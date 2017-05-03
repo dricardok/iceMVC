@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<decorators defaultdir="/decorators">
+
+	<!-- URLs que no usaran decorator -->
+	<excludes>
+		<pattern>/nodecorate/*</pattern>
+		<pattern>/resources/*</pattern>
+		<pattern>/styles/*</pattern>
+		<pattern>/scripts/*</pattern>
+		<pattern>/images/*</pattern>
+		<pattern>/struts/*</pattern>
+	</excludes>
+
+
+	<!-- decorator que solo contiene la estructura HTML, HEAD y BODY -->
+	<decorator name="clean" page="decorator_clean.jsp">
+		<!--pattern>/seguridad/*</pattern-->
+	</decorator>
+    
+    
+	<!-- decorator que incluye taglibs, framework UI, utilerias JS -->
+	<decorator name="default" page="decorator_default.jsp">
+		<pattern>/seguridad/accesoDirecto.action</pattern>
+	</decorator>
+
+</decorators>
