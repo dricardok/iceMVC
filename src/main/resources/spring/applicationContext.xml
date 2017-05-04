@@ -15,7 +15,7 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                 <value>file:/RES/ice/properties/global.properties</value>
+                 <value>file:/RES/iceMVC/properties/global.properties</value>
             </list>
         </property>
 	</bean>
