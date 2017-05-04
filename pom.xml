@@ -19,6 +19,12 @@
 	        <name>Oracle OJDBC Repository</name>
 	        <url>https://repo.adobe.com/nexus/content/repositories/public</url>
 	    </repository-->
+	    
+	    <repository>
+			<id>internal</id>
+			<name>Internal Repository RSA</name>
+			<url>http://10.142.67.54/repository-rsa/m2</url>
+		</repository>
     </repositories>
     
     <dependencies>
@@ -227,6 +233,20 @@
             <artifactId>ice-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        
+        <!-- Dependencias para authentication -->
+		<dependency>
+			<groupId>mx.com.royalsun</groupId>
+			<artifactId>rsa-authentication-interface</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mx.com.royalsun</groupId>
+			<artifactId>rsaspringbase-interface</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<!-- -->
                 
     </dependencies>
     
