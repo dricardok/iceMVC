@@ -21,6 +21,6 @@
 	</bean>
 	
 	<!-- JNDI Resources: -->
-	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/gseguros"/>
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/alead11g"/>
     
 </beans>
