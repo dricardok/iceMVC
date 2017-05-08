@@ -44,15 +44,33 @@ public class TestServiciosAction extends PrincipalCoreAction {
 	public String testMethod() throws Exception {
 		
         logger.debug("Iniciando testMethod");
-	    
-        List<Map<String, String>> submenus = testServiciosDAO.obtieneSubmenus("533", "0");
         
+        List<Map<String, String>> submenus = testServiciosDAO.obtieneSubmenus("533", "0");
         logger.debug("Submenus encontrados: {} = {}", submenus.size(), submenus);
-	    
+        
 	    logger.debug("Finalizando testMethod");
-	    
 	    return SUCCESS;
 	}
+    
+    
+    @Action(
+        value = "testFunction", 
+        results = { 
+            @Result(name = "input", location = "/jsp-script/servicios/input.jsp"),
+            @Result(name = "success", type = "json") 
+        }
+    )
+    public String testFunction() throws Exception {
+        
+        logger.debug("Iniciando testFunction");
+
+        String resultado = testServiciosDAO.ejecutaStoredFunction("Entrada");
+        logger.debug("Prueba Stored Function, resultado: {}", resultado);
+        
+        logger.debug("Finalizando testFunction");
+        
+        return SUCCESS;
+    }
 
     public Map<String, String> getParams() {
         return params;

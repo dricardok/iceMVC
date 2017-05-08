@@ -12,6 +12,14 @@ public interface TestServiciosDAO {
      * @return Lista de submenus
      * @throws Exception
      */
-    public List<Map<String, String>> obtieneSubmenus(String cdmenu, String cdnivelPadre) throws Exception;
+    public List<Map<String, String>> obtieneSubmenus(String cdmenu, String cdnivelPadre) throws Exception;    
+    
+    /**
+     * 
+     * @param paramEntrada
+     * @return
+     * @throws Exception
+     */
+    public String ejecutaStoredFunction(String paramEntrada) throws Exception;
     
 }
