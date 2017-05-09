@@ -15,7 +15,10 @@ import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.controller.PrincipalCoreAction;
 
+import mx.com.segurossura.authentication.DelegSignOn;
 import mx.com.segurossura.test.dao.TestServiciosDAO;
+import mx.com.royalsun.services.interfaces.authentication.ViewfinderItemVO;
+
 
 @Controller
 @Scope("prototype")
