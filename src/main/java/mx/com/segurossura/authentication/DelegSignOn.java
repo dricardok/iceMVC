@@ -1,4 +1,4 @@
-package mx.com.royalsun.guestbook.authentication;
+package mx.com.segurossura.authentication;
 
 import java.util.HashMap;
 
