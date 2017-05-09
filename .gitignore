@@ -1,2 +1,3 @@
 target/*
 src/main/resources/spring/applicationContext.xml
+src/main/resources/rebel.xml
