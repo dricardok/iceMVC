@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>mx.com.gsegurossura</groupId>
-    <artifactId>ice</artifactId>
+    <artifactId>iceMVC</artifactId>
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>iceMVC</name>
@@ -19,7 +19,6 @@
 	        <name>Oracle OJDBC Repository</name>
 	        <url>https://repo.adobe.com/nexus/content/repositories/public</url>
 	    </repository-->
-	    
 	    <repository>
 			<id>internal</id>
 			<name>Internal Repository RSA</name>
@@ -126,11 +125,11 @@
         
         
         <!-- Oracle Driver -->
-        <dependency>
+        <!--dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
             <version>11.2.0</version>
-        </dependency>
+        </dependency-->
         
                 
         <!-- Struts 2 -->
@@ -251,7 +250,7 @@
     </dependencies>
     
     <build>
-        <finalName>ice</finalName>
+        <finalName>iceMVC</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
