@@ -113,7 +113,7 @@ public class ComponentesDAOImpl extends AbstractManagerDAO implements Componente
 
     protected class MovimientoComponentesSP extends StoredProcedure {
         protected MovimientoComponentesSP(DataSource dataSource) {
-            super(dataSource, "P_MOV_TCONFSCR");
+            super(dataSource, "PACK_CONFIG_SCREEN.P_MOV");
             declareParameter(new SqlParameter("pv_pantalla_i", OracleTypes.VARCHAR));
             declareParameter(new SqlParameter("pv_seccion_i", OracleTypes.VARCHAR));
             declareParameter(new SqlParameter("pv_modulo_i", OracleTypes.VARCHAR));
