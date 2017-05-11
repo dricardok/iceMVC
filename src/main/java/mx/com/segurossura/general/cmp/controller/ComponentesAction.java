@@ -35,7 +35,7 @@ public class ComponentesAction  extends PrincipalCoreAction{
     private List<Map<String,String>>    secciones;
     private Map<String, String>         params;
     private boolean                     success;
-    private List<Map<String,String>>    componentes;
+    private Map<String, List<Map<String,String>>>    componentes;
     private String                      message;
     
     @Autowired
@@ -80,7 +80,7 @@ public class ComponentesAction  extends PrincipalCoreAction{
 //                if(null == resultados || resultados.isEmpty()){
 //                    resultados = new ArrayList<Map<String,String>>();
 //                }
-                componentes.addAll(componentesManager.obtenerComponentes(pantalla, seccion, modulo, estatus, cdramo, cdtipsit, cdsisrol, auxkey));
+                componentes.put(seccion, componentesManager.obtenerComponentes(pantalla, seccion, modulo, estatus, cdramo, cdtipsit, cdsisrol, auxkey));
                 success = true;
             }
         }
@@ -161,11 +161,11 @@ public class ComponentesAction  extends PrincipalCoreAction{
         this.success = exito;
     }
 
-    public List<Map<String, String>> getComponentes() {
+    public Map<String, List<Map<String, String>>> getComponentes() {
         return componentes;
     }
 
-    public void setComponentes(List<Map<String, String>> resultados) {
+    public void setComponentes(Map<String, List<Map<String, String>>> resultados) {
         this.componentes = resultados;
     }
 
