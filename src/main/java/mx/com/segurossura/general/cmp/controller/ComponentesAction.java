@@ -77,9 +77,9 @@ public class ComponentesAction  extends PrincipalCoreAction{
                 String auxkey   = map.get("auxkey");
                 Utils.validate(pantalla, "No se recibio el nombre de la pantalla");
                 Utils.validate(seccion,  "No se recibio la seccion");
-//                if(null == resultados || resultados.isEmpty()){
-//                    resultados = new ArrayList<Map<String,String>>();
-//                }
+                if(null == componentes || componentes.isEmpty()){
+                    componentes = new HashMap<String, List<Map<String,String>>>();
+                }
                 componentes.put(seccion, componentesManager.obtenerComponentes(pantalla, seccion, modulo, estatus, cdramo, cdtipsit, cdsisrol, auxkey));
                 success = true;
             }
