@@ -1,5 +1,6 @@
 package mx.com.segurossura.general.cmp.dao.impl;
 
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,17 +15,14 @@ import org.springframework.data.jdbc.support.oracle.SqlArrayValue;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
-import org.springframework.stereotype.Service;
 
-import com.biosnettcs.core.AbstractManagerDAO;
 import com.biosnettcs.core.GenericMapper;
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.core.dao.AbstractManagerDAO;
+import com.biosnettcs.core.dao.OracleTypes;
 import com.biosnettcs.core.exception.ApplicationException;
 
-import freemarker.template.utility.StringUtil;
-import mx.com.segurossura.general.cmp.controller.ComponentesAction;
 import mx.com.segurossura.general.cmp.dao.ComponentesDAO;
-import oracle.jdbc.OracleTypes;
 
 public class ComponentesDAOImpl extends AbstractManagerDAO implements ComponentesDAO {
     private static Logger logger = LoggerFactory.getLogger(ComponentesDAOImpl.class);
@@ -57,22 +55,22 @@ public class ComponentesDAOImpl extends AbstractManagerDAO implements Componente
     protected class ObtenerListaComponentes extends StoredProcedure {
         protected ObtenerListaComponentes(DataSource dataSource) {
             super(dataSource, "PACK_CONFIG_SCREEN.P_GET");
-            declareParameter(new SqlParameter("pv_pantalla_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_seccion_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_modulo_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_estatus_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdramo_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdtipsit_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdsisrol_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_auxkey_i", OracleTypes.VARCHAR));
+            declareParameter(new SqlParameter("pv_pantalla_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_seccion_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_modulo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estatus_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdtipsit_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdsisrol_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_auxkey_i", Types.VARCHAR));
             String[] cols = new String[] { "pantalla", "seccion", "modulos", "estatus", "ramos", "situaciones", "roles",
                     "auxkey", "orden", "label", "tipocampo", "catalogo", "minlength", "maxlength", "minvalue",
                     "maxvalue", "swobliga", "swcolumn", "renderer", "name_cdatribu", "swlectura", "queryparam", "value",
                     "swoculto", "param1", "value1", "param2", "value2", "param3", "value3", "param4", "value4",
                     "param5", "value5", "swfinal", "icono", "handler", "swnoload", "width" };
             declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
-            declareParameter(new SqlOutParameter("pv_msg_id_o", OracleTypes.NUMERIC));
-            declareParameter(new SqlOutParameter("pv_title_o", OracleTypes.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
             compile();
         }
     }
@@ -114,17 +112,17 @@ public class ComponentesDAOImpl extends AbstractManagerDAO implements Componente
     protected class MovimientoComponentesSP extends StoredProcedure {
         protected MovimientoComponentesSP(DataSource dataSource) {
             super(dataSource, "PACK_CONFIG_SCREEN.P_MOV");
-            declareParameter(new SqlParameter("pv_pantalla_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_seccion_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_modulo_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_estatus_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdramo_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdtipsit_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdsisrol_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_auxkey_i", OracleTypes.VARCHAR));
-            declareParameter(new SqlParameter("pv_lista_i", OracleTypes.ARRAY, "LISTA_LISTAS_VARCHAR2"));
-            declareParameter(new SqlOutParameter("pv_msg_id_o", OracleTypes.NUMERIC));
-            declareParameter(new SqlOutParameter("pv_title_o", OracleTypes.VARCHAR));
+            declareParameter(new SqlParameter("pv_pantalla_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_seccion_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_modulo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estatus_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdtipsit_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdsisrol_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_auxkey_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_lista_i", Types.ARRAY, "LISTA_LISTAS_VARCHAR2"));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
             compile();
         }
     }

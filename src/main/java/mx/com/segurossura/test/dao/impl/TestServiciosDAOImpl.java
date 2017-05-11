@@ -13,11 +13,11 @@ import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
 
-import com.biosnettcs.core.AbstractManagerDAO;
 import com.biosnettcs.core.GenericMapper;
+import com.biosnettcs.core.dao.AbstractManagerDAO;
+import com.biosnettcs.core.dao.OracleTypes;
 
 import mx.com.segurossura.test.dao.TestServiciosDAO;
-import oracle.jdbc.OracleTypes;
 
 public class TestServiciosDAOImpl extends AbstractManagerDAO implements TestServiciosDAO {
 
