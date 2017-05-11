@@ -1,8 +1,7 @@
+.classpath
 .project
+.settings/*
 bin/*
 target/*
+src/main/resources/rebel.xml
 /target/
-.settings/*
-.classpath
-
-##
