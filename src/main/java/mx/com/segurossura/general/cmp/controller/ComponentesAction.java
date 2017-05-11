@@ -123,6 +123,7 @@ public class ComponentesAction  extends PrincipalCoreAction{
             String auxkey   = params.get("auxkey");            
             Utils.validate(pantalla, "No se recibio la pantalla");
             Utils.validate(seccion, "No se recibio la seccion");
+            Utils.validate(secciones, "No se recibieron datos");
 //            componentesManager.movimientoComponentes(pantalla, seccion, modulo, estatus, cdramo, cdtipsit, cdsisrol, auxkey, secciones);
         }
         catch(Exception ex){
