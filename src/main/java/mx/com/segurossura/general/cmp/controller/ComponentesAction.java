@@ -91,7 +91,7 @@ public class ComponentesAction  extends PrincipalCoreAction{
         logger.debug(Utils.log(
                 "\n################################"
                ,"\n###### recuperarComponentes ######"
-               ,"\n###### resultados=" , componentes
+               ,"\n###### componentes=" , componentes
                ));
         return SUCCESS;
     }
@@ -124,7 +124,7 @@ public class ComponentesAction  extends PrincipalCoreAction{
             Utils.validate(pantalla, "No se recibio la pantalla");
             Utils.validate(seccion, "No se recibio la seccion");
             Utils.validate(secciones, "No se recibieron datos");
-//            componentesManager.movimientoComponentes(pantalla, seccion, modulo, estatus, cdramo, cdtipsit, cdsisrol, auxkey, secciones);
+            componentesManager.movimientoComponentes(pantalla, seccion, modulo, estatus, cdramo, cdtipsit, cdsisrol, auxkey, secciones);
         }
         catch(Exception ex){
             success = false;
