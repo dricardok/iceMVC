@@ -12,5 +12,5 @@
 	
     
     <bean id="testServiciosDAOImpl" class="mx.com.segurossura.test.dao.impl.TestServiciosDAOImpl" parent="abstractManagerDAO"/>
-	
+	<bean id="componentesDAOImpl" class="mx.com.segurossura.general.cmp.dao.impl.ComponentesDAOImpl" parent="abstractManagerDAO"/>
 </beans>
