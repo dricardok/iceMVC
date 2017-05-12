@@ -20,18 +20,28 @@ public class ComponentesManagerImpl implements ComponentesManager {
     private ComponentesDAO componentesDAO;
     
     @Override
-    public List<Map<String, String>> obtenerComponentes(String pantalla, String seccion, String modulo, String estatus,
-            String cdramo, String cdtipsit, String cdsisrol, String auxkey) throws Exception {
-        List<Map<String, String>> componentes = new ArrayList<Map<String,String>>();
+    public Map<String, List<Map<String, String>>> obtenerComponentes(List<Map<String, String>> componentes) throws Exception {
+        Map<String, List<Map<String, String>>> result = new HashMap<String, List<Map<String,String>>>();
         String paso = "";
         try{
-            paso = "Antes de obtener componentes";
-            componentes = componentesDAO.obtenerListaComponentesSP(pantalla, seccion, modulo, estatus, cdramo, cdtipsit, cdsisrol, auxkey); 
+            for(Map<String, String> map: componentes){
+                paso = "Antes de obtener componentes";
+                String pantalla = map.get("pantalla");
+                String seccion = map.get("seccion");
+                String modulo = map.get("modulo");
+                String estatus = map.get("estatus");
+                String cdramo = map.get("cdramo");
+                String cdtipsit = map.get("cdtipsit");
+                String cdsisrol = map.get("cdsisrol");
+                String auxkey = map.get("auxKey");                
+                result.put(seccion, componentesDAO.obtenerListaComponentesSP(pantalla, seccion, modulo, estatus, cdramo, cdtipsit, cdsisrol, auxkey));
+            }
+             
         }
         catch(Exception ex){
             Utils.generaExcepcion(ex, paso);
         }
-        return componentes;
+        return result;
     }
 
     @Override
