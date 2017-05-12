@@ -57,32 +57,14 @@ public class ComponentesAction  extends PrincipalCoreAction{
                ));
         try{
             Utils.validate(secciones, "No se recibieron datos");
-//            secciones = new ArrayList<Map<String,String>>();
-//            Map<String, String> seccionn = new HashMap<String, String>();
-//            seccionn.put("pantalla", "COTIZACION_CUSTOM");
-//            seccionn.put("seccion", "CDATRIBU_DERECHO");
-//            secciones.add(seccionn);
-//            seccionn.put("seccion", "TATRI_POL");
-//            secciones.add(seccionn);
-//            UserVO usuario     = (UserVO)session.get("USUARIO");
-//            String cdsisrol    = usuario.getRolActivo().getClave();
             for(Map<String, String> map:secciones){
                 String pantalla = map.get("pantalla");
                 String seccion  = map.get("seccion");
-                String modulo   = map.get("modulo");
-                String estatus  = map.get("estatus");
-                String cdramo   = map.get("cdramo");
-                String cdtipsit = map.get("cdtipsit");
-                String cdsisrol = map.get("cdsisrol");
-                String auxkey   = map.get("auxkey");
                 Utils.validate(pantalla, "No se recibio el nombre de la pantalla");
-                Utils.validate(seccion,  "No se recibio la seccion");
-                if(null == componentes || componentes.isEmpty()){
-                    componentes = new HashMap<String, List<Map<String,String>>>();
-                }
-                componentes.put(seccion, componentesManager.obtenerComponentes(pantalla, seccion, modulo, estatus, cdramo, cdtipsit, cdsisrol, auxkey));
+                Utils.validate(seccion,  "No se recibio la seccion");                
                 success = true;
             }
+            componentes = componentesManager.obtenerComponentes(secciones);
         }
         catch(Exception ex){
             success = false;
