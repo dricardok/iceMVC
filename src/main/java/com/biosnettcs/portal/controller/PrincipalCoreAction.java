@@ -1,4 +1,4 @@
-package com.biosnettcs.core.controller;
+package com.biosnettcs.portal.controller;
 
 import java.lang.reflect.Field;
 import java.util.Map;
