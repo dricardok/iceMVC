@@ -29,25 +29,18 @@
     <package name="default" namespace="/" extends="json-default">
     
         <interceptors>
-            <interceptor name="authenticationInterceptor" class="authenticationInterceptor" />
+            <interceptor name="authInterceptor" class="com.biosnettcs.portal.interceptor.AuthenticationInterceptor" />
             <interceptor-stack name="secureStack">
-                <interceptor-ref name="authenticationInterceptor" />
+                <interceptor-ref name="authInterceptor" />
                 <interceptor-ref name="defaultStack" />
             </interceptor-stack>
         </interceptors>
         
-        <default-interceptor-ref name="secureStack" />
+        <!--default-interceptor-ref name="secureStack" /-->
         
         <global-results>
-            <result name="denied">/jsp/extjs4/denegado.jsp</result>
-            <result name="login" type="redirectAction">
-                <param name="actionName">login</param>
-                <param name="namespace">/seguridad</param>
-            </result>
-            <result name="tree" type="redirectAction">
-                <param name="actionName">seleccionaRolCliente</param>
-                <param name="namespace">/</param>
-            </result>
+        	<result name="login">/</result>
+            <result name="denied">/denegado.jsp</result>
             <result name="notfound">/404.jsp</result>
             <result name="excel" type="stream">
                 <param name="contentType">application/vnd.ms-excel</param>

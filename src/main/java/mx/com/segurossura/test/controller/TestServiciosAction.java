@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -13,17 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.biosnettcs.core.controller.PrincipalCoreAction;
+import com.biosnettcs.portal.controller.PrincipalCoreAction;
 
-import mx.com.segurossura.authentication.DelegSignOn;
 import mx.com.segurossura.test.dao.TestServiciosDAO;
-import mx.com.royalsun.services.interfaces.authentication.ViewfinderItemVO;
 
 
 @Controller
 @Scope("prototype")
-@ParentPackage(value="json-default")
+@ParentPackage(value="default")
 @Namespace("/test")
+@InterceptorRef(value="secureStack")
 public class TestServiciosAction extends PrincipalCoreAction {
 	
 	private static final long serialVersionUID = 7996363816495572103L;
