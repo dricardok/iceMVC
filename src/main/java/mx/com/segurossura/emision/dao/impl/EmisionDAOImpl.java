@@ -224,7 +224,7 @@ public class EmisionDAOImpl extends AbstractManagerDAO implements EmisionDAO {
 	
 	//nombre
 	@Override
-	public void generaNmpolizaSP(
+	public String generaNmpolizaSP(
 			String Gn_Nmpoliza			 ,
 			String Gn_Cdunieco						  ,
 			String Gn_Cdramo							  ,
@@ -233,20 +233,24 @@ public class EmisionDAOImpl extends AbstractManagerDAO implements EmisionDAO {
 			String Gn_Nmpolcoi
 		) throws Exception{
 	
-	Map<String, Object> params = new LinkedHashMap<String, Object>();
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+		
+		// params.put
 	
-	// params.put
+		params.put("Gv_Identificador_Error",null);
+		params.put("Gn_Nmpoliza",					Gn_Nmpoliza);
+		params.put("Gn_Cdunieco",     Gn_Cdunieco);
+		params.put("Gn_Cdramo", Gn_Cdramo);
+		params.put("Gv_Estado", Gv_Estado);
+		params.put("Gv_Swcolind",      Gv_Swcolind);
+		params.put("Gn_Nmpolcoi",           Gn_Nmpolcoi);
+		
+													//Clase
+		Map<String, Object> resultado = ejecutaSP(new GeneraNmpoliza(getDataSource()), params);
+		String datos=(String)resultado.get("Gn_Nmpoliza");
+		
+		return datos;
 
-	params.put("Gv_Identificador_Error",null);
-	params.put("Gn_Nmpoliza",					Gn_Nmpoliza);
-	params.put("Gn_Cdunieco",     Gn_Cdunieco);
-	params.put("Gn_Cdramo", Gn_Cdramo);
-	params.put("Gv_Estado", Gv_Estado);
-	params.put("Gv_Swcolind",      Gv_Swcolind);
-	params.put("Gn_Nmpolcoi",           Gn_Nmpolcoi);
-	
-												//Clase
-	Map<String, Object> resultado = ejecutaSP(new GeneraNmpoliza(getDataSource()), params);
 	}
 				//Clase
 	protected class GeneraNmpoliza extends StoredProcedure
@@ -758,7 +762,7 @@ public class EmisionDAOImpl extends AbstractManagerDAO implements EmisionDAO {
 			String pv_estado_i   ,
 			String pv_nmpoliza_i ,
 			String pv_nmsituac_i ,
-			String pv_cdtipsit_i ,
+			String pv_cdgarant_i ,
 			String pv_nmsuplem_i 
 
 		) throws Exception{
@@ -771,7 +775,7 @@ public class EmisionDAOImpl extends AbstractManagerDAO implements EmisionDAO {
 		params.put("pv_estado_i",      pv_estado_i  );
 		params.put("pv_nmpoliza_i",    pv_nmpoliza_i);
 		params.put("pv_nmsituac_i",    pv_nmsituac_i);
-		params.put("pv_cdtipsit_i",    pv_cdtipsit_i);
+		params.put("pv_cdgarant_i",    pv_cdgarant_i);
 		params.put("pv_nmsuplem_i",    pv_nmsuplem_i);
 		
 													//Clase
@@ -794,7 +798,7 @@ public class EmisionDAOImpl extends AbstractManagerDAO implements EmisionDAO {
 			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_nmsituac_i",Types.VARCHAR));
-			declareParameter(new SqlParameter("pv_cdtipsit_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdgarant_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
 			
 			String[] cols=new String[]{
@@ -933,10 +937,8 @@ public class EmisionDAOImpl extends AbstractManagerDAO implements EmisionDAO {
 			String pv_estado_i   				,
 			String pv_nmpoliza_i 				,
 			String pv_nmsituac_i 				,
-			String pv_nmsuplem_i 				,
-			String pv_registro_o 				,
-			String pv_msg_id_o   				,
-			String pv_title_o   				
+			String pv_nmsuplem_i 				
+							
 		) throws Exception{
 	
 		Map<String, Object> params = new LinkedHashMap<String, Object>();

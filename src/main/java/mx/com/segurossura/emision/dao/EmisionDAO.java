@@ -7,9 +7,7 @@ import java.util.Map;
 public interface EmisionDAO {
 	
 
-	void generaNmpolizaSP(String Gn_Nmpoliza, String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado,
-			String Gv_Swcolind, String Gn_Nmpolcoi) throws Exception;
-
+	
 
 	void movimientoMpolisitSP(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
 			String Gn_Nmsituac, String Gn_Nmsuplem_Sesion, String Gn_Nmsuplem_Bean, String Gv_Status,
@@ -48,9 +46,7 @@ public interface EmisionDAO {
 			String Gn_Nmsituac, String Gn_Nmsuplem_Sesion, String Gv_Swrevalo, String Gv_Cdcapita, String Gn_Ptcapita,
 			String Gn_Nmsuplem_Bloque, String Gv_ModoAcceso) throws Exception;
 
-	List<Map<String, String>> obtieneMpolisitSP(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
-			String pv_nmpoliza_i, String pv_nmsituac_i, String pv_nmsuplem_i, String pv_registro_o, String pv_msg_id_o,
-			String pv_title_o) throws Exception;
+	
 
 	List<Map<String, String>> obtieneTvalositSP(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
 			String pv_nmpoliza_i, String pv_nmsituac_i, String pv_cdtipsit_i, String pv_nmsuplem_i) throws Exception;
@@ -74,6 +70,12 @@ public interface EmisionDAO {
 
 	void movimientoTvalopolSP(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
 			String Gn_Cdatribu, String Gn_Nmsuplem, String Gv_Otvalor_New, String Gv_Otvalor_Old) throws Exception;
+
+	String generaNmpolizaSP(String Gn_Nmpoliza, String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado,
+			String Gv_Swcolind, String Gn_Nmpolcoi) throws Exception;
+
+	List<Map<String, String>> obtieneMpolisitSP(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
+			String pv_nmpoliza_i, String pv_nmsituac_i, String pv_nmsuplem_i) throws Exception;
 
 
 	
