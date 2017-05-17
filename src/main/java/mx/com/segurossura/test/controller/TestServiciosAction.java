@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 
+import mx.com.segurossura.authentication.DelegSignOn;
+import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.test.dao.TestServiciosDAO;
 
 
@@ -36,6 +38,9 @@ public class TestServiciosAction extends PrincipalCoreAction {
 	
 	@Autowired
 	private TestServiciosDAO testServiciosDAO;
+	
+	@Autowired
+	private EmisionDAO emisionDAO;
 
     @Action(
         value = "testMethod", 
@@ -74,6 +79,23 @@ public class TestServiciosAction extends PrincipalCoreAction {
         
         return SUCCESS;
     }
+    
+    
+    @Action(
+            value = "testDAO", 
+            results = { 
+                @Result(name = "input", location = "/jsp-script/servicios/input.jsp"),
+                @Result(name = "success", type = "json") 
+            }
+        )
+        public String testDao() throws Exception {
+            
+            //logger.debug("--->"+emisionDAO.generaNmpolizaSP(null, "0", "602", "W", "N", "100"));
+            
+    	//logger.debug("--->"+emisionDAO.obtieneTvalopolSP("1", "201", "M", "179407", "245436412000000001"));
+    	emisionDAO.movimientoMpoligarSP(null, null, null, null, null, null, null, null, null, null);;
+            return SUCCESS;
+        }
 
     public Map<String, String> getParams() {
         return params;

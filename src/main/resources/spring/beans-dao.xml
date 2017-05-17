@@ -13,4 +13,8 @@
     
     <bean id="testServiciosDAOImpl" class="mx.com.segurossura.test.dao.impl.TestServiciosDAOImpl" parent="abstractManagerDAO"/>
 	<bean id="componentesDAOImpl" class="mx.com.segurossura.general.cmp.dao.impl.ComponentesDAOImpl" parent="abstractManagerDAO"/>
+	<bean id="emisionDAOImpl" class="mx.com.segurossura.emision.dao.impl.EmisionDAOImpl" parent="abstractManagerDAO"/>
+	<bean id="usuarioDAOImpl" class="mx.com.segurossura.emision.dao.impl.UsuarioDAOImpl" parent="abstractManagerDAO"/>
+
+	
 </beans>
