@@ -61,8 +61,8 @@ public class ComponentesAction extends PrincipalCoreAction {
             if(session != null){
                 usuario = (UsuarioVO) session.get("USUARIO");
             }
-//            usuario = new UsuarioVO();
-//            usuario.setCdusuario("DHPERNIA");
+            usuario = new UsuarioVO();
+            usuario.setCdusuario("DHPERNIA");
 //            RolVO rol = new RolVO();
 //            rol.setClave("SUSCRIPTOR");
 //            rol.setActivo(false);
@@ -131,11 +131,11 @@ public class ComponentesAction extends PrincipalCoreAction {
     private Object getScreenSesion(String x, UsuarioVO usuario) {
         String y = SIN_SESION;
         if (null != usuario) {
-            y = OK;
-            if(null != usuario.getRolActivo()){
-//                if(!usuario.getRolActivo().isActivo()){
-                y = SIN_ROL;
-//                }
+            y = SIN_ROL;            
+            if(null != usuario.getRolActivo()){                
+                if(null != usuario.getRolActivo().getClave()){
+                    y = OK;
+                }
             }
         }
         Map<String, Map<String, Object>> matriz = setMatriz();
