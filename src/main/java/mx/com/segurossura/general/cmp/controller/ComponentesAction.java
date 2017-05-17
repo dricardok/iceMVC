@@ -26,7 +26,7 @@ import com.opensymphony.xwork2.ActionContext;
 @Controller
 @Scope
 @ParentPackage("json-default")
-@Namespace("/general")
+@Namespace("/componentes")
 
 public class ComponentesAction extends PrincipalCoreAction {
     /**
@@ -73,8 +73,7 @@ public class ComponentesAction extends PrincipalCoreAction {
                 String pantalla = map.get("pantalla");
                 String seccion = map.get("seccion");
                 Utils.validate(pantalla, "No se recibio el nombre de la pantalla");
-                // Utils.validate(seccion, "No se recibio la seccion");
-                success = true;
+                // Utils.validate(seccion, "No se recibio la seccion");                
             }
             if(!pant.equals(LOGIN) && !pant.equals(ROL_TREE)){
                 pant = "otro";
@@ -87,6 +86,7 @@ public class ComponentesAction extends PrincipalCoreAction {
                 params = new HashMap<String, String>();
                 params.put("redirect", o.toString());
             }
+            success = true;
         } catch (Exception ex) {
             success = false;
             message = Utils.manejaExcepcion(ex);
@@ -127,10 +127,11 @@ public class ComponentesAction extends PrincipalCoreAction {
     private Object getScreenSesion(String x, UsuarioVO usuario) {
         String y = SIN_SESION;
         if (null != usuario) {
-            if(!usuario.getRolActivo().isActivo()){
-                y = SIN_ROL;
-            }else{
-                y = OK;
+            y = OK;
+            if(null != usuario.getRolActivo()){
+                if(!usuario.getRolActivo().isActivo()){
+                    y = SIN_ROL;
+                }
             }
         }
         Map<String, Map<String, Object>> matriz = setMatriz();
