@@ -54,7 +54,7 @@ public class ComponentesAction extends PrincipalCoreAction {
     public String recuperarComponentes() throws Exception {
         logger.debug(Utils.log("\n################################", "\n###### recuperarComponentes ######",
                 "\n###### secciones=", secciones));
-        String pant = null;
+        String pant = "otro";
         UsuarioVO usuario = null;
         try {
             session = ActionContext.getContext().getSession();
@@ -65,19 +65,23 @@ public class ComponentesAction extends PrincipalCoreAction {
 //            usuario.setCdusuario("DHPERNIA");
 //            RolVO rol = new RolVO();
 //            rol.setClave("SUSCRIPTOR");
-//            rol.setActivo(true);
+//            rol.setActivo(false);
 //            usuario.setRolActivo(rol);
-            Utils.validate(secciones, "No se recibieron datos");            
-            pant = secciones.get(0).get("pantalla");
-            for (Map<String, String> map : secciones) {
-                String pantalla = map.get("pantalla");
-                String seccion = map.get("seccion");
-                Utils.validate(pantalla, "No se recibio el nombre de la pantalla");
-                // Utils.validate(seccion, "No se recibio la seccion");                
-            }
-            if(!pant.equals(LOGIN) && !pant.equals(ROL_TREE)){
-                pant = "otro";
-            }
+//            Utils.validate(secciones, "No se recibieron datos");
+            if(null != secciones){
+                if(secciones.size() > 0){
+                    pant = secciones.get(0).get("pantalla");
+                    for (Map<String, String> map : secciones) {
+                        String pantalla = map.get("pantalla");
+                        String seccion = map.get("seccion");
+                        Utils.validate(pantalla, "No se recibio el nombre de la pantalla");
+                        // Utils.validate(seccion, "No se recibio la seccion");                
+                    }
+                    if(!pant.equals(LOGIN) && !pant.equals(ROL_TREE)){
+                        pant = "otro";
+                    }
+                }
+            }            
             Object o = getScreenSesion(pant, usuario);
             if (null == o) {
                 componentes = componentesManager.obtenerComponentes(secciones);
