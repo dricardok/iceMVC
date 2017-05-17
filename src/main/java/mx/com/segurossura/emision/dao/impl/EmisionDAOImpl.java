@@ -237,7 +237,7 @@ public class EmisionDAOImpl extends AbstractManagerDAO implements EmisionDAO {
 		
 		// params.put
 	
-		params.put("Gv_Identificador_Error",null);
+		//params.put("Gv_Identificador_Error",null);
 		params.put("Gn_Nmpoliza",					Gn_Nmpoliza);
 		params.put("Gn_Cdunieco",     Gn_Cdunieco);
 		params.put("Gn_Cdramo", Gn_Cdramo);
