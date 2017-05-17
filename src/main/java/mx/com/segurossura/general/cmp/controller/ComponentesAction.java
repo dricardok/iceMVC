@@ -15,108 +15,126 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-
-import com.biosnettcs.core.controller.PrincipalCoreAction;
 import mx.com.segurossura.general.cmp.service.ComponentesManager;
 
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.portal.controller.PrincipalCoreAction;
+import com.biosnettcs.portal.model.RolVO;
+import com.biosnettcs.portal.model.UsuarioVO;
+import com.opensymphony.xwork2.ActionContext;
 
 @Controller
 @Scope
 @ParentPackage("json-default")
 @Namespace("/general")
- 
-public class ComponentesAction  extends PrincipalCoreAction{
+
+public class ComponentesAction extends PrincipalCoreAction {
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
     private static Logger logger = LoggerFactory.getLogger(ComponentesAction.class);
-    private List<Map<String,String>>    secciones;
-    private Map<String, String>         params;
-    private boolean                     success;
-    private Map<String, List<Map<String,String>>>    componentes;
-    private String                      message;
-    
-    @Autowired
-    private ComponentesManager          componentesManager;
+    private List<Map<String, String>> secciones;
+    private Map<String, String> params;
+    private boolean success;
+    private Map<String, List<Map<String, String>>> componentes;
+    private String message;
+    private String SIN_SESION = "sinsesion";
+    private String SIN_ROL = "sinrol";
+    private String OK = "ok";
+    private String ROL_TREE = "roltree";
+    private String MESA_CONTROL = "mesacontrol";
+    private String LOGIN = "login";
 
-    @Action(
-            value = "recuperarComponentes", 
-            results = {
-                @Result(name = "success", type = "json") 
-            },
-            interceptorRefs = {
-                    @InterceptorRef(value = "json", params = {"enableSMD", "true","ignoreSMDMethodInterfaces","false"})
-            })
+    @Autowired
+    private ComponentesManager componentesManager;
+
+    @Action(value = "recuperarComponentes", results = { @Result(name = "success", type = "json") }, interceptorRefs = {
+            @InterceptorRef(value = "json", params = { "enableSMD", "true", "ignoreSMDMethodInterfaces", "false" }) })
     public String recuperarComponentes() throws Exception {
-        logger.debug(Utils.log(
-                "\n################################"
-               ,"\n###### recuperarComponentes ######"
-               ,"\n###### secciones=" , secciones
-               ));
-        try{
-            Utils.validate(secciones, "No se recibieron datos");
-            for(Map<String, String> map:secciones){
+        logger.debug(Utils.log("\n################################", "\n###### recuperarComponentes ######",
+                "\n###### secciones=", secciones));
+        String pant = null;
+        UsuarioVO usuario = null;
+        try {
+            session = ActionContext.getContext().getSession();
+            if(session != null){
+                usuario = (UsuarioVO) session.get("USUARIO");
+            }
+//            usuario = new UsuarioVO();
+//            usuario.setCdusuario("DHPERNIA");
+//            RolVO rol = new RolVO();
+//            rol.setClave("SUSCRIPTOR");
+//            rol.setActivo(true);
+//            usuario.setRolActivo(rol);
+            Utils.validate(secciones, "No se recibieron datos");            
+            pant = secciones.get(0).get("pantalla");
+            for (Map<String, String> map : secciones) {
                 String pantalla = map.get("pantalla");
-                String seccion  = map.get("seccion");
+                String seccion = map.get("seccion");
                 Utils.validate(pantalla, "No se recibio el nombre de la pantalla");
-                Utils.validate(seccion,  "No se recibio la seccion");                
+                // Utils.validate(seccion, "No se recibio la seccion");
                 success = true;
             }
-            componentes = componentesManager.obtenerComponentes(secciones);
-        }
-        catch(Exception ex){
+            if(!pant.equals(LOGIN) && !pant.equals(ROL_TREE)){
+                pant = "otro";
+            }
+            Object o = getScreenSesion(pant, usuario);
+            if (null == o) {
+                componentes = componentesManager.obtenerComponentes(secciones);
+            } 
+            else if (o instanceof String) {
+                params = new HashMap<String, String>();
+                params.put("redirect", o.toString());
+            }
+        } catch (Exception ex) {
             success = false;
             message = Utils.manejaExcepcion(ex);
         }
-        logger.debug(Utils.log(
-                "\n################################"
-               ,"\n###### recuperarComponentes ######"
-               ,"\n###### componentes=" , componentes
-               ));
+        logger.debug(Utils.log("\n################################", "\n###### recuperarComponentes ######",
+                "\n###### componentes=", componentes));
         return SUCCESS;
     }
-    
-    @Action(
-            value = "movimientoComponentes", 
-            results = {
-                @Result(name = "success", type = "json") 
-            },
-            interceptorRefs = {
-                    @InterceptorRef(value = "json", params = {"enableSMD", "true","ignoreSMDMethodInterfaces","false"})
-            }
-        )
+
+    @Action(value = "movimientoComponentes", results = { @Result(name = "success", type = "json") }, interceptorRefs = {
+            @InterceptorRef(value = "json", params = { "enableSMD", "true", "ignoreSMDMethodInterfaces", "false" }) })
     public String movimientoComponentes() throws Exception {
-        logger.debug(Utils.log(
-                "\n################################"
-               ,"\n###### movimientoComponentes ######"
-               ,"\n###### params=" , params
-               ));
-        try{
+        logger.debug(Utils.log("\n################################", "\n###### movimientoComponentes ######",
+                "\n###### params=", params));
+        try {
             Utils.validate(params, "No se recibieron datos");
             String pantalla = params.get("pantalla");
-            String seccion  = params.get("seccion");
-            String modulo   = params.get("modulo");
-            String estatus  = params.get("estatus");
-            String cdramo   = params.get("cdramo");
+            String seccion = params.get("seccion");
+            String modulo = params.get("modulo");
+            String estatus = params.get("estatus");
+            String cdramo = params.get("cdramo");
             String cdtipsit = params.get("cdtipsit");
             String cdsisrol = params.get("cdsisrol");
-            String auxkey   = params.get("auxkey");            
+            String auxkey = params.get("auxkey");
             Utils.validate(pantalla, "No se recibio la pantalla");
             Utils.validate(seccion, "No se recibio la seccion");
             Utils.validate(secciones, "No se recibieron datos");
-            componentesManager.movimientoComponentes(pantalla, seccion, modulo, estatus, cdramo, cdtipsit, cdsisrol, auxkey, secciones);
-        }
-        catch(Exception ex){
+            componentesManager.movimientoComponentes(pantalla, seccion, modulo, estatus, cdramo, cdtipsit, cdsisrol,
+                    auxkey, secciones);
+        } catch (Exception ex) {
             success = false;
             message = Utils.manejaExcepcion(ex);
         }
-        logger.debug(Utils.log(
-                "\n################################"
-               ,"\n###### movimientoComponentes ######"
-               ));
+        logger.debug(Utils.log("\n################################", "\n###### movimientoComponentes ######"));
         return SUCCESS;
+    }
+
+    private Object getScreenSesion(String x, UsuarioVO usuario) {
+        String y = SIN_SESION;
+        if (null != usuario) {
+            if(!usuario.getRolActivo().isActivo()){
+                y = SIN_ROL;
+            }else{
+                y = OK;
+            }
+        }
+        Map<String, Map<String, Object>> matriz = setMatriz();
+        return matriz.get(x).get(y);
     }
 
     public List<Map<String, String>> getSecciones() {
@@ -157,5 +175,25 @@ public class ComponentesAction  extends PrincipalCoreAction{
 
     public void setMessage(String respuesta) {
         this.message = respuesta;
+    }
+
+    private Map<String, Map<String, Object>> setMatriz() {
+        Map<String, Map<String, Object>> matriz = new HashMap<String, Map<String, Object>>();
+        Map<String, Object> y = new HashMap<String, Object>();
+        y.put(SIN_SESION, true);
+        y.put(SIN_ROL, ROL_TREE);
+        y.put(OK, MESA_CONTROL);
+        matriz.put("login", y);
+        y = new HashMap<String, Object>();
+        y.put(SIN_SESION, LOGIN);
+        y.put(SIN_ROL, true);
+        y.put(OK, MESA_CONTROL);
+        matriz.put("roltree", y);
+        y = new HashMap<String, Object>();
+        y.put(SIN_SESION, LOGIN);
+        y.put(SIN_ROL, ROL_TREE);
+        y.put(OK, null);
+        matriz.put("otro", y);
+        return matriz;
     }
 }

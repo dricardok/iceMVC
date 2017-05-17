@@ -1,4 +1,4 @@
-package com.biosnettcs.core.controller;
+package com.biosnettcs.portal.controller;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -11,15 +11,12 @@ import com.opensymphony.xwork2.ActionSupport;
 
 
 public abstract class PrincipalCoreAction extends ActionSupport implements SessionAware {
-
-    // RBS: Prueba de cambio de encoding: á Á é É i Í ó Ó u Ú
     
 	private static final long serialVersionUID = -7975229967003917194L;
 
 	protected final transient Logger logger = Logger.getLogger(PrincipalCoreAction.class);
 	
 	protected Map<String,Object> session;
-	
 	
 	/**
 	 * Convierte el valor de una propiedad a formato JSON 
