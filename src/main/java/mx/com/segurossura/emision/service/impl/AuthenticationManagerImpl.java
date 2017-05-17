@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Utils;
@@ -26,6 +27,15 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 	@Autowired
 	private UsuarioDAO usuarioDAO ;
 	
+	@Value("${DATABASE.URL}")
+	private  String urlDataBase;
+	@Value("${DATABASE.DRIVER}")
+	private  String driverDataBase;
+	@Value("${rmi.service.authentication.url}")
+	private  String urlAuth;
+	@Value("${login.auth.ldap.activa}")
+	private  boolean requierePass;
+	
 	@Override
 	public UsuarioVO login(String user,String password) throws Exception{
 		
@@ -41,8 +51,10 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 		try{
 			
 			paso="Validando usuario Autenticación Sura";
-			boolean usuarioValido = DelegSignOn.isValid(user, password);
-			
+			boolean usuarioValido=true;
+			if(requierePass)
+				 usuarioValido = DelegSignOn.isValid(user, password,urlDataBase,driverDataBase,urlAuth);
+			logger.debug("@@@@ Requiere Pass:"+requierePass);
 			paso="Creando  usuario";
 			if(usuarioValido){
 				usuario= usuarioDAO.obtieneRolesCliente(user);
