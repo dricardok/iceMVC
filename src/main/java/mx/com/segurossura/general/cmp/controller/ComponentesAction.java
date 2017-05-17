@@ -133,9 +133,9 @@ public class ComponentesAction extends PrincipalCoreAction {
         if (null != usuario) {
             y = OK;
             if(null != usuario.getRolActivo()){
-                if(!usuario.getRolActivo().isActivo()){
-                    y = SIN_ROL;
-                }
+//                if(!usuario.getRolActivo().isActivo()){
+                y = SIN_ROL;
+//                }
             }
         }
         Map<String, Map<String, Object>> matriz = setMatriz();
