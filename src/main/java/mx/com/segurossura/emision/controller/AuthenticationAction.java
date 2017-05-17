@@ -1,13 +1,11 @@
 package mx.com.segurossura.emision.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -22,9 +20,7 @@ import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 import com.biosnettcs.portal.model.RolVO;
 import com.biosnettcs.portal.model.UsuarioVO;
-import com.opensymphony.xwork2.ActionContext;
 
-import mx.com.segurossura.authentication.DelegSignOn;
 import mx.com.segurossura.emision.service.AuthenticationManager;
 
 
@@ -42,7 +38,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	
 	private Map<String,String> params;
 	private boolean            success;
-	private String             respuesta;
+	private String             message;
 	private List<RolVO>		   roles;
 	private UsuarioVO		   user;
 	
@@ -52,17 +48,16 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	@Action(
 	        value = "login", 
 	        results = { 
-	            @Result(name = "input", location = "/jsp-script/servicios/input.jsp"),
 	            @Result(name = "success", type = "json") 
 	        }
 	    )
 	public String login(){
 		logger.debug(StringUtils.join(
-				 "\n###########################################"
+				 "\n###################"
 				,"\n###### login ######"
 				));
 		
-		String result = ERROR;
+		String result = SUCCESS;
 		
 		try
 		{
@@ -78,19 +73,20 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			if(usuario==null){
 				params.put("usuarioValido", "N");
 				session.clear();
-				respuesta="Usted no posee un rol asociado, por favor contacte al administrador";
+				throw new ApplicationException("Usted no posee un rol asociado, por favor contacte al administrador");
 				
 			}else{
 				session.put("USUARIO", usuario);
 			}
-			
+			logger.debug(StringUtils.join("#### usuario logeado=",usuario));
+			success=true;
 			
 			result = SUCCESS;
 		}
 		catch(Exception ex)
 		{
 			success=false;
-			respuesta = Utils.manejaExcepcion(ex);
+			message = Utils.manejaExcepcion(ex);
 		}
 		
 		logger.debug(StringUtils.join(
@@ -104,17 +100,16 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	@Action(
 	        value = "roles", 
 	        results = { 
-	            @Result(name = "input", location = "/jsp-script/servicios/input.jsp"),
 	            @Result(name = "success", type = "json") 
 	        }
 	    )
 	public String roles(){
 		logger.debug(StringUtils.join(
-				 "\n###########################################"
+				 "\n###################"
 				,"\n###### roles ######"
 				));
 		
-		String result = ERROR;
+		String result = SUCCESS;
 		
 		try
 		{
@@ -129,17 +124,19 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			
 			roles= usuario.getRoles();
 			
+			logger.debug(StringUtils.join("#### roles=",roles));
 			
+			success=true;
 			result = SUCCESS;
 		}
 		catch(Exception ex)
 		{
 			success=false;
-			respuesta = Utils.manejaExcepcion(ex);
+			message = Utils.manejaExcepcion(ex);
 		}
 		
 		logger.debug(StringUtils.join(
-				 "\n###### login ######"
+				 "\n###### roles ######"
 				,"\n###################"
 				));
 		return result;
@@ -149,7 +146,6 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	@Action(
 	        value = "selectRol", 
 	        results = { 
-	            @Result(name = "input", location = "/jsp-script/servicios/input.jsp"),
 	            @Result(name = "success", type = "json") 
 	        }
 	    )
@@ -159,7 +155,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 				,"\n###### selectRol ######"
 				));
 		
-		String result = ERROR;
+		String result = SUCCESS;
 		
 		try
 		{
@@ -175,39 +171,35 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			}
 			
 			// Java 8
-			//RolVO rol= usuario.getRoles().stream().filter((r)->r.getClave().equals(cdsisrol)).findFirst().get();
+			//RolVO rol= usuario.getRoles().stream().filter((r)->r.getClave().cdsisrol.equals(r.getClave()).findFirst().get();
 			
 			RolVO rol=(RolVO) CollectionUtils.find(usuario.getRoles(), new Predicate() {
-				
 				@Override
 				public boolean evaluate(Object object) {
-					// TODO Auto-generated method stub
 					RolVO r=(RolVO) object;
-					
 					return cdsisrol.equals(r.getClave());
 				}
 			});
 			
 			if(rol==null ){
 				throw new ApplicationException(StringUtils.join("No Tienes el rol:",cdsisrol," asociado"));
-				
 			}
-			logger.debug("->"+rol);
+			logger.debug(StringUtils.join("#### Rol seleccionado=",rol));
 			usuario.setRolActivo(rol);
 			
 			
-			
+			success=true;
 			result = SUCCESS;
 		}
 		catch(Exception ex)
 		{
 			success=false;
-			respuesta = Utils.manejaExcepcion(ex);
+			message = Utils.manejaExcepcion(ex);
 		}
 		
 		logger.debug(StringUtils.join(
-				 "\n###### login ######"
-				,"\n###################"
+				 "\n###### selectRoles ######"
+				,"\n#########################"
 				));
 		return result;
 	}
@@ -216,13 +208,12 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	@Action(
 	        value = "datosSesion", 
 	        results = { 
-	            @Result(name = "input", location = "/jsp-script/servicios/input.jsp"),
 	            @Result(name = "success", type = "json") 
 	        }
 	    )
 	public String datosSesion(){
 		logger.debug(StringUtils.join(
-				 "\n###################"
+				 "\n#########################"
 				,"\n###### datosSesion ######"
 				));
 		
@@ -242,18 +233,18 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			user=usuario;
 			
 			
-			
+			success=true;
 			result = SUCCESS;
 		}
 		catch(Exception ex)
 		{
 			success=false;
-			respuesta = Utils.manejaExcepcion(ex);
+			message = Utils.manejaExcepcion(ex);
 		}
 		
 		logger.debug(StringUtils.join(
 				 "\n###### datosSesion ######"
-				,"\n###################"
+				,"\n#########################"
 				));
 		return result;
 	}
@@ -268,12 +259,12 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	public String logout() throws Exception {
 		try {
 			
-			//session.clear();
 			((SessionMap) session).invalidate();
+			success=true;
 			return SUCCESS;
 		} catch (Exception ex) {
 			logger.error("Error al terminar la sesion", ex);
-			respuesta = "Error al terminar la sesion";
+			message = "Error al terminar la sesion";
 			return SUCCESS;
 		}
 	}
@@ -284,23 +275,15 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	public UsuarioVO getUser() {
 		return user;
 	}
-
-
 	public void setUser(UsuarioVO user) {
 		this.user = user;
 	}
-
-
 	public List<RolVO> getRoles() {
 		return roles;
 	}
-
-
 	public void setRoles(List<RolVO> roles) {
 		this.roles = roles;
 	}
-
-
 	public Map<String, String> getParams() {
 		return params;
 	}
@@ -314,10 +297,10 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		this.success = success;
 	}
 	public String getRespuesta() {
-		return respuesta;
+		return message;
 	}
 	public void setRespuesta(String respuesta) {
-		this.respuesta = respuesta;
+		this.message = respuesta;
 	}
 	
 	
