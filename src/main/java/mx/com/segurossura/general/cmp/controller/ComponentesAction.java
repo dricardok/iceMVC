@@ -54,7 +54,7 @@ public class ComponentesAction extends PrincipalCoreAction {
     public String recuperarComponentes() throws Exception {
         logger.debug(Utils.log("\n################################", "\n###### recuperarComponentes ######",
                 "\n###### secciones=", secciones));
-        String pant = null;
+        String pant = "otro";
         UsuarioVO usuario = null;
         try {
             session = ActionContext.getContext().getSession();
@@ -65,7 +65,7 @@ public class ComponentesAction extends PrincipalCoreAction {
 //            usuario.setCdusuario("DHPERNIA");
 //            RolVO rol = new RolVO();
 //            rol.setClave("SUSCRIPTOR");
-//            rol.setActivo(true);
+//            rol.setActivo(false);
 //            usuario.setRolActivo(rol);
 //            Utils.validate(secciones, "No se recibieron datos");
             if(null != secciones){
@@ -81,7 +81,7 @@ public class ComponentesAction extends PrincipalCoreAction {
                         pant = "otro";
                     }
                 }
-            }
+            }            
             Object o = getScreenSesion(pant, usuario);
             if (null == o) {
                 componentes = componentesManager.obtenerComponentes(secciones);
