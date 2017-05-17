@@ -16,10 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.biosnettcs.core.controller.PrincipalCoreAction;
 import mx.com.segurossura.general.cmp.service.ComponentesManager;
 
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.portal.controller.PrincipalCoreAction;
 
 @Controller
 @Scope

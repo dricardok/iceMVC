@@ -2,9 +2,11 @@ package mx.com.segurossura.emision.service;
 
 import java.util.Map;
 
+import com.biosnettcs.portal.model.UsuarioVO;
+
 public interface AuthenticationManager {
 
-	boolean login(String usr, String password, Map<String, String> respuesta) throws Exception;
+	UsuarioVO login(String user, String password) throws Exception;
 
 	
 }
