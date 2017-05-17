@@ -224,12 +224,6 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			
 			UsuarioVO usuario = (UsuarioVO) session.get("USUARIO");
 			
-			
-            if(usuario==null ){
-				throw new ApplicationException("No Hay datos");
-				
-			}
-			
 			user=usuario;
 			
 			
