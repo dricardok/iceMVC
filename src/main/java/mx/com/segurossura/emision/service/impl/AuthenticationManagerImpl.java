@@ -98,21 +98,26 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 		String result="";
 		try{
 			
+			
 			paso="Leyendo menu";
 			RestTemplate rt=new RestTemplate();
 			//usuario.setCdusuari("OPS$PRUEBCAL");
-			String url=Utils.join(urlMenu,usuario.getCdusuari(),"/",idApp);
-			result=rt.getForObject(url, String.class);
-			
-			if(menuJsonVacio.equals(result)){
-				if(usuario.getRolActivo()!=null){
-					url=Utils.join(urlMenu,usuario.getRolActivo().getCdsisrol(),"/",idApp);
-					result=rt.getForObject(url, String.class);
-					if(menuJsonVacio.equals(result)){
+			if(usuario==null){
+				result="{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in&tipo=C\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"\",\"nodes\": []}]}";
+			}else{
+				String url=Utils.join(urlMenu,usuario.getCdusuari(),"/",idApp);
+				result=rt.getForObject(url, String.class);
+				
+				if(menuJsonVacio.equals(result)){
+					if(usuario.getRolActivo()!=null){
+						url=Utils.join(urlMenu,usuario.getRolActivo().getCdsisrol(),"/",idApp);
+						result=rt.getForObject(url, String.class);
+						if(menuJsonVacio.equals(result)){
+							result="{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in&tipo=C\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"\",\"nodes\": []}]}";
+						}
+					}else{
 						result="{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in&tipo=C\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"\",\"nodes\": []}]}";
 					}
-				}else{
-					result="{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in&tipo=C\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"\",\"nodes\": []}]}";
 				}
 			}
 			logger.debug("@@@@ result:"+result);
