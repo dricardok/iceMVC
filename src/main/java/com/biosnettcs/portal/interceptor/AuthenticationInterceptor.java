@@ -46,7 +46,7 @@ public class AuthenticationInterceptor implements Interceptor {
 			
             String pid = ManagementFactory.getRuntimeMXBean().getName();
             logger.info("Usuario en sesion: {} - {} \nRol Activo: {} - {}\npid: {}", 
-                    user.getCdusuari(), user.getDsusuario(), 
+                    user.getCdusuari(), user.getDsusuari(), 
                     user.getRolActivo().getCdsisrol(), user.getRolActivo().getDssisrol(), pid);
 			
 			MDC.put("USERID", new StringBuilder(user.getCdusuari()).append(" ").append(System.currentTimeMillis()).toString());

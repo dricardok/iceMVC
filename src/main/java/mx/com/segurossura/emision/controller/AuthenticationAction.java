@@ -86,7 +86,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		catch(Exception ex)
 		{
 			success=false;
-			message = Utils.manejaExcepcion(ex);
+			setMessage(Utils.manejaExcepcion(ex));
 		}
 		
 		logger.debug(StringUtils.join(
@@ -132,7 +132,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		catch(Exception ex)
 		{
 			success=false;
-			message = Utils.manejaExcepcion(ex);
+			setMessage(Utils.manejaExcepcion(ex));
 		}
 		
 		logger.debug(StringUtils.join(
@@ -194,7 +194,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		catch(Exception ex)
 		{
 			success=false;
-			message = Utils.manejaExcepcion(ex);
+			setMessage(Utils.manejaExcepcion(ex));
 		}
 		
 		logger.debug(StringUtils.join(
@@ -233,7 +233,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		catch(Exception ex)
 		{
 			success=false;
-			message = Utils.manejaExcepcion(ex);
+			setMessage(Utils.manejaExcepcion(ex));
 		}
 		
 		logger.debug(StringUtils.join(
@@ -258,7 +258,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			return SUCCESS;
 		} catch (Exception ex) {
 			logger.error("Error al terminar la sesion", ex);
-			message = "Error al terminar la sesion";
+			setMessage("Error al terminar la sesion");
 			return SUCCESS;
 		}
 	}
@@ -296,7 +296,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		catch(Exception ex)
 		{
 			success=false;
-			message = Utils.manejaExcepcion(ex);
+			setMessage(Utils.manejaExcepcion(ex));
 		}
 		
 		logger.debug(StringUtils.join(
@@ -333,12 +333,17 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-	public String getRespuesta() {
+
+
+	public String getMessage() {
 		return message;
 	}
-	public void setRespuesta(String respuesta) {
-		this.message = respuesta;
+
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
+	
 	
 	
 	
