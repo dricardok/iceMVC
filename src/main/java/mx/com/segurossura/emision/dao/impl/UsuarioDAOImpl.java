@@ -65,7 +65,7 @@ public class UsuarioDAOImpl extends AbstractManagerDAO implements UsuarioDAO{
 				if(rowNum==0){
 					usuario.setCdusuari(rs.getString("CDUSUARIO"));
 					usuario.setCdperson(rs.getString("CDPERSON"));
-					usuario.setDsusuario(rs.getString("DSUSUARI"));
+					usuario.setDsusuari(rs.getString("DSUSUARI"));
 					usuario.setRoles(new ArrayList());
 					
 				}
