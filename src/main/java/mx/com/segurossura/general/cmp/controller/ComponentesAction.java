@@ -61,8 +61,8 @@ public class ComponentesAction extends PrincipalCoreAction {
             if(session != null){
                 usuario = (UsuarioVO) session.get("USUARIO");
             }
-            usuario = new UsuarioVO();
-            usuario.setCdusuario("DHPERNIA");
+//            usuario = new UsuarioVO();
+//            usuario.setCdusuario("DHPERNIA");
 //            RolVO rol = new RolVO();
 //            rol.setClave("SUSCRIPTOR");
 //            rol.setActivo(false);
