@@ -70,7 +70,7 @@ public class ComponentesAction extends PrincipalCoreAction {
 //            Utils.validate(secciones, "No se recibieron datos");
             if(null != secciones){
                 if(secciones.size() > 0){
-                    pant = secciones.get(0).get("pantalla");
+                    pant = secciones.get(0).get("pantalla").toLowerCase();
                     for (Map<String, String> map : secciones) {
                         String pantalla = map.get("pantalla");
                         String seccion = map.get("seccion");
@@ -131,10 +131,10 @@ public class ComponentesAction extends PrincipalCoreAction {
     private Object getScreenSesion(String x, UsuarioVO usuario) {
         String y = SIN_SESION;
         if (null != usuario) {
-            y = OK;
-            if(null != usuario.getRolActivo()){
-                if(!usuario.getRolActivo().isActivo()){
-                    y = SIN_ROL;
+            y = SIN_ROL;            
+            if(null != usuario.getRolActivo()){                
+                if(null != usuario.getRolActivo().getClave()){
+                    y = OK;
                 }
             }
         }
