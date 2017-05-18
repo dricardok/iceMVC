@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
-import com.biosnettcs.portal.model.ParentNode;
 import com.biosnettcs.portal.model.UsuarioVO;
 
 
@@ -37,7 +36,12 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 	private  String urlAuth;
 	@Value("${login.auth.ldap.activa}")
 	private  boolean requierePass;
+	@Value("${servicio.menu.url}")
+	private String urlMenu;
+	@Value("${servicio.menu.idApp}")
+	private String idApp;
 	
+	private static final String menuJsonVacio="{\"lstChildNodes\":[{\"atrWork\":\"T\",\"atrMenu\":\"No disponible\",\"atrFinish\":true,\"atrCdfunci\":null,\"atrTarget\":\"\",\"nodes\":[]}]}";
 	@Override
 	public UsuarioVO login(String user,String password) throws Exception{
 		
@@ -81,7 +85,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 	}
 	
 	@Override
-	public UsuarioVO menu(UsuarioVO usuario) throws Exception{
+	public String menu(UsuarioVO usuario) throws Exception{
 		
 		
 		logger.debug(Utils.join(
@@ -91,14 +95,27 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 				,"\n@@@@@@ "
 				));
 		String paso="";
-		
+		String result="";
 		try{
 			
 			paso="Leyendo menu";
 			RestTemplate rt=new RestTemplate();
-			ParentNode result=rt.getForObject("http://10.142.67.39:8080/userprofileServices/API/profile/menu/OPS$PRUEBCAL/3", ParentNode.class);
+			//usuario.setCdusuari("OPS$PRUEBCAL");
+			String url=Utils.join(urlMenu,usuario.getCdusuari(),"/",idApp);
+			result=rt.getForObject(url, String.class);
 			
-			logger.debug("----->"+result);
+			if(menuJsonVacio.equals(result)){
+				if(usuario.getRolActivo()!=null){
+					url=Utils.join(urlMenu,usuario.getRolActivo().getCdsisrol(),"/",idApp);
+					result=rt.getForObject(url, String.class);
+					if(menuJsonVacio.equals(result)){
+						result="{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in&tipo=C\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"\",\"nodes\": []}]}";
+					}
+				}else{
+					result="{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in&tipo=C\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"\",\"nodes\": []}]}";
+				}
+			}
+			logger.debug("@@@@ result:"+result);
 			
 			
 
@@ -112,6 +129,6 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 				 "\n@@@@@@ menu                         @@@@@@"
 				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				));
-		return usuario;
+		return result;
 	}
 }

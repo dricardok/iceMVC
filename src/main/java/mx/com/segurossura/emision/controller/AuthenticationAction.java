@@ -72,7 +72,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			logger.debug("-->"+usuario);
 			if(usuario==null){
 				params.put("usuarioValido", "N");
-				session.clear();
+				((SessionMap) session).invalidate();
 				throw new ApplicationException("Usted no posee un rol asociado, por favor contacte al administrador");
 				
 			}else{
@@ -287,7 +287,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			 
             
             
-			authenticationManager.menu((UsuarioVO) session.get("USUARIO"));
+			message=authenticationManager.menu((UsuarioVO) session.get("USUARIO"));
 			
 			success=true;
 			
