@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.struts2.json.JSONPopulator;
+import org.apache.struts2.json.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
+import com.biosnettcs.portal.model.ParentNode;
 import com.biosnettcs.portal.model.UsuarioVO;
 
 
@@ -98,25 +101,32 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 		String result="";
 		try{
 			
-			
+			String login = "{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"C\",\"nodes\": []}]}";
 			paso="Leyendo menu";
 			RestTemplate rt=new RestTemplate();
-			//usuario.setCdusuari("OPS$PRUEBCAL");
 			if(usuario==null){
-				result="{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in&tipo=C\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"\",\"nodes\": []}]}";
+				result=login;
 			}else{
 				String url=Utils.join(urlMenu,usuario.getCdusuari(),"/",idApp);
+				
 				result=rt.getForObject(url, String.class);
+				
+				HashMap<String,String> map = (HashMap) JSONUtil.deserialize(result);
+				
+				JSONPopulator populator = new JSONPopulator();
+				ParentNode vo = new ParentNode();
+				populator.populateObject(vo, map);
+				logger.debug("--->"+vo.getLstChildNodes().get(0).getAtrMenu());
 				
 				if(menuJsonVacio.equals(result)){
 					if(usuario.getRolActivo()!=null){
 						url=Utils.join(urlMenu,usuario.getRolActivo().getCdsisrol(),"/",idApp);
 						result=rt.getForObject(url, String.class);
 						if(menuJsonVacio.equals(result)){
-							result="{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in&tipo=C\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"\",\"nodes\": []}]}";
+							result=login;
 						}
 					}else{
-						result="{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in&tipo=C\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"\",\"nodes\": []}]}";
+						result=login;
 					}
 				}
 			}
