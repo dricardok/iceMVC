@@ -9,9 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
+import com.biosnettcs.portal.model.ParentNode;
 import com.biosnettcs.portal.model.UsuarioVO;
 
 
@@ -73,6 +75,41 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 		logger.debug(Utils.join(
 				"\n@@@@@@ usuario=",usuario
 				, "\n@@@@@@ login                         @@@@@@"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		return usuario;
+	}
+	
+	@Override
+	public UsuarioVO menu(UsuarioVO usuario) throws Exception{
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ menu                         @@@@@@"
+				,"\n@@@@@@ usuario="  , usuario
+				,"\n@@@@@@ "
+				));
+		String paso="";
+		
+		try{
+			
+			paso="Leyendo menu";
+			RestTemplate rt=new RestTemplate();
+			ParentNode result=rt.getForObject("http://10.142.67.39:8080/userprofileServices/API/profile/menu/OPS$PRUEBCAL/3", ParentNode.class);
+			
+			logger.debug("----->"+result);
+			
+			
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ menu                         @@@@@@"
 				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				));
 		return usuario;

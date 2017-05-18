@@ -14,29 +14,29 @@ public class RolVO implements Serializable {
 
     private static final long serialVersionUID = 5769939690034163728L;
 
-    private String clave;
+    private String cdsisrol;
 	
-	private String descripcion;
+	private String dssisrol;
 	
 	private boolean activo;
 	
 	
 	// Getters & Setters:
 
-    public String getClave() {
-        return clave;
+    public String getCdsisrol() {
+        return cdsisrol;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setCdsisrol(String clave) {
+        this.cdsisrol = clave;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDssisrol() {
+        return dssisrol;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDssisrol(String descripcion) {
+        this.dssisrol = descripcion;
     }
 
     public boolean isActivo() {

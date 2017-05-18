@@ -20,7 +20,7 @@ public class UsuarioVO implements Serializable {
     /**
      * Codigo del usuario
      */
-    private String cdusuario;
+    private String cdusuari;
     
     /**
      * Descripcion del usuario
@@ -62,12 +62,12 @@ public class UsuarioVO implements Serializable {
         this.logger = logger;
     }
 
-    public String getCdusuario() {
-        return cdusuario;
+    public String getCdusuari() {
+        return cdusuari;
     }
 
-    public void setCdusuario(String cdusuario) {
-        this.cdusuario = cdusuario;
+    public void setCdusuari(String cdusuario) {
+        this.cdusuari = cdusuario;
     }
 
     public String getDsusuario() {

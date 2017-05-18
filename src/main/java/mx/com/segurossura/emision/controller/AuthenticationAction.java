@@ -177,7 +177,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 				@Override
 				public boolean evaluate(Object object) {
 					RolVO r=(RolVO) object;
-					return cdsisrol.equals(r.getClave());
+					return cdsisrol.equals(r.getCdsisrol());
 				}
 			});
 			
@@ -261,6 +261,49 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			message = "Error al terminar la sesion";
 			return SUCCESS;
 		}
+	}
+	
+	
+	@Action(		
+	        value = "menu", 
+	        results = { 
+	            @Result(name = "success", type = "json") 
+	        }
+	    )	
+	public String menu(){
+		logger.debug(StringUtils.join(
+				 "\n###################"
+				,"\n###### menu ######"
+				));
+		
+		String result = SUCCESS;
+		
+		try
+		{
+			
+
+			
+			
+			 
+            
+            
+			authenticationManager.menu((UsuarioVO) session.get("USUARIO"));
+			
+			success=true;
+			
+			result = SUCCESS;
+		}
+		catch(Exception ex)
+		{
+			success=false;
+			message = Utils.manejaExcepcion(ex);
+		}
+		
+		logger.debug(StringUtils.join(
+				 "\n###### menu  ######"
+				,"\n###################"
+				));
+		return result;
 	}
 	
 	
