@@ -42,14 +42,14 @@ public class AuthenticationInterceptor implements Interceptor {
 		
 		UsuarioVO user = (UsuarioVO) session.get(Constantes.USER);
 		// Si el usuario completo existe en sesion:
-        if (user != null && user.getRolActivo() != null && StringUtils.isNotBlank(user.getRolActivo().getClave())) {
+        if (user != null && user.getRolActivo() != null && StringUtils.isNotBlank(user.getRolActivo().getCdsisrol())) {
 			
             String pid = ManagementFactory.getRuntimeMXBean().getName();
             logger.info("Usuario en sesion: {} - {} \nRol Activo: {} - {}\npid: {}", 
-                    user.getCdusuario(), user.getDsusuario(), 
-                    user.getRolActivo().getClave(), user.getRolActivo().getDescripcion(), pid);
+                    user.getCdusuari(), user.getDsusuario(), 
+                    user.getRolActivo().getCdsisrol(), user.getRolActivo().getDssisrol(), pid);
 			
-			MDC.put("USERID", new StringBuilder(user.getCdusuario()).append(" ").append(System.currentTimeMillis()).toString());
+			MDC.put("USERID", new StringBuilder(user.getCdusuari()).append(" ").append(System.currentTimeMillis()).toString());
 			
 			nextAction = actionInvocation.invoke();
 			

@@ -8,5 +8,7 @@ public interface AuthenticationManager {
 
 	UsuarioVO login(String user, String password) throws Exception;
 
+	UsuarioVO menu(UsuarioVO usuario) throws Exception;
+
 	
 }
