@@ -1,6 +1,5 @@
 package mx.com.segurossura.general.cmp.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,13 +14,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import mx.com.segurossura.general.cmp.service.ComponentesManager;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
-import com.biosnettcs.portal.model.RolVO;
 import com.biosnettcs.portal.model.UsuarioVO;
 import com.opensymphony.xwork2.ActionContext;
+
+import mx.com.segurossura.general.cmp.service.ComponentesManager;
 
 @Controller
 @Scope
@@ -133,7 +132,7 @@ public class ComponentesAction extends PrincipalCoreAction {
         if (null != usuario) {
             y = SIN_ROL;            
             if(null != usuario.getRolActivo()){                
-                if(null != usuario.getRolActivo().getClave()){
+                if(null != usuario.getRolActivo().getCdsisrol()){
                     y = OK;
                 }
             }
