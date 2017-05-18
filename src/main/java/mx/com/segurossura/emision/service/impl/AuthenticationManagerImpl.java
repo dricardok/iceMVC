@@ -111,12 +111,12 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 				
 				result=rt.getForObject(url, String.class);
 				
-				HashMap<String,String> map = (HashMap) JSONUtil.deserialize(result);
-				
-				JSONPopulator populator = new JSONPopulator();
-				ParentNode vo = new ParentNode();
-				populator.populateObject(vo, map);
-				logger.debug("--->"+vo.getLstChildNodes().get(0).getAtrMenu());
+//				HashMap<String,String> map = (HashMap) JSONUtil.deserialize(result);
+//				
+//				JSONPopulator populator = new JSONPopulator();
+////				ParentNode vo = new ParentNode();
+////				populator.populateObject(vo, map);
+////				logger.debug("--->"+vo.getLstChildNodes().get(0).getAtrMenu());
 				
 				if(menuJsonVacio.equals(result)){
 					if(usuario.getRolActivo()!=null){
