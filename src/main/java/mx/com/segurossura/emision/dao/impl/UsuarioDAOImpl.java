@@ -63,16 +63,16 @@ public class UsuarioDAOImpl extends AbstractManagerDAO implements UsuarioDAO{
 			while(rs.next()){  
 				
 				if(rowNum==0){
-					usuario.setCdusuario(rs.getString("CDUSUARIO"));
+					usuario.setCdusuari(rs.getString("CDUSUARIO"));
 					usuario.setCdperson(rs.getString("CDPERSON"));
-					usuario.setDsusuario(rs.getString("DSUSUARI"));
+					usuario.setDsusuari(rs.getString("DSUSUARI"));
 					usuario.setRoles(new ArrayList());
 					
 				}
 				RolVO rol=new RolVO();
 				
-				rol.setClave(rs.getString("CDSISROL"));
-				rol.setDescripcion(rs.getString("DSSISROL"));
+				rol.setCdsisrol(rs.getString("CDSISROL"));
+				rol.setDssisrol(rs.getString("DSSISROL"));
 				usuario.getRoles().add(rol);
 				rowNum++;
 			}  

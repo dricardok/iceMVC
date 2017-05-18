@@ -72,7 +72,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			logger.debug("-->"+usuario);
 			if(usuario==null){
 				params.put("usuarioValido", "N");
-				session.clear();
+				((SessionMap) session).invalidate();
 				throw new ApplicationException("Usted no posee un rol asociado, por favor contacte al administrador");
 				
 			}else{
@@ -86,7 +86,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		catch(Exception ex)
 		{
 			success=false;
-			message = Utils.manejaExcepcion(ex);
+			setMessage(Utils.manejaExcepcion(ex));
 		}
 		
 		logger.debug(StringUtils.join(
@@ -132,7 +132,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		catch(Exception ex)
 		{
 			success=false;
-			message = Utils.manejaExcepcion(ex);
+			setMessage(Utils.manejaExcepcion(ex));
 		}
 		
 		logger.debug(StringUtils.join(
@@ -177,7 +177,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 				@Override
 				public boolean evaluate(Object object) {
 					RolVO r=(RolVO) object;
-					return cdsisrol.equals(r.getClave());
+					return cdsisrol.equals(r.getCdsisrol());
 				}
 			});
 			
@@ -194,7 +194,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		catch(Exception ex)
 		{
 			success=false;
-			message = Utils.manejaExcepcion(ex);
+			setMessage(Utils.manejaExcepcion(ex));
 		}
 		
 		logger.debug(StringUtils.join(
@@ -233,7 +233,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		catch(Exception ex)
 		{
 			success=false;
-			message = Utils.manejaExcepcion(ex);
+			setMessage(Utils.manejaExcepcion(ex));
 		}
 		
 		logger.debug(StringUtils.join(
@@ -258,9 +258,52 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			return SUCCESS;
 		} catch (Exception ex) {
 			logger.error("Error al terminar la sesion", ex);
-			message = "Error al terminar la sesion";
+			setMessage("Error al terminar la sesion");
 			return SUCCESS;
 		}
+	}
+	
+	
+	@Action(		
+	        value = "menu", 
+	        results = { 
+	            @Result(name = "success", type = "json") 
+	        }
+	    )	
+	public String menu(){
+		logger.debug(StringUtils.join(
+				 "\n###################"
+				,"\n###### menu ######"
+				));
+		
+		String result = SUCCESS;
+		
+		try
+		{
+			
+
+			
+			
+			 
+            
+            
+			message=authenticationManager.menu((UsuarioVO) session.get("USUARIO"));
+			
+			success=true;
+			
+			result = SUCCESS;
+		}
+		catch(Exception ex)
+		{
+			success=false;
+			setMessage(Utils.manejaExcepcion(ex));
+		}
+		
+		logger.debug(StringUtils.join(
+				 "\n###### menu  ######"
+				,"\n###################"
+				));
+		return result;
 	}
 	
 	
@@ -290,12 +333,17 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-	public String getRespuesta() {
+
+
+	public String getMessage() {
 		return message;
 	}
-	public void setRespuesta(String respuesta) {
-		this.message = respuesta;
+
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
+	
 	
 	
 	
