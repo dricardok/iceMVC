@@ -104,7 +104,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 			String login = "{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"C\",\"nodes\": []}]}";
 			paso="Leyendo menu";
 			RestTemplate rt=new RestTemplate();
-			if(usuario==null){
+			if(usuario==null ||  usuario.getRolActivo()==null){
 				result=login;
 			}else{
 				String url=Utils.join(urlMenu,usuario.getCdusuari(),"/",idApp);
@@ -119,13 +119,9 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 ////				logger.debug("--->"+vo.getLstChildNodes().get(0).getAtrMenu());
 				
 				if(menuJsonVacio.equals(result)){
-					if(usuario.getRolActivo()!=null){
-						url=Utils.join(urlMenu,usuario.getRolActivo().getCdsisrol(),"/",idApp);
-						result=rt.getForObject(url, String.class);
-						if(menuJsonVacio.equals(result)){
-							result=login;
-						}
-					}else{
+					url=Utils.join(urlMenu,usuario.getRolActivo().getCdsisrol(),"/",idApp);
+					result=rt.getForObject(url, String.class);
+					if(menuJsonVacio.equals(result)){
 						result=login;
 					}
 				}
