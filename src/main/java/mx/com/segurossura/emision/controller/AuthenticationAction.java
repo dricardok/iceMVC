@@ -68,7 +68,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
             Utils.validate(user, "No se recibio user");
             Utils.validate(password, "No se recibio password");
             
-			UsuarioVO usuario=authenticationManager.login(user, password);
+			UsuarioVO usuario=authenticationManager.validarUsuario(user, password);
 			logger.debug("-->"+usuario);
 			if(usuario==null){
 				params.put("usuarioValido", "N");
@@ -277,7 +277,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		try
 		{
 
-			message=authenticationManager.menu((UsuarioVO) session.get("USUARIO"));
+			message=authenticationManager.obtenerMenu((UsuarioVO) session.get("USUARIO"));
 			
 			success=true;
 			
