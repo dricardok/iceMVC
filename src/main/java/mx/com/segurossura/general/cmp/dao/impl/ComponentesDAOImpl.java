@@ -15,16 +15,18 @@ import org.springframework.data.jdbc.support.oracle.SqlArrayValue;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
+import org.springframework.stereotype.Repository;
 
-import com.biosnettcs.core.GenericMapper;
 import com.biosnettcs.core.Utils;
-import com.biosnettcs.core.dao.AbstractManagerDAO;
+import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
+import com.biosnettcs.core.dao.mapper.GenericMapper;
 import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.general.cmp.dao.ComponentesDAO;
 
-public class ComponentesDAOImpl extends AbstractManagerDAO implements ComponentesDAO {
+@Repository
+public class ComponentesDAOImpl extends HelperJdbcDao implements ComponentesDAO {
     private static Logger logger = LoggerFactory.getLogger(ComponentesDAOImpl.class);
 
     @Override

@@ -1,10 +1,10 @@
 package mx.com.segurossura.test.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -16,16 +16,18 @@ import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 
-import mx.com.segurossura.authentication.DelegSignOn;
 import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.test.dao.TestServiciosDAO;
+import mx.com.segurossura.test.model.AlumnoMateriaVO;
+import mx.com.segurossura.test.model.AlumnoVO;
+import mx.com.segurossura.test.service.TestServiciosManager;
 
 
 @Controller
 @Scope("prototype")
 @ParentPackage(value="default")
 @Namespace("/test")
-@InterceptorRef(value="secureStack")
+//@InterceptorRef(value="secureStack")
 public class TestServiciosAction extends PrincipalCoreAction {
 	
 	private static final long serialVersionUID = 7996363816495572103L;
@@ -38,6 +40,9 @@ public class TestServiciosAction extends PrincipalCoreAction {
 	
 	@Autowired
 	private TestServiciosDAO testServiciosDAO;
+	
+	@Autowired
+	private TestServiciosManager testServiciosManager; 
 	
 	@Autowired
 	private EmisionDAO emisionDAO;
@@ -70,12 +75,43 @@ public class TestServiciosAction extends PrincipalCoreAction {
     )
     public String testFunction() throws Exception {
         
-        logger.debug("Iniciando testFunction");
+        logger.debug("Iniciando testFunction, params={}", params);
 
-        String resultado = testServiciosDAO.ejecutaStoredFunction("Entrada");
+        String resultado = testServiciosDAO.ejecutaStoredFunction(params.get("entrada"));
         logger.debug("Prueba Stored Function, resultado: {}", resultado);
         
+        respuesta = resultado;
+        success = true;
         logger.debug("Finalizando testFunction");
+        
+        return SUCCESS;
+    }
+    
+    
+    @Action(
+        value = "testTransactional", 
+        results = { 
+            @Result(name = "success", type = "json") 
+        }
+    )
+    public String testTransactional() throws Exception {
+        
+        logger.debug("Inicio testTransactional...");
+        
+        AlumnoVO alumno = new AlumnoVO();
+        alumno.setNombre("Ricardo");
+        alumno.setPaterno("Bautista");
+        alumno.setMaterno("Silva");
+        alumno.setFechaNac(new Date());
+        
+        AlumnoMateriaVO alumnoMateria = new AlumnoMateriaVO();
+        alumnoMateria.setCdmateria(Long.parseLong(params.get("cdmateria")));
+        alumnoMateria.setFechaIni(new Date());
+        
+        testServiciosManager.guardarAlumnoMateria(alumno, alumnoMateria);
+        
+        success = true;
+        logger.debug("Fin testTransactional...");
         
         return SUCCESS;
     }
