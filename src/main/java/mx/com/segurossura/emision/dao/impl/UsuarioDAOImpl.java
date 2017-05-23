@@ -5,30 +5,26 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
+import org.springframework.stereotype.Repository;
 
-import com.biosnettcs.core.dao.AbstractManagerDAO;
+import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
-import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.portal.model.RolVO;
 import com.biosnettcs.portal.model.UsuarioVO;
 
 import mx.com.segurossura.emision.dao.UsuarioDAO;
 
-
-
-public class UsuarioDAOImpl extends AbstractManagerDAO implements UsuarioDAO{
-
+@Repository
+public class UsuarioDAOImpl extends HelperJdbcDao implements UsuarioDAO {
 	
 	@Override
 	public UsuarioVO obtieneRolesCliente(String user) throws Exception {

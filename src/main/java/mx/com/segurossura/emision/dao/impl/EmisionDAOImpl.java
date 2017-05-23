@@ -12,61 +12,62 @@ import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
+import org.springframework.stereotype.Repository;
 
-import com.biosnettcs.core.dao.AbstractManagerDAO;
+import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
+import com.biosnettcs.core.dao.mapper.GenericMapper;
 import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.emision.dao.EmisionDAO;
 
-import com.biosnettcs.core.GenericMapper;
-
-
-public class EmisionDAOImpl extends AbstractManagerDAO implements EmisionDAO {
+@Repository
+public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 
 	@Override
-	public void movimientoMpolizasSP(//String Gv_Identificador_Error			,
-									 String Gn_Cdunieco 		  			,
-									 String Gn_Cdramo    					,
-									 String Gv_Estado    					,
-									 String Gn_Nmpoliza     				,
-									 String Gn_NmsuplemBloque				,
-									 String Gn_NmsuplemSesion				,
-									 String Gv_Status     					,
-									 String Gv_Swestado   					,
-									 String Gn_Nmsolici   					,
-									 Date   Gd_Feautori   					,
-									 String Gn_Cdmotanu   					,
-									 Date   Gd_Feanulac   					,
-									 String Gv_Swautori   					,
-									 String Gv_Cdmoneda   					,
-									 Date   Gd_Feinisus 					,
-									 Date   Gd_Fefinsus    					,
-									 String Gv_Ottempot   					,
-									 Date   Gd_Feefecto    					,
-									 String Gv_Hhefecto   					,
-									 Date   Gd_Feproren   					,
-									 Date   Gd_Fevencim  					,
-									 String Gn_Nmrenova  					,
-									 Date   Gd_Ferecibo  					,
-									 Date   Gd_Feultsin  					,
-									 String Gn_Nmnumsin  					,
-									 String Gv_Cdtipcoa  					,
-									 String Gv_Swtarifi  					,
-									 String Gv_Swabrido  					,
-									 Date   Gd_Feemisio  					,
-									 String Gn_Cdperpag  					,
-									 String Gn_Nmpoliex  					,
-									 String Gv_Nmcuadro  					,
-									 String Gn_Porredau  					,
-									 String Gv_Swconsol  					,
-									 String Gn_Nmpolcoi  					,
-									 String Gv_Adparben 					,
-									 String Gn_Nmcercoi  					,
-									 String Gn_Cdtipren  					,
-									// String Gv_Rowid  						,
-									 String Gv_Accion						
-									) throws Exception{
+	public void movimientoMpolizasSP(
+         //String Gv_Identificador_Error,
+		 String Gn_Cdunieco,
+		 String Gn_Cdramo,
+		 String Gv_Estado,
+		 String Gn_Nmpoliza,
+		 String Gn_NmsuplemBloque,
+		 String Gn_NmsuplemSesion,
+		 String Gv_Status,
+		 String Gv_Swestado,
+		 String Gn_Nmsolici,
+		 Date   Gd_Feautori,
+		 String Gn_Cdmotanu,
+		 Date   Gd_Feanulac,
+		 String Gv_Swautori,
+		 String Gv_Cdmoneda,
+		 Date   Gd_Feinisus,
+		 Date   Gd_Fefinsus,
+		 String Gv_Ottempot,
+		 Date   Gd_Feefecto,
+		 String Gv_Hhefecto,
+		 Date   Gd_Feproren,
+		 Date   Gd_Fevencim,
+		 String Gn_Nmrenova,
+		 Date   Gd_Ferecibo,
+		 Date   Gd_Feultsin,
+		 String Gn_Nmnumsin,
+		 String Gv_Cdtipcoa,
+		 String Gv_Swtarifi,
+		 String Gv_Swabrido,
+		 Date   Gd_Feemisio,
+		 String Gn_Cdperpag,
+		 String Gn_Nmpoliex,
+		 String Gv_Nmcuadro,
+		 String Gn_Porredau,
+		 String Gv_Swconsol,
+		 String Gn_Nmpolcoi,
+		 String Gv_Adparben,
+		 String Gn_Nmcercoi,
+		 String Gn_Cdtipren,
+		 // String Gv_Rowid,
+		 String Gv_Accion
+	        ) throws Exception{
 		
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
