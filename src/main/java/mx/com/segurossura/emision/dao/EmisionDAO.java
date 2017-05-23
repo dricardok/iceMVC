@@ -9,73 +9,73 @@ public interface EmisionDAO {
 
 	
 
-	void movimientoMpolisitSP(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
-			String Gn_Nmsituac, String Gn_Nmsuplem_Sesion, String Gn_Nmsuplem_Bean, String Gv_Status,
-			String Gv_Cdtipsit, String Gv_Swreduci, String Gn_Cdagrupa, String Gn_Cdestado, String Gf_Fefecsit,
-			String Gf_Fecharef, String Gv_Indparbe, String Gf_Feinipbs, String Gn_Porparbe, String Gn_Intfinan,
-			String Gn_Cdmotanu, String Gf_Feinisus, String Gf_Fefinsus, String Gv_Accion) throws Exception;
+	void movimientoMpolisit(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsituac, String nmsuplem_sesion, String nmsuplem_bean, String status,
+			String cdtipsit, String swreduci, String cdagrupa, String cdestado, String fefecsit,
+			String fecharef, String indparbe, String feinipbs, String porparbe, String intfinan,
+			String cdmotanu, String feinisus, String fefinsus, String accion) throws Exception;
 
-	void movimientoTvalositSP(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
-			String Gn_Nmsituac, String Gv_Cdtipsit, String Gn_Cdatribu, String Gn_Nmsuplem, String Gv_Otvalor,
-			String Gv_Accion) throws Exception;
+	void movimientoTvalosit(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsituac, String cdtipsit, String cdatribu, String nmsuplem, String otvalor,
+			String accion) throws Exception;
 
-	void movimientoMpoligarSP(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
-			String Gn_Nmsituac, String Gn_Nmsuplem_Session, String Gv_Cdgarant, String Gn_Cdcapita, Date Gd_Fevencim,
-			String Gv_Accion) throws Exception;
-
-	
-
-	void movimientoTvalogarSP(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
-			String Gn_Cdatribu, String Gn_Nmsuplem, String Gn_Nmsituac, String Gv_Cdgarant, String Gv_Otvalor,
-			String Gv_Accion) throws Exception;
-
-	List<Map<String, String>> obtieneMpoligarSP(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
-			String pv_nmpoliza_i, String pv_nmsituac_i, String pv_cdgarant_i, String pv_nmsuplem_i) throws Exception;
-
-	List<Map<String, String>> obtieneMpolicapSP(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
-			String pv_nmpoliza_i, String pv_nmsituac_i, String pv_cdcapita_i, String pv_nmsuplem_i) throws Exception;
-
-	List<Map<String, String>> obtieneTvalogarSP(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
-			String pv_nmpoliza_i, String pv_nmsituac_i, String pv_cdtipsit_i, String pv_nmsuplem_i) throws Exception;
-
-	List<Map<String, String>> obtieneMcapitalSP(String pv_cdramo_i, String pv_cdcapita_i) throws Exception;
-
-	List<Map<String, String>> obtieneTgarantiSP(String pv_cdgarant_i) throws Exception;
-
-	void movimientoMpolicapSP(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
-			String Gn_Nmsituac, String Gn_Nmsuplem_Sesion, String Gv_Swrevalo, String Gv_Cdcapita, String Gn_Ptcapita,
-			String Gn_Nmsuplem_Bloque, String Gv_ModoAcceso) throws Exception;
+	void movimientoMpoligar(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsituac, String nmsuplem_session, String cdgarant, String cdcapita, Date fevencim,
+			String accion) throws Exception;
 
 	
 
-	List<Map<String, String>> obtieneTvalositSP(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
-			String pv_nmpoliza_i, String pv_nmsituac_i, String pv_cdtipsit_i, String pv_nmsuplem_i) throws Exception;
+	void movimientoTvalogar(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String cdatribu, String nmsuplem, String nmsituac, String cdgarant, String otvalor,
+			String accion) throws Exception;
 
-	List<Map<String, String>> obtieneMpolizasSP(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
-			String pv_nmpoliza_i, String pv_nmsuplem_i) throws Exception;
+	List<Map<String, String>> obtieneMpoligar(String cdunieco, String cdramo, String estado,
+			String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception;
 
-	List<Map<String, String>> obtieneTvalopolSP(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
-			String pv_nmpoliza_i, String pv_nmsuplem_i) throws Exception;
+	List<Map<String, String>> obtieneMpolicap(String cdunieco, String cdramo, String estado,
+			String nmpoliza, String nmsituac, String cdcapita, String nmsuplem) throws Exception;
 
-	void movimientoMpolizasSP(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
-			String Gn_NmsuplemBloque, String Gn_NmsuplemSesion, String Gv_Status, String Gv_Swestado,
-			String Gn_Nmsolici, Date Gd_Feautori, String Gn_Cdmotanu, Date Gd_Feanulac, String Gv_Swautori,
-			String Gv_Cdmoneda, Date Gd_Feinisus, Date Gd_Fefinsus, String Gv_Ottempot, Date Gd_Feefecto,
-			String Gv_Hhefecto, Date Gd_Feproren, Date Gd_Fevencim, String Gn_Nmrenova, Date Gd_Ferecibo,
-			Date Gd_Feultsin, String Gn_Nmnumsin, String Gv_Cdtipcoa, String Gv_Swtarifi, String Gv_Swabrido,
-			Date Gd_Feemisio, String Gn_Cdperpag, String Gn_Nmpoliex, String Gv_Nmcuadro, String Gn_Porredau,
-			String Gv_Swconsol, String Gn_Nmpolcoi, String Gv_Adparben, String Gn_Nmcercoi, String Gn_Cdtipren,
-			String Gv_Accion) throws Exception;
+	List<Map<String, String>> obtieneTvalogar(String cdunieco, String cdramo, String estado,
+			String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception;
+
+	List<Map<String, String>> obtieneMcapital(String cdramo, String cdcapita) throws Exception;
+
+	List<Map<String, String>> obtieneTgaranti(String cdgarant) throws Exception;
+
+	void movimientoMpolicap(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsituac, String nmsuplem_sesion, String swrevalo, String cdcapita, String ptcapita,
+			String nmsuplem_bloque, String modoacceso) throws Exception;
+
+	
+
+	List<Map<String, String>> obtieneTvalosit(String cdunieco, String cdramo, String estado,
+			String nmpoliza, String nmsituac, String cdtipsit, String nmsuplem) throws Exception;
+
+	List<Map<String, String>> obtieneMpolizas(String cdunieco, String cdramo, String estado,
+			String nmpoliza, String nmsuplem) throws Exception;
+
+	List<Map<String, String>> obtieneTvalopol(String cdunieco, String cdramo, String estado,
+			String nmpoliza, String nmsuplem) throws Exception;
+
+	void movimientoMpolizas(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsuplembloque, String nmsuplemsesion, String status, String swestado,
+			String nmsolici, Date feautori, String cdmotanu, Date feanulac, String swautori,
+			String cdmoneda, Date feinisus, Date fefinsus, String ottempot, Date feefecto,
+			String hhefecto, Date feproren, Date fevencim, String nmrenova, Date ferecibo,
+			Date feultsin, String nmnumsin, String cdtipcoa, String swtarifi, String swabrido,
+			Date feemisio, String cdperpag, String nmpoliex, String nmcuadro, String porredau,
+			String swconsol, String nmpolcoi, String adparben, String nmcercoi, String cdtipren,
+			String accion) throws Exception;
 
 
-	void movimientoTvalopolSP(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
-			String Gn_Cdatribu, String Gn_Nmsuplem, String Gv_Otvalor_New, String Gv_Otvalor_Old) throws Exception;
+	void movimientoTvalopol(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String cdatribu, String nmsuplem, String otvalor_new, String otvalor_old) throws Exception;
 
-	String generaNmpolizaSP(String Gn_Nmpoliza, String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado,
-			String Gv_Swcolind, String Gn_Nmpolcoi) throws Exception;
+	String generaNmpoliza(String nmpoliza, String cdunieco, String cdramo, String estado,
+			String swcolind, String nmpolcoi) throws Exception;
 
-	List<Map<String, String>> obtieneMpolisitSP(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
-			String pv_nmpoliza_i, String pv_nmsituac_i, String pv_nmsuplem_i) throws Exception;
+	List<Map<String, String>> obtieneMpolisit(String cdunieco, String cdramo, String estado,
+			String nmpoliza, String nmsituac, String nmsuplem) throws Exception;
 
 
 	
