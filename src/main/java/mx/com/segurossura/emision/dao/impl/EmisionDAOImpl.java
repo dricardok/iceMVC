@@ -25,142 +25,108 @@ import mx.com.segurossura.emision.dao.EmisionDAO;
 public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 
 	@Override
-	public void movimientoMpolizasSP(
-         //String Gv_Identificador_Error,
-		 String Gn_Cdunieco,
-		 String Gn_Cdramo,
-		 String Gv_Estado,
-		 String Gn_Nmpoliza,
-		 String Gn_NmsuplemBloque,
-		 String Gn_NmsuplemSesion,
-		 String Gv_Status,
-		 String Gv_Swestado,
-		 String Gn_Nmsolici,
-		 Date   Gd_Feautori,
-		 String Gn_Cdmotanu,
-		 Date   Gd_Feanulac,
-		 String Gv_Swautori,
-		 String Gv_Cdmoneda,
-		 Date   Gd_Feinisus,
-		 Date   Gd_Fefinsus,
-		 String Gv_Ottempot,
-		 Date   Gd_Feefecto,
-		 String Gv_Hhefecto,
-		 Date   Gd_Feproren,
-		 Date   Gd_Fevencim,
-		 String Gn_Nmrenova,
-		 Date   Gd_Ferecibo,
-		 Date   Gd_Feultsin,
-		 String Gn_Nmnumsin,
-		 String Gv_Cdtipcoa,
-		 String Gv_Swtarifi,
-		 String Gv_Swabrido,
-		 Date   Gd_Feemisio,
-		 String Gn_Cdperpag,
-		 String Gn_Nmpoliex,
-		 String Gv_Nmcuadro,
-		 String Gn_Porredau,
-		 String Gv_Swconsol,
-		 String Gn_Nmpolcoi,
-		 String Gv_Adparben,
-		 String Gn_Nmcercoi,
-		 String Gn_Cdtipren,
-		 // String Gv_Rowid,
-		 String Gv_Accion
-	        ) throws Exception{
+	public void movimientoMpolizas (String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsuplembloque, String nmsuplemsesion, String status, String swestado,
+            String nmsolici, Date feautori, String cdmotanu, Date feanulac, String swautori,
+            String cdmoneda, Date feinisus, Date fefinsus, String ottempot, Date feefecto,
+            String hhefecto, Date feproren, Date fevencim, String nmrenova, Date ferecibo,
+            Date feultsin, String nmnumsin, String cdtipcoa, String swtarifi, String swabrido,
+            Date feemisio, String cdperpag, String nmpoliex, String nmcuadro, String porredau,
+            String swconsol, String nmpolcoi, String adparben, String nmcercoi, String cdtipren,
+            String accion) throws Exception{
 		
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
-		 //params.put("Gv_Identificador_Error",   Gv_Identificador_Error);
-		 params.put("Gn_Cdunieco",   Gn_Cdunieco);
-		 params.put("Gn_Cdramo",   Gn_Cdramo);
-		 params.put("Gv_Estado",   Gv_Estado);
-		 params.put("Gn_Nmpoliza",   Gn_Nmpoliza);
-		 params.put("Gn_NmsuplemBloque",   Gn_NmsuplemBloque);
-		 params.put("Gn_NmsuplemSesion",   Gn_NmsuplemSesion);
-		 params.put("Gv_Status",   Gv_Status);
-		 params.put("Gv_Swestado",   Gv_Swestado);
-		 params.put("Gn_Nmsolici",   Gn_Nmsolici);
-		 params.put("Gd_Feautori",   Gd_Feautori);
-		 params.put("Gn_Cdmotanu",   Gn_Cdmotanu);
-		 params.put("Gd_Feanulac",   Gd_Feanulac);
-		 params.put("Gv_Swautori",   Gv_Swautori);
-		 params.put("Gv_Cdmoneda",   Gv_Cdmoneda);
-		 params.put("Gd_Feinisus",   Gd_Feinisus);
-		 params.put("Gd_Fefinsus",   Gd_Fefinsus);
-		 params.put("Gv_Ottempot",   Gv_Ottempot);
-		 params.put("Gd_Feefecto",   Gd_Feefecto);
-		 params.put("Gv_Hhefecto",   Gv_Hhefecto);
-		 params.put("Gd_Feproren",   Gd_Feproren);
-		 params.put("Gd_Fevencim",   Gd_Fevencim);
-		 params.put("Gn_Nmrenova",   Gn_Nmrenova);
-		 params.put("Gd_Ferecibo",   Gd_Ferecibo);
-		 params.put("Gd_Feultsin",   Gd_Feultsin);
-		 params.put("Gn_Nmnumsin",   Gn_Nmnumsin);
-		 params.put("Gv_Cdtipcoa",   Gv_Cdtipcoa);
-		 params.put("Gv_Swtarifi",   Gv_Swtarifi);
-		 params.put("Gv_Swabrido",   Gv_Swabrido);
-		 params.put("Gd_Feemisio",   Gd_Feemisio);
-		 params.put("Gn_Cdperpag",   Gn_Cdperpag);
-		 params.put("Gn_Nmpoliex",   Gn_Nmpoliex);
-		 params.put("Gv_Nmcuadro",   Gv_Nmcuadro);
-		 params.put("Gn_Porredau",   Gn_Porredau);
-		 params.put("Gv_Swconsol",   Gv_Swconsol);
-		 params.put("Gn_Nmpolcoi",   Gn_Nmpolcoi);
-		 params.put("Gv_Adparben",   Gv_Adparben);
-		 params.put("Gn_Nmcercoi",   Gn_Nmcercoi);
-		 params.put("Gn_Cdtipren",   Gn_Cdtipren);
-		// params.put("Gv_Rowid",   Gv_Rowid);
-		 params.put("Gv_Accion",   Gv_Accion);	
+		 //params.put("Identificador_Error",   Identificador_Error);
+		 params.put("pv_cdunieco_i",   cdunieco);
+		 params.put("pv_cdramo_i",   cdramo);
+		 params.put("pv_estado_i",   estado);
+		 params.put("pv_nmpoliza_i",   nmpoliza);
+		 params.put("pv_nmsuplembloque_i",   nmsuplembloque);
+		 params.put("pv_nmsuplemsesion_i",   nmsuplemsesion);
+		 params.put("pv_status_i",   status);
+		 params.put("pv_swestado_i",   swestado);
+		 params.put("pv_nmsolici_i",   nmsolici);
+		 params.put("pv_feautori_i",   feautori);
+		 params.put("pv_cdmotanu_i",   cdmotanu);
+		 params.put("pv_feanulac_i",   feanulac);
+		 params.put("pv_swautori_i",   swautori);
+		 params.put("pv_cdmoneda_i",   cdmoneda);
+		 params.put("pv_feinisus_i",   feinisus);
+		 params.put("pv_fefinsus_i",   fefinsus);
+		 params.put("pv_ottempot_i",   ottempot);
+		 params.put("pv_feefecto_i",   feefecto);
+		 params.put("pv_hhefecto_i",   hhefecto);
+		 params.put("pv_feproren_i",   feproren);
+		 params.put("pv_fevencim_i",   fevencim);
+		 params.put("pv_nmrenova_i",   nmrenova);
+		 params.put("pv_ferecibo_i",   ferecibo);
+		 params.put("pv_feultsin_i",   feultsin);
+		 params.put("pv_nmnumsin_i",   nmnumsin);
+		 params.put("pv_cdtipcoa_i",   cdtipcoa);
+		 params.put("pv_swtarifi_i",   swtarifi);
+		 params.put("pv_swabrido_i",   swabrido);
+		 params.put("pv_feemisio_i",   feemisio);
+		 params.put("pv_cdperpag_i",   cdperpag);
+		 params.put("pv_nmpoliex_i",   nmpoliex);
+		 params.put("pv_nmcuadro_i",   nmcuadro);
+		 params.put("pv_porredau_i",   porredau);
+		 params.put("pv_swconsol_i",   swconsol);
+		 params.put("pv_nmpolcoi_i",   nmpolcoi);
+		 params.put("pv_adparben_i",   adparben);
+		 params.put("pv_nmcercoi_i",   nmcercoi);
+		 params.put("pv_cdtipren_i",   cdtipren);
+		// params.put("pv_rowid_i",   rowid);
+		 params.put("pv_accion_i",        accion);	
 		 
-		 Map<String, Object> resultado = ejecutaSP(new MovimientoMpolizas(getDataSource()), params);
+		 Map<String, Object> resultado = ejecutaSP(new MovimientoMpolizasSP(getDataSource()), params);
 	}
 	
-	protected class MovimientoMpolizas extends StoredProcedure
+	protected class MovimientoMpolizasSP extends StoredProcedure
 	{
-    	protected MovimientoMpolizas(DataSource dataSource) {
+    	protected MovimientoMpolizasSP(DataSource dataSource) {
             super(dataSource,"P_COT_MOV_MPOLIZAS");
-            //declareParameter(new SqlInOutParameter("Gv_Identificador_Error",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_Cdunieco",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_Cdramo",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Estado",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_Nmpoliza",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_NmsuplemBloque",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_NmsuplemSesion",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Status",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Swestado",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_Nmsolici",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gd_Feautori",Types.DATE));
-            declareParameter(new SqlParameter("Gn_Cdmotanu",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gd_Feanulac",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Swautori",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Cdmoneda",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gd_Feinisus",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gd_Fefinsus",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Ottempot",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gd_Feefecto",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Hhefecto",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gd_Feproren",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gd_Fevencim",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_Nmrenova",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gd_Ferecibo",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gd_Feultsin",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_Nmnumsin",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Cdtipcoa",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Swtarifi",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Swabrido",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gd_Feemisio",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_Cdperpag",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_Nmpoliex",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Nmcuadro",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_Porredau",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Swconsol",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_Nmpolcoi",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Adparben",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_Nmcercoi",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gn_Cdtipren",Types.VARCHAR));
-           // declareParameter(new SqlInOutParameter("Gv_Rowid",Types.VARCHAR));
-            declareParameter(new SqlParameter("Gv_Accion",Types.VARCHAR));
+            //declareParameter(new SqlInOutParameter("Identificador_Error",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplembloque_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplemsesion_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_status_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_swestado_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsolici_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feautori_i",Types.DATE));
+            declareParameter(new SqlParameter("pv_cdmotanu_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feanulac_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_swautori_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdmoneda_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feinisus_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_fefinsus_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_ottempot_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feefecto_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_hhefecto_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feproren_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_fevencim_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmrenova_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_ferecibo_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feultsin_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmnumsin_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdtipcoa_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_swtarifi_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_swabrido_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feemisio_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdperpag_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliex_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmcuadro_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_porredau_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_swconsol_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpolcoi_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_adparben_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmcercoi_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdtipren_i",Types.VARCHAR));
+           // declareParameter(new sqlinoutparameter("rowid_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_accion_i",Types.VARCHAR));
 //         
             declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
@@ -170,51 +136,41 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	
 	
 	@Override			//nombre
-	public void movimientoTvalopolSP(
-			 //parametros
-			String  Gn_Cdunieco    		 ,
-			String  Gn_Cdramo     		 ,
-			String  Gv_Estado     		 ,
-			String  Gn_Nmpoliza    		 ,
-			String  Gn_Cdatribu            ,
-			String  Gn_Nmsuplem            ,
-			String  Gv_Otvalor_New         ,
-			String  Gv_Otvalor_Old         
-			//String  Gv_Status_Registro     
-			) throws Exception{
+	public void movimientoTvalopol(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String cdatribu, String nmsuplem, String otvalor_new, String otvalor_old) throws Exception{
 
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
 		// params.put
-		params.put("Gn_Cdunieco",		 Gn_Cdunieco);
-		params.put("Gn_Cdramo",       Gn_Cdramo);
-		params.put("Gv_Estado",       Gv_Estado);
-		params.put("Gn_Nmpoliza",       Gn_Nmpoliza);
-		params.put("Gn_Cdatribu",     Gn_Cdatribu);
-		params.put("Gn_Nmsuplem",     Gn_Nmsuplem);
-		params.put("Gv_Otvalor_New",     Gv_Otvalor_New);
-		params.put("Gv_Otvalor_Old",     Gv_Otvalor_Old);
-		//params.put("Gv_Status_Registro",     Gv_Status_Registro);
+		params.put("pv_cdunieco_i",		 cdunieco);
+		params.put("pv_cdramo_i",       cdramo);
+		params.put("pv_estado_i",       estado);
+		params.put("pv_nmpoliza_i",       nmpoliza);
+		params.put("pv_cdatribu_i",     cdatribu);
+		params.put("pv_nmsuplem_i",     nmsuplem);
+		params.put("pv_otvalor_new_i",     otvalor_new);
+		params.put("pv_otvalor_old_i",     otvalor_old);
+		//params.put("Status_Registro",     Status_Registro);
 		
 													//Clase
-		Map<String, Object> resultado = ejecutaSP(new MovimientoTvalopol(getDataSource()), params);
+		Map<String, Object> resultado = ejecutaSP(new MovimientoTvalopolSP(getDataSource()), params);
 }
 					//Clase
-	protected class MovimientoTvalopol extends StoredProcedure
+	protected class MovimientoTvalopolSP extends StoredProcedure
 	{
-		protected MovimientoTvalopol(DataSource dataSource) {
+		protected MovimientoTvalopolSP(DataSource dataSource) {
 			super(dataSource,"P_COT_MOV_TVALOPOL");// Nombre
 			//SqlParameters
-			//declareParameter(new SqlInOutParameter("Gv_Identificador_Error",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdunieco",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdramo",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Estado",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmpoliza",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdatribu",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsuplem",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Otvalor_New",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Otvalor_Old",Types.VARCHAR));
-			//declareParameter(new SqlParameter("Gv_Status_Registro",Types.VARCHAR));
+			//declareParameter(new SqlInOutParameter("Identificador_Error",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdatribu_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_otvalor_new_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_otvalor_old_i",Types.VARCHAR));
+			//declareParameter(new SqlParameter("Status_Registro",Types.VARCHAR));
 			
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
@@ -225,48 +181,42 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	
 	//nombre
 	@Override
-	public String generaNmpolizaSP(
-			String Gn_Nmpoliza			 ,
-			String Gn_Cdunieco						  ,
-			String Gn_Cdramo							  ,
-			String Gv_Estado							  ,
-			String Gv_Swcolind						 ,
-			String Gn_Nmpolcoi
-		) throws Exception{
+	public String generaNmpoliza(String nmpoliza, String cdunieco, String cdramo, String estado,
+            String swcolind, String nmpolcoi) throws Exception{
 	
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
 		// params.put
 	
-		//params.put("Gv_Identificador_Error",null);
-		params.put("Gn_Nmpoliza",					Gn_Nmpoliza);
-		params.put("Gn_Cdunieco",     Gn_Cdunieco);
-		params.put("Gn_Cdramo", Gn_Cdramo);
-		params.put("Gv_Estado", Gv_Estado);
-		params.put("Gv_Swcolind",      Gv_Swcolind);
-		params.put("Gn_Nmpolcoi",           Gn_Nmpolcoi);
+		//params.put("Identificador_Error",null);
+		params.put("pv_nmpoliza_i",					nmpoliza);
+		params.put("pv_cdunieco_i",     cdunieco);
+		params.put("pv_cdramo_i", cdramo);
+		params.put("pv_estado_i", estado);
+		params.put("pv_swcolind_i",      swcolind);
+		params.put("pv_nmpolcoi_i",           nmpolcoi);
 		
 													//Clase
-		Map<String, Object> resultado = ejecutaSP(new GeneraNmpoliza(getDataSource()), params);
-		String datos=(String)resultado.get("Gn_Nmpoliza");
+		Map<String, Object> resultado = ejecutaSP(new GeneraNmpolizaSP(getDataSource()), params);
+		String datos=(String)resultado.get("Nmpoliza");
 		
 		return datos;
 
 	}
 				//Clase
-	protected class GeneraNmpoliza extends StoredProcedure
+	protected class GeneraNmpolizaSP extends StoredProcedure
 	{
-		protected GeneraNmpoliza(DataSource dataSource) {
+		protected GeneraNmpolizaSP(DataSource dataSource) {
 			super(dataSource,"P_GENERA_NMPOLIZA");// Nombre
 			//SqlParameters
 			
-			declareParameter(new SqlInOutParameter("Gv_Identificador_Error",Types.VARCHAR));
-			declareParameter(new SqlInOutParameter("Gn_Nmpoliza",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdunieco",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdramo",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Estado",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Swcolind",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmpolcoi",Types.VARCHAR));
+			declareParameter(new SqlInOutParameter("pv_identificador_error_i",Types.VARCHAR));
+			declareParameter(new SqlInOutParameter("pv_nmpoliza_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_swcolind_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmpolcoi_i",Types.VARCHAR));
 //			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 //			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
 			compile();
@@ -274,95 +224,72 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	@Override //nombre
-	public void movimientoMpolisitSP(
-		 //parametros
-			String Gn_Cdunieco				,
-			String Gn_Cdramo   				,
-			String Gv_Estado   				,
-			String Gn_Nmpoliza				,
-			String Gn_Nmsituac				,
-			String Gn_Nmsuplem_Sesion		,
-			String Gn_Nmsuplem_Bean			,
-			String Gv_Status    			,
-			String Gv_Cdtipsit				,
-			String Gv_Swreduci				,
-			String Gn_Cdagrupa				,
-			String Gn_Cdestado				,
-			String Gf_Fefecsit				,
-			String Gf_Fecharef				,
-			String Gv_Indparbe				,
-			String Gf_Feinipbs				,
-			String Gn_Porparbe				,
-			String Gn_Intfinan				,
-			String Gn_Cdmotanu				,
-			String Gf_Feinisus				,
-			String Gf_Fefinsus				,
-			String Gv_Accion	  			
-			//String Gv_Rowid    				,
-			//String Gv_Error    				 
-
-		) throws Exception{
+	public void movimientoMpolisit(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String nmsuplem_sesion, String nmsuplem_bean, String status,
+            String cdtipsit, String swreduci, String cdagrupa, String cdestado, String fefecsit,
+            String fecharef, String indparbe, String feinipbs, String porparbe, String intfinan,
+            String cdmotanu, String feinisus, String fefinsus, String accion) throws Exception{
 	
 	Map<String, Object> params = new LinkedHashMap<String, Object>();
 	
 	// params.put
-	params.put("Gn_Cdunieco",	 Gn_Cdunieco);
-	params.put("Gn_Cdramo",         Gn_Cdramo);
-	params.put("Gv_Estado",         Gv_Estado);
-	params.put("Gn_Nmpoliza",         Gn_Nmpoliza);
-	params.put("Gn_Nmsituac",         Gn_Nmsituac);
-	params.put("Gn_Nmsuplem_Sesion",            Gn_Nmsuplem_Sesion);
-	params.put("Gn_Nmsuplem_Bean",            Gn_Nmsuplem_Bean);
-	params.put("Gv_Status",         Gv_Status);
-	params.put("Gv_Cdtipsit",     Gv_Cdtipsit);
-	params.put("Gv_Swreduci",     Gv_Swreduci);
-	params.put("Gn_Cdagrupa",     Gn_Cdagrupa);
-	params.put("Gn_Cdestado",     Gn_Cdestado);
-	params.put("Gf_Fefecsit",     Gf_Fefecsit);
-	params.put("Gf_Fecharef",     Gf_Fecharef);
-	params.put("Gv_Indparbe",     Gv_Indparbe);
-	params.put("Gf_Feinipbs",     Gf_Feinipbs);
-	params.put("Gn_Porparbe",     Gn_Porparbe);
-	params.put("Gn_Intfinan",     Gn_Intfinan);
-	params.put("Gn_Cdmotanu",     Gn_Cdmotanu);
-	params.put("Gf_Feinisus",     Gf_Feinisus);
-	params.put("Gf_Fefinsus",     Gf_Fefinsus);
-	params.put("Gv_Accion",            Gv_Accion);
-//	params.put("Gv_Rowid",     null);
-//	params.put("Gv_Error",            null);
+	params.put("pv_cdunieco_i",	 cdunieco);
+	params.put("pv_cdramo_i",         cdramo);
+	params.put("pv_estado_i",         estado);
+	params.put("pv_nmpoliza_i",         nmpoliza);
+	params.put("pv_nmsituac_i",         nmsituac);
+	params.put("pv_nmsuplem_sesion_i",            nmsuplem_sesion);
+	params.put("pv_nmsuplem_bean_i",            nmsuplem_bean);
+	params.put("pv_status_i",         status);
+	params.put("pv_cdtipsit_i",     cdtipsit);
+	params.put("pv_swreduci_i",     swreduci);
+	params.put("pv_cdagrupa_i",     cdagrupa);
+	params.put("pv_cdestado_i",     cdestado);
+	params.put("pv_fefecsit_i",     fefecsit);
+	params.put("pv_fecharef_i",     fecharef);
+	params.put("pv_indparbe_i",     indparbe);
+	params.put("pv_feinipbs_i",     feinipbs);
+	params.put("pv_porparbe_i",     porparbe);
+	params.put("pv_intfinan_i",     intfinan);
+	params.put("pv_cdmotanu_i",     cdmotanu);
+	params.put("pv_feinisus_i",     feinisus);
+	params.put("pv_fefinsus_i",     fefinsus);
+	params.put("pv_accion_i",            accion);
+//	params.put("Rowid",     null);
+//	params.put("Error",            null);
 	
 												//Clase
-	Map<String, Object> resultado = ejecutaSP(new MovimientoMpolisit(getDataSource()), params);
+	Map<String, Object> resultado = ejecutaSP(new MovimientoMpolisitSP(getDataSource()), params);
 	}
 				//Clase
-	protected class MovimientoMpolisit extends StoredProcedure
+	protected class MovimientoMpolisitSP extends StoredProcedure
 	{
-		protected MovimientoMpolisit(DataSource dataSource) {
+		protected MovimientoMpolisitSP(DataSource dataSource) {
 			super(dataSource,"P_COT_Mov_Mpolisit");// Nombre
 			//SqlParameters
 			
-			declareParameter(new SqlParameter("Gn_Cdunieco",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdramo",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Estado",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmpoliza",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsituac",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsuplem_Sesion",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsuplem_Bean",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Status",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Cdtipsit",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Swreduci",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdagrupa",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdestado",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gf_Fefecsit",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gf_Fecharef",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Indparbe",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gf_Feinipbs",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Porparbe",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Intfinan",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdmotanu",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gf_Feinisus",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gf_Fefinsus",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Accion",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsituac_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsuplem_sesion_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsuplem_bean_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_status_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdtipsit_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_swreduci_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdagrupa_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdestado_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_fefecsit_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_fecharef_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_indparbe_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_feinipbs_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_porparbe_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_intfinan_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdmotanu_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_feinisus_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_fefinsus_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_accion_i",Types.VARCHAR));
 			
  			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
@@ -371,57 +298,45 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	@Override //nombre
-	public void movimientoTvalositSP(
-		 //parametros
-			//String Gv_Identificador_Error	IN OUT	   VARCHAR2,
-			String Gn_Cdunieco,	
-			String Gn_Cdramo,   
-			String Gv_Estado,   
-			String Gn_Nmpoliza, 
-			String Gn_Nmsituac, 
-			String Gv_Cdtipsit, 
-			String Gn_Cdatribu, 
-			String Gn_Nmsuplem, 
-			String Gv_Otvalor,  
-			String Gv_Accion 	
-
-		) throws Exception{
+	public void movimientoTvalosit(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String cdtipsit, String cdatribu, String nmsuplem, String otvalor,
+            String accion) throws Exception{
 	
 	Map<String, Object> params = new LinkedHashMap<String, Object>();
 	
 	// params.put
-	//params.put("Gv_Identificador_Error",Gv_Identificador_Error);
-	params.put("Gn_Cdunieco",	  Gn_Cdunieco);
-	params.put("Gn_Cdramo",        Gn_Cdramo);
-	params.put("Gv_Estado",        Gv_Estado);
-	params.put("Gn_Nmpoliza",       Gn_Nmpoliza);
-	params.put("Gn_Nmsituac",       Gn_Nmsituac);
-	params.put("Gv_Cdtipsit",       Gv_Cdtipsit);
-	params.put("Gn_Cdatribu",       Gn_Cdatribu);
-	params.put("Gn_Nmsuplem",       Gn_Nmsuplem);
-	params.put("Gv_Otvalor",        Gv_Otvalor);
-	params.put("Gv_Accion",               Gv_Accion); 
+	//params.put("Identificador_Error",Identificador_Error);
+	params.put("pv_cdunieco_i",	  cdunieco);
+	params.put("pv_cdramo_i",        cdramo);
+	params.put("pv_estado_i",        estado);
+	params.put("pv_nmpoliza_i",       nmpoliza);
+	params.put("pv_nmsituac_i",       nmsituac);
+	params.put("pv_cdtipsit_i",       cdtipsit);
+	params.put("pv_cdatribu_i",       cdatribu);
+	params.put("pv_nmsuplem_i",       nmsuplem);
+	params.put("pv_otvalor_i",        otvalor);
+	params.put("pv_accion_i",               accion); 
 	
 												//Clase
-	Map<String, Object> resultado = ejecutaSP(new MovimientoTvalosit(getDataSource()), params);
+	Map<String, Object> resultado = ejecutaSP(new MovimientoTvalositSP(getDataSource()), params);
 	}
 				//Clase
-	protected class MovimientoTvalosit extends StoredProcedure
+	protected class MovimientoTvalositSP extends StoredProcedure
 	{
-		protected MovimientoTvalosit(DataSource dataSource) {
+		protected MovimientoTvalositSP(DataSource dataSource) {
 			super(dataSource,"P_COT_MOV_TVALOSIT");// Nombre
 			//SqlParameters
-			//declareParameter(new SqlParameter("Gv_Identificador_Error",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdunieco",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdramo",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Estado",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmpoliza",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsituac",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Cdtipsit",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdatribu",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsuplem",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Otvalor",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Accion",Types.VARCHAR));
+			//declareParameter(new SqlParameter("Identificador_Error",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsituac_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdtipsit_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdatribu_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_otvalor_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_accion_i",Types.VARCHAR));
 			
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
@@ -431,56 +346,45 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	
 	
 	@Override //nombre
-	public void movimientoMpoligarSP(
-		 //parametros
-			//String Gv_Identificador_Error   ,
-			String Gn_Cdunieco				,
-			String Gn_Cdramo				,
-			String Gv_Estado				,
-			String Gn_Nmpoliza				,
-			String Gn_Nmsituac				,
-			String Gn_Nmsuplem_Session				,
-			String Gv_Cdgarant				,
-			String Gn_Cdcapita				,
-			Date   Gd_Fevencim				,
-			String Gv_Accion         		 
-		) throws Exception{
+	public void movimientoMpoligar(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String nmsuplem_session, String cdgarant, String cdcapita, Date fevencim,
+            String accion) throws Exception{
 	
 	Map<String, Object> params = new LinkedHashMap<String, Object>();
 	
 	// params.put
-	//params.put("Gv_Identificador_Error",				Gv_Identificador_Error);
-	params.put("Gn_Cdunieco",               Gn_Cdunieco);
-	params.put("Gn_Cdramo",               Gn_Cdramo);
-	params.put("Gv_Estado",               Gv_Estado);
-	params.put("Gn_Nmpoliza",               Gn_Nmpoliza);
-	params.put("Gn_Nmsituac",               Gn_Nmsituac);
-	params.put("Gn_Nmsuplem_Session",       Gn_Nmsuplem_Session);
-	params.put("Gv_Cdgarant",               Gv_Cdgarant);
-	params.put("Gn_Cdcapita",               Gn_Cdcapita);
-	params.put("Gd_Fevencim",               Gd_Fevencim);
-	params.put("Gv_Accion",	            Gv_Accion);
+	//params.put("Identificador_Error",				Identificador_Error);
+	params.put("pv_cdunieco_i",               cdunieco);
+	params.put("pv_cdramo_i",               cdramo);
+	params.put("pv_estado_i",               estado);
+	params.put("pv_nmpoliza_i",               nmpoliza);
+	params.put("pv_nmsituac_i",               nmsituac);
+	params.put("pv_nmsuplem_session_i",       nmsuplem_session);
+	params.put("pv_cdgarant_i",               cdgarant);
+	params.put("pv_cdcapita_i",               cdcapita);
+	params.put("pv_fevencim_i",               fevencim);
+	params.put("pv_accion_i",	            accion);
 	
 												//Clase
-	Map<String, Object> resultado = ejecutaSP(new MovimientoMpoligar(getDataSource()), params);
+	Map<String, Object> resultado = ejecutaSP(new MovimientoMpoligarSP(getDataSource()), params);
 	}
 				//Clase
-	protected class MovimientoMpoligar extends StoredProcedure
+	protected class MovimientoMpoligarSP extends StoredProcedure
 	{
-		protected MovimientoMpoligar(DataSource dataSource) {
+		protected MovimientoMpoligarSP(DataSource dataSource) {
 			super(dataSource,"P_COT_MOV_MPOLIGAR");// Nombre
 			//SqlParameters
-			//declareParameter(new SqlInOutParameter("Gv_Identificador_Error",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdunieco",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdramo",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Estado",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmpoliza",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsituac",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsuplem_Session",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Cdgarant",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdcapita",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gd_Fevencim",Types.DATE));
-			declareParameter(new SqlParameter("Gv_Accion",Types.VARCHAR));
+			//declareParameter(new SqlInOutParameter("Identificador_Error",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsituac_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsuplem_session_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdgarant_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdcapita_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_fevencim_i",Types.DATE));
+			declareParameter(new SqlParameter("pv_accion_i",Types.VARCHAR));
 			
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
@@ -489,56 +393,45 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	@Override //nombre
-	public void movimientoTvalogarSP(
-		 //parametros
-			//String Gv_Identificador_Error	,
-			String Gn_Cdunieco				,
-			String Gn_Cdramo				,
-			String Gv_Estado				,
-			String Gn_Nmpoliza				,
-			String Gn_Cdatribu				,
-			String Gn_Nmsuplem				,
-			String Gn_Nmsituac				,
-			String Gv_Cdgarant				,
-			String Gv_Otvalor				,
-			String Gv_Accion 				
-		) throws Exception{
+	public void movimientoTvalogar(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String cdatribu, String nmsuplem, String nmsituac, String cdgarant, String otvalor,
+            String accion) throws Exception{
 	
 	Map<String, Object> params = new LinkedHashMap<String, Object>();
 	
 	// params.put
-	//params.put("Gv_Identificador_Error",	   Gv_Identificador_Error);
-	params.put("Gn_Cdunieco",      Gn_Cdunieco);
-	params.put("Gn_Cdramo",      Gn_Cdramo);
-	params.put("Gv_Estado",      Gv_Estado);
-	params.put("Gn_Nmpoliza",      Gn_Nmpoliza);
-	params.put("Gn_Cdatribu",      Gn_Cdatribu);
-	params.put("Gn_Nmsuplem",      Gn_Nmsuplem);
-	params.put("Gn_Nmsituac",      Gn_Nmsituac);
-	params.put("Gv_Cdgarant",      Gv_Cdgarant);
-	params.put("Gv_Otvalor",      Gv_Otvalor);
-	params.put("Gv_Accion",      Gv_Accion);
+	//params.put("Identificador_Error",	   Identificador_Error);
+	params.put("pv_cdunieco_i",      cdunieco);
+	params.put("pv_cdramo_i",      cdramo);
+	params.put("pv_estado_i",      estado);
+	params.put("pv_nmpoliza_i",      nmpoliza);
+	params.put("pv_cdatribu_i",      cdatribu);
+	params.put("pv_nmsuplem_i",      nmsuplem);
+	params.put("pv_nmsituac_i",      nmsituac);
+	params.put("pv_cdgarant_i",      cdgarant);
+	params.put("pv_otvalor_i",      otvalor);
+	params.put("pv_accion_i",      accion);
 	
 												//Clase
-	Map<String, Object> resultado = ejecutaSP(new MovimientoTvalogar(getDataSource()), params);
+	Map<String, Object> resultado = ejecutaSP(new MovimientoTvalogarSP(getDataSource()), params);
 	}
 				//Clase
-	protected class MovimientoTvalogar extends StoredProcedure
+	protected class MovimientoTvalogarSP extends StoredProcedure
 	{
-		protected MovimientoTvalogar(DataSource dataSource) {
+		protected MovimientoTvalogarSP(DataSource dataSource) {
 			super(dataSource,"P_COT_MOV_TVALOGAR");// Nombre
 			//SqlParameters
-			//declareParameter(new SqlParameter("Gv_Identificador_Error",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdunieco",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdramo",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Estado",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmpoliza",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdatribu",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsuplem",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsituac",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Cdgarant",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Otvalor",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Accion",Types.VARCHAR));
+			//declareParameter(new SqlParameter("Identificador_Error",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdatribu_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsituac_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdgarant_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_otvalor_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_accion_i",Types.VARCHAR));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
 			compile();
@@ -546,64 +439,50 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	@Override //nombre
-	public void movimientoMpolicapSP(
-		 //parametros
-			//String Gv_Identificador_Error,
-			String Gn_Cdunieco,      		
-			String Gn_Cdramo,       		
-			String Gv_Estado,    			
-			String Gn_Nmpoliza,        		
-			String Gn_Nmsituac,        		
-			String Gn_Nmsuplem_Sesion,    
-			String Gv_Swrevalo,        		
-			String Gv_Cdcapita,        		
-			String Gn_Ptcapita,        		
-			String Gn_Nmsuplem_Bloque,    
-			//String Gv_Rowid,              
-			String Gv_ModoAcceso          
-
-		) throws Exception{
+	public void movimientoMpolicap(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String nmsuplem_sesion, String swrevalo, String cdcapita, String ptcapita,
+            String nmsuplem_bloque, String modoacceso) throws Exception{
 	
 	Map<String, Object> params = new LinkedHashMap<String, Object>();
 	
 	// params.put
-	//params.put("Gv_Identificador_Error",Gv_Identificador_Error);
-	params.put("Gn_Cdunieco",Gn_Cdunieco);
-	params.put("Gn_Cdramo",Gn_Cdramo);
-	params.put("Gv_Estado",Gv_Estado);
-	params.put("Gn_Nmpoliza",Gn_Nmpoliza);
-	params.put("Gn_Nmsituac",Gn_Nmsituac);
-	params.put("Gn_Nmsuplem_Sesion",Gn_Nmsuplem_Sesion);
-	params.put("Gv_Swrevalo",Gv_Swrevalo);
-	params.put("Gv_Cdcapita",Gv_Cdcapita);
-	params.put("Gn_Ptcapita",Gn_Ptcapita);
-	params.put("Gn_Nmsuplem_Bloque",Gn_Nmsuplem_Bloque);
-	//params.put("Gv_Rowid",Gv_Rowid);
-	params.put("Gv_ModoAcceso",Gv_ModoAcceso);
+	//params.put("Identificador_Error",Identificador_Error);
+	params.put("pv_cdunieco_i",cdunieco);
+	params.put("pv_cdramo_i",cdramo);
+	params.put("pv_estado_i",estado);
+	params.put("pv_nmpoliza_i",nmpoliza);
+	params.put("pv_nmsituac_i",nmsituac);
+	params.put("pv_nmsuplem_sesion_i",nmsuplem_sesion);
+	params.put("pv_swrevalo_i",swrevalo);
+	params.put("pv_cdcapita_i",cdcapita);
+	params.put("pv_ptcapita_i",ptcapita);
+	params.put("pv_nmsuplem_bloque_i",nmsuplem_bloque);
+	//params.put("pv_rowid_i",rowid);
+	params.put("pv_modoacceso_i",modoacceso);
 	
 												//Clase
-	Map<String, Object> resultado = ejecutaSP(new MovimientoMpolicap(getDataSource()), params);
+	Map<String, Object> resultado = ejecutaSP(new MovimientoMpolicapSP(getDataSource()), params);
 	}
 				//Clase
-	protected class MovimientoMpolicap extends StoredProcedure
+	protected class MovimientoMpolicapSP extends StoredProcedure
 	{
-		protected MovimientoMpolicap(DataSource dataSource) {
+		protected MovimientoMpolicapSP(DataSource dataSource) {
 			super(dataSource,"P_COT_MOV_MPOLICAP");// Nombre
 			//SqlParameters
-			//declareParameter(new SqlParameter("Gv_Identificador_Error",Types.VARCHAR));
-			declareParameter(new SqlInOutParameter("Gv_Identificador_Error",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdunieco",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Cdramo",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Estado",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmpoliza",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsituac",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsuplem_Sesion",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Swrevalo",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_Cdcapita",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Ptcapita",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gn_Nmsuplem_Bloque",Types.VARCHAR));
-			//declareParameter(new SqlInOutParameter("Gv_Rowid",Types.VARCHAR));
-			declareParameter(new SqlParameter("Gv_ModoAcceso",Types.VARCHAR));			
+			//declareParameter(new SqlParameter("Identificador_Error",Types.VARCHAR));
+			declareParameter(new SqlInOutParameter("pv_identificador_error_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsituac_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsuplem_sesion_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_swrevalo_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdcapita_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_ptcapita_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsuplem_bloque_i",Types.VARCHAR));
+			//declareParameter(new sqlinoutparameter("pv_rowid_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_modoacceso_i",Types.VARCHAR));			
 			
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
@@ -615,31 +494,23 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	
 	
 	@Override //nombre
-	public List<Map<String,String>> obtieneMpoligarSP(
-		 //parametros
-			String pv_cdunieco_i ,
-			String pv_cdramo_i   ,
-			String pv_estado_i   ,
-			String pv_nmpoliza_i ,
-			String pv_nmsituac_i ,
-			String pv_cdgarant_i ,
-			String pv_nmsuplem_i 
-		) throws Exception{
+	public List<Map<String,String>> obtieneMpoligar(String cdunieco, String cdramo, String estado,
+            String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception{
 	
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
 		// params.put
 		
-		params.put("pv_cdunieco_i",	    pv_cdunieco_i);
-		params.put("pv_cdramo_i",      pv_cdramo_i  );
-		params.put("pv_estado_i",      pv_estado_i  );
-		params.put("pv_nmpoliza_i",      pv_nmpoliza_i);
-		params.put("pv_nmsituac_i",      pv_nmsituac_i);
-		params.put("pv_cdgarant_i",      pv_cdgarant_i);
-		params.put("pv_nmsuplem_i",      pv_nmsuplem_i);
+		params.put("pv_cdunieco_i",	    cdunieco);
+		params.put("pv_cdramo_i",      cdramo);
+		params.put("pv_estado_i",      estado);
+		params.put("pv_nmpoliza_i",      nmpoliza);
+		params.put("pv_nmsituac_i",      nmsituac);
+		params.put("pv_cdgarant_i",      cdgarant);
+		params.put("pv_nmsuplem_i",      nmsuplem);
 		
 													//Clase
-		Map<String, Object> resultado = ejecutaSP(new ObtieneMpoligar(getDataSource()), params);
+		Map<String, Object> resultado = ejecutaSP(new ObtieneMpoligarSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
 		if(listaDatos==null||listaDatos.size()==0)
 		{
@@ -648,9 +519,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		return listaDatos;
 	}
 				//Clase
-	protected class ObtieneMpoligar extends StoredProcedure
+	protected class ObtieneMpoligarSP extends StoredProcedure
 	{
-		protected ObtieneMpoligar(DataSource dataSource) {
+		protected ObtieneMpoligarSP(DataSource dataSource) {
 			super(dataSource,"P_COT_GET_MPOLIGAR");// Nombre
 			//SqlParameters
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
@@ -685,31 +556,22 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	
 	
 	@Override //nombre
-	public List<Map<String,String>> obtieneMpolicapSP(
-		 //parametros
-			String pv_cdunieco_i ,
-			String pv_cdramo_i   ,
-			String pv_estado_i   ,
-			String pv_nmpoliza_i ,
-			String pv_nmsituac_i ,
-			String pv_cdcapita_i ,
-			String pv_nmsuplem_i 
-
-		) throws Exception{
+	public List<Map<String,String>> obtieneMpolicap(String cdunieco, String cdramo, String estado,
+            String nmpoliza, String nmsituac, String cdcapita, String nmsuplem) throws Exception{
 	
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
 		// params.put
-		params.put("pv_cdunieco_i",	pv_cdunieco_i);
-		params.put("pv_cdramo_i",      pv_cdramo_i  );
-		params.put("pv_estado_i",      pv_estado_i  );
-		params.put("pv_nmpoliza_i",    pv_nmpoliza_i);
-		params.put("pv_nmsituac_i",    pv_nmsituac_i);
-		params.put("pv_cdcapita_i",    pv_cdcapita_i);
-		params.put("pv_nmsuplem_i",    pv_nmsuplem_i);
+		params.put("pv_cdunieco_i",	cdunieco);
+		params.put("pv_cdramo_i",      cdramo);
+		params.put("pv_estado_i",      estado);
+		params.put("pv_nmpoliza_i",    nmpoliza);
+		params.put("pv_nmsituac_i",    nmsituac);
+		params.put("pv_cdcapita_i",    cdcapita);
+		params.put("pv_nmsuplem_i",    nmsuplem);
 		
 													//Clase
-		Map<String, Object> resultado = ejecutaSP(new ObtieneMpolicap(getDataSource()), params);
+		Map<String, Object> resultado = ejecutaSP(new ObtieneMpolicapSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
 		if(listaDatos==null||listaDatos.size()==0)
 		{
@@ -718,9 +580,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		return listaDatos;
 	}
 				//Clase
-	protected class ObtieneMpolicap extends StoredProcedure
+	protected class ObtieneMpolicapSP extends StoredProcedure
 	{
-		protected ObtieneMpolicap(DataSource dataSource) {
+		protected ObtieneMpolicapSP(DataSource dataSource) {
 			super(dataSource,"P_COT_GET_MPOLICAP");// Nombre
 			//SqlParameters
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
@@ -756,31 +618,22 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	@Override //nombre
-	public List<Map<String,String>> obtieneTvalogarSP(
-		 //parametros
-			String pv_cdunieco_i ,
-			String pv_cdramo_i   ,
-			String pv_estado_i   ,
-			String pv_nmpoliza_i ,
-			String pv_nmsituac_i ,
-			String pv_cdgarant_i ,
-			String pv_nmsuplem_i 
-
-		) throws Exception{
+	public List<Map<String,String>> obtieneTvalogar(String cdunieco, String cdramo, String estado,
+            String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception{
 	
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
 		// params.put
-		params.put("pv_cdunieco_i",	pv_cdunieco_i);
-		params.put("pv_cdramo_i",      pv_cdramo_i  );
-		params.put("pv_estado_i",      pv_estado_i  );
-		params.put("pv_nmpoliza_i",    pv_nmpoliza_i);
-		params.put("pv_nmsituac_i",    pv_nmsituac_i);
-		params.put("pv_cdgarant_i",    pv_cdgarant_i);
-		params.put("pv_nmsuplem_i",    pv_nmsuplem_i);
+		params.put("pv_cdunieco_i",	cdunieco);
+		params.put("pv_cdramo_i",      cdramo);
+		params.put("pv_estado_i",      estado);
+		params.put("pv_nmpoliza_i",    nmpoliza);
+		params.put("pv_nmsituac_i",    nmsituac);
+		params.put("pv_cdgarant_i",    cdgarant);
+		params.put("pv_nmsuplem_i",    nmsuplem);
 		
 													//Clase
-		Map<String, Object> resultado = ejecutaSP(new ObtieneTvalogar(getDataSource()), params);
+		Map<String, Object> resultado = ejecutaSP(new ObtieneTvalogarSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
 		if(listaDatos==null||listaDatos.size()==0)
 		{
@@ -789,9 +642,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		return listaDatos;
 	}
 				//Clase
-	protected class ObtieneTvalogar extends StoredProcedure
+	protected class ObtieneTvalogarSP extends StoredProcedure
 	{
-		protected ObtieneTvalogar(DataSource dataSource) {
+		protected ObtieneTvalogarSP(DataSource dataSource) {
 			super(dataSource,"P_COT_GET_TVALOGAR");// Nombre
 			//SqlParameters
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
@@ -839,22 +692,18 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	@Override //nombre
-	public List<Map<String,String>> obtieneMcapitalSP(
-		 //parametros
-			String pv_cdramo_i,
-			String pv_cdcapita_i
-		) throws Exception{
+	public List<Map<String,String>> obtieneMcapital(String cdramo, String cdcapita) throws Exception{
 	
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
 		// params.put
-		params.put("pv_cdramo_i",    pv_cdramo_i);
-		params.put("pv_cdcapita_i",    pv_cdcapita_i);
+		params.put("pv_cdramo_i",    cdramo);
+		params.put("pv_cdcapita_i",    cdcapita);
 		
 		
 		
 													//Clase
-		Map<String, Object> resultado = ejecutaSP(new ObtieneMcapita(getDataSource()), params);
+		Map<String, Object> resultado = ejecutaSP(new ObtieneMcapitaSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
 		if(listaDatos==null||listaDatos.size()==0)
 		{
@@ -863,9 +712,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		return listaDatos;
 	}
 				//Clase
-	protected class ObtieneMcapita extends StoredProcedure
+	protected class ObtieneMcapitaSP extends StoredProcedure
 	{
-		protected ObtieneMcapita(DataSource dataSource) {
+		protected ObtieneMcapitaSP(DataSource dataSource) {
 			super(dataSource,"P_COT_GET_MCAPITAL");// Nombre
 			//SqlParameters
 			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
@@ -885,18 +734,15 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	@Override //nombre
-	public List<Map<String,String>> obtieneTgarantiSP(
-		 //parametros
-			String pv_cdgarant_i
-		) throws Exception{
+	public List<Map<String,String>> obtieneTgaranti(String cdgarant) throws Exception{
 	
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
 		// params.put
-		params.put("pv_cdgarant_i", pv_cdgarant_i);
+		params.put("pv_cdgarant_i", cdgarant);
 		
 													//Clase
-		Map<String, Object> resultado = ejecutaSP(new ObtieneTgaranti(getDataSource()), params);
+		Map<String, Object> resultado = ejecutaSP(new ObtieneTgarantiSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
 		if(listaDatos==null||listaDatos.size()==0)
 		{
@@ -905,9 +751,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		return listaDatos;
 	}
 				//Clase
-	protected class ObtieneTgaranti extends StoredProcedure
+	protected class ObtieneTgarantiSP extends StoredProcedure
 	{
-		protected ObtieneTgaranti(DataSource dataSource) {
+		protected ObtieneTgarantiSP(DataSource dataSource) {
 			super(dataSource,"P_COT_GET_TGARANTI");// Nombre
 			
 			//SqlParameters
@@ -931,29 +777,21 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	@Override //nombre
-	public List<Map<String,String>> obtieneMpolisitSP(
-		 //parametros
-			String pv_cdunieco_i 				,
-			String pv_cdramo_i   				,
-			String pv_estado_i   				,
-			String pv_nmpoliza_i 				,
-			String pv_nmsituac_i 				,
-			String pv_nmsuplem_i 				
-							
-		) throws Exception{
+	public List<Map<String,String>> obtieneMpolisit(String cdunieco, String cdramo, String estado,
+            String nmpoliza, String nmsituac, String nmsuplem) throws Exception{
 	
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
 		// params.put
-		params.put("pv_cdunieco_i",	   pv_cdunieco_i);
-		params.put("pv_cdramo_i",      pv_cdramo_i  );
-		params.put("pv_estado_i",      pv_estado_i  );
-		params.put("pv_nmpoliza_i",      pv_nmpoliza_i);
-		params.put("pv_nmsituac_i",      pv_nmsituac_i);
-		params.put("pv_nmsuplem_i",      pv_nmsuplem_i);
+		params.put("pv_cdunieco_i",	   cdunieco);
+		params.put("pv_cdramo_i",      cdramo);
+		params.put("pv_estado_i",      estado);
+		params.put("pv_nmpoliza_i",      nmpoliza);
+		params.put("pv_nmsituac_i",      nmsituac);
+		params.put("pv_nmsuplem_i",      nmsuplem);
 		
 													//Clase
-		Map<String, Object> resultado = ejecutaSP(new ObtieneMpolisit(getDataSource()), params);
+		Map<String, Object> resultado = ejecutaSP(new ObtieneMpolisitSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
 		if(listaDatos==null||listaDatos.size()==0)
 		{
@@ -962,9 +800,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		return listaDatos;
 	}
 				//Clase
-	protected class ObtieneMpolisit extends StoredProcedure
+	protected class ObtieneMpolisitSP extends StoredProcedure
 	{
-		protected ObtieneMpolisit(DataSource dataSource) {
+		protected ObtieneMpolisitSP(DataSource dataSource) {
 			super(dataSource,"P_COT_GET_MPOLISIT");// Nombre
 			//SqlParameters
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
@@ -989,31 +827,22 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	@Override //nombre
-	public List<Map<String,String>> obtieneTvalositSP(
-		 //parametros
-			
-			String pv_cdunieco_i ,
-			String pv_cdramo_i   ,
-			String pv_estado_i   ,
-			String pv_nmpoliza_i ,
-			String pv_nmsituac_i ,
-			String pv_cdtipsit_i ,
-			String pv_nmsuplem_i 
-		) throws Exception{
+	public List<Map<String,String>> obtieneTvalosit(String cdunieco, String cdramo, String estado,
+            String nmpoliza, String nmsituac, String cdtipsit, String nmsuplem) throws Exception{
 	
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
 		// params.put
-		params.put("pv_cdunieco_i",	 pv_cdunieco_i );
-		params.put("pv_cdramo_i",   pv_cdramo_i   );
-		params.put("pv_estado_i",   pv_estado_i   );
-		params.put("pv_nmpoliza_i",   pv_nmpoliza_i );
-		params.put("pv_nmsituac_i",   pv_nmsituac_i );
-		params.put("pv_cdtipsit_i",   pv_cdtipsit_i );
-		params.put("pv_nmsuplem_i",   pv_nmsuplem_i );
+		params.put("pv_cdunieco_i",	 cdunieco);
+		params.put("pv_cdramo_i",   cdramo);
+		params.put("pv_estado_i",   estado);
+		params.put("pv_nmpoliza_i",   nmpoliza);
+		params.put("pv_nmsituac_i",   nmsituac);
+		params.put("pv_cdtipsit_i",   cdtipsit);
+		params.put("pv_nmsuplem_i",   nmsuplem);
 		
 													//Clase
-		Map<String, Object> resultado = ejecutaSP(new ObtieneTvalosit(getDataSource()), params);
+		Map<String, Object> resultado = ejecutaSP(new ObtieneTvalositSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
 		if(listaDatos==null||listaDatos.size()==0)
 		{
@@ -1022,9 +851,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		return listaDatos;
 	}
 				//Clase
-	protected class ObtieneTvalosit extends StoredProcedure
+	protected class ObtieneTvalositSP extends StoredProcedure
 	{
-		protected ObtieneTvalosit(DataSource dataSource) {
+		protected ObtieneTvalositSP(DataSource dataSource) {
 			super(dataSource,"P_COT_GET_TVALOSIT");// Nombre
 			//SqlParameters
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
@@ -1072,25 +901,19 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	@Override //nombre
-	public List<Map<String,String>> obtieneMpolizasSP(
-		 //parametros
-			String pv_cdunieco_i ,
-			String pv_cdramo_i   ,
-			String pv_estado_i   ,
-			String pv_nmpoliza_i ,
-			String pv_nmsuplem_i 
-		) throws Exception{
+	public List<Map<String,String>> obtieneMpolizas(String cdunieco, String cdramo, String estado,
+            String nmpoliza, String nmsuplem) throws Exception{
 	
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
 		// params.put
-		params.put("pv_cdunieco_i",	    pv_cdunieco_i );
-		params.put("pv_cdramo_i",      pv_cdramo_i   );
-		params.put("pv_estado_i",      pv_estado_i   );
-		params.put("pv_nmpoliza_i",      pv_nmpoliza_i );
-		params.put("pv_nmsuplem_i",      pv_nmsuplem_i );
+		params.put("pv_cdunieco_i",	    cdunieco);
+		params.put("pv_cdramo_i",      cdramo);
+		params.put("pv_estado_i",      estado);
+		params.put("pv_nmpoliza_i",      nmpoliza);
+		params.put("pv_nmsuplem_i",      nmsuplem);
 													//Clase
-		Map<String, Object> resultado = ejecutaSP(new ObtieneMpolizas(getDataSource()), params);
+		Map<String, Object> resultado = ejecutaSP(new ObtieneMpolizasSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
 		if(listaDatos==null||listaDatos.size()==0)
 		{
@@ -1099,9 +922,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		return listaDatos;
 	}
 				//Clase
-	protected class ObtieneMpolizas extends StoredProcedure
+	protected class ObtieneMpolizasSP extends StoredProcedure
 	{
-		protected ObtieneMpolizas(DataSource dataSource) {
+		protected ObtieneMpolizasSP(DataSource dataSource) {
 			super(dataSource,"P_COT_GET_MPOLIZAS");// Nombre
 			//SqlParameters
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
@@ -1128,25 +951,19 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	@Override //nombre
-	public List<Map<String,String>> obtieneTvalopolSP(
-		 //parametros
-			String pv_cdunieco_i ,
-			String pv_cdramo_i   ,
-			String pv_estado_i   ,
-			String pv_nmpoliza_i ,
-			String pv_nmsuplem_i 
-		) throws Exception{
+	public List<Map<String,String>> obtieneTvalopol(String cdunieco, String cdramo, String estado,
+            String nmpoliza, String nmsuplem) throws Exception{
 	
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
 		// params.put
-		params.put("pv_cdunieco_i",	    pv_cdunieco_i );
-		params.put("pv_cdramo_i",      pv_cdramo_i   );
-		params.put("pv_estado_i",      pv_estado_i   );
-		params.put("pv_nmpoliza_i",      pv_nmpoliza_i );
-		params.put("pv_nmsuplem_i",      pv_nmsuplem_i );
+		params.put("pv_cdunieco_i",	    cdunieco);
+		params.put("pv_cdramo_i",      cdramo);
+		params.put("pv_estado_i",      estado);
+		params.put("pv_nmpoliza_i",      nmpoliza);
+		params.put("pv_nmsuplem_i",      nmsuplem);
 													//Clase
-		Map<String, Object> resultado = ejecutaSP(new ObtieneTvalopol(getDataSource()), params);
+		Map<String, Object> resultado = ejecutaSP(new ObtieneTvalopolSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
 		if(listaDatos==null||listaDatos.size()==0)
 		{
@@ -1155,9 +972,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		return listaDatos;
 	}
 				//Clase
-	protected class ObtieneTvalopol extends StoredProcedure
+	protected class ObtieneTvalopolSP extends StoredProcedure
 	{
-		protected ObtieneTvalopol(DataSource dataSource) {
+		protected ObtieneTvalopolSP(DataSource dataSource) {
 			super(dataSource,"P_COT_GET_TVALOPOL");// Nombre
 			//SqlParameters
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
