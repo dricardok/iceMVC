@@ -46,15 +46,15 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	private AuthenticationManager authenticationManager;
 	
 	@Action(
-	        value = "login", 
+	        value = "validaUsuario", 
 	        results = { 
 	            @Result(name = "success", type = "json") 
 	        }
 	    )
-	public String login(){
+	public String validaUsuario(){
 		logger.debug(StringUtils.join(
 				 "\n###################"
-				,"\n###### login ######"
+				,"\n###### validaUsuario ######"
 				));
 		
 		String result = SUCCESS;
@@ -68,7 +68,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
             Utils.validate(user, "No se recibio user");
             Utils.validate(password, "No se recibio password");
             
-			UsuarioVO usuario=authenticationManager.login(user, password);
+			UsuarioVO usuario=authenticationManager.validarUsuario(user, password);
 			logger.debug("-->"+usuario);
 			if(usuario==null){
 				params.put("usuarioValido", "N");
@@ -81,7 +81,6 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			logger.debug(StringUtils.join("#### usuario logeado=",usuario));
 			success=true;
 			
-			result = SUCCESS;
 		}
 		catch(Exception ex)
 		{
@@ -90,7 +89,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		}
 		
 		logger.debug(StringUtils.join(
-				 "\n###### login ######"
+				 "\n###### validaUsuario ######"
 				,"\n###################"
 				));
 		return result;
@@ -98,15 +97,15 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	
 	
 	@Action(
-	        value = "roles", 
+	        value = "obtenerRoles", 
 	        results = { 
 	            @Result(name = "success", type = "json") 
 	        }
 	    )
-	public String roles(){
+	public String obtenerRoles(){
 		logger.debug(StringUtils.join(
 				 "\n###################"
-				,"\n###### roles ######"
+				,"\n###### obtenerRoles ######"
 				));
 		
 		String result = SUCCESS;
@@ -127,7 +126,6 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			logger.debug(StringUtils.join("#### roles=",roles));
 			
 			success=true;
-			result = SUCCESS;
 		}
 		catch(Exception ex)
 		{
@@ -136,7 +134,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		}
 		
 		logger.debug(StringUtils.join(
-				 "\n###### roles ######"
+				 "\n###### obtenerRoles ######"
 				,"\n###################"
 				));
 		return result;
@@ -144,15 +142,15 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	
 	
 	@Action(
-	        value = "selectRol", 
+	        value = "seleccionarRol", 
 	        results = { 
 	            @Result(name = "success", type = "json") 
 	        }
 	    )
-	public String selectRol(){
+	public String seleccionarRol(){
 		logger.debug(StringUtils.join(
 				 "\n###################"
-				,"\n###### selectRol ######"
+				,"\n###### seleccionarRol ######"
 				));
 		
 		String result = SUCCESS;
@@ -189,7 +187,6 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			
 			
 			success=true;
-			result = SUCCESS;
 		}
 		catch(Exception ex)
 		{
@@ -198,7 +195,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		}
 		
 		logger.debug(StringUtils.join(
-				 "\n###### selectRoles ######"
+				 "\n###### seleccionarRol ######"
 				,"\n#########################"
 				));
 		return result;
@@ -206,15 +203,15 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	
 	
 	@Action(
-	        value = "datosSesion", 
+	        value = "obtenerDatosSesion", 
 	        results = { 
 	            @Result(name = "success", type = "json") 
 	        }
 	    )
-	public String datosSesion(){
+	public String obtenerDatosSesion(){
 		logger.debug(StringUtils.join(
 				 "\n#########################"
-				,"\n###### datosSesion ######"
+				,"\n###### obtenerDatosSesion ######"
 				));
 		
 		String result = SUCCESS;
@@ -228,7 +225,6 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			
 			
 			success=true;
-			result = SUCCESS;
 		}
 		catch(Exception ex)
 		{
@@ -237,7 +233,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		}
 		
 		logger.debug(StringUtils.join(
-				 "\n###### datosSesion ######"
+				 "\n###### obtenerDatosSesion ######"
 				,"\n#########################"
 				));
 		return result;
@@ -265,12 +261,12 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	
 	
 	@Action(		
-	        value = "menu", 
+	        value = "obtenerMenu", 
 	        results = { 
 	            @Result(name = "success", type = "json") 
 	        }
 	    )	
-	public String menu(){
+	public String obtenerMenu(){
 		logger.debug(StringUtils.join(
 				 "\n###################"
 				,"\n###### menu ######"
@@ -280,18 +276,12 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		
 		try
 		{
-			
 
-			
-			
-			 
-            
-            
-			message=authenticationManager.menu((UsuarioVO) session.get("USUARIO"));
+			message=authenticationManager.obtenerMenu((UsuarioVO) session.get("USUARIO"));
 			
 			success=true;
 			
-			result = SUCCESS;
+			
 		}
 		catch(Exception ex)
 		{

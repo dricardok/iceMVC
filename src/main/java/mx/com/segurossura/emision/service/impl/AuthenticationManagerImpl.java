@@ -46,7 +46,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 	
 	private static final String menuJsonVacio="{\"lstChildNodes\":[{\"atrWork\":\"T\",\"atrMenu\":\"No disponible\",\"atrFinish\":true,\"atrCdfunci\":null,\"atrTarget\":\"\",\"nodes\":[]}]}";
 	@Override
-	public UsuarioVO login(String user,String password) throws Exception{
+	public UsuarioVO validarUsuario(String user,String password) throws Exception{
 		
 		
 		logger.debug(Utils.join(
@@ -88,7 +88,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 	}
 	
 	@Override
-	public String menu(UsuarioVO usuario) throws Exception{
+	public String obtenerMenu(UsuarioVO usuario) throws Exception{
 		
 		
 		logger.debug(Utils.join(
