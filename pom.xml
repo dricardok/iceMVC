@@ -228,7 +228,7 @@
         </dependency>
         
         <dependency>
-            <groupId>com.biosnet</groupId>
+            <groupId>com.biosnet.core</groupId>
             <artifactId>ice-commons</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
