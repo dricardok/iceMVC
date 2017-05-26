@@ -77,6 +77,10 @@ public interface EmisionDAO {
 	List<Map<String, String>> obtieneMpolisit(String cdunieco, String cdramo, String estado,
 			String nmpoliza, String nmsituac, String nmsuplem) throws Exception;
 
+	List<Map<String, String>> obtieneTatrigar(String pv_cdramo_i, String pv_cdtipsit_i, String pv_cdgarant_i,
+			String pv_cdatribu_i) throws Exception;
+
+	
 
 	
 }

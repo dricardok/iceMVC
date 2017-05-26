@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
@@ -20,10 +22,13 @@ import com.biosnettcs.core.dao.mapper.GenericMapper;
 import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.emision.dao.EmisionDAO;
+import mx.com.segurossura.emision.service.impl.AuthenticationManagerImpl;
 
 @Repository
 public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 
+	private final static Logger logger = LoggerFactory.getLogger(EmisionDAOImpl.class);
+	
 	@Override
 	public void movimientoMpolizas (String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmsuplembloque, String nmsuplemsesion, String status, String swestado,
@@ -372,7 +377,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	protected class MovimientoMpoligarSP extends StoredProcedure
 	{
 		protected MovimientoMpoligarSP(DataSource dataSource) {
-			super(dataSource,"P_COT_MOV_MPOLIGAR");// Nombre
+			super(dataSource,"PKG_DATA_ALEA.P_MOV_MPOLIGAR");// Nombre
 			//SqlParameters
 			//declareParameter(new SqlInOutParameter("Identificador_Error",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
@@ -385,7 +390,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 			declareParameter(new SqlParameter("pv_cdcapita_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_fevencim_i",Types.DATE));
 			declareParameter(new SqlParameter("pv_accion_i",Types.VARCHAR));
-			
+			declareParameter(new SqlOutParameter("pv_rowid_o"    , Types.VARCHAR));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
 			compile();
@@ -497,6 +502,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	public List<Map<String,String>> obtieneMpoligar(String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception{
 	
+		
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
 		// params.put
@@ -508,7 +514,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		params.put("pv_nmsituac_i",      nmsituac);
 		params.put("pv_cdgarant_i",      cdgarant);
 		params.put("pv_nmsuplem_i",      nmsuplem);
-		
+		logger.debug("-->"+params);
 													//Clase
 		Map<String, Object> resultado = ejecutaSP(new ObtieneMpoligarSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
@@ -522,7 +528,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	protected class ObtieneMpoligarSP extends StoredProcedure
 	{
 		protected ObtieneMpoligarSP(DataSource dataSource) {
-			super(dataSource,"P_COT_GET_MPOLIGAR");// Nombre
+			super(dataSource,"PKG_DATA_ALEA.P_GET_MPOLIGAR_DISPONIBLES");// Nombre
 			//SqlParameters
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
@@ -545,7 +551,11 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 					 "status",
 					   "swmanual",
 					 
-					           "fevencim"
+					           "fevencim",
+					           "ptcapita",
+					           "deducible",
+					           "dsgarant",
+					           "amparada"
 			};
 			declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
@@ -1009,6 +1019,52 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 			           "otvalor106", "otvalor107", "otvalor108", "otvalor109", "otvalor110", 
 			           "otvalor111", "otvalor112", "otvalor113", "otvalor114", "otvalor115", 
 			           "otvalor116", "otvalor117", "otvalor118", "otvalor119", "otvalor120"
+			};
+			declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
+			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+			compile();
+		}
+	}
+	
+	@Override //nombre
+	public List<Map<String,String>> obtieneTatrigar(String pv_cdramo_i  ,
+			String pv_cdtipsit_i  ,
+			String pv_cdgarant_i  ,
+			String pv_cdatribu_i) throws Exception{
+	
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+		
+		// params.put
+		params.put("pv_cdramo_i",	    pv_cdramo_i);
+		params.put("pv_cdtipsit_i",      pv_cdtipsit_i);
+		params.put("pv_cdgarant_i",      pv_cdgarant_i);
+		params.put("pv_cdatribu_i",      pv_cdatribu_i);
+		
+													//Clase
+		Map<String, Object> resultado = ejecutaSP(new ObtieneTatrigarSP(getDataSource()), params);
+		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
+		if(listaDatos==null||listaDatos.size()==0)
+		{
+			throw new ApplicationException("Sin resultados");
+		}
+		return listaDatos;
+	}
+				//Clase
+	protected class ObtieneTatrigarSP extends StoredProcedure
+	{
+		protected ObtieneTatrigarSP(DataSource dataSource) {
+			super(dataSource,"PKG_DATA_ALEA.P_GET_TATRIGAR");// Nombre
+			//SqlParameters
+			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdtipsit_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdgarant_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdatribu_i",Types.VARCHAR));
+			String[] cols=new String[]{
+				//cursor
+					 "cdramo",   "cdtipsit",   "cdgarant", "cdatribu", 
+			           "swformat",   "nmlmax", "nmlmin", "swobliga", "dsatribu", 
+			           "ottabval", "swproduc", "swsuplem"
 			};
 			declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));

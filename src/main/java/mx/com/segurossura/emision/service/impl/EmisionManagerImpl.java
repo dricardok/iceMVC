@@ -525,5 +525,36 @@ public class EmisionManagerImpl implements EmisionManager{
 		return datos;
 	}
 	
+	@Override
+	public List<Map<String,String>> obtieneTatrigar(String pv_cdramo_i  ,
+			String pv_cdtipsit_i  ,
+			String pv_cdgarant_i  ,
+			String pv_cdatribu_i) throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ obtieneTatrigar"
+				
+				));
+		String paso="";
+		List<Map<String, String>> datos=null;
+		try{
+			
+			paso="Consultando datos";
+			
+			datos=emisionDAO.obtieneTatrigar(pv_cdramo_i, pv_cdtipsit_i, pv_cdgarant_i, pv_cdatribu_i);
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ obtieneTatrigar"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		return datos;
+	}
+	
 	
 }
