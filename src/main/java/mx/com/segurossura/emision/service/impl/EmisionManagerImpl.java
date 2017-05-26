@@ -38,7 +38,7 @@ public class EmisionManagerImpl implements EmisionManager{
 		try{
 			
 			paso="Consultando datos";
-			emisionDAO.movimientoMpolisitSP(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gn_Nmsuplem_Sesion, Gn_Nmsuplem_Bean, Gv_Status, Gv_Cdtipsit, Gv_Swreduci, Gn_Cdagrupa, Gn_Cdestado, Gf_Fefecsit, Gf_Fecharef, Gv_Indparbe, Gf_Feinipbs, Gn_Porparbe, Gn_Intfinan, Gn_Cdmotanu, Gf_Feinisus, Gf_Fefinsus, Gv_Accion);
+			emisionDAO.movimientoMpolisit(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gn_Nmsuplem_Sesion, Gn_Nmsuplem_Bean, Gv_Status, Gv_Cdtipsit, Gv_Swreduci, Gn_Cdagrupa, Gn_Cdestado, Gf_Fefecsit, Gf_Fecharef, Gv_Indparbe, Gf_Feinipbs, Gn_Porparbe, Gn_Intfinan, Gn_Cdmotanu, Gf_Feinisus, Gf_Fefinsus, Gv_Accion);
 
 		}catch(Exception ex)
 		{
@@ -67,7 +67,7 @@ public class EmisionManagerImpl implements EmisionManager{
 		try{
 			
 			paso="Consultando datos";
-			emisionDAO.movimientoTvalositSP(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gv_Cdtipsit, Gn_Cdatribu, Gn_Nmsuplem, Gv_Otvalor, Gv_Accion);
+			emisionDAO.movimientoTvalosit(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gv_Cdtipsit, Gn_Cdatribu, Gn_Nmsuplem, Gv_Otvalor, Gv_Accion);
 			
 
 		}catch(Exception ex)
@@ -96,7 +96,7 @@ public class EmisionManagerImpl implements EmisionManager{
 		try{
 			
 			paso="Consultando datos";
-			emisionDAO.movimientoMpoligarSP(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gn_Nmsuplem_Session, Gv_Cdgarant, Gn_Cdcapita, Gd_Fevencim, Gv_Accion);
+			emisionDAO.movimientoMpoligar(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gn_Nmsuplem_Session, Gv_Cdgarant, Gn_Cdcapita, Gd_Fevencim, Gv_Accion);
 			
 
 		}catch(Exception ex)
@@ -126,7 +126,7 @@ public class EmisionManagerImpl implements EmisionManager{
 		try{
 			
 			paso="Consultando datos";
-			emisionDAO.movimientoTvalogarSP(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Cdatribu, Gn_Nmsuplem, Gn_Nmsituac, Gv_Cdgarant, Gv_Otvalor, Gv_Accion);
+			emisionDAO.movimientoTvalogar(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Cdatribu, Gn_Nmsuplem, Gn_Nmsituac, Gv_Cdgarant, Gv_Otvalor, Gv_Accion);
 			
 
 		}catch(Exception ex)
@@ -157,7 +157,7 @@ public class EmisionManagerImpl implements EmisionManager{
 			
 			paso="Consultando datos";
 			
-			datos=emisionDAO.obtieneMpoligarSP(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdgarant_i, pv_nmsuplem_i);
+			datos=emisionDAO.obtieneMpoligar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdgarant_i, pv_nmsuplem_i);
 					
 
 		}catch(Exception ex)
@@ -187,7 +187,7 @@ public class EmisionManagerImpl implements EmisionManager{
 			
 			paso="Consultando datos";
 			
-			datos=emisionDAO.obtieneMpolicapSP(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdcapita_i, pv_nmsuplem_i)  ;
+			datos=emisionDAO.obtieneMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdcapita_i, pv_nmsuplem_i)  ;
 
 		}catch(Exception ex)
 		{
@@ -216,7 +216,7 @@ public class EmisionManagerImpl implements EmisionManager{
 			
 			paso="Consultando datos";
 			
-			datos=emisionDAO.obtieneTvalogarSP(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i)  ;
+			datos=emisionDAO.obtieneTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i)  ;
 
 		}catch(Exception ex)
 		{
@@ -244,7 +244,7 @@ public class EmisionManagerImpl implements EmisionManager{
 			
 			paso="Consultando datos";
 			
-			datos=emisionDAO.obtieneMcapitalSP(pv_cdramo_i, pv_cdcapita_i)  ;
+			datos=emisionDAO.obtieneMcapital(pv_cdramo_i, pv_cdcapita_i)  ;
 
 		}catch(Exception ex)
 		{
@@ -272,7 +272,7 @@ public class EmisionManagerImpl implements EmisionManager{
 			
 			paso="Consultando datos";
 			
-			datos=emisionDAO.obtieneTgarantiSP(pv_cdgarant_i)  ;
+			datos=emisionDAO.obtieneTgaranti(pv_cdgarant_i)  ;
 
 		}catch(Exception ex)
 		{
@@ -301,7 +301,7 @@ public class EmisionManagerImpl implements EmisionManager{
 			
 			paso="Consultando datos";
 			
-			emisionDAO.movimientoMpolicapSP(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gn_Nmsuplem_Sesion, Gv_Swrevalo, Gv_Cdcapita, Gn_Ptcapita, Gn_Nmsuplem_Bloque, Gv_ModoAcceso);
+			emisionDAO.movimientoMpolicap(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gn_Nmsuplem_Sesion, Gv_Swrevalo, Gv_Cdcapita, Gn_Ptcapita, Gn_Nmsuplem_Bloque, Gv_ModoAcceso);
 
 		}catch(Exception ex)
 		{
@@ -331,7 +331,7 @@ public class EmisionManagerImpl implements EmisionManager{
 			
 			paso="Consultando datos";
 			
-			datos=emisionDAO.obtieneTvalositSP(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i)  ;
+			datos=emisionDAO.obtieneTvalosit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i)  ;
 
 		}catch(Exception ex)
 		{
@@ -360,7 +360,7 @@ public class EmisionManagerImpl implements EmisionManager{
 			
 			paso="Consultando datos";
 			
-			datos=emisionDAO.obtieneMpolizasSP(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i)  ;
+			datos=emisionDAO.obtieneMpolizas(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i)  ;
 
 		}catch(Exception ex)
 		{
@@ -389,7 +389,7 @@ public class EmisionManagerImpl implements EmisionManager{
 			
 			paso="Consultando datos";
 			
-			datos=emisionDAO.obtieneTvalopolSP(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i)  ;
+			datos=emisionDAO.obtieneTvalopol(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i)  ;
 
 		}catch(Exception ex)
 		{
@@ -424,7 +424,7 @@ public class EmisionManagerImpl implements EmisionManager{
 		try{
 			
 			paso="Consultando datos";
-			emisionDAO.movimientoMpolizasSP(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_NmsuplemBloque, Gn_NmsuplemSesion, Gv_Status, Gv_Swestado, Gn_Nmsolici, Gd_Feautori, Gn_Cdmotanu, Gd_Feanulac, Gv_Swautori, Gv_Cdmoneda, Gd_Feinisus, Gd_Fefinsus, Gv_Ottempot, Gd_Feefecto, Gv_Hhefecto, Gd_Feproren, Gd_Fevencim, Gn_Nmrenova, Gd_Ferecibo, Gd_Feultsin, Gn_Nmnumsin, Gv_Cdtipcoa, Gv_Swtarifi, Gv_Swabrido, Gd_Feemisio, Gn_Cdperpag, Gn_Nmpoliex, Gv_Nmcuadro, Gn_Porredau, Gv_Swconsol, Gn_Nmpolcoi, Gv_Adparben, Gn_Nmcercoi, Gn_Cdtipren, Gv_Accion);
+			emisionDAO.movimientoMpolizas(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_NmsuplemBloque, Gn_NmsuplemSesion, Gv_Status, Gv_Swestado, Gn_Nmsolici, Gd_Feautori, Gn_Cdmotanu, Gd_Feanulac, Gv_Swautori, Gv_Cdmoneda, Gd_Feinisus, Gd_Fefinsus, Gv_Ottempot, Gd_Feefecto, Gv_Hhefecto, Gd_Feproren, Gd_Fevencim, Gn_Nmrenova, Gd_Ferecibo, Gd_Feultsin, Gn_Nmnumsin, Gv_Cdtipcoa, Gv_Swtarifi, Gv_Swabrido, Gd_Feemisio, Gn_Cdperpag, Gn_Nmpoliex, Gv_Nmcuadro, Gn_Porredau, Gv_Swconsol, Gn_Nmpolcoi, Gv_Adparben, Gn_Nmcercoi, Gn_Cdtipren, Gv_Accion);
 			
 
 		}catch(Exception ex)
@@ -453,7 +453,7 @@ public class EmisionManagerImpl implements EmisionManager{
 		try{
 			
 			paso="Consultando datos";
-			emisionDAO.movimientoTvalopolSP(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Cdatribu, Gn_Nmsuplem, Gv_Otvalor_New, Gv_Otvalor_Old);
+			emisionDAO.movimientoTvalopol(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Cdatribu, Gn_Nmsuplem, Gv_Otvalor_New, Gv_Otvalor_Old);
 
 		}catch(Exception ex)
 		{
@@ -481,7 +481,7 @@ public class EmisionManagerImpl implements EmisionManager{
 		try{
 			
 			paso="Consultando datos";
-			nmpoliza=emisionDAO.generaNmpolizaSP(Gn_Nmpoliza, Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gv_Swcolind, Gn_Nmpolcoi);
+			nmpoliza=emisionDAO.generaNmpoliza(Gn_Nmpoliza, Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gv_Swcolind, Gn_Nmpolcoi);
 
 		}catch(Exception ex)
 		{
@@ -510,7 +510,7 @@ public class EmisionManagerImpl implements EmisionManager{
 			
 			paso="Consultando datos";
 			
-			datos=emisionDAO.obtieneMpolisitSP(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i)  ;
+			datos=emisionDAO.obtieneMpolisit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i)  ;
 
 		}catch(Exception ex)
 		{

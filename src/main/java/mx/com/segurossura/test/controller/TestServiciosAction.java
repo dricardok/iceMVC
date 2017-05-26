@@ -129,7 +129,7 @@ public class TestServiciosAction extends PrincipalCoreAction {
             //logger.debug("--->"+emisionDAO.generaNmpolizaSP(null, "0", "602", "W", "N", "100"));
             
     	//logger.debug("--->"+emisionDAO.obtieneTvalopolSP("1", "201", "M", "179407", "245436412000000001"));
-    	emisionDAO.movimientoMpoligarSP(null, null, null, null, null, null, null, null, null, null);;
+    	emisionDAO.movimientoMpoligar(null, null, null, null, null, null, null, null, null, null);;
             return SUCCESS;
         }
 
