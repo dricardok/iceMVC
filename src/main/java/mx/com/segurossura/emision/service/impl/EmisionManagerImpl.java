@@ -480,7 +480,7 @@ public class EmisionManagerImpl implements EmisionManager{
 		String nmpoliza=null;
 		try{
 			
-			nmpoliza = emisionDAO.generaNmpoliza(Gn_Nmpoliza, Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gv_Swcolind, Gn_Nmpolcoi);
+			nmpoliza = emisionDAO.generaNmpoliza(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gv_Swcolind, Gn_Nmpolcoi);
 
 		}catch(Exception ex)
 		{

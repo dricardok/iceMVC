@@ -71,12 +71,11 @@ public interface EmisionDAO {
 	void movimientoTvalopol(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String cdatribu, String nmsuplem, String otvalor_new, String otvalor_old) throws Exception;
 
-	String generaNmpoliza(String nmpoliza, String cdunieco, String cdramo, String estado,
-			String swcolind, String nmpolcoi) throws Exception;
-
 	List<Map<String, String>> obtieneMpolisit(String cdunieco, String cdramo, String estado,
 			String nmpoliza, String nmsituac, String nmsuplem) throws Exception;
-
-
 	
+	public String generaNmpoliza (String cdunieco, String cdramo, String estado, String swcolind, String nmpolcoi) throws Exception;
+	
+	public void movimientoTvalopol (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplemBloque,
+	        String nmsuplemSesion, String status, Map<String, String> otvalores, String accion) throws Exception;
 }
