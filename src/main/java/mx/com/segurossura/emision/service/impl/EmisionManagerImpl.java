@@ -376,7 +376,7 @@ public class EmisionManagerImpl implements EmisionManager{
 	}
 
 	@Override
-	public List<Map<String, String>> obtieneTvalopol(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
+	public Map<String, String> obtieneTvalopol(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
 			String pv_nmpoliza_i, String pv_nmsuplem_i) throws Exception {
 		logger.debug(Utils.join(
 				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -384,12 +384,12 @@ public class EmisionManagerImpl implements EmisionManager{
 				
 				));
 		String paso="";
-		List<Map<String, String>> datos=null;
+		Map<String, String> datos=null;
 		try{
 			
 			paso="Consultando datos";
 			
-			datos=emisionDAO.obtieneTvalopol(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i)  ;
+			datos=emisionDAO.obtenerTvalopol(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i)  ;
 
 		}catch(Exception ex)
 		{

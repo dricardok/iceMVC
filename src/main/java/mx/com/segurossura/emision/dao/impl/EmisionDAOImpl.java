@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.jdbc.support.oracle.SqlStructValue;
 import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.SqlOutParameter;
@@ -28,6 +30,8 @@ import mx.com.segurossura.emision.model.TvalopolVO;
 @Repository
 public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 
+    private static final Logger logger = LoggerFactory.getLogger(EmisionDAOImpl.class);
+    
 	@Override
 	public void movimientoMpolizas (String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmsuplembloque, String nmsuplemsesion, String status, String swestado,
@@ -88,7 +92,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	
 	protected class MovimientoMpolizasSP extends StoredProcedure {
     	protected MovimientoMpolizasSP (DataSource dataSource) {
-            super(dataSource,"P_SAT_MOV_MPOLIZAS");
+            super(dataSource,"PKG_DATA_ALEA.P_MOV_MPOLIZAS");
             declareParameter(new SqlParameter("pv_cdunieco_i"       , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i"         , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i"         , Types.VARCHAR));
@@ -907,25 +911,20 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	@Override //nombre
-	public List<Map<String,String>> obtieneTvalopol(String cdunieco, String cdramo, String estado,
-            String nmpoliza, String nmsuplem) throws Exception{
-	
+	public Map<String,String> obtenerTvalopol (String cdunieco, String cdramo, String estado,
+            String nmpoliza, String nmsuplem) throws Exception {
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
-		
-		// params.put
-		params.put("pv_cdunieco_i",	    cdunieco);
-		params.put("pv_cdramo_i",      cdramo);
-		params.put("pv_estado_i",      estado);
-		params.put("pv_nmpoliza_i",      nmpoliza);
-		params.put("pv_nmsuplem_i",      nmsuplem);
-													//Clase
+		params.put("pv_cdunieco_i" , cdunieco);
+		params.put("pv_cdramo_i"   , cdramo);
+		params.put("pv_estado_i"   , estado);
+		params.put("pv_nmpoliza_i" , nmpoliza);
+		params.put("pv_nmsuplem_i" , nmsuplem);
 		Map<String, Object> resultado = ejecutaSP(new ObtieneTvalopolSP(getDataSource()), params);
-		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
-		if(listaDatos==null||listaDatos.size()==0)
-		{
+		List<Map<String,String>> listaDatos = (List<Map<String,String>>) resultado.get("pv_registro_o");
+		if (listaDatos == null || listaDatos.size() == 0) {
 			throw new ApplicationException("Sin resultados");
 		}
-		return listaDatos;
+		return listaDatos.get(0);
 	}
 				//Clase
 	protected class ObtieneTvalopolSP extends StoredProcedure
@@ -1031,6 +1030,51 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_accion_i"         , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public Map<String, String> ejecutarValoresDefecto (String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String nmsuplem, String cdbloque) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsituac_i", nmsituac);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        params.put("pv_cdbloque_i", cdbloque);
+        Map<String, Object> procRes = ejecutaSP(new EjecutarValoresDefectoSP(getDataSource()), params);
+        String valores = (String) procRes.get("pv_valores_o");
+        if (StringUtils.isBlank(valores)) {
+            valores = "";
+        }
+        
+        Map<String, String> valoresMap = new LinkedHashMap<String, String>();
+        
+        String[] valoresArray = valores.split(" ");
+        for (int i = 0; i < valoresArray.length ; i = i + 2) {
+            valoresMap.put(valoresArray[i].replaceAll(Utils.join(cdbloque, "."), "").toLowerCase(), valoresArray[i + 1]);
+        }
+        
+        logger.debug(Utils.log("****** ejecutarValoresDefecto valoresMap = ", valoresMap));
+        return valoresMap;
+    }
+    
+    protected class EjecutarValoresDefectoSP extends StoredProcedure {
+        protected EjecutarValoresDefectoSP (DataSource dataSource) {
+            super(dataSource, "PKG_STRUCT_ALEA.P_GET_VALDEF_BLQ");
+            declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdbloque_i",Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_string_val_o" , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"     , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"      , Types.VARCHAR));
             compile();
         }
     }

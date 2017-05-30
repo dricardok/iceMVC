@@ -51,7 +51,7 @@ public interface EmisionManager {
 	List<Map<String, String>> obtieneMpolizas(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
 			String pv_nmpoliza_i, String pv_nmsuplem_i) throws Exception;
 
-	List<Map<String, String>> obtieneTvalopol(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
+	Map<String, String> obtieneTvalopol(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
 			String pv_nmpoliza_i, String pv_nmsuplem_i) throws Exception;
 
 	void movimientoMpolizas(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,

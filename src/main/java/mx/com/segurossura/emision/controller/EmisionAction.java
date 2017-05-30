@@ -715,7 +715,7 @@ public class EmisionAction extends PrincipalCoreAction {
 			String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
             
             
-			slist1=emisionManager.obtieneTvalopol(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i);
+			params=emisionManager.obtieneTvalopol(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i);
 			
 			success=true;
 			

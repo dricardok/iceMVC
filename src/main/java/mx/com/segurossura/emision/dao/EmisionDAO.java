@@ -54,8 +54,8 @@ public interface EmisionDAO {
 	List<Map<String, String>> obtieneMpolizas(String cdunieco, String cdramo, String estado,
 			String nmpoliza, String nmsuplem) throws Exception;
 
-	List<Map<String, String>> obtieneTvalopol(String cdunieco, String cdramo, String estado,
-			String nmpoliza, String nmsuplem) throws Exception;
+	public Map<String, String> obtenerTvalopol (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem)
+	        throws Exception;
 
 	void movimientoMpolizas(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplembloque, String nmsuplemsesion, String status, String swestado,
@@ -78,4 +78,7 @@ public interface EmisionDAO {
 	
 	public void movimientoTvalopol (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplemBloque,
 	        String nmsuplemSesion, String status, Map<String, String> otvalores, String accion) throws Exception;
+	
+	public Map<String, String> ejecutarValoresDefecto (String cdunieco, String cdramo, String estado, String nmpoliza,
+	        String nmsituac, String nmsuplem, String cdbloque) throws Exception;
 }
