@@ -51,8 +51,9 @@ public class ComponentesAction extends PrincipalCoreAction {
     @Action(value = "recuperarComponentes", results = { @Result(name = "success", type = "json") }, interceptorRefs = {
             @InterceptorRef(value = "json", params = { "enableSMD", "true", "ignoreSMDMethodInterfaces", "false" }) })
     public String recuperarComponentes() throws Exception {
-        logger.debug(Utils.log("\n################################", "\n###### recuperarComponentes ######",
-                "\n###### secciones=", secciones));
+        logger.debug(Utils.log("\n################################", 
+                               "\n###### recuperarComponentes ######",
+                               "\n###### secciones=", secciones));
         String pant = "otro";
         UsuarioVO usuario = null;
         try {
@@ -94,16 +95,18 @@ public class ComponentesAction extends PrincipalCoreAction {
             success = false;
             message = Utils.manejaExcepcion(ex);
         }
-        logger.debug(Utils.log("\n################################", "\n###### recuperarComponentes ######",
-                "\n###### componentes=", componentes));
+        logger.debug(Utils.log("\n###### recuperarComponentes ######",
+                               "\n###### componentes=", componentes,
+                               "\n################################"));
         return SUCCESS;
     }
 
     @Action(value = "movimientoComponentes", results = { @Result(name = "success", type = "json") }, interceptorRefs = {
             @InterceptorRef(value = "json", params = { "enableSMD", "true", "ignoreSMDMethodInterfaces", "false" }) })
     public String movimientoComponentes() throws Exception {
-        logger.debug(Utils.log("\n################################", "\n###### movimientoComponentes ######",
-                "\n###### params=", params));
+        logger.debug(Utils.log("\n###################################", 
+                               "\n###### movimientoComponentes ######",
+                               "\n###### params=", params));
         try {
             Utils.validate(params, "No se recibieron datos");
             String pantalla = params.get("pantalla");
@@ -123,7 +126,8 @@ public class ComponentesAction extends PrincipalCoreAction {
             success = false;
             message = Utils.manejaExcepcion(ex);
         }
-        logger.debug(Utils.log("\n################################", "\n###### movimientoComponentes ######"));
+        logger.debug(Utils.log("\n###### movimientoComponentes ######",
+                               "\n###################################"));
         return SUCCESS;
     }
 

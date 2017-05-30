@@ -376,7 +376,7 @@ public class EmisionManagerImpl implements EmisionManager{
 	}
 
 	@Override
-	public Map<String, String> obtieneTvalopol(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
+	public Map<String, String> obtenerTvalopol(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
 			String pv_nmpoliza_i, String pv_nmsuplem_i) throws Exception {
 		logger.debug(Utils.join(
 				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -480,6 +480,7 @@ public class EmisionManagerImpl implements EmisionManager{
 		String nmpoliza=null;
 		try{
 			
+			paso="Consultando datos";
 			nmpoliza = emisionDAO.generaNmpoliza(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gv_Swcolind, Gn_Nmpolcoi);
 
 		}catch(Exception ex)
@@ -524,5 +525,72 @@ public class EmisionManagerImpl implements EmisionManager{
 		return datos;
 	}
 	
+	@Override
+	public List<Map<String,String>> obtieneTatrigar(String pv_cdramo_i  ,
+			String pv_cdtipsit_i  ,
+			String pv_cdgarant_i  ,
+			String pv_cdatribu_i) throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ obtieneTatrigar"
+				
+				));
+		String paso="";
+		List<Map<String, String>> datos=null;
+		try{
+			
+			paso="Consultando datos";
+			
+			datos=emisionDAO.obtieneTatrigar(pv_cdramo_i, pv_cdtipsit_i, pv_cdgarant_i, pv_cdatribu_i);
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ obtieneTatrigar"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		return datos;
+	}
 	
+	@Override
+	public String obtieneNmsituac(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception{
+	    logger.debug(Utils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ obtieneNmsituac"
+               ));
+        String paso = "";
+        String nmsituac = "";
+        try{
+            nmsituac = emisionDAO.obtieneNmsituac(cdunieco, cdramo, estado, nmpoliza);
+        } catch (Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
+        logger.debug(Utils.join(
+                "\n@@@@@@ obtieneNmsituac"
+               ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+               ));
+        return nmsituac;
+	}
+    
+	@Override
+    public void borraEstructuraSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception{
+	    logger.debug(Utils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ borraEstructuraSituacion"
+               ));
+        String paso = "";
+        try{
+            emisionDAO.borraEstructuraSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+        } catch (Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
+        logger.debug(Utils.join(
+                "\n@@@@@@ borraEstructuraSituacion"
+               ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+               ));
+	}
 }
