@@ -78,9 +78,14 @@ public interface EmisionDAO {
 			String nmpoliza, String nmsituac, String nmsuplem) throws Exception;
 
 	List<Map<String, String>> obtieneTatrigar(String pv_cdramo_i, String pv_cdtipsit_i, String pv_cdgarant_i,
-			String pv_cdatribu_i) throws Exception;
-
+			String pv_cdatribu_i) throws Exception;	
 	
+	String obtieneNmsituac(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
+	    
+	void borraEstructuraSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception;
+	
+	List<Map<String, String>> obtieneValoresDefecto(String cdunieco, String cdramo, String estado, String nmpoliza, 
+	        String nmsituac, String nmsuplem, String cdbloque) throws Exception;
 
 	
 }

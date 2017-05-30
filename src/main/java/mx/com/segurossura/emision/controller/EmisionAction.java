@@ -909,7 +909,7 @@ public class EmisionAction extends PrincipalCoreAction {
 	}
 	
 	
-	@Action(		
+	@Action(
 	        value = "obtieneMpolisit", 
 	        results = { 
 	            @Result(name = "success", type = "json") 
@@ -917,43 +917,35 @@ public class EmisionAction extends PrincipalCoreAction {
 	    )	
 	public String obtieneMpolisit(){
 		logger.debug(StringUtils.join(
-				 "\n###################"
-				,"\n###### obtieneMpolisit ######"
-				));
-		
-		String result = SUCCESS;
-		
-		try
-		{
-			
-			Utils.validate(params, "No se recibieron datos");
-			
-			
-			String pv_cdunieco_i= params.get("pv_cdunieco_i");
-			String pv_cdramo_i= params.get("pv_cdramo_i");
-			String pv_estado_i= params.get("pv_estado_i");
-			String pv_nmpoliza_i= params.get("pv_nmpoliza_i");
-			String pv_nmsituac_i= params.get("pv_nmsituac_i");
-			String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
-            
-            
-			slist1=emisionManager.obtieneMpolisit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i);
-			
-			success=true;
-			
-			result = SUCCESS;
-		}
-		catch(Exception ex)
-		{
+				 "\n###################",
+				 "\n###### obtieneMpolisit ######",
+				 "\n###### params ",params
+				));		
+		try{			
+			Utils.validate(params, "No se recibieron datos");			
+			String pv_cdunieco_i= params.get("cdunieco");
+			String pv_cdramo_i= params.get("cdramo");
+			String pv_estado_i= params.get("estado");
+			String pv_nmpoliza_i= params.get("nmpoliza");
+			String pv_nmsituac_i= params.get("nmsituac");
+			String pv_nmsuplem_i= params.get("nmsuplem");
+            Utils.validate(pv_cdunieco_i, "No se recibio oficina");
+            Utils.validate(pv_cdramo_i, "No se recibio producto");
+            Utils.validate(pv_estado_i, "No se recibio estado de la póliza");
+            Utils.validate(pv_nmpoliza_i, "No se recibio el numero de póliza");
+            Utils.validate(pv_nmsuplem_i, "No se recibio sumplemento");
+			slist1 = emisionManager.obtieneMpolisit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i);			
+			success = true;
+		} catch(Exception ex) {
 			success=false;
 			message = Utils.manejaExcepcion(ex);
 		}
-		
 		logger.debug(StringUtils.join(
-				 "\n###### obtieneMpolisit ######"
-				,"\n#############################"
+				 "\n###### obtieneMpolisit ######",
+				 "\n###### slist1 ",slist1,
+				 "\n#############################"
 				));
-		return result;
+		return SUCCESS;
 	}
 	
 	@Action(		
@@ -1011,6 +1003,39 @@ public class EmisionAction extends PrincipalCoreAction {
 				,"\n#############################"
 				));
 		return result;
+	}
+	
+	@Action(       
+            value = "obtieneNmsituac", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }                    
+        )   
+    public String obtieneNmsituac(){
+	    logger.debug(StringUtils.join(
+                "\n#############################",
+               "\n###### obtieneNmsituac ######",
+               "\n###### params ",params
+               ));
+	    try{
+	        Utils.validate(params, "No se recibieron parametros");
+	        String cdunieco = params.get("cdunieco");
+	        String cdramo   = params.get("cdramo");
+	        String estado   = params.get("estado");
+	        String nmpoliza = params.get("nmpoliza");
+	        Utils.validate(cdunieco, "No se recibio oficina");
+	        Utils.validate(cdramo, "No se recibio producto");
+	        Utils.validate(estado, "No se recibio estado");
+	        Utils.validate(nmpoliza, "No se recibio poliza");
+	        emisionManager.obtieneNmsituac(cdunieco, cdramo, estado, nmpoliza);
+	    } catch(Exception ex) {
+	        Utils.manejaExcepcion(ex);
+	    }
+	    logger.debug(StringUtils.join(
+                "\n###### obtieneNmsituac ######"
+               ,"\n#############################"
+               ));
+	    return SUCCESS;
 	}
 
 	public Map<String, String> getParams() {

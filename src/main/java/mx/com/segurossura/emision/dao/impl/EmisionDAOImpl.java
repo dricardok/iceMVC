@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Repository;
 
+import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
@@ -1072,4 +1073,105 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 			compile();
 		}
 	}
-}
+	
+	@Override
+	public String obtieneNmsituac(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception{
+	    Map<String, Object> params = new LinkedHashMap<String, Object>();
+	    String nmsituac = null;
+	    params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsituac_o", nmsituac);
+	    Map<String, Object> resultado = ejecutaSP(new ObtieneNmsituacSP(getDataSource()), params);
+	    nmsituac = (String) resultado.get("pv_nmsituac_o");
+	    return nmsituac;
+	}
+	
+	protected class ObtieneNmsituacSP extends StoredProcedure{
+        protected ObtieneNmsituacSP(DataSource dataSource) {
+            super(dataSource,"PKG_DATA_ALEA.P_GENERA_NMSITUAC");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlInOutParameter("pv_nmsituac_o", Types.VARCHAR)); 
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+	    
+	@Override
+	public void borraEstructuraSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception{
+	    Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsituac_i", nmsituac);
+        ejecutaSP(new BorraEstructuraSituacionSP(getDataSource()), params);
+	}
+	
+	protected class BorraEstructuraSituacionSP extends StoredProcedure{
+	    protected BorraEstructuraSituacionSP(DataSource dataSource) {
+	        super(dataSource,"PKG_DML_ALEA.P_DEL_DAT_SIT");
+	        declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+	        declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+	        declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+	        declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+	        declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
+	        declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+	        declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+	        compile();
+	    }
+	}
+	
+	@Override
+	public List<Map<String,String>> obtieneValoresDefecto(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String cdbloque) throws Exception{	    
+	    Map<String, Object> params = new LinkedHashMap<String, Object>();	        
+	    // params.put
+	    params.put("pv_cdunieco_i", cdunieco);
+	    params.put("pv_cdramo_i", cdramo);
+	    params.put("pv_estado_i", estado);
+	    params.put("pv_nmpoliza_i", nmpoliza);
+	    params.put("pv_nmsituac_i", nmsituac);
+	    params.put("pv_nmsuplem_i", nmsuplem);
+	    params.put("pv_cdbloque_i", cdbloque);
+	    Map<String, Object> resultado = ejecutaSP(new ObtieneValoresDefectoSP(getDataSource()), params);
+	    List<Map<String,String>> listaDatos = (List<Map<String,String>>)resultado.get("pv_registro_o");
+	    if(listaDatos==null||listaDatos.size()==0){
+	        throw new ApplicationException("Sin resultados");
+	    }
+	        return listaDatos;
+	}
+	
+	//Clase
+	protected class ObtieneValoresDefectoSP extends StoredProcedure{
+	    protected ObtieneValoresDefectoSP(DataSource dataSource) {
+	        super(dataSource,"P_ALEADEFECTO");
+	        //SqlParameters
+	        declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+	        declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+	        declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+	        declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
+	        declareParameter(new SqlParameter("pv_nmsituac_i",Types.VARCHAR));
+	        declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
+	        declareParameter(new SqlParameter("pv_cdbloque_i",Types.VARCHAR));
+	        String[] cols=new String[]{
+	                     "cdunieco",
+	                     "cdramo",
+	                     "estado",
+	                     "nmpoliza",
+	                     "nmsituac",
+	                     "nmsuplem",
+	                     "otclave",
+	                     "otvalor"
+	        };
+	        declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
+	        declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+	        declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+	        compile();
+	    }
+	}
+  }

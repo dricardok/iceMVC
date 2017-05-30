@@ -556,5 +556,63 @@ public class EmisionManagerImpl implements EmisionManager{
 		return datos;
 	}
 	
+	@Override
+	public String obtieneNmsituac(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception{
+	    logger.debug(Utils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ obtieneNmsituac"
+               ));
+        String paso = "";
+        String nmsituac = "";
+        try{
+            nmsituac = emisionDAO.obtieneNmsituac(cdunieco, cdramo, estado, nmpoliza);
+        } catch (Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
+        logger.debug(Utils.join(
+                "\n@@@@@@ obtieneNmsituac"
+               ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+               ));
+        return nmsituac;
+	}
+    
+	@Override
+    public void borraEstructuraSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception{
+	    logger.debug(Utils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ borraEstructuraSituacion"
+               ));
+        String paso = "";
+        try{
+            emisionDAO.borraEstructuraSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+        } catch (Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
+        logger.debug(Utils.join(
+                "\n@@@@@@ borraEstructuraSituacion"
+               ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+               ));
+	}
+	
+	@Override
+	public List<Map<String, String>>obtieneValoresDefecto(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String cdbloque) throws Exception{
+	    logger.debug(Utils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ obtieneValoresDefecto"
+               ));
+        String paso="";
+        List<Map<String, String>> datos = null;
+        try{
+            paso = "Consultando datos";
+            datos = emisionDAO.obtieneValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, cdbloque);
+       } catch(Exception ex) {
+           Utils.generaExcepcion(ex, paso);
+       }
+       logger.debug(Utils.join(
+                "\n@@@@@@ obtieneValoresDefecto",
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+               ));
+       return datos;
+	}
 	
 }
