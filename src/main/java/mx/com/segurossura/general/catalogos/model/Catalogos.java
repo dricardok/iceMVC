@@ -3,7 +3,8 @@ package mx.com.segurossura.general.catalogos.model;
 public enum Catalogos {
     
     SUCURSALES(""),
-    TATRIPOL("");
+    TATRIPOL(""),
+    TATRISIT("");
     
     private String cdtabla;
     

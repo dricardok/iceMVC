@@ -69,4 +69,32 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
             compile();
         }
     }
+    
+    @Override
+    public List<Map<String, String>> obtenerCatalogoTatrisit (String cdtipsit, String cdatribu) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdtipsit_i", cdtipsit);
+        params.put("pv_cdatribu_i", cdatribu);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerCatalogoTatrisitSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerCatalogoTatrisitSP extends StoredProcedure {
+        protected ObtenerCatalogoTatrisitSP (DataSource dataSource) {
+            super(dataSource,"PKG_LOV_ALEA.P_GET_CAT_TATRISIT");
+            declareParameter(new SqlParameter("pv_cdtipsit_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdatribu_i", Types.VARCHAR));
+            String[] cols = new String[]{
+                    "otclave1", "otvalor26"
+                    };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
+            compile();
+        }
+    }
 }

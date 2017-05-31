@@ -28,6 +28,7 @@ public class CatalogosManagerImpl implements CatalogosManager {
     @Override
     public List<BaseVO> obtenerCatalogo (String catalogo, Map<String, String> params, String cdusuari, String cdsisrol) throws Exception {
         String paso = Utils.join("Recuperando cat\u00e1logo ", catalogo);
+        List<Map<String, String>> registros = new ArrayList<>();
         List<BaseVO> lista = null;
         try {
             Catalogos cat = Catalogos.valueOf(catalogo);
@@ -46,7 +47,18 @@ public class CatalogosManagerImpl implements CatalogosManager {
                 
             case TATRIPOL:
                 paso = "Recuperando lista de apoyo para atributo de p\u00f3liza";
-                List<Map<String, String>> registros = catalogosDAO.obtenerCatalogoTatripol(params.get("cdramo"), params.get("cdatribu"));
+                registros = catalogosDAO.obtenerCatalogoTatripol(params.get("cdramo"), params.get("cdatribu"));
+                lista = new ArrayList<BaseVO>();
+                if (registros != null) {
+                    for (Map<String, String> registro: registros) {
+                        lista.add(new BaseVO(registro.get("otclave1"), registro.get("otvalor26")));
+                    }
+                }
+                break;
+             
+            case TATRISIT:
+                paso = "Recuperando lista de apoyo para atributo de p\u00f3liza";
+                registros = catalogosDAO.obtenerCatalogoTatrisit(params.get("cdtipsit"), params.get("cdatribu"));
                 lista = new ArrayList<BaseVO>();
                 if (registros != null) {
                     for (Map<String, String> registro: registros) {
