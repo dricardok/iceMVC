@@ -1044,8 +1044,13 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     public Map<String, String> ejecutarValoresDefecto (String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmsituac, String nmsuplem, String cdbloque) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
-        params.put("pv_nmsuplem_i", nmsuplem);
-        params.put("pv_cdbloque_i", cdbloque);
+        params.put("pv_cdunieco_i" , cdunieco);
+        params.put("pv_cdramo_i"   , cdramo);
+        params.put("pv_estado_i"   , estado);
+        params.put("pv_nmpoliza_i" , nmpoliza);
+        params.put("pv_nmsituac_i" , nmsituac);
+        params.put("pv_nmsuplem_i" , nmsuplem);
+        params.put("pv_cdbloque_i" , cdbloque);
         Map<String, Object> procRes = ejecutaSP(new EjecutarValoresDefectoSP(getDataSource()), params);
         String valores = (String) procRes.get("pv_valores_o");
         if (StringUtils.isBlank(valores)) {
@@ -1062,7 +1067,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         logger.debug(Utils.log("****** ejecutarValoresDefecto valoresMap = ", valoresMap));
         return valoresMap;
     }
-    
+
     protected class EjecutarValoresDefectoSP extends StoredProcedure {
         protected EjecutarValoresDefectoSP (DataSource dataSource) {
             super(dataSource, "PKG_STRUCT_ALEA.P_GET_VALDEF_BLQ");

@@ -41,154 +41,6 @@ public class EmisionAction extends PrincipalCoreAction {
 	@Autowired
 	private EmisionManager emisionManager;
 	
-	
-	@Action(
-	        value = "movimientoMpolisit", 
-	        results = { 
-	            @Result(name = "success", type = "json") 
-	        }
-	    )
-	public String movimientoMpolisit(){
-		logger.debug(StringUtils.join(
-				 "\n###################"
-				,"\n###### movimientoMpolisit ######"
-				));
-		
-		String result = SUCCESS;
-		
-		try
-		{
-			
-			Utils.validate(params, "No se recibieron datos");
-			String Gn_Cdunieco			= params.get("Cdunieco");
-			String Gn_Cdramo			= params.get("Cdramo");
-			String Gv_Estado			= params.get("Estado");
-			String Gn_Nmpoliza			= params.get("Nmpoliza");
-			String Gn_Nmsituac			= params.get("Nmsituac");
-			String Gn_Nmsuplem_Sesion	= params.get("Nmsuplem_Sesion");
-			String Gn_Nmsuplem_Bean		= params.get("Nmsuplem_Bean");
-			String Gv_Status			= params.get("Status");
-			String Gv_Cdtipsit			= params.get("Cdtipsit");
-			String Gv_Swreduci			= params.get("Swreduci");
-			String Gn_Cdagrupa			= params.get("Cdagrupa");
-			String Gn_Cdestado			= params.get("Cdestado");
-			String Gf_Fefecsit			= params.get("Fefecsit");
-			String Gf_Fecharef			= params.get("Fecharef");
-			String Gv_Indparbe			= params.get("Indparbe");
-			String Gf_Feinipbs			= params.get("Feinipbs");
-			String Gn_Porparbe			= params.get("Porparbe");
-			String Gn_Intfinan			= params.get("Intfinan");
-			String Gn_Cdmotanu			= params.get("Cdmotanu");
-			String Gf_Feinisus			= params.get("Feinisus");
-			String Gf_Fefinsus			= params.get("Fefinsus");
-			String Gv_Accion            = params.get("Accion");
-			
-			 logger.debug(Utils.join("### Gn_Cdunieco=",Gn_Cdunieco		));
-			 logger.debug(Utils.join("### Gn_Cdramo=",Gn_Cdramo			));
-			 logger.debug(Utils.join("### Gv_Estado=",Gv_Estado			));
-			 logger.debug(Utils.join("### Gn_Nmpoliza=",Gn_Nmpoliza		));
-			 logger.debug(Utils.join("### Gn_Nmsituac=",Gn_Nmsituac		));
-			 logger.debug(Utils.join("### Gn_Nmsuplem_Sesion=",Gn_Nmsuplem_Sesion));
-			 logger.debug(Utils.join("### Gn_Nmsuplem_Bean=",Gn_Nmsuplem_Bean	));
-			 logger.debug(Utils.join("### Gv_Status=",Gv_Status			));
-			 logger.debug(Utils.join("### Gv_Cdtipsit=",Gv_Cdtipsit		));
-			 logger.debug(Utils.join("### Gv_Swreduci=",Gv_Swreduci		));
-			 logger.debug(Utils.join("### Gn_Cdagrupa=",Gn_Cdagrupa		));
-			 logger.debug(Utils.join("### Gn_Cdestado=",Gn_Cdestado		));
-			 logger.debug(Utils.join("### Gf_Fefecsit=",Gf_Fefecsit		));
-			 logger.debug(Utils.join("### Gf_Fecharef=",Gf_Fecharef		));
-			 logger.debug(Utils.join("### Gv_Indparbe=",Gv_Indparbe		));
-			 logger.debug(Utils.join("### Gf_Feinipbs=",Gf_Feinipbs		));
-			 logger.debug(Utils.join("### Gn_Porparbe=",Gn_Porparbe		));
-			 logger.debug(Utils.join("### Gn_Intfinan=",Gn_Intfinan		));
-			 logger.debug(Utils.join("### Gn_Cdmotanu=",Gn_Cdmotanu		));
-			 logger.debug(Utils.join("### Gf_Feinisus=",Gf_Feinisus		));
-			 logger.debug(Utils.join("### Gf_Fefinsus=",Gf_Fefinsus		));
-			 logger.debug(Utils.join("### Gv_Accion=",Gv_Accion			));
-            
-            
-			emisionManager.movimientoMpolisit(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gn_Nmsuplem_Sesion, Gn_Nmsuplem_Bean, Gv_Status, Gv_Cdtipsit, Gv_Swreduci, Gn_Cdagrupa, Gn_Cdestado, Gf_Fefecsit, Gf_Fecharef, Gv_Indparbe, Gf_Feinipbs, Gn_Porparbe, Gn_Intfinan, Gn_Cdmotanu, Gf_Feinisus, Gf_Fefinsus, Gv_Accion);
-            
-			
-			success=true;
-			
-			result = SUCCESS;
-		}
-		catch(Exception ex)
-		{
-			success=false;
-			message = Utils.manejaExcepcion(ex);
-		}
-		
-		logger.debug(StringUtils.join(
-				 "\n###### movimientoMpolisit ######"
-				,"\n###################"
-				));
-		return result;
-	}
-	
-	@Action(
-	        value = "movimientoTvalosit", 
-	        results = { 
-	            @Result(name = "success", type = "json") 
-	        }
-	    )
-	public String movimientoTvalosit(){
-		logger.debug(StringUtils.join(
-				 "\n###################"
-				,"\n###### movimientoTvalosit ######"
-				));
-		
-		String result = SUCCESS;
-		
-		try
-		{
-			
-			Utils.validate(params, "No se recibieron datos");
-			
-			 String  Gn_Cdunieco= params.get("Cdunieco");
-			 String  Gn_Cdramo= params.get("Cdramo");
-			 String  Gv_Estado= params.get("Estado");
-			 String  Gn_Nmpoliza= params.get("Nmpoliza");
-			 String  Gn_Nmsituac= params.get("Nmsituac");
-			 String  Gv_Cdtipsit= params.get("Cdtipsit");
-			 String  Gn_Cdatribu= params.get("Cdatribu");
-			 String  Gn_Nmsuplem= params.get("Nmsuplem");
-			 String  Gv_Otvalor= params.get("Otvalor");
-			 String  Gv_Accion= params.get("Accion");
-			 
-			 logger.debug(Utils.join("### Gn_Cdunieco= ",Gn_Cdunieco));
-			 logger.debug(Utils.join("### Gn_Cdramo= ",  Gn_Cdramo));
-			 logger.debug(Utils.join("### Gv_Estado= ",  Gv_Estado));
-			 logger.debug(Utils.join("### Gn_Nmpoliza= ",Gn_Nmpoliza));
-			 logger.debug(Utils.join("### Gn_Nmsituac= ",Gn_Nmsituac));
-			 logger.debug(Utils.join("### Gv_Cdtipsit= ",Gv_Cdtipsit));
-			 logger.debug(Utils.join("### Gn_Cdatribu= ",Gn_Cdatribu));
-			 logger.debug(Utils.join("### Gn_Nmsuplem= ",Gn_Nmsuplem));
-			 logger.debug(Utils.join("### Gv_Otvalor= ", Gv_Otvalor));
-			 logger.debug(Utils.join("### Gv_Accion= ",  Gv_Accion));
-            
-			emisionManager.movimientoTvalosit(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gv_Cdtipsit, Gn_Cdatribu, Gn_Nmsuplem, Gv_Otvalor, Gv_Accion);
-			
-			
-			success=true;
-			
-			result = SUCCESS;
-		}
-		catch(Exception ex)
-		{
-			success=false;
-			message = Utils.manejaExcepcion(ex);
-		}
-		
-		logger.debug(StringUtils.join(
-				 "\n###### movimientoMpolisit ######"
-				,"\n###################"
-				));
-		return result;
-	}
-	
-	
 	@Action(		
 	        value = "movimientoMpoligar", 
 	        results = { 
@@ -608,53 +460,7 @@ public class EmisionAction extends PrincipalCoreAction {
 		return result;
 	}
 	
-	@Action(		
-	        value = "obtieneTvalosit", 
-	        results = { 
-	            @Result(name = "success", type = "json") 
-	        }
-	    )	
-	public String obtieneTvalosit(){
-		logger.debug(StringUtils.join(
-				 "\n###################"
-				,"\n###### obtieneTvalosit ######"
-				));
-		
-		String result = SUCCESS;
-		
-		try
-		{
-			
-			Utils.validate(params, "No se recibieron datos");
-			
-			String pv_cdunieco_i= params.get("pv_cdunieco_i");
-			String pv_cdramo_i= params.get("pv_cdramo_i");
-			String pv_estado_i= params.get("pv_estado_i");
-			String pv_nmpoliza_i= params.get("pv_nmpoliza_i");
-			String pv_nmsituac_i= params.get("pv_nmsituac_i");
-			String pv_cdtipsit_i= params.get("pv_cdtipsit_i");
-			String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
-            
 
-			list=emisionManager.obtieneTvalosit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i);
-
-			
-			success=true;
-			
-			result = SUCCESS;
-		}
-		catch(Exception ex)
-		{
-			success=false;
-			message = Utils.manejaExcepcion(ex);
-		}
-		
-		logger.debug(StringUtils.join(
-				 "\n###### obtieneTvalosit ######"
-				,"\n###################"
-				));
-		return result;
-	}
 	
 	@Action(		
 	        value = "obtieneMpolizas", 
@@ -923,48 +729,6 @@ public class EmisionAction extends PrincipalCoreAction {
 		return result;
 	}
 	
-	
-	@Action(
-	        value = "obtieneMpolisit", 
-	        results = { 
-	            @Result(name = "success", type = "json") 
-	        }
-	    )	
-	public String obtieneMpolisit(){
-		logger.debug(StringUtils.join(
-				 "\n###################",
-				 "\n###### obtieneMpolisit ######",
-				 "\n###### params ",params
-				));		
-		try{			
-			Utils.validate(params, "No se recibieron datos");			
-			String pv_cdunieco_i= params.get("cdunieco");
-			String pv_cdramo_i= params.get("cdramo");
-			String pv_estado_i= params.get("estado");
-			String pv_nmpoliza_i= params.get("nmpoliza");
-			String pv_nmsituac_i= params.get("nmsituac");
-			String pv_nmsuplem_i= params.get("nmsuplem");
-            Utils.validate(pv_cdunieco_i, "No se recibio oficina");
-            Utils.validate(pv_cdramo_i, "No se recibio producto");
-            Utils.validate(pv_estado_i, "No se recibio estado de la póliza");
-            Utils.validate(pv_nmpoliza_i, "No se recibio el numero de póliza");
-            Utils.validate(pv_nmsuplem_i, "No se recibio sumplemento");
-
-			list = emisionManager.obtieneMpolisit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i);			
-
-			success = true;
-		} catch(Exception ex) {
-			success=false;
-			message = Utils.manejaExcepcion(ex);
-		}
-		logger.debug(StringUtils.join(
-				 "\n###### obtieneMpolisit ######",
-				 "\n###### slist1 ",list,
-				 "\n#############################"
-				));
-		return SUCCESS;
-	}
-	
 	@Action(		
 	        value = "obtieneTatrigar", 
 	        results = { 
@@ -1023,39 +787,6 @@ public class EmisionAction extends PrincipalCoreAction {
 				));
 		return result;
 	}
-	
-	@Action(       
-            value = "obtieneNmsituac", 
-            results = { 
-                @Result(name = "success", type = "json") 
-            }                    
-        )   
-    public String obtieneNmsituac(){
-	    logger.debug(StringUtils.join(
-                "\n#############################",
-               "\n###### obtieneNmsituac ######",
-               "\n###### params ",params
-               ));
-	    try{
-	        Utils.validate(params, "No se recibieron parametros");
-	        String cdunieco = params.get("cdunieco");
-	        String cdramo   = params.get("cdramo");
-	        String estado   = params.get("estado");
-	        String nmpoliza = params.get("nmpoliza");
-	        Utils.validate(cdunieco, "No se recibio oficina");
-	        Utils.validate(cdramo, "No se recibio producto");
-	        Utils.validate(estado, "No se recibio estado");
-	        Utils.validate(nmpoliza, "No se recibio poliza");
-	        emisionManager.obtieneNmsituac(cdunieco, cdramo, estado, nmpoliza);
-	    } catch(Exception ex) {
-	        Utils.manejaExcepcion(ex);
-	    }
-	    logger.debug(StringUtils.join(
-                "\n###### obtieneNmsituac ######"
-               ,"\n#############################"
-               ));
-	    return SUCCESS;
-	}
 
 
 	@Action(		
@@ -1107,7 +838,6 @@ public class EmisionAction extends PrincipalCoreAction {
 				));
 		return SUCCESS;
 	}
-
 
 	public Map<String, String> getParams() {
 		return params;
