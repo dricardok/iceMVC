@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package mx.com.segurossura.emision.controller;
 
 import java.text.SimpleDateFormat;
@@ -19,6 +20,29 @@ import org.springframework.stereotype.Controller;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 
+=======
+package mx.com.segurossura.emision.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+
+import com.biosnettcs.core.Utils;
+import com.biosnettcs.portal.controller.PrincipalCoreAction;
+
+>>>>>>> refs/remotes/origin/master
 import mx.com.segurossura.emision.service.EmisionManager;
 
 @Controller
@@ -30,7 +54,11 @@ public class EmisionAction extends PrincipalCoreAction {
 	private Map<String,String> params;
 	private boolean            success;
 	private String             message;
+<<<<<<< HEAD
 	private List<Map<String, String>> list;
+=======
+	private List<Map<String, String>> slist1;
+>>>>>>> refs/remotes/origin/master
 	private Map<String, List<Map<String, String>>> componentes;
 	private static SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
 	
@@ -343,7 +371,11 @@ public class EmisionAction extends PrincipalCoreAction {
 			 
             
             
+<<<<<<< HEAD
 			list=emisionManager.obtieneMpoligar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdgarant_i, pv_nmsuplem_i);
+=======
+			slist1=emisionManager.obtieneMpoligar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdgarant_i, pv_nmsuplem_i);
+>>>>>>> refs/remotes/origin/master
 			
 			
 			success=true;
@@ -383,6 +415,7 @@ public class EmisionAction extends PrincipalCoreAction {
 			Utils.validate(params, "No se recibieron datos");
 			
 			
+<<<<<<< HEAD
 			String pv_cdunieco_i= params.get("cdunieco");
 			 String pv_cdramo_i= params.get("cdramo");
 			 String pv_estado_i= params.get("estado");
@@ -393,6 +426,18 @@ public class EmisionAction extends PrincipalCoreAction {
             
             
 			list=emisionManager.obtieneMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdcapita_i, pv_nmsuplem_i);
+=======
+			String pv_cdunieco_i= params.get("pv_cdunieco_i");
+			 String pv_cdramo_i= params.get("pv_cdramo_i");
+			 String pv_estado_i= params.get("pv_estado_i");
+			String pv_nmpoliza_i= params.get("pv_nmpoliza_i");
+			 String pv_nmsituac_i= params.get("pv_nmsituac_i");
+			 String pv_cdcapita_i= params.get("pv_cdcapita_i");
+			 String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
+            
+            
+			slist1=emisionManager.obtieneMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdcapita_i, pv_nmsuplem_i);
+>>>>>>> refs/remotes/origin/master
 			
 			success=true;
 			
@@ -430,6 +475,7 @@ public class EmisionAction extends PrincipalCoreAction {
 			
 			Utils.validate(params, "No se recibieron datos");
 			
+<<<<<<< HEAD
 			String pv_cdunieco_i= params.get("cdunieco");
 			 String pv_cdramo_i= params.get("cdramo");
 			 String pv_estado_i= params.get("estado");
@@ -441,6 +487,19 @@ public class EmisionAction extends PrincipalCoreAction {
             
             
 			list=emisionManager.obtieneTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdgarant_i, pv_nmsuplem_i);
+=======
+			String pv_cdunieco_i= params.get("pv_cdunieco_i");
+			 String pv_cdramo_i= params.get("pv_cdramo_i");
+			 String pv_estado_i= params.get("pv_estado_i");
+			String pv_nmpoliza_i= params.get("pv_nmpoliza_i");
+			 String pv_nmsituac_i= params.get("pv_nmsituac_i");
+			 String pv_cdtipsit_i= params.get("pv_cdtipsit_i");
+			 String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
+			 
+            
+            
+			slist1=emisionManager.obtieneTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i);
+>>>>>>> refs/remotes/origin/master
 			
 			success=true;
 			
@@ -483,7 +542,11 @@ public class EmisionAction extends PrincipalCoreAction {
 			 
             
             
+<<<<<<< HEAD
 			list=emisionManager.obtieneMcapital(pv_cdramo_i, pv_cdcapita_i);
+=======
+			slist1=emisionManager.obtieneMcapital(pv_cdramo_i, pv_cdcapita_i);
+>>>>>>> refs/remotes/origin/master
 			
 			success=true;
 			
@@ -525,7 +588,11 @@ public class EmisionAction extends PrincipalCoreAction {
 			 
 			String pv_cdgarant_i= params.get("pv_cdgarant_i");
             
+<<<<<<< HEAD
 			list=emisionManager.obtieneTgaranti(pv_cdgarant_i);
+=======
+			slist1=emisionManager.obtieneTgaranti(pv_cdgarant_i);
+>>>>>>> refs/remotes/origin/master
 			
 			success=true;
 			
@@ -621,7 +688,11 @@ public class EmisionAction extends PrincipalCoreAction {
 			String pv_cdtipsit_i= params.get("pv_cdtipsit_i");
 			String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
             
+<<<<<<< HEAD
 			list=emisionManager.obtieneTvalosit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i);
+=======
+			slist1=emisionManager.obtieneTvalosit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i);
+>>>>>>> refs/remotes/origin/master
 			
 			success=true;
 			
@@ -668,7 +739,11 @@ public class EmisionAction extends PrincipalCoreAction {
 			String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
             
             
+<<<<<<< HEAD
 			list=emisionManager.obtieneMpolizas(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i);
+=======
+			slist1=emisionManager.obtieneMpolizas(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i);
+>>>>>>> refs/remotes/origin/master
 			
 			success=true;
 			
@@ -931,7 +1006,11 @@ public class EmisionAction extends PrincipalCoreAction {
             Utils.validate(pv_estado_i, "No se recibio estado de la póliza");
             Utils.validate(pv_nmpoliza_i, "No se recibio el numero de póliza");
             Utils.validate(pv_nmsuplem_i, "No se recibio sumplemento");
+<<<<<<< HEAD
 			list = emisionManager.obtieneMpolisit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i);			
+=======
+			slist1 = emisionManager.obtieneMpolisit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i);			
+>>>>>>> refs/remotes/origin/master
 			success = true;
 		} catch(Exception ex) {
 			success=false;
@@ -964,9 +1043,15 @@ public class EmisionAction extends PrincipalCoreAction {
 		try
 		{
 			
+<<<<<<< HEAD
 			Utils.validate(list, "No se recibieron datos");
 			
 			Map<String,String> datos=list.get(0);
+=======
+			Utils.validate(slist1, "No se recibieron datos");
+			
+			Map<String,String> datos=slist1.get(0);
+>>>>>>> refs/remotes/origin/master
 			
 			String pv_cdramo_i= datos.get("cdramo");
 			String pv_cdtipsit_i= datos.get("cdtipsit");
@@ -1035,6 +1120,7 @@ public class EmisionAction extends PrincipalCoreAction {
 	    return SUCCESS;
 	}
 
+<<<<<<< HEAD
 	@Action(		
 	        value = "guardarCoberturas", 
 	        results = { 
@@ -1085,6 +1171,8 @@ public class EmisionAction extends PrincipalCoreAction {
 		return SUCCESS;
 	}
 
+=======
+>>>>>>> refs/remotes/origin/master
 	public Map<String, String> getParams() {
 		return params;
 	}
@@ -1109,12 +1197,21 @@ public class EmisionAction extends PrincipalCoreAction {
 		this.message = message;
 	}
 
+<<<<<<< HEAD
 	public List<Map<String, String>> getList() {
 		return list;
 	}
 
 	public void setList(List<Map<String, String>> slist1) {
 		this.list = slist1;
+=======
+	public List<Map<String, String>> getSlist1() {
+		return slist1;
+	}
+
+	public void setSlist1(List<Map<String, String>> slist1) {
+		this.slist1 = slist1;
+>>>>>>> refs/remotes/origin/master
 	}
 
 	public Map<String, List<Map<String, String>>> getComponentes() {

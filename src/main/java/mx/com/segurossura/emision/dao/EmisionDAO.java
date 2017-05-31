@@ -54,7 +54,7 @@ public interface EmisionDAO {
 	List<Map<String, String>> obtieneMpolizas(String cdunieco, String cdramo, String estado,
 			String nmpoliza, String nmsuplem) throws Exception;
 
-	List<Map<String, String>> obtieneTvalopol(String cdunieco, String cdramo, String estado,
+	Map<String, String> obtenerTvalopol(String cdunieco, String cdramo, String estado,
 			String nmpoliza, String nmsuplem) throws Exception;
 
 	void movimientoMpolizas(String cdunieco, String cdramo, String estado, String nmpoliza,
@@ -68,19 +68,27 @@ public interface EmisionDAO {
 			String accion) throws Exception;
 
 
-	void movimientoTvalopol(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String cdatribu, String nmsuplem, String otvalor_new, String otvalor_old) throws Exception;
+	public void movimientoTvalopol (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplemBloque,
+            String nmsuplemSesion, String status, Map<String, String> otvalores, String accion) throws Exception;
+	
+    public void movimientoTvalopol(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String cdatribu, String nmsuplem, String otvalor_new, String otvalor_old) throws Exception;
 
-	String generaNmpoliza(String nmpoliza, String cdunieco, String cdramo, String estado,
+	String generaNmpoliza(String cdunieco, String cdramo, String estado,
 			String swcolind, String nmpolcoi) throws Exception;
 
 	List<Map<String, String>> obtieneMpolisit(String cdunieco, String cdramo, String estado,
 			String nmpoliza, String nmsituac, String nmsuplem) throws Exception;
 
 	List<Map<String, String>> obtieneTatrigar(String pv_cdramo_i, String pv_cdtipsit_i, String pv_cdgarant_i,
-			String pv_cdatribu_i) throws Exception;
-
+			String pv_cdatribu_i) throws Exception;	
 	
+	String obtieneNmsituac(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
+	    
+	void borraEstructuraSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception;
+	
+	public Map<String, String> ejecutarValoresDefecto (String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String nmsuplem, String cdbloque) throws Exception;
 
 	
 }
