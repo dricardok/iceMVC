@@ -88,7 +88,7 @@ public interface EmisionDAO {
 	void borraEstructuraSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception;
 	
 	public Map<String, String> ejecutarValoresDefecto (String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsituac, String nmsuplem, String cdbloque) throws Exception;
+            String nmsituac, String nmsuplem, String cdbloque, String cdgarant) throws Exception;
 
-	
+	public String obtenerCuadroComisionesDefault (String cdramo) throws Exception;
 }

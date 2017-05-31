@@ -72,7 +72,7 @@ public class CatalogosManagerImpl implements CatalogosManager {
                 lista = new ArrayList<BaseVO>();
                 if (registrosTmanteni != null) {
                     for (Map<String, String> registroTmanteni: registrosTmanteni) {
-                        lista.add(new BaseVO(registroTmanteni.get("otclave"), registroTmanteni.get("otvalor")));
+                        lista.add(new BaseVO(registroTmanteni.get("codigo"), registroTmanteni.get("descripl")));
                     }
                 }
                 break;

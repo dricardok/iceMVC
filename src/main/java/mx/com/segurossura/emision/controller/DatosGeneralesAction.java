@@ -86,8 +86,8 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
             Utils.validate(params, "No hay datos para valores por defecto variables para bloque de datos generales");
             
             String cdunieco = params.get("b1_cdunieco"),
-                   cdramo   = params.get("cdramo"),
-                   estado   = params.get("estado"),
+                   cdramo   = params.get("b1_cdramo"),
+                   estado   = params.get("b1_estado"),
                    nmpoliza = params.get("b1_nmpoliza");
             
             Utils.validate(cdunieco , "Falta cdunieco",
@@ -101,60 +101,60 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
                     cdramo,
                     estado,
                     nmpoliza,
-                    params.get("nmsuplem"),
-                    params.get("nmsuplem"),
-                    params.get("status"),
-                    params.get("swestado"),
-                    params.get("nmpoliza"),
-                    StringUtils.isBlank(params.get("feautori"))
+                    params.get("b1_nmsuplem"),
+                    params.get("b1_nmsuplem"),
+                    params.get("b1_status"),
+                    params.get("b1_swestado"),
+                    params.get("b1_nmpoliza"),
+                    StringUtils.isBlank(params.get("b1_feautori"))
                         ? null
-                        : Utils.parse(params.get("feautori")),
-                    params.get("cdmotanu"),
-                    StringUtils.isBlank(params.get("feanulac"))
+                        : Utils.parse(params.get("b1_feautori")),
+                    params.get("b1_cdmotanu"),
+                    StringUtils.isBlank(params.get("b1_feanulac"))
                         ? null
-                        : Utils.parse(params.get("feanulac")),
-                    params.get("swautori"),
-                    params.get("cdmoneda"),
-                    StringUtils.isBlank(params.get("feinisus"))
+                        : Utils.parse(params.get("b1_feanulac")),
+                    params.get("b1_swautori"),
+                    params.get("b1_cdmoneda"),
+                    StringUtils.isBlank(params.get("b1_feinisus"))
                         ? null
-                        : Utils.parse(params.get("feinisus")),
-                    StringUtils.isBlank(params.get("fefinsus"))
+                        : Utils.parse(params.get("b1_feinisus")),
+                    StringUtils.isBlank(params.get("b1_fefinsus"))
                         ? null
-                        : Utils.parse(params.get("fefinsus")),
-                    params.get("ottempot"),
-                    StringUtils.isBlank(params.get("feefecto"))
+                        : Utils.parse(params.get("b1_fefinsus")),
+                    params.get("b1_ottempot"),
+                    StringUtils.isBlank(params.get("b1_feefecto"))
                         ? null
-                        : Utils.parse(params.get("feefecto")),
-                    params.get("hhefecto"),
-                    StringUtils.isBlank(params.get("feproren"))
+                        : Utils.parse(params.get("b1_feefecto")),
+                    params.get("b1_hhefecto"),
+                    StringUtils.isBlank(params.get("b1_feproren"))
                         ? null
-                        : Utils.parse(params.get("feproren")),
-                    StringUtils.isBlank(params.get("fevencim"))
+                        : Utils.parse(params.get("b1_feproren")),
+                    StringUtils.isBlank(params.get("b1_fevencim"))
                         ? null
-                        : Utils.parse(params.get("fevencim")),
-                    params.get("nmrenova"),
-                    StringUtils.isBlank(params.get("ferecibo"))
+                        : Utils.parse(params.get("b1_fevencim")),
+                    params.get("b1_nmrenova"),
+                    StringUtils.isBlank(params.get("b1_ferecibo"))
                         ? null
-                        : Utils.parse(params.get("ferecibo")),
-                    StringUtils.isBlank(params.get("feultsin"))
+                        : Utils.parse(params.get("b1_ferecibo")),
+                    StringUtils.isBlank(params.get("b1_feultsin"))
                         ? null
-                        : Utils.parse(params.get("feultsin")),
-                    params.get("nmnumsin"),
-                    params.get("cdtipcoa"),
-                    params.get("swtarifi"),
-                    params.get("swabrido"),
-                    StringUtils.isBlank(params.get("feemisio"))
+                        : Utils.parse(params.get("b1_feultsin")),
+                    params.get("b1_nmnumsin"),
+                    params.get("b1_cdtipcoa"),
+                    params.get("b1_swtarifi"),
+                    params.get("b1_swabrido"),
+                    StringUtils.isBlank(params.get("b1_feemisio"))
                         ? null
-                        : Utils.parse(params.get("feemisio")),
-                    params.get("cdperpag"),
-                    params.get("nmpoliex"),
-                    params.get("nmcuadro"),
-                    params.get("porredau"),
-                    params.get("swconsol"),
-                    params.get("nmpolcoi"),
-                    params.get("adparben"),
-                    params.get("nmcercoi"),
-                    params.get("cdtipren")
+                        : Utils.parse(params.get("b1_feemisio")),
+                    params.get("b1_cdperpag"),
+                    params.get("b1_nmpoliex"),
+                    params.get("b1_nmcuadro"),
+                    params.get("b1_porredau"),
+                    params.get("b1_swconsol"),
+                    params.get("b1_nmpolcoi"),
+                    params.get("b1_adparben"),
+                    params.get("b1_nmcercoi"),
+                    params.get("b1_cdtipren")
                     );
             
             success = true;

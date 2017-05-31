@@ -25,8 +25,6 @@ import com.biosnettcs.core.dao.mapper.GenericMapper;
 import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.emision.dao.EmisionDAO;
-
-
 import mx.com.segurossura.emision.model.TvalopolVO;
 
 @Repository
@@ -106,24 +104,24 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_nmsolici_i"       , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_feautori_i"       , Types.DATE));
             declareParameter(new SqlParameter("pv_cdmotanu_i"       , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_feanulac_i"       , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feanulac_i"       , Types.DATE));
             declareParameter(new SqlParameter("pv_swautori_i"       , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdmoneda_i"       , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_feinisus_i"       , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_fefinsus_i"       , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feinisus_i"       , Types.DATE));
+            declareParameter(new SqlParameter("pv_fefinsus_i"       , Types.DATE));
             declareParameter(new SqlParameter("pv_ottempot_i"       , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_feefecto_i"       , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feefecto_i"       , Types.DATE));
             declareParameter(new SqlParameter("pv_hhefecto_i"       , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_feproren_i"       , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_fevencim_i"       , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feproren_i"       , Types.DATE));
+            declareParameter(new SqlParameter("pv_fevencim_i"       , Types.DATE));
             declareParameter(new SqlParameter("pv_nmrenova_i"       , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_ferecibo_i"       , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_feultsin_i"       , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_ferecibo_i"       , Types.DATE));
+            declareParameter(new SqlParameter("pv_feultsin_i"       , Types.DATE));
             declareParameter(new SqlParameter("pv_nmnumsin_i"       , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdtipcoa_i"       , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_swtarifi_i"       , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_swabrido_i"       , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_feemisio_i"       , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feemisio_i"       , Types.DATE));
             declareParameter(new SqlParameter("pv_cdperpag_i"       , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmpoliex_i"       , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmcuadro_i"       , Types.VARCHAR));
@@ -1042,7 +1040,12 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     
     @Override
     public Map<String, String> ejecutarValoresDefecto (String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsituac, String nmsuplem, String cdbloque) throws Exception {
+            String nmsituac, String nmsuplem, String cdbloque, String cdgarant) throws Exception {
+        
+        if (StringUtils.isBlank(cdgarant)) {
+            cdgarant = "NULO";
+        }
+        
         Map<String, String> params = new LinkedHashMap<String, String>();
         params.put("pv_cdunieco_i" , cdunieco);
         params.put("pv_cdramo_i"   , cdramo);
@@ -1051,17 +1054,24 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_nmsituac_i" , nmsituac);
         params.put("pv_nmsuplem_i" , nmsuplem);
         params.put("pv_cdbloque_i" , cdbloque);
+        params.put("pv_cdgarant_i" , cdgarant);
         Map<String, Object> procRes = ejecutaSP(new EjecutarValoresDefectoSP(getDataSource()), params);
-        String valores = (String) procRes.get("pv_valores_o");
+        String valores = (String) procRes.get("pv_string_val_o");
         if (StringUtils.isBlank(valores)) {
             valores = "";
+        } else {
+            valores = valores.trim();
         }
+        
+        logger.debug(Utils.log("****** ejecutarValoresDefecto valores = ", valores));
         
         Map<String, String> valoresMap = new LinkedHashMap<String, String>();
         
-        String[] valoresArray = valores.split(" ");
-        for (int i = 0; i < valoresArray.length ; i = i + 2) {
-            valoresMap.put(valoresArray[i].replaceAll(Utils.join(cdbloque, "."), "").toLowerCase(), valoresArray[i + 1]);
+        if (StringUtils.isNotBlank(valores)) {
+            String[] valoresArray = valores.split(" ");
+            for (int i = 0; i < valoresArray.length ; i = i + 2) {
+                valoresMap.put(valoresArray[i].replaceAll(Utils.join(cdbloque, "."), "").toLowerCase(), valoresArray[i + 1]);
+            }
         }
         
         logger.debug(Utils.log("****** ejecutarValoresDefecto valoresMap = ", valoresMap));
@@ -1078,6 +1088,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_nmsituac_i",Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdbloque_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdgarant_i",Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_string_val_o" , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o"     , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"      , Types.VARCHAR));
@@ -1183,4 +1194,27 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	        compile();
 	    }
 	}
+	
+	@Override
+	public String obtenerCuadroComisionesDefault (String cdramo) throws Exception {
+	    Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("pv_cdramo_i", cdramo);
+        Map<String, Object> resultado = ejecutaSP(new ObtenerCuadroComisionesDefaultSP(getDataSource()), params);
+        String nmcuadro = (String) resultado.get("pv_nmcuadro_o");
+        if (StringUtils.isBlank(nmcuadro)) {
+            throw new ApplicationException("No hay cuadro de comisiones default para el ramo");
+        }
+        return nmcuadro;
+    }
+    
+    protected class ObtenerCuadroComisionesDefaultSP extends StoredProcedure{
+        protected ObtenerCuadroComisionesDefaultSP(DataSource dataSource) {
+            super(dataSource,"PKG_DATA_ALEA.P_GET_DAT_COMIS");
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_nmcuadro_o", Types.VARCHAR)); 
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
 }

@@ -31,7 +31,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     
     protected class ObtenerSucursalesSP extends StoredProcedure {
         protected ObtenerSucursalesSP (DataSource dataSource) {
-            super(dataSource,"PKG_DATA_ALEA.P_LOV_SUCURSAL");
+            super(dataSource,"PKG_LOV_ALEA.P_LOV_SUCURSAL");
             String[] cols = new String[]{
                     "cdunieco", "dsunieco"
                     };
@@ -115,7 +115,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
             super(dataSource,"PKG_LOV_ALEA.P_GET_CAT_TMANTENI");
             declareParameter(new SqlParameter("pv_cdtabla_i", Types.VARCHAR));
             String[] cols = new String[]{
-                    "otclave", "otvalor"
+                    "codigo", "descripl"
                     };
             declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));

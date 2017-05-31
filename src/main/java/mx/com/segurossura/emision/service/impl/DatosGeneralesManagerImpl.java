@@ -3,6 +3,7 @@ package mx.com.segurossura.emision.service.impl;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -17,6 +18,7 @@ import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.service.DatosGeneralesManager;
+import mx.com.segurossura.general.catalogos.model.Bloque;
 
 @Service
 public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
@@ -43,7 +45,9 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
             Map<String, String> valoresDefecto = emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza,
                     "0", //nmsituac
                     nmsuplem,
-                    "B1");
+                    Bloque.DATOS_GENERALES.getCdbloque(),
+                    null
+                    );
             for (Entry<String, String> en : valoresDefecto.entrySet()) {
                 valores.put(Utils.join("b1_", en.getKey()), en.getValue());
             }
@@ -66,24 +70,61 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
         Map<String, String> valores = new LinkedHashMap<String, String>();
         String paso = null;
         try {
+            Date hoy = new Date();
+            
             paso = "Instanciando variables principales";
             nmsuplembloque = Utils.NVL(nmsuplembloque, "0");
             nmsuplemsesion = Utils.NVL(nmsuplemsesion, "0");
             status = Utils.NVL(status, "V");
             
-            paso = "Insertando maestro de p\u00f3lizas";
-            emisionDAO.movimientoMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplembloque, nmsuplemsesion, status, swestado,
-                    nmsolici, feautori, cdmotanu, feanulac, swautori, cdmoneda, feinisus, fefinsus, ottempot, feefecto,
-                    hhefecto, feproren, fevencim, nmrenova, ferecibo, feultsin, nmnumsin, cdtipcoa, swtarifi, swabrido,
-                    feemisio, cdperpag, nmpoliex, nmcuadro, porredau, swconsol, nmpolcoi, adparben, nmcercoi, cdtipren,
-                    "I" //accion
-                    );
+            boolean existe = false;
+            try {
+                List<Map<String, String>> mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplembloque);
+                if (mpolizas == null || mpolizas.size() == 0) {
+                    throw new ApplicationException("No hay mpolizas");
+                }
+                existe = true;
+            } catch (Exception ex) {
+                logger.warn("Warning al tratar de recuperar mpolizas", ex);
+            }
+            
+            if (!existe) {
+                // valores por defecto estaticos
+                swestado = Utils.NVL(swestado, "0");
+                swautori = Utils.NVL(swautori, "N");
+                cdmoneda = Utils.NVL(cdmoneda, "MXP");
+                nmrenova = Utils.NVL(nmrenova, "0");
+                swtarifi = Utils.NVL(swtarifi, "A");
+                feemisio = Utils.NVL(feemisio, hoy);
+                
+                paso = "Recuperando cuadro de comisiones default para el ramo";
+                nmcuadro = Utils.NVL(nmcuadro, emisionDAO.obtenerCuadroComisionesDefault(cdramo));
+                
+                swconsol = Utils.NVL(swconsol, "S");
+                cdmotanu = Utils.NVL(cdmotanu, null);
+                nmnumsin = Utils.NVL(nmnumsin, null);
+                swabrido = Utils.NVL(swabrido, null);
+                nmpoliex = Utils.NVL(nmpoliex, null);
+                nmpolcoi = Utils.NVL(nmpolcoi, null);
+                adparben = Utils.NVL(adparben, null);
+                nmcercoi = Utils.NVL(nmcercoi, null);
+                nmnumsin = Utils.NVL(nmnumsin, "0");
+                
+                paso = "Insertando maestro de p\u00f3lizas";
+                emisionDAO.movimientoMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplembloque, nmsuplemsesion, status, swestado,
+                        nmsolici, feautori, cdmotanu, feanulac, swautori, cdmoneda, feinisus, fefinsus, ottempot, feefecto,
+                        hhefecto, feproren, fevencim, nmrenova, ferecibo, feultsin, nmnumsin, cdtipcoa, swtarifi, swabrido,
+                        feemisio, cdperpag, nmpoliex, nmcuadro, porredau, swconsol, nmpolcoi, adparben, nmcercoi, cdtipren,
+                        "I" //accion
+                        );
+            }
             
             paso = "Ejecutando valores por defecto variables";
-            emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, swestado, nmpoliza,
+            emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza,
                     "0", //nmsituac
                     nmsuplembloque,
-                    "B1B" //cdbloque
+                    Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque(),
+                    null
                     );
             
             paso = "Recuperando valores variables";
@@ -100,7 +141,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     @Override
     public Map<String, String> cargar (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
             String swcolind, String nmpolcoi) throws Exception {
-        Map<String, String> datos = null;
+        Map<String, String> datos = new LinkedHashMap<String, String>();
         String paso = null;
         try {
             Date hoy = new Date();
@@ -155,14 +196,23 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
             }
             
             paso = "Recuperando p\u00f3liza";
-            datos = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0);
-            if (datos == null) {
+            Map<String, String> mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0);
+            if (mpolizas == null) {
                 throw new ApplicationException("No se encuentra la p\u00f3liza");
+            }
+            
+            for (Entry<String, String> en : mpolizas.entrySet()) {
+                datos.put(Utils.join("b1_", en.getKey()), en.getValue());
             }
             
             try {
                 paso = "Recuperando atributos variables de p\u00f3liza";
-                datos.putAll(emisionDAO.obtenerTvalopol(cdunieco, cdramo, estado, nmpoliza, nmsuplem));
+                Map<String, String> tvalopol = emisionDAO.obtenerTvalopol(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+                if (tvalopol != null) {
+                    for (Entry<String, String> en : tvalopol.entrySet()) {
+                        datos.put(Utils.join("b1b_", en.getKey()), en.getValue());
+                    }
+                }
             } catch (Exception e) {
                 logger.warn("No hay tvalopol", e);
             }
