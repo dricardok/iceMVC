@@ -80,11 +80,11 @@ public enum Bloque {
     
     private String cdbloque;
     
-    private Bloque (String cdbloque){
+    private Bloque(String cdbloque){
         this.cdbloque = cdbloque;
     }
     
-    public String getCdbloque(){
+    public String getCdBloque(){
         return cdbloque;
     }
 }
