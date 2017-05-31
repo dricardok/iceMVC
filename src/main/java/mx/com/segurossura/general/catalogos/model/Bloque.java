@@ -84,7 +84,7 @@ public enum Bloque {
         this.cdbloque = cdbloque;
     }
     
-    public String getCdBloque(){
+    public String getCdbloque(){
         return cdbloque;
     }
 }
