@@ -54,6 +54,17 @@ public class CatalogosManagerImpl implements CatalogosManager {
                     }
                 }
                 break;
+            
+            case TATRISIT:
+                paso = "Recuperando lista de apoyo para atributo de p\u00f3liza";
+                List<Map<String, String>> registrosTatrisit = catalogosDAO.obtenerCatalogoTatrisit(params.get("cdtipsit"), params.get("cdatribu"));
+                lista = new ArrayList<BaseVO>();
+                if (registrosTatrisit != null) {
+                    for (Map<String, String> registroTatrisit: registrosTatrisit) {
+                        lista.add(new BaseVO(registroTatrisit.get("otclave1"), registroTatrisit.get("otvalor26")));
+                    }
+                }
+                break;
                 
             case FORMAS_PAGO:
                 paso = "Recuperando tabla de mantenimiento";
