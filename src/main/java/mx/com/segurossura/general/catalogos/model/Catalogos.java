@@ -4,7 +4,8 @@ public enum Catalogos {
     
     SUCURSALES(""),
     TATRIPOL(""),
-    TATRISIT("");
+    TATRISIT(""),
+    FORMAS_PAGO("TPERPAG");
     
     private String cdtabla;
     
