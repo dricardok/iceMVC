@@ -1,3 +1,4 @@
+
 package mx.com.segurossura.emision.controller;
 
 import java.text.SimpleDateFormat;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 
+
 import mx.com.segurossura.emision.service.EmisionManager;
 
 @Controller
@@ -30,12 +32,14 @@ public class EmisionAction extends PrincipalCoreAction {
 	private Map<String,String> params;
 	private boolean            success;
 	private String             message;
-	private List<Map<String, String>> slist1;
+
+	private List<Map<String, String>> list;
+
 	private Map<String, List<Map<String, String>>> componentes;
 	private static SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
 	
 	@Autowired
-	private EmisionManager emisionManager;	
+	private EmisionManager emisionManager;
 	
 	@Action(		
 	        value = "movimientoMpoligar", 
@@ -195,7 +199,9 @@ public class EmisionAction extends PrincipalCoreAction {
 			 
             
             
-			slist1=emisionManager.obtieneMpoligar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdgarant_i, pv_nmsuplem_i);
+
+			list=emisionManager.obtieneMpoligar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdgarant_i, pv_nmsuplem_i);
+
 			
 			
 			success=true;
@@ -235,16 +241,18 @@ public class EmisionAction extends PrincipalCoreAction {
 			Utils.validate(params, "No se recibieron datos");
 			
 			
-			String pv_cdunieco_i= params.get("pv_cdunieco_i");
-			 String pv_cdramo_i= params.get("pv_cdramo_i");
-			 String pv_estado_i= params.get("pv_estado_i");
-			String pv_nmpoliza_i= params.get("pv_nmpoliza_i");
-			 String pv_nmsituac_i= params.get("pv_nmsituac_i");
-			 String pv_cdcapita_i= params.get("pv_cdcapita_i");
-			 String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
+
+			String pv_cdunieco_i= params.get("cdunieco");
+			 String pv_cdramo_i= params.get("cdramo");
+			 String pv_estado_i= params.get("estado");
+			String pv_nmpoliza_i= params.get("nmpoliza");
+			 String pv_nmsituac_i= params.get("nmsituac");
+			 String pv_cdcapita_i= params.get("cdcapita");
+			 String pv_nmsuplem_i= params.get("nmsuplem");
             
             
-			slist1=emisionManager.obtieneMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdcapita_i, pv_nmsuplem_i);
+			list=emisionManager.obtieneMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdcapita_i, pv_nmsuplem_i);
+
 			
 			success=true;
 			
@@ -282,17 +290,19 @@ public class EmisionAction extends PrincipalCoreAction {
 			
 			Utils.validate(params, "No se recibieron datos");
 			
-			String pv_cdunieco_i= params.get("pv_cdunieco_i");
-			 String pv_cdramo_i= params.get("pv_cdramo_i");
-			 String pv_estado_i= params.get("pv_estado_i");
-			String pv_nmpoliza_i= params.get("pv_nmpoliza_i");
-			 String pv_nmsituac_i= params.get("pv_nmsituac_i");
-			 String pv_cdtipsit_i= params.get("pv_cdtipsit_i");
-			 String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
+
+			String pv_cdunieco_i= params.get("cdunieco");
+			 String pv_cdramo_i= params.get("cdramo");
+			 String pv_estado_i= params.get("estado");
+			String pv_nmpoliza_i= params.get("nmpoliza");
+			 String pv_nmsituac_i= params.get("nmsituac");
+			 String pv_cdgarant_i= params.get("cdgarant");
+			 String pv_nmsuplem_i= params.get("nmsuplem");
 			 
             
             
-			slist1=emisionManager.obtieneTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i);
+			list=emisionManager.obtieneTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdgarant_i, pv_nmsuplem_i);
+
 			
 			success=true;
 			
@@ -335,7 +345,9 @@ public class EmisionAction extends PrincipalCoreAction {
 			 
             
             
-			slist1=emisionManager.obtieneMcapital(pv_cdramo_i, pv_cdcapita_i);
+
+			list=emisionManager.obtieneMcapital(pv_cdramo_i, pv_cdcapita_i);
+
 			
 			success=true;
 			
@@ -377,7 +389,9 @@ public class EmisionAction extends PrincipalCoreAction {
 			 
 			String pv_cdgarant_i= params.get("pv_cdgarant_i");
             
-			slist1=emisionManager.obtieneTgaranti(pv_cdgarant_i);
+
+			list=emisionManager.obtieneTgaranti(pv_cdgarant_i);
+
 			
 			success=true;
 			
@@ -446,6 +460,8 @@ public class EmisionAction extends PrincipalCoreAction {
 		return result;
 	}
 	
+
+	
 	@Action(		
 	        value = "obtieneMpolizas", 
 	        results = { 
@@ -474,7 +490,9 @@ public class EmisionAction extends PrincipalCoreAction {
 			String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
             
             
-			slist1=emisionManager.obtieneMpolizas(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i);
+
+			list=emisionManager.obtieneMpolizas(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i);
+
 			
 			success=true;
 			
@@ -730,9 +748,11 @@ public class EmisionAction extends PrincipalCoreAction {
 		try
 		{
 			
-			Utils.validate(slist1, "No se recibieron datos");
+
+			Utils.validate(list, "No se recibieron datos");
 			
-			Map<String,String> datos=slist1.get(0);
+			Map<String,String> datos=list.get(0);
+
 			
 			String pv_cdramo_i= datos.get("cdramo");
 			String pv_cdtipsit_i= datos.get("cdtipsit");
@@ -768,6 +788,57 @@ public class EmisionAction extends PrincipalCoreAction {
 		return result;
 	}
 
+
+	@Action(		
+	        value = "guardarCoberturas", 
+	        results = { 
+	            @Result(name = "success", type = "json") 
+	        },
+	        		interceptorRefs = {
+	        	            @InterceptorRef(value = "json", params = { "enableSMD", "true", "ignoreSMDMethodInterfaces", "false" }) }
+	    )	
+	public String guardarCoberturas(){
+		logger.debug(StringUtils.join(
+				 "\n#############################"
+				,"\n###### guardarCoberturas ######"
+				));
+		
+		
+		try
+		{
+			
+			logger.debug("### "+list);
+			logger.debug("### "+params);
+			
+			Utils.validate(params,"No hay parametros de entrada");
+			Utils.validate(list,"No hay parametros de entrada");
+			String  pv_cdunieco_i = params.get("cdunieco"), 
+					pv_cdramo_i   = params.get("cdramo"), 
+					pv_estado_i   = params.get("estado"), 
+					pv_nmpoliza_i = params.get("nmpoliza"), 
+					pv_nmsituac_i = params.get("nmsituac"), 
+					pv_cdtipsit_i = params.get("cdtipsit"), 
+					pv_nmsuplem_i = params.get("nmsuplem"), 
+					pv_cdgarant_i = params.get("cdgarant"), 
+					pv_cdcapita_i = params.get("cdcapita");
+			
+			emisionManager.guardarCobertura(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i, pv_cdgarant_i, pv_cdcapita_i, list);
+			success=true;
+			
+		}
+		catch(Exception ex)
+		{
+			success=false;
+			message = Utils.manejaExcepcion(ex);
+		}
+		
+		logger.debug(StringUtils.join(
+				 "\n###### guardarCoberturas ######"
+				,"\n###############################"
+				));
+		return SUCCESS;
+	}
+
 	public Map<String, String> getParams() {
 		return params;
 	}
@@ -792,12 +863,14 @@ public class EmisionAction extends PrincipalCoreAction {
 		this.message = message;
 	}
 
-	public List<Map<String, String>> getSlist1() {
-		return slist1;
+
+	public List<Map<String, String>> getList() {
+		return list;
 	}
 
-	public void setSlist1(List<Map<String, String>> slist1) {
-		this.slist1 = slist1;
+	public void setList(List<Map<String, String>> slist1) {
+		this.list = slist1;
+
 	}
 
 	public Map<String, List<Map<String, String>>> getComponentes() {
