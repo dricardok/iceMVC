@@ -1,7 +1,9 @@
-package mx.com.segurossura.catalogos.util;
+package mx.com.segurossura.general.catalogos.model;
 
-public enum Bloques {
+public enum Bloque {
     
+    DATOS_GENERALES("B1"),
+    ATRIBUTOS_DATOS_GENERALES("B1B"),
     AGENTES("B2"),
     PERSONAS_SITUACION("B3"),
     ATRIBUTOS_PERSONAS_SITUACION("B3B"),
@@ -78,7 +80,7 @@ public enum Bloques {
     
     private String cdbloque;
     
-    private Bloques(String cdbloque){
+    private Bloque(String cdbloque){
         this.cdbloque = cdbloque;
     }
     
