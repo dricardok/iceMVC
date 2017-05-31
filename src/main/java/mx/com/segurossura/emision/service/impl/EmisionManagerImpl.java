@@ -609,7 +609,7 @@ public class EmisionManagerImpl implements EmisionManager{
 			String pv_cdcapita_i,
 			List<Map<String,String>> valores) throws Exception {
 		logger.debug(Utils.join(
-				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				,"\n@@@@@@ obtieneTatrigar"
 				
 				));
@@ -639,7 +639,7 @@ public class EmisionManagerImpl implements EmisionManager{
 		
 		logger.debug(Utils.join(
 				 "\n@@@@@@ obtieneTatrigar"
-				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				));
 		
 	}

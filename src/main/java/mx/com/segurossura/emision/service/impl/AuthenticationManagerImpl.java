@@ -104,7 +104,6 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 			String login = "{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"C\",\"nodes\": []}]}";
 			paso="Leyendo menu";
 			
-			if (true) return login;
 			RestTemplate rt=new RestTemplate();
 			if(usuario==null ||  usuario.getRolActivo()==null){
 				result=login;
