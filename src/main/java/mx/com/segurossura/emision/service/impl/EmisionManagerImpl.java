@@ -1,3 +1,4 @@
+
 package mx.com.segurossura.emision.service.impl;
 
 import java.util.Date;
@@ -592,5 +593,54 @@ public class EmisionManagerImpl implements EmisionManager{
                 "\n@@@@@@ borraEstructuraSituacion"
                ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
                ));
+	}
+
+
+	@Override
+	public void guardarCobertura(
+			String pv_cdunieco_i, 
+			String pv_cdramo_i,
+			String pv_estado_i, 
+			String pv_nmpoliza_i, 
+			String pv_nmsituac_i, 
+			String pv_cdtipsit_i, 
+			String pv_nmsuplem_i,
+			String pv_cdgarant_i,
+			String pv_cdcapita_i,
+			List<Map<String,String>> valores) throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ obtieneTatrigar"
+				
+				));
+		String paso="";
+		List<Map<String, String>> datos=null;
+		try{
+			
+			paso="Guardando datos";
+			
+			for(Map<String,String> m: valores){
+				logger.debug("@@@@@ "+m);
+				if(m.get("valor")!= null && !m.get("valor").equals(m.get("valorOriginal"))){
+					if(m.get("tabla")==null || "null".equals(m.get("tabla"))){
+						emisionDAO.movimientoTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, m.get("name").substring("otvalor".length()), pv_nmsuplem_i, pv_nmsituac_i, pv_cdgarant_i, m.get("valor"), "U");
+					}else{//mpolicap
+						emisionDAO.movimientoMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, pv_cdcapita_i, m.get("valor"), pv_nmsuplem_i, "U");
+					}
+				}
+			}
+			
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ obtieneTatrigar"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		
 	}
 }
