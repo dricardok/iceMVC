@@ -376,7 +376,7 @@ public class EmisionManagerImpl implements EmisionManager{
 	}
 
 	@Override
-	public List<Map<String, String>> obtieneTvalopol(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
+	public Map<String, String> obtenerTvalopol(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
 			String pv_nmpoliza_i, String pv_nmsuplem_i) throws Exception {
 		logger.debug(Utils.join(
 				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -384,12 +384,12 @@ public class EmisionManagerImpl implements EmisionManager{
 				
 				));
 		String paso="";
-		List<Map<String, String>> datos=null;
+		Map<String, String> datos=null;
 		try{
 			
 			paso="Consultando datos";
 			
-			datos=emisionDAO.obtieneTvalopol(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i)  ;
+			datos=emisionDAO.obtenerTvalopol(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i)  ;
 
 		}catch(Exception ex)
 		{
@@ -481,7 +481,7 @@ public class EmisionManagerImpl implements EmisionManager{
 		try{
 			
 			paso="Consultando datos";
-			nmpoliza=emisionDAO.generaNmpoliza(Gn_Nmpoliza, Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gv_Swcolind, Gn_Nmpolcoi);
+			nmpoliza = emisionDAO.generaNmpoliza(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gv_Swcolind, Gn_Nmpolcoi);
 
 		}catch(Exception ex)
 		{
@@ -556,5 +556,90 @@ public class EmisionManagerImpl implements EmisionManager{
 		return datos;
 	}
 	
-	
+	@Override
+	public String obtieneNmsituac(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception{
+	    logger.debug(Utils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ obtieneNmsituac"
+               ));
+        String paso = "";
+        String nmsituac = "";
+        try{
+            nmsituac = emisionDAO.obtieneNmsituac(cdunieco, cdramo, estado, nmpoliza);
+        } catch (Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
+        logger.debug(Utils.join(
+                "\n@@@@@@ obtieneNmsituac"
+               ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+               ));
+        return nmsituac;
+	}
+    
+	@Override
+    public void borraEstructuraSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception{
+	    logger.debug(Utils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ borraEstructuraSituacion"
+               ));
+        String paso = "";
+        try{
+            emisionDAO.borraEstructuraSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+        } catch (Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
+        logger.debug(Utils.join(
+                "\n@@@@@@ borraEstructuraSituacion"
+               ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+               ));
+	}
+
+
+	@Override
+	public void guardarCobertura(
+			String pv_cdunieco_i, 
+			String pv_cdramo_i,
+			String pv_estado_i, 
+			String pv_nmpoliza_i, 
+			String pv_nmsituac_i, 
+			String pv_cdtipsit_i, 
+			String pv_nmsuplem_i,
+			String pv_cdgarant_i,
+			String pv_cdcapita_i,
+			List<Map<String,String>> valores) throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ obtieneTatrigar"
+				
+				));
+		String paso="";
+		List<Map<String, String>> datos=null;
+		try{
+			
+			paso="Guardando datos";
+			
+			for(Map<String,String> m: valores){
+				logger.debug("@@@@@ "+m);
+				if(m.get("valor")!= null && !m.get("valor").equals(m.get("valorOriginal"))){
+					if(m.get("tabla")==null || "null".equals(m.get("tabla"))){
+						emisionDAO.movimientoTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, m.get("name").substring("otvalor".length()), pv_nmsuplem_i, pv_nmsituac_i, pv_cdgarant_i, m.get("valor"), "U");
+					}else{//mpolicap
+						emisionDAO.movimientoMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, pv_cdcapita_i, m.get("valor"), pv_nmsuplem_i, "U");
+					}
+				}
+			}
+			
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ obtieneTatrigar"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		
+	}
 }
