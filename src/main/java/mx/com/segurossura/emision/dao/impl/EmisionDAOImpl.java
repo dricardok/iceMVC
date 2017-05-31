@@ -430,7 +430,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 			super(dataSource,"PKG_DATA_ALEA.P_MOV_MPOLICAP");// Nombre
 			//SqlParameters
 			//declareParameter(new SqlParameter("Identificador_Error",Types.VARCHAR));
-			declareParameter(new SqlInOutParameter("pv_identificador_error_i",Types.VARCHAR));
+			//declareParameter(new SqlInOutParameter("pv_identificador_error_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
@@ -441,9 +441,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 			declareParameter(new SqlParameter("pv_cdcapita_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_ptcapita_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_nmsuplem_bloque_i",Types.VARCHAR));
-			//declareParameter(new sqlinoutparameter("pv_rowid_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_modoacceso_i",Types.VARCHAR));			
-			
+			declareParameter(new SqlOutParameter("pv_rowid_i",Types.VARCHAR));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
 			compile();
@@ -1043,8 +1042,13 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     public Map<String, String> ejecutarValoresDefecto (String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmsituac, String nmsuplem, String cdbloque) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
-        params.put("pv_nmsuplem_i", nmsuplem);
-        params.put("pv_cdbloque_i", cdbloque);
+        params.put("pv_cdunieco_i" , cdunieco);
+        params.put("pv_cdramo_i"   , cdramo);
+        params.put("pv_estado_i"   , estado);
+        params.put("pv_nmpoliza_i" , nmpoliza);
+        params.put("pv_nmsituac_i" , nmsituac);
+        params.put("pv_nmsuplem_i" , nmsuplem);
+        params.put("pv_cdbloque_i" , cdbloque);
         Map<String, Object> procRes = ejecutaSP(new EjecutarValoresDefectoSP(getDataSource()), params);
         String valores = (String) procRes.get("pv_valores_o");
         if (StringUtils.isBlank(valores)) {
@@ -1061,7 +1065,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         logger.debug(Utils.log("****** ejecutarValoresDefecto valoresMap = ", valoresMap));
         return valoresMap;
     }
-    
+
     protected class EjecutarValoresDefectoSP extends StoredProcedure {
         protected EjecutarValoresDefectoSP (DataSource dataSource) {
             super(dataSource, "PKG_STRUCT_ALEA.P_GET_VALDEF_BLQ");
