@@ -9,18 +9,21 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jdbc.support.oracle.SqlStructValue;
 import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Repository;
 
+import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
 import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.emision.dao.SituacionDAO;
+import mx.com.segurossura.emision.model.TvalositVO;
 
 @Repository
 public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
@@ -56,7 +59,7 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
         params.put("pv_feinisus_i", feinisus);
         params.put("pv_fefinsus_i", fefinsus);
         params.put("pv_accion_i", accion);
-        Map<String, Object> resultado = ejecutaSP(new MovimientoMpolisitSP(getDataSource()), params);
+        ejecutaSP(new MovimientoMpolisitSP(getDataSource()), params);
     }
 
     // Clase
@@ -93,35 +96,29 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
 
     @Override // nombre
     public void movimientoTvalosit(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
-            String cdtipsit, String cdatribu, String nmsuplem, String otvalor, String accion) throws Exception {
+            String cdtipsit, String status, String nmsuplem, Map<String, String> otvalores, String accion) throws Exception {
+        TvalositVO tvalosit = new TvalositVO(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, status, cdtipsit);
+        String key;
+        for (int i = 1; i <= 120; i++) {
+            if (i < 10) {
+                key = Utils.join("otvalor0", i);
+            } else {
+                key = Utils.join("otvalor", i);
+            }
+            tvalosit.put(key, otvalores.get(key));
+        }
         Map<String, Object> params = new LinkedHashMap<String, Object>();
-        params.put("pv_cdunieco_i", cdunieco);
-        params.put("pv_cdramo_i", cdramo);
-        params.put("pv_estado_i", estado);
-        params.put("pv_nmpoliza_i", nmpoliza);
-        params.put("pv_nmsituac_i", nmsituac);
-        params.put("pv_cdtipsit_i", cdtipsit);
-        params.put("pv_cdatribu_i", cdatribu);
-        params.put("pv_nmsuplem_i", nmsuplem);
-        params.put("pv_otvalor_i", otvalor);
-        params.put("pv_accion_i", accion);
-        Map<String, Object> resultado = ejecutaSP(new MovimientoTvalositSP(getDataSource()), params);
+        params.put("pv_status_registro_i", accion);
+        params.put("pv_tvalo_record_i", new SqlStructValue<TvalositVO>(tvalosit));
+        ejecutaSP(new MovimientoTvalositSP(getDataSource()), params);
     }
 
     // Clase
     protected class MovimientoTvalositSP extends StoredProcedure {
         protected MovimientoTvalositSP(DataSource dataSource) {
             super(dataSource, "PKG_DATA_ALEA.P_MOV_TVALOSIT");// Nombre
-            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdtipsit_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdatribu_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_otvalor_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_accion_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_status_registro_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_tvalo_record_i", Types.STRUCT, "TVALOSIT_OBJECT"));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
             compile();

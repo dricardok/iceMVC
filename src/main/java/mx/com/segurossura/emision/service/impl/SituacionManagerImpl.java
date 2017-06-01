@@ -1,7 +1,10 @@
 package mx.com.segurossura.emision.service.impl;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +14,9 @@ import org.springframework.stereotype.Service;
 import com.biosnettcs.core.Utils;
 
 import mx.com.segurossura.emision.dao.EmisionDAO;
+import mx.com.segurossura.emision.dao.SituacionDAO;
 import mx.com.segurossura.emision.service.SituacionManager;
+import mx.com.segurossura.general.catalogos.model.Bloque;
 
 @Service
 public class SituacionManagerImpl implements SituacionManager{
@@ -19,7 +24,105 @@ public class SituacionManagerImpl implements SituacionManager{
 	private final static Logger logger = LoggerFactory.getLogger(SituacionManagerImpl.class);
 	
 	@Autowired
+	private SituacionDAO situacionDAO;
+	
+	@Autowired
 	private EmisionDAO emisionDAO;
+	
+	@Override
+	public Map<String, String> obtenerSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdtipsit, String nmsuplem) throws Exception{
+	    logger.debug(Utils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ valoresDefectoFijos"                
+               ));
+        Map<String, String> valores = new LinkedHashMap<String, String>();
+        String paso="";
+        try{
+            valores = situacionDAO.obtieneMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem).get(0);
+            Map<String, String> valoresDefecto = situacionDAO.obtieneTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdtipsit, nmsuplem).get(0);
+            for(Map.Entry<String, String> entry : valoresDefecto.entrySet()){
+                valores.put(("b5b_"+entry.getKey()), entry.getValue());
+            }
+        } catch (Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }
+        return valores;
+	}
+	
+	@Override
+	public Map<String, String> valoresDefectoFijos (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception{
+	    logger.debug(Utils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ valoresDefectoFijos"                
+               ));
+	    Map<String, String> valores = new LinkedHashMap<String, String>();
+        String paso="";
+        try{
+            paso = "Antes de obtener nuevo numero de situacion";
+            String nmsituac = situacionDAO.obtieneNmsituac(cdunieco, cdramo, estado, nmpoliza);
+            paso = "Antes de obtener valores por defecto de situacion de riesgo";
+            valores = emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.SITUACIONES.toString(), "NULO");
+        } catch (Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
+        logger.debug(Utils.join(
+                "\n@@@@@@ valoresDefectoFijos",
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+               ));
+        return valores;
+	}
+	
+	@Override
+    public Map<String, String> valoresDefectoVariables (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, 
+            String nmsuplem, String status, String cdtipsit, String swreduci, String cdagrupa, String cdestado, String fefecsit, 
+            String fecharef, String indparbe, String feinipbs, String porparbe, String intfinan, String cdmotanu, String feinisus, 
+            String fefinsus) throws Exception{
+        logger.debug(Utils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ valoresDefectoVariables"                
+               ));
+        Map<String, String> valores = new LinkedHashMap<String, String>();
+        String paso="";
+        try{
+            paso = "Antes de guardar datos fijos de situacion";
+            situacionDAO.movimientoMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmsuplem, status, cdtipsit, swreduci, 
+                    cdagrupa, cdestado, fefecsit, fecharef, indparbe, feinipbs, porparbe, intfinan, cdmotanu, feinisus, fefinsus, "I");
+            paso = "Antes de guardar valores por defecto";
+            emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.ATRIBUTOS_SITUACIONES.toString(), "NULO");
+            paso = "Recuperando valores variables";
+            Map<String, String> tvalopol = situacionDAO.obtieneTvalosit(cdunieco, cdramo, cdestado, nmpoliza, nmsituac, cdtipsit, nmsuplem).get(0);
+            for (Entry<String, String> en : tvalopol.entrySet()) {
+                valores.put(Utils.join("b5b_", en.getKey()), en.getValue());
+            }
+        } catch (Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
+        logger.debug(Utils.join(
+                "\n@@@@@@ valoresDefectoVariables",
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+               ));
+        return valores;
+    }
+	
+	   @Override
+	    public void valoresDefectoCoberturas (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem) throws Exception{
+	        logger.debug(Utils.join(
+	                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+	                "\n@@@@@@ valoresDefectoCoberturas"                
+	               ));
+	        String paso="";
+	        try{
+	            paso = "Antes de guardar valores por defecto";
+	            emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.GARANTIAS.toString(), "NULO");
+	            paso = "Recuperando valores variables";
+	        } catch (Exception ex){
+	            Utils.generaExcepcion(ex, paso);
+	        }
+	        logger.debug(Utils.join(
+	                "\n@@@@@@ valoresDefectoCoberturas",
+	                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+	               ));
+	    }
 	
 	@Override
 	public void movimientoMpolisit(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
@@ -29,18 +132,14 @@ public class SituacionManagerImpl implements SituacionManager{
 			String Gn_Cdmotanu, String Gf_Feinisus, String Gf_Fefinsus, String Gv_Accion) throws Exception {
 		logger.debug(Utils.join(
 				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-				,"\n@@@@@@ movimientoMpolisitSP"
-				
+				,"\n@@@@@@ movimientoMpolisitSP"				
 				));
-		String paso="";
-		
-		try{
-			
+		String paso="";		
+		try{			
 			paso="Consultando datos";
-			emisionDAO.movimientoMpolisit(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gn_Nmsuplem_Sesion, Gn_Nmsuplem_Bean, Gv_Status, Gv_Cdtipsit, Gv_Swreduci, Gn_Cdagrupa, Gn_Cdestado, Gf_Fefecsit, Gf_Fecharef, Gv_Indparbe, Gf_Feinipbs, Gn_Porparbe, Gn_Intfinan, Gn_Cdmotanu, Gf_Feinisus, Gf_Fefinsus, Gv_Accion);
+			situacionDAO.movimientoMpolisit(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gn_Nmsuplem_Sesion, Gn_Nmsuplem_Bean, Gv_Status, Gv_Cdtipsit, Gv_Swreduci, Gn_Cdagrupa, Gn_Cdestado, Gf_Fefecsit, Gf_Fecharef, Gv_Indparbe, Gf_Feinipbs, Gn_Porparbe, Gn_Intfinan, Gn_Cdmotanu, Gf_Feinisus, Gf_Fefinsus, Gv_Accion);
 
-		}catch(Exception ex)
-		{
+		} catch(Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}
 		
@@ -53,24 +152,25 @@ public class SituacionManagerImpl implements SituacionManager{
 	}
 
 	@Override
-	public void movimientoTvalosit(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
-			String Gn_Nmsituac, String Gv_Cdtipsit, String Gn_Cdatribu, String Gn_Nmsuplem, String Gv_Otvalor,
-			String Gv_Accion) throws Exception {
+	public void movimientoTvalosit(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String cdtipsit, String status, String nmsuplem, Map<String,String> situacion,
+            String accion) throws Exception {
 		logger.debug(Utils.join(
 				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				,"\n@@@@@@ movimientoTvalosit"
 				
 				));
-		String paso="";
-		
-		try{
-			
-			paso="Consultando datos";
-			emisionDAO.movimientoTvalosit(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Nmsituac, Gv_Cdtipsit, Gn_Cdatribu, Gn_Nmsuplem, Gv_Otvalor, Gv_Accion);
-			
-
-		}catch(Exception ex)
-		{
+		Map<String, String> otvalores = new HashMap<>();
+		String paso="";		
+		try{			
+			paso = "Consultando datos";
+			for(Map.Entry<String, String> entry : situacion.entrySet()){
+			    if(entry.getKey().startsWith("b5b_otvalor")){
+			        otvalores.put((entry.getKey().substring("b5b_".length(), entry.getKey().length())), entry.getValue());
+			    }
+            }
+			situacionDAO.movimientoTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdtipsit, status, nmsuplem, otvalores, accion);
+		} catch(Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}
 		
@@ -91,14 +191,11 @@ public class SituacionManagerImpl implements SituacionManager{
 				));
 		String paso="";
 		List<Map<String, String>> datos=null;
-		try{
-			
+		try{			
 			paso="Consultando datos";
-			
-			datos=emisionDAO.obtieneTvalosit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i)  ;
+			datos=situacionDAO.obtieneTvalosit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i)  ;
 
-		}catch(Exception ex)
-		{
+		} catch(Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}
 		
@@ -122,17 +219,12 @@ public class SituacionManagerImpl implements SituacionManager{
 		String paso="";
 		List<Map<String, String>> datos=null;
 		try{
-			
 			paso="Consultando datos";
-			
-			datos=emisionDAO.obtieneMpolisit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i)  ;
+			datos=situacionDAO.obtieneMpolisit(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i)  ;
 
-		}catch(Exception ex)
-		{
+		} catch(Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}
-		
-		
 		logger.debug(Utils.join(
 				 "\n@@@@@@ obtieneMpolisit"
 				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -149,7 +241,7 @@ public class SituacionManagerImpl implements SituacionManager{
         String paso = "";
         String nmsituac = "";
         try{
-            nmsituac = emisionDAO.obtieneNmsituac(cdunieco, cdramo, estado, nmpoliza);
+            nmsituac = situacionDAO.obtieneNmsituac(cdunieco, cdramo, estado, nmpoliza);
         } catch (Exception ex){
             Utils.generaExcepcion(ex, paso);
         }
@@ -168,7 +260,7 @@ public class SituacionManagerImpl implements SituacionManager{
                ));
         String paso = "";
         try{
-            emisionDAO.borraEstructuraSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+            situacionDAO.borraEstructuraSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
         } catch (Exception ex){
             Utils.generaExcepcion(ex, paso);
         }
