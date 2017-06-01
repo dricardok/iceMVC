@@ -26,4 +26,7 @@ public interface BloqueCoberturasManager {
 			String pv_nmsituac_i, String pv_cdtipsit_i, String pv_nmsuplem_i, String pv_cdgarant_i,
 			String pv_cdcapita_i, List<Map<String, String>> valores) throws Exception;
 
+	void agregaCobertura(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
+			String nmsuplem,  List<Map<String, String>> lista)throws Exception;
+
 }

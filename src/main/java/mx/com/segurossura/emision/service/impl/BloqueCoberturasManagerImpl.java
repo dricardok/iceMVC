@@ -13,6 +13,7 @@ import com.biosnettcs.core.Utils;
 
 import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.service.BloqueCoberturasManager;
+import mx.com.segurossura.general.catalogos.model.Bloque;
 @Service	
 public class BloqueCoberturasManagerImpl implements BloqueCoberturasManager {
 
@@ -226,7 +227,43 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 		return datos;
 	}
 
+	@Override
+	public void agregaCobertura(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String nmsuplem
+            ,List<Map<String,String>> lista) throws Exception {
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ agregaCobertura"
+				
+				));
+		String paso="";
+		List<Map<String, String>> datos=null;
+		try{
+			
+			paso="Consultando datos";
+			
+			for(Map<String,String> m: lista){
+				
+				emisionDAO.movimientoMpoligar(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, m.get("cdgarant"), m.get("cdcapita"), null, "I");
+				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.CAPITALES.getCdbloque(),m.get("cdgarant"));
 
+			}
+
+				
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ agregaCobertura"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		
+	} 
 
 
 
