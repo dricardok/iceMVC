@@ -1,6 +1,7 @@
 package mx.com.segurossura.emision.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -31,6 +32,7 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
     private boolean success;
     private String message;
     private Map<String, String> params;
+    private List<Map<String, String>> list;
     
     @Autowired
     private DatosGeneralesManager datosGeneralesManager;
@@ -205,8 +207,23 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
             }
         )
     public String guardar () {
+        logger.debug(Utils.log("###### guardar params = ", params));
         try {
-            
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+            Utils.validate(params, "No se recibieron datos generales");
+            String cdunieco = params.get("b1_cdunieco"),
+                   cdramo   = params.get("b1_cdramo"),
+                   estado   = params.get("b1_estado"),
+                   nmpoliza = params.get("b1_nmpoliza"),
+                   nmsuplem = params.get("b1_nmsuplem");
+            Utils.validate(cdunieco , "Falta cdunieco",
+                           cdramo   , "Falta cdramo",
+                           estado   , "Falta estado",
+                           nmpoliza , "Falta nmpoliza");
+            nmsuplem = Utils.NVL(nmsuplem, "0");
+            list = datosGeneralesManager.guardar(usuario.getCdusuari(),
+                    usuario.getRolActivo().getCdsisrol(), cdunieco, cdramo, estado, nmpoliza, nmsuplem, params);
+            success = true;
         } catch (Exception ex) {
             message = Utils.manejaExcepcion(ex);
         }
@@ -235,6 +252,14 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
 
     public void setParams(Map<String, String> params) {
         this.params = params;
+    }
+
+    public List<Map<String, String>> getList() {
+        return list;
+    }
+
+    public void setList(List<Map<String, String>> list) {
+        this.list = list;
     }
     
 }

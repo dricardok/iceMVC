@@ -1,6 +1,7 @@
 package mx.com.segurossura.emision.dao.impl;
 
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -1020,18 +1021,16 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	        tvalopol.put(key, otvalores.get(key));
 	    }
 	    Map<String, Object> params = new LinkedHashMap<String, Object>();
+	    params.put("pv_status_i", accion);
 	    params.put("pv_tvalo_record_i", new SqlStructValue<TvalopolVO>(tvalopol));
-	    params.put("pv_nmsuplemsesion_i", nmsuplemSesion);
-	    params.put("pv_accion_i", accion);
 	    ejecutaSP(new MovimientoTvalopolSP(getDataSource()), params);
 	}
     
     protected class MovimientoTvalopolSP extends StoredProcedure {
         protected MovimientoTvalopolSP (DataSource dataSource) {
-            super(dataSource, "P_SAT_MOV_TVALOPOL");
-            declareParameter(new SqlParameter("pv_tvalo_record_i"   , Types.STRUCT, "TVALOPOL_OBJECT"));
-            declareParameter(new SqlParameter("pv_nmsuplemsesion_i" , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_accion_i"         , Types.VARCHAR));
+            super(dataSource, "PKG_DATA_ALEA.P_MOV_TVALOPOL");
+            declareParameter(new SqlParameter("pv_status_i"       , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_tvalo_record_i" , Types.STRUCT, "TVALOPOL_OBJECT"));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
             compile();
@@ -1214,6 +1213,44 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlOutParameter("pv_nmcuadro_o", Types.VARCHAR)); 
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public List<Map<String, String>> ejecutarValidaciones (String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String nmsuplem, String cdbloque) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i" , cdunieco);
+        params.put("pv_cdramo_i"   , cdramo);
+        params.put("pv_estado_i"   , estado);
+        params.put("pv_nmpoliza_i" , nmpoliza);
+        params.put("pv_nmsituac_i" , nmsituac);
+        params.put("pv_nmsuplem_i" , nmsuplem);
+        params.put("pv_cdbloque_i" , cdbloque);
+        Map<String, Object> procRes = ejecutaSP(new EjecutarValidacionesSP(getDataSource()), params);
+        List<Map<String, String>> validaciones = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (validaciones == null) {
+            validaciones = new ArrayList<Map<String, String>>();
+        }
+        logger.debug(Utils.log("****** PKG_STRUCT_ALEA.P_GET_VALIDA_BLQ validaciones = ", validaciones));
+        return validaciones;
+    }
+
+    protected class EjecutarValidacionesSP extends StoredProcedure {
+        protected EjecutarValidacionesSP (DataSource dataSource) {
+            super(dataSource, "PKG_STRUCT_ALEA.P_GET_VALIDA_BLQ");
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdbloque_i" , Types.VARCHAR));
+            String[] cols=new String[]{ "tipo", "otvalor" };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
             compile();
         }
     }

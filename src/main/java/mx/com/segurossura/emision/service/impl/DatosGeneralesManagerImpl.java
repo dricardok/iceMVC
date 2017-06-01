@@ -1,5 +1,6 @@
 package mx.com.segurossura.emision.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -127,6 +128,12 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     null
                     );
             
+            paso = "Recuperando valores fijo";
+            Map<String, String> mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplembloque).get(0);
+            for (Entry<String, String> en : mpolizas.entrySet()) {
+                valores.put(Utils.join("b1_", en.getKey()), en.getValue());
+            }
+            
             paso = "Recuperando valores variables";
             Map<String, String> tvalopol = emisionDAO.obtenerTvalopol(cdunieco, cdramo, estado, nmpoliza, nmsuplembloque);
             for (Entry<String, String> en : tvalopol.entrySet()) {
@@ -235,38 +242,126 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
         }
         return datos;
     }
-
+    
     @Override
-    public Map<String, String> guardar (String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsuplembloque, String nmsuplemsesion, String status, String swestado,
-            String nmsolici, Date feautori, String cdmotanu, Date feanulac, String swautori,
-            String cdmoneda, Date feinisus, Date fefinsus, String ottempot, Date feefecto,
-            String hhefecto, Date feproren, Date fevencim, String nmrenova, Date ferecibo,
-            Date feultsin, String nmnumsin, String cdtipcoa, String swtarifi, String swabrido,
-            Date feemisio, String cdperpag, String nmpoliex, String nmcuadro, String porredau,
-            String swconsol, String nmpolcoi, String adparben, String nmcercoi, String cdtipren,
-            Map<String, String> otvalores) throws Exception {
-        Map<String, String> errores = null;
+    public List<Map<String, String>> guardar (String cdusuari, String cdsisrol, String cdunieco, String cdramo, String estado,
+            String nmpoliza, String nmsuplem, Map<String, String> datosPantalla) throws Exception {
+        List<Map<String, String>> validaciones = new ArrayList<Map<String, String>>();
         String paso = null;
         try {
-            paso = "Recuperando p\u00f3liza anterior";
-            Map<String, String> mpolizasObj = null;
+            paso = "Recuperando datos actuales";
+            Map<String, String> mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0),
+                                tvalopol = emisionDAO.obtenerTvalopol(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
             
-            if (StringUtils.isNotBlank(nmpoliza)) {
-                try {
-                    mpolizasObj = emisionDAO.obtieneMpolizas(cdunieco, cdramo, swestado, nmpoliza, nmsuplembloque).get(0);
-                } catch (Exception e) {
-                    logger.warn("No se encuentra la poliza anterior {}", e);
+            paso = "Agregando datos modificados";
+            String key, value, b1Key, b1bKey;
+            for (Entry<String, String> datoPantalla : datosPantalla.entrySet()) {
+                key = datoPantalla.getKey();
+                value = datoPantalla.getValue();
+                
+                if (StringUtils.isBlank(value)) { // no enviar cadena vacia
+                    value = null;
+                }
+                
+                if (key.indexOf("_cdunieco") != -1 // no tocar llave
+                        || key.indexOf("_cdramo") != -1
+                        || key.indexOf("_estado") != -1
+                        || key.indexOf("_nmpoliza") != -1
+                        || key.indexOf("_nmsuplem") != -1
+                        ) {
+                    continue;
+                }
+                
+                if (key.indexOf("b1_") != -1) { // mpolizas
+                    b1Key = key.substring("b1_".length());
+                    if (mpolizas.containsKey(b1Key)) {
+                        mpolizas.put(b1Key, value);
+                    }
+                } else if (key.indexOf("b1b_") != -1) { // tvalopol
+                    b1bKey = key.substring("b1b_".length());
+                    if (tvalopol.containsKey(b1bKey)) {
+                        tvalopol.put(b1bKey, value);
+                    }
                 }
             }
             
-            // generar nmpoliza
-            if (mpolizasObj == null) {
+            paso = "Guardando datos";
+            emisionDAO.movimientoMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem,
+                    mpolizas.get("status"),
+                    mpolizas.get("swestado"),
+                    mpolizas.get("nmsolici"),
+                    Utils.parse(mpolizas.get("feautori")),
+                    mpolizas.get("cdmotanu"),
+                    Utils.parse(mpolizas.get("feanulac")),
+                    mpolizas.get("swautori"),
+                    mpolizas.get("cdmoneda"),
+                    Utils.parse(mpolizas.get("feinisus")),
+                    Utils.parse(mpolizas.get("fefinsus")),
+                    mpolizas.get("ottempot"),
+                    Utils.parse(mpolizas.get("feefecto")),
+                    mpolizas.get("hhefecto"),
+                    Utils.parse(mpolizas.get("feproren")),
+                    Utils.parse(mpolizas.get("fevencim")),
+                    mpolizas.get("nmrenova"),
+                    Utils.parse(mpolizas.get("ferecibo")),
+                    Utils.parse(mpolizas.get("feultsin")),
+                    mpolizas.get("nmnumsin"),
+                    mpolizas.get("cdtipcoa"),
+                    mpolizas.get("swtarifi"),
+                    mpolizas.get("swabrido"),
+                    Utils.parse(mpolizas.get("feemisio")),
+                    mpolizas.get("cdperpag"),
+                    mpolizas.get("nmpoliex"),
+                    mpolizas.get("nmcuadro"),
+                    mpolizas.get("porredau"),
+                    mpolizas.get("swconsol"),
+                    mpolizas.get("nmpolcoi"),
+                    mpolizas.get("adparben"),
+                    mpolizas.get("nmcercoi"),
+                    mpolizas.get("cdtipren"),
+                    "U" // accion
+                    );
+            
+            Map<String, String> otvalores = new LinkedHashMap<String, String>();
+            for (int i = 1; i <= 120; i++) {
+                key = "otvalor";
+                if (i < 10) {
+                    key = Utils.join(key, "0"); // otvalor0
+                }
+                key = Utils.join(key, i);
+                
+                otvalores.put(key, tvalopol.get(key));
             }
+            
+            emisionDAO.movimientoTvalopol(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem, tvalopol.get("status"),
+                    otvalores, "M" // accion
+                    );
+            
+            
+            paso = "Ejecutando validaciones";
+            validaciones.addAll(emisionDAO.ejecutarValidaciones(
+                    cdunieco,
+                    cdramo,
+                    estado,
+                    nmpoliza,
+                    "0", // nmsituac
+                    nmsuplem,
+                    Bloque.DATOS_GENERALES.getCdbloque()
+                    ));
+            validaciones.addAll(emisionDAO.ejecutarValidaciones(
+                    cdunieco,
+                    cdramo,
+                    estado,
+                    nmpoliza,
+                    "0", // nmsituac
+                    nmsuplem,
+                    Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque()
+                    ));
+            
         } catch (Exception ex) {
             Utils.generaExcepcion(ex, paso);
         }
-        return errores;
+        return validaciones;
     }
 
 }
