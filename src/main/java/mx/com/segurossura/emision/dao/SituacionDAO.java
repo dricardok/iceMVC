@@ -1,6 +1,5 @@
 package mx.com.segurossura.emision.dao;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,9 +11,8 @@ public interface SituacionDAO {
 			String fecharef, String indparbe, String feinipbs, String porparbe, String intfinan,
 			String cdmotanu, String feinisus, String fefinsus, String accion) throws Exception;
 
-	void movimientoTvalosit(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String nmsituac, String cdtipsit, String cdatribu, String nmsuplem, String otvalor,
-			String accion) throws Exception;
+	void movimientoTvalosit(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
+            String cdtipsit, String status, String nmsuplem, Map<String, String> otvalores, String accion) throws Exception;
 
 	List<Map<String, String>> obtieneTvalosit(String cdunieco, String cdramo, String estado,
 			String nmpoliza, String nmsituac, String cdtipsit, String nmsuplem) throws Exception;
