@@ -26,6 +26,13 @@
 		</repository>
     </repositories>
     
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <struts2.version>2.5.10.1</struts2.version>
+        <spring.version>4.3.8.RELEASE</spring.version>
+        <jackson.version>1.9.10</jackson.version>
+    </properties>
+    
     <dependencies>
         
         <!-- Unit Testing -->
@@ -82,6 +89,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
         </dependency>
@@ -98,7 +110,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>2.5.6</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -112,7 +124,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
+            <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
         
@@ -245,7 +257,24 @@
 			<artifactId>rsaspringbase-interface</artifactId>
 			<version>1.0</version>
 		</dependency>
-		<!-- -->
+		
+        <!-- Parser JSON -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.6.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.6.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.6.2</version>
+        </dependency>
+		
                 
     </dependencies>
     
@@ -280,9 +309,4 @@
             </plugins>
         </pluginManagement>
     </build>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <struts2.version>2.5.10.1</struts2.version>
-        <spring.version>4.3.8.RELEASE</spring.version>
-    </properties>
 </project>
