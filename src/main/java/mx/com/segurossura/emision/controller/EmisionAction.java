@@ -513,6 +513,59 @@ public class EmisionAction extends PrincipalCoreAction {
 	}
 	
 	
+	@Action(		
+	        value = "validaciones", 
+	        results = { 
+	            @Result(name = "success", type = "json") 
+	        }
+	    )	
+	public String validaciones(){
+		logger.debug(StringUtils.join(
+				 "\n###################"
+				,"\n###### validaciones ######"
+				));
+		
+		String result = SUCCESS;
+		
+		try
+		{
+			
+			Utils.validate(params, "No se recibieron datos");
+			
+			String nmpoliza= params.get("nmpoliza");//opcional, puede ser nulo
+			String cdunieco= params.get("cdunieco");
+			String cdramo= params.get("cdramo");
+			String estado= params.get("estado");
+			String nmsituac= params.get("nmsituac");
+			String nmsuplem= params.get("nmsuplem");
+			String cdbloque= params.get("cdbloque");
+			
+			Utils.validate(nmpoliza,"Falta nmpoliza");
+			Utils.validate(cdunieco,"Falta cdunieco");
+			Utils.validate(cdramo,"Falta cdramo");
+			Utils.validate(estado,"Falta estado");
+			Utils.validate(nmsituac,"Falta nmsituac");
+			//Utils.validate(nmsuplem,"Falta nmsuplem");
+			Utils.validate(cdbloque,"Falta cdbloque");
+			list=emisionManager.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, cdbloque);
+			
+			
+			success=true;
+			
+			result = SUCCESS;
+		}
+		catch(Exception ex)
+		{
+			success=false;
+			message = Utils.manejaExcepcion(ex);
+		}
+		
+		logger.debug(StringUtils.join(
+				 "\n###### validaciones ######"
+				,"\n###################"
+				));
+		return result;
+	}
 	
 	public Map<String, String> getParams() {
 		return params;

@@ -1,6 +1,7 @@
 package mx.com.segurossura.emision.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public interface DatosGeneralesManager {
@@ -27,13 +28,6 @@ public interface DatosGeneralesManager {
     public Map<String, String> cargar (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
             String swcolind, String nmpolcoi) throws Exception;
     
-    public Map<String, String> guardar (String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsuplembloque, String nmsuplemsesion, String status, String swestado,
-            String nmsolici, Date feautori, String cdmotanu, Date feanulac, String swautori,
-            String cdmoneda, Date feinisus, Date fefinsus, String ottempot, Date feefecto,
-            String hhefecto, Date feproren, Date fevencim, String nmrenova, Date ferecibo,
-            Date feultsin, String nmnumsin, String cdtipcoa, String swtarifi, String swabrido,
-            Date feemisio, String cdperpag, String nmpoliex, String nmcuadro, String porredau,
-            String swconsol, String nmpolcoi, String adparben, String nmcercoi, String cdtipren,
-            Map<String, String> otvalores) throws Exception;
+    public List<Map<String, String>> guardar (String cdusuari, String cdsisrol, String cdunieco, String cdramo, String estado,
+            String nmpoliza, String nmsuplem, Map<String, String> datosPantalla) throws Exception;
 }

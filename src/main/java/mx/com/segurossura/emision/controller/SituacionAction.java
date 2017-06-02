@@ -188,7 +188,7 @@ public class SituacionAction extends PrincipalCoreAction {
 	    }
 	
 	   @Action(
-               value = "valoresDefectoVariables", 
+               value = "eliminarSituacion", 
                results = { 
                    @Result(name = "success", type = "json") 
                }

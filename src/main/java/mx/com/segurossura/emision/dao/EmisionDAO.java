@@ -91,4 +91,7 @@ public interface EmisionDAO {
             String nmsituac, String nmsuplem, String cdbloque, String cdgarant) throws Exception;
 
 	public String obtenerCuadroComisionesDefault (String cdramo) throws Exception;
+	
+	public List<Map<String, String>> ejecutarValidaciones (String cdunieco, String cdramo, String estado, String nmpoliza,
+	        String nmsituac, String nmsuplem, String cdbloque) throws Exception;
 }

@@ -71,6 +71,9 @@ public interface EmisionManager {
 	
 	void borraEstructuraSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception;
 
+	List<Map<String, String>> ejecutarValidaciones(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsituac, String nmsuplem, String cdbloque) throws Exception;
+
 	
 	
 

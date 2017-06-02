@@ -445,5 +445,26 @@ public class EmisionManagerImpl implements EmisionManager{
                ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
                ));
 	}
+	
+	@Override 
+	public List<Map<String, String>> ejecutarValidaciones (String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String nmsuplem, String cdbloque) throws Exception{
+		
+		 logger.debug(Utils.join(
+	                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+	                "\n@@@@@@ borraEstructuraSituacion"
+	               ));
+	        String paso = "";
+	        try{
+	            return emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, cdbloque);
+	        } catch (Exception ex){
+	            Utils.generaExcepcion(ex, paso);
+	        }
+	        logger.debug(Utils.join(
+	                "\n@@@@@@ borraEstructuraSituacion"
+	               ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+	               ));
+		return null;
+	}
 
 }
