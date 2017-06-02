@@ -1,5 +1,6 @@
 package mx.com.segurossura.emision.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -119,7 +120,7 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 	
 
 	@Override
-	public void guardarCobertura(
+	public List<Map<String,String>> guardarCobertura(
 			String pv_cdunieco_i, 
 			String pv_cdramo_i,
 			String pv_estado_i, 
@@ -140,7 +141,7 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 		try{
 			
 			paso="Guardando datos";
-			
+			List<Map<String, String>> lista=new ArrayList<>();
 			for(Map<String,String> m: valores){
 				logger.debug("@@@@@ "+m);
 				if(m.get("valor")!= null && !m.get("valor").equals(m.get("valorOriginal"))){
@@ -151,6 +152,17 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 					}
 				}
 			}
+			paso="Validando";
+			lista.addAll(
+					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, Bloque.CAPITALES.getCdbloque())
+						);
+			
+			lista.addAll(
+					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, Bloque.GARANTIAS.getCdbloque())
+						);
+			lista.addAll(
+					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, Bloque.ATRIBUTOS_GARANTIAS.getCdbloque())
+						);
 			
 
 		}catch(Exception ex)
@@ -163,6 +175,7 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 				 "\n@@@@@@ obtieneTatrigar"
 				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				));
+		return null;
 		
 	}
 	
