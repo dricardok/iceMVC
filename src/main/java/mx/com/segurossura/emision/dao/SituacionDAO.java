@@ -23,4 +23,6 @@ public interface SituacionDAO {
 	String obtieneNmsituac(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
 	    
 	void borraEstructuraSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception;
+	
+	List<Map<String, String>> obtenerListaSituaciones(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem) throws Exception;
 }

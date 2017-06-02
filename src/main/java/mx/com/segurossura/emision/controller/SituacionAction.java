@@ -38,6 +38,45 @@ public class SituacionAction extends PrincipalCoreAction {
 	private SituacionManager situacionManager;	
 	
 	@Action(
+            value = "obteneListaSituaciones", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String obteneListaSituaciones(){
+        logger.debug(StringUtils.join(
+                 "\n################################",
+                 "\n###### obteneListaSituaciones ######",
+                 "\n###### params ", params
+                ));
+        try{
+            Utils.validate(params, "No se recibieron parametros de entrada");
+            String cdunieco = params.get("cdunieco");
+            String cdramo = params.get("cdramo");
+            String estado = params.get("estado");
+            String nmpoliza = params.get("nmpoliza");
+            String nmsituac = params.get("nmsituac");
+            String nmsuplem = params.get("nmsuplem");
+            Utils.validate(cdunieco, "No se recibio oficina");
+            Utils.validate(cdramo, "No se recibio producto");
+            Utils.validate(estado, "No se recibio el estado de la póliza");
+            Utils.validate(nmpoliza, "No se recibio el numero de póliza");
+            Utils.validate(nmsituac, "No se recibio la situacion de riesgo");
+            Utils.validate(nmsuplem, "No se recibio el suplemento");            
+            situaciones = situacionManager.obtenerListaSituaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem);
+            success = true;
+        } catch (Exception ex) {
+            Utils.manejaExcepcion(ex);
+        }
+        logger.debug(StringUtils.join(
+                "\n###### situaciones ", situaciones,
+                "\n###### obteneListaSituaciones ######",
+                "\n################################"                
+               ));
+        return SUCCESS;
+    }
+	
+	@Action(
             value = "obtenerSituacion", 
             results = { 
                 @Result(name = "success", type = "json") 

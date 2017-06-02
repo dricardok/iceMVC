@@ -1,5 +1,6 @@
 package mx.com.segurossura.emision.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -268,5 +269,25 @@ public class SituacionManagerImpl implements SituacionManager{
                 "\n@@@@@@ borraEstructuraSituacion"
                ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
                ));
+	}
+	
+	@Override
+	public List<Map<String, String>> obtenerListaSituaciones(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem) throws Exception{
+	    logger.debug(Utils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ obtenerListaSituaciones"
+               ));
+	    List<Map<String, String>> lista = new ArrayList<>();
+        String paso = "";
+        try{
+            lista = situacionDAO.obtenerListaSituaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem);
+        } catch (Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
+        logger.debug(Utils.join(
+                "\n@@@@@@ obtenerListaSituaciones"
+               ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+               ));
+        return lista;
 	}
 }

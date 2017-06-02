@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
+import com.biosnettcs.core.dao.mapper.DinamicMapper;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
 import com.biosnettcs.core.exception.ApplicationException;
 
@@ -269,6 +270,39 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
             declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public List<Map<String, String>> obtenerListaSituaciones(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem) throws Exception{
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsituac_i", nmsituac);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        Map<String, Object> resultado = ejecutaSP(new ObtenerListaSituacionesSP(getDataSource()), params);
+        List<Map<String, String>> listaDatos = (List<Map<String, String>>) resultado.get("pv_registro_o");
+        if (listaDatos == null || listaDatos.size() == 0) {
+            throw new ApplicationException("Sin resultados");
+        }
+        return listaDatos;
+    }
+    
+    protected class ObtenerListaSituacionesSP extends StoredProcedure {
+        protected ObtenerListaSituacionesSP(DataSource dataSource) {
+            super(dataSource, "PKG_DML_ALEA.P_DEL_DAT_SIT");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_registro_o", Types.REF_CURSOR, new DinamicMapper()));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
             compile();
