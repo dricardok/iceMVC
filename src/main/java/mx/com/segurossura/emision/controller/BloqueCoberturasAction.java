@@ -368,7 +368,10 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 	        value = "agregarCobertura", 
 	        results = { 
 	            @Result(name = "success", type = "json") 
-	        }
+	        },
+    		interceptorRefs = {
+    	            @InterceptorRef(value = "json", params = { "enableSMD", "true", "ignoreSMDMethodInterfaces", "false" }) }
+
 	    )	
 	public String agregarCobertura(){
 		logger.debug(StringUtils.join(
@@ -382,11 +385,21 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 		{
 			
 			
-			logger.debug(list);
+			logger.debug("#####"+list);
+			logger.debug("#####"+params);
+			Utils.validate(params, "No se recibieron datos");
+			Utils.validate(list, "No se recibieron datos");
 			
-
-			 
+			String pv_cdunieco_i= params.get("cdunieco");
+			String pv_cdramo_i= params.get("cdramo");
+			String pv_estado_i= params.get("estado");
+		   	String pv_nmpoliza_i= params.get("nmpoliza");
+			String pv_nmsituac_i= params.get("nmsituac");
+			String pv_nmsuplem_i= params.get("nmsuplem");
+			
+			bloqueCoberturasManager.agregaCobertura(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i,  list);
             
+			 
             
 			//list=emisionManager.obtieneMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdcapita_i, pv_nmsuplem_i);
 			
