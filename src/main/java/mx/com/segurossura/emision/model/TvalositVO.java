@@ -2,8 +2,9 @@ package mx.com.segurossura.emision.model;
 
 import java.lang.reflect.Method;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.biosnettcs.core.Utils;
-import com.sun.xml.internal.ws.util.StringUtils;
 
 public class TvalositVO {
     
