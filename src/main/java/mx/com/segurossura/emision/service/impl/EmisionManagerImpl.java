@@ -467,4 +467,16 @@ public class EmisionManagerImpl implements EmisionManager{
 		return null;
 	}
 
+    @Override
+    public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac) throws Exception {
+        return emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+    }
+
+    @Override
+    public List<Map<String, String>> obtenerDatosTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza)
+            throws Exception {
+        return emisionDAO.obtenerDatosTarificacion(cdunieco, cdramo, estado, nmpoliza);
+    }
+
 }

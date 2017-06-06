@@ -97,4 +97,30 @@ public interface EmisionDAO {
 	
 	public List<Map<String,String>> obtieneMpoligarTabla(String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception;
+	
+	/**
+	 * Genera la tarificacion de una poliza
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsituac
+	 * @return
+	 * @throws Exception
+	 */
+    public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac)
+            throws Exception;
+	
+	
+    /**
+     * Obtiene los datos de la tarificacion
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @return
+     * @throws Exception
+     */
+	public List<Map<String,String>> obtenerDatosTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
+	
 }

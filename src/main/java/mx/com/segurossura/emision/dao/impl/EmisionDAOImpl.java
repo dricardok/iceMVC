@@ -1304,4 +1304,76 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             compile();
         }
     }
+    
+    
+    @Override
+    public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac)
+            throws Exception {
+        
+        Map<String, Object> params = new LinkedHashMap<String, Object>();       
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsituac_i", nmsituac);
+        Map<String, Object> resultado = ejecutaSP(new BbvtarxincF(getDataSource()), params);
+        return resultado;
+    }
+    
+    protected class BbvtarxincF extends StoredProcedure {
+        protected BbvtarxincF (DataSource dataSource) {
+            super(dataSource, "PKG_PROCESS_ALEA.F_BBVTARXINC");
+            /** important that the out parameter is defined before the in parameter. */
+            declareParameter(new SqlOutParameter("v_return",    Types.VARCHAR));  
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i" , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_comando_o",Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_error_o",  Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o",  Types.VARCHAR));
+            /** use function instead of stored procedure */
+            setFunction(true);
+            compile();
+        }
+    }
+    
+    
+    @Override
+    public List<Map<String, String>> obtenerDatosTarificacion(String cdunieco, String cdramo, String estado,
+            String nmpoliza) throws Exception {
+        
+        Map<String, Object> params = new LinkedHashMap<String, Object>();       
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        Map<String, Object> res = ejecutaSP(new DatTarificaF(getDataSource()), params);
+        List<Map<String, String>> listaDatos = (List<Map<String, String>>)res.get("pv_registro_o");
+        if (listaDatos == null || listaDatos.size() == 0) {
+            throw new ApplicationException("No hay resultados de cotizacion");
+        }
+        return listaDatos;
+    }
+    
+    protected class DatTarificaF extends StoredProcedure {
+        protected DatTarificaF (DataSource dataSource) {
+            super(dataSource, "PKG_PROCESS_ALEA.P_DAT_TARIFICA");
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            
+            String[] cols = new String[] { "nmsituac", "cdgarant", "dsgarant", "cdcontar", "dscontar", "nmimport" };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o",  Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    
+    
 }
