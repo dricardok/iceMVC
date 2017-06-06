@@ -29,6 +29,7 @@ public class CatalogosManagerImpl implements CatalogosManager {
     public List<BaseVO> obtenerCatalogo (String catalogo, Map<String, String> params, String cdusuari, String cdsisrol) throws Exception {
         String paso = Utils.join("Recuperando cat\u00e1logo ", catalogo);
         List<BaseVO> lista = null;
+        List<Map<String, String>> registrosTmanteni  = null;
         try {
             Catalogos cat = Catalogos.valueOf(catalogo);
             switch (cat) {
@@ -68,7 +69,7 @@ public class CatalogosManagerImpl implements CatalogosManager {
                 
             case FORMAS_PAGO:
                 paso = "Recuperando tabla de mantenimiento";
-                List<Map<String, String>> registrosTmanteni = catalogosDAO.obtenerCatalogoTmanteni(cat.getCdtabla());
+                registrosTmanteni = catalogosDAO.obtenerCatalogoTmanteni(cat.getCdtabla());
                 lista = new ArrayList<BaseVO>();
                 if (registrosTmanteni != null) {
                     for (Map<String, String> registroTmanteni: registrosTmanteni) {
@@ -76,6 +77,17 @@ public class CatalogosManagerImpl implements CatalogosManager {
                     }
                 }
                 break;
+                
+            case TIPO_SITUACIONES:
+                paso = "Recuperando catalogo tipo de situaciones";
+                lista = new ArrayList<>();
+                List<Map<String, String>> listaTipSit = catalogosDAO.obtenerTipoSituaciones(params.get("cdramo"));
+                if (listaTipSit != null) {
+                    for (Map<String, String> registroTmanteni: listaTipSit) {
+                        lista.add(new BaseVO(registroTmanteni.get("cdtipsit"), registroTmanteni.get("dstipsit")));
+                    }
+                }
+                break; 
                 
             default:
                 throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));

@@ -13,4 +13,6 @@ public interface CatalogosDAO {
     
     public List<Map<String, String>> obtenerCatalogoTmanteni (String cdtabla) throws Exception;
     
+    public List<Map<String, String>> obtenerTipoSituaciones (String cdramo) throws Exception;
+    
 }
