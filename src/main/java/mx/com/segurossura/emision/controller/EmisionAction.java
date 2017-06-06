@@ -32,7 +32,7 @@ public class EmisionAction extends PrincipalCoreAction {
 	private Map<String,String> params;
 	private boolean            success;
 	private String             message;
-
+	private List<String>	   bloques;
 	private List<Map<String, String>> list;
 
 	private Map<String, List<Map<String, String>>> componentes;
@@ -538,7 +538,7 @@ public class EmisionAction extends PrincipalCoreAction {
 			String estado= params.get("estado");
 			String nmsituac= params.get("nmsituac");
 			String nmsuplem= params.get("nmsuplem");
-			String cdbloque= params.get("cdbloque");
+			
 			
 			Utils.validate(nmpoliza,"Falta nmpoliza");
 			Utils.validate(cdunieco,"Falta cdunieco");
@@ -546,8 +546,8 @@ public class EmisionAction extends PrincipalCoreAction {
 			Utils.validate(estado,"Falta estado");
 			Utils.validate(nmsituac,"Falta nmsituac");
 			//Utils.validate(nmsuplem,"Falta nmsuplem");
-			Utils.validate(cdbloque,"Falta cdbloque");
-			list=emisionManager.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, cdbloque);
+			Utils.validate(bloques,"Faltan bloques");
+			list=emisionManager.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, bloques);
 			
 			
 			success=true;
@@ -608,6 +608,16 @@ public class EmisionAction extends PrincipalCoreAction {
 	public void setComponentes(Map<String, List<Map<String, String>>> componentes) {
 		this.componentes = componentes;
 	}
+
+	public List<String> getBloques() {
+		return bloques;
+	}
+
+	public void setBloques(List<String> bloques) {
+		this.bloques = bloques;
+	}
+	
+	
 	
 	
 	
