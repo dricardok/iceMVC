@@ -486,9 +486,9 @@ public class EmisionManagerImpl implements EmisionManager{
         Map<String, Object> res = null;
         List<Map<String,String>> situacionesPoliza = situacionDAO.obtieneMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, "0");
         for (Map<String, String> situac : situacionesPoliza) {
-            logger.debug("Inicio tarificando inciso:{}", situac);
+            logger.debug("Inicio tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}", situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
             res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"));
-            logger.debug("Fin tarificando inciso:{}", situac);
+            logger.debug("Fin    tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}", situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
         }
         return res;
     }

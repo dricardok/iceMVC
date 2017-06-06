@@ -592,12 +592,11 @@ public class EmisionAction extends PrincipalCoreAction {
             String cdramo =   params.get("cdramo");
             String estado =   params.get("estado");
             String nmpoliza = params.get("nmpoliza");
-            String nmsituac = params.get("nmsituac");
+            String nmsituac = "0".equals(params.get("nmsituac")) ? null : params.get("nmsituac");
             Utils.validate(cdunieco, "Falta cdunieco");
             Utils.validate(cdramo,   "Falta cdramo");
             Utils.validate(estado,   "Falta estado");
             Utils.validate(nmpoliza, "Falta nmpoliza");
-            Utils.validate(nmsituac, "Falta nmsituac");
             
             Map<String, Object> resultado = emisionManager.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
             logger.debug("resultado Tarificacion: {}", resultado);
