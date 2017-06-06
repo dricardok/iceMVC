@@ -367,7 +367,7 @@ public class SituacionManagerImpl implements SituacionManager{
                 "\n@@@@@@ validaBloqueSituacion"
                ));
 	    String paso = "";
-        List<Map<String, String>> validaciones = new ArrayList<>();
+        List<Map<String, String>> validaciones = new ArrayList<Map<String, String>>();
         try{
             paso = "Antes de validar bloque "+Bloque.SITUACIONES.getCdbloque();
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
