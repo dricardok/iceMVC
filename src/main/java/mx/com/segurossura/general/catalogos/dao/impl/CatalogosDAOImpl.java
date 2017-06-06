@@ -98,6 +98,40 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
         }
     }
     
+    
+    @Override
+    public List<Map<String, String>> obtenerCatalogoTatrigar (String cdramo,String cdgarant, String cdatribu) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_cdgarant_i", cdgarant);
+        params.put("pv_cdatribu_i", cdatribu);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerCatalogoTatrigarSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerCatalogoTatrigarSP extends StoredProcedure {
+        protected ObtenerCatalogoTatrigarSP (DataSource dataSource) {
+            super(dataSource,"PKG_LOV_ALEA.P_GET_CAT_TATRIGAR");
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdgarant_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdatribu_i", Types.VARCHAR));
+            
+            String[] cols = new String[]{
+                    "otclave1", "otvalor26"
+                    };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    
+    
     @Override
     public List<Map<String, String>> obtenerCatalogoTmanteni (String cdtabla) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();

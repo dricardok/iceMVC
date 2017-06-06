@@ -246,7 +246,7 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 					pv_cdgarant_i = params.get("cdgarant"), 
 					pv_cdcapita_i = params.get("cdcapita");
 			
-			bloqueCoberturasManager.guardarCobertura(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i, pv_cdgarant_i, pv_cdcapita_i, list);
+			list=bloqueCoberturasManager.guardarCobertura(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i, pv_cdgarant_i, pv_cdcapita_i, list);
 			success=true;
 			
 		}

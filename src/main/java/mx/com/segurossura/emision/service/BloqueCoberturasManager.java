@@ -22,7 +22,7 @@ public interface BloqueCoberturasManager {
 	List<Map<String, String>> obtieneMpolicap(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
 			String pv_nmpoliza_i, String pv_nmsituac_i, String pv_cdcapita_i, String pv_nmsuplem_i) throws Exception;
 
-	void guardarCobertura(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i, String pv_nmpoliza_i,
+	List<Map<String, String>> guardarCobertura(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i, String pv_nmpoliza_i,
 			String pv_nmsituac_i, String pv_cdtipsit_i, String pv_nmsuplem_i, String pv_cdgarant_i,
 			String pv_cdcapita_i, List<Map<String, String>> valores) throws Exception;
 

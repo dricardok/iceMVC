@@ -67,6 +67,18 @@ public class CatalogosManagerImpl implements CatalogosManager {
                 }
                 break;
                 
+            case TATRIGAR:
+                paso = "Recuperando lista de apoyo para atributo de p\u00f3liza";
+                List<Map<String, String>> registrosTatrigar = catalogosDAO.obtenerCatalogoTatrigar(params.get("cdramo"), params.get("cdgarant"), params.get("cdatribu"));
+                lista = new ArrayList<BaseVO>();
+                logger.debug("-->tatrigar"+registrosTatrigar);
+                if (registrosTatrigar != null) {
+                    for (Map<String, String> registroTatrigar: registrosTatrigar) {
+                        lista.add(new BaseVO(registroTatrigar.get("otclave1"), registroTatrigar.get("otvalor26")));
+                    }
+                }
+                break;
+                
             case FORMAS_PAGO:
                 paso = "Recuperando tabla de mantenimiento";
                 registrosTmanteni = catalogosDAO.obtenerCatalogoTmanteni(cat.getCdtabla());
