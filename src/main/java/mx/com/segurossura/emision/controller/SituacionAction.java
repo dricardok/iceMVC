@@ -1,10 +1,12 @@
 package mx.com.segurossura.emision.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -27,15 +29,55 @@ public class SituacionAction extends PrincipalCoreAction {
      * 
      */
     private static final long serialVersionUID = 1L;
-    private Map<String,String> params;
+    private Map<String, String> params;
 	private boolean            success;
 	private String             message;
 	private List<Map<String, String>> situaciones;
+	private List<Map<String, String>> validaciones;
 	private Map<String, String> situacion;
 	private Map<String, List<Map<String, String>>> componentes;
 	
 	@Autowired
 	private SituacionManager situacionManager;	
+	
+	@Action(
+            value = "obteneListaSituaciones", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String obteneListaSituaciones(){
+        logger.debug(StringUtils.join(
+                 "\n################################",
+                 "\n###### obteneListaSituaciones ######",
+                 "\n###### params ", params
+                ));
+        try{
+            Utils.validate(params, "No se recibieron parametros de entrada");
+            String cdunieco = (String) params.get("cdunieco");
+            String cdramo = (String) params.get("cdramo");
+            String estado = (String) params.get("estado");
+            String nmpoliza = (String) params.get("nmpoliza");
+            String nmsituac = (String) params.get("nmsituac");
+            String nmsuplem = (String) params.get("nmsuplem");
+            Utils.validate(cdunieco, "No se recibio oficina");
+            Utils.validate(cdramo, "No se recibio producto");
+            Utils.validate(estado, "No se recibio el estado de la póliza");
+            Utils.validate(nmpoliza, "No se recibio el numero de póliza");
+//            Utils.validate(nmsituac, "No se recibio la situacion de riesgo");
+            Utils.validate(nmsuplem, "No se recibio el suplemento");            
+            situaciones = situacionManager.obtenerListaSituaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem);
+            success = true;
+        } catch (Exception ex) {
+            Utils.manejaExcepcion(ex);
+        }
+        logger.debug(StringUtils.join(
+                "\n###### situaciones ", situaciones,
+                "\n###### obteneListaSituaciones ######",
+                "\n################################"                
+               ));
+        return SUCCESS;
+    }
 	
 	@Action(
             value = "obtenerSituacion", 
@@ -51,13 +93,13 @@ public class SituacionAction extends PrincipalCoreAction {
                 ));
         try{
             Utils.validate(params, "No se recibieron parametros de entrada");
-            String cdunieco = params.get("cdunieco");
-            String cdramo = params.get("cdramo");
-            String estado = params.get("estado");
-            String nmpoliza = params.get("nmpoliza");
-            String nmsituac = params.get("nmsituac");
-            String cdtipsit = params.get("cdtipsit");
-            String nmsuplem = params.get("nmsuplem");
+            String cdunieco = (String) params.get("cdunieco");
+            String cdramo = (String) params.get("cdramo");
+            String estado = (String) params.get("estado");
+            String nmpoliza = (String) params.get("nmpoliza");
+            String nmsituac = (String) params.get("nmsituac");
+            String cdtipsit = (String) params.get("cdtipsit");
+            String nmsuplem = (String) params.get("nmsuplem");
             Utils.validate(cdunieco, "No se recibio oficina");
             Utils.validate(cdramo, "No se recibio producto");
             Utils.validate(estado, "No se recibio el estado de la póliza");
@@ -71,7 +113,7 @@ public class SituacionAction extends PrincipalCoreAction {
             Utils.manejaExcepcion(ex);
         }
         logger.debug(StringUtils.join(
-                "\n###### situaciones ", situaciones,
+                "\n###### situacion ", situacion,
                 "\n###### obtenerSituaciones ######",
                 "\n################################"                
                ));
@@ -112,76 +154,94 @@ public class SituacionAction extends PrincipalCoreAction {
         return SUCCESS;
     }
 	
-	   @Action(
-	            value = "valoresDefectoVariables", 
-	            results = { 
+	@Action(
+	        value = "valoresDefectoVariables", 
+	        results = { 
 	                @Result(name = "success", type = "json") 
-	            }
+	                }
 	        )
-	    public String valoresDefectoVariables(){
-	        logger.debug(Utils.log("###### valoresDefectoVariables", 
-	                               "###### params ", params));
-	        try {
-	            Utils.validate(params, "No se recibieron parametros");
-	            String cdunieco = params.get("cdunieco");
-	            String cdramo = params.get("cdramo");
-	            String estado = params.get("estado");
-	            String nmpoliza = params.get("nmpoliza");
-	            String nmsituac = params.get("nmsituac");
-	            String nmsuplem = params.get("nmsuplem");
-	            Utils.validate(cdunieco, "No se recibio oficina");
-	            Utils.validate(cdramo, "No se recibio producto");
-	            Utils.validate(estado, "No se recibio el estado de la póliza");
-	            Utils.validate(nmpoliza, "No se recibio el numero de póliza");
-	            Utils.validate(nmsituac, "No se recibio la situacion de riesgo");
-	            Utils.validate(nmsuplem, "No se recibio el suplemento");  
-	            situacion = situacionManager.valoresDefectoFijos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
-	            success = true;
-	        } catch (Exception ex) {
-	            message = Utils.manejaExcepcion(ex);
-	        }
-	        logger.debug(StringUtils.join(
-	                "\n###### situacion ", situacion,
-	                "\n###### valoresDefectoVariables ######",
-	                "\n################################"                
-	               ));
-	        return SUCCESS;
+	public String valoresDefectoVariables(){
+	    logger.debug(Utils.log("###### valoresDefectoVariables", 
+	                           "###### params ", params));
+	    try {
+	        Utils.validate(params, "No se recibieron parametros");
+	        String cdunieco = params.get("cdunieco");
+	        String cdramo = params.get("cdramo");
+	        String estado = params.get("estado");
+	        String nmpoliza = params.get("nmpoliza");
+	        String nmsituac = params.get("nmsituac");
+	        String nmsuplem = params.get("nmsuplem");
+	        String cdtipsit = params.get("cdtipsit");
+            String status   = params.get("status");
+            String swreduci = params.get("swreduci");
+            String cdagrupa = params.get("cdagrupa");
+            String cdestado = params.get("cdestado");
+            String fefecsit = params.get("fefecsit");
+            String fecharef = params.get("fecharef");
+            String indparbe = params.get("indparbe");
+            String feinipbs = params.get("feinipbs");
+            String porparbe = params.get("porparbe");
+            String intfinan = params.get("intfinan");
+            String cdmotanu = params.get("cdmotanu");
+            String feinisus = params.get("feinisus");
+            String fefinsus = params.get("fefinsus");
+	        Utils.validate(cdunieco, "No se recibio oficina");
+	        Utils.validate(cdramo, "No se recibio producto");
+	        Utils.validate(estado, "No se recibio el estado de la póliza");
+	        Utils.validate(nmpoliza, "No se recibio el numero de póliza");
+	        Utils.validate(nmsituac, "No se recibio la situacion de riesgo");
+	        Utils.validate(nmsuplem, "No se recibio el suplemento");
+	        Utils.validate(fefecsit, "No se recibio fecha de efecto de situacion");
+	        Utils.validate(cdtipsit, "No se recibio tipo de situacion");
+	        Utils.validate(cdestado, "No se recibio el codigo de estado");
+	        Utils.validate(cdagrupa, "No se recibo el numero de agrupador");
+	        situacion = situacionManager.valoresDefectoVariables(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, status, cdtipsit, swreduci, cdagrupa, cdestado, fefecsit, fecharef, indparbe, feinipbs, porparbe, intfinan, cdmotanu, feinisus, fefinsus);
+	        success = true;
+	    } catch (Exception ex) {
+	        message = Utils.manejaExcepcion(ex);
 	    }
+	    logger.debug(StringUtils.join(
+	            "\n###### situacion ", situacion,
+	            "\n###### valoresDefectoVariables ######",
+	            "\n################################"                
+	            ));
+	    return SUCCESS;
+	}
 	
-	   @Action(
-               value = "eliminarSituacion", 
-               results = { 
-                   @Result(name = "success", type = "json") 
-               }
-           )
-       public String eliminarSituacion(){
-           logger.debug(Utils.log("###### eliminarSituacion", 
-                                  "###### params ", params));
-           try {
-               Utils.validate(params, "No se recibieron parametros");
-               String cdunieco = params.get("cdunieco");
-               String cdramo = params.get("cdramo");
-               String estado = params.get("estado");
-               String nmpoliza = params.get("nmpoliza");
-               String nmsituac = params.get("nmsituac");
-               String nmsuplem = params.get("nmsuplem");
-               Utils.validate(cdunieco, "No se recibio oficina");
-               Utils.validate(cdramo, "No se recibio producto");
-               Utils.validate(estado, "No se recibio el estado de la póliza");
-               Utils.validate(nmpoliza, "No se recibio el numero de póliza");
-               Utils.validate(nmsituac, "No se recibio la situacion de riesgo");
-               Utils.validate(nmsuplem, "No se recibio el suplemento");  
-               situacionManager.borraEstructuraSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
-               success = true;
-           } catch (Exception ex) {
-               message = Utils.manejaExcepcion(ex);
-           }
-           logger.debug(StringUtils.join(
-                   "\n###### eliminarSituacion ######",
-                   "\n################################"                
-                  ));
-           return SUCCESS;
-       }
+    @Action(
+            value = "eliminarSituacion", 
+            results = { 
+                @Result(name = "success", type = "json")
+                }
+            )
+    public String eliminarSituacion(){
+        logger.debug(Utils.log("###### eliminarSituacion", 
+                "###### params ", params));
+        try {
+            Utils.validate(params, "No se recibieron parametros");
+            String cdunieco = (String) params.get("cdunieco");
+            String cdramo = (String) params.get("cdramo");
+            String estado = (String) params.get("estado");
+            String nmpoliza = (String) params.get("nmpoliza");
+            String nmsituac = (String) params.get("nmsituac");
+            String nmsuplem = (String) params.get("nmsuplem");
+            Utils.validate(cdunieco, "No se recibio oficina");
+            Utils.validate(cdramo, "No se recibio producto");
+            Utils.validate(estado, "No se recibio el estado de la póliza");
+            Utils.validate(nmpoliza, "No se recibio el numero de póliza");
+            Utils.validate(nmsituac, "No se recibio la situacion de riesgo");
+            Utils.validate(nmsuplem, "No se recibio el suplemento");  
+            situacionManager.borraEstructuraSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+            success = true;
+        } catch (Exception ex) {
+            message = Utils.manejaExcepcion(ex);
+        }
+        logger.debug(StringUtils.join(
+                "\n###### eliminarSituacion ######",
+                "\n################################"
+                ));
+        return SUCCESS;
+    }
 	   
 	@Action(
 	        value = "movimientoMpolisit", 
@@ -197,28 +257,28 @@ public class SituacionAction extends PrincipalCoreAction {
 				));
 		try{
 			Utils.validate(params, "No se recibieron datos");
-			String cdunieco = params.get("cdunieco");
-			String cdramo = params.get("cdramo");
-			String estado = params.get("estado");
-			String nmpoliza = params.get("nmpoliza");
-			String nmsituac = params.get("nmsituac");
-			String nmsuplem	= params.get("nmsuplem");
-			String nmsuplem_bean = params.get("nmsuplem_Bean");
-			String status = params.get("status");
-			String cdtipsit = params.get("cdtipsit");
-			String swreduci = params.get("swreduci");
-			String cdagrupa = params.get("cdagrupa");
-			String cdestado = params.get("cdestado");
-			String fefecsit = params.get("fefecsit");
-			String fecharef = params.get("fecharef");
-			String indparbe = params.get("indparbe");
-			String feinipbs = params.get("feinipbs");
-			String porparbe = params.get("porparbe");
-			String intfinan = params.get("intfinan");
-			String cdmotanu = params.get("cdmotanu");
-			String feinisus = params.get("feinisus");
-			String fefinsus = params.get("fefinsus");
-			String accion = params.get("accion");
+			String cdunieco = (String) params.get("cdunieco");
+			String cdramo = (String) params.get("cdramo");
+			String estado = (String) params.get("estado");
+			String nmpoliza = (String) params.get("nmpoliza");
+			String nmsituac = (String) params.get("nmsituac");
+			String nmsuplem	= (String) params.get("nmsuplem");
+			String nmsuplem_bean = (String) params.get("nmsuplem_Bean");
+			String status = (String) params.get("status");
+			String cdtipsit = (String) params.get("cdtipsit");
+			String swreduci = (String) params.get("swreduci");
+			String cdagrupa = (String) params.get("cdagrupa");
+			String cdestado = (String) params.get("cdestado");
+			String fefecsit = (String) params.get("fefecsit");
+			String fecharef = (String) params.get("fecharef");
+			String indparbe = (String) params.get("indparbe");
+			String feinipbs = (String) params.get("feinipbs");
+			String porparbe = (String) params.get("porparbe");
+			String intfinan = (String) params.get("intfinan");
+			String cdmotanu = (String) params.get("cdmotanu");
+			String feinisus = (String) params.get("feinisus");
+			String fefinsus = (String) params.get("fefinsus");
+			String accion = (String) params.get("accion");
             Utils.validate(cdunieco, "No se recibio la oficina");
             Utils.validate(cdramo, "No se recibio el producto");
             Utils.validate(estado, "No se recibio el estado de la póliza");
@@ -254,13 +314,13 @@ public class SituacionAction extends PrincipalCoreAction {
 				));
 		try{
 			Utils.validate(params, "No se recibieron datos");
-			String cdunieco = params.get("cdunieco");
-			String cdramo = params.get("cdramo");
-			String estado = params.get("estado");
-			String nmpoliza = params.get("nmpoliza");
-			String nmsituac = params.get("nmsituac");
-			String cdtipsit = params.get("cdtipsit");
-			String nmsuplem = params.get("nmsuplem");
+			String cdunieco = (String) params.get("cdunieco");
+			String cdramo = (String) params.get("cdramo");
+			String estado = (String) params.get("estado");
+			String nmpoliza = (String) params.get("nmpoliza");
+			String nmsituac = (String) params.get("nmsituac");
+			String cdtipsit = (String) params.get("cdtipsit");
+			String nmsuplem = (String) params.get("nmsuplem");
 			Utils.validate(cdunieco, "No se recibio oficina");
             Utils.validate(cdramo, "No se recibio el producto");
             Utils.validate(estado, "No se recibio el estado de la póliza");
@@ -280,8 +340,7 @@ public class SituacionAction extends PrincipalCoreAction {
 				));
 		return SUCCESS;
 	}
-	
-			
+				
 	@Action(
 	        value = "obtieneMpolisit", 
 	        results = { 
@@ -296,12 +355,12 @@ public class SituacionAction extends PrincipalCoreAction {
 				));		
 		try{			
 			Utils.validate(params, "No se recibieron datos");			
-			String pv_cdunieco_i= params.get("cdunieco");
-			String pv_cdramo_i= params.get("cdramo");
-			String pv_estado_i= params.get("estado");
-			String pv_nmpoliza_i= params.get("nmpoliza");
-			String pv_nmsituac_i= params.get("nmsituac");
-			String pv_nmsuplem_i= params.get("nmsuplem");
+			String pv_cdunieco_i= (String) params.get("cdunieco");
+			String pv_cdramo_i= (String) params.get("cdramo");
+			String pv_estado_i= (String) params.get("estado");
+			String pv_nmpoliza_i= (String) params.get("nmpoliza");
+			String pv_nmsituac_i= (String) params.get("nmsituac");
+			String pv_nmsuplem_i= (String) params.get("nmsuplem");
             Utils.validate(pv_cdunieco_i, "No se recibio oficina");
             Utils.validate(pv_cdramo_i, "No se recibio producto");
             Utils.validate(pv_estado_i, "No se recibio estado de la póliza");
@@ -321,6 +380,62 @@ public class SituacionAction extends PrincipalCoreAction {
 		return SUCCESS;
 	}
 	
+	@Action(value = "actualizaSituacion", 
+	        results = { 
+	                @Result(name = "success", type = "json") 
+	                }, 
+	        interceptorRefs = {
+	                @InterceptorRef(value = "json", 
+	                        params = { "enableSMD", "true", "ignoreSMDMethodInterfaces", "false" }
+	                )}
+	)
+    public String actualizaSituacion(){
+        logger.debug(StringUtils.join(
+                 "\n###################",
+                 "\n###### actualizaSituacion ######",
+                 "\n###### params ",params,
+                 "\n###### situacion ",situacion
+                ));     
+        try{
+            Utils.validate(params, "No se recibieron parametros");
+            String cdunieco = (String) params.get("cdunieco");
+            String cdramo = (String) params.get("cdramo");
+            String estado = (String) params.get("estado");
+            String nmpoliza = (String) params.get("nmpoliza");
+            String nmsituac = (String) params.get("nmsituac");
+            String nmsuplem = (String) params.get("nmsuplem");
+            String cdtipsit = (String) params.get("cdtipsit");
+            String status   = (String) params.get("status");
+            String swreduci = (String) params.get("swreduci");
+            String cdagrupa = (String) params.get("cdagrupa");
+            String cdestado = (String) params.get("cdestado");
+            String fefecsit = (String) params.get("fefecsit");
+            String fecharef = (String) params.get("fecharef");
+            String indparbe = (String) params.get("indparbe");
+            String feinipbs = (String) params.get("feinipbs");
+            String porparbe = (String) params.get("porparbe");
+            String intfinan = (String) params.get("intfinan");
+            String cdmotanu = (String) params.get("cdmotanu");
+            String feinisus = (String) params.get("feinisus");
+            String fefinsus = (String) params.get("fefinsus");
+            Utils.validate(cdunieco, "No se recibio oficina");
+            Utils.validate(cdramo, "No se recibio producto");
+            Utils.validate(estado, "No se recibio el estado de la póliza");
+            Utils.validate(nmpoliza, "No se recibio el numero de póliza");
+//            Utils.validate(nmsituac, "No se recibio la situacion de riesgo");
+            Utils.validate(nmsuplem, "No se recibio el suplemento");
+            validaciones = situacionManager.actualizaSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, status, cdtipsit, swreduci, cdagrupa, cdestado, fefecsit, fecharef, indparbe, feinipbs, porparbe, intfinan, cdmotanu, feinisus, fefinsus, situacion);           
+            success = true;
+        } catch(Exception ex) {
+            success=false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        logger.debug(StringUtils.join(
+                 "\n###### actualizaSituacion ######",
+                 "\n#############################"
+                ));
+        return SUCCESS;
+    }
 		
 	@Action(       
             value = "obtieneNmsituac", 
@@ -336,10 +451,10 @@ public class SituacionAction extends PrincipalCoreAction {
                ));
 	    try{
 	        Utils.validate(params, "No se recibieron parametros");
-	        String cdunieco = params.get("cdunieco");
-	        String cdramo   = params.get("cdramo");
-	        String estado   = params.get("estado");
-	        String nmpoliza = params.get("nmpoliza");
+	        String cdunieco = (String) params.get("cdunieco");
+	        String cdramo   = (String) params.get("cdramo");
+	        String estado   = (String) params.get("estado");
+	        String nmpoliza = (String) params.get("nmpoliza");
 	        Utils.validate(cdunieco, "No se recibio oficina");
 	        Utils.validate(cdramo, "No se recibio producto");
 	        Utils.validate(estado, "No se recibio estado");
@@ -355,6 +470,41 @@ public class SituacionAction extends PrincipalCoreAction {
                ));
 	    return SUCCESS;
 	}
+	
+	@Action(       
+            value = "validaBloqueSituacion", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }                    
+        )   
+    public String validaBloqueSituacion(){
+        logger.debug(StringUtils.join(
+                "\n#############################",
+               "\n###### validaBloqueSituacion ######",
+               "\n###### params ",params
+               ));
+        try{
+            Utils.validate(params, "No se recibieron parametros");
+            String cdunieco = params.get("cdunieco");
+            String cdramo   = params.get("cdramo");
+            String estado   = params.get("estado");
+            String nmpoliza = params.get("nmpoliza");
+            String nmsuplem = params.get("nmsuplem");
+            Utils.validate(cdunieco, "No se recibio oficina");
+            Utils.validate(cdramo, "No se recibio producto");
+            Utils.validate(estado, "No se recibio estado");
+            Utils.validate(nmpoliza, "No se recibio poliza");
+            situacionManager.validaBloqueSituacion(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+        } catch(Exception ex) {
+            success = false;
+            Utils.manejaExcepcion(ex);
+        }
+        logger.debug(StringUtils.join(
+                "\n###### validaBloqueSituacion ######"
+               ,"\n#############################"
+               ));
+        return SUCCESS;
+    }
 	
 //  Getters y Setters	
 
@@ -404,5 +554,13 @@ public class SituacionAction extends PrincipalCoreAction {
 
     public void setSituacion(Map<String, String> situacion) {
         this.situacion = situacion;
+    }
+
+    public List<Map<String, String>> getValidaciones() {
+        return validaciones;
+    }
+
+    public void setValidaciones(List<Map<String, String>> validaciones) {
+        this.validaciones = validaciones;
     }
 }

@@ -545,9 +545,15 @@ public class EmisionAction extends PrincipalCoreAction {
 			Utils.validate(cdramo,"Falta cdramo");
 			Utils.validate(estado,"Falta estado");
 			Utils.validate(nmsituac,"Falta nmsituac");
+			Utils.validate(nmsuplem,"Falta nmsuplem");
+			
+			
+
 			//Utils.validate(nmsuplem,"Falta nmsuplem");
 			Utils.validate(bloques,"Faltan bloques");
 			list=emisionManager.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, bloques);
+
+			
 			
 			
 			success=true;

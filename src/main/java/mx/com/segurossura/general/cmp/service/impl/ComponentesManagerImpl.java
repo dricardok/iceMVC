@@ -33,7 +33,7 @@ public class ComponentesManagerImpl implements ComponentesManager {
                 String cdramo = map.get("cdramo");
                 String cdtipsit = map.get("cdtipsit");
                 String cdsisrol = map.get("cdsisrol");
-                String auxkey = map.get("auxKey");                
+                String auxkey = map.get("auxkey");                
                 result.put(seccion, componentesDAO.obtenerListaComponentesSP(pantalla, seccion, modulo, estatus, cdramo, cdtipsit, cdsisrol, auxkey));
             }
              

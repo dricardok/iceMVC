@@ -1254,4 +1254,54 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             compile();
         }
     }
+    
+    @Override //nombre
+    public List<Map<String,String>> obtieneMpoligarTabla(String cdunieco, String cdramo, String estado,
+            String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception{         
+        Map<String, Object> params = new LinkedHashMap<String, Object>();       
+        // params.put       
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsituac_i", nmsituac);
+        params.put("pv_cdgarant_i", cdgarant);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        logger.debug("-->"+params);
+        //Clase
+        Map<String, Object> resultado = ejecutaSP(new ObtieneMpoligarTablaSP(getDataSource()), params);
+        List<Map<String,String>> listaDatos = (List<Map<String,String>>)resultado.get("pv_registro_o");
+        return listaDatos;
+    }
+                //Clase
+    protected class ObtieneMpoligarTablaSP extends StoredProcedure{
+        protected ObtieneMpoligarTablaSP(DataSource dataSource) {
+            super(dataSource,"PKG_DATA_ALEA.P_GET_MPOLIGAR");// Nombre
+            //SqlParameters
+            declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdgarant_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));                  
+            String[] cols=new String[]{
+                    "cdunieco",
+                     "cdramo",
+                     "estado",
+                     "nmpoliza",
+                     "nmsituac",
+                     "cdgarant",
+                     "nmsuplem",
+                     "cdcapita",
+                     "status",
+                     "swmanual",
+                     "fevencim"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            compile();
+        }
+    }
 }

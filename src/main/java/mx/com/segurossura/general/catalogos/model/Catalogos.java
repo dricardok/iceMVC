@@ -6,7 +6,9 @@ public enum Catalogos {
     TATRIPOL(""),
     TATRISIT(""),
     FORMAS_PAGO("TPERPAG"), 
-    TATRIGAR("TATRIGAR");
+    TATRIGAR("TATRIGAR"),
+    TIPO_SITUACIONES("");
+
     
     private String cdtabla;
     

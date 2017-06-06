@@ -15,4 +15,6 @@ public interface CatalogosDAO {
 
 	public List<Map<String, String>> obtenerCatalogoTatrigar(String cdramo, String cdgarant, String cdatribu) throws Exception;
     
+    public List<Map<String, String>> obtenerTipoSituaciones (String cdramo) throws Exception;
+    
 }
