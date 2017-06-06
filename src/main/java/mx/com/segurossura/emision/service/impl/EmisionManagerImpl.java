@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.biosnettcs.core.Utils;
 
 import mx.com.segurossura.emision.dao.EmisionDAO;
+import mx.com.segurossura.emision.dao.SituacionDAO;
 import mx.com.segurossura.emision.service.EmisionManager;
 
 @Service
@@ -23,6 +24,9 @@ public class EmisionManagerImpl implements EmisionManager{
 	
 	@Autowired
 	private EmisionDAO emisionDAO;
+	
+	@Autowired
+    private SituacionDAO situacionDAO;
 	
 	@Override
 	public void movimientoMpolisit(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
@@ -478,7 +482,15 @@ public class EmisionManagerImpl implements EmisionManager{
     @Override
     public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmsituac) throws Exception {
-        return emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+        
+        Map<String, Object> res = null;
+        List<Map<String,String>> situacionesPoliza = situacionDAO.obtieneMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, "0");
+        for (Map<String, String> situac : situacionesPoliza) {
+            logger.debug("Inicio tarificando inciso:{}", situac);
+            res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"));
+            logger.debug("Fin tarificando inciso:{}", situac);
+        }
+        return res;
     }
 
     @Override
