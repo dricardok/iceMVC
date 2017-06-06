@@ -3,23 +3,22 @@ package mx.com.segurossura.emision.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
-
 
 import mx.com.segurossura.emision.service.EmisionManager;
 
@@ -28,6 +27,10 @@ import mx.com.segurossura.emision.service.EmisionManager;
 @ParentPackage(value="json-default")
 @Namespace("/emision")
 public class EmisionAction extends PrincipalCoreAction {
+    
+    private static final long serialVersionUID = 2454964992688068482L;
+
+    private static final Logger logger = LoggerFactory.getLogger(EmisionAction.class);
 
 	private Map<String,String> params;
 	private boolean            success;
@@ -573,6 +576,76 @@ public class EmisionAction extends PrincipalCoreAction {
 		return result;
 	}
 	
+	
+    @Action(        
+            value = "generarTarificacion", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )   
+    public String generarTarificacion() {
+        
+        logger.debug("Inicio generarTarificacion...");
+        try {
+            Utils.validate(params, "No se recibieron datos");
+            String cdunieco = params.get("cdunieco");
+            String cdramo =   params.get("cdramo");
+            String estado =   params.get("estado");
+            String nmpoliza = params.get("nmpoliza");
+            String nmsituac = params.get("nmsituac");
+            Utils.validate(cdunieco, "Falta cdunieco");
+            Utils.validate(cdramo,   "Falta cdramo");
+            Utils.validate(estado,   "Falta estado");
+            Utils.validate(nmpoliza, "Falta nmpoliza");
+            Utils.validate(nmsituac, "Falta nmsituac");
+            
+            Map<String, Object> resultado = emisionManager.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+            logger.debug("resultado Tarificacion: {}", resultado);
+            
+            success=true;
+        } catch (Exception ex) {
+            success=false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        
+        logger.debug("Fin generarTarificacion.");
+        return SUCCESS;
+    }
+	
+    
+    @Action(        
+            value = "obtenerDatosTarificacion", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )   
+    public String obtenerDatosTarificacion() {
+        
+        logger.debug("Inicio obtenerDatosTarificacion...");
+        try {
+            Utils.validate(params, "No se recibieron datos");
+            String cdunieco = params.get("cdunieco");
+            String cdramo =   params.get("cdramo");
+            String estado =   params.get("estado");
+            String nmpoliza = params.get("nmpoliza");
+            Utils.validate(cdunieco, "Falta cdunieco");
+            Utils.validate(cdramo,   "Falta cdramo");
+            Utils.validate(estado,   "Falta estado");
+            Utils.validate(nmpoliza, "Falta nmpoliza");
+            
+            list = emisionManager.obtenerDatosTarificacion(cdunieco, cdramo, estado, nmpoliza);
+            logger.debug("Datos de Tarificacion: {}", list);
+            
+            success = true;
+        } catch (Exception ex) {
+            success=false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        logger.debug("Fin obtenerDatosTarificacion.");
+        return SUCCESS;
+    }
+    
+	
 	public Map<String, String> getParams() {
 		return params;
 	}
@@ -622,11 +695,4 @@ public class EmisionAction extends PrincipalCoreAction {
 	public void setBloques(List<String> bloques) {
 		this.bloques = bloques;
 	}
-	
-	
-	
-	
-	
-	
-	
 }
