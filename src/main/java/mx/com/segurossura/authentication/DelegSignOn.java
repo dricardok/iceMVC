@@ -2,21 +2,17 @@ package mx.com.segurossura.authentication;
 
 import java.util.HashMap;
 
-//import mx.com.royalsun.guestbook.commons.util.UtilProperties;
-import mx.com.royalsun.services.interfaces.ServiceMapBase;
-import mx.com.royalsun.services.interfaces.authentication.ViewfinderItemVO;
-import mx.com.segurossura.emision.service.impl.AuthenticationManagerImpl;
-import sun.util.logging.resources.logging;
-
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
+
+import mx.com.royalsun.services.interfaces.ServiceMapBase;
+import mx.com.royalsun.services.interfaces.authentication.ViewfinderItemVO;
 
 public class DelegSignOn {
 
-	private final static Logger logger = LoggerFactory.getLogger(DelegSignOn.class);
+	@SuppressWarnings("unused")
+    private final static Logger logger = LoggerFactory.getLogger(DelegSignOn.class);
 	
 	private static BeanSignOn sigOn;
 	
