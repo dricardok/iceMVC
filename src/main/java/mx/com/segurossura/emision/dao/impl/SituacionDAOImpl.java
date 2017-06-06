@@ -1,6 +1,7 @@
 package mx.com.segurossura.emision.dao.impl;
 
 import java.sql.Types;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +35,8 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
     @Override
     public void movimientoMpolisit(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
             String nmsuplem_sesion, String nmsuplem_bean, String status, String cdtipsit, String swreduci,
-            String cdagrupa, String cdestado, String fefecsit, String fecharef, String indparbe, String feinipbs,
-            String porparbe, String intfinan, String cdmotanu, String feinisus, String fefinsus, String accion)
+            String cdagrupa, String cdestado, Date fefecsit, Date fecharef, String indparbe, Date feinipbs,
+            String porparbe, String intfinan, String cdmotanu, Date feinisus, Date fefinsus, String accion)
             throws Exception {
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("pv_cdunieco_i", cdunieco);
@@ -79,16 +80,17 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
             declareParameter(new SqlParameter("pv_swreduci_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdagrupa_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdestado_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_fefecsit_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_fecharef_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_fefecsit_i", Types.DATE));
+            declareParameter(new SqlParameter("pv_fecharef_i", Types.DATE));
             declareParameter(new SqlParameter("pv_indparbe_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_feinipbs_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feinipbs_i", Types.DATE));
             declareParameter(new SqlParameter("pv_porparbe_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_intfinan_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdmotanu_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_feinisus_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_fefinsus_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feinisus_i", Types.DATE));
+            declareParameter(new SqlParameter("pv_fefinsus_i", Types.DATE));
             declareParameter(new SqlParameter("pv_accion_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_rowid_o", Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
             compile();
@@ -108,6 +110,11 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
             }
             tvalosit.put(key, otvalores.get(key));
         }
+        logger.debug(Utils.join("\n otvalor1", " ", tvalosit.getOtvalor01()));
+        logger.debug(Utils.join("\n otvalor2", " ", tvalosit.getOtvalor02()));
+        logger.debug(Utils.join("\n otvalor3", " ", tvalosit.getOtvalor03()));
+        logger.debug(Utils.join("\n otvalor4", " ", tvalosit.getOtvalor04()));
+        logger.debug(Utils.join("\n otvalor5", " ", tvalosit.getOtvalor05()));
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("pv_status_registro_i", accion);
         params.put("pv_tvalo_record_i", new SqlStructValue<TvalositVO>(tvalosit));
@@ -138,6 +145,7 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
         params.put("pv_nmsuplem_i", nmsuplem);
         Map<String, Object> resultado = ejecutaSP(new ObtieneMpolisitSP(getDataSource()), params);
         List<Map<String, String>> listaDatos = (List<Map<String, String>>) resultado.get("pv_registro_o");
+        logger.debug(Utils.join("\nlistaDatos", listaDatos));
         if (listaDatos == null || listaDatos.size() == 0) {
             throw new ApplicationException("Sin resultados");
         }
@@ -155,9 +163,26 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
             declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
             String[] cols = new String[] {
-                    "cdunieco", "cdramo", "estado", "nmpoliza", "nmsituac", "nmsuplem", "status", "cdtipsit",
-                    "swreduci", "cdagrupa", "cdestado", "fefecsit", "fecharef", "indparbe", "feinipbs", "porparbe",
-                    "intfinan", "cdmotanu", "feinisus", "fefinsus", };
+                    "cdunieco", 
+                    "cdramo",   
+                    "estado",   
+                    "nmpoliza", 
+                    "nmsituac", 
+                    "nmsuplem", 
+                    "status",   
+                    "cdtipsit", 
+                    "swreduci", 
+                    "cdagrupa", 
+                    "cdestado",   
+                    "fefecsit", 
+                    "fecharef", 
+                    "indparbe", 
+                    "feinipbs", 
+                    "porparbe", 
+                    "intfinan", 
+                    "cdmotanu", 
+                    "feinisus", 
+                    "fefinsus"};
             declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
@@ -178,9 +203,6 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
         params.put("pv_nmsuplem_i", nmsuplem);
         Map<String, Object> resultado = ejecutaSP(new ObtieneTvalositSP(getDataSource()), params);
         List<Map<String, String>> listaDatos = (List<Map<String, String>>) resultado.get("pv_registro_o");
-        if (listaDatos == null || listaDatos.size() == 0) {
-            throw new ApplicationException("Sin resultados");
-        }
         return listaDatos;
     }
 
@@ -295,14 +317,14 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
     
     protected class ObtenerListaSituacionesSP extends StoredProcedure {
         protected ObtenerListaSituacionesSP(DataSource dataSource) {
-            super(dataSource, "PKG_DML_ALEA.P_DEL_DAT_SIT");
+            super(dataSource, "PKG_DATA_ALEA.P_GET_DET_SIT");
             declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
-            declareParameter(new SqlOutParameter("pv_registro_o", Types.REF_CURSOR, new DinamicMapper()));
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new DinamicMapper()));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
             compile();
