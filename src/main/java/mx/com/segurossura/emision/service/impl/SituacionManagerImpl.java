@@ -110,7 +110,7 @@ public class SituacionManagerImpl implements SituacionManager{
             emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), "NULO");
             paso = "Recuperando valores variables";
             List<Map<String, String>> tvalositList = new ArrayList<>(); 
-            tvalositList = situacionDAO.obtieneTvalosit(cdunieco, cdramo, cdestado, nmpoliza, nmsituac, cdtipsit, nmsuplem);            
+            tvalositList = situacionDAO.obtieneTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdtipsit, nmsuplem);            
             if(tvalositList != null && tvalositList.size() > 0){
                 Map<String, String> tvalosit = tvalositList.get(0);
                 for (Entry<String, String> en : tvalosit.entrySet()) {

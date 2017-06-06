@@ -495,6 +495,7 @@ public class SituacionAction extends PrincipalCoreAction {
             Utils.validate(estado, "No se recibio estado");
             Utils.validate(nmpoliza, "No se recibio poliza");
             situacionManager.validaBloqueSituacion(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+            success = true;
         } catch(Exception ex) {
             success = false;
             Utils.manejaExcepcion(ex);
