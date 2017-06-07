@@ -496,6 +496,7 @@ public class EmisionManagerImpl implements EmisionManager{
     @Override
     public List<Map<String, String>> obtenerDatosTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza)
             throws Exception {
+        Thread.sleep(2000l); // esperar la tarifa
         return emisionDAO.obtenerDatosTarificacion(cdunieco, cdramo, estado, nmpoliza);
     }
 
