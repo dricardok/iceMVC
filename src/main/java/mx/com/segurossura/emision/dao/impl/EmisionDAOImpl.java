@@ -46,7 +46,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
-		 //params.put("Identificador_Error",   Identificador_Error);
+		  
 		 params.put("pv_cdunieco_i",   cdunieco);
 		 params.put("pv_cdramo_i",   cdramo);
 		 params.put("pv_estado_i",   estado);
@@ -241,7 +241,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 
     protected class MovimientoMpolicapSP extends StoredProcedure {
 		protected MovimientoMpolicapSP(DataSource dataSource) {
-			super(dataSource,"PKG_DATA_ALEA.P_MOV_MPOLICAP");// Nombre
+			super(dataSource,"PKG_DATA_ALEA.P_MOV_MPOLICAP"); 
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
@@ -286,7 +286,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	
 	protected class ObtieneMpoligarSP extends StoredProcedure {
 		protected ObtieneMpoligarSP(DataSource dataSource) {
-			super(dataSource,"PKG_DATA_ALEA.P_GET_MPOLIGAR_DISPONIBLES");// Nombre
+			super(dataSource,"PKG_DATA_ALEA.P_GET_MPOLIGAR_DISPONIBLES"); 
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
@@ -364,13 +364,16 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
         if (listaDatos == null || listaDatos.size() == 0) {
 			logger.warn("Sin resultados en Tvalogar: {}", params);
+			
+			
 		}
+        
 		return listaDatos;
 	}
 	
 	protected class ObtieneTvalogarSP extends StoredProcedure {
 		protected ObtieneTvalogarSP(DataSource dataSource) {
-			super(dataSource,"PKG_DATA_ALEA.P_GET_TVALOGAR");// Nombre
+			super(dataSource,"PKG_DATA_ALEA.P_GET_TVALOGAR"); 
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
@@ -430,8 +433,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	
     protected class ObtieneMcapitaSP extends StoredProcedure {
 		protected ObtieneMcapitaSP(DataSource dataSource) {
-			super(dataSource,"PKG_DATA_ALEA.P_GET_MCAPITAL");// Nombre
-			//SqlParameters
+			super(dataSource,"PKG_DATA_ALEA.P_GET_MCAPITAL"); 
+			 
 			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdcapita_i",Types.VARCHAR));
             String[] cols = new String[] { "cdramo", "cdcapita", "cdtipcap", "dscapita" };
@@ -458,11 +461,11 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	
 	protected class ObtieneTgarantiSP extends StoredProcedure {
 		protected ObtieneTgarantiSP(DataSource dataSource) {
-			super(dataSource,"PKG_DATA_ALEA.P_GET_TGARANTI");// Nombre
+			super(dataSource,"PKG_DATA_ALEA.P_GET_TGARANTI"); 
 			
 			declareParameter(new SqlParameter("pv_cdgarant_i",Types.VARCHAR));
 			String[] cols=new String[]{
-				//cursor
+				 
 					"cdgarant",
 					"dsgarant",
 					"cdtipoga",
@@ -489,7 +492,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		params.put("pv_estado_i",      estado);
 		params.put("pv_nmpoliza_i",      nmpoliza);
 		params.put("pv_nmsuplem_i",      nmsuplem);
-													//Clase
+													 
 		Map<String, Object> resultado = ejecutaSP(new ObtieneMpolizasSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
         if (listaDatos == null || listaDatos.size() == 0) {
@@ -497,10 +500,10 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		}
 		return listaDatos;
 	}
-				//Clase
+				 
     protected class ObtieneMpolizasSP extends StoredProcedure {
 		protected ObtieneMpolizasSP(DataSource dataSource) {
-			super(dataSource,"PKG_DATA_ALEA.P_GET_MPOLIZAS");// Nombre
+			super(dataSource,"PKG_DATA_ALEA.P_GET_MPOLIZAS"); 
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
@@ -540,19 +543,19 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		}
 		return listaDatos.get(0);
 	}
-				//Clase
+				 
 	protected class ObtieneTvalopolSP extends StoredProcedure
 	{
 		protected ObtieneTvalopolSP(DataSource dataSource) {
-			super(dataSource,"PKG_DATA_ALEA.P_GET_TVALOPOL");// Nombre
-			//SqlParameters
+			super(dataSource,"PKG_DATA_ALEA.P_GET_TVALOPOL"); 
+			 
 			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
 			String[] cols=new String[]{
-				//cursor
+				 
 					"cdunieco",   "cdramo",     "estado",     "nmpoliza",   "nmsuplem",  "status", 
 			           "otvalor01",  "otvalor02",  "otvalor03",  "otvalor04",  "otvalor05", 
 			           "otvalor06",  "otvalor07",  "otvalor08",  "otvalor09",  "otvalor10", 
@@ -638,7 +641,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     protected class MovimientoTvalopolSP extends StoredProcedure {
         protected MovimientoTvalopolSP (DataSource dataSource) {
             super(dataSource, "PKG_DATA_ALEA.P_MOV_TVALOPOL");
-            this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor());// unwrapping the connection
+            this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor()); 
             declareParameter(new SqlParameter("pv_status_i"       , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_tvalo_record_i" , Types.STRUCT, "TVALOPOL_OBJECT"));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
@@ -726,14 +729,14 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	
     protected class ObtieneTatrigarSP extends StoredProcedure {
 		protected ObtieneTatrigarSP(DataSource dataSource) {
-			super(dataSource,"PKG_DATA_ALEA.P_GET_TATRIGAR");// Nombre
-			//SqlParameters
+			super(dataSource,"PKG_DATA_ALEA.P_GET_TATRIGAR"); 
+			 
 			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdtipsit_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdgarant_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdatribu_i",Types.VARCHAR));
 			String[] cols=new String[]{
-				//cursor
+				 
 					 "cdramo",   "cdtipsit",   "cdgarant", "cdatribu", 
 			           "swformat",   "nmlmax", "nmlmin", "swobliga", "dsatribu", 
 			           "ottabval", "swproduc", "swsuplem"
@@ -825,11 +828,11 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         List<Map<String,String>> listaDatos = (List<Map<String,String>>)resultado.get("pv_registro_o");
         return listaDatos;
     }
-                //Clase
+                 
     protected class ObtieneMpoligarTablaSP extends StoredProcedure{
         protected ObtieneMpoligarTablaSP(DataSource dataSource) {
-            super(dataSource,"PKG_DATA_ALEA.P_GET_MPOLIGAR");// Nombre
-            //SqlParameters
+            super(dataSource,"PKG_DATA_ALEA.P_GET_MPOLIGAR"); 
+             
             declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
