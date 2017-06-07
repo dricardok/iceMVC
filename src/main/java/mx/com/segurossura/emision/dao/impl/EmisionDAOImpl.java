@@ -13,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jdbc.support.oracle.SqlStructValue;
-import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
@@ -86,10 +85,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		 params.put("pv_adparben_i",   adparben);
 		 params.put("pv_nmcercoi_i",   nmcercoi);
 		 params.put("pv_cdtipren_i",   cdtipren);
-		// params.put("pv_rowid_i",   rowid);
 		 params.put("pv_accion_i",        accion);	
 		 
-		 Map<String, Object> resultado = ejecutaSP(new MovimientoMpolizasSP(getDataSource()), params);
+		 ejecutaSP(new MovimientoMpolizasSP(getDataSource()), params);
 	}
 	
 	protected class MovimientoMpolizasSP extends StoredProcedure {
@@ -158,7 +156,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_fevencim_i", fevencim);
         params.put("pv_accion_i", accion);
 
-        Map<String, Object> resultado = ejecutaSP(new MovimientoMpoligarSP(getDataSource()), params);
+        ejecutaSP(new MovimientoMpoligarSP(getDataSource()), params);
     }
     
 	protected class MovimientoMpoligarSP extends StoredProcedure {
@@ -197,7 +195,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_otvalor_i", otvalor);
         params.put("pv_accion_i", accion);
 
-        Map<String, Object> resultado = ejecutaSP(new MovimientoTvalogarSP(getDataSource()), params);
+        ejecutaSP(new MovimientoTvalogarSP(getDataSource()), params);
     }
     
 	protected class MovimientoTvalogarSP extends StoredProcedure {
@@ -238,7 +236,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_nmsuplem_bloque_i", nmsuplem_bloque);
         params.put("pv_modoacceso_i", modoacceso);
 
-        Map<String, Object> resultado = ejecutaSP(new MovimientoMpolicapSP(getDataSource()), params);
+        ejecutaSP(new MovimientoMpolicapSP(getDataSource()), params);
     }
 
     protected class MovimientoMpolicapSP extends StoredProcedure {
@@ -263,7 +261,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
     
-	@Override
+	@SuppressWarnings("unchecked")
+    @Override
 	public List<Map<String,String>> obtieneMpoligar(String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception{
 	    
@@ -278,7 +277,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		params.put("pv_nmsuplem_i",      nmsuplem);
 		logger.debug("-->"+params);
 		Map<String, Object> resultado = ejecutaSP(new ObtieneMpoligarSP(getDataSource()), params);
-		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
+        List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
 		if(listaDatos==null||listaDatos.size()==0) {
 			throw new ApplicationException("Sin resultados");
 		}
@@ -307,6 +306,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String,String>> obtieneMpolicap(String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsituac, String cdcapita, String nmsuplem) throws Exception{
@@ -346,6 +346,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		}
 	}
 	
+    @SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String,String>> obtieneTvalogar(String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception{
@@ -413,6 +414,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String,String>> obtieneMcapital(String cdramo, String cdcapita) throws Exception{
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
@@ -440,6 +442,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		}
 	}
 	
+    @SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String,String>> obtieneTgaranti(String cdgarant) throws Exception{
 	
@@ -475,7 +478,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		}
 	}
 	
-	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String,String>> obtieneMpolizas(String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsuplem) throws Exception {
@@ -520,7 +523,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		}
 	}
 	
-	@Override //nombre
+    @SuppressWarnings("unchecked")
+	@Override
 	public Map<String,String> obtenerTvalopol (String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsuplem) throws Exception {
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
@@ -634,7 +638,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     protected class MovimientoTvalopolSP extends StoredProcedure {
         protected MovimientoTvalopolSP (DataSource dataSource) {
             super(dataSource, "PKG_DATA_ALEA.P_MOV_TVALOPOL");
-            this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor());
+            this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor());// unwrapping the connection
             declareParameter(new SqlParameter("pv_status_i"       , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_tvalo_record_i" , Types.STRUCT, "TVALOPOL_OBJECT"));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
@@ -700,7 +704,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             compile();
         }
     }
-
+    
+    @SuppressWarnings("unchecked")
 	@Override
     public List<Map<String, String>> obtieneTatrigar(String pv_cdramo_i, String pv_cdtipsit_i, String pv_cdgarant_i,
             String pv_cdatribu_i) throws Exception {
@@ -764,6 +769,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         }
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public List<Map<String, String>> ejecutarValidaciones (String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmsituac, String nmsuplem, String cdbloque) throws Exception {
@@ -802,11 +808,11 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         }
     }
     
-    @Override //nombre
+    @SuppressWarnings("unchecked")
+    @Override
     public List<Map<String,String>> obtieneMpoligarTabla(String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception{         
         Map<String, Object> params = new LinkedHashMap<String, Object>();       
-        // params.put       
         params.put("pv_cdunieco_i", cdunieco);
         params.put("pv_cdramo_i", cdramo);
         params.put("pv_estado_i", estado);
@@ -815,7 +821,6 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_cdgarant_i", cdgarant);
         params.put("pv_nmsuplem_i", nmsuplem);
         logger.debug("-->"+params);
-        //Clase
         Map<String, Object> resultado = ejecutaSP(new ObtieneMpoligarTablaSP(getDataSource()), params);
         List<Map<String,String>> listaDatos = (List<Map<String,String>>)resultado.get("pv_registro_o");
         return listaDatos;
@@ -887,7 +892,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         }
     }
     
-    
+    @SuppressWarnings("unchecked")
     @Override
     public List<Map<String, String>> obtenerDatosTarificacion(String cdunieco, String cdramo, String estado,
             String nmpoliza) throws Exception {
