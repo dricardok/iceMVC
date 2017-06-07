@@ -423,52 +423,6 @@ public class EmisionAction extends PrincipalCoreAction {
 		return result;
 	}
 	
-	@Action(		
-	        value = "movimientoTvalopol", 
-	        results = { 
-	            @Result(name = "success", type = "json") 
-	        }
-	    )	
-	public String movimientoTvalopol(){
-		logger.debug(StringUtils.join(
-				 "\n###################"
-				,"\n###### movimientoTvalopol ######"
-				));
-		
-		String result = SUCCESS;
-		
-		try
-		{
-			
-			Utils.validate(params, "No se recibieron datos");
-			
-			String Gn_Cdunieco= params.get("Cdunieco");
-			String Gn_Cdramo= params.get("Cdramo");
-			String Gv_Estado= params.get("Estado");
-			String Gn_Nmpoliza= params.get("Nmpoliza");
-			String Gn_Cdatribu= params.get("Cdatribu");
-			String Gn_Nmsuplem= params.get("Nmsuplem");
-			String Gv_Otvalor_New= params.get("Otvalor_New");
-			String Gv_Otvalor_Old= params.get("Otvalor_Old");
-			 
-			emisionManager.movimientoTvalopol(Gn_Cdunieco, Gn_Cdramo, Gv_Estado, Gn_Nmpoliza, Gn_Cdatribu, Gn_Nmsuplem, Gv_Otvalor_New, Gv_Otvalor_Old);
-			
-			success=true;
-			
-			result = SUCCESS;
-		}
-		catch(Exception ex)
-		{
-			success=false;
-			message = Utils.manejaExcepcion(ex);
-		}
-		
-		logger.debug(StringUtils.join(
-				 "\n###### movimientoTvalopol ######"
-				,"\n###################"
-				));
-		return result;
-	}
 	
 	@Action(		
 	        value = "generaNmpoliza", 
