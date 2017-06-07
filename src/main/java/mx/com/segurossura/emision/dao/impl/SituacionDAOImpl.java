@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
+import org.springframework.jdbc.support.nativejdbc.OracleJdbc4NativeJdbcExtractor;
 import org.springframework.stereotype.Repository;
 
 import com.biosnettcs.core.Utils;
@@ -121,10 +122,10 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
         ejecutaSP(new MovimientoTvalositSP(getDataSource()), params);
     }
 
-    // Clase
     protected class MovimientoTvalositSP extends StoredProcedure {
         protected MovimientoTvalositSP(DataSource dataSource) {
-            super(dataSource, "PKG_DATA_ALEA.P_MOV_TVALOSIT");// Nombre
+            super(dataSource, "PKG_DATA_ALEA.P_MOV_TVALOSIT");
+            this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor());// unwrapping the connection
             declareParameter(new SqlParameter("pv_status_registro_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_tvalo_record_i", Types.STRUCT, "TVALOSIT_OBJECT"));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
