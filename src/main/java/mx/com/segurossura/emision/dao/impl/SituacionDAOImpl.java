@@ -309,9 +309,9 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
         params.put("pv_nmsuplem_i", nmsuplem);
         Map<String, Object> resultado = ejecutaSP(new ObtenerListaSituacionesSP(getDataSource()), params);
         List<Map<String, String>> listaDatos = (List<Map<String, String>>) resultado.get("pv_registro_o");
-        if (listaDatos == null || listaDatos.size() == 0) {
-            throw new ApplicationException("Sin resultados");
-        }
+//        if (listaDatos == null || listaDatos.size() == 0) {
+//            throw new ApplicationException("Sin resultados");
+//        }
         return listaDatos;
     }
     
