@@ -322,7 +322,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		Map<String, Object> resultado = ejecutaSP(new ObtieneMpolicapSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
         if (listaDatos == null || listaDatos.size() == 0) {
-			throw new ApplicationException("Sin resultados");
+			logger.warn("Sin resultados en mpolicap: {}", params);
 		}
 		return listaDatos;
 	}
@@ -362,7 +362,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		Map<String, Object> resultado = ejecutaSP(new ObtieneTvalogarSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
         if (listaDatos == null || listaDatos.size() == 0) {
-			throw new ApplicationException("Sin resultados");
+			logger.warn("Sin resultados en Tvalogar: {}", params);
 		}
 		return listaDatos;
 	}
