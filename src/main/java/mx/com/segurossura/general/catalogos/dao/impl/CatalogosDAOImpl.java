@@ -144,34 +144,6 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     }
     
     @SuppressWarnings("unchecked")
-    
-    @Override
-    public List<Map<String, String>> obtenerCatalogoTmanteni (String cdtabla) throws Exception {
-        Map<String, String> params = new LinkedHashMap<String, String>();
-        params.put("pv_cdtabla_i", cdtabla);
-        Map<String, Object> procRes = ejecutaSP(new ObtenerCatalogoTmanteniSP(getDataSource()), params);
-        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
-        if (lista == null) {
-            lista = new ArrayList<Map<String, String>>();
-        }
-        return lista;
-    }
-    
-    protected class ObtenerCatalogoTmanteniSP extends StoredProcedure {
-        protected ObtenerCatalogoTmanteniSP (DataSource dataSource) {
-            super(dataSource,"PKG_LOV_ALEA.P_GET_CAT_TMANTENI");
-            declareParameter(new SqlParameter("pv_cdtabla_i", Types.VARCHAR));
-            String[] cols = new String[]{
-                    "codigo", "descripl"
-                    };
-            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
-            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
-            declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
-            compile();
-        }
-    }
-    
-    @SuppressWarnings("unchecked")
     @Override
     public List<Map<String, String>> obtenerTipoSituaciones (String cdramo) throws Exception{
         Map<String, String> params = new LinkedHashMap<String, String>();
@@ -220,10 +192,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     
     protected class BaseMapper implements RowMapper<BaseVO> {
         public BaseVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-            BaseVO base = new BaseVO();
-            base.setKey(rs.getString("codigo"));
-            base.setValue(rs.getString("descripl"));
-            return base;
+            return new BaseVO(rs.getString("codigo"), rs.getString("descripl"));
         }
     }
 }

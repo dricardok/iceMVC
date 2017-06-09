@@ -83,17 +83,6 @@ public class CatalogosManagerImpl implements CatalogosManager {
                     }
                     break;
                     
-                case FORMAS_PAGO:
-                    paso = "Recuperando tabla de mantenimiento";
-                    registrosTmanteni = catalogosDAO.obtenerCatalogoTmanteni(cat.getCdtabla());
-                    lista = new ArrayList<BaseVO>();
-                    if (registrosTmanteni != null) {
-                        for (Map<String, String> registroTmanteni: registrosTmanteni) {
-                            lista.add(new BaseVO(registroTmanteni.get("codigo"), registroTmanteni.get("descripl")));
-                        }
-                    }
-                    break;
-                    
                 case TIPO_SITUACIONES:
                     paso = "Recuperando catalogo tipo de situaciones";
                     lista = new ArrayList<>();

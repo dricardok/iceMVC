@@ -5,8 +5,7 @@ public enum Catalogos {
     SUCURSALES(""),
     TATRIPOL(""),
     TATRISIT(""),
-    FORMAS_PAGO("TPERPAG"), 
-    TATRIGAR("TATRIGAR"),
+    TATRIGAR(""),
     TIPO_SITUACIONES("");
 
     

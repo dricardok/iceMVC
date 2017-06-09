@@ -34,15 +34,6 @@ public interface CatalogosDAO {
      * @throws Exception
      */
     public List<Map<String, String>> obtenerCatalogoTatrisit (String cdtipsit, String cdatribu) throws Exception;
-    
-    /**
-     * Obtiene el catalogo de TMANTENI por codigo de tabla
-     * 
-     * @param cdtabla Codigo de la tabla
-     * @return Lista de elementos del catalogo
-     * @throws Exception
-     */
-    public List<Map<String, String>> obtenerCatalogoTmanteni (String cdtabla) throws Exception;
 
     /**
      * Obtiene el catalogo de TATRIGAR por ramo, cobertura y atributo
