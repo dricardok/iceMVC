@@ -62,7 +62,7 @@ public interface CatalogosDAO {
      * @return Lista de elementos del catalogo
      * @throws Exception
      */
-    public List<BaseVO> obtenerCatalogoPorCodigoTabla(String cdtabla) throws Exception;
+    public List<BaseVO> obtenerCatalogoTablaApoyo(String cdtabla) throws Exception;
     
     
 }

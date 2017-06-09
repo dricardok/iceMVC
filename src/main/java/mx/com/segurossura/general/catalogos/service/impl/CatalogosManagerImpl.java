@@ -29,12 +29,11 @@ public class CatalogosManagerImpl implements CatalogosManager {
     public List<BaseVO> obtenerCatalogo (String catalogo, Map<String, String> params, String cdusuari, String cdsisrol) throws Exception {
         String paso = Utils.join("Recuperando cat\u00e1logo ", catalogo);
         List<BaseVO> lista = null;
-        List<Map<String, String>> registrosTmanteni  = null;
         
         try {
             // Si se encuentra el prefijo "CAT_" se busca en las tablas de apoyo: 
             if(catalogo.toUpperCase().startsWith("CAT_")) {
-                lista = catalogosDAO.obtenerCatalogoPorCodigoTabla(catalogo.toUpperCase().substring(4));
+                lista = catalogosDAO.obtenerCatalogoTablaApoyo(catalogo.toUpperCase().substring(4));
             } else {
                 Catalogos cat = Catalogos.valueOf(catalogo);
                 switch (cat) {

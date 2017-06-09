@@ -172,16 +172,16 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     
     @SuppressWarnings("unchecked")
     @Override
-    public List<BaseVO> obtenerCatalogoPorCodigoTabla(String cdtabla) throws Exception {
+    public List<BaseVO> obtenerCatalogoTablaApoyo(String cdtabla) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
         params.put("pv_cdtabla_i", cdtabla);
-        Map<String, Object> procRes = ejecutaSP(new ObtenerCatalogoPorCdtablaSP(getDataSource()), params);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerCatalogoTablaApoyoSP(getDataSource()), params);
         return (List<BaseVO>) procRes.get("pv_registro_o");
     }
     
-    protected class ObtenerCatalogoPorCdtablaSP extends StoredProcedure {
-        protected ObtenerCatalogoPorCdtablaSP (DataSource dataSource) {
-            super(dataSource,"PKG_LOV_ALEA.P_GET_CAT_X_CDTABLA");
+    protected class ObtenerCatalogoTablaApoyoSP extends StoredProcedure {
+        protected ObtenerCatalogoTablaApoyoSP (DataSource dataSource) {
+            super(dataSource,"PKG_LOV_ALEA.P_GET_CAT_TABLA_APOYO");
             declareParameter(new SqlParameter("pv_cdtabla_i", Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new BaseMapper()));
             declareParameter(new SqlOutParameter("pv_msg_id_o"  , Types.NUMERIC));
