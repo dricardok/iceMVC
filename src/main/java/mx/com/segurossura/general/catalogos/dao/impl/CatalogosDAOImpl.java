@@ -1,5 +1,7 @@
 package mx.com.segurossura.general.catalogos.dao.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
@@ -17,12 +20,14 @@ import org.springframework.stereotype.Repository;
 import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
+import com.biosnettcs.core.model.BaseVO;
 
 import mx.com.segurossura.general.catalogos.dao.CatalogosDAO;
 
 @Repository
 public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     
+    @SuppressWarnings("unchecked")
     @Override
     public List<Map<String, String>> obtenerSucursales () throws Exception {
          return (List<Map<String, String>>) ((Map<String, Object>) ejecutaSP(new ObtenerSucursalesSP(getDataSource()),
@@ -42,6 +47,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
         }
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public List<Map<String, String>> obtenerCatalogoTatripol (String cdramo, String cdatribu) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
@@ -72,6 +78,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
         }
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public List<Map<String, String>> obtenerCatalogoTatrisit (String cdtipsit, String cdatribu) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
@@ -102,7 +109,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
         }
     }
     
-    
+    @SuppressWarnings("unchecked")
     @Override
     public List<Map<String, String>> obtenerCatalogoTatrigar (String cdramo,String cdgarant, String cdatribu) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
@@ -136,7 +143,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
         }
     }
     
-    
+    @SuppressWarnings("unchecked")
     
     @Override
     public List<Map<String, String>> obtenerCatalogoTmanteni (String cdtabla) throws Exception {
@@ -164,6 +171,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
         }
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public List<Map<String, String>> obtenerTipoSituaciones (String cdramo) throws Exception{
         Map<String, String> params = new LinkedHashMap<String, String>();
@@ -187,6 +195,35 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
             compile();
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<BaseVO> obtenerCatalogoPorCodigoTabla(String cdtabla) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdtabla_i", cdtabla);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerCatalogoPorCdtablaSP(getDataSource()), params);
+        return (List<BaseVO>) procRes.get("pv_registro_o");
+    }
+    
+    protected class ObtenerCatalogoPorCdtablaSP extends StoredProcedure {
+        protected ObtenerCatalogoPorCdtablaSP (DataSource dataSource) {
+            super(dataSource,"PKG_LOV_ALEA.P_GET_CAT_X_CDTABLA");
+            declareParameter(new SqlParameter("pv_cdtabla_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new BaseMapper()));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"  , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"   , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    protected class BaseMapper implements RowMapper<BaseVO> {
+        public BaseVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+            BaseVO base = new BaseVO();
+            base.setKey(rs.getString("codigo"));
+            base.setValue(rs.getString("descripl"));
+            return base;
         }
     }
 }
