@@ -50,34 +50,40 @@ public class CatalogosManagerImpl implements CatalogosManager {
                     
                 case TATRIPOL:
                     paso = "Recuperando lista de apoyo para atributo de p\u00f3liza";
-                    List<Map<String, String>> registrosTatripol = catalogosDAO.obtenerCatalogoTatripol(params.get("cdramo"), params.get("cdatribu"));
+                    List<Map<String, String>> registrosTatripol = catalogosDAO.obtenerCatalogoTatripol(params.get("cdramo"),
+                            params.get("cdatribu"), params.get("idPadre"), params.get("idPadre2"), params.get("idPadre3"),
+                            params.get("idPadre4"), params.get("idPadre5"));
                     lista = new ArrayList<BaseVO>();
                     if (registrosTatripol != null) {
                         for (Map<String, String> registroTatripol: registrosTatripol) {
-                            lista.add(new BaseVO(registroTatripol.get("otclave1"), registroTatripol.get("otvalor26")));
+                            lista.add(new BaseVO(registroTatripol.get("clave"), registroTatripol.get("descripcion")));
                         }
                     }
                     break;
                 
                 case TATRISIT:
                     paso = "Recuperando lista de apoyo para atributo de p\u00f3liza";
-                    List<Map<String, String>> registrosTatrisit = catalogosDAO.obtenerCatalogoTatrisit(params.get("cdtipsit"), params.get("cdatribu"));
+                    List<Map<String, String>> registrosTatrisit = catalogosDAO.obtenerCatalogoTatrisit(params.get("cdtipsit"),
+                            params.get("cdatribu"), params.get("idPadre"), params.get("idPadre2"), params.get("idPadre3"),
+                            params.get("idPadre4"), params.get("idPadre5"));
                     lista = new ArrayList<BaseVO>();
                     if (registrosTatrisit != null) {
                         for (Map<String, String> registroTatrisit: registrosTatrisit) {
-                            lista.add(new BaseVO(registroTatrisit.get("otclave1"), registroTatrisit.get("otvalor26")));
+                            lista.add(new BaseVO(registroTatrisit.get("clave"), registroTatrisit.get("descripcion")));
                         }
                     }
                     break;
                     
                 case TATRIGAR:
                     paso = "Recuperando lista de apoyo para atributo de p\u00f3liza";
-                    List<Map<String, String>> registrosTatrigar = catalogosDAO.obtenerCatalogoTatrigar(params.get("cdramo"), params.get("cdgarant"), params.get("cdatribu"));
+                    List<Map<String, String>> registrosTatrigar = catalogosDAO.obtenerCatalogoTatrigar(params.get("cdramo"),
+                            params.get("cdgarant"), params.get("cdatribu"), params.get("idPadre"), params.get("idPadre2"),
+                            params.get("idPadre3"), params.get("idPadre4"), params.get("idPadre5"));
                     lista = new ArrayList<BaseVO>();
                     logger.debug("-->tatrigar"+registrosTatrigar);
                     if (registrosTatrigar != null) {
                         for (Map<String, String> registroTatrigar: registrosTatrigar) {
-                            lista.add(new BaseVO(registroTatrigar.get("otclave1"), registroTatrigar.get("otvalor26")));
+                            lista.add(new BaseVO(registroTatrigar.get("clave"), registroTatrigar.get("descripcion")));
                         }
                     }
                     break;

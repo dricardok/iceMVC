@@ -49,11 +49,12 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     
     @SuppressWarnings("unchecked")
     @Override
-    public List<Map<String, String>> obtenerCatalogoTatripol (String cdramo, String cdatribu) throws Exception {
+    public List<Map<String, String>> obtenerCatalogoTatripol (String cdramo, String cdatribu, String idPadre1, String idPadre2,
+            String idPadre3, String idPadre4, String idPadre5) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
         params.put("pv_cdramo_i", cdramo);
         params.put("pv_cdatribu_i", cdatribu);
-        params.put("pv_clave_i", null);
+        params.put("pv_clave_i", idPadre1);
         Map<String, Object> procRes = ejecutaSP(new ObtenerCatalogoTatripolSP(getDataSource()), params);
         List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
         if (lista == null) {
@@ -69,7 +70,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
             declareParameter(new SqlParameter("pv_cdatribu_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_clave_i", Types.VARCHAR));
             String[] cols = new String[]{
-                    "otclave1", "otvalor26"
+                    "clave", "descripcion"
                     };
             declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
@@ -80,11 +81,12 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     
     @SuppressWarnings("unchecked")
     @Override
-    public List<Map<String, String>> obtenerCatalogoTatrisit (String cdtipsit, String cdatribu) throws Exception {
+    public List<Map<String, String>> obtenerCatalogoTatrisit (String cdtipsit, String cdatribu, String idPadre1, String idPadre2,
+            String idPadre3, String idPadre4, String idPadre5) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
         params.put("pv_cdtipsit_i", cdtipsit);
         params.put("pv_cdatribu_i", cdatribu);
-        params.put("pv_clave_i", null);
+        params.put("pv_clave_i", idPadre1);
         Map<String, Object> procRes = ejecutaSP(new ObtenerCatalogoTatrisitSP(getDataSource()), params);
         List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
         if (lista == null) {
@@ -100,7 +102,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
             declareParameter(new SqlParameter("pv_cdatribu_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_clave_i", Types.VARCHAR));
             String[] cols = new String[]{
-                    "otclave1", "otvalor26"
+                    "clave", "descripcion"
                     };
             declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
@@ -111,12 +113,13 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     
     @SuppressWarnings("unchecked")
     @Override
-    public List<Map<String, String>> obtenerCatalogoTatrigar (String cdramo,String cdgarant, String cdatribu) throws Exception {
+    public List<Map<String, String>> obtenerCatalogoTatrigar (String cdramo,String cdgarant, String cdatribu, String idPadre1,
+            String idPadre2, String idPadre3, String idPadre4, String idPadre5) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
         params.put("pv_cdramo_i", cdramo);
         params.put("pv_cdgarant_i", cdgarant);
         params.put("pv_cdatribu_i", cdatribu);
-        params.put("pv_clave_i", null);
+        params.put("pv_clave_i", idPadre1);
         Map<String, Object> procRes = ejecutaSP(new ObtenerCatalogoTatrigarSP(getDataSource()), params);
         List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
         if (lista == null) {
@@ -134,7 +137,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
             declareParameter(new SqlParameter("pv_clave_i", Types.VARCHAR));
             
             String[] cols = new String[]{
-                    "otclave1", "otvalor26"
+                    "clave", "descripcion"
                     };
             declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));

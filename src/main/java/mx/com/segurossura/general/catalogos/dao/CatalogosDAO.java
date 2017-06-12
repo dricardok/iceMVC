@@ -23,7 +23,8 @@ public interface CatalogosDAO {
      * @return Lista de elementos del catalogo
      * @throws Exception
      */
-    public List<Map<String, String>> obtenerCatalogoTatripol (String cdramo, String cdatribu) throws Exception;
+    public List<Map<String, String>> obtenerCatalogoTatripol (String cdramo, String cdatribu, String idPadre1, String idPadre2,
+            String idPadre3, String idPadre4, String idPadre5) throws Exception;
     
     /**
      * Obtiene el catalogo de TATRISIT por tipo de situacion y atributo
@@ -33,7 +34,8 @@ public interface CatalogosDAO {
      * @return Lista de elementos del catalogo
      * @throws Exception
      */
-    public List<Map<String, String>> obtenerCatalogoTatrisit (String cdtipsit, String cdatribu) throws Exception;
+    public List<Map<String, String>> obtenerCatalogoTatrisit (String cdtipsit, String cdatribu, String idPadre1, String idPadre2,
+            String idPadre3, String idPadre4, String idPadre5) throws Exception;
 
     /**
      * Obtiene el catalogo de TATRIGAR por ramo, cobertura y atributo
@@ -44,7 +46,8 @@ public interface CatalogosDAO {
      * @return Lista de elementos del catalogo
      * @throws Exception
      */
-	public List<Map<String, String>> obtenerCatalogoTatrigar(String cdramo, String cdgarant, String cdatribu) throws Exception;
+	public List<Map<String, String>> obtenerCatalogoTatrigar(String cdramo, String cdgarant, String cdatribu, String idPadre1,
+	        String idPadre2, String idPadre3, String idPadre4, String idPadre5) throws Exception;
     
 	/**
 	 * Obtiene el catalogo de tipo de situaciones por ramo

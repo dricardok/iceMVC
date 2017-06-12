@@ -877,7 +877,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     
     protected class BbvtarxincF extends StoredProcedure {
         protected BbvtarxincF (DataSource dataSource) {
-            super(dataSource, "PKG_PROCESS_ALEA.F_BBVTARXINC");
+            super(dataSource, "PKG_PROCESS_ALEA.F_BBVTARXINC_HOST_CMD");
             /** important that the out parameter is defined before the in parameter. */
             declareParameter(new SqlOutParameter("v_return",    Types.VARCHAR));  
             declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
