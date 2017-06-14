@@ -1,0 +1,14 @@
+{"componentes":{
+        "TATRIPER":[
+                {"nmlmax":null,"swobliga":"N","cdgarant":"5109","nmlmin":null,"cdramo":"501","cdtipsit":"51","swsuplem":"N","swformat":"P","dsatribu":"ESTADO CIVIL","swproduc":"N","ottabval":null,"cdatribu":"1"              },
+                {"nmlmax":null,"swobliga":"N","cdgarant":"5109","nmlmin":null,"cdramo":"501","cdtipsit":"51","swsuplem":"N","swformat":"P","dsatribu":"CURP","swproduc":"N","ottabval":null,"cdatribu":"2"              },
+                {"nmlmax":null,"swobliga":"N","cdgarant":"5109","nmlmin":null,"cdramo":"501","cdtipsit":"51","swsuplem":"N","swformat":"P","dsatribu":"NUM. DOMIC.CORR","swproduc":"N","ottabval":null,"cdatribu":"3"               },
+                {"nmlmax":"1","swobliga":"N","cdgarant":"5109","nmlmin":"1","cdramo":"501","cdtipsit":"51","swsuplem":"N","swformat":"A","dsatribu":"COD.BCO.CTA.CHQ","swproduc":"N","ottabval":null,"cdatribu":"4"             },
+                {"nmlmax":"4","swobliga":"N","cdgarant":"5109","nmlmin":"1","cdramo":"501","cdtipsit":"51","swsuplem":"N","swformat":"A","dsatribu":"NUM.SUCURS.BCO","swproduc":"N","ottabval":null,"cdatribu":"5"              },
+                {"nmlmax":"4","swobliga":"N","cdgarant":"5109","nmlmin":"1","cdramo":"501","cdtipsit":"51","swsuplem":"N","swformat":"A","dsatribu":"NUM.CUENTA.CHQ","swproduc":"N","ottabval":null,"cdatribu":"6"              },
+                {"nmlmax":"10","swobliga":"N","cdgarant":"5109","nmlmin":"1","cdramo":"501","cdtipsit":"51","swsuplem":"S","swformat":"N","dsatribu":"EMPRESA TRABAJA","swproduc":"S","ottabval":null,"cdatribu":"7"                },
+                {"nmlmax":"1","swobliga":"N","cdgarant":"5109","nmlmin":"1","cdramo":"501","cdtipsit":"51","swsuplem":"N","swformat":"A","dsatribu":"TIPO CONTRATACN","swproduc":"N","ottabval":null,"cdatribu":"8"             },
+                {"nmlmax":"1","swobliga":"N","cdgarant":"5109","nmlmin":"1","cdramo":"501","cdtipsit":"51","swsuplem":"N","swformat":"A","dsatribu":"TIPO PROVEEDOR","swproduc":"N","ottabval":null,"cdatribu":"9"              },
+                {"nmlmax":"1","swobliga":"N","cdgarant":"5109","nmlmin":"1","cdramo":"501","cdtipsit":"51","swsuplem":"N","swformat":"A","dsatribu":"COD.BCO.TAR.CRE","swproduc":"N","ottabval":null,"cdatribu":"10"                },
+                {"nmlmax":null,"swobliga":"N","cdgarant":"5109","nmlmin":null,"cdramo":"501","cdtipsit":"51","swsuplem":"S","swformat":"P","dsatribu":"NUM.TARJ.CREDIT","swproduc":"S","ottabval":null,"cdatribu":"11"}]                },
+"list":[{"cdgarant":"5109","validators":true,"rootRequestData":"list","url":"coberturas\/obtieneTatrigar.action","seccion":"TATRIGAR","pantalla":"TATRIGAR","estatus":"","cdramo":"501","cdtipsit":"51","auxKey":"","fields":true,"modulo":"","items":true}],"message":null,"params":null,"success":true}

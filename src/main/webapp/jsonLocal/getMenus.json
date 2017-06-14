@@ -1,0 +1,4 @@
+{
+    success: true,
+    message: '{"lstChildNodes":[{"atrWork": "bloquedatosgenerales.action?iconCls=dollar&cdramo=501&cdtipsit=51","atrMenu": "Datos generales","atrFinish": true,"atrCdfunci": "00305","atrTarget": "C"},{"atrWork": "bloquelistasituaciones.action?iconCls=dollar&cdramo=501&cdtipsit=51","atrMenu": "ListaSituaciones","atrFinish": true,"atrCdfunci": "00305","atrTarget": "C"},{"atrWork": "bloquecoberturas.action?iconCls=dollar&cdramo=501&cdtipsit=51","atrMenu": "Coberturas","atrFinish": true,"atrCdfunci": "00305","atrTarget": "C"},{"atrWork": "mesacontrol.action?iconCls=home","atrMenu": "Mesa control","atrFinish": true,"atrCdfunci": "00305","atrTarget": "C"}]}'
+}

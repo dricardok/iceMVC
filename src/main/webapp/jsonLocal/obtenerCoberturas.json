@@ -1,0 +1,26 @@
+[
+	{
+		opcional: "S",
+		cdgarant:"1253",
+		dsgarant:"ORIENTACION MEDICA",
+		deducible:"5%",
+		suma_asegurada: "1234543",
+		amparada:"S"
+	},
+	{
+		opcional: "N",
+		cdgarant:"12",
+		dsgarant:"MEDICA",
+		deducible:"5%",
+		suma_asegurada: "1234543",
+		amparada:"S"
+	},
+	{
+		opcional: "S",
+		cdgarant:"98",
+		dsgarant:"ORIENTACION",
+		deducible:"5%",
+		suma_asegurada: "1234543",
+		amparada:"N"
+	},
+]

@@ -1,0 +1,11 @@
+{
+    success: true,
+    user: {
+        cdusuari: 'A1',
+        dsusuari: 'USUARIO A1',
+        rolActivo: {
+            cdsisrol: 'AGENTE',
+            dssisrol: 'AGENTE'
+        }
+    }
+}

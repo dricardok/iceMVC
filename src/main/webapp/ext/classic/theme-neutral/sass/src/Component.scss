@@ -1,0 +1,89 @@
+.#{$prefix}body {
+    color: $color;
+    font-size: $font-size;
+    @if $line-height != normal {
+        line-height: $line-height;
+    }
+    @if $font-weight != normal {
+        font-weight: $font-weight;
+    }
+    font-family: $font-family;
+    @if not is-null($body-background-color) and $body-background-color != transparent {
+        background:$azulbd;
+    }
+}
+
+// When a component is having its size animated, or is collapsed, content must be clipped
+// This state must override others, so is !important
+.#{$prefix}animating-size,
+.#{$prefix}collapsed {
+    overflow: hidden!important;
+}
+
+// When a component is animating from collapsed state, its element needs to appear above
+// the other elements for the duration of the expanding animation.
+.#{$prefix}animating-size {
+    z-index: 10000;
+}
+
+/*ESTILOS SURA 2017 para la sección de elección rol*/
+
+
+.btn_rol_suscriptor{
+	border-style: solid;
+	border-left-width: 12px;
+	border-top-width:0px;
+	border-right-width: 0px;
+	border-bottom-width:0px;
+	border-left-color:#00B5CB;
+	display:block;
+	width:25%;
+	margin: 20px auto;
+	padding: 10px;
+	background-color: rgba(0, 51, 160, .75);
+	color:#FFF; 
+	font-size:16px;
+	min-height:65px; 
+	line-height: 38px;
+	-webkit-transition: all .25s ease-in-out;
+		&:hover{
+		 -webkit-transform: scale(1.1);
+		 background-color: rgba(0, 51, 160, .90); }
+		 
+}
+
+
+
+
+
+.txt_btn_rol {
+    position: relative;
+    &:before {
+   		content: "\f0c0";
+   	 	font-family: FontAwesome;
+    	font-style: normal;
+    	font-weight: normal;
+    	text-decoration: inherit;
+   	 	color: #fff;
+   		font-size: 18px;
+    	padding-right: 0.5em;
+   	 	position: absolute;
+    	top: 10px;
+   		left: 0;
+    	line-height: 25px;}
+}
+ 
+.chev_rol:after {
+    content: "\f105";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    color: #fff;
+    font-size: 18px;
+    padding-right: 0.5em;
+    left: 0;
+    line-height: 25px; 
+}
+
+

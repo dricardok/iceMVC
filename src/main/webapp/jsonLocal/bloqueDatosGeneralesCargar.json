@@ -1,0 +1,10 @@
+{
+    success: true,
+    params: {
+        cdunieco: '1000',
+        feefecto: '17/08/1990',
+        feproren: '17/09/1990',
+        fesolici: '17/08/2000',
+        nmpoliza: '105'
+    }
+}

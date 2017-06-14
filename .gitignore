@@ -4,34 +4,18 @@
 bin/*
 target/*
 src/main/resources/rebel.xml
-/target/
 
-#archivos del proyecto iceFront
-src/main/webapp/app/*
-src/main/webapp/build/*
-src/main/webapp/classic/*
-src/main/webapp/ext/*
-src/main/webapp/jsonLocal/*
-src/main/webapp/modern/*
-src/main/webapp/overrides/*
-src/main/webapp/packages/*
-src/main/webapp/resources/*
-src/main/webapp/sass/*
-src/main/webapp/.git/*
-src/main/webapp/.sencha/*
-src/main/webapp/.settings/*
-src/main/webapp/app.js
-src/main/webapp/app.json
+# Archivos de Sencha EXTJS
+src/main/webapp/.sencha/
+src/main/webapp/.settings/
 src/main/webapp/bootstrap.css
 src/main/webapp/bootstrap.js
 src/main/webapp/build.xml
+src/main/webapp/build/*
 src/main/webapp/classic.json
 src/main/webapp/classic.jsonp
-src/main/webapp/IceCore.js
-src/main/webapp/index.html
+src/main/webapp/ext/*
 src/main/webapp/modern.json
 src/main/webapp/modern.jsonp
-src/main/webapp/Readme.md
+src/main/webapp/sass/example/*
 src/main/webapp/workspace.json
-src/main/webapp/.gitignore
-src/main/webapp/.project

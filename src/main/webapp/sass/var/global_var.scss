@@ -1,0 +1,83 @@
+/*---------- Variables (Pantalla General) Sura-2017--------------*/
+ 				/*Manual de Marca Sura 2017*/
+ 				
+ 				
+ 				
+ /*Colores Corporativos*/
+   
+$azulo-s:#0033a0;
+$azulo2-s:#042D85;
+$azulo3-s:#0F2F74;
+
+$azulc-s:#00B5CB;
+$azulc2-s:#002A64;
+$azulo-rgba:rgba(0, 51, 160, .75);
+$blanco-s:#ffffff !important;
+
+
+
+
+ /*Tipografía Corporativa DIN Regular-Medium*/
+$font_dir: '/resources/fonts/';
+$font-bold: 700;
+$font-grey:#707372;
+
+ /*Botones Corporativos*/
+ 
+ 
+ /*Background Azul #0033a0*/
+$button-default-background-color:$azulo-s;
+$button-default-background-color-over:$azulo-rgba;
+$button-default-background-color-focus:$azulo-rgba;
+$button-default-background-color-pressed:$azulo-rgba;
+$button-default-background-color-focus-over:$azulo-rgba;
+$button-default-background-color-focus-pressed:$azulo-rgba;
+
+  
+ /*Border*/
+ $btn_transparent:transparent;
+ $border_btn_sm:2px;
+ 
+ 
+ $button-default-border-color:$azulo-s;
+ $button-default-border-color-over:$btn_transparent;
+ $button-default-border-color-focus:$btn_transparent;
+ $button-default-border-color-pressed:$btn_transparent;
+ $button-default-border-color-focus-over:$btn_transparent;
+ $button-default-border-color-focus-pressed:$btn_transparent;
+ $button-default-border-color-disabled:$btn_transparent;
+ 
+ 
+				/*Componentes Generales Main Sura 2017*/
+
+/*Head 01*/
+ 
+ /*Head 02*/
+  $fuente-s:'DIN-Medium';
+  $fuente-s2:'DIN-Regular';
+  $t-ft:10px;
+ 
+ 
+ /*Body*/
+ $azulbd:#DEEBF4;
+  
+  /*Menu*/
+ $ind_selected:$azulc-s;
+ $item-expanded-background-color:$azulo2-s !important; 
+ 
+ /*Panel*/
+$sombra-pnl: 0 2px 5px 0 rgba(0,0,0,0.26);
+$mrg-pnl:5%;
+$ui-header-background-color:$azulo-s !important;
+
+ /*Footer*/
+
+ $fuente-df:'Arial';
+
+
+
+
+
+ 
+ 
+

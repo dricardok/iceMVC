@@ -1,0 +1,18 @@
+{
+    success: true,
+    lista : [
+        {
+        	cdunieco: '5',
+        	cdramo:'902',
+        	estado:'M',
+        	nmpoliza:'50000016',
+            nmsituac:'1',
+            nmsuplem:'245379912000000000',
+            otvalor01:'01',
+            otvalor02:'0011',
+            otvalor03:'00110001',
+            otvalor04:'3',
+            otvalor05:'3'
+        }
+    ]
+}

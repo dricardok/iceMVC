@@ -1,0 +1,11 @@
+{
+    success: true,
+    situacion: {
+            nmsituac:'1',
+            otvalor01:'01',
+            otvalor02:'0011',
+            otvalor03:'00110001',
+            otvalor04:'3',
+            otvalor05:'3'
+        }
+}

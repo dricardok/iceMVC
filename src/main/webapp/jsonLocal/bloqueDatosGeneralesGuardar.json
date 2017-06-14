@@ -1,0 +1,7 @@
+{
+    success: true,
+    errors: {
+        cdunieco: 'La sucursal es de salud',
+        fesolici: 'Esa fecha no se permite'
+    }
+}

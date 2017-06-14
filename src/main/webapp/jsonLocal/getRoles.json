@@ -1,0 +1,18 @@
+{
+    success: true,
+    roles: [
+        {
+            cdsisrol: 'AGENTE',
+            dssisrol: 'AGENTE'
+        }, {
+            cdsisrol: 'MESADECONTROL',
+            dssisrol: 'MESA DE CONTROL'
+        }, {
+            cdsisrol: 'COTIZADOR',
+            dssisrol: 'SUSCRIPTOR'
+        }, {
+            cdsisrol: 'SUSCRIPTOR',
+            dssisrol: 'EMISOR'
+        }
+    ]
+}
