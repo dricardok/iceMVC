@@ -56,7 +56,7 @@
      */
     "requires": [
         "font-awesome",
-        "DIN-Regular",
+        //"DIN-Regular",
         "ux",
         "ext-locale"
     ],
