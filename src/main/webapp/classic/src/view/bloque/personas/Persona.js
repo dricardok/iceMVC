@@ -12,7 +12,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 		bodyPadding: '10px 0px 0px 10px',
 	    defaults: {
 	        margin: '0px 10px 10px 0px',
-	        cls: 'big-50 small-100'
+	        cls: 'big-100 small-100'
 	    },
 		constructor: function (config) {
 	        Ice.log('Ice.view.bloque.DatosGenerales.constructor config:', config);
@@ -35,26 +35,14 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        	var compsTatriper = Ice.generaComponentes({
 	                pantalla: 'TATRIPER',
 	                seccion: 'TATRIPER',
-	                url: 'jsonLocal/obtieneTatriper.json',
 	                items: true,
 	                fields: true,
-	                validators: true,
-	                mapperAttr:function(obj){
-	                	obj.label=obj.dsatribu;
-	                	obj.tipocampo=obj.swformat
-	                	obj.name_cdatribu=obj.cdatribu
-	                	obj.maxlength=obj.nmlmax
-	                	obj.minlength=obj.nmlmin
-	                	obj.catalogo=Ext.isEmpty((""+obj.ottabval).trim())?false:obj.ottabval
-	                			
-	                	
-	                }
+	                validators: true
 	            });
 	        	
 	        	var compsMpersona = Ice.generaComponentes({
 	                pantalla: 'AGREGAR_PERSONAS',
 	                seccion: 'MPERSONA',
-	                url: 'jsonLocal/obtieneMpersona.json',
 	                items: true,
 	                fields: true,
 	                validators: true
@@ -66,7 +54,9 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        				xtype		:	'button',
 	                        iconCls		:	'x-fa fa-plus-circle',
 	        				text		:	'Agregar Domicilio',
-	        				handler		:	'agregarDomicilio'
+	        				handler		:	function(grid,row,col){
+								me.getController().agregarDomicilio(grid,row,col)
+							}
 	        			},
 	        			actionColumns	:	[
 	        				{
@@ -76,34 +66,40 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 												{
 													iconCls : 'x-fa fa-edit',
 													tooltip : 'Editar',
-													handler : 'editarDomicilio'
+													handler : function(grid,row,col){
+														me.getController().editarDomicilio(grid,row,col)
+													}
 												},
 												{
 													iconCls : 'x-fa fa-remove',
 													tooltip : 'Borrar',
-													handler : 'borrarDomicilio'
+													handler : function(grid,row,col){
+														me.getController().borrarDomicilio(grid,row,col)
+													}
 												} 
 											]
 								}
 	        			]
 	        			
-	        	}
+	        	};
+	        
 	        	var frmPersonas={
 	        			xtype		:	'form',
-	        			
+	        			modelValidators:Object.assign({},compsMpersona.AGREGAR_PERSONAS.MPERSONA.validators,compsTatriper.TATRIPER.TATRIPER.validators),
+	        			modelFields:compsMpersona.AGREGAR_PERSONAS.MPERSONA.fields.concat(compsTatriper.TATRIPER.TATRIPER.fields),
 	        			items		:	[
 	        				{
 	        					xtype: 'fieldset',
-	        		            title: 'MPERSONA',
-	        		            items: compsMpersona.AGREGAR_PERSONAS.MPERSONA.items,
+	        		            title: 'Datos',
+	        		            items: compsMpersona.AGREGAR_PERSONAS.MPERSONA.items.concat(compsTatriper.TATRIPER.TATRIPER.items),
 	        		            layout	    :   'column'
 	        				},
-	        				{
-	        					xtype: 'fieldset',
-	        		            title: 'TATRIPER',
-	        		            items: compsTatriper.TATRIPER.TATRIPER.items,
-	        		            layout	    :   'column'
-	        				},
+//	        				{
+//	        					xtype: 'fieldset',
+//	        		            title: 'TATRIPER',
+//	        		            items: compsTatriper.TATRIPER.TATRIPER.items,
+//	        		            layout	    :   'column'
+//	        				},
 	        				{
 	        					xtype: 'fieldset',
 	        		            title: 'DOMICILOS',
@@ -114,7 +110,8 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        			],
 	        			buttons		:	[
 	        				{
-	        					text		:	'Guardar'
+	        					text		:	'Guardar',
+	        					handler		:	'guardarPersona'
 	        				}
 	        			]	
 	        	}
@@ -130,6 +127,13 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        } catch (e) {
 	            Ice.generaExcepcion(e, paso);
 	        }
+	        
+	        paso = 'custom';
+				try {
+					me.getController().custom();
+				} catch (e) {
+					Ice.generaExcepcion(e, paso);
+				}
 	    }
 		
 });

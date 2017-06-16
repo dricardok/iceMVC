@@ -1,5 +1,26 @@
 {"componentes":null,
     "list":
         [
-            {"estado":"W","cdgarant":"5104","cdunieco":"1","fevencim":"null","amparada":"S","nmsuplem":"0","deducible":null,"dsgarant":"R C PROD Y TRABAJOS TERMINADOS","cdramo":"501","nmpoliza":"11075","ptcapita":"453","nmsituac":"1","cdcapita":"1","swmanual":"N","status":"V"}
+            {
+            "cdpostal":"5104",
+            "otpoblac":"1",
+            "cdpostal":"0",
+            "cdpais":null,
+            "dsdomici":"R C PROD Y TRABAJOS TERMINADOS",
+            "cdpiso":"501",
+            "nmnumero":"11075",
+            "cdprovin":"453",
+            "cdcoloni":"1",
+            "nmorddom":"1"},
+            {
+            "cdpostal":"5104",
+            "otpoblac":"1",
+            "cdpostal":"0",
+            "cdpais":null,
+            "dsdomici":"R C PROD Y TRABAJOS TERMINADOS",
+            "cdpiso":"501",
+            "nmnumero":"11075",
+            "cdprovin":"453",
+            "cdcoloni":"1",
+            "nmorddom":"1"}
             ],"message":null,"params":{"pv_estado_i":"W","pv_nmsituac_i":"1","pv_cdunieco_i":"1","pv_cdramo_i":"501","pv_nmpoliza_i":"11075","pv_nmsuplem_i":"0"},"success":true}

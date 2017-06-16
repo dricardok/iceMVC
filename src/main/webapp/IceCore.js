@@ -34,7 +34,8 @@ var Ice = Object.assign(Ice || {}, {
              obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
 			 recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
 			 recuperarTatrisit:    'emision/obtieneTatrisit.action',
-			 recuperarTatripol:    'emision/obtieneTatripol.action'
+			 recuperarTatripol:    'emision/obtieneTatripol.action',
+			 recuperarTatriper:	   'registroPersona/obtieneTatriper.action'
          },
          
          // URLs de emision
@@ -74,7 +75,11 @@ var Ice = Object.assign(Ice || {}, {
             },
             ejecutarValidacion:			'emision/validaciones.action',
             personas:{
-            	obtenerDomicilios:			'jsonLocal/obtenerDomicilios.json'
+            	obtenerDomicilios:			'jsonLocal/obtenerDomicilios.json',
+            	guardarPersona:				'registroPersona/guardarPersona.action',
+            	movimientoDomicilio:		'registroPersona/movimientoDomicilio.action',
+            	buscaCP:					'registroPersona/obtieneCdpost.action'
+            		
             }
             
          }
@@ -762,6 +767,19 @@ var Ice = Object.assign(Ice || {}, {
 		              secciones.url=Ice.url.core.recuperarTatrigar;
 		              secciones.rootRequestData="list"
 		            	  
+	        	}else if("TATRIPER"==secciones.pantalla && "TATRIPER"==secciones.seccion){
+	        		secciones.url= Ice.url.core.recuperarTatriper,
+	        		secciones.mapperAttr=function(obj){
+	                	obj.label=obj.dsatribu;
+	                	obj.tipocampo=obj.swformat;
+	                	obj.name_cdatribu=obj.cdatribu;
+	                	obj.maxlength=obj.nmlmax;
+	                	obj.minlength=obj.nmlmin;
+	                	obj.catalogo=Ext.isEmpty((""+obj.ottabval).trim())?false:obj.ottabval;
+	                			
+	                	
+	                }
+	        	
 	        	}else if("TATRISIT"==secciones.pantalla && "TATRISIT"==secciones.seccion){
 	        		secciones.mapperAttr=function(obj){
 	                	

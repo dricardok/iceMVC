@@ -198,4 +198,77 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
             return new BaseVO(rs.getString("codigo"), rs.getString("descripl"));
         }
     }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Map<String, String>> obtenerMunicipio(String cdprovin) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdprovin_i", cdprovin);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerMunicipioSP(getDataSource()), params);
+        return (List<Map<String, String>>) procRes.get("pv_registro_o");
+    }
+    
+    protected class ObtenerMunicipioSP extends StoredProcedure {
+        protected ObtenerMunicipioSP (DataSource dataSource) {
+            super(dataSource,"PKG_LOV_ALEA.P_LOV_MUNICI");
+            declareParameter(new SqlParameter("pv_cdprovin_i", Types.VARCHAR));
+            String[] cols = new String[]{
+                    "cdmunici", "dsmunici"
+                    };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"  , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"   , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Map<String, String>> obtenerProvincia() throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        
+        Map<String, Object> procRes = ejecutaSP(new ObtenerProvinciaSP(getDataSource()), params);
+        return (List<Map<String, String>>) procRes.get("pv_registro_o");
+    }
+    
+    protected class ObtenerProvinciaSP extends StoredProcedure {
+        protected ObtenerProvinciaSP (DataSource dataSource) {
+            super(dataSource,"PKG_LOV_ALEA.P_LOV_PROVIN");
+
+            String[] cols = new String[]{
+                    "cdprovin", "dsprovin","sgentfed"
+                    };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"  , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"   , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Map<String, String>> obtenerColonia(String cdcodpos) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        
+        params.put("pv_cdcodpos_i", cdcodpos);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerColoniaSP(getDataSource()), params);
+        return (List<Map<String, String>>) procRes.get("pv_registro_o");
+    }
+    
+    protected class ObtenerColoniaSP extends StoredProcedure {
+        protected ObtenerColoniaSP (DataSource dataSource) {
+            super(dataSource,"PKG_LOV_ALEA.P_LOV_COLONIA");
+            declareParameter(new SqlParameter("pv_cdcodpos_i", Types.VARCHAR));
+            String[] cols = new String[]{
+                    "cdcoloni", "dscoloni"
+                    };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"  , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"   , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    
+
 }

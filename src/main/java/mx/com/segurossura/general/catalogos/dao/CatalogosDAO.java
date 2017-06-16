@@ -66,6 +66,12 @@ public interface CatalogosDAO {
      * @throws Exception
      */
     public List<BaseVO> obtenerCatalogoTablaApoyo(String cdtabla) throws Exception;
+
+	public List<Map<String, String>> obtenerMunicipio(String cdprovin) throws Exception;
+
+	public List<Map<String, String>> obtenerProvincia() throws Exception;
+
+	public List<Map<String, String>> obtenerColonia(String cdcodpos) throws Exception;
     
     
 }

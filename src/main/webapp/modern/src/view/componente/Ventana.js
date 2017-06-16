@@ -4,5 +4,9 @@ Ext.define('Ice.view.componente.Ventana', {
     
     mostrar: function () {
         Ice.query('#mainView').getReferences().mainCard.push(this);
+    },
+    
+    cerrar:	function(){
+    	Ice.query('#mainView').getReferences().mainCard.pop();
     }
 });

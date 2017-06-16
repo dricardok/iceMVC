@@ -6,6 +6,9 @@ public enum Catalogos {
     TATRIPOL(""),
     TATRISIT(""),
     TATRIGAR(""),
+    MUNICIPIO(""),
+    PROVINCIA(""),
+    COLONIA(""),
     TIPO_SITUACIONES("");
 
     
