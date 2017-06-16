@@ -79,7 +79,6 @@ var Ice = Object.assign(Ice || {}, {
             	guardarPersona:				'registroPersona/guardarPersona.action',
             	movimientoDomicilio:		'registroPersona/movimientoDomicilio.action',
             	buscaCP:					'registroPersona/obtieneCdpost.action'
-            		
             }
             
          }
