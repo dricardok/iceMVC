@@ -121,7 +121,7 @@ public class CatalogosManagerImpl implements CatalogosManager {
                      }
                      break;
                 case COLONIA:
-                	 paso = "Recuperando catalogo provincia";
+                	 paso = "Recuperando catalogo colonia";
                      lista = new ArrayList<>();
                      if(StringUtils.isBlank(params.get("idPadre"))){
                     	 break;

@@ -16,10 +16,12 @@ Ext.define('Ice.view.componente.GridIce', {
        		 
 				tbar		:	me.getBotones()
             });
-    		 me.callParent(arguments);
+    		 
     	}catch(e){
     		Ice.generaExcepcion(e,paso);
     	}
+    	
+    	me.callParent(arguments);
     },
     
     
