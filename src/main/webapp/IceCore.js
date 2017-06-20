@@ -78,6 +78,7 @@ var Ice = Object.assign(Ice || {}, {
             	obtenerDomicilios:			'jsonLocal/obtenerDomicilios.json',
             	guardarPersona:				'registroPersona/guardarPersona.action',
             	movimientoDomicilio:		'registroPersona/movimientoDomicilio.action',
+            	obtenerPersona:				'registroPersona/obtienePersona.action',
             	buscaCP:					'registroPersona/obtieneCdpost.action'
             }
             
