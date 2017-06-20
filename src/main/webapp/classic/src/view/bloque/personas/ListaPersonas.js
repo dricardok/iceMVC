@@ -2,7 +2,7 @@
  * Created by DEORTIZT on 5/22/2017.
  */
 Ext.define('Ice.view.bloque.personas.ListaPersonas', {
-	    extend: 'Ext.grid.Grid',
+	    extend: 'Ext.grid.Panel',
 	    xtype: 'listapersonas',
 	    
 	    controller: 'listapersonas',
