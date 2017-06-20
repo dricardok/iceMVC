@@ -7,12 +7,24 @@ Ext.define('Ice.view.field.DatefieldIce', {
     
     
     getValue: function () {
-        var fecha = null,
+        var fecha = '',
             value = this.callParent();
         if (!Ext.isEmpty(value)) {
             fecha = Ext.Date.format(value, Ext.util.Format.dateFormat);
         }
         return fecha;
+    },
+    
+    
+    setValue(val) {
+        if (val && typeof val === 'string') {
+            try {
+                val = Ext.Date.parse(val, Ext.util.Format.dateFormat);
+            } catch (e) {
+                Ice.logWarn('no se pudo convertir a fecha:', val);
+            }
+        }
+        this.callParent([val]);
     }
     
     /*initComponent: function () {

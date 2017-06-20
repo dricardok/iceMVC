@@ -2,7 +2,12 @@ var Ice = Object.assign(Ice || {}, {
 
     logActivo: true,
 
-    
+    constantes: {
+        toolbarHeight: {
+            classic: 44,
+            modern: 64
+        }
+    },
     
     /*
      * Urls del sistema por modulos 
@@ -1326,9 +1331,11 @@ var Ice = Object.assign(Ice || {}, {
                 }
                 else{
                     column.flex = config.width;
+                    column.minWidth = 50;
                 }
             } else {
                 column.flex = 1;
+                column.minWidth = 50;
             }
             
             if(config.swoculto){
