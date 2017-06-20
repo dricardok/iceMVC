@@ -201,11 +201,72 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     
     @SuppressWarnings("unchecked")
     @Override
+    public List<Map<String, String>> obtenerRolXRamo (String cdramo) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdramo_i", cdramo);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerRolXRamo(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerRolXRamo extends StoredProcedure {
+        protected ObtenerRolXRamo (DataSource dataSource) {
+            super(dataSource,"PKG_LOV_ALEA.P_LOV_ROLXRAMO");
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            String[] cols = new String[]{
+                    "cdrol", "descripl"
+                    };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Map<String, String>> obtenerPersonas(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String cdrol, String cdperson, String cdatribu, String otvalor) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_dsatribu_i", cdatribu);
+        params.put("pv_otvalor_i", otvalor);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerPersonas(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerPersonas extends StoredProcedure {
+        protected ObtenerPersonas (DataSource dataSource) {
+            super(dataSource,"PKG_DATA_ALEA.P_GET_PERSONAS_CRITERIO");
+            declareParameter(new SqlParameter("pv_dsatribu_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor_i", Types.VARCHAR));
+            String[] cols = new String[]{
+                    "cdperson",
+                    "dsnombre"
+                    };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
     public List<Map<String, String>> obtenerMunicipio(String cdprovin) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
         params.put("pv_cdprovin_i", cdprovin);
         Map<String, Object> procRes = ejecutaSP(new ObtenerMunicipioSP(getDataSource()), params);
         return (List<Map<String, String>>) procRes.get("pv_registro_o");
+                            
+                                                         
+         
+                     
     }
     
     protected class ObtenerMunicipioSP extends StoredProcedure {
@@ -227,6 +288,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     public List<Map<String, String>> obtenerProvincia() throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
         
+                                            
         Map<String, Object> procRes = ejecutaSP(new ObtenerProvinciaSP(getDataSource()), params);
         return (List<Map<String, String>>) procRes.get("pv_registro_o");
     }
@@ -243,6 +305,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
             declareParameter(new SqlOutParameter("pv_title_o"   , Types.VARCHAR));
             compile();
         }
+                     
     }
     
     @SuppressWarnings("unchecked")
@@ -258,9 +321,11 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     protected class ObtenerColoniaSP extends StoredProcedure {
         protected ObtenerColoniaSP (DataSource dataSource) {
             super(dataSource,"PKG_LOV_ALEA.P_LOV_COLONIA");
+                                                                               
             declareParameter(new SqlParameter("pv_cdcodpos_i", Types.VARCHAR));
             String[] cols = new String[]{
                     "cdcoloni", "dscoloni"
+                              
                     };
             declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o"  , Types.NUMERIC));
@@ -268,7 +333,4 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
             compile();
         }
     }
-    
-    
-
 }
