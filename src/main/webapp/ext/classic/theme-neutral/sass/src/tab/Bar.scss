@@ -166,7 +166,7 @@
         max(left($ui-strip-border-width), left($ui-border-width));
 
     .#{$prefix}tab-bar-#{$ui} {
-        background-color: $ui-background-color;
+        background-color: $azulc-s;
         @if $ui-border-width != 0 {
             border-style: solid;
             border-color: $ui-border-color;

@@ -1,17 +1,17 @@
 /*---------- Tipografía Corporativa Sura 2017 DIN medium y regular
 
 
-@include font-face(DIN-Regular, "fonts/DIN-Regular");
+@include font-face(DIN-Regular, "ext/packages/fonts/DIN-Regular");
 
 
 @font-face {
   font-family: 'DIN-Regular';
-  src: url('fonts/DIN-Regular.woff') format('woff'),
-       url('fonts/DIN-Regular.ttf') format('truetype'),
-       url('fonts/DIN-Regular.svg#DIN-Medium') format('svg'),
-       url('fonts/DIN-Regular.eot'),
-       url('fonts/DIN-Regular.woff2') format('woff2'),
-       url('fonts/DIN-Regular.eot?#iefix') format('embedded-opentype');
+  src: url('ext/packages/fonts/DIN-Regular.woff') format('woff'),
+       url('ext/packages/fonts/DIN-Regular.ttf') format('truetype'),
+       url('ext/packages/fonts/DIN-Regular.svg#DIN-Medium') format('svg'),
+       url('ext/packages/resources/fonts/DIN-Regular.eot'),
+       url('ext/packages/fonts/DIN-Regular.woff2') format('woff2'),
+       url('ext/packages/fonts/DIN-Regular.eot?#iefix') format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -94,17 +94,39 @@
 .head_02{
 	background-color:$azulo-s;
 	width:100%;
-	height:35px;
+	height:42px !important;
 	position:relative;
-	color:$blanco-s;
-    font-family:$fuente-s;
-    	.dinR{	
-			font-size:15px;
-			vertical-align: middle;
-			margin-left: 95px;
-			line-height: 2.5;	
-			 }	 			
+	color:$blanco-s;    				
 		}
+		
+  
+
+.phone_sura{
+    padding: 0 4px;
+    color: #fff !important;
+    font: 400 13px/16px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    .mail_sura{text-decoration:underline;}
+    
+}
+
+#mail_s{
+    .x-btn{
+    cursor:default !important;
+    }
+
+}
+
+.fa-envelope:before{
+color: #fff !important;
+cursor:default !important;
+}
+
+.fa-phone:before {
+color: #fff !important;
+cursor:default !important;
+}
+
+
 
  /*Body*/
 
@@ -128,10 +150,14 @@
            }
     	}
     }
- 
+    
+.linksura{
+color:$font-grey !important;
+font-size:12px !important;
+line-height:30px;
+}
 
 
-	
 
  /*Panel*/
 	
@@ -172,3 +198,23 @@
 /*---------- Termina Componentes Generales Main Sura 2017--------------*/
 
 
+
+#head_02 .head_02{
+color:#fff;
+}
+
+#main-navigation-btn-btnIconEl:before{
+color:#fff;}
+
+
+
+    
+   #toolbar-1039-innerCt:before{
+   background-color:#fff;
+   }
+   
+   
+   
+   
+   
+ 

@@ -981,8 +981,11 @@ content: "\f107" !important;
  }
  
  .x-scroller > .x-inner:before, .x-scroller > .x-inner:after {
-content:none !important;
+content:"" !important;
 }
+
+
+
 
 
 

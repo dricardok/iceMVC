@@ -216,8 +216,8 @@ a {
     width: $user-nav-width;
 }
 
-$logosura-image-width: 100px;
-$logosura-image-height: 34px;
+$logosura-image-width: 118px;
+$logosura-image-height: 40px;
 
 .sura-logo {
     position: relative;
@@ -344,7 +344,7 @@ $logo-image-height: 25px;
         left: 12px;
         width: $logo-image-width;
         height: $logo-image-height;
-        background: transparent url(images/ICE5.png) no-repeat center center;
+        background: transparent;
     }
 }
 
@@ -389,3 +389,24 @@ $logo-image-height: 25px;
     }
 }
 */
+
+
+.bg_login:after{
+content:""!important;
+
+}
+
+.bg_login:before{
+content:"" !important;
+
+}
+
+
+.btn_az{
+background-color: $azulo-s !important;
+}
+
+
+ $border-color:$azulo-s !important;
+ 
+ 

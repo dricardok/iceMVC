@@ -235,7 +235,7 @@
     }
 
     .#{$prefix}window-#{$ui} {
-        @if not is-null($ui-border-color) { border-color: $ui-border-color; }
+        @if not is-null($azulo-s) { border-color:$azulo-s; }
         @if not is-null($ui-border-radius) { @include border-radius($ui-border-radius); }
 
         @if $ui-inner-border-width != 0 {
@@ -272,8 +272,8 @@
 
     .#{$prefix}window-header-#{$ui} {
         @if not is-null($ui-header-font-size) { font-size: $ui-header-font-size; }
-        @if not is-null($ui-border-color) { border-color: $ui-border-color; }
-        background-color: $ui-header-background-color;
+        @if not is-null($azulo-s) { border-color: $azulo-s }
+        background-color:$azulo-s !important;
 
         .#{$prefix}tool-img {
             @if $ui-tool-background-image != $tool-background-image {
@@ -282,7 +282,7 @@
             // EXTJSIV-8846: partially transparent png images do not display correctly
             // in winXP/IE8m when the image element has a transparent background.
             // to fix this, we give the element the same background-color as the header.
-            background-color: $ui-header-background-color;
+            background-color: $azulo-s !important;
         }
     }
 
@@ -328,7 +328,7 @@
                     &:after {
                         font-family: ext-watermark;
                         font-size: ($ui-header-line-height + vertical($ui-header-padding)) * 0.75;
-                        content: 'd';
+                        content: '';
                         position: absolute;
                         top: 0;
                         right: 0;
@@ -717,3 +717,5 @@
 .#{$prefix}window-body-plain {
     background-color: transparent;
 }
+
+
