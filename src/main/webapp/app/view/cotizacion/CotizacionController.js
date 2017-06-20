@@ -59,6 +59,9 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     reference: 'ref' + index,
                     indice: index,
                     
+                    //scrollable: true,
+                    //height: view.getHeight() - (Ice.constantes.toolbarHeight[Ext.manifest.toolkit] * 2), // se restan las barras
+                    
                     cdunieco: view.getCdunieco(),
                     cdramo: view.getCdramo(),
                     estado: view.getEstado(),
@@ -223,6 +226,9 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     title: bloque.label,
                     reference: 'ref' + i,
                     indice: i,
+                    
+                    //scrollable: true,
+                    //height: view.getHeight() - (Ice.constantes.toolbarHeight[Ext.manifest.toolkit] * 2), // se restan las barras
                     
                     cdunieco: view.getCdunieco(),
                     cdramo: view.getCdramo(),

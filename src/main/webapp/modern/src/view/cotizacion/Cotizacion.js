@@ -3,7 +3,6 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
     xtype: 'cotizacion',
     
     requires: [
-        //'Ext.ux.layout.ResponsiveColumn'
         'Ext.Toolbar'
     ],
     
@@ -42,8 +41,6 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
     
     // configuracion que no usa parametros
     layout: 'fit',
-    padding: 0,
-    
     
     
     //defaultFocus: 'form',

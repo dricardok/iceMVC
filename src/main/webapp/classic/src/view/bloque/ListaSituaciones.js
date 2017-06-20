@@ -20,7 +20,8 @@
 	                }               	                config.modulo = config.modulo || 'COTIZACION';               	            } catch (e) {	                Ice.generaExcepcion(e, paso);	            }	        me.callParent(arguments);	    },
 	       	    // configuracion del componente (no EXT)
 	    config: {
-	    	actionColumns:[]
+	    	actionColumns:[],
+	    	situacionCero: false
 	    },    	    
 	    // configuracio ext
 	    title: 'Lista Situaciones',	    	    

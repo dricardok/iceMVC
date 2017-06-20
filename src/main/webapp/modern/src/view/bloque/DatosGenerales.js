@@ -70,7 +70,7 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
     
     scrollable: true,
     
-    bodyPadding: '10px 0px 0px 10px',
+    bodyPadding: '20 0 0 20',
     
     items: [
         {
@@ -137,7 +137,7 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
             
             if (Ext.manifest.toolkit !== 'classic') {
                 for (var i = 0; i < comps.BLOQUE_DATOS_GENERALES.FORMULARIO.items.length; i++) {
-                    comps.BLOQUE_DATOS_GENERALES.FORMULARIO.items[i].style = 'float: left; margin: 0px 10px 10px 0px;';
+                    comps.BLOQUE_DATOS_GENERALES.FORMULARIO.items[i].style = 'float: left; margin: 0px 20px 20px 0px;';
                     comps.BLOQUE_DATOS_GENERALES.FORMULARIO.items[i].userCls = 'big-50 small-100';
                 }
             }

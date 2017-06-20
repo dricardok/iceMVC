@@ -74,9 +74,8 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
     
     scrollable: true,
     
-    bodyPadding: '10px 0px 0px 10px',
+    bodyPadding: '0 0 0 80',
     defaults: {
-        margin: '0px 10px 10px 0px',
         cls: 'big-50 small-100'
     },
     
@@ -105,7 +104,7 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
         },
         */
         {
-            text: 'Guardar',
+            text: 'Guardar datos generales',
             iconCls: 'x-fa fa-save',
             handler: 'onGuardarClic'
         }

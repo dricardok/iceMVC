@@ -166,19 +166,19 @@ a {
 .main-nav-container,
 .user-nav-container,
 .main-container {
-    height: calc(100vh - #{$main-toolbar-height});
+    height: calc(100vh - #{$main-toolbar-height} - 100px); /* jtezva se restan 70 del header del browser  */
 }
 
 .phone .main-container {
-    height: calc(100vh - #{$main-phone-toolbar-height});
+    height: calc(100vh - #{$main-phone-toolbar-height} - 60px); /* jtezva se restan 70 del header del browser  */
 }
 
 .phone .main-nav-container {
-    height: 100vh;
+    height: calc(100vh - 60px;) /* jtezva se restan 70 del header del browser  */
 }
 
 .phone .user-nav-container {
-    height: 100vh;
+    height: calc(100vh - 60px;) /* jtezva se restan 70 del header del browser  */
 }
 
 // ios has a bug where vh units are not interpreted correctly resulting
@@ -193,10 +193,10 @@ a {
 }
 
 .x-treelist-navigation:not(.x-treelist-floater) {
-    min-height: calc(100vh - #{$main-toolbar-height});
+    min-height: calc(100vh - #{$main-toolbar-height} - 100px); /* jtezva se restan 70 del header del browser  */
 
     .phone & {
-        min-height: calc(100vh - #{$main-phone-toolbar-height});
+        min-height: calc(100vh - #{$main-phone-toolbar-height} - 60px); /* jtezva se restan 70 del header del browser  */
     }
 }
 
