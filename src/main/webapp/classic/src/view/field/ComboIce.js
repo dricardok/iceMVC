@@ -38,7 +38,7 @@ Ext.define('Ice.view.field.ComboIce', {
         
         
         // queryMode
-        if (configIce.queryparam) {
+        if (configIce.queryParam) {
             configTra.queryMode = 'remote';
         } else {
             configTra.queryMode = 'local';
