@@ -139,254 +139,20 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     	}
     },
     
-    agregarDomicilio		:	function(accion){
+    agregarDomicilio	:	function(){
     	var paso="",
-    		me=this,
-    		view=me.getView();
-    	try{
-    		
-    		var comps = Ice.generaComponentes({
-                pantalla: 'AGREGAR_PERSONAS',
-                seccion: 'MDOMICIL',
-                items: true,
-                fields: true,
-                validators: true
-            });
-    		
-//    		var forms=[
-//    			{
-//    				xtype			: 'combo',
-//    				displayField 	: 'cdcodpos',
-//    			    valueField 		: 'cdcodpos',
-//    			    queryMode 		: 'remote',
-//    			    queryParam		: 'params.cdpost',
-//    			    typeAhead 		: true,
-//    			    label			:	"CP",
-//    			    store			: 	{
-//						fields:['cdmunici','cdcodpos','dscodpos'],
-//						autoLoad	:	true,
-//						proxy		:	{
-//							type 		: 'ajax',
-//							url 		: 'registroPersona/obtieneCdpost.action',
-//							
-//							reader 		: {
-//								type : 'json',
-//								rootProperty : 'list',
-//								successProperty : 'success',
-//								messageProperty : 'message'
-//							}
-//						}
-//					}
-//    			}
-//    		]
-    		comps.AGREGAR_PERSONAS.MDOMICIL.items.forEach(function(it){
-    			
-    			var b=it.name=="cdpostal" ||
-    				it.name=="cdpais" ||
-    				it.name=="otpoblac" ||
-    				it.name=="cdprovin";
-    			
-    			if(b){
-    				it.cmpBuscar=true;
-    				
-    			}
-    		});
-    		Ice.log("##",comps.AGREGAR_PERSONAS.MDOMICIL.items);
-    		
-    		
-    		
-    		var win=Ext.create('Ice.view.componente.Ventana', {
-    			title		:	'Añadir Domicilio',
-    			itemId		:	'addDom',
- 			    height		:	"80%",
- 			    width		:	"70%",
- 			    layout		:	'fit',
- 			    accion		:	accion,
- 			    listeners	:{
- 			    	beforerender:function(win){
- 			    		var paso='';
- 			    		try{
- 			    			
- 			    			var comps = Ice.generaComponentes({
- 			                   pantalla: 'AGREGAR_PERSONAS',
- 			                   seccion: 'BUSCARCDPOS',
- 			                   items: true
- 			               });
- 			    			
- 			    			win.crearVentanaCP=function(w){
- 			    				
- 			    				w.ventanaCP=Ext.create('Ice.view.componente.Ventana',{
- 			    					title		:	'Buscar CP',
- 			    					height		:	"80%",
- 			    					scrollable	: 	true,
- 			    	 			    width		:	"70%",
- 			    					items		:	[
- 			    						{
- 			    							xtype		:	'formulario',
- 			    							scrollable	:	true,
- 			    							items		:	comps.AGREGAR_PERSONAS.BUSCARCDPOS.items,
- 			    							buttons		:	[
- 			    	 		 			    	{
- 			    	 						    	xtype	: 'button',
- 			    	 						    	text	: 'Buscar',
- 			    	 						    	handler : function(btn){
- 			    	 						    		var ventana=btn.up("[xtype=ventana]");
- 			    	 						    		me.buscarDomicilio(ventana.down("[xtype=formulario]"),ventana.down("[xtype=gridice]"));
-// 			    	 						    		view.down('[xtype=domicilios]').getStore().load();
- 			    	 						    		
- 			    	 						    	}
- 			    	 		 			    	},
- 			    	 		 			    	{
- 			    	 						    	xtype	: 'button',
- 			    	 						    	text	: 'Cancelar',
- 			    	 						    	handler : function(btn){
- 			    	 						    		btn.up('[xtype=ventana]').cerrar();
- 			    	 						    	}
- 			    	 		 			    	}
- 			    	 		 			    ]
- 			    						},
- 			    						{
- 			    							xtype		:	'gridice',
- 			    							title		:	"Resultados",
- 			    							botones		:	{
- 			    								xtype		:	'button',
- 			    								text		:	'Elegir',
- 			    								handler		:	function(btn){
- 			    									var paso='';
- 			    									try{
- 			    										var grid=btn.up("[xtype=gridice]");
- 			    										var record=grid.getSelection()[0];
- 			    										Ice.log("record: ",record);
- 			    										var form=Ice.query("#addDom > [xtype=formulario]");
- 			    										Ice.log("form ", form);
- 			    										Ext.ComponentQuery.query("[getName][cmpBuscar]",form)
- 			    										.forEach(function(it){
- 			    											Ice.log(it.getName(),"it",it);
- 			    											it.setValue(record.get(it.getName()));
- 			    										});
- 			    										
- 			    									}catch(e){
- 			    										Ice.manejaExcepcion(e,paso);
- 			    									}
- 			    								}
- 			    							},
- 			    							columns		:	[
- 			    								{
- 			    									text		:	'CP',
- 			    									dataIndex	:	'cdcodpos'
- 			    								},
- 			    								{
- 			    									text		:	'Provincia',
- 			    									dataIndex	:	'dsprovin'
- 			    								},
- 			    								{
- 			    									text		:	'Ciudad',
- 			    									dataIndex	:	'dsciudad'
- 			    								},
- 			    								{
- 			    									text		:	'Municipio',
- 			    									dataIndex	:	'dsmunici'
- 			    								}
- 			    							],
- 			    							store		:	{
- 			    								
- 			    								fields	:["cdpostal",'otpoblac',"cdpais","descripl",'cdmunici','cdcodpos','cdprovin','dscodpos','dsprovin','dsciudad','cdciudad','dsmunici','tipoiva'],
- 			    								proxy	:{
- 			    									type 		:	'ajax',
- 			    									url			:	Ice.url.bloque.personas.buscaCP,
- 			    									reader 		: {
- 			    										type 			: 'json',
- 			    										rootProperty 	: 'list',
- 			    										successProperty : 'success',
- 			    										messageProperty : 'message'
- 			    									}
- 			    								}
- 			    							}
- 			    						}
- 			    					]
- 			    						
- 			    			});
- 			    			};
- 			    			
- 			    			win.crearVentanaCP(win);
- 			    			
- 			    		}catch(e){
- 			    			Ice.manejaExcepcion(e,paso);
- 			    		}
- 			    	},
-						
-					afterrender:function(w){
-					
-						var paso='';
-						try{
-							Ext.ComponentQuery
-							.query("[cmpBuscar]").forEach(function(it){
-								
-								Ice.log("Selecciono");
-								
-								it.on({
-									focus:function(){
-										Ice.log("Evento");
-										w.crearVentanaCP(w);
-	 						    		w.ventanaCP.mostrar();
-									}
-								})
-							});
-						}catch(e){
-							Ice.manejaExcepcion(e,paso);
-						}
-					}
-							
- 			    },
- 			    items		:	[
- 			    	{
- 			    		xtype		:	'formulario',
- 			    		scrollable	:	true,
- 			    		layaout		:	'column',
- 			    		margin: '0px 10px 10px 0px',
- 			    		defaults:{
- 			    	    	margin: '0px 10px 10px 0px'
- 			    	    },
- 			    		itemId		:	'frmDomicilio',
- 			    		items		:	comps.AGREGAR_PERSONAS.MDOMICIL.items,
- 			    		modelValidators:comps.AGREGAR_PERSONAS.MDOMICIL.validators,
-	        			modelFields:	comps.AGREGAR_PERSONAS.MDOMICIL.fields,	
- 			    		buttons		:	[
- 		 			    	{
- 						    	xtype	: 'button',
- 						    	text	: 'Guardar',
- 						    	handler : function(btn){
- 						    		;
- 						    		me.guardar(btn.up('#addDom').accion);
- 						    		view.down('[xtype=domicilios]').getStore().load();
- 						    		
- 						    	}
- 		 			    	},
- 		 			    	{
- 						    	xtype	: 'button',
- 						    	text	: 'Cancelar',
- 						    	handler : function(btn){
- 						    		btn.up('[xtype=ventana]').crearVentanaCP(btn.up('[xtype=ventana]'));
- 						    		btn.up('[xtype=ventana]').ventanaCP.mostrar();
- 						    		//btn.up('#addDom').cerrar();
- 						    	}
- 		 			    	}
- 		 			    ],
- 		 			    beforerender:function(){
- 		 			    	if(accion){
-// 		 			    		me.llenarCampos(this,'url',{
-// 		 			    			cdperson:accion.cdperson,
-// 		 			    			nmorddom:accion.nmorddom
-// 		 			    		});
- 		 			    	}
- 		 			    }
- 			    	}
- 			    ]
- 			    
-    		})
-    		.mostrar();
-    	}catch(e){
-    		Ice.manejaExcepcion(e,paso);
+		me=this,
+		view=me.getView();
+		try{
+	    	Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
+	    		listeners:{
+	    			guardarDomicilio:function(){
+	    				view.down('[xtype=domicilios]').getStore().load();
+	    			}
+	    		}
+	    	}).mostrar();
+		}catch(e){
+    		Ice.generaExcepcion(e,paso);
     	}
     },
     
@@ -409,12 +175,18 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
             }
     		
     		
+    		Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
+    			
+    			cdperson:record.get("cdperson"),
+				nmorddom:record.get("nmorddom"),
+	    		listeners:{
+	    			guardarDomicilio:function(){
+	    				view.down('[xtype=domicilios]').getStore().load();
+	    			}
+	    		}
+	    	}).mostrar();
     		
-    		this.agregarDomicilio({accion:'U',
-    							 cdperson:record.get("cdperson"),
-    							 nmorddom:record.get("nmorddom")});
     		
-    		view.down('[xtype=domicilios]').getStore().load();
     	}catch(e){
     		Ice.manejaExcepcion(e,paso);
     	}
@@ -549,25 +321,11 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     	}catch(e){
     		Ice.generaExcepcion(e,paso);
     	}
-    },
-    
-    buscarDomicilio:function(form,grid){
-    	paso="";
-    	try{
-    		var datos={};
-    		Ext.ComponentQuery.query("[getName]",form)
-    		.forEach(function(it){
-    			datos["params."+it.getName()]=it.getValue();
-    		});
-
-    		Ice.log("datos: ",datos);
-    		grid.getStore().proxy.extraParams=datos;
-    		grid.getStore().load();
-    		
-    	}catch(e){
-    		Ice.manejaExcepcion(e,paso);
-    	}
     }
+    
+    
+    
+    
     
     
 
