@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,8 +98,73 @@ public class CatalogosManagerImpl implements CatalogosManager {
                             lista.add(new BaseVO(registroTmanteni.get("cdtipsit"), registroTmanteni.get("dstipsit")));
                         }
                     }
-                    break; 
+                    break;
                     
+                case ROLES_X_RAMO:
+                    paso = "Recuperando catalogo roles por ramo";
+                    lista = new ArrayList<>();
+                    List<Map<String, String>> listaRoles = catalogosDAO.obtenerRolXRamo(params.get("cdramo"));
+                    if (listaRoles != null) {
+                        for (Map<String, String> registroTmanteni: listaRoles) {
+                            lista.add(new BaseVO(registroTmanteni.get("cdrol"), registroTmanteni.get("descripl")));
+                        }
+                    }
+                    break;
+                    
+                case PERSONAS:
+                    paso = "Recuperando catalogo roles por ramo";
+                    lista = new ArrayList<>();
+                    String cdunieco = params.get("cdunieco");
+                    String cdramo = params.get("cdramo");
+                    String estado = params.get("estado");
+                    String nmpoliza = params.get("nmpoliza");
+                    String nmsituac = params.get("nmsituac");
+                    String nmsuplem = params.get("nmsuplem");
+                    String cdrol = params.get("cdrol");
+                    String cdperson = params.get("cdperson");
+                    String cdatribu = params.get("cdatribu");
+                    String otvalor = params.get("otvalor").toUpperCase();
+                    List<Map<String, String>> listaPersonas = catalogosDAO.obtenerPersonas(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, cdrol, cdperson, cdatribu, otvalor);
+                    if (listaPersonas != null) {
+                        for (Map<String, String> registroTmanteni: listaPersonas) {
+                            lista.add(new BaseVO(registroTmanteni.get("cdperson"), registroTmanteni.get("dsnombre")));
+                        }
+                    }
+                    break;
+                case MUNICIPIO:
+                    paso = "Recuperando catalogo municipios";
+                    lista = new ArrayList<>();
+                    List<Map<String, String>> listaM = catalogosDAO.obtenerMunicipio(params.get("idPadre"));
+                    if (listaM != null) {
+                        for (Map<String, String> registro: listaM) {
+                            lista.add(new BaseVO(registro.get("cdmunici"), registro.get("dsmunici")));
+                        }
+                    }
+                   break;
+               case PROVINCIA:
+                   
+                    paso = "Recuperando catalogo provincia";
+                    lista = new ArrayList<>();
+                    List<Map<String, String>> listaP = catalogosDAO.obtenerProvincia();
+                    if (listaP != null) {
+                        for (Map<String, String> registroTmanteni: listaP) {
+                            lista.add(new BaseVO(registroTmanteni.get("cdprovin"), registroTmanteni.get("dsprovin")));
+                        }
+                    }
+                    break;
+               case COLONIA:
+                    paso = "Recuperando catalogo colonia";
+                    lista = new ArrayList<>();
+                    if(StringUtils.isBlank(params.get("idPadre"))){
+                        break;
+                    }
+                    List<Map<String, String>> listaC = catalogosDAO.obtenerColonia(params.get("idPadre"));
+                    if (listaC != null) {
+                        for (Map<String, String> registroTmanteni: listaC) {
+                            lista.add(new BaseVO(registroTmanteni.get("cdcoloni"), registroTmanteni.get("dscoloni")));
+                        }
+                    }
+                   break;    
                 default:
                     throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));
                 }

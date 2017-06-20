@@ -5,12 +5,13 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
 		title	:		'Domicilios',
 		config	:		{
 			cdperson		:	null,
+			selector        :   false,
 			actionColumns	:	[],
 			botones			:	[],
-			
+			nmorddom		:	null
 		},
 		controller : 'domicilios',
-		
+		scrollable: true,
 		constructor: function (config) {
 	        Ice.log('Ice.view.bloque.personas.DomiciliosGrid.constructor config:', config);
 	        var me = this,
@@ -23,47 +24,51 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
 	        me.callParent(arguments);
 	    },
 	    initComponent: function () {
-	    	Ice.log('Ice.view.bloque.personas.DomiciliosGrid.initComponent [this, args]:', this, arguments);
-	    	 var me = this,
+	        Ice.log('Ice.view.bloque.personas.DomiciliosGrid.initComponent [this, args]:', this, arguments);
+	    	var me = this,
 	            paso = 'Construyendo Domicilios';
-	        
-	        try {
-	        	
-	        	
-	        	
+	        try {        	
 	        	var comps = Ice.generaComponentes({
-	                pantalla: 'AGREGAR_PERSONAS',
-	                seccion: 'COLUMNAS_DOMICILIOS',
-	                url: 'jsonLocal/obtieneDomiciliosCol.json',
+	                pantalla: 'DOMICILIO',
+	                seccion: 'GRID',
 	                fields: true,
 	                columns: true
 	            });
-	        	 Ext.apply(me, {
-	        		 columns		:	comps.AGREGAR_PERSONAS.COLUMNAS_DOMICILIOS.columns.concat(me.getActionColumns()),
-	        		 store			:	{
-							fields		:	comps.AGREGAR_PERSONAS.COLUMNAS_DOMICILIOS.fields,
-							autoLoad 	: true,
-							proxy		:	{
-								type 		: 'ajax',
-								url 		: Ice.url.bloque.personas.obtenerDomicilios,
-								extraParams	: {
-									'params.cdperson'	: me.getCdperson()
-								},
-								reader 		: {
-									type : 'json',
-									rootProperty : 'list',
-									successProperty : 'success',
-									messageProperty : 'message'
-								}
-							}
-						},
-					tbar		:	me.getBotones()
-	             });
-	        	 me.callParent(arguments);
+	        	Ice.log('Ice.view.bloque.personas.DomiciliosGrid.initComponent comps:', comps);
+	        	var config = {
+                    columns:    comps.DOMICILIO.GRID.columns.concat(me.getActionColumns()),
+                    store:  {
+                        fields: comps.DOMICILIO.GRID.fields,
+                        autoLoad: true, //me.getSelector() === 'true' ? false : true,
+                        proxy: {
+                            type        : 'ajax',
+                            url         : Ice.url.bloque.personas.obtenerDomicilios,
+                            extraParams : {
+                                'params.cdperson'   : me.getCdperson()
+                                },
+                            reader      : {
+                                type : 'json',
+                                rootProperty : 'listas',
+                                successProperty : 'success',
+                                messageProperty : 'message'
+                            }
+                        }
+                    },
+                    tbar:   me.getBotones()
+	            };
+	        	if (me.getSelector() == true){
+                    config.selModel = {
+                        type: 'checkboxmodel',
+                        mode: 'SINGLE',
+                        showHeaderCheckbox: false,
+                        allowDeselect: true
+                    };
+                }
+                Ext.apply(me, config);
 	        } catch (e) {
 	            Ice.generaExcepcion(e, paso);
 	        }
-	    	
+	        me.callParent(arguments);	    	
 	    }
 		
 });

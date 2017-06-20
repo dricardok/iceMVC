@@ -6,7 +6,12 @@ public enum Catalogos {
     TATRIPOL(""),
     TATRISIT(""),
     TATRIGAR(""),
-    TIPO_SITUACIONES("");
+    TIPO_SITUACIONES(""),
+    ROLES_X_RAMO(""),
+    PERSONAS(""),
+    MUNICIPIO(""),
+    PROVINCIA(""),
+    COLONIA("");
 
     
     private String cdtabla;
