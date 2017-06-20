@@ -32,10 +32,10 @@ var Ice = Object.assign(Ice || {}, {
              recuperarMenus:       'authentication/obtenerMenu.action',
              obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
              obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
-			 recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
-			 recuperarTatrisit:    'emision/obtieneTatrisit.action',
-			 recuperarTatripol:    'emision/obtieneTatripol.action',
-			 recuperarTatriper:	   'registroPersona/obtieneTatriper.action'
+             recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
+             recuperarTatrisit:    'emision/obtieneTatrisit.action',
+             recuperarTatripol:    'emision/obtieneTatripol.action',
+             recuperarTatriper:    'registroPersona/obtieneTatriper.action'
          },
          
          // URLs de emision
@@ -65,23 +65,23 @@ var Ice = Object.assign(Ice || {}, {
                 validaciones: 'emision/validaBloqueSituacion.action'
             },
             coberturas:{
-            	datosCoberturas: 			'coberturas/obtieneMpoligar.action',
-            	borrarCobertura : 			'coberturas/movimientoMpoligar.action',//
-            	recuperarTatrigar:			'coberturas/obtieneTatrigar.action',
-            	guardarCoberturas:			'coberturas/guardarCoberturas.action',
-            	obtieneTvalogar: 			'coberturas/obtieneTvalogar.action',
-            	obtieneMpolicap: 			'coberturas/obtieneMpolicap.action',
-            	agregarCobertura: 			'coberturas/agregarCobertura.action'
+                datosCoberturas:            'coberturas/obtieneMpoligar.action',
+                borrarCobertura :           'coberturas/movimientoMpoligar.action',//
+                recuperarTatrigar:          'coberturas/obtieneTatrigar.action',
+                guardarCoberturas:          'coberturas/guardarCoberturas.action',
+                obtieneTvalogar:            'coberturas/obtieneTvalogar.action',
+                obtieneMpolicap:            'coberturas/obtieneMpolicap.action',
+                agregarCobertura:           'coberturas/agregarCobertura.action'
             },
-            ejecutarValidacion:			'emision/validaciones.action',
+            ejecutarValidacion:         'emision/validaciones.action',
             personas:{
                 cargarPersonas:             'emision/obtenerPersonasPoliza.action',
                 cargarPersona:              'emision/obtenerPersonaPoliza.action',
                 obtenerDomicilios:          'emision/obtenerDomicilios.action',
                 movimientoPolizaPersona:    'emision/movimientoPolizaPersona.action',
-                guardarPersona:				'registroPersona/guardarPersona.action',
-            	movimientoDomicilio:		'registroPersona/movimientoDomicilio.action',
-            	buscaCP:					'registroPersona/obtieneCdpost.action'
+                guardarPersona:             'registroPersona/guardarPersona.action',
+                movimientoDomicilio:        'registroPersona/movimientoDomicilio.action',
+                buscaCP:                    'registroPersona/obtieneCdpost.action'
             }
             
          }
@@ -739,74 +739,74 @@ var Ice = Object.assign(Ice || {}, {
 
         
         try { 
-        	if(secciones){
-        		Ice.log("sec ",secciones)
-	        	if("TATRIGAR"==secciones.pantalla && "TATRIGAR"==secciones.seccion){
-	        		
-	        		 secciones.mapperAttr=function(obj){
-		                	
-		                	obj.label=obj.dsatribu;
-		                	obj.tipocampo=obj.swformat
-		                	obj.name_cdatribu=obj.cdatribu
-		                	obj.maxlength=obj.nmlmax
-		                	obj.minlength=obj.nmlmin
-		                	obj.catalogo=Ext.isEmpty((""+obj.ottabval).trim())?false:obj.ottabval
-		                	Ice.log("******",obj.catalogo)
-		                	if(obj.catalogo){
-		                		obj.catalogo='TATRIGAR';
-		                	}
-		                	
-		                	obj.param1 = 'params.cdramo';
-		                	obj.value1 = secciones.cdramo;
-		                	
-		                	obj.param2 = 'params.cdgarant';
-		                	obj.value2 = secciones.cdgarant;
-		                	
-		                	obj.param3 = 'params.cdatribu';
-		                	obj.value3 = obj.cdatribu;
-		                	
-		                };
-		              secciones.url=Ice.url.core.recuperarTatrigar;
-		              secciones.rootRequestData="list"
-		        }else if("TATRIPER"==secciones.pantalla && "TATRIPER"==secciones.seccion){
-	        		secciones.url= Ice.url.core.recuperarTatriper,
-	        		secciones.mapperAttr=function(obj){
-	                	obj.label=obj.dsatribu;
-	                	obj.tipocampo=obj.swformat;
-	                	obj.name_cdatribu=obj.cdatribu;
-	                	obj.maxlength=obj.nmlmax;
-	                	obj.minlength=obj.nmlmin;
-	                	obj.catalogo=Ext.isEmpty((""+obj.ottabval).trim())?false:obj.ottabval;
-	                			
-	                	
-	                }	  
-	        	}else if("TATRISIT"==secciones.pantalla && "TATRISIT"==secciones.seccion){
-	        		secciones.mapperAttr=function(obj){
-	                	
-	                	obj.label=obj.dsatribu;
-	                	obj.tipocampo=obj.swformat
-	                	obj.name_cdatribu=obj.cdatribu
-	                	obj.maxlengthe=obj.nmlmax
-	                	obj.minlength=obj.nmlmin
-	                	obj.catalogo=obj.ottabval
-	                };
-	              secciones.url=Ice.url.core.recuperarTatrisit;
-	              secciones.rootRequestData="list"
-	        		
-	        	}else if("TATRIPOL"==secciones.pantalla && "TATRIPOL"==secciones.seccion){
-	        		secciones.mapperAttr=function(obj){
-	                	
-	                	obj.label=obj.dsatribu;
-	                	obj.tipocampo=obj.swformat
-	                	obj.name_cdatribu=obj.cdatribu
-	                	obj.maxlengthe=obj.nmlmax
-	                	obj.minlength=obj.nmlmin
-	                	obj.catalogo=obj.ottabval
-	                };
-	              secciones.url=Ice.url.core.recuperarTatripol;
-	              secciones.rootRequestData="list"
-	        	}
-        	}
+            if(secciones){
+                Ice.log("sec ",secciones)
+                if("TATRIGAR"==secciones.pantalla && "TATRIGAR"==secciones.seccion){
+                    
+                     secciones.mapperAttr=function(obj){
+                            
+                            obj.label=obj.dsatribu;
+                            obj.tipocampo=obj.swformat
+                            obj.name_cdatribu=obj.cdatribu
+                            obj.maxlength=obj.nmlmax
+                            obj.minlength=obj.nmlmin
+                            obj.catalogo=Ext.isEmpty((""+obj.ottabval).trim())?false:obj.ottabval
+                            Ice.log("******",obj.catalogo)
+                            if(obj.catalogo){
+                                obj.catalogo='TATRIGAR';
+                            }
+                            
+                            obj.param1 = 'params.cdramo';
+                            obj.value1 = secciones.cdramo;
+                            
+                            obj.param2 = 'params.cdgarant';
+                            obj.value2 = secciones.cdgarant;
+                            
+                            obj.param3 = 'params.cdatribu';
+                            obj.value3 = obj.cdatribu;
+                            
+                        };
+                      secciones.url=Ice.url.core.recuperarTatrigar;
+                      secciones.rootRequestData="list"
+                }else if("TATRIPER"==secciones.pantalla && "TATRIPER"==secciones.seccion){
+                    secciones.url= Ice.url.core.recuperarTatriper,
+                    secciones.mapperAttr=function(obj){
+                        obj.label=obj.dsatribu;
+                        obj.tipocampo=obj.swformat;
+                        obj.name_cdatribu=obj.cdatribu;
+                        obj.maxlength=obj.nmlmax;
+                        obj.minlength=obj.nmlmin;
+                        obj.catalogo=Ext.isEmpty((""+obj.ottabval).trim())?false:obj.ottabval;
+                                
+                        
+                    }     
+                }else if("TATRISIT"==secciones.pantalla && "TATRISIT"==secciones.seccion){
+                    secciones.mapperAttr=function(obj){
+                        
+                        obj.label=obj.dsatribu;
+                        obj.tipocampo=obj.swformat
+                        obj.name_cdatribu=obj.cdatribu
+                        obj.maxlengthe=obj.nmlmax
+                        obj.minlength=obj.nmlmin
+                        obj.catalogo=obj.ottabval
+                    };
+                  secciones.url=Ice.url.core.recuperarTatrisit;
+                  secciones.rootRequestData="list"
+                    
+                }else if("TATRIPOL"==secciones.pantalla && "TATRIPOL"==secciones.seccion){
+                    secciones.mapperAttr=function(obj){
+                        
+                        obj.label=obj.dsatribu;
+                        obj.tipocampo=obj.swformat
+                        obj.name_cdatribu=obj.cdatribu
+                        obj.maxlengthe=obj.nmlmax
+                        obj.minlength=obj.nmlmin
+                        obj.catalogo=obj.ottabval
+                    };
+                  secciones.url=Ice.url.core.recuperarTatripol;
+                  secciones.rootRequestData="list"
+                }
+            }
             var lista,
                 secciones = secciones || [];
             if (secciones.pantalla) { // cuando se recibe un solo elemento
@@ -877,18 +877,18 @@ var Ice = Object.assign(Ice || {}, {
 
                           //mapper
                             if(secciones.mapperAttr){
-                            	paso="Mapeando campos"
-                            	
-                            	if(Ext.isArray(json.componentes[lista[i].seccion])){
-                            		
-                            		json.componentes[lista[i].seccion].forEach(function(it,idx){
-                            			secciones.mapperAttr(it);
-                            		
-                            		})
-                            	
-                            	}
-                            	
-                            	
+                                paso="Mapeando campos"
+                                
+                                if(Ext.isArray(json.componentes[lista[i].seccion])){
+                                    
+                                    json.componentes[lista[i].seccion].forEach(function(it,idx){
+                                        secciones.mapperAttr(it);
+                                    
+                                    })
+                                
+                                }
+                                
+                                
                             }
 
 
@@ -1342,7 +1342,7 @@ var Ice = Object.assign(Ice || {}, {
             }
             
             if(config.swoculto === 'S'){
-            	column.hidden = true;
+                column.hidden = true;
             }
             
             
