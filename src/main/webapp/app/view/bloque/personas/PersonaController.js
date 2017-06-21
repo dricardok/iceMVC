@@ -33,8 +33,8 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     		Ice.query('[getName]',form).forEach(function(it){
     			
     			var valor=it.getValue();
-    			if((""+valor).indexOf("-")!=-1){
-    				valor=valor.split("-")[0].trim();
+    			if(it.getName()!="fenacimi" && typeof valor =="string" && (""+valor).indexOf("-")!=-1){
+    				valor=(valor.split("-")[0]+"").trim();
     			}
     			if((""+it.getName()).indexOf("otvalor")!=-1){
     				tvaloper[it.getName()]=valor;
@@ -167,7 +167,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 		try{
 			
 			if(view.getAccion()==='I'){
-				Ext.MessageBox.confirm("Agregar Domicilio","Se guardarán los datos de la persona \u00bfDesea continuar?",function(opc){
+				Ext.Msg.confirm("Agregar Domicilio","Se guardarán los datos de la persona \u00bfDesea continuar?",function(opc){
 	      		  if(opc==='yes'){
 	      			me.guardarPersona(function(){
 	      				Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
@@ -274,6 +274,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 		view=me.getView();
 		try{
 			var datos={};
+			datos=Object.assign({},accion);
 			var form=Ice.query("#frmDomicilio")
 			if(!(accion && accion.accion=='D')) me.validarCampos(form);
 			Ext.ComponentQuery.query('[getName]',form).forEach(function(it){

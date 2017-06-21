@@ -58,6 +58,12 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	                validators: true
 	            });
 	        	
+	        	var fenacimi=compsMpersona.AGREGAR_PERSONAS.MPERSONA.items.find(function(it){
+	        		return it.name=="fenacimi";
+	        	});
+	        	
+	        	fenacimi.format="Y-m-d";
+	        	
 	        	var gridDomicilios={
 	        			xtype		:	'domicilios',
 	        			cdperson	:	me.getCdperson(),

@@ -5,7 +5,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     custom	:	function(){
     	var me=this,paso="",view =me.getView();
     	try{
-    	alert(view.getAccion())
+    )
     	if(view.getAccion()=='U'){
     	
 	    	params={
@@ -36,7 +36,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
 			Ext.ComponentQuery.query('[getName]',form).forEach(function(it){
 				
 				if(it.getValue() && it.getValue().toString().indexOf("-")!=-1){
-					it.setValue(it.getValue().split('-')[0]);
+					it.setValue((it.getValue().split('-')[0]+"").trim());
 				}
 				datos[it.getName()]=it.getValue();
 				

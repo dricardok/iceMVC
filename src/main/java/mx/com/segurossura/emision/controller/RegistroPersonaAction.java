@@ -145,11 +145,11 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            if(fenacimi!=null){
 	            	fenacimi=fenacimi.split("T")[0];
 	            }
-	            
+	            fenacimi=fenacimi.replaceAll("/", "-");
 	            renderFechas= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	            registroPersonaManager.movimientoMpersona(cdperson, cdtipide, cdideper, dsnombre, dsnombr1, dsnombr2, dsapell1, dsapell2, cdtipper, otfisjur, otsexo,
 	            		"null".equals(fenacimi)?null:
-	            			new SimpleDateFormat("dd/MM/yyyy").parse(fenacimi), 
+	            			new SimpleDateFormat("yyyy-MM-dd").parse(fenacimi), 
 	            				cdprovin, accion);
 	            
 	            registroPersonaManager.movimientoTvaloper(cdperson, tvaloper, accion);
@@ -174,7 +174,8 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            value = "movimientoDomicilio",
 	            results = { 
 	                @Result(name = "success", type = "json") 
-	            },
+	            }
+	            ,
         		interceptorRefs = {
         	            @InterceptorRef(value = "json", params = { "enableSMD", "true", "ignoreSMDMethodInterfaces", "false" }) }
     
@@ -206,14 +207,20 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	        	String  cdcoloni =  params.get("cdcoloni");
 	        	
 	        	Utils.validate(cdperson,"No se recibió cdperson");
-	        	Utils.validate(cdtipdom,"No se recibió cdtipdom");
+	        	
 	        	Utils.validate(accion,"No se recibió accion");
+	        	logger.debug("acc",accion);
+	        	if(!"D".equals(accion)){
+	        		Utils.validate(cdtipdom,"No se recibió cdtipdom");
+	        	}
 	        	
 	        	
 	            
 	            logger.debug("Datos de Enviados: {} ", params);
-	            if(accion=="I") nmorddom=String.valueOf(registroPersonaManager.obtieneMdomicil(cdperson, null).size()+1);
-	            logger.debug("Nmorddom generado: {}",nmorddom);
+	            if("I".equals(accion)){
+	            	nmorddom=String.valueOf(registroPersonaManager.obtieneMdomicil(cdperson, null).size()+1);
+		            logger.debug("Nmorddom generado: {}",nmorddom);
+	            } 
 	            
 	            registroPersonaManager.movimientoMdomicil(cdperson, nmorddom, cdtipdom, dsdomici, cdsiglas, cdidioma, nmtelex, nmfax, nmtelefo, cdpostal, otpoblac, cdpais, otpiso, nmnumero, cdprovin, dszona, cdcoloni, accion);
 	            

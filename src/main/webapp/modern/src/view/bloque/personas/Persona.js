@@ -76,12 +76,16 @@ Ext.define('Ice.view.bloque.personas.Persona', {
                                 xtype: 'button',
                                 ui: 'action',
                                 iconCls: 'x-fa fa-edit',
-                                handler: 'editarDomicilio'
+                                handler : function(grid,row,col){
+									me.getController().editarDomicilio(grid,row,col)
+								}
                             } , {
                                 xtype: 'button',
                                 ui: 'action',
                                 iconCls: 'x-fa fa-minus-circle',
-                                handler: 'borrarDomicilio'
+                                handler: function(grid,row,col){
+									me.getController().borrarDomicilio(grid,row,col)
+								}
                             }
                             
                         ]
