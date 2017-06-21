@@ -16,6 +16,7 @@ import com.biosnettcs.core.Utils;
 import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.dao.SituacionDAO;
 import mx.com.segurossura.emision.service.EmisionManager;
+import mx.com.segurossura.general.catalogos.model.Bloque;
 
 @Service
 public class EmisionManagerImpl implements EmisionManager{
@@ -301,13 +302,22 @@ public class EmisionManagerImpl implements EmisionManager{
     @Override
     public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmsituac) throws Exception {
-        
+        String paso = null;
         Map<String, Object> res = null;
-        List<Map<String,String>> situacionesPoliza = situacionDAO.obtieneMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, "0");
-        for (Map<String, String> situac : situacionesPoliza) {
-            logger.debug("Inicio tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}", situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
-            res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"));
-            logger.debug("Fin    tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}", situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
+        try {
+            paso = "Tarificando situaciones";
+            List<Map<String,String>> situacionesPoliza = situacionDAO.obtieneMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, "0");
+            for (Map<String, String> situac : situacionesPoliza) {
+                logger.debug("Inicio tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}", situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
+                res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"));
+                logger.debug("Fin    tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}", situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
+            }
+            
+            paso = "Tarificando conceptos globales";
+            emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0", Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(),
+                    "NULO");
+        } catch (Exception ex) {
+            Utils.generaExcepcion(ex, paso);
         }
         return res;
     }

@@ -632,5 +632,5 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
-    },
+    }
 });
