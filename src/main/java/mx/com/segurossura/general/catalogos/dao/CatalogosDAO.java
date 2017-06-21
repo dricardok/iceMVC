@@ -99,5 +99,8 @@ public interface CatalogosDAO {
     public List<Map<String, String>> obtenerProvincia() throws Exception;
 
     public List<Map<String, String>> obtenerColonia(String cdcodpos) throws Exception;
+
+	public List<Map<String, String>> obtenerCatalogoTatriper(String cdramo, String cdrol, String cdatribu, String idPadre1,
+			String idPadre2, String idPadre3, String idPadre4, String idPadre5) throws Exception;
     
 }

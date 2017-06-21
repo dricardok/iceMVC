@@ -11,6 +11,7 @@ public enum Catalogos {
     PERSONAS(""),
     MUNICIPIO(""),
     PROVINCIA(""),
+    TATRIPER(""),
     COLONIA("");
 
     

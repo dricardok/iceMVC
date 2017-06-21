@@ -7,7 +7,7 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
             cdperson        :   null,
             selector        :   false,
             actionColumns   :   [],
-            botones         :   [],
+            botones         :   []
             
         },
         controller : 'domicilios',
@@ -42,7 +42,7 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
                         autoLoad: true, //me.getSelector() === 'true' ? false : true,
                         proxy: {
                             type        : 'ajax',
-                            url         : Ice.url.bloque.personas.obtenerDomicilios,
+                            url         : Ice.url.bloque.personas.obtenerDomicilio,
                             extraParams : {
                                 'params.cdperson'   : me.getCdperson()
                                 },

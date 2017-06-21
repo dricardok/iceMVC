@@ -3,7 +3,17 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     alias: 'controller.persona',
     
     custom:function(){
+    	var me=this,paso="",view =me.getView();
     	try{
+    		
+    		if(view.getCdperson()){
+	    		params={
+	    			'params.cdperson'	:	view.getCdperson(),
+	    			'params.cdrol'		:	view.getCdrol(),
+	    			'params.cdramo'		:	view.getCdramo()
+	    		};
+	    		me.llenarCampos(view.down('#frmPersona'),Ice.url.bloque.personas.obtenerPersona,params);
+    		}
     		
     	}catch(e){
     		Ice.log(e,paso);
@@ -11,7 +21,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     	
     },
     
-    guardarPersona:function(accion){
+    guardarPersona:function(call){
     	var paso="",
     		me=this,
     		view=me.getView();
@@ -28,7 +38,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     			}
     		});
     		Ice.log("Datos de persona a enviar: ",mpersona,tvaloper);
-    		accion=accion?accion:null;
+    		accion=view.getAccion();
     		Ice.request({
     			url:Ice.url.bloque.personas.guardarPersona,
     			jsonData:{
@@ -40,7 +50,12 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     					}
     			},
     			success:function(json){
-    				
+    				if(call && typeof call =='function'){
+    					call();
+    				}
+    				alert(json.params.cdperson);
+    				view.setCdperson(json.params.cdperson);
+    				view.setAccion("U");
     				Ice.mensaje("Se guardo correctamente");
     			}
     			
@@ -144,13 +159,32 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 		me=this,
 		view=me.getView();
 		try{
-	    	Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
-	    		listeners:{
-	    			guardarDomicilio:function(){
-	    				view.down('[xtype=domicilios]').getStore().load();
-	    			}
-	    		}
-	    	}).mostrar();
+			
+			if(view.getAccion()==='I'){
+				Ext.MessageBox.confirm("Agregar Domicilio","Se guardarán los datos de la persona \u00bfDesea continuar?",function(opc){
+	      		  if(opc==='yes'){
+	      			me.guardarPersona(function(){
+	      				Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
+		    	    		listeners:{
+		    	    			guardarDomicilio:function(){
+		    	    				view.down('[xtype=domicilios]').getStore().load();
+		    	    			}
+		    	    		}
+		    	    	}).mostrar(); 
+	      			});
+	      			
+	      		  }
+	      		});
+			}else{
+				Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
+		    		listeners:{
+		    			guardarDomicilio:function(){
+		    				view.down('[xtype=domicilios]').getStore().load();
+		    			}
+		    		}
+		    	}).mostrar();
+			}
+	    	
 		}catch(e){
     		Ice.generaExcepcion(e,paso);
     	}

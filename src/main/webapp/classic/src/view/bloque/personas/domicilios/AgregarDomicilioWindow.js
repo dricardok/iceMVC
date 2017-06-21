@@ -83,6 +83,11 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 			Ice.generaExcepcion(e,paso);
 		}
 		me.callParent(arguments);
+		try {
+			me.getController().custom();
+		} catch (e) {
+			Ice.generaExcepcion(e, paso);
+		}
 	},
 	
 	

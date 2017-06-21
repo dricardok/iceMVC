@@ -776,7 +776,8 @@ var Ice = Object.assign(Ice || {}, {
                       secciones.url=Ice.url.core.recuperarTatrigar;
                       secciones.rootRequestData="list"
                 }else if("TATRIPER"==secciones.pantalla && "TATRIPER"==secciones.seccion){
-                    secciones.url= Ice.url.core.recuperarTatriper,
+                    secciones.url= Ice.url.core.recuperarTatriper;
+                    secciones.rootRequestData="list";
                     secciones.mapperAttr=function(obj){
                         obj.label=obj.dsatribu;
                         obj.tipocampo=obj.swformat;
@@ -784,8 +785,19 @@ var Ice = Object.assign(Ice || {}, {
                         obj.maxlength=obj.nmlmax;
                         obj.minlength=obj.nmlmin;
                         obj.catalogo=Ext.isEmpty((""+obj.ottabval).trim())?false:obj.ottabval;
-                                
                         
+                        if(obj.catalogo){
+                            obj.catalogo='TATRIPER';
+                        }
+                                
+                        obj.param1 = 'params.cdramo';
+                        obj.value1 = secciones.cdramo;
+                        
+                        obj.param2 = 'params.cdrol';
+                        obj.value2 = secciones.cdrol.toUpperCase();
+                        
+                        obj.param3 = 'params.cdatribu';
+                        obj.value3 = obj.cdatribu;
                     }     
                 }else if("TATRISIT"==secciones.pantalla && "TATRISIT"==secciones.seccion){
                     secciones.mapperAttr=function(obj){
@@ -798,7 +810,7 @@ var Ice = Object.assign(Ice || {}, {
                         obj.catalogo=obj.ottabval
                     };
                   secciones.url=Ice.url.core.recuperarTatrisit;
-                  secciones.rootRequestData="list"
+                  secciones.rootRequestData="list";
                     
                 }else if("TATRIPOL"==secciones.pantalla && "TATRIPOL"==secciones.seccion){
                     secciones.mapperAttr=function(obj){

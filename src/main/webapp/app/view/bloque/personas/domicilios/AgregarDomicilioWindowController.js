@@ -2,6 +2,27 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     extend: 'Ext.app.ViewController',
     alias: 'controller.agregardomiciliowindow',
     
+    custom	:	function(){
+    	var me=this,paso="",view =me.getView();
+    	try{
+    	if(view.getCdperson() && view.getNmorddom()){
+    	
+	    	params={
+	    			'params.cdperson'	:	view.getCdperson(),
+	    			'params.nmorddom'		:	view.getNmorddom()
+	    		};
+	    	var form=view.down('[xtype=formulario]');
+	    	
+	    	me.llenarCampos(form,Ice.url.bloque.personas.obtenerDomicilio,params,function(){
+	    		form.down("[getName][name=cdcoloni]").heredar();
+	    	});
+    	}
+	    	
+    	}catch(e){
+    		//Ice.manejaExcepcion(e,paso);
+    	}
+    },
+    
     guardarDomicilio : function(btn){
 		var paso="",
 			me=this,
@@ -166,9 +187,36 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
 				
     },
     
-    isNumber : function(n) {
-	  return !isNaN(parseFloat(n)) && isFinite(n);
-	}
+    llenarCampos:function(root,url,params,call){
+    	paso=""
+    	try{
+    		Ice.request({
+    			url:url,
+    			params:params,
+    			success:function(json){
+    				
+    				
+    				var paso="";
+    				try{
+	    				var datos=json.params || {};
+	    				Ext.ComponentQuery.query('[getName]',root)
+	    				.forEach(function(it){
+	    					it.setValue(datos[it.getName()]);
+	    				});
+	    				
+	    				if(call){
+	    					
+	    					call();
+	    				}
+    				}catch(e){
+    					Ice.generaExcepcion(e,paso)
+    				}
+    			}
+    		})
+    	}catch(e){
+    		Ice.generaExcepcion(e,paso);
+    	}
+    }
     
     
 });

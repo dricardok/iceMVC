@@ -148,6 +148,41 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     
     @SuppressWarnings("unchecked")
     @Override
+    public List<Map<String, String>> obtenerCatalogoTatriper (String cdramo,String cdrol, String cdatribu, String idPadre1,
+            String idPadre2, String idPadre3, String idPadre4, String idPadre5) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_cdrol_i", cdrol);
+        params.put("pv_cdatribu_i", cdatribu);
+        params.put("pv_clave_i", idPadre1);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerCatalogoTatriperSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerCatalogoTatriperSP extends StoredProcedure {
+        protected ObtenerCatalogoTatriperSP (DataSource dataSource) {
+            super(dataSource,"PKG_LOV_ALEA.P_GET_CAT_TATRIPER");
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdrol_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdatribu_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_clave_i", Types.VARCHAR));
+            
+            String[] cols = new String[]{
+                    "clave", "descripcion"
+                    };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
     public List<Map<String, String>> obtenerTipoSituaciones (String cdramo) throws Exception{
         Map<String, String> params = new LinkedHashMap<String, String>();
         params.put("pv_cdramo_i", cdramo);

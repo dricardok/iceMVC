@@ -89,6 +89,20 @@ public class CatalogosManagerImpl implements CatalogosManager {
                     }
                     break;
                     
+                case TATRIPER:
+                    paso = "Recuperando lista de apoyo para atributo de p\u00f3liza";
+                    List<Map<String, String>> registrosTatriper = catalogosDAO.obtenerCatalogoTatriper(params.get("cdramo"),
+                            params.get("cdrol"), params.get("cdatribu"), params.get("idPadre"), params.get("idPadre2"),
+                            params.get("idPadre3"), params.get("idPadre4"), params.get("idPadre5"));
+                    lista = new ArrayList<BaseVO>();
+                    logger.debug("-->tatrigar"+registrosTatriper);
+                    if (registrosTatriper != null) {
+                        for (Map<String, String> registroTatriper: registrosTatriper) {
+                            lista.add(new BaseVO(registroTatriper.get("clave"), registroTatriper.get("descripcion")));
+                        }
+                    }
+                    break;
+                    
                 case TIPO_SITUACIONES:
                     paso = "Recuperando catalogo tipo de situaciones";
                     lista = new ArrayList<>();

@@ -1,8 +1,11 @@
 package mx.com.segurossura.emision.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,7 @@ import mx.com.segurossura.emision.service.RegistroPersonaManager;
 @Service
 public class RegistroPersonaManagerImpl implements RegistroPersonaManager {
 
+	private final static Logger logger = LoggerFactory.getLogger(RegistroPersonaManagerImpl.class);
 	@Autowired
 	private RegistoPersonaDAO registroPersonaDao;
 	@Override
@@ -32,4 +36,228 @@ public class RegistroPersonaManagerImpl implements RegistroPersonaManager {
 		}
 		return list;
 	}
+	@Override
+	public List<Map<String, String>> obtieneTvaloper(String cdperson) throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ obtieneTvaloper"
+				
+				));
+		String paso="";
+		List<Map<String, String>> datos=null;
+		try{
+			
+			paso="Consultando datos";
+			
+			datos=registroPersonaDao.obtieneTvaloper(cdperson)  ;
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ obtieneTvaloper"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		return datos;
+	}
+	@Override
+	public List<Map<String, String>> obtieneMpersona(String cdperson) throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ obtieneMpersona"
+				
+				));
+		String paso="";
+		List<Map<String, String>> datos=null;
+		try{
+			
+			paso="Consultando datos";
+			
+			datos=registroPersonaDao.obtieneMpersona(cdperson)  ;
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ obtieneMpersona"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		return datos;
+	}
+	@Override
+	public List<Map<String, String>> obtieneMdomicil(String cdperson, String nmorddom) throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ obtieneMdomicil"
+				
+				));
+		String paso="";
+		List<Map<String, String>> datos=null;
+		try{
+			
+			paso="Consultando datos";
+			
+			datos=registroPersonaDao.obtieneMdomicil(cdperson, nmorddom)  ;
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ obtieneMdomicil"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		return datos;
+	}
+	@Override
+	public void movimientoTvaloper(String cdperson, Map<String, String> otvalores, String accion) throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ movimientoTvalogar"
+				
+				));
+		String paso="";
+		
+		try{
+			
+			paso="Consultando datos";
+			registroPersonaDao.movimientoTvaloper(cdperson, otvalores, accion);
+			
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ movimientoTvalogar"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		
+	}
+	@Override
+	public void movimientoMpersona(String cdperson, String cdtipide, String cdideper, String dsnombre, String dsnombr1,
+			String dsnombr2, String dsapell1, String dsapell2, String cdtipper, String otfisjur, String otsexo,
+			Date fenacimi, String cdprovin, String accion) throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ movimientoTvalogar"
+				
+				));
+		String paso="";
+		
+		try{
+			
+			paso="Consultando datos";
+			registroPersonaDao.movimientoMpersona(cdperson, cdtipide, cdideper, dsnombre, dsnombr1, dsnombr2, dsapell1, dsapell2, cdtipper, otfisjur, otsexo, fenacimi, cdprovin, accion);
+			
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ movimientoTvalogar"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		
+	}
+	@Override
+	public void movimientoMdomicil(String cdperson, String nmorddom, String cdtipdom, String dsdomici, String cdsiglas,
+			String cdidioma, String nmtelex, String nmfax, String nmtelefo, String cdpostal, String otpoblac,
+			String cdpais, String otpiso, String nmnumero, String cdprovin, String dszona, String cdcoloni,
+			String accion) throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ movimientoTvalogar"
+				
+				));
+		String paso="";
+		
+		try{
+			
+			paso="Consultando datos";
+			registroPersonaDao.movimientoMdomicil(cdperson, nmorddom, cdtipdom, dsdomici, cdsiglas, cdidioma, nmtelex, nmfax, nmtelefo, cdpostal, otpoblac, cdpais, otpiso, nmnumero, cdprovin, dszona, cdcoloni, accion);
+			
+			
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ movimientoTvalogar"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		
+	}
+	@Override
+	public List<Map<String, String>> obtieneAttrXRol(String cdramo, String cdrol) throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ obtieneTvaloper"
+				
+				));
+		String paso="";
+		List<Map<String, String>> datos=null;
+		try{
+			
+			paso="Consultando datos";
+			
+			datos=registroPersonaDao.obtieneAttrXRol(cdramo, cdrol)  ;
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ obtieneTvaloper"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		return datos;
+	}
+	@Override
+	public String generaCdperson() throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ obtieneTvaloper"
+				
+				));
+		String paso="";
+		String datos=null;
+		try{
+			
+			paso="Consultando datos";
+			
+			datos=registroPersonaDao.generaCdperson();
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ obtieneTvaloper"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		return datos;
+	}
+	
+	
 }

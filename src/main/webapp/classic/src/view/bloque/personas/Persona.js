@@ -5,7 +5,10 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 		config	:		{
 			cdperson		:	null,
 			modelFields		:	[],
-			modelValidators	:	{}
+			modelValidators	:	{},
+			cdramo			:	null,
+			cdrol			:	null,
+			accion			:	'I'
 		},
 		controller : 'persona',
 		layout	   : 'responsivecolumn',
@@ -19,7 +22,12 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        var me = this,
 	            paso = 'Validando construcci\u00f3n de bloque de datos generales';
 	            try {
-	                
+	                if(!config.cdramo || !config.cdrol){
+	                	throw 'No se recibio ramo o rol en el bloque de personas';
+	                }
+	                if(config.cdperson){
+	                	config.accion="U";
+	                }
 	            } catch (e) {
 	                Ice.generaExcepcion(e, paso);
 	            }
@@ -35,6 +43,8 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        	var compsTatriper = Ice.generaComponentes({
 	                pantalla: 'TATRIPER',
 	                seccion: 'TATRIPER',
+	                cdramo:	me.getCdramo(),
+	                cdrol:	me.getCdrol(),
 	                items: true,
 	                fields: true,
 	                validators: true
@@ -50,6 +60,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        	
 	        	var gridDomicilios={
 	        			xtype		:	'domicilios',
+	        			cdperson	:	me.getCdperson(),
 	        			botones		:	{
 	        				xtype		:	'button',
 	                        iconCls		:	'x-fa fa-plus-circle',
@@ -85,6 +96,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        
 	        	var frmPersonas={
 	        			xtype		:	'form',
+	        			itemId		:	"frmPersona",
 	        			modelValidators:Object.assign({},compsMpersona.AGREGAR_PERSONAS.MPERSONA.validators,compsTatriper.TATRIPER.TATRIPER.validators),
 	        			modelFields:compsMpersona.AGREGAR_PERSONAS.MPERSONA.fields.concat(compsTatriper.TATRIPER.TATRIPER.fields),
 	        			items		:	[

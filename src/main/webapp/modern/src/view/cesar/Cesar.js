@@ -70,7 +70,7 @@ Ext.define('Ice.view.cesar.Cesar', {
 		    
 		    ],
 
-		    dockedItems: [],   
+		    dockedItems: []
 		    // Reset and Submit buttons
 		   
 	}

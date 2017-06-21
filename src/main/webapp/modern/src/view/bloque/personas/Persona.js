@@ -4,12 +4,26 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 		xtype		:		'persona',
 		controller 	: 		'persona',
 		scrollable	:		 true,
+		config	:		{
+			cdperson		:	null,
+			modelFields		:	[],
+			modelValidators	:	{},
+			cdramo			:	null,
+			cdrol			:	null,
+			accion			:	'I'
+		},
 		constructor: function (config) {
 	        Ice.log('Ice.view.bloque.DatosGenerales.constructor config:', config);
 	        var me = this,
 	            paso = 'Validando construcci\u00f3n de bloque de datos generales';
 	            try {
-	                
+	            	 if(!config.cdramo || !config.cdrol){
+		                	throw 'No se recibio ramo o rol en el bloque de personas';
+		                }
+	            	 if(config.cdperson){
+		                	config.accion="U";
+		                }
+	            	 
 	            } catch (e) {
 	                Ice.generaExcepcion(e, paso);
 	            }
@@ -19,10 +33,14 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 		initialize	:		function(){
 			var paso='',
 				me=this;
+			
 			try{
+				
 				var compsTatriper = Ice.generaComponentes({
 	                pantalla: 'TATRIPER',
 	                seccion: 'TATRIPER',
+	                cdramo:	me.getCdramo(),
+	                cdrol:	me.getCdrol(),
 	                items: true,
 	                fields: true,
 	                validators: true
@@ -38,6 +56,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        	
 	        	var gridDomicilios={
 	        			xtype		:	'domicilios',
+	        			cdperson	:	me.getCdperson(),
 	        			width		:	'100%',
 	        			height		: 	300,
 	        			buttons		:	[{
@@ -65,6 +84,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        
 	        	var frmPersonas={
 	        			xtype		:	'formpanel',
+	        			itemId		:	"frmPersona",
 	        			modelValidators:Object.assign({},compsMpersona.AGREGAR_PERSONAS.MPERSONA.validators,compsTatriper.TATRIPER.TATRIPER.validators),
 	        			modelFields:compsMpersona.AGREGAR_PERSONAS.MPERSONA.fields.concat(compsTatriper.TATRIPER.TATRIPER.fields),
 	        			items		:	[

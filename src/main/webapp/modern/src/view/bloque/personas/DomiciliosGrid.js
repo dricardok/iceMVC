@@ -29,13 +29,13 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
 			var me = this, paso = '';
 			try {
 				var comps = Ice.generaComponentes({
-	                pantalla: 'AGREGAR_PERSONAS',
-	                seccion: 'MDOMICIL',
+	                pantalla: 'DOMICILIO',
+	                seccion: 'GRID',
 	                fields: true,
 	                columns: true
 	            });
-				Ice.log("****",         comps.AGREGAR_PERSONAS.MDOMICIL.columns);
-				config.columns		=	comps.AGREGAR_PERSONAS.MDOMICIL.columns;
+				Ice.log("****",         comps.DOMICILIO.GRID.columns);
+				config.columns		=	comps.DOMICILIO.GRID.columns;
 				
 				
 				config.items   = config.items || [];
@@ -90,17 +90,17 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
 			
 			
 			var comps = Ice.generaComponentes({
-                pantalla: 'AGREGAR_PERSONAS',
-                seccion: 'MDOMICIL',
+                pantalla: 'DOMICILIO',
+                seccion: 'GRID',
                 fields: true,
                 columns: true
             });
 			this.setStore({
-				fields		:	comps.AGREGAR_PERSONAS.MDOMICIL.fields,
+				fields		:	comps.DOMICILIO.GRID.fields,
 				autoLoad	:	true,
 				proxy		:	{
 					type 		: 'ajax',
-					url 		: Ice.url.bloque.personas.obtenerDomicilios,
+					url 		: Ice.url.bloque.personas.obtenerDomicilio,
 					extraParams	: {
 						'params.cdperson'	: me.getCdperson()
 					},
