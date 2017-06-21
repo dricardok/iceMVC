@@ -24,12 +24,16 @@ Ext.define('Ice.view.main.Main', {
             xtype: 'maintoolbar',
             docked: 'top',
             userCls: 'main-toolbar shadow'
-        }, {
+            	
+        },
+        
+        {
             xtype: 'container',
             userCls: 'main-nav-container',
             reference: 'navigation',
             scrollable: true,
             items: [
+            	
                 {
                     xtype: 'treelist',
                     reference: 'navigationTree',
@@ -59,6 +63,7 @@ Ext.define('Ice.view.main.Main', {
                     xtype: 'comboice',
                     label: 'Cambiar rol',
                     labelWidth: 90,
+                    style: 'padding: 30px 20px 20px 15px;',
                     valueField: 'cdsisrol',
                     displayField: 'dssisrol',
                     autoSelect: false,
@@ -76,6 +81,7 @@ Ext.define('Ice.view.main.Main', {
                 }, {
                     xtype: 'button',
                     text: 'Salir',
+                    style: 'background-color:#0033a0 !important; widht: 100%;margin 0px auto !important;',
                     iconCls: 'x-fa fa-sign-out',
                     handler: 'onLogoutClic'
                 }

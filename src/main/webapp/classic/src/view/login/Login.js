@@ -2,7 +2,7 @@
  * 
  */
 Ext.define('Ice.view.login.Login', {
-    extend: 'Ext.container.Container',
+    extend: 'Ext.window.Window',
     xtype: 'login',
     
     requires: [
@@ -20,16 +20,57 @@ Ext.define('Ice.view.login.Login', {
     controller: 'login',
     
     viewModel: 'login',
+    style: 'min-height: 100%;padding: 100px 0px 0px 20px; background: url(resources/images/bg_sura_login_small.jpg); background-repeat: no-repeat; background-size: cover;background-position: 0% 0%; !important;',
+    bodyStyle: 'background: transparent;',
+    maximized: true,
+    modal: true,
+    closable: false,
+    title: 'Iniciar Sesión',
+    titleAlign: 'center',
+    
+    
     
     items: [
         {
             xtype: 'form',
             reference: 'form',
-            bodyPadding: '10px 0px 0px 10px',
+            bodyPadding: '0 0',
+            width: 415,
+            
+            cls: '',
+            style: 'float:left; left:50%; margin-left: -225px;',
             defaults: {
-                style: 'margin: 0px 10px 10px 0px;'
+                style: 'margin: 10px 30px 10px 30px;'
+            },
+            layout: {
+            	type: 'vbox',
+            	align:'stretch'
+            	
             },
             items: [
+            	
+            
+            	{
+                    xtype: 'component',
+                    reference: 'suraLogo',
+                    cls: 'sura-logo',
+                    style:'text-align:right;padding: 15px 20px 0px 0px !important; background-color:#0033a0',
+                    html: '<div class="main-logo"><img src="resources/images/logo_sura_bco.png"></div>',
+                    align:'stretch'
+                },                 
+            
+          
+                /*
+                {
+                    iconCls:'x-fa fa-user',
+                    ui: 'header',
+                    id:'user',
+                    style:'padding: 20px, 20px;', 
+                    cls: ''
+                    
+                },*/
+                
+                
                 {
                     xtype: 'textfieldice',
                     label: 'Usuario',
@@ -47,14 +88,44 @@ Ext.define('Ice.view.login.Login', {
                     listeners: {
                         specialkey: 'onSpecialkeyPress'
                     }
-                }
+                },
+                {
+                    xtype: 'container',
+                    layout: 'hbox',
+                    style: 'padding: 20px 30px !important;', 
+                    items: [
+                        {
+                            xtype: 'checkboxfield',
+                            flex : 1,
+                            cls: 'form-panel-font-color rememberMeCheckbox',
+                            height: 30,
+                            bind: '{persist}',
+                            style: 'font-size; 11px !important;',
+                            boxLabel: 'Guardar Contraseña'
+                            
+                        },
+                        {
+                            xtype: 'box',
+                            html: '<a href="#passwordreset" class="linksura" style="font-size:12px !important;color:#707372 !important; line-height:30px !important;">¿Olvidó su Contraseña?</a>'
+                            
+                                                    
+                        }
+                    ]
+                }       
+                 
+                
+                
             ],
+            
             buttons: [
                 {
-                    text: 'Aceptar',
+                    text: 'Ir',
                     reference: 'loginbutton',
-                    iconCls: 'x-fa fa-key',
+                    iconCls: '',
+                    id:'ir_01',
+                    style: 'margin-right:30px !important;',
                     handler: 'onAceptarClic',
+                    
                     bind: {
                         disabled: '{!datosCompletos}'
                     }

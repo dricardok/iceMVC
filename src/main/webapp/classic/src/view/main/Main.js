@@ -25,10 +25,10 @@ Ext.define('Ice.view.main.Main', {
         {
             xtype: 'toolbar',
             cls: 'sencha-dash-dash-headerbar shadow',
-            height: 103,
+            height: 102,
             itemId: 'headerBar',
             items: [
-                {
+                /*{
                     xtype: 'component',
                     reference: 'senchaLogo',
                     width: 50
@@ -37,8 +37,9 @@ Ext.define('Ice.view.main.Main', {
                     ui: 'header',
                     iconCls:'x-fa fa-navicon',
                     id: 'main-navigation-btn',
-                    handler: 'onToggleNavigationSize'
-                }, {
+                    handler: 'onToggleNavigationSize',
+                    hidden: true
+                },*/ {
                     xtype: 'component',
                     reference: 'suraLogo',
                     cls: 'sura-logo',
@@ -53,7 +54,7 @@ Ext.define('Ice.view.main.Main', {
                         text: '{dsusuari} - {dssisrol}',
                         hidden: '{!rolOUsuario}'
                     },
-                    cls: 'dinR'
+                    cls: ''
                 }, {
                     iconCls: 'x-fa fa-user',
                     ui: 'header',
@@ -64,11 +65,59 @@ Ext.define('Ice.view.main.Main', {
                 }
             ]
         }, {
+        	xtype: 'toolbar',
+        	cls: 'head_02',
+        	id:'head_02',
+        	items: [
+        		{
+                    margin: '0 0 0 15',
+                    ui: 'header',
+                    iconCls:'x-fa fa-navicon ',
+                    id: 'main-navigation-btn',
+                    cls:'bco_nav',
+                    handler: 'onToggleNavigationSize'
+                }, {
+                	xtype: 'tbtext',
+                	cls: '',
+                	style:'color:#fff !important;',
+                	text: 'SEGUROS'
+                },'->', 
+                
+                {
+                    iconCls:'x-fa fa-envelope',
+                    ui: 'header',
+                    id:'mail_s',
+                    cls: 'mail_sura'
+                },
+              
+                {
+                    xtype: 'box',
+                    style:'',
+                    html: '<a href="mailto:surateescucha@segurossura.com.mx" style="font-family:arial;color:#fff !important;text-align:left;padding-right:45px;text-decoration:underline">surateescucha@segurossura.com.mx</a>'
+                   
+                },
+                
+                {
+                    iconCls:'x-fa fa-phone',
+                    ui: 'header',
+                    id:'phone_s',
+                    cls: 'phone_sura'
+                    
+                },
+                {
+                	xtype: 'tbtext',
+                	style:'color:#fff !important;padding-right:45px;',
+                	cls: '',
+                	text: '01 800 00 83 693 /  5723 7944'
+                }
+        	]
+        }, {
             xtype: 'maincontainerwrap',
             id: 'main-view-detail-wrap',
             reference: 'mainContainerWrap',
             flex: 1,
             items: [
+            	
                 {
                     xtype: 'treelist',
                     reference: 'navigationTreeList',
@@ -99,8 +148,9 @@ Ext.define('Ice.view.main.Main', {
                     layout: 'anchor',
                     cls: 'shadow',
                     style: 'background: white;',
+                    bodyPadding: '20 20',
                     defaults: {
-                        anchor: '100%'
+                     anchor: '100%'
                     },
                     micro: true,
                     getMicro: function () {
@@ -110,6 +160,8 @@ Ext.define('Ice.view.main.Main', {
                         this.micro = micro;
                     },
                     items: [
+                    	
+                    	
                         {
                             xtype: 'comboice',
                             label: 'Cambiar rol',

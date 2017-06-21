@@ -20,6 +20,7 @@ import com.biosnettcs.core.exception.ApplicationException;
 import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.service.DatosGeneralesManager;
 import mx.com.segurossura.general.catalogos.model.Bloque;
+import mx.com.segurossura.general.utils.ValoresMinimosUtils;
 
 @Service
 public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
@@ -52,6 +53,24 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
             for (Entry<String, String> en : valoresDefecto.entrySet()) {
                 valores.put(Utils.join("b1_", en.getKey()), en.getValue());
             }
+            
+            Map<String, Object> mpolizas = ValoresMinimosUtils.obtenerValores(Bloque.DATOS_GENERALES, valoresDefecto);
+            
+            mpolizas.put("nmcuadro", emisionDAO.obtenerCuadroComisionesDefault(cdramo));
+            
+            paso = "Insertando maestro de p\u00f3liza";
+            emisionDAO.movimientoMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem, "V",
+                    (String) mpolizas.get("swestado"), (String) mpolizas.get("nmsolici"), (Date)   mpolizas.get("feautori"),
+                    (String) mpolizas.get("cdmotanu"), (Date)   mpolizas.get("feanulac"), (String) mpolizas.get("swautori"),
+                    (String) mpolizas.get("cdmoneda"), (Date)   mpolizas.get("feinisus"), (Date)   mpolizas.get("fefinsus"),
+                    (String) mpolizas.get("ottempot"), (Date)   mpolizas.get("feefecto"), (String) mpolizas.get("hhefecto"),
+                    (Date)   mpolizas.get("feproren"), (Date)   mpolizas.get("fevencim"), (String) mpolizas.get("nmrenova"),
+                    (Date)   mpolizas.get("ferecibo"), (Date)   mpolizas.get("feultsin"), (String) mpolizas.get("nmnumsin"),
+                    (String) mpolizas.get("cdtipcoa"), (String) mpolizas.get("swtarifi"), (String) mpolizas.get("swabrido"),
+                    (Date)   mpolizas.get("feemisio"), (String) mpolizas.get("cdperpag"), (String) mpolizas.get("nmpoliex"),
+                    (String) mpolizas.get("nmcuadro"), (String) mpolizas.get("porredau"), (String) mpolizas.get("swconsol"),
+                    (String) mpolizas.get("nmpolcoi"), (String) mpolizas.get("adparben"), (String) mpolizas.get("nmcercoi"),
+                    (String) mpolizas.get("cdtipren"), "I");
         } catch (Exception ex) {
             Utils.generaExcepcion(ex, paso);
         }
@@ -61,64 +80,14 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     @Override
     public Map<String, String> valoresDefectoVariables (String cdusuari, String cdsisrol,
             String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsuplembloque, String nmsuplemsesion, String status, String swestado,
-            String nmsolici, Date feautori, String cdmotanu, Date feanulac, String swautori,
-            String cdmoneda, Date feinisus, Date fefinsus, String ottempot, Date feefecto,
-            String hhefecto, Date feproren, Date fevencim, String nmrenova, Date ferecibo,
-            Date feultsin, String nmnumsin, String cdtipcoa, String swtarifi, String swabrido,
-            Date feemisio, String cdperpag, String nmpoliex, String nmcuadro, String porredau,
-            String swconsol, String nmpolcoi, String adparben, String nmcercoi, String cdtipren) throws Exception {
+            String nmsuplembloque, String nmsuplemsesion, String status) throws Exception {
         Map<String, String> valores = new LinkedHashMap<String, String>();
         String paso = null;
         try {
-            Date hoy = new Date();
-            
             paso = "Instanciando variables principales";
             nmsuplembloque = Utils.NVL(nmsuplembloque, "0");
             nmsuplemsesion = Utils.NVL(nmsuplemsesion, "0");
             status = Utils.NVL(status, "V");
-            
-            boolean existe = false;
-            try {
-                List<Map<String, String>> mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplembloque);
-                if (mpolizas == null || mpolizas.size() == 0) {
-                    throw new ApplicationException("No hay mpolizas");
-                }
-                existe = true;
-            } catch (Exception ex) {
-                logger.warn("Warning al tratar de recuperar mpolizas", ex);
-            }
-            
-            if (!existe) {
-                // valores por defecto estaticos
-                swestado = Utils.NVL(swestado, "0");
-                swautori = Utils.NVL(swautori, "N");
-                cdmoneda = Utils.NVL(cdmoneda, "MXP");
-                nmrenova = Utils.NVL(nmrenova, "0");
-                swtarifi = Utils.NVL(swtarifi, "A");
-                feemisio = Utils.NVL(feemisio, hoy);
-                
-                paso = "Recuperando cuadro de comisiones default para el ramo";
-                nmcuadro = Utils.NVL(nmcuadro, emisionDAO.obtenerCuadroComisionesDefault(cdramo));
-                
-                swconsol = Utils.NVL(swconsol, "S");
-                cdmotanu = Utils.NVL(cdmotanu, null);
-                nmnumsin = Utils.NVL(nmnumsin, null);
-                swabrido = Utils.NVL(swabrido, null);
-                nmpoliex = Utils.NVL(nmpoliex, null);
-                nmpolcoi = Utils.NVL(nmpolcoi, null);
-                adparben = Utils.NVL(adparben, null);
-                nmcercoi = Utils.NVL(nmcercoi, null);
-                nmnumsin = Utils.NVL(nmnumsin, "0");
-                
-                paso = "Insertando maestro de p\u00f3lizas";
-                emisionDAO.movimientoMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplembloque, nmsuplemsesion, status, swestado,
-                        nmsolici, feautori, cdmotanu, feanulac, swautori, cdmoneda, feinisus, fefinsus, ottempot, feefecto,
-                        hhefecto, feproren, fevencim, nmrenova, ferecibo, feultsin, nmnumsin, cdtipcoa, swtarifi, swabrido,
-                        feemisio, cdperpag, nmpoliex, nmcuadro, porredau, swconsol, nmpolcoi, adparben, nmcercoi, cdtipren,
-                        "I" //accion
-                        );
-            }
             
             paso = "Ejecutando valores por defecto variables";
             emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza,
