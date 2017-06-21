@@ -18,7 +18,7 @@ $blanco-s:#ffffff !important;
 
 
  /*Tipografía Corporativa DIN Regular-Medium*/
-$font_dir: '/resources/fonts/';
+$font_din: 'ext/packages/fonts/';
 $font-bold: 700;
 $font-grey:#707372;
 
@@ -71,12 +71,17 @@ $mrg-pnl:5%;
 $ui-header-background-color:$azulo-s !important;
 
  /*Footer*/
-
  $fuente-df:'Arial';
 
 
+ /*Alertas*/
+$ui-header-background-color:$azulo-s !important;
 
-
+ /*Tabs
+ $ui-color-active: $azulc-s !important;
+ $ui-font-weight-active: $font-bold !important;
+ $ui-font-weight: 600;*/
+ 
 
  
  

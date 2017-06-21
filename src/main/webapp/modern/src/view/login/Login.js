@@ -24,27 +24,46 @@ Ext.define('Ice.view.login.Login', {
         {
             xtype: 'formpanel',
             reference: 'form',
+            bodyPadding: '0 0',
+            bodyStyle: 'background: transparent;',
+            style: 'padding:60px 20px;min-height:100%; background: url(resources/images/bg_sura_login_small.jpg); background-repeat: no-repeat; background-size: cover;background-position: 20% 0%; !important;',
+            cls:'bg_login',
             items: [
+            	{
+                    xtype: 'component',
+                    reference: 'suraLogo',
+                    cls: '',
+                    style:'text-align:right;background-color:#0033a0',
+                    html: '<div style="padding:10px;"><img src="resources/images/logo_sura_bco.png"></div>',
+                    align:'stretch'
+                },
+            	
                 {
                     xtype: 'textfieldice',
                     label: 'Usuario',
                     labelAlign: 'placeholder',
                     name: 'cdusuari',
+                    style:'padding: 0px 20px 0px 20px;',
                     bind: '{login.cdusuari}'
                 }, {
                     xtype: 'textfieldice',
                     label: 'Contrase\u00f1a',
                     labelAlign: 'placeholder',
                     inputType: 'password',
+                    style:'padding: 0px 20px 0px 20px;',
                     name: 'password',
                     bind: '{login.password}'
-                }, {
+                },
+                
+                {
                     xtype: 'toolbar',
                     docked: 'bottom',
+                                       
                     items: [{
-                        text: 'Aceptar',
+                        text: 'Ir',
+                        
                         iconCls: 'x-fa fa-key',
-                        handler: 'onAceptarClic',
+                        handler: 'onAceptarClic',                        
                         bind: {
                             hidden: '{!datosCompletos}'
                         }
