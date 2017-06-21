@@ -5,7 +5,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     custom	:	function(){
     	var me=this,paso="",view =me.getView();
     	try{
-    )
+    
     	if(view.getAccion()=='U'){
     	
 	    	params={
