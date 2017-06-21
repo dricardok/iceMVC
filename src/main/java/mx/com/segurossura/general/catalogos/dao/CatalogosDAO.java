@@ -67,5 +67,37 @@ public interface CatalogosDAO {
      */
     public List<BaseVO> obtenerCatalogoTablaApoyo(String cdtabla) throws Exception;
     
+    /**
+     * Obtiene el catalogo de roles por ramo
+     * 
+     * @param cdramo Codigo de ramo
+     * @return Lista de elementos del catalogo
+     * @throws Exception
+     */
+    public List<Map<String, String>> obtenerRolXRamo (String cdramo) throws Exception;
+    
+    /**
+     * Obtiene personas de acuerdo a criterio cdatribu
+     * 
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsituac
+     * @param nmsuplem
+     * @param cdrol
+     * @param cdperson
+     * @param cdatribu
+     * @param otvalor
+     * @return Lista de personas
+     * @throws Exception
+     */
+    public List<Map<String, String>> obtenerPersonas(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String cdrol, String cdperson, String cdatribu, String otvalor) throws Exception;
+    
+    public List<Map<String, String>> obtenerMunicipio(String cdprovin) throws Exception;
+
+    public List<Map<String, String>> obtenerProvincia() throws Exception;
+
+    public List<Map<String, String>> obtenerColonia(String cdcodpos) throws Exception;
     
 }
