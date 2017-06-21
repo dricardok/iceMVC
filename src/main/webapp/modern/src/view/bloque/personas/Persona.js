@@ -54,6 +54,12 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	                validators: true
 	            });
 	        	
+	        	var fenacimi=compsMpersona.AGREGAR_PERSONAS.MPERSONA.items.find(function(it){
+	        		return it.name=="fenacimi";
+	        	});
+	        	
+	        	fenacimi.dateFormat="Y-m-d";
+	        	
 	        	var gridDomicilios={
 	        			xtype		:	'domicilios',
 	        			cdperson	:	me.getCdperson(),
@@ -83,7 +89,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        	};
 	        
 	        	var frmPersonas={
-	        			xtype		:	'formpanel',
+	        			xtype		:	'formulario',
 	        			itemId		:	"frmPersona",
 	        			modelValidators:Object.assign({},compsMpersona.AGREGAR_PERSONAS.MPERSONA.validators,compsTatriper.TATRIPER.TATRIPER.validators),
 	        			modelFields:compsMpersona.AGREGAR_PERSONAS.MPERSONA.fields.concat(compsTatriper.TATRIPER.TATRIPER.fields),
@@ -97,7 +103,8 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        					xtype: 'fieldset',
 	        		            title: 'TATRIPER',
 	        		            items: compsTatriper.TATRIPER.TATRIPER.items
-	        				}
+	        				},
+	        				gridDomicilios
 	        				
 	        			],
 	        			buttons		:	[
@@ -109,7 +116,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        	}
 	        	
 	        	me.add(frmPersonas);
-	        	me.add(gridDomicilios);
+	        	//me.add(gridDomicilios);
 			}catch(e){
 				Ice.manejaExcepcion(e,paso);
 			}

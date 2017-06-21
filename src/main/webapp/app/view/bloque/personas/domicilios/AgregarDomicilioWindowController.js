@@ -5,7 +5,8 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     custom	:	function(){
     	var me=this,paso="",view =me.getView();
     	try{
-    	if(view.getCdperson() && view.getNmorddom()){
+    	alert(view.getAccion())
+    	if(view.getAccion()=='U'){
     	
 	    	params={
 	    			'params.cdperson'	:	view.getCdperson(),
@@ -29,6 +30,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
 			view=me.getView();
 		try{
 			var datos={};
+			datos.cdperson=view.getCdperson();
 			var form=view.down("[xtype=formulario]");
 			me.validarCampos(form);
 			Ext.ComponentQuery.query('[getName]',form).forEach(function(it){
@@ -69,7 +71,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
 		me=this,
 		view=me.getView();
 		try{
-			view.close()
+			view.cerrar()
 		}catch(e){
 			Ice.manejaExcepcion(e,paso);
 		}

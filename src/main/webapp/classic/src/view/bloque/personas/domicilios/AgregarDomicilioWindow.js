@@ -18,9 +18,12 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 		var paso="",
 			me=this;
 		try{
-			if(me.cdperson && me.nmorddom){
-				me.accion="U";
+			if(config.cdperson && config.nmorddom){
+				config.accion="U";
+				//alert();
 			}
+			
+			Ice.log("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow.constructor: cdperson nmorddom",config.cdperson,config.nmorddom);
 			var comps = Ice.generaComponentes({
                 pantalla: 'AGREGAR_PERSONAS',
                 seccion: 'MDOMICIL',

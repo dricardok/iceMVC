@@ -26,16 +26,22 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     		me=this,
     		view=me.getView();
     	try{
-    		var form=view.down("form"),
+    		var form=view.down("[xtype=formulario]"),
     			tvaloper={},
     			mpersona={};
     		me.validarCampos(form);
     		Ice.query('[getName]',form).forEach(function(it){
-    			if((""+it.getName()).indexOf("otvalor")!=-1){
-    				tvaloper[it.getName()]=it.getValue();
-    			}else{
-    				mpersona[it.getName()]=it.getValue();
+    			
+    			var valor=it.getValue();
+    			if((""+valor).indexOf("-")!=-1){
+    				valor=valor.split("-")[0].trim();
     			}
+    			if((""+it.getName()).indexOf("otvalor")!=-1){
+    				tvaloper[it.getName()]=valor;
+    			}else{
+    				mpersona[it.getName()]=valor;
+    			}
+    			
     		});
     		Ice.log("Datos de persona a enviar: ",mpersona,tvaloper);
     		accion=view.getAccion();
@@ -53,7 +59,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     				if(call && typeof call =='function'){
     					call();
     				}
-    				alert(json.params.cdperson);
+    				//alert(json.params.cdperson);
     				view.setCdperson(json.params.cdperson);
     				view.setAccion("U");
     				Ice.mensaje("Se guardo correctamente");
@@ -169,7 +175,8 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 		    	    			guardarDomicilio:function(){
 		    	    				view.down('[xtype=domicilios]').getStore().load();
 		    	    			}
-		    	    		}
+		    	    		},
+		    	    		cdperson:view.getCdperson()
 		    	    	}).mostrar(); 
 	      			});
 	      			
@@ -181,7 +188,8 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 		    			guardarDomicilio:function(){
 		    				view.down('[xtype=domicilios]').getStore().load();
 		    			}
-		    		}
+		    		},
+    	    		cdperson:view.getCdperson()
 		    	}).mostrar();
 			}
 	    	
@@ -208,7 +216,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
                     data = record.getData();
             }
     		
-    		
+    		Ice.log("record",record,record.get("cdperson"),record.get("nmorddom"));
     		Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
     			
     			cdperson:record.get("cdperson"),

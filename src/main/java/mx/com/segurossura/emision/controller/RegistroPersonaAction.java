@@ -109,7 +109,7 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	    public String guardarPersona() {
 	        
 	    	logger.debug(StringUtils.join(
-					 "\n###################"
+					 "\n############################"
 					,"\n###### guardarPersona ######"
 					));
 	        try {
@@ -132,7 +132,7 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            String  cdtipper = mpersona.get("cdtipper");
 	            String  otfisjur = mpersona.get("otfisjur");
 	            String  otsexo = mpersona.get("otsexo");
-	            String  fenacimi = mpersona.get("fenacim");
+	            String  fenacimi = mpersona.get("fenacimi");
 	            String  cdprovin = mpersona.get("cdprovin");
 	            
 	            Utils.validate(cdtipide,"No se recibió tipo de identificador");
@@ -142,11 +142,14 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            if("I".equals(accion)){
 	            	cdperson=registroPersonaManager.generaCdperson();
 	            }
+	            if(fenacimi!=null){
+	            	fenacimi=fenacimi.split("T")[0];
+	            }
 	            
 	            renderFechas= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	            registroPersonaManager.movimientoMpersona(cdperson, cdtipide, cdideper, dsnombre, dsnombr1, dsnombr2, dsapell1, dsapell2, cdtipper, otfisjur, otsexo,
 	            		"null".equals(fenacimi)?null:
-	            			new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(fenacimi), 
+	            			new SimpleDateFormat("dd/MM/yyyy").parse(fenacimi), 
 	            				cdprovin, accion);
 	            
 	            registroPersonaManager.movimientoTvaloper(cdperson, tvaloper, accion);
@@ -184,10 +187,35 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 					));
 	        try {
 	            
+	        	String  cdperson		 =  params.get("cdperson");
+	        	String  nmorddom =  params.get("nmorddom");
+	        	String  cdtipdom =  params.get("cdtipdom");
+	        	String  dsdomici =  params.get("dsdomici");
+	        	String  cdsiglas =  params.get("cdsiglas");
+	        	String  cdidioma =  params.get("cdidioma");
+	        	String  nmtelex =  params.get("nmtelex");
+	        	String  nmfax =  params.get("nmfax");
+	        	String  nmtelefo =  params.get("nmtelefo");
+	        	String  cdpostal =  params.get("cdpostal");
+	        	String  otpoblac =  params.get("otpoblac");
+	        	String  cdpais =  params.get("cdpais");
+	        	String  otpiso =  params.get("otpiso");
+	        	String  nmnumero =  params.get("nmnumero");
+	        	String  cdprovin =  params.get("cdprovin");
+	        	String  dszona =  params.get("dszona");
+	        	String  cdcoloni =  params.get("cdcoloni");
+	        	
+	        	Utils.validate(cdperson,"No se recibió cdperson");
+	        	Utils.validate(cdtipdom,"No se recibió cdtipdom");
+	        	Utils.validate(accion,"No se recibió accion");
 	        	
 	        	
 	            
 	            logger.debug("Datos de Enviados: {} ", params);
+	            if(accion=="I") nmorddom=String.valueOf(registroPersonaManager.obtieneMdomicil(cdperson, null).size()+1);
+	            logger.debug("Nmorddom generado: {}",nmorddom);
+	            
+	            registroPersonaManager.movimientoMdomicil(cdperson, nmorddom, cdtipdom, dsdomici, cdsiglas, cdidioma, nmtelex, nmfax, nmtelefo, cdpostal, otpoblac, cdpais, otpiso, nmnumero, cdprovin, dszona, cdcoloni, accion);
 	            
 	            success = true;
 	        } catch (Exception ex) {
@@ -245,9 +273,7 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            value = "obtienePersona",
 	            results = { 
 	                @Result(name = "success", type = "json") 
-	            },
-        		interceptorRefs = {
-        	            @InterceptorRef(value = "json", params = { "enableSMD", "true", "ignoreSMDMethodInterfaces", "false" }) }
+	            }
     
 	        )   
 	    public String obtienePersona() {
@@ -263,6 +289,7 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	        	Utils.validate(cdperson,"No se recibió cdperson");
 	        	params= registroPersonaManager.obtieneTvaloper(cdperson).get(0);
 	        	params.putAll(registroPersonaManager.obtieneMpersona(cdperson).get(0));
+	        	logger.debug("..>",registroPersonaManager.obtieneMpersona(cdperson).get(0));
 	            success = true;
 	        } catch (Exception ex) {
 	            success=false;
@@ -279,10 +306,7 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            value = "obtieneDomicilio",
 	            results = { 
 	                @Result(name = "success", type = "json") 
-	            },
-        		interceptorRefs = {
-        	            @InterceptorRef(value = "json", params = { "enableSMD", "true", "ignoreSMDMethodInterfaces", "false" }) }
-    
+	            }
 	        )   
 	    public String obtieneDomicilio() {
 	        
@@ -300,6 +324,11 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	        		listas=new ArrayList();
 	        	}else{
 	        		listas=registroPersonaManager.obtieneMdomicil(cdperson, nmorddom);
+	        		list=listas;
+	        	}
+	        	
+	        	if(nmorddom!=null && null!=listas.get(0)){
+	        		params=listas.get(0);
 	        	}
 	        	
 	        	

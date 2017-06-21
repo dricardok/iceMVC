@@ -14,8 +14,8 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 		var paso="",
 			me=this;
 		try{
-			if(me.cdperson && me.nmorddom){
-				me.accion="U";
+			if(config.cdperson && config.nmorddom){
+				config.accion="U";
 			}
 		}catch(e){
 			Ice.generaExcepcion(e,paso);
