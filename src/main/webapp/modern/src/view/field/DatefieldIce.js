@@ -16,7 +16,7 @@ Ext.define('Ice.view.field.DatefieldIce', {
     },
     
     
-    setValue(val) {
+    setValue: function (val) {
         if (val && typeof val === 'string') {
             try {
                 val = Ext.Date.parse(val, Ext.util.Format.dateFormat);
