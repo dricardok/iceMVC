@@ -131,7 +131,7 @@ Ext.define('Ice.view.bloque.Agentes', {
 	                ]
 	                
             	},{
-	            	xtype: 'grid',
+	            	xtype: 'gridice',
 	            	title: 'Participacion de Agentes',
 	            	layout: 'responsivecolumn',
 	            	columns: gridAgt.BLOQUE_AGENTES.GRID.columns.concat(me.config.actionColumns),
@@ -166,7 +166,29 @@ Ext.define('Ice.view.bloque.Agentes', {
                               iconCls: 'x-fa fa-save',
                               handler: 'onGuardarClic'
                           }
-	    	        ]
+	    	        ],
+	    	        actionColumns:[
+        				{
+								xtype : 'actioncolumn',
+								width : 50,
+								items : [
+											{
+												iconCls : 'x-fa fa-edit',
+												tooltip : 'Editar Porcentaje',
+												handler : function(grid,row,col){
+													me.getController().editarPorcentaje(grid,row,col)
+												}
+											},
+											{
+												iconCls : 'x-fa fa-remove',
+												tooltip : 'Borrar',
+												handler : function(grid,row,col){
+													me.getController().eliminar(grid,row,col)
+												}
+											} 
+										]
+							}
+        			]
 	                
             	}/*,{
             		buttons: [

@@ -48,11 +48,11 @@ Ext.define('Ice.view.bloque.AgentesController', {
             	mascara: 'Cargando valores iniciales',
             	url: Ice.url.bloque.agentes.cargar,
             	params: {
-            		'params.cdunieco'	:		view.cdunieco,
-            		'params.cdramo'		:		view.cdramo,
-            		'params.estado'		:		view.estado,
-            		'params.nmpoliza'	:		view.nmpoliza,
-            		'params.nmsuplem'	:		view.nmsuplem
+            		'params.cdunieco'	:		view.getCdunieco(),
+            		'params.cdramo'		:		view.getCdramo(),
+            		'params.estado'		:		view.getEstado().toUpperCase(),
+            		'params.nmpoliza'	:		view.getNmpoliza(),
+            		'params.nmsuplem'	:		view.getNmsuplem()
             	},
             	success: function(action) {
             		
@@ -124,11 +124,11 @@ Ext.define('Ice.view.bloque.AgentesController', {
                 url: Ice.url.bloque.agentes.guardar,
                 jsonData: {
                 	params: {
-                		'cdunieco'	:		view.cdunieco,
-                		'cdramo'	:		view.cdramo,
-                		'estado'	:		view.estado,
-                		'nmpoliza'	:		view.nmpoliza,
-                		'nmsuplem'	:		view.nmsuplem,
+                		'cdunieco'	:		view.getCdunieco(),
+                		'cdramo'	:		view.getCdramo(),
+                		'estado'	:		view.getEstado(),
+                		'nmpoliza'	:		view.getNmpoliza(),
+                		'nmsuplem'	:		view.getNmsuplem(),
                 		'nmcuadro'	:		refs['nmcuadro'].getValue(),
                 		'porredau'	:		refs['porredau'].getValue()
                 	},
@@ -220,6 +220,89 @@ Ext.define('Ice.view.bloque.AgentesController', {
         }catch(e) {
         	Ice.manejaExcepcion(e, paso);
         }
+    },
+    
+    editarPorcentaje	:	function(grid,rowIndex,colIndex){
+    	 var me = this,          
+ 		view = me.getView(),
+ 		refs = view.getReferences(),
+ 		paso = 'Editar porcentaje';
+    	 
+    	 try{
+    		 if(Ext.manifest.toolkit === 'classic'){
+     			var record=grid.getStore().getAt(rowIndex);            
+             } else {
+                 var cell = grid.getParent(),
+                     record = cell.getRecord(),
+                     data = record.getData();
+             }
+    		 Ice.log("record",record);
+    		 
+    		 Ext.create("Ice.view.componente.Ventana",{
+    			 
+    			 rec	:	record,
+    			 title	:	"Editar porcentaje",
+    			 layout	:	"fit",
+    			 items	:	[
+    				 {
+    					 xtype	:	"formulario",
+    					 items	:[
+    						 {
+    							 xtype	:	'numberfieldice',
+    							 label	:	'Porcentaje'
+    						 }
+    					 ],
+    					 buttons	:	[
+    						 {
+ 						    	xtype	: 'button',
+ 						    	text	: 'Guardar',
+ 						    	handler : function(btn){
+ 						    		btn.up('[xtype=ventana]').cerrar();
+ 						    		var record=btn.up('[xtype=ventana]').rec;
+ 						    		Ice.log("record",record);
+ 						    		record.set("porredau",btn.up('[xtype=ventana]').down('numberfieldice').getValue());
+ 						    	}
+ 		 			    	},
+ 		 			    	{
+ 						    	xtype	: 'button',
+ 						    	text	: 'Cancelar',
+ 						    	handler : function(btn){
+ 						    		btn.up('[xtype=ventana]').cerrar();
+ 						    	}
+ 		 			    	}
+    					 ]
+    				 }
+    			 ]
+    		 }).mostrar();
+    	 }catch(e){
+    		 Ice.manejaExcepcion(e, paso);
+    	 }
+    	 
+    },
+    eliminar : function(grid,rowIndex,colIndex){
+    	
+    var me   = this,          
+  		view = me.getView(),
+  		refs = view.getReferences(),
+  		paso = 'Editar porcentaje';
+    	try{
+    		if(Ext.manifest.toolkit === 'classic'){
+     			var record=grid.getStore().getAt(rowIndex);            
+             } else {
+                 var cell = grid.getParent(),
+                     record = cell.getRecord(),
+                     data = record.getData();
+             }
+    		var g=grid.up('[xtype=gridice]');
+    		
+    		var i=g.getStore().indexOf(record);
+    		g.getStore().removeAt(i);
+    		 Ice.log("record",record);
+    		 
+    		 
+    	}catch(e){
+    		Ice.manejaExcepcion(e,paso);
+    	}
     }
         
 });
