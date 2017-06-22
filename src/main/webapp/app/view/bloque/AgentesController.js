@@ -258,10 +258,11 @@ Ext.define('Ice.view.bloque.AgentesController', {
  						    	xtype	: 'button',
  						    	text	: 'Guardar',
  						    	handler : function(btn){
- 						    		btn.up('[xtype=ventana]').cerrar();
+ 						    		
  						    		var record=btn.up('[xtype=ventana]').rec;
  						    		Ice.log("record",record);
  						    		record.set("porredau",btn.up('[xtype=ventana]').down('numberfieldice').getValue());
+ 						    		btn.up('[xtype=ventana]').cerrar();
  						    	}
  		 			    	},
  		 			    	{
