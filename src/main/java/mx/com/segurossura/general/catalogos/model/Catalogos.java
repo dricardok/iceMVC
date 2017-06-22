@@ -13,7 +13,8 @@ public enum Catalogos {
     PROVINCIA(""),
     TATRIPER(""),
     COLONIA(""),
-    CUACOM_RAMO("");
+    CUACOM_RAMO(""),
+    TMANTENI("");
 
     
     private String cdtabla;
