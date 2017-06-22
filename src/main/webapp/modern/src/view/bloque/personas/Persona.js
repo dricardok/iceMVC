@@ -12,6 +12,10 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 			cdrol			:	null,
 			accion			:	'I'
 		},
+		masked: {
+		    xtype: 'loadmask',
+		    message: 'Guardando'
+		},
 		constructor: function (config) {
 	        Ice.log('Ice.view.bloque.DatosGenerales.constructor config:', config);
 	        var me = this,
@@ -100,12 +104,12 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        			items		:	[
 	        				{
 	        					xtype: 'fieldset',
-	        		            title: 'MPERSONA',
+	        		            title: '',
 	        		            items: compsMpersona.AGREGAR_PERSONAS.MPERSONA.items
 	        				},
 	        				{
 	        					xtype: 'fieldset',
-	        		            title: 'TATRIPER',
+	        		            title: '',
 	        		            items: compsTatriper.TATRIPER.TATRIPER.items
 	        				},
 	        				gridDomicilios

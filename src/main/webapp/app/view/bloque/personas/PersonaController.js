@@ -59,9 +59,9 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     				if(call && typeof call =='function'){
     					call();
     				}
-    				//alert(json.params.cdperson);
     				view.setCdperson(json.params.cdperson);
     				view.setAccion("U");
+    				view.fireEvent("afterguardarpersona",view,json.params.cdperson);
     				Ice.mensaje("Se guardo correctamente");
     			}
     			
