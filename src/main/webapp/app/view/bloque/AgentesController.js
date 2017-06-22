@@ -243,6 +243,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
     			 rec	:	record,
     			 title	:	"Editar porcentaje",
     			 layout	:	"fit",
+    			 bodyPadding: '20px 20px 20px 20px',
     			 items	:	[
     				 {
     					 xtype	:	"formulario",
