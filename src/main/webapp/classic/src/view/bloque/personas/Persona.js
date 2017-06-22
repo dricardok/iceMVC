@@ -10,6 +10,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 			cdrol			:	null,
 			accion			:	'I'
 		},
+		
 		controller : 'persona',
 		layout	   : 'responsivecolumn',
 		bodyPadding: '10px 0px 0px 10px',
