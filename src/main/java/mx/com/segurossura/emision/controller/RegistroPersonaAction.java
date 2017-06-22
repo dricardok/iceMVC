@@ -146,7 +146,7 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            	fenacimi=fenacimi.split("T")[0];
 	            }
 	            fenacimi=fenacimi.replaceAll("/", "-");
-	            renderFechas= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	            
 	            registroPersonaManager.movimientoMpersona(cdperson, cdtipide, cdideper, dsnombre, dsnombr1, dsnombr2, dsapell1, dsapell2, cdtipper, otfisjur, otsexo,
 	            		"null".equals(fenacimi)?null:
 	            			new SimpleDateFormat("yyyy-MM-dd").parse(fenacimi), 

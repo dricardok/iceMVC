@@ -56,12 +56,13 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     					}
     			},
     			success:function(json){
+    				
+    				view.setCdperson(json.params.cdperson);
+    				view.setAccion("U");
+    				view.fireEvent("guardarpersona",view,json.params.cdperson);
     				if(call && typeof call =='function'){
     					call();
     				}
-    				view.setCdperson(json.params.cdperson);
-    				view.setAccion("U");
-    				view.fireEvent("afterguardarpersona",view,json.params.cdperson);
     				Ice.mensaje("Se guardo correctamente");
     			}
     			
@@ -169,7 +170,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 			if(view.getAccion()==='I'){
 				Ext.Msg.confirm("Agregar Domicilio","Se guardarán los datos de la persona \u00bfDesea continuar?",function(opc){
 	      		  if(opc==='yes'){
-	      			me.guardarPersona(function(){
+	      			me.guardarPersona(function(cdperson){
 	      				Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 		    	    		listeners:{
 		    	    			guardarDomicilio:function(){
