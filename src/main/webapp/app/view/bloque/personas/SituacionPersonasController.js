@@ -55,17 +55,22 @@ Ext.define('Ice.view.bloque.personas.SituacionPersonasController', {
         var me = this,
             view = me.getView(),
             refs = view.getReferences(),
-            paso = 'Actualizando valores de personas por situacion';
+            paso = 'Actualizando valores de personas por situacion',
+            data;
         try {
             var store = refs.gridSituaciones.getStore();
-            Ice.log('Ice.view.bloque.situacionPersonas.actualizar store ',store);
-            var nmsituac = store.getAt(rowIndex).getData().nmsituac;
-            Ice.log('Ice.view.bloque.situacionPersonas.actualizar nmsituac ',nmsituac);
+            if(Ext.manifest.toolkit === 'classic'){
+                data = store.getAt(rowIndex).getData();              
+            } else {
+                var cell = grid.getParent(),
+                    record = cell.getRecord(),
+                    data = record.getData();
+            }            
+            var nmsituac = data.nmsituac;            
             paso = 'Antes de ejecutar funcion cargar personas';
-            Ice.log('Ice.view.bloque.situacionPersonas.actualizar refs ',refs);
             refs.gridPersonas.getController().onCargar(nmsituac);
-            Ice.log('refs.gridPersonas refs ',refs.gridPersonas);
             refs.gridPersonas.setNmsituac(nmsituac);
+            Ice.log('refs.gridPersonas',refs.gridPersonas);
             refs.gridPersonas.show();
         } catch (e) {
             Ice.generaExcepcion(e, paso);
@@ -78,11 +83,19 @@ Ext.define('Ice.view.bloque.personas.SituacionPersonasController', {
         var me = this,
             view = me.getView(),
             refs = view.getReferences(),
-            paso = 'Agregando persona a situacion de poliza';
+            paso = 'Agregando persona a situacion de poliza',
+            data;
         try {
             var store = refs.gridSituaciones.getStore();
+            if(Ext.manifest.toolkit === 'classic'){
+                data = store.getAt(rowIndex).getData();              
+            } else {
+                var cell = grid.getParent(),
+                    record = cell.getRecord(),
+                    data = record.getData();
+            }
             Ice.log('Ice.view.bloque.situacionPersonas.actualizar store ',store);
-            var nmsituac = store.getAt(rowIndex).getData().nmsituac;
+            var nmsituac = data.nmsituac;
             refs.setNmsituac(nmsituac);
         } catch (e) {
             Ice.generaExcepcion(e, paso);

@@ -10,11 +10,14 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
+
+import mx.com.segurossura.emision.service.PersonasPolizaManager;
 
 @Controller
 @Scope("prototype")
@@ -30,6 +33,9 @@ public class PersonasPolizaAction extends PrincipalCoreAction{
     private Map<String, String> lista;
     private boolean success;
     private String message;
+    
+    @Autowired
+    PersonasPolizaManager personasPolizaManager;
     
     @Action(
             value = "obtenerPersonasPoliza", 
@@ -57,24 +63,25 @@ public class PersonasPolizaAction extends PrincipalCoreAction{
             Utils.validate(nmpoliza, "No se recibio el número de póliza");
             Utils.validate(nmsituac, "No se recibio la situacion de la póliza");
             Utils.validate(nmsuplem, "No se recibio el suplemento de la póliza");
-            listas = new ArrayList<Map<String, String>>();
-            Map<String, String> persona = new HashMap<String, String>();
-            if(Integer.parseInt(nmsituac) > 0){
-                persona.put("cdrol", "AS");
-            } else {
-                persona.put("cdrol", "TO");
-            }
-            persona.put("cdunieco", cdunieco);
-            persona.put("cdramo", cdramo);
-            persona.put("estado", estado);
-            persona.put("nmpoliza", nmpoliza);            
-            persona.put("nmsituac", nmsituac);
-            persona.put("cdperson", "4066");
-            persona.put("nmsuplem", nmsuplem);
-            persona.put("status", "V");
-            persona.put("nmorddom", "1");
-            persona.put("swfallec", "N");
-            listas.add(persona);
+            listas = personasPolizaManager.obtieneMpoliper(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem);
+//            listas = new ArrayList<Map<String, String>>();
+//            Map<String, String> persona = new HashMap<String, String>();
+//            if(Integer.parseInt(nmsituac) > 0){
+//                persona.put("cdrol", "AS");
+//            } else {
+//                persona.put("cdrol", "TO");
+//            }
+//            persona.put("cdunieco", cdunieco);
+//            persona.put("cdramo", cdramo);
+//            persona.put("estado", estado);
+//            persona.put("nmpoliza", nmpoliza);            
+//            persona.put("nmsituac", nmsituac);
+//            persona.put("cdperson", "4066");
+//            persona.put("nmsuplem", nmsuplem);
+//            persona.put("status", "V");
+//            persona.put("nmorddom", "1");
+//            persona.put("swfallec", "N");
+//            listas.add(persona);
             success = true;
         } catch(Exception ex){
             success = false;
@@ -109,9 +116,9 @@ public class PersonasPolizaAction extends PrincipalCoreAction{
             String estado = params.get("estado");
             String nmpoliza = params.get("nmpoliza");
             String nmsituac = params.get("nmsituac");
-            String cdrol = params.get("cdrol");
-            String cdperson = params.get("cdperson");
-            String nmsuplem = params.get("nmsuplem");
+//            String cdrol = params.get("cdrol");
+//            String cdperson = params.get("cdperson");
+//            String nmsuplem = params.get("nmsuplem");
             Utils.validate(dsatribu, "No se recibio la descripcion");
             Utils.validate(otvalor, "No se recibio el valor");
             Utils.validate(cdunieco, "No se recibio la oficina");
@@ -119,21 +126,21 @@ public class PersonasPolizaAction extends PrincipalCoreAction{
             Utils.validate(estado, "No se recibo el estado de la póliza");
             Utils.validate(nmpoliza, "No se recibio el número de póliza");
             Utils.validate(nmsituac, "No se recibio la situacion de la póliza");
-            Utils.validate(cdrol, "No se recibio el rol");
-            Utils.validate(cdperson, "No se recibio el codigo de persona");
-            Utils.validate(nmsuplem, "No se recibio el suplemento de la póliza");
-            lista = new HashMap<String, String>();
-            lista.put("cdunieco", cdunieco);
-            lista.put("cdramo", cdramo);
-            lista.put("estado", estado);
-            lista.put("nmpoliza", nmpoliza);
-            lista.put("nmsituac", nmsituac);
-            lista.put("cdrol", cdrol);
-            lista.put("cdperson", cdperson);
-            lista.put("nmsuplem", nmsuplem);
-            lista.put("status", "V");
-            lista.put("nmorddom", "1");
-            lista.put("swfallec", "N");
+//            Utils.validate(cdrol, "No se recibio el rol");
+//            Utils.validate(cdperson, "No se recibio el codigo de persona");
+//            Utils.validate(nmsuplem, "No se recibio el suplemento de la póliza");
+//            lista = new HashMap<String, String>();
+//            lista.put("cdunieco", cdunieco);
+//            lista.put("cdramo", cdramo);
+//            lista.put("estado", estado);
+//            lista.put("nmpoliza", nmpoliza);
+//            lista.put("nmsituac", nmsituac);
+//            lista.put("cdrol", cdrol);
+//            lista.put("cdperson", cdperson);
+//            lista.put("nmsuplem", nmsuplem);
+//            lista.put("status", "V");
+//            lista.put("nmorddom", "1");
+//            lista.put("swfallec", "N");
             success = true;
         } catch(Exception ex){
             success = false;
@@ -232,8 +239,46 @@ public class PersonasPolizaAction extends PrincipalCoreAction{
             Utils.validate(nmorddom, "No se recibio domicilio");
             Utils.validate(swfallec, "No se recibio switch fallecimiento");
             Utils.validate(accion, "No se recibio la accion");
+            personasPolizaManager.movimientoMpoliper(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdrol, cdperson, nmsuplem, nmsuplem, nmorddom, swfallec, accion);
             success = true;
         } catch(Exception ex){
+            success = false;
+            Utils.manejaExcepcion(ex);
+        }
+        logger.debug(StringUtils.join(
+                "\n################################",
+                "\n###### movimientoPolizaPersona ######"
+               ));
+        return SUCCESS;
+    }
+    
+    @Action(
+            value = "obtenerPersonaCriterio", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String obtenerPersonaCriterio(){
+        logger.debug(StringUtils.join(
+                "\n################################",
+                "\n###### movimientoPolizaPersona ######",
+                "\n###### params ", params
+               ));
+        try{
+            Utils.validate(params, "No se recibieron parametros");
+            String cdunieco = params.get("cdunieco");
+            String cdramo = params.get("cdramo");
+            String estado = params.get("estado");
+            String nmpoliza = params.get("nmpoliza");
+            String nmsituac = params.get("nmsituac");
+            String nmsuplem = params.get("nmsuplem");
+            String cdrol = params.get("cdrol");
+            String cdperson = params.get("cdperson");
+            String cdatribu = params.get("cdatribu");
+            String otvalor = params.get("otvalor");
+            listas = personasPolizaManager.obtenerPersonasCriterio(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, cdrol, cdperson, cdatribu, otvalor);
+            success = true;
+        } catch(Exception ex) {
             success = false;
             Utils.manejaExcepcion(ex);
         }

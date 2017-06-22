@@ -4,13 +4,10 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGridController', {
     
     custom: function () {
         Ice.log('Ice.view.bloque.CoberturasController.custom');
-        
-        
-        try {
-        	
-        	var me = this,
-            view = me.getView(),
-            paso = 'Configurando comportamiento de bloque lista de situaciones';
+        var me = this,
+        view = me.getView(),
+        paso = 'Configurando comportamiento de bloque lista de situaciones';
+        try {        	
         	
         } catch (e) {
             Ice.generaExcepcion(e, paso);

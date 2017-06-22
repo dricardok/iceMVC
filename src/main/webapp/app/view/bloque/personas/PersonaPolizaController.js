@@ -25,7 +25,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
     },
     
     custom: function () {
-        Ice.log('Ice.view.bloque.personas.PersonasPolizaController.custom');
+        Ice.log('Ice.view.bloque.personas.PersonasPolizaController.custom',view);
         var me = this,
             view = me.getView(),
             paso = 'Configurando comportamiento de lista de personas';
@@ -92,6 +92,10 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
         this.guardar(btn);
     },
     
+    onNuevaPersona: function(panel){
+      this.nuevaPersona(panel);
+    },
+    
     guardar: function(btn){
         Ice.log('Ice.view.bloque.personas.PersonasPolizaController.agregar btn ',btn);
         var me = this,
@@ -103,12 +107,42 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
             if(refs.form.isValid()){
                 var selected = refs.gridDomicilios.selModel.getSelected();
                 if(selected.getCount() > 0){
-                    Ice.log('situacion de vista guardar ', view.getCdunieco(), ' ', view.getCdramo(), ' ', view.getEstado(), ' ', view.getNmpoliza(), ' ', view.getNmsituac(), ' ', view.getNmsuplem());
-                    Ice.log('form ',refs.form.getValues());
-                    Ice.log('domicilio ',selected.getAt(0).data);
-                    Ice.log('guardado');
-                    Ice.log('view', view.up('panel'));
-                    view.up('panel').refs.personapoliza.fireEvent('datosPersonaGuardada', me);
+//                    Ice.log('situacion de vista guardar ', view.getCdunieco(), ' ', view.getCdramo(), ' ', view.getEstado(), ' ', view.getNmpoliza(), ' ', view.getNmsituac(), ' ', view.getNmsuplem());
+//                    Ice.log('form ',refs.form.getValues());
+//                    Ice.log('domicilio ',selected.getAt(0).data);
+//                    Ice.log('guardado');
+//                    Ice.log('view', view.up('panel'));
+//                    Ice.log('selected.getAt(0)',selected.getAt(0).data);
+//                    Ice.log('params guardar',view.getCdunieco(),view.getCdramo(),view.getEstado(),view.getNmpoliza(),view.getNmsuplem(),view.getNmsituac(),refs.cdrol.value,refs.form['otvalor'],view.getNmsuplem(),selected.getAt(0).data.nmordom);
+                    Ice.request({
+                        mascara: 'Agregando situacion de riesgo',
+                        url: Ice.url.bloque.personas.movimientoPolizaPersona,
+                        params: {
+                            'params.cdunieco' : view.getCdunieco(),
+                            'params.cdramo': view.getCdramo(),
+                            'params.estado': view.getEstado(),
+                            'params.nmpoliza': view.getNmpoliza(),
+                            'params.nmsuplem': view.getNmsuplem(),
+                            'params.nmsituac': view.getNmsituac(),
+                            'params.cdrol': refs.cdrol.value,
+                            'params.cdperson': selected.getAt(0).data.cdperson,
+                            'params.nmsuplem': view.getNmsuplem(),
+                            'params.status': 'V',
+                            'params.nmorddom':  selected.getAt(0).data.nmorddom,
+                            'params.swfallec': 'N',
+                            'params.accion': 'I'
+                        },
+                        success: function (json) {
+                            var paso2 = 'LLenando store';
+                            try {
+                                Ice.log("json ",json);
+                                Ice.mensajeCorrecto('Guardado con exito');
+                                view.up('panel').refs.personapoliza.fireEvent('datosPersonaGuardada', me);
+                            } catch (e) {
+                                Ice.manejaExcepcion(e, paso2);
+                            }
+                        }
+                    });
                 } else {
                     Ice.mensajeWarning('Seleccione un domicilio');
                 }
@@ -123,5 +157,49 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
             Ice.generaExcepcion(e, paso);
         }
         Ice.log('Ice.view.bloque.personas.PersonasPolizaController.agregar');
+    },
+    
+    nuevaPersona: function(panel){
+        Ice.log('Ice.view.bloque.personas.PersonasPolizaController.nuevaPersona',panel);
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            paso = 'Agregando nueva persona';
+        try{
+            Ice.log('form',refs.form.items['dsatribu']);
+            if(refs.cdrol.value){
+                var selected = refs.gridDomicilios.selModel.getSelected();
+                var persona = Ext.create('Ice.view.bloque.personas.Persona',{
+                    reference: 'persona',
+                    id: 'card-2',
+                    cdramo: view.getCdramo(),
+                    cdrol: refs.cdrol.value,
+                    listeners: {
+                        'personaGuardada': function(personaView, cdperson){
+                            view.setCdperson(cdperson);
+                            if(Ext.manifest.toolkit === 'classic'){
+                                me.navigate(panel, "prev");
+                            } else {
+                                Ice.query('#mainView').getReferences().mainCard.pop();
+                            }
+                            view.up('panel').remove(refs.persona);
+                            Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.cerrarPersonaPoliza');
+                        }
+                    }
+                });
+                
+                if(Ext.manifest.toolkit === 'classic'){
+                    panel.getController().navigate(panel, "next", persona);                              
+                } else {
+                    Ice.query('#mainView').getReferences().mainCard.push(persona);
+                }
+            } else {
+                Ice.mensajeWarning('Seleccione un rol');
+            }
+            
+        } catch (e){
+            Ice.generaExcepcion(e, paso);
+        }
+        Ice.log('Ice.view.bloque.personas.PersonasPolizaController.nuevaPersona');
     }
 });

@@ -1,7 +1,8 @@
-Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
-	
+Ext.define('Ice.view.bloque.personas.PersonaPoliza', {	
 		extend  :       'Ext.panel.Panel',
 		xtype	:		'personapoliza',
+		controller : 'personapoliza',
+
 		config	:		{
 		    cdunieco: null,
             cdramo: null,
@@ -17,7 +18,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
             cdtipsit: null,
             botones: []
 		},
-		controller : 'personapoliza',
+		
 		layout	   : 'responsivecolumn',
 		bodyPadding: '10px 0px 0px 10px',
 	    defaults: {
@@ -60,10 +61,6 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                     pantalla: 'BLOQUE_PERSONAS',
                     seccion: 'FORMULARIO',
                     modulo: me.modulo || '',
-                    estatus: (me.flujo && me.flujo.estatus) || '',
-                    cdramo: me.cdramo || '',
-                    cdtipsit: me.cdtipsit ||'',
-                    auxKey: me.auxkey || '',
                     items: true
                 });
                 Ice.log('Ice.view.bloque.personas.ListaPersonas.initComponent comps:', comps);
@@ -100,22 +97,15 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                                    xtype: 'button',
                                    reference: 'btnGuardar',
                                    text: 'Guardar',
-                                   handler: 'onGuardar',/*function (me){
-                                       Ice.log('Ice.view.bloque.personas.ListaPersonas.initComponent me',me.up('panel'));
-                                       me.up('panel').close();
-                                   }*/
-                               //'onGuardarBloque'
+                                   handler: 'onGuardar'
                                },{
                                    xtype: 'button',
                                    text: 'Nuevo',
-                                   handler: function (me){
-                                       var paso = '';
-                                       try{
-                                           paso = 'Antes de ocultar formulario de situacion';
-                                           me.up('form').close();
-                                       } catch (e){
-                                           Ice.generaExcepcion(e, paso);
-                                       }
+                                   scope: me,
+                                   handler: function(btn){
+                                       Ice.log('me.up',me.up('panel'));
+                                       Ice.log('me.up.up',me.up('panel').up('panel'));
+                                       this.getController().nuevaPersona(me.up('panel'));
                                    }
                                }
                            ],

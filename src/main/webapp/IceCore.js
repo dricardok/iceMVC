@@ -84,6 +84,7 @@ var Ice = Object.assign(Ice || {}, {
                 cargarPersona:              'emision/obtenerPersonaPoliza.action',
                 obtenerDomicilios:          'emision/obtenerDomicilios.action',
                 movimientoPolizaPersona:    'emision/movimientoPolizaPersona.action',
+                obtenerPersonaCriterio:     'emision/obtenerPersonaCriterio.action',
                 guardarPersona:				'registroPersona/guardarPersona.action',
             	movimientoDomicilio:		'registroPersona/movimientoDomicilio.action',
             	obtenerPersona:				'registroPersona/obtienePersona.action',
