@@ -1,4 +1,4 @@
-package mx.com.segurossura.authentication;
+package mx.com.segurossura.authentication.model;
 
 import mx.com.royalsun.services.interfaces.ServiceMapBase;
 

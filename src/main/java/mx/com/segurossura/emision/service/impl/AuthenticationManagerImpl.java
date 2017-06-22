@@ -15,11 +15,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
-import com.biosnettcs.portal.model.ParentNode;
 import com.biosnettcs.portal.model.UsuarioVO;
 
 
 import mx.com.segurossura.authentication.DelegSignOn;
+import mx.com.segurossura.authentication.model.ParentNode;
 import mx.com.segurossura.emision.dao.UsuarioDAO;
 import mx.com.segurossura.emision.service.AuthenticationManager;
 

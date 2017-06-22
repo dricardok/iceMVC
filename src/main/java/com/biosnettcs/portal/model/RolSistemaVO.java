@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author Ricardo
  *
  */
-public class RolVO implements Serializable {
+public class RolSistemaVO implements Serializable {
 
     private static final long serialVersionUID = 5769939690034163728L;
 

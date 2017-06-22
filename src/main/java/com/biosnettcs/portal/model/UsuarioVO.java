@@ -45,9 +45,9 @@ public class UsuarioVO implements Serializable {
     
     private String materno;
     
-    private List<RolVO> roles;
+    private List<RolSistemaVO> roles;
     
-    private RolVO rolActivo;
+    private RolSistemaVO rolActivo;
     
     private List<MenuPrincipalVO> menus;
     
@@ -126,19 +126,19 @@ public class UsuarioVO implements Serializable {
         this.materno = materno;
     }
 
-    public List<RolVO> getRoles() {
+    public List<RolSistemaVO> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<RolVO> roles) {
+    public void setRoles(List<RolSistemaVO> roles) {
         this.roles = roles;
     }
 
-    public RolVO getRolActivo() {
+    public RolSistemaVO getRolActivo() {
         return rolActivo;
     }
 
-    public void setRolActivo(RolVO rolActivo) {
+    public void setRolActivo(RolSistemaVO rolActivo) {
         this.rolActivo = rolActivo;
     }
 
