@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -18,7 +19,8 @@ import org.springframework.stereotype.Repository;
 
 import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
-import com.biosnettcs.portal.model.RolVO;
+import com.biosnettcs.core.dao.mapper.GenericMapper;
+import com.biosnettcs.portal.model.RolSistemaVO;
 import com.biosnettcs.portal.model.UsuarioVO;
 
 import mx.com.segurossura.emision.dao.UsuarioDAO;
@@ -65,20 +67,37 @@ public class UsuarioDAOImpl extends HelperJdbcDao implements UsuarioDAO {
 					usuario.setRoles(new ArrayList());
 					
 				}
-				RolVO rol=new RolVO();
+				RolSistemaVO rol=new RolSistemaVO();
 				
 				rol.setCdsisrol(rs.getString("CDSISROL"));
 				rol.setDssisrol(rs.getString("DSSISROL"));
 				usuario.getRoles().add(rol);
 				rowNum++;
-			}  
-			
-			
+			}
 			return usuario;  
 		}
-		
     }
     
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Map<String, String>> obtenerRolesSistema() throws Exception {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> resultado = ejecutaSP(new ObtenerRolesSistemaSP(getDataSource()), params);
+        return (List<Map<String, String>>) resultado.get("PV_REGISTRO_O");
+    }
+    
+    protected class ObtenerRolesSistemaSP extends StoredProcedure {
+
+        protected ObtenerRolesSistemaSP(DataSource dataSource) {
+            super(dataSource, "P_GET_TSISROL");
+            String[] cols = new String[]{"CDSISROL", "DSSISROL"};
+            declareParameter(new SqlOutParameter("PV_REGISTRO_O", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("PV_MSG_ID_O", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("PV_TITLE_O", Types.VARCHAR));
+            compile();
+        }
+    }    
 
 	
 }

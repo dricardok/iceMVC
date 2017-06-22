@@ -8,6 +8,7 @@ import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
 
 import mx.com.royalsun.services.interfaces.ServiceMapBase;
 import mx.com.royalsun.services.interfaces.authentication.ViewfinderItemVO;
+import mx.com.segurossura.authentication.model.BeanSignOn;
 
 public class DelegSignOn {
 
