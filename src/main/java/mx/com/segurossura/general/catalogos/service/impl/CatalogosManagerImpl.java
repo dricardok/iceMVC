@@ -190,6 +190,17 @@ public class CatalogosManagerImpl implements CatalogosManager {
             		   }
             	   }
             	   break;
+            	   
+               case TMANTENI:
+            	   paso = "Recuperando catalogo de TMANTENI";
+            	   lista = new ArrayList<>();
+            	   List<Map<String, String>> tmanteni = catalogosDAO.obtenerCatalogoTablaManteni(params.get("cdtabla"));
+            	   if(tmanteni != null){
+            		   for (Map<String, String> registro: tmanteni) {
+            			   lista.add(new BaseVO(registro.get("codigo"), registro.get("descripl")));
+            		   }
+            	   }
+            	   break;
                    
                 default:
                     throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));

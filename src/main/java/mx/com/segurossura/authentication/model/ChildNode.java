@@ -1,4 +1,4 @@
-package com.biosnettcs.portal.model;
+package mx.com.segurossura.authentication.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Controller;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
-import com.biosnettcs.portal.model.RolVO;
+import com.biosnettcs.portal.model.RolSistemaVO;
 import com.biosnettcs.portal.model.UsuarioVO;
 
 import mx.com.segurossura.emision.service.AuthenticationManager;
@@ -39,7 +39,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	private Map<String,String> params;
 	private boolean            success;
 	private String             message;
-	private List<RolVO>		   roles;
+	private List<RolSistemaVO>		   roles;
 	private UsuarioVO		   user;
 	
 	@Autowired
@@ -171,10 +171,10 @@ public class AuthenticationAction extends PrincipalCoreAction {
 			// Java 8
 			//RolVO rol= usuario.getRoles().stream().filter((r)->r.getClave().cdsisrol.equals(r.getClave()).findFirst().get();
 			
-			RolVO rol=(RolVO) CollectionUtils.find(usuario.getRoles(), new Predicate() {
+			RolSistemaVO rol=(RolSistemaVO) CollectionUtils.find(usuario.getRoles(), new Predicate() {
 				@Override
 				public boolean evaluate(Object object) {
-					RolVO r=(RolVO) object;
+					RolSistemaVO r=(RolSistemaVO) object;
 					return cdsisrol.equals(r.getCdsisrol());
 				}
 			});
@@ -305,10 +305,10 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	public void setUser(UsuarioVO user) {
 		this.user = user;
 	}
-	public List<RolVO> getRoles() {
+	public List<RolSistemaVO> getRoles() {
 		return roles;
 	}
-	public void setRoles(List<RolVO> roles) {
+	public void setRoles(List<RolSistemaVO> roles) {
 		this.roles = roles;
 	}
 	public Map<String, String> getParams() {
