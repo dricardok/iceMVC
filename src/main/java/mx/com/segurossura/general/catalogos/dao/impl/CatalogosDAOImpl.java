@@ -368,4 +368,32 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
             compile();
         }
     }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Map<String, String>> obtenerCuadrosComision (String cdramo) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdramo_i", cdramo);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerCuadrosComisionSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerCuadrosComisionSP extends StoredProcedure {
+        protected ObtenerCuadrosComisionSP (DataSource dataSource) {
+            super(dataSource,"PKG_LOV_ALEA.p_lov_cuadxramo");
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            String[] cols = new String[]{
+                    "nmcuadro", "descripl"
+                    };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
+            compile();
+        }
+    } 
+    
 }
