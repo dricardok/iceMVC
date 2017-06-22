@@ -25,7 +25,7 @@ Ext.define('Ice.view.main.MainContainerWrap', {
         // of the viewport minus the top toolbar
 
         var me = this,
-            height = Ext.Element.getViewportHeight() - 103,  // offset by topmost toolbar height
+            height = Ext.Element.getViewportHeight() - (102 + 42),  // offset by (topmost toolbar height + toolbar delia)
             // We use itemId/getComponent instead of "reference" because the initial
             // layout occurs too early for the reference to be resolved
             navTree = me.getComponent('navigationTreeList');

@@ -52,7 +52,7 @@ public class ValoresMinimosUtils {
             valoresMinimos.put("swtarifi", "A");
             valoresMinimos.put("feemisio", new Date());
             valoresMinimos.put("cdperpag", "12");
-            valoresMinimos.put("nmcuadro", "X"); // es por prod?
+            valoresMinimos.put("nmcuadro", "x"); // es por prod?
             valoresMinimos.put("porredau", "0");
             valoresMinimos.put("swconsol", "S");
             valoresMinimos.put("cdtipren", "12");
