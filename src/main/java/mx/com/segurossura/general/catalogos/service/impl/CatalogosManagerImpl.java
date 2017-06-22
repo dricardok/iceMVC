@@ -178,7 +178,30 @@ public class CatalogosManagerImpl implements CatalogosManager {
                             lista.add(new BaseVO(registroTmanteni.get("cdcoloni"), registroTmanteni.get("dscoloni")));
                         }
                     }
-                   break;    
+                   break;
+                   
+               case CUACOM_RAMO:
+            	   paso = "Recuperando catalogo de cuadros comision";
+            	   lista = new ArrayList<>();
+            	   List<Map<String, String>> listaCuacom = catalogosDAO.obtenerCuadrosComision(params.get("cdramo"));
+            	   if(listaCuacom != null){
+            		   for (Map<String, String> registroTmanteni: listaCuacom) {
+            			   lista.add(new BaseVO(registroTmanteni.get("nmcuadro"), registroTmanteni.get("descripl")));
+            		   }
+            	   }
+            	   break;
+            	   
+               case TMANTENI:
+            	   paso = "Recuperando catalogo de TMANTENI";
+            	   lista = new ArrayList<>();
+            	   List<Map<String, String>> tmanteni = catalogosDAO.obtenerCatalogoTablaManteni(params.get("cdtabla"));
+            	   if(tmanteni != null){
+            		   for (Map<String, String> registro: tmanteni) {
+            			   lista.add(new BaseVO(registro.get("codigo"), registro.get("descripl")));
+            		   }
+            	   }
+            	   break;
+                   
                 default:
                     throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));
                 }

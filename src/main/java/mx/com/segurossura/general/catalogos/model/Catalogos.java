@@ -12,7 +12,9 @@ public enum Catalogos {
     MUNICIPIO(""),
     PROVINCIA(""),
     TATRIPER(""),
-    COLONIA("");
+    COLONIA(""),
+    CUACOM_RAMO(""),
+    TMANTENI("");
 
     
     private String cdtabla;

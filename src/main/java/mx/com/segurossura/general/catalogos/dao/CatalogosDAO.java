@@ -102,5 +102,16 @@ public interface CatalogosDAO {
 
 	public List<Map<String, String>> obtenerCatalogoTatriper(String cdramo, String cdrol, String cdatribu, String idPadre1,
 			String idPadre2, String idPadre3, String idPadre4, String idPadre5) throws Exception;
+	
+	/**
+	 * Obtiene el catalogo de cuadros de comision por ramo
+	 * 
+	 * @param cdramo Codigo de ramo
+	 * @return Lista de elementos del catalogo
+	 * @throws Exception
+	 */
+    public List<Map<String, String>> obtenerCuadrosComision (String cdramo) throws Exception;
+    
+    public List<Map<String, String>> obtenerCatalogoTablaManteni (String cdtabla) throws Exception;
     
 }
