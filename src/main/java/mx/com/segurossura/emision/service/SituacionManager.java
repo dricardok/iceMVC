@@ -16,11 +16,9 @@ public interface SituacionManager {
     
     void valoresDefectoCoberturas (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem) throws Exception;
     
-	void movimientoMpolisit(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String nmsituac, String nmsuplem_Sesion, String nmsuplem_Bean, String status,
-			String cdtipsit, String swreduci, String cdagrupa, String cdestado, String fefecsit,
-			String fecharef, String indparbe, String feinipbs, String porparbe, String intfinan,
-			String cdmotanu, String feinisus, String fefinsus, String accion) throws Exception;
+	public void movimientoMpolisit(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsituac, String nmsuplemEnd, String nmsuplem, String status, Map<String, String> datos,
+			String accion) throws Exception;
 
 	void movimientoTvalosit(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsituac, String cdtipsit, String status, String nmsuplem, Map<String,String> situacion,
