@@ -51,8 +51,8 @@ public class AgrupadoresManagerImpl implements AgrupadoresManager {
 	}
 	
 	@Override
-	public List<Map<String, String>> obtenerMpoligar(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String cdagrupa, String nmsuplem) throws Exception {
+    public List<Map<String, String>> obtenerMpoligar(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsuplem, String cdagrupa) throws Exception {
 		
 		logger.debug(Utils.join(
 				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -62,17 +62,16 @@ public class AgrupadoresManagerImpl implements AgrupadoresManager {
         List<Map<String, String>> datos=null;
 		try {
 			paso="Consultando datos";
-			datos = agrupadoresDAO.obtenerMpoliagr(cdunieco, cdramo, estado, nmpoliza, cdagrupa, nmsuplem);
+			datos = agrupadoresDAO.obtenerMpoliagr(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdagrupa);
 			
-		}catch(Exception ex){
+        } catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}
 		
 		logger.debug(Utils.join(
-				 "\n@@@@@@ obtenerPoliagr"
+				 "\n@@@@@@ obtenerMpoligar"
 				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				));
-		
 		return datos;
 	}
 	

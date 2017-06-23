@@ -22,8 +22,6 @@ import com.biosnettcs.core.dao.mapper.GenericMapper;
 import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.emision.dao.AgrupadoresDAO;
-import mx.com.segurossura.emision.dao.impl.SituacionDAOImpl.MovimientoMpolisitSP;
-import mx.com.segurossura.emision.dao.impl.SituacionDAOImpl.ObtieneMpolisitSP;
 import mx.com.segurossura.emision.service.impl.AgrupadoresManagerImpl;
 
 @Repository
@@ -68,16 +66,16 @@ public class AgrupadoresDAOImpl extends HelperJdbcDao implements AgrupadoresDAO 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Map<String, String>> obtenerMpoliagr(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String cdagrupa, String nmsuplem) throws Exception {
+    public List<Map<String, String>> obtenerMpoliagr(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsuplem, String cdagrupa) throws Exception {
 		
 		Map<String, Object> params = new LinkedHashMap<String, Object>();       
 	    params.put("pv_cdunieco_i", cdunieco);
-	    params.put("pv_cdramo_i", cdramo);
-	    params.put("pv_estado_i", estado);
+	    params.put("pv_cdramo_i",   cdramo);
+	    params.put("pv_estado_i",   estado);
 	    params.put("pv_nmpoliza_i", nmpoliza);
-	    params.put("pv_cdagrupa_i", cdagrupa);
 	    params.put("pv_nmsuplem_i", nmsuplem);
+	    params.put("pv_cdagrupa_i", cdagrupa);
 	    logger.debug("-->"+params);
 	    Map<String, Object> resultado = ejecutaSP(new ObtieneMpoliagrSP(getDataSource()), params);
         List<Map<String, String>> listaDatos = (List<Map<String, String>>) resultado.get("pv_registro_o");
@@ -95,7 +93,7 @@ public class AgrupadoresDAOImpl extends HelperJdbcDao implements AgrupadoresDAO 
             declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdagrupa_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
             String[] cols = new String[] {
             		"cdunieco",
