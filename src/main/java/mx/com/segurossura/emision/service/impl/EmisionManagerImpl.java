@@ -328,4 +328,30 @@ public class EmisionManagerImpl implements EmisionManager{
         return emisionDAO.obtenerDatosTarificacion(cdunieco, cdramo, estado, nmpoliza);
     }
 
+
+	@Override
+	public Map<String, Object> distribuirAgrupadores(String cdunieco, String cdramo, String estado,
+			String nmpoliza, String nmsuplem) throws Exception {		
+		 
+		String paso = null;
+	    Map<String, Object> res = null;
+	    Map<String, Object> resultado = null;
+	    try {
+	         paso = "Distribuyendo agrupadores";
+	         
+	         try{
+	        	 
+	        	 resultado = emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, nmsuplem); 
+	        	 
+	         }catch(Exception ex){
+	        	 logger.error("Error al llamar funcion de distribucionAgrupadores");
+	         }
+	         
+	         
+	     } catch (Exception ex) {
+	         Utils.generaExcepcion(ex, paso);
+	     }
+	   return res;
+	}
+
 }
