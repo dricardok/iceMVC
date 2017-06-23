@@ -62,7 +62,9 @@ public class ValoresMinimosUtils {
             valoresMinimos.put("cdestado", "0");
             valoresMinimos.put("fefecsit", Utils.format(new Date()));
         } else if (bloque.equals(Bloque.ATRIBUTOS_SITUACIONES)) { // TVALOSIT
-            valoresMinimos.put("cdtipsit", "X"); // es por prod?
+            valoresMinimos.put("cdtipsit", "x"); // es por prod?
+        } else if (bloque.equals(Bloque.AGRUPADOR_DE_SITUACIONES)) { // TVALOSIT
+            valoresMinimos.put("cdperson", "0");
         } else {
             throw new ApplicationException("No se han implementado los valores minimos para el bloque");
         }
