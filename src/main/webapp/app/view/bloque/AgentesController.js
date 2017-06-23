@@ -89,6 +89,9 @@ Ext.define('Ice.view.bloque.AgentesController', {
         	var datos={}
         	var form=view.down("#agregaragente");
         	Ice.query('[getName]',form).forEach(function(it){
+        		if(it.getName().indexOf("_")!=-1){
+        			it.setName(it.getName().split("_")[0].trim())
+        		}
         		datos[it.getName()]=it.getValue();
         	});
         	
@@ -120,11 +123,17 @@ Ext.define('Ice.view.bloque.AgentesController', {
         	this.validacion();
         	
         	var agentes = [],
-        		store = view.down('grid').getStore(),
+        		store = view.down('[xtype=gridice]').getStore(),
         		data = store.getData(),
         		items = data.items;
         	
         	for(var i=0; i<items.length; i++){
+        		
+        		var tipoag=items[i].data.cdtipoag;
+        		Ice.log("tipoag:",tipoag)
+        		if(tipoag  && tipoag.indexOf("-")!=-1){
+        			items[i].data.cdtipoag=tipoag.split("-")[0].trim()
+        		}
         		agentes.push(items[i].data);
         	}
         	

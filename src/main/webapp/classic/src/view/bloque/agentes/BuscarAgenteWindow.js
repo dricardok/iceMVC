@@ -45,7 +45,8 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 						},
 						{
 							text		:	'Nombre',
-							dataIndex	:	'dsnombre'
+							dataIndex	:	'dsnombre',
+							flex		:	2
 						},
 					],
 					store		:	{
@@ -80,6 +81,11 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 		{
 			text	:	"Elegir",
 			handler	:	"onElegir"
+		},{
+			text	:	"Cancelar",
+			handler	:	function(){
+				this.cerrar();
+			}
 		}
 	]
 });

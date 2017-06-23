@@ -136,10 +136,7 @@ Ext.define('Ice.view.bloque.Agentes', {
                      }
                 },	                
                 buttons: [
-                      {
-                          text: 'Eliminar',
-                          handler: ''
-                      },
+                      
                       {
                           text: 'Guardar',
                           iconCls: 'x-fa fa-save',
