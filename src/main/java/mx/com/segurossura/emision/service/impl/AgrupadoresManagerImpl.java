@@ -2,7 +2,6 @@ package mx.com.segurossura.emision.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -57,12 +56,12 @@ public class AgrupadoresManagerImpl implements AgrupadoresManager {
 	}
 	
 	@Override
-    public List<Map<String, String>> obtenerMpoligar(String cdunieco, String cdramo, String estado, String nmpoliza,
+    public List<Map<String, String>> obtenerMpoliagr(String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmsuplem, String cdagrupa) throws Exception {
 		
 		logger.debug(Utils.join(
 				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-				,"\n@@@@@@ obtenerMpoligar"				
+				,"\n@@@@@@ obtenerMpoliagr"				
 				));
         String paso="";
         List<Map<String, String>> datos=null;
@@ -75,7 +74,7 @@ public class AgrupadoresManagerImpl implements AgrupadoresManager {
 		}
 		
 		logger.debug(Utils.join(
-				 "\n@@@@@@ obtenerMpoligar"
+				 "\n@@@@@@ obtenerMpoliagr"
 				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				));
 		return datos;
@@ -93,21 +92,20 @@ public class AgrupadoresManagerImpl implements AgrupadoresManager {
 				if(StringUtils.isBlank(cdagrupa)) {
 					throw new ApplicationException("Falta cdagrupa");
 				}			
-				agrupadoresDAO.realizarMovimientoMpoliagr(cdunieco, cdramo, estado, nmpoliza, cdagrupa, nmsuplem_sesion, null, null, 
-														  null, null, null, null, null, null, null, null, null, 
-														  null, null, null, null, null, null, accion);
+				agrupadoresDAO.realizarMovimientoMpoliagr(cdunieco, cdramo, estado, nmpoliza, cdagrupa, nmsuplem_sesion, nmsuplem_bloque,
+				        null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, accion);
 			
 			} else if("I".equals(accion) || "U".equals(accion)) {
 				
 				// Recupera el registro actual
-				Map<String, String> agrupadores = null;
+				Map<String, String> agrupador = null;
 				try {
-					agrupadores = agrupadoresDAO.obtenerMpoliagr(cdunieco, cdramo, estado, nmpoliza, cdagrupa, nmsuplem_sesion).get(0);
-				}catch(Exception ex) {
+					agrupador = agrupadoresDAO.obtenerMpoliagr(cdunieco, cdramo, estado, nmpoliza, cdagrupa, nmsuplem_sesion).get(0);
+				} catch (Exception ex) {
 					logger.warn("No se encuentra agrupador");
 				}
-				if (agrupadores == null) {
-					agrupadores = ValoresMinimosUtils.obtenerValores(Bloque.AGRUPADOR_DE_SITUACIONES);
+				if (agrupador == null) {
+					agrupador = ValoresMinimosUtils.obtenerValores(Bloque.AGRUPADOR_DE_SITUACIONES);
 		        }
 				
 				// agregar los datos de pantalla al registro actual
@@ -124,7 +122,7 @@ public class AgrupadoresManagerImpl implements AgrupadoresManager {
 		        for (Entry<String, String> en : datos.entrySet()) {
 		            String key = en.getKey();
 		            if (!camposLlave.containsKey(key)) {
-		            	agrupadores.put(key, en.getValue());
+		            	agrupador.put(key, en.getValue());
 		            }
 		        }
 		        
@@ -133,22 +131,22 @@ public class AgrupadoresManagerImpl implements AgrupadoresManager {
 		        		// llvae
 		        		cdunieco, cdramo, estado, nmpoliza, cdagrupa, nmsuplem_sesion, nmsuplem_bloque,
 		        		// datos
-		        		agrupadores.get("cdperson"),
-		        		agrupadores.get("nmorddom"),
-		        		agrupadores.get("cdforpag"),
-		        		agrupadores.get("cdbanco"),
-		        		agrupadores.get("cdsucurs"),
-		        		agrupadores.get("cdcuenta"),
-		        		agrupadores.get("cdrazon"),
-		        		agrupadores.get("swregula"),		        		
-		        		agrupadores.get("cdperreg"),		        		
-		        		Utils.parse(agrupadores.get("feultreg")),
-		        		agrupadores.get("cdgestor"),
-		        		agrupadores.get("cdtipred"),
-		        		Utils.parse(agrupadores.get("fevencim")),
-		        		agrupadores.get("cdtarcre"),
-		        		agrupadores.get("nmcuota"),
-		        		agrupadores.get("nmporcen"),
+		        		agrupador.get("cdperson"),
+		        		agrupador.get("nmorddom"),
+		        		agrupador.get("cdforpag"),
+		        		agrupador.get("cdbanco"),
+		        		agrupador.get("cdsucurs"),
+		        		agrupador.get("cdcuenta"),
+		        		agrupador.get("cdrazon"),
+		        		agrupador.get("swregula"),		        		
+		        		agrupador.get("cdperreg"),		        		
+		        		Utils.parse(agrupador.get("feultreg")),
+		        		agrupador.get("cdgestor"),
+		        		agrupador.get("cdtipred"),
+		        		Utils.parse(agrupador.get("fevencim")),
+		        		agrupador.get("cdtarcre"),
+		        		agrupador.get("nmcuota"),
+		        		agrupador.get("nmporcen"),
 		        		
 		        		// accion
 		        		accion);		

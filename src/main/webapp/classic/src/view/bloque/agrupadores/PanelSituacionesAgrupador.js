@@ -107,7 +107,7 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
                             {
                                 xtype: 'comboice',
                                 reference: 'comboagrupador',
-                                fieldLabel: 'Agrupador',
+                                label: 'Agrupador',
                                 name: 'cdagrupa',
                                 disabled: true,
                                 allowBlank: false,

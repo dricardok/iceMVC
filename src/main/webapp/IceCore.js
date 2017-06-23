@@ -96,8 +96,11 @@ var Ice = Object.assign(Ice || {}, {
             	cargarAgentes: 		'emision/agentes/cargarAgentes.action',
             	guardar:			'emision/agentes/guardarAgentes.action',
             	buscar:				'emision/agentes/buscarAgentes.action'
+            },
+            agrupadores: {
+                obtenerAgrupador: 'emision/obtenerMpoliagr.action',
+                movimientoAgrupador: 'emision/realizarMovimientoMpoliagr.action'
             }
-            
          }
      },
 
@@ -1742,5 +1745,110 @@ var Ice = Object.assign(Ice || {}, {
             Ice.generaExcepcion(e, paso);
         }
         return params;
+    },
+    
+    cargarFormulario: function (form, datos) {
+        Ice.log('Ice.cargarFormulario form:', form, 'datos:', datos);
+        var paso = 'Estableciendo valores de formulario';
+        try {
+            if (!form) {
+                throw 'Falta el formulario';
+            }
+            Ice.suspendEvents(form);
+            form.reset();
+            if (datos) {
+                var refs = form.getReferences() || {};
+                for (var att in datos) {
+                    var ref = refs[att];
+                    if (ref) {
+                        if (ref.isXType('selectfield') && ref.getStore().getCount() === 0) { // aun no hay registros
+                            ref.getStore().padre = ref;
+                            ref.getStore().valorOnLoad = '' + datos[att];
+                            ref.getStore().on('load', function handleLoad (me) {
+                                me.removeListener('load', handleLoad);
+                                me.padre.setValue(me.valorOnLoad);
+                            });
+                        } else {
+                            ref.setValue(datos[att]);
+                        }
+                    }
+                }
+            }
+            Ice.resumeEvents(form);
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+    
+    
+    /**
+     * Este metodo valida los campos de un formulario, usando un Model.
+     * El formulario debe tener en sus propiedades (config) modelFields.
+     * El formulario debe tener en sus propiedades (config) modelValidators.
+     * @param form
+     * @return no regresa nada, pero arroja excepcion si no es valido
+     */
+    validaFormulario: function (form) {
+        Ice.log('Ice.validaFormulario form:', form);
+        var paso = 'Validando formulario';
+        try {
+            if (!form || !form.getModelFields || !form.getModelValidators) {
+                throw 'No se puede validar el formulario';
+            }
+            var refs = form.getReferences(),
+                valores = form.getValues() || {},
+                fields = form.getModelFields() || [],
+                validators = form.getModelValidators() || {},
+                modelName = Ext.id(),
+                validatorsAplican = {};
+            
+            Ice.log('Ice.validaFormulario refs:', refs, 'valores:', valores, 'fields:', fields, 'validators:', validators);
+            
+            // solo aplican validators para campos que no esten ocultos
+            for (var att in refs) {
+                ref = refs[att];
+                if (ref.isHidden() !== true && validators[ref.getName()]) {
+                    validatorsAplican[ref.getName()] = validators[ref.getName()];
+                }
+            }
+            
+            Ext.define(modelName, {
+                extend: 'Ext.data.Model',
+                fields: fields,
+                validators: validatorsAplican
+            });
+            var validaciones = Ext.create(modelName, valores).getValidation().getData(),
+                errores = {},
+                valido = true;
+            
+            Ice.log('Ice.validaFormulario validaciones:', validaciones);
+            
+            for (var att in validaciones) {
+                if (validaciones[att] !== true) {
+                    valido = false;
+                    errores[att] = validaciones[att];
+                }
+            }
+            
+            Ice.log('Ice.validaFormulario errores:', errores);
+            
+            if (valido !== true) {
+                if (Ext.manifest.toolkit === 'classic') {
+                    for (var name in errores) {
+                        refs[name].setActiveError(errores[name]);
+                    }
+                    throw 'Favor de validar los datos';
+                } else {
+                    var errorString = '';
+                    for (var name in errores) {
+                        var ref = refs[name];
+                        errorString = errorString + ref.getLabel() + ': ' + errores[name] + '<br/>';
+                    }
+                    throw errorString;
+                }
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
     }
 });

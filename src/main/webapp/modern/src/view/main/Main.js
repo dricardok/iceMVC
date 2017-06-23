@@ -63,7 +63,7 @@ Ext.define('Ice.view.main.Main', {
                     xtype: 'comboice',
                     label: 'Cambiar rol',
                     labelWidth: 90,
-                    style: 'padding: 30px 20px 20px 15px;',
+                    style: 'padding: 60px 20px 20px 15px;',
                     valueField: 'cdsisrol',
                     displayField: 'dssisrol',
                     autoSelect: false,
@@ -81,7 +81,7 @@ Ext.define('Ice.view.main.Main', {
                 }, {
                     xtype: 'button',
                     text: 'Salir',
-                    style: 'background-color:#0033a0 !important; widht: 100%;margin 0px auto !important;',
+                    style: '',
                     iconCls: 'x-fa fa-sign-out',
                     handler: 'onLogoutClic'
                 }
