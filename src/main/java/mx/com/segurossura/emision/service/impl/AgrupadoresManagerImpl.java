@@ -1,7 +1,6 @@
 package mx.com.segurossura.emision.service.impl;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,12 +50,12 @@ public class AgrupadoresManagerImpl implements AgrupadoresManager {
 	}
 	
 	@Override
-    public List<Map<String, String>> obtenerMpoligar(String cdunieco, String cdramo, String estado, String nmpoliza,
+    public List<Map<String, String>> obtenerMpoliagr(String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmsuplem, String cdagrupa) throws Exception {
 		
 		logger.debug(Utils.join(
 				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-				,"\n@@@@@@ obtenerMpoligar"				
+				,"\n@@@@@@ obtenerMpoliagr"				
 				));
         String paso="";
         List<Map<String, String>> datos=null;
@@ -69,7 +68,7 @@ public class AgrupadoresManagerImpl implements AgrupadoresManager {
 		}
 		
 		logger.debug(Utils.join(
-				 "\n@@@@@@ obtenerMpoligar"
+				 "\n@@@@@@ obtenerMpoliagr"
 				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				));
 		return datos;

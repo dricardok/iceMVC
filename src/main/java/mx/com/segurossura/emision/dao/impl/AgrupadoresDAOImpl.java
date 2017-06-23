@@ -1,6 +1,7 @@
 package mx.com.segurossura.emision.dao.impl;
 
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,6 @@ import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
-import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.emision.dao.AgrupadoresDAO;
 import mx.com.segurossura.emision.service.impl.AgrupadoresManagerImpl;
@@ -74,8 +74,8 @@ public class AgrupadoresDAOImpl extends HelperJdbcDao implements AgrupadoresDAO 
 	    Map<String, Object> resultado = ejecutaSP(new ObtieneMpoliagrSP(getDataSource()), params);
         List<Map<String, String>> listaDatos = (List<Map<String, String>>) resultado.get("pv_registro_o");
         logger.debug(Utils.log("\nlistaDatos", listaDatos));
-        if (listaDatos == null || listaDatos.size() == 0) {
-            throw new ApplicationException("Sin resultados");
+        if (listaDatos == null) {
+            listaDatos = new ArrayList<Map<String, String>>();
         }
         return listaDatos;
 	}

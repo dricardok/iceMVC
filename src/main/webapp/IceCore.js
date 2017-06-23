@@ -96,8 +96,10 @@ var Ice = Object.assign(Ice || {}, {
             	cargarAgentes: 		'emision/agentes/cargarAgentes.action',
             	guardar:			'emision/agentes/guardarAgentes.action',
             	buscar:				'emision/agentes/buscarAgentes.action'
+            },
+            agrupadores: {
+                obtenerAgrupador: 'emision/obtenerMpoliagr.action'
             }
-            
          }
      },
 
@@ -1742,5 +1744,38 @@ var Ice = Object.assign(Ice || {}, {
             Ice.generaExcepcion(e, paso);
         }
         return params;
+    },
+    
+    cargarFormulario: function (form, datos) {
+        Ice.log('Ice.cargarFormulario form:', form, 'datos:', datos);
+        var paso = 'Estableciendo valores de formulario';
+        try {
+            if (!form) {
+                throw 'Falta el formulario';
+            }
+            Ice.suspendEvents(form);
+            form.reset();
+            if (datos) {
+                var refs = form.getReferences() || {};
+                for (var att in datos) {
+                    var ref = refs[att];
+                    if (ref) {
+                        if (ref.isXType('selectfield') && ref.getStore().getCount() === 0) { // aun no hay registros
+                            ref.getStore().padre = ref;
+                            ref.getStore().valorOnLoad = '' + datos[att];
+                            ref.getStore().on('load', function handleLoad (me) {
+                                me.removeListener('load', handleLoad);
+                                me.padre.setValue(me.valorOnLoad);
+                            });
+                        } else {
+                            ref.setValue(datos[att]);
+                        }
+                    }
+                }
+            }
+            Ice.resumeEvents(form);
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
     }
 });

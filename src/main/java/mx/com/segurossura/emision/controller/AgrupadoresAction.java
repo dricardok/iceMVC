@@ -90,48 +90,36 @@ public class AgrupadoresAction extends PrincipalCoreAction {
 	
 	
     @Action(
-            value = "obtenerMpoligar",
+            value = "obtenerMpoliagr",
             results = {
                     @Result(name = "success", type = "json")
             }
     )
-    public String obtenerMpoligar() {
-        
-        logger.debug(StringUtils.join(
-                "\n################################",
-                "\n###### obtenerMpoligar ######",
-                "\n###### params ", params
-               ));
-        try{
+    public String obtenerMpoliagr() {
+        logger.debug(StringUtils.join("###### obtenerMpoliagr params ", params));
+        try {
             Utils.validate(params, "No se recibieron parametros");          
             String cdunieco = params.get("cdunieco");
             String cdramo   = params.get("cdramo");
             String estado   = params.get("estado");
             String nmpoliza = params.get("nmpoliza");
-            String nmsuplem = params.get("nmsuplem");
             String cdagrupa = params.get("cdagrupa");
+            String nmsuplem = params.get("nmsuplem");
             
-            Utils.validate(cdunieco, "No se recibio la oficina");
-            Utils.validate(cdramo, "No se recibio el ramo");
-            Utils.validate(estado, "No se recibo el estado de la póliza");
-            Utils.validate(nmpoliza, "No se recibio el número de póliza");
-            Utils.validate(nmsuplem, "No se recibio el suplemento de la póliza");
-            Utils.validate(cdagrupa, "No se recibio el agrupador de la póliza");
-            
-            list = agrupadoresManager.obtenerMpoligar(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdagrupa);
-            
+            Utils.validate(cdunieco, "Falta cdunieco",
+                           cdramo,   "Falta cdramo",
+                           estado,   "Falta estado",
+                           nmpoliza, "Falta nmpoliza",
+                           cdagrupa, "Falta cdagrupa",
+                           nmsuplem, "Falta nmsuplem");
+            List<Map<String, String>> lista = agrupadoresManager.obtenerMpoliagr(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdagrupa);
+            if (lista != null && lista.size() > 0) {
+                params = lista.get(0);
+            }
             success = true;
-            
         } catch (Exception ex) {
             message = Utils.manejaExcepcion(ex);
         }
-        
-        logger.debug(StringUtils.join(
-                "\n################################",
-                "\n mpoligar : ", list,
-                "\n###### obtenerMpoligar ######"
-               ));
-        
         return SUCCESS;
     }
     
