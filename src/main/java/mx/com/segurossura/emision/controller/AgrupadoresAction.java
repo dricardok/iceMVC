@@ -190,10 +190,11 @@ public class AgrupadoresAction extends PrincipalCoreAction {
             Utils.validate(nmporcen, "No se recibio nmporcen");
             Utils.validate(accion, "No se recibio accion");
             
-            agrupadoresManager.realizarMovimientoMpoliagr(cdunieco, cdramo, estado, nmpoliza,
-                    cdagrupa, nmsuplem_sesion, nmsuplem_bloque, cdperson, nmorddom, cdforpag, cdbanco,
-                    cdsucurs, cdcuenta, cdrazon, swregula, cdperreg, feultreg, cdgestor, cdtipred, fevencim, cdtarcre,
-                    nmcuota, nmporcen, accion);
+            agrupadoresManager.realizarMovimientoMpoliagr(cdunieco, cdramo, estado, nmpoliza, cdagrupa, nmsuplem_sesion, nmsuplem_bloque, 
+            		
+            		params, 
+                    
+            		accion);
             
             success = true;
             
