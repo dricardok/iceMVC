@@ -219,8 +219,10 @@ public class AgentesAction extends PrincipalCoreAction {
             Utils.validate(cdagente, "Se debe indicar codigo de agente");
             Utils.validate(cdramo, "Se debe indicar codigo de rol");
             Utils.validate(cdproceso, "Se debe indicar codigo de agente");
+           
             
-            params.put ("valido", agentesManager.validaAgente(cdagente, cdramo, cdproceso)?"S":"N");
+           // params.put ("valido", agentesManager.validaAgente(cdagente, cdramo, cdproceso)?"S":"N");
+            params.put ("valido","N");
             
             success = true;
             
