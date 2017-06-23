@@ -86,11 +86,47 @@ Ext.define('Ice.view.bloque.AgentesController', {
         	paso = 'Antes de agregar agente';
         
         try {
-        	var datos={}
-        	var form=view.down("#agregaragente");
+        	
+        	var codagente = refs['cdagente'].getValue(); 
+        	if(!codagente){
+        		throw 'Falta indicar el codigo de agente';
+        	}
+        	if(!refs['porredau_'].getValue()){
+        		throw 'Falta indicar el porcentaje de participacion';
+        	}
+        	if(!refs['cdtipoag'].getValue()){
+        		throw 'Falta indicar el tipo de agente';
+        	}
+        	
+     		var agentes = [];
+     		view.down("[xtype=gridice]").getStore().each(function(it){
+     			agentes.push({
+     				cdagente: it.get("cdagente")
+     			})
+     		});
+     		 
+     		agentes.forEach(function(it){
+     			if(codagente === it.cdagente){
+     				throw 'El agente ya se encuentra incluido';
+     			}
+     		});
+     		
+     		var datos={}
+        	var form = view.down("#agregaragente");
+        	     		
         	Ice.query('[getName]',form).forEach(function(it){
+        		 
+        		if(it.getName().indexOf("_")!=-1){
+	        			
+        			if (Ext.manifest.toolkit !== 'classic') {
+	        				it.setName(it.getName().split("_")[0].trim());
+		        	}else{
+		        		it.name = it.getName().split("_")[0].trim();
+		        	}
+	        	}
         		datos[it.getName()]=it.getValue();
         	});
+        	
         	
         	view.down("[xtype=gridice]").getStore().add(datos);
         	view.getAgentesAgregados().push(datos);
@@ -120,11 +156,17 @@ Ext.define('Ice.view.bloque.AgentesController', {
         	this.validacion();
         	
         	var agentes = [],
-        		store = view.down('grid').getStore(),
+        		store = view.down('[xtype=gridice]').getStore(),
         		data = store.getData(),
         		items = data.items;
         	
         	for(var i=0; i<items.length; i++){
+        		
+        		var tipoag=items[i].data.cdtipoag;
+        		Ice.log("tipoag:",tipoag)
+        		if(tipoag  && tipoag.indexOf("-")!=-1){
+        			items[i].data.cdtipoag=tipoag.split("-")[0].trim()
+        		}
         		agentes.push(items[i].data);
         	}
         	
@@ -212,7 +254,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
     	}
     },
     
-    buscarAgentes: function () {
+    /*buscarAgentes: function () {
         Ice.log('Ice.view.bloque.AgentesController.buscar');
         var me = this,          
     		view = me.getView(),
@@ -235,9 +277,9 @@ Ext.define('Ice.view.bloque.AgentesController', {
 	        		for (var att in action.list) {
 	        			refs['agente'] = agente;
 	        			//alert(att);
-	                    /*if (refs[att] && !refs[att].getValue()) {
+	                    if (refs[att] && !refs[att].getValue()) {
 	                        refs[att].setValue(action.params[att]);
-	                    }*/
+	                    }
 	                }            		
 	        		
 	        	},
@@ -248,7 +290,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
         }catch(e) {
         	Ice.manejaExcepcion(e, paso);
         }
-    },
+    },*/
     
     editarPorcentaje	:	function(grid,rowIndex,colIndex){
     	 var me = this,          
@@ -309,6 +351,8 @@ Ext.define('Ice.view.bloque.AgentesController', {
     	 }
     	 
     },
+    
+    
     eliminar : function(grid,rowIndex,colIndex){
     	
     var me   = this,          
@@ -336,28 +380,31 @@ Ext.define('Ice.view.bloque.AgentesController', {
     },
     
     validacion:function(){
-    	 var me   = this,          
+    	var me   = this,          
    		view = me.getView(),
    		refs = view.getReferences(),
    		paso = 'valida porcentaje';
+    	
      	try{
      		
-     		 var sesion=Number(view.down("#datpoliza").down("[getName][name=porredau]").getValue());
+     		var sesion=Number(view.down("#datpoliza").down("[getName][name=porredau]").getValue());
      		var agentes=[]
-     		 view.down("[xtype=gridice]").getStore().each(function(it){
-     			 agentes.push({
+     		
+     		view.down("[xtype=gridice]").getStore().each(function(it){
+     			agentes.push({
      				porredau: Number(it.get("porredau"))
-     			 })
-     		 });
+     			})
+     		});
      		 
-     		 var tot=sesion;
-     		 agentes.forEach(function(it){
-     			 tot+=it.porredau;
-     		 });
-     		 if(tot!=100){
-     			 paso='El porcentaje es más de 100.'
-     			 throw 'El porcentaje es diferente de 100%';
-     		 }
+     		var tot=sesion;
+     		agentes.forEach(function(it){
+     			tot+=it.porredau;
+     		});
+     		
+     		if(tot!=100){
+     			paso='El porcentaje es más de 100.';
+     			throw 'La suma de sesion de comision y porcentaje de participacion de agentes es diferente de 100%';
+     		}
      		 
      		 
      	}catch(e){

@@ -9,7 +9,7 @@
 
 @include button-ui(
     $ui: 'round',
-    $border-radius: 50%,
+    $border-radius: 20%,
     $border-radius-big: 50%
 );
 
@@ -212,12 +212,12 @@ a {
 
 .user-nav-container, .main-logo {
     position: relative;
-    transition: width 0.3s;
+transition: width 0.3s;
     width: $user-nav-width;
 }
 
-$logosura-image-width: 118px;
-$logosura-image-height: 40px;
+$logosura-image-width: 140px;
+$logosura-image-height: 48px;
 
 .sura-logo {
     position: relative;
@@ -253,6 +253,10 @@ $logosura-image-height: 40px;
     border: none;
     padding: 0 38px 0 0;
 }
+
+ /*Color Corporativo Sura*/
+$panel-navigation-background-color:$azulc-s !important; 
+
 
 .main-nav-floated {
     background-color: $panel-navigation-background-color;
@@ -302,8 +306,8 @@ $logo-image-height: 25px;
         line-height: $main-phone-toolbar-height;
 
         &:before {
-            top: ($main-phone-toolbar-height - $logo-image-height) / 2;
-            background-size: 85%;
+            vertical align:middle !important:
+            background-size: 75%;
         }
     }
     
@@ -312,8 +316,9 @@ $logo-image-height: 25px;
 
         &:before {
             left: 0px;
-            top: ($main-phone-toolbar-height - $logosura-image-height) / 2;
-            background-size: 85%;
+            vertical align:middle !important:
+           /* top: ($main-phone-toolbar-height - $logosura-image-height) / 1.8;*/
+            background-size: 75%;
         }
     }
 }
@@ -327,7 +332,7 @@ $logo-image-height: 25px;
 }
 
 .main-logo {
-    background-color: $base-color;
+    background-color: ;
     height: $main-toolbar-height;
     line-height: $main-toolbar-height;
 
@@ -391,22 +396,5 @@ $logo-image-height: 25px;
 */
 
 
-.bg_login:after{
-content:""!important;
 
-}
-
-.bg_login:before{
-content:"" !important;
-
-}
-
-
-.btn_az{
-background-color: $azulo-s !important;
-}
-
-
- $border-color:$azulo-s !important;
- 
  
