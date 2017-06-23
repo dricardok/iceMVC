@@ -13,41 +13,6 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
     title: 'Subagrupador',
     layout: 'default',
     
-    items: [
-        {
-            xtype: 'toolbar',
-            docked: 'bottom',
-            items: [
-                {
-                    text: 'Guardar',
-                    iconCls: 'x-fa fa-save',
-                    handler: 'onGuardarClic'
-                }, {
-                    text: 'Cancelar',
-                    iconCls: 'x-fa fa-remove',
-                    handler: 'onCancelarClic'
-                }
-            ],
-        }, {
-            xtype: 'textfield',
-            label: 'Agrupador',
-            name: 'cdagrupa',
-            reference: 'cdagrupa',
-            style: 'float: left; margin: 0px 20px 20px 0px;',
-            userCls: 'big-50 small-100'
-        }, {
-            xtype: 'textfield',
-            label: 'Agrupador',
-            style: 'float: left; margin: 0px 20px 20px 0px;',
-            userCls: 'big-50 small-100'
-        }, {
-            xtype: 'textfield',
-            label: 'Agrupador',
-            style: 'float: left; margin: 0px 20px 20px 0px;',
-            userCls: 'big-50 small-100'
-        }
-    ],
-    
     // configuracion no ext
     
     config: {
@@ -62,7 +27,14 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
         
         modulo: null,
         flujo: null,
-        auxkey: null
+        auxkey: null,
+        
+        modelFields: [],
+        modelValidators: []
+    },
+    
+    guardar: function () {
+        this.fireEvent('guardar', this);
     },
     
     constructor: function (config) {
@@ -88,9 +60,48 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
             config.nmsuplem    = config.nmsuplem || 0;
             config.status      = config.status || 'V';
             config.nmsuplemEnd = config.nmsuplemEnd || 0;
-            config.modulo      = config.modulo || 'COTIZACION';
+            config.modulo      = config.modulo || 'EMISION';
             config.flujo       = config.flujo || {},
             config.auxkey      = config.auxkey || '';
+            
+            var comps = Ice.generaComponentes({
+                pantalla: 'FORM_AGRUPADOR',
+                seccion: 'FORM',
+                modulo: config.modulo,
+                estatus: config.flujo.estatus || '',
+                cdramo: config.cdramo,
+                cdtipsit: config.cdtipsit ||'',
+                auxkey: config.auxkey || '',
+                
+                items: true,
+                fields: true,
+                validators: true
+            });
+            
+            config.items = (comps.FORM_AGRUPADOR.FORM.items || []).concat(config.items || []);
+            config.modelFields = comps.FORM_AGRUPADOR.FORM.fields || [];
+            config.modelValidators = comps.FORM_AGRUPADOR.FORM.validators || [];
+            
+            for (var i = 0; i < config.items.length; i++) {
+                config.items[i].style = 'float: left; margin: 0px 20px 20px 0px;';
+                config.items[i].userCls = 'big-50 small-100';
+            }
+            
+            config.items.push({
+                xtype: 'toolbar',
+                docked: 'bottom',
+                items: [
+                    {
+                        text: 'Guardar',
+                        iconCls: 'x-fa fa-save',
+                        handler: 'onGuardarClic'
+                    }, {
+                        text: 'Cancelar',
+                        iconCls: 'x-fa fa-remove',
+                        handler: 'onCancelarClic'
+                    }
+                ],
+            });
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
