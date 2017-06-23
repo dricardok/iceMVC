@@ -63,10 +63,8 @@ public interface AgrupadoresManager {
      * @throws Exception
      */
     void realizarMovimientoMpoliagr(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String pv_cdagrupa_i, String pv_nmsuplem_sesion_i, String pv_nmsuplem_bloque_i, String cdperson,
-			String nmorddom, String cdforpag, String cdbanco, String cdsucurs, String cdcuenta, String cdrazon,
-			String swregula, String cdperreg, String feultreg, String cdgestor, String cdtipred, String fevencim,
-			String cdtarcre, String nmcuota, String nmporcen, String accion) throws Exception;
+			   String cdagrupa, String nmsuplem_sesion, String nmsuplem_bloque,
+			   Map<String, String> datos, String accion) throws Exception;
     
     
 }
