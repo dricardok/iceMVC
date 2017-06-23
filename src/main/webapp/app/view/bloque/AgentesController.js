@@ -111,6 +111,23 @@ Ext.define('Ice.view.bloque.AgentesController', {
      			}
      		});
      		
+     		Ice.request({
+            	mascara: 'Validando agente',
+            	url: Ice.url.bloque.agentes.validarAgente,
+            	params: {
+            		'params.cdramo'		:		view.getCdramo(),
+            		'params.cdproceso'	:		'E',
+            		'params.cdagente'	:		codagente
+            	},
+            	success: function(action) {
+            		if(action.params['valido'] === 'N'){
+            			throw 'El agente no es valido';
+            		}
+            	},
+            	failure: function() {           		
+            	}
+            });
+     		
      		var datos={}
         	var form = view.down("#agregaragente");
         	     		

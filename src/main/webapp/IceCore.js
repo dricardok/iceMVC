@@ -95,7 +95,8 @@ var Ice = Object.assign(Ice || {}, {
             	cargar: 			'emision/agentes/cargar.action',
             	cargarAgentes: 		'emision/agentes/cargarAgentes.action',
             	guardar:			'emision/agentes/guardarAgentes.action',
-            	buscar:				'emision/agentes/buscarAgentes.action'
+            	buscar:				'emision/agentes/buscarAgentes.action',
+            	validarAgente: 		'emision/agentes/validarAgente.action'
             },
             agrupadores: {
                 obtenerAgrupador: 'emision/obtenerMpoliagr.action',
