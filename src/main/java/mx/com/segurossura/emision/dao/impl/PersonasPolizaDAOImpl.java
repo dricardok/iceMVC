@@ -1,6 +1,7 @@
 package mx.com.segurossura.emision.dao.impl;
 
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,6 +118,43 @@ public class PersonasPolizaDAOImpl extends HelperJdbcDao implements PersonasPoli
 	            declareParameter(new SqlOutParameter("pv_rowid_o"           , Types.VARCHAR));
 	            declareParameter(new SqlOutParameter("pv_msg_id_o"          , Types.NUMERIC));
 	            declareParameter(new SqlOutParameter("pv_title_o"           , Types.VARCHAR));
+	            compile();
+	        }
+	    }
+	    
+	    @Override
+	    public List<Map<String, String>> obtenerPersonasCriterio(String cdunieco, String cdramo, String estado, String nmpoliza, String cdatribu, String otvalor) throws Exception{
+	        Map<String, String> params = new LinkedHashMap<String, String>();
+	        params.put("pv_dsatribu_i", cdatribu);
+	        params.put("pv_otvalor_i", otvalor);
+	        params.put("pv_cdunieco_i", cdunieco);
+	        params.put("pv_cdramo_i", cdramo);
+	        params.put("pv_estado_i", estado);
+	        params.put("pv_nmpoliza_i", nmpoliza);
+	        Map<String, Object> procRes = ejecutaSP(new ObtenerPersonasCriterio(getDataSource()), params);
+	        @SuppressWarnings("unchecked")
+            List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+	        if (lista == null) {
+	            lista = new ArrayList<Map<String, String>>();
+	        }
+	        return lista;
+	    }
+	    
+	    protected class ObtenerPersonasCriterio extends StoredProcedure {
+	        protected ObtenerPersonasCriterio (DataSource dataSource) {
+	            super(dataSource,"PKG_DATA_ALEA.P_GET_PERSONAS_CRITERIO");
+	            declareParameter(new SqlParameter("pv_dsatribu_i", Types.VARCHAR));
+	            declareParameter(new SqlParameter("pv_otvalor_i", Types.VARCHAR));
+	            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+	            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+	            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+	            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+	            String[] cols = new String[]{
+	                    "cdperson", "dsnombre"
+	                    };
+	            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+	            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+	            declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
 	            compile();
 	        }
 	    }

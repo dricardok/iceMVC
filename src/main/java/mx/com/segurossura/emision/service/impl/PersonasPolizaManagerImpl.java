@@ -13,7 +13,6 @@ import com.biosnettcs.core.Utils;
 
 import mx.com.segurossura.emision.dao.PersonasPolizaDAO;
 import mx.com.segurossura.emision.service.PersonasPolizaManager;
-import mx.com.segurossura.general.catalogos.dao.CatalogosDAO;
 
 @Service
 public class PersonasPolizaManagerImpl implements PersonasPolizaManager {
@@ -22,9 +21,6 @@ public class PersonasPolizaManagerImpl implements PersonasPolizaManager {
 	
 	@Autowired
 	private PersonasPolizaDAO personasPolizaDAO;
-	
-	@Autowired
-	private CatalogosDAO catalogosDAO;
 
 	@Override
 	public List<Map<String, String>> obtieneMpoliper(String cdunieco, String cdramo, String estado, String nmpoliza, 
@@ -71,7 +67,7 @@ public class PersonasPolizaManagerImpl implements PersonasPolizaManager {
     }
 	
 	@Override
-	public List<Map<String, String>> obtenerPersonasCriterio(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String cdrol, String cdperson, String cdatribu, String otvalor) throws Exception{
+	public List<Map<String, String>> obtenerPersonasCriterio(String cdunieco, String cdramo, String estado, String nmpoliza, String cdatribu, String otvalor) throws Exception{
 	    logger.debug(Utils.join(
                 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
                ,"\n@@@@@@ obtenerPersonasCriterio"
@@ -79,7 +75,7 @@ public class PersonasPolizaManagerImpl implements PersonasPolizaManager {
 	    String paso = "";
 	    List<Map<String, String>> listaPersonas = new ArrayList<Map<String, String>>(0);
 	    try{
-	        listaPersonas = catalogosDAO.obtenerPersonas(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, cdrol, cdperson, cdatribu, otvalor);
+	        listaPersonas = personasPolizaDAO.obtenerPersonasCriterio(cdunieco, cdramo, estado, nmpoliza, cdatribu, otvalor);
 	    } catch(Exception ex) {
 	        Utils.generaExcepcion(ex, paso);
 	    }

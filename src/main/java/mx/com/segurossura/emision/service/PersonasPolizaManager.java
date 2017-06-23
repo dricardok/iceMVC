@@ -46,14 +46,10 @@ public interface PersonasPolizaManager {
 	 * @param cdramo
 	 * @param estado
 	 * @param nmpoliza
-	 * @param nmsituac
-	 * @param nmsuplem
-	 * @param cdrol
-	 * @param cdperson
 	 * @param cdatribu
 	 * @param otvalor
 	 * @return
 	 * @throws Exception
 	 */
-	List<Map<String, String>> obtenerPersonasCriterio(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String cdrol, String cdperson, String cdatribu, String otvalor) throws Exception;
+	List<Map<String, String>> obtenerPersonasCriterio(String cdunieco, String cdramo, String estado, String nmpoliza, String cdatribu, String otvalor) throws Exception;
 }

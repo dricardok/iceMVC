@@ -423,4 +423,28 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
         }
     }
     
+    @Override
+    public List<Map<String, String>> obtenerProductos() throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        Map<String, Object> procRes = ejecutaSP(new ObtenerProductos(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerProductos extends StoredProcedure {
+        protected ObtenerProductos (DataSource dataSource) {
+            super(dataSource,"PKG_LOV_ALEA.P_LOV_PRODUCTOS");
+            String[] cols = new String[]{
+                    "cdramo", "dsramo"
+                    };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
+            compile();
+        }
+    }
+    
 }

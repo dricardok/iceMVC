@@ -60,6 +60,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
 	            var comps = Ice.generaComponentes({
                     pantalla: 'BLOQUE_PERSONAS',
                     seccion: 'FORMULARIO',
+                    cdramo: me.cdramo,
                     modulo: me.modulo || '',
                     items: true
                 });

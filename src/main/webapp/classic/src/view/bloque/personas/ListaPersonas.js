@@ -8,9 +8,9 @@ Ext.define('Ice.view.bloque.personas.ListaPersonas', {
 	    controller: 'listapersonas',
 	    viewModel: 'listapersonas',
 	    scrollable: true,
-	    requires: [
-	        'Ext.ux.layout.ResponsiveColumn'
-	    ],
+//	    requires: [
+//	        'Ext.ux.layout.ResponsiveColumn'
+//	    ],
 	    
 	    // validacion de parametros de entrada
 	    constructor: function (config) {

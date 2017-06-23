@@ -261,7 +261,7 @@ public class PersonasPolizaAction extends PrincipalCoreAction{
     public String obtenerPersonaCriterio(){
         logger.debug(StringUtils.join(
                 "\n################################",
-                "\n###### movimientoPolizaPersona ######",
+                "\n###### obtenerPersonaCriterio ######",
                 "\n###### params ", params
                ));
         try{
@@ -270,13 +270,10 @@ public class PersonasPolizaAction extends PrincipalCoreAction{
             String cdramo = params.get("cdramo");
             String estado = params.get("estado");
             String nmpoliza = params.get("nmpoliza");
-            String nmsituac = params.get("nmsituac");
-            String nmsuplem = params.get("nmsuplem");
-            String cdrol = params.get("cdrol");
-            String cdperson = params.get("cdperson");
             String cdatribu = params.get("cdatribu");
             String otvalor = params.get("otvalor");
-            listas = personasPolizaManager.obtenerPersonasCriterio(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, cdrol, cdperson, cdatribu, otvalor);
+            Utils.validate(cdatribu, "No se recibio criterio de busqueda");
+            listas = personasPolizaManager.obtenerPersonasCriterio(cdunieco, cdramo, estado, nmpoliza, cdatribu, otvalor);
             success = true;
         } catch(Exception ex) {
             success = false;
@@ -284,7 +281,7 @@ public class PersonasPolizaAction extends PrincipalCoreAction{
         }
         logger.debug(StringUtils.join(
                 "\n################################",
-                "\n###### movimientoPolizaPersona ######"
+                "\n###### obtenerPersonaCriterio ######"
                ));
         return SUCCESS;
     }

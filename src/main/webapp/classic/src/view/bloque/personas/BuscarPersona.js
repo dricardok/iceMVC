@@ -4,14 +4,16 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
         controller: 'buscarpersona',
         
         config  :       {
+            cdunieco: null,
+            cdramo: null,
+            estado: null,
+            nmpoliza: null,
+            nmsituac: null,
+            nmsuplem: null,
+            cdrol: null,
             cdperson: null
         },
-        layout     : 'responsivecolumn',
         bodyPadding: '10px 0px 0px 10px',
-        defaults: {
-            margin: '0px 10px 10px 0px',
-            cls: 'big-50 small-100'
-        },
         constructor: function (config) {
             Ice.log('Ice.view.bloque.BuscarPersona.constructor config:', config);
             var me = this,
@@ -22,14 +24,15 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                     Ice.generaExcepcion(e, paso);
                 }
             Ice.log('Ice.view.bloque.BuscarPersona.constructor');
+            me.callParent(arguments);
         },
         initComponent: function () {
             Ice.log('Ice.view.bloque.personas.BuscarPersona.initComponent [this, args]:', this, arguments);
             var me = this,
-                paso = 'Construyendo busqueda persona';            
+                paso = 'Construyendo busqueda persona';
             try {
                 var comps = Ice.generaComponentes({
-                    pantalla: 'BLOQUE_PERSONAS',
+                    pantalla: 'BUSQUEDA_PERSONA',
                     seccion: 'FORMULARIO',
                     modulo: me.modulo || '',
                     estatus: (me.flujo && me.flujo.estatus) || '',
@@ -42,7 +45,8 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                 var compsGrid = Ice.generaComponentes({
                     pantalla: 'BUSQUEDA_PERSONA',
                     seccion: 'GRID',
-                    items: true
+                    columns: true,
+                    fields: true
                 });
                 Ice.log('Ice.view.bloque.personas.BuscarPersona.initComponent comps:', comps);
                 Ice.log('Ice.view.bloque.personas.BuscarPersona.initComponent compsGrid:', compsGrid);
@@ -55,10 +59,10 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                            xtype: 'form',
                            reference: 'form',
                            title: 'Buscar persona',
-                           items: comps.BLOQUE_PERSONAS.FORMULARIO.items,
+                           items: comps.BUSQUEDA_PERSONA.FORMULARIO.items,
                            modelo: modelName,
                            layout: 'responsivecolumn',
-                           width: '100%',
+//                           width: '100%',
                            bodyPadding: '10px 0px 0px 10px',
                            defaults: {
                                margin: '0px 10px 10px 0px',
@@ -69,10 +73,11 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                                    text: 'Buscar',
                                    handler: 'onBuscar'
                                }
-                           ]  
+                           ]
                        },{
                            xtype: 'gridpanel',
                            reference: 'gridPersonas',
+//                           hidden: true,
                            columns: compsGrid.BUSQUEDA_PERSONA.GRID.columns,
                            store: {
                                autoLoad: false,
@@ -80,18 +85,6 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                                proxy: {
                                    type        : 'ajax',
                                    url         : Ice.url.bloque.personas.obtenerPersonaCriterio,
-                                   extraParams : {
-                                       'params.cdunieco': me.getCdunieco(),
-                                       'params.cdramo': me.getCdramo(),
-                                       'params.estado': me.getEstado(),
-                                       'params.nmpoliza': me.getNmpoliza(),
-                                       'params.nmsituac': me.getNmsituac(),
-                                       'params.nmsuplem': me.getNmsuplem(),
-                                       'params.cdrol': me.getCdrol(),
-                                       'params.cdperson': me.getCdperson(),
-                                       'params.cdatribu': me.getCdatribu(),
-                                       'params.otvalor': me.getOtvalor()
-                                   },
                                    reader : {
                                        type : 'json',
                                        rootProperty : 'listas',
