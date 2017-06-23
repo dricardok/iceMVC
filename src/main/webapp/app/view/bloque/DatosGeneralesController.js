@@ -152,11 +152,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             
             var errores = me.obtenerErrores(),
                 viewValues = view.getValues(),
-                valores = {
-                    'params.b1_cdramo': view.getCdramo(),
-                    'params.b1_nmsuplem': view.getNmsuplem() || '0',
-                    'params.swcolind': view.getSwcolind()
-                };
+                valores = {};
             
             for (var i = 0; i < view.getCamposDisparanValoresDefectoFijos().length; i++) {
                 var name = view.getCamposDisparanValoresDefectoFijos()[i];
@@ -166,6 +162,13 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 }
                 valores['params.' + name] = viewValues[name];
             }
+            
+            valores['params.cdunieco'] = viewValues.cdunieco || view.getCdunieco();
+            valores['params.cdramo'] = view.getCdramo();
+            valores['params.estado'] = view.getEstado();
+            valores['params.nmpoliza'] = viewValues.nmpoliza || view.getNmpoliza();
+            valores['params.nmsuplem'] = view.getNmsuplem();
+            valores['params.status'] = view.getStatus();
             
             view.setProcesandoValoresDefecto(true);
             accedeProcesar = true;
@@ -184,26 +187,19 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                             throw 'No se cargaron datos';
                         }
                         
-                        if (!action.params.b1_estado) {
-                            throw 'No se gener\u00f3 el estado';
-                        }
-                        
-                        if (!action.params.b1_nmpoliza) {
+                        if (!action.params.nmpoliza) {
                             throw 'No se gener\u00f3 el n\u00famero cotizaci\u00f3n';
                         }
                         
-                        view.setCdunieco(view.getValues().b1_cdunieco);
-                        view.setEstado(action.params.b1_estado);
-                        view.setNmpoliza(action.params.b1_nmpoliza);
-                        view.setNmsuplem(view.getValues().b1_nmsuplem || '0');
+                        view.setCdunieco(viewValues.cdunieco);
+                        view.setNmpoliza(action.params.nmpoliza);
                         
-                        if (!view.getCdunieco() || !view.getCdramo() || !view.getEstado() || !view.getNmpoliza()
-                            || Ext.isEmpty(view.getNmsuplem())) {
+                        if (!view.getCdunieco() || !view.getNmpoliza()) {
                             throw 'No se gener\u00f3 la llave de p\u00f3liza';
                         }
                         
                         view.fireEvent('llaveGenerada', view, view.getCdunieco(), view.getCdramo(), view.getEstado(), view.getNmpoliza(),
-                            view.getNmsuplem());
+                            view.getNmsuplem(), view.getStatus());
                         
                         Ice.suspendEvents(view);
                         for (var att in action.params) {
@@ -251,8 +247,8 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 return;
             }
             
-            if (!view.getEstado()) {
-                Ice.logWarn('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoVariables view no tiene view.estado');
+            if (!view.getCdunieco()) {
+                Ice.logWarn('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoVariables view no tiene view.cdunieco');
                 return;
             }
             
@@ -266,10 +262,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 return;
             }
             
-            var errores = me.obtenerErrores(),
-                viewValues = view.getValues(),
-                valores = {};
-            
+            var errores = me.obtenerErrores();
             for (var i = 0; i < view.getCamposDisparanValoresDefectoVariables().length; i++) {
                 var name = view.getCamposDisparanValoresDefectoVariables()[i];
                 if (refs[name] && errores[name] !== true) {
@@ -278,18 +271,16 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 }
             }
             
-            for (var att in viewValues) {
-                valores['params.' + att] = viewValues[att];
-            }
-            valores['params.b1_cdramo'] = view.getCdramo();
-            valores['params.b1_estado'] = view.getEstado();
+            var valores = Ice.convertirAParams(view.getValues());
+            valores['params.cdunieco'] = view.getCdunieco();
+            valores['params.cdramo'] = view.getCdramo();
+            valores['params.estado'] = view.getEstado();
+            valores['params.nmpoliza'] = view.getNmpoliza();
+            valores['params.nmsuplem'] = view.getNmsuplem();
+            valores['params.status'] = view.getStatus();
             
             view.setProcesandoValoresDefecto(true);
             accedeProcesar = true;
-            
-            if (!valores['params.b1_nmpoliza']) {
-                valores['params.b1_nmpoliza'] = view.getNmpoliza();
-            }
             
             Ice.request({
                 mascara: 'Cargando valores por defecto',
@@ -384,7 +375,14 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                                 }
                             }
                         }
+                        if (refs.cdunieco) {
+                            refs.cdunieco.setValue(view.getCdunieco());
+                        }
+                        if (refs.nmpoliza) {
+                            refs.nmpoliza.setValue(view.getNmpoliza());
+                        }
                         Ice.resumeEvents(view);
+                        
                         
                         // no permitir modificar la llave
                         for (var i = 0; i < view.getCamposDisparanValoresDefectoFijos().length; i++) {
@@ -432,11 +430,19 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
         try {
             me.validarDatos();
             
+            var valores = Ice.convertirAParams(view.getValues());
+            valores['params.cdunieco'] = view.getValues().cdunieco || view.getCdunieco();
+            valores['params.cdramo']   = view.getCdramo();
+            valores['params.estado']   = view.getEstado();
+            valores['params.nmpoliza'] = view.getValues().nmpoliza || view.getNmpoliza();
+            valores['params.nmsuplem'] = view.getNmsuplem();
+            valores['params.status']   = view.getStatus();
+            
             paso = 'Guardando datos generales';
             Ice.request({
                 mascara: paso,
                 url: Ice.url.bloque.datosGenerales.guardar,
-                params: Ice.convertirAParams(view.getValues()),
+                params: valores,
                 success: function (action) {
                     var paso2 = 'Ejecutando acci\u00f3n posterior al guardado';
                     try {

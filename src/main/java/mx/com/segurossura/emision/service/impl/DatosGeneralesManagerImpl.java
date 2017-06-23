@@ -32,16 +32,12 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     
     @Override
     public Map<String, String> valoresDefectoFijos (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
-            String swcolind, String nmpolcoi) throws Exception {
+            String status, String swcolind, String nmpolcoi) throws Exception {
         Map<String, String> valores = new LinkedHashMap<String, String>();
         String paso = null;
         try {
             paso = "Calculando n\u00famero de p\u00f3liza";
-            estado = "W";
             nmpoliza = emisionDAO.generaNmpoliza(cdunieco, cdramo, estado, swcolind, nmpolcoi);
-            
-            valores.put("b1_estado", "W");
-            valores.put("b1_nmpoliza", nmpoliza);
             
             paso = "Ejecutando valores por defecto fijos de bloque de datos generales";
             Map<String, String> valoresDefecto = emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza,
@@ -50,13 +46,21 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     Bloque.DATOS_GENERALES.getCdbloque(),
                     null
                     );
-            for (Entry<String, String> en : valoresDefecto.entrySet()) {
-                valores.put(Utils.join("b1_", en.getKey()), en.getValue());
-            }
             
             Map<String, Object> mpolizas = ValoresMinimosUtils.obtenerValores(Bloque.DATOS_GENERALES, valoresDefecto);
+            for (Entry<String, String> en : valoresDefecto.entrySet()) {
+                String key = en.getKey();
+                if (key.substring(0, 1).equals("f")) {
+                    mpolizas.put(key, Utils.parse(en.getValue()));
+                } else {
+                    mpolizas.put(key, en.getValue());
+                }
+            }
             
-            mpolizas.put("nmcuadro", emisionDAO.obtenerCuadroComisionesDefault(cdramo));
+            // cuando viene una x de ValoresMinimosUtils
+            if ("x".equals(mpolizas.get("nmcuadro"))) {
+                mpolizas.put("nmcuadro", emisionDAO.obtenerCuadroComisionesDefault(cdramo));
+            }
             
             paso = "Insertando maestro de p\u00f3liza";
             emisionDAO.movimientoMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem, "V",
@@ -71,6 +75,22 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     (String) mpolizas.get("nmcuadro"), (String) mpolizas.get("porredau"), (String) mpolizas.get("swconsol"),
                     (String) mpolizas.get("nmpolcoi"), (String) mpolizas.get("adparben"), (String) mpolizas.get("nmcercoi"),
                     (String) mpolizas.get("cdtipren"), "I");
+            
+            paso = "Recuperando maestro de p\u00f3liza generado";
+            Map<String, String> mpolizasRecuperado = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0);
+            for (Entry <String, String> en : mpolizasRecuperado.entrySet()) {
+                String key = en.getKey();
+                if ("cdunieco".equals(key) ||
+                        "cdramo".equals(key) ||
+                        "estado".equals(key) ||
+                        "nmpoliza".equals(key) ||
+                        "nmsuplem".equals(key) ||
+                        "status".equals(key)) {
+                    valores.put(key, en.getValue());
+                } else {
+                    valores.put(Utils.join("b1_", key), en.getValue());
+                }
+            }
         } catch (Exception ex) {
             Utils.generaExcepcion(ex, paso);
         }
@@ -80,31 +100,37 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     @Override
     public Map<String, String> valoresDefectoVariables (String cdusuari, String cdsisrol,
             String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsuplembloque, String nmsuplemsesion, String status) throws Exception {
+            String nmsuplembloque, String nmsuplemsesion, String status, Map<String, String> datosMpolizasPantalla) throws Exception {
+        logger.debug(Utils.log("@@@@@@ valoresDefectoVariables datosMpolizasPantalla = ", datosMpolizasPantalla));
         Map<String, String> valores = new LinkedHashMap<String, String>();
         String paso = null;
         try {
-            paso = "Instanciando variables principales";
-            nmsuplembloque = Utils.NVL(nmsuplembloque, "0");
-            nmsuplemsesion = Utils.NVL(nmsuplemsesion, "0");
-            status = Utils.NVL(status, "V");
+            paso = "Recuperando maestro de p\u00f3liza";
+            Map<String, String> mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplembloque).get(0);
+            mpolizas.putAll(datosMpolizasPantalla);
+            
+            paso = "Actualizando maestro de p\u00f3liza";
+            emisionDAO.movimientoMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplembloque, nmsuplemsesion, status,
+                    mpolizas.get("swestado"), mpolizas.get("nmsolici"), Utils.parse(mpolizas.get("feautori")), mpolizas.get("cdmotanu"),
+                    Utils.parse(mpolizas.get("feanulac")), mpolizas.get("swautori"), mpolizas.get("cdmoneda"),
+                    Utils.parse(mpolizas.get("feinisus")), Utils.parse(mpolizas.get("fefinsus")), mpolizas.get("ottempot"),
+                    Utils.parse(mpolizas.get("feefecto")), mpolizas.get("hhefecto"), Utils.parse(mpolizas.get("feproren")),
+                    Utils.parse(mpolizas.get("fevencim")), mpolizas.get("nmrenova"), Utils.parse(mpolizas.get("ferecibo")),
+                    Utils.parse(mpolizas.get("feultsin")), mpolizas.get("nmnumsin"), mpolizas.get("cdtipcoa"), mpolizas.get("swtarifi"),
+                    mpolizas.get("swabrido"), Utils.parse(mpolizas.get("feemisio")), mpolizas.get("cdperpag"), mpolizas.get("nmpoliex"),
+                    mpolizas.get("nmcuadro"), mpolizas.get("porredau"), mpolizas.get("swconsol"), mpolizas.get("nmpolcoi"),
+                    mpolizas.get("adparben"), mpolizas.get("nmcercoi"), mpolizas.get("cdtipren"), "U");
             
             paso = "Ejecutando valores por defecto variables";
             emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza,
                     "0", //nmsituac
-                    nmsuplembloque,
+                    nmsuplemsesion,
                     Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque(),
                     null
                     );
             
-            paso = "Recuperando valores fijo";
-            Map<String, String> mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplembloque).get(0);
-            for (Entry<String, String> en : mpolizas.entrySet()) {
-                valores.put(Utils.join("b1_", en.getKey()), en.getValue());
-            }
-            
             paso = "Recuperando valores variables";
-            Map<String, String> tvalopol = emisionDAO.obtenerTvalopol(cdunieco, cdramo, estado, nmpoliza, nmsuplembloque);
+            Map<String, String> tvalopol = emisionDAO.obtenerTvalopol(cdunieco, cdramo, estado, nmpoliza, nmsuplemsesion);
             for (Entry<String, String> en : tvalopol.entrySet()) {
                 valores.put(Utils.join("b1b_", en.getKey()), en.getValue());
             }

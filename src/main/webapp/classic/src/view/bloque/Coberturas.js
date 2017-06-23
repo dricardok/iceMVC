@@ -35,7 +35,7 @@
  							config.cdramo = config.cdramo || '';
  							config.estado = config.estado || '';
  							config.nmpoliza = config.nmpoliza || '';
- 							config.nmsuplem = config.nmsuplem || '';
+ 							config.nmsuplem = config.nmsuplem || 0;
  							config.flujo = config.flujo || {};
  						} catch (e) {
  							Ice.generaExcepcion(e, paso);

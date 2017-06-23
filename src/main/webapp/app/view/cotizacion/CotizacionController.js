@@ -66,7 +66,9 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     cdramo: view.getCdramo(),
                     estado: view.getEstado(),
                     nmpoliza: view.getNmpoliza(),
+                    
                     nmsuplem: view.getNmsuplem(),
+                    status: view.getStatus(),
                     
                     modulo: view.getModulo(),
                     flujo: view.getFlujo(),
@@ -75,7 +77,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 
                 if (view.getNuevaCotizacion() === true && index === 0 && bloqueExistente.xtype === 'bloquedatosgenerales') {
                     bloqueExistente.on({
-                        llaveGenerada: function (bloqueDatosGen, cdunieco, cdramo, estado, nmpoliza, nmsuplem) {
+                        llaveGenerada: function (bloqueDatosGen, cdunieco, cdramo, estado, nmpoliza, nmsuplem, status) {
                             Ice.log('Ice.view.cotizacion.CotizacionController bloquedatosgenerales.llaveGenerada args:', arguments);
                             if (!cdunieco || !cdramo || !estado || !nmpoliza || Ext.isEmpty(nmsuplem)) {
                                 throw 'No se pudo recuperar la llave de datos generales';
@@ -86,6 +88,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                             view.setEstado(estado);
                             view.setNmpoliza(nmpoliza);
                             view.setNmsuplem(nmsuplem);
+                            view.setStatus(status);
                             Ice.log('Ice.view.cotizacion.CotizacionController bloquedatosgenerales.llaveGenerada viewCotizacion:', view);
                         }
                     });

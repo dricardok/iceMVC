@@ -23,6 +23,10 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
                     throw 'Faltan par\u00e1metros para construir bloque de datos generales';
                 }
                 
+                config.estado = config.estado || 'W';
+                config.nmsuplem = config.nmsuplem || 0;
+                config.status = config.status || 'V';
+                
                 config.flujo = config.flujo || {};
             } catch (e) {
                 Ice.generaExcepcion(e, paso);
@@ -45,16 +49,17 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
         estado: null,
         nmpoliza: null,
         nmsuplem: null,
+        status: null,
         
         // variables para valores por defecto (fijos y variables)
         procesandoValoresDefecto: false,
         datosFijosNuevos: true,
         datosVariablesNuevos: true,
         camposDisparanValoresDefectoFijos: [
-            'b1_cdunieco'
+            'cdunieco'
         ],
         camposDisparanValoresDefectoVariables: [
-            'b1_cdunieco', 'b1_nmpoliza', 'b1_feefecto', 'b1_feproren'
+            'cdunieco', 'nmpoliza', 'b1_feefecto', 'b1_feproren'
         ],
         
         // otro
