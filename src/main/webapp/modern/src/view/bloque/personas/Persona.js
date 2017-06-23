@@ -12,10 +12,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 			cdrol			:	null,
 			accion			:	'I'
 		},
-		masked: {
-		    xtype: 'loadmask',
-		    message: 'Guardando'
-		},
+		
 		constructor: function (config) {
 	        Ice.log('Ice.view.bloque.DatosGenerales.constructor config:', config);
 	        var me = this,

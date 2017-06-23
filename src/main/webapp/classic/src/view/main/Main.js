@@ -24,7 +24,7 @@ Ext.define('Ice.view.main.Main', {
     items: [
         {
             xtype: 'toolbar',
-            cls: 'sencha-dash-dash-headerbar shadow',
+            cls: 'sencha-dash-dash-headerbar',
             height: 102,
             itemId: 'headerBar',
             items: [
@@ -67,8 +67,8 @@ Ext.define('Ice.view.main.Main', {
             ]
         }, {
         	xtype: 'toolbar',
-        	cls: 'head_02',
-        	id:'head_02',
+        	cls: 'head_02 shadow',
+        	//id:'head_02',
         	items: [
         		{
                     margin: '0 0 0 80',

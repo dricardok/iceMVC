@@ -100,6 +100,7 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
         estado: null,
         nmpoliza: null,
         nmsuplem: null,
+        status: null,
         
         // etapas
         nuevaCotizacion: true,

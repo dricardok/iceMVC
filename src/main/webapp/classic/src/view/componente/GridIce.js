@@ -13,7 +13,7 @@ Ext.define('Ice.view.componente.GridIce', {
 		try{
 			
 			config.columns = config.columns || [];	
-			
+			config.actionColumns = config.actionColumns || [];
 			config.columns=config.columns.concat(config.actionColumns);
 			 
 		}catch(e){
@@ -38,7 +38,7 @@ Ext.define('Ice.view.componente.GridIce', {
     	}
     	
     	me.callParent(arguments);
-    },
+    }
     
     
     

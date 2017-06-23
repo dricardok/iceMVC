@@ -134,7 +134,20 @@ public class AgentesManagerImpl implements AgentesManager {
 	        							  datos.get("cdtipren"),
 	        							  "U");
 	        
+	        
+	        
 	        paso = "Guardando agentes";
+	        
+	        agentesDAO.movimientoMpoliage(cdunieco, 
+					  cdramo, 
+					  estado, 
+					  nmpoliza, 
+					  null, 
+					  nmsuplem, 
+					  nmsuplem, 
+					  null,
+					  null,
+					  "D");
 	        
 	        for(int current=0; current<agentes.size(); current++){
 	        	Map<String, String> tmp = (Map<String, String>) agentes.get(current);
@@ -173,6 +186,23 @@ public class AgentesManagerImpl implements AgentesManager {
         }
 		
 		return agentes;	
+	}
+
+	@Override
+	public boolean validaAgente(String cdagente, String cdramo, String cdproceso) throws Exception {
+		String paso = null;
+		boolean val =false;
+		
+        try{
+		
+        	paso = "Recuperando valida agente";
+        	val = agentesDAO.validaAgente(cdagente, cdramo, cdproceso);
+	        
+        }catch(Exception e){
+        	e.printStackTrace();
+        	Utils.generaExcepcion(e, paso);
+        }
+		return val;
 	}
 	
 	

@@ -65,6 +65,7 @@ var Ice = Object.assign(Ice || {}, {
                 borrar: 'emision/eliminarSituacion.action',                
                 cargar: 'emision/obteneListaSituaciones.action',
                 actualizar: 'emision/actualizaSituacion.action',
+                movimientoMpolisit: 'emision/movimientoMpolisit.action',
                 valoresDefectoFijos: 'emision/valoresDefectoFijos.action',
                 valoresDefectoVariables: 'emision/valoresDefectoVariables.action',
                 validaciones: 'emision/validaBloqueSituacion.action'
@@ -1088,8 +1089,9 @@ var Ice = Object.assign(Ice || {}, {
         try {
             configComps = configComps || [];
             for (var i = 0; i < configComps.length; i++) {
-                columns.push(Ice.generaColumn(configComps[i]));
-
+                if (configComps[i].swcolumn === 'S') {
+                    columns.push(Ice.generaColumn(configComps[i]));
+                }
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
@@ -1357,10 +1359,10 @@ var Ice = Object.assign(Ice || {}, {
             // width / flex       
             if(config.width){
                 if(Number(config.width) > 10){
-                    column.width = config.width;
+                    column.width = Number(config.width);
                 }
                 else{
-                    column.flex = config.width;
+                    column.flex = Number(config.width);
                     column.minWidth = 50;
                 }
             } else {

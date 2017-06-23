@@ -24,7 +24,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 				config.cdramo = config.cdramo || '';
 				config.estado = config.estado || '';
 				config.nmpoliza = config.nmpoliza || '';
-				config.nmsuplem = config.nmsuplem || '';
+				config.nmsuplem = config.nmsuplem || 0;
 				config.flujo = config.flujo || {};
 				
 				

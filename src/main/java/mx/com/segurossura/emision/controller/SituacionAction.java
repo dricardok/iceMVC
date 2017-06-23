@@ -1,6 +1,5 @@
 package mx.com.segurossura.emision.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +9,8 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,8 @@ public class SituacionAction extends PrincipalCoreAction {
 	private List<Map<String, String>> validaciones;
 	private Map<String, String> situacion;
 	private Map<String, List<Map<String, String>>> componentes;
+	
+	private static final Logger logger = LoggerFactory.getLogger(SituacionAction.class);
 	
 	@Autowired
 	private SituacionManager situacionManager;	
@@ -250,53 +253,35 @@ public class SituacionAction extends PrincipalCoreAction {
 	        }
 	    )
 	public String movimientoMpolisit(){
-		logger.debug(StringUtils.join(
-				 "\n###################",
-				 "\n###### movimientoMpolisit ######",
-				 "\n###### params ", params
-				));
-		try{
+		logger.debug(StringUtils.join("###### movimientoMpolisit params = ", params));
+		try {
+		    Utils.validateSession(session);
 			Utils.validate(params, "No se recibieron datos");
-			String cdunieco = (String) params.get("cdunieco");
-			String cdramo = (String) params.get("cdramo");
-			String estado = (String) params.get("estado");
-			String nmpoliza = (String) params.get("nmpoliza");
-			String nmsituac = (String) params.get("nmsituac");
-			String nmsuplem	= (String) params.get("nmsuplem");
-			String nmsuplem_bean = (String) params.get("nmsuplem_Bean");
-			String status = (String) params.get("status");
-			String cdtipsit = (String) params.get("cdtipsit");
-			String swreduci = (String) params.get("swreduci");
-			String cdagrupa = (String) params.get("cdagrupa");
-			String cdestado = (String) params.get("cdestado");
-			String fefecsit = (String) params.get("fefecsit");
-			String fecharef = (String) params.get("fecharef");
-			String indparbe = (String) params.get("indparbe");
-			String feinipbs = (String) params.get("feinipbs");
-			String porparbe = (String) params.get("porparbe");
-			String intfinan = (String) params.get("intfinan");
-			String cdmotanu = (String) params.get("cdmotanu");
-			String feinisus = (String) params.get("feinisus");
-			String fefinsus = (String) params.get("fefinsus");
-			String accion = (String) params.get("accion");
-            Utils.validate(cdunieco, "No se recibio la oficina");
-            Utils.validate(cdramo, "No se recibio el producto");
-            Utils.validate(estado, "No se recibio el estado de la póliza");
-            Utils.validate(nmpoliza, "No se recibio el numero de póliza");
-            Utils.validate(nmsituac, "No se recibio la situacion de riesgo");
-            Utils.validate(nmsuplem, "No se recibio el suplemento");
-            Utils.validate(accion, "No se recibio la accion");
-			situacionManager.movimientoMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmsuplem_bean, status, cdtipsit, swreduci, cdagrupa, cdestado, fefecsit, fecharef, indparbe, feinipbs, porparbe, intfinan, cdmotanu, feinisus, fefinsus, accion);
+			String cdunieco    = params.get("cdunieco"),
+			       cdramo      = params.get("cdramo"),
+			       estado      = params.get("estado"),
+			       nmpoliza    = params.get("nmpoliza"),
+			       nmsituac    = params.get("nmsituac"),
+			       nmsuplem	   = params.get("nmsuplem"),
+			       status      = params.get("status"),
+			       nmsuplemEnd = params.get("nmsuplemEnd"),
+			       accion      = params.get("accion");
+			
+			Utils.validate(cdunieco, "No se recibi\u00f3 la oficina",
+			               cdramo,   "No se recibi\u00f3 el producto",
+			               estado,   "No se recibi\u00f3 el estado de la p\u00f3liza",
+			               nmpoliza, "No se recibi\u00f3 el n\u00famero de p\u00f3liza",
+			               accion,   "Falta acci\u00f3");
+			
+			nmsuplem = Utils.NVL(nmsuplem, "0");
+			status = Utils.NVL(status, "V");
+			nmsuplemEnd = Utils.NVL(nmsuplemEnd, nmsuplem);
+			
+			situacionManager.movimientoMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmsuplemEnd, status, params, accion);
 			success = true;
-		} catch(Exception ex) {
-			success=false;
+		} catch (Exception ex) {
 			message = Utils.manejaExcepcion(ex);
 		}
-		
-		logger.debug(StringUtils.join(
-				 "\n###### movimientoMpolisit ######",
-				 "\n###################"
-				));
 		return SUCCESS;
 	}
 	

@@ -20,7 +20,9 @@ Ext.define('Ice.view.bloque.Agentes', {
     	cdramo		: null,
     	estado		: null,
     	nmpoliza	: null,
-    	nmsuplem	: null
+    	nmsuplem	: null,
+    	
+    	agentesAgregados:[]
     }, 
         
     constructor: function (config) {
@@ -93,9 +95,10 @@ Ext.define('Ice.view.bloque.Agentes', {
             Ext.apply(me, {
             	
             	items: [{
-	            	xtype: 'form',
+	            	xtype: 'formulario',
 	            	title: 'Datos de Poliza',
 	            	layout: 'responsivecolumn',
+	            	itemId:"datpoliza",
 	            	defaults: {
 	                    labelWidth: 90,
 	                    labelAlign: 'top',
@@ -107,8 +110,10 @@ Ext.define('Ice.view.bloque.Agentes', {
 	                items: formPol.BLOQUE_AGENTES.FORM_POLIZA.items
 	                
             	},{
-	            	xtype: 'form',
+	            	xtype: 'formulario',
 	            	title: 'Agregar Agente',
+
+	            	itemId:"agregaragente",
 	            	layout: 'responsivecolumn',
 	            	defaults: {
 	                    labelWidth: 90,
@@ -121,7 +126,7 @@ Ext.define('Ice.view.bloque.Agentes', {
 	                items: formAgt.BLOQUE_AGENTES.FORM_AGENTE.items,
 	                buttons: [
 						  {
-							  text: 'Buscar',
+							  text: 'Buscar Agente',
 							  handler: 'onBuscarClic'
 						  },
                           {
