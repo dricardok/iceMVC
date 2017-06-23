@@ -145,10 +145,10 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            if(fenacimi!=null){
 	            	fenacimi=fenacimi.split("T")[0];
 	            }
-	            fenacimi=fenacimi.replaceAll("/", "-");
+	            fenacimi=fenacimi==null?null:fenacimi.replaceAll("/", "-");
 	            
 	            registroPersonaManager.movimientoMpersona(cdperson, cdtipide, cdideper, dsnombre, dsnombr1, dsnombr2, dsapell1, dsapell2, cdtipper, otfisjur, otsexo,
-	            		"null".equals(fenacimi)?null:
+	            		"null".equals(fenacimi) || fenacimi==null?null:
 	            			new SimpleDateFormat("yyyy-MM-dd").parse(fenacimi), 
 	            				cdprovin, accion);
 	            

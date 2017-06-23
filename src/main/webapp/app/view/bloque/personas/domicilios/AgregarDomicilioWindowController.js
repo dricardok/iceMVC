@@ -162,6 +162,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     						.forEach(function(it){
     							Ice.log(it.getName(),"it",it);
     							it.setValue(record.get(it.getName()));
+    							Ice.log("it val new",it,record.get(it.getName()));
     							switch(it.getName()){
     								case "cdpais":
     									it.setValue(record.get(it.getName())+"-"+record.get("descripl"));

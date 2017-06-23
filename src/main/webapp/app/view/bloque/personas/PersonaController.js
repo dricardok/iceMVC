@@ -174,6 +174,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 	      				Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 		    	    		listeners:{
 		    	    			guardarDomicilio:function(){
+		    	    				view.down('[xtype=domicilios]').getStore().proxy.extraParams['params.cdperson']=view.getCdperson();
 		    	    				view.down('[xtype=domicilios]').getStore().load();
 		    	    			}
 		    	    		},
@@ -187,6 +188,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 				Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 		    		listeners:{
 		    			guardarDomicilio:function(){
+		    				view.down('[xtype=domicilios]').getStore().proxy.extraParams['params.cdperson']=view.getCdperson();
 		    				view.down('[xtype=domicilios]').getStore().load();
 		    			}
 		    		},
