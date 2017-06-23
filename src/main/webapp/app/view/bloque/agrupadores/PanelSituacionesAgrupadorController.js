@@ -2,6 +2,10 @@ Ext.define('Ext.view.bloque.agrupadores.PanelSituacionesAgrupadorController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.panelsituacionesagrupador',
     
+    onItemTap: function (gridSituacionesAgrupador, index, target, record) {
+        this.onItemClic(gridSituacionesAgrupador, record);
+    },
+    
     onItemClic: function (gridSituacionesAgrupador, record) {
         Ice.log('controller.panelsituacionesagrupador.onItemClic args:', arguments);
         var me = this,
@@ -21,11 +25,22 @@ Ext.define('Ext.view.bloque.agrupadores.PanelSituacionesAgrupadorController', {
             refs = me.getReferences(),
             paso = 'Guardando agrupador';
         try {
-            if (!refs.comboagrupador.isValid()) {
-                return;
+            if (Ext.manifest.toolkit === 'classic') {
+                if (!refs.comboagrupador.isValid()) {
+                    return;
+                }
+            } else {
+                if (!refs.comboagrupador.getValue()) {
+                    return Ice.mensajeWarning('Favor de seleccionar el agrupador');
+                }
             }
-            var record = refs.gridsituacionesagrupador.getSelectionModel().getSelection()[0],
-                valores = {
+            var record;
+            if (Ext.manifest.toolkit === 'classic') {
+                record = refs.gridsituacionesagrupador.getSelectionModel().getSelection()[0];
+            } else {
+                record = refs.gridsituacionesagrupador.getSelection();
+            }
+            var valores = {
                     cdunieco: record.get('cdunieco'),
                     cdramo: record.get('cdramo'),
                     estado: record.get('estado'),

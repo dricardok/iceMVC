@@ -6,6 +6,8 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
     
     // propiedades ext
     title: 'Situaciones',
+    layout: 'vbox',
+    scrollable: true,
     
     // propiedades no ext
     config: {
@@ -59,18 +61,17 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
                 {
                     xtype: 'bloquelistasituaciones',
                     reference: 'gridsituacionesagrupador',
-                    minHeight: 200,
-                    maxHeight: 400,
+                    height: 300,
                     style: 'border: 1px solid red;',
-                    actionColumns: [
+                    columns: [
                         {
                             text: 'Agrupador',
                             dataIndex: 'cdagrupa',
-                            width: 100
+                            width: 110
                         }
                     ],
                     listeners: {
-                        itemclick: 'onItemClic'
+                        itemtap: 'onItemTap'
                     },
                     
                     cdunieco: config.cdunieco,
@@ -87,12 +88,11 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
                     xtype: 'formpanel',
                     layout: 'hbox',
                     padding: '10 0 0 10',
-                    style: 'border: 1px solid red;',
                     items: [
                         {
                             xtype: 'comboice',
                             reference: 'comboagrupador',
-                            fieldLabel: 'Agrupador',
+                            label: 'Agrupador',
                             name: 'cdagrupa',
                             disabled: true,
                             allowBlank: false,
@@ -107,7 +107,7 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
                             param3: 'params.estado',
                             value3: config.estado,
                             param4: 'params.nmpoliza',
-                            value4: config.mpoliza
+                            value4: config.nmpoliza
                         }, {
                             xtype: 'button',
                             reference: 'botonguardar',

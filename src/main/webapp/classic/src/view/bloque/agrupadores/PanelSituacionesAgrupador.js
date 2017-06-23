@@ -74,7 +74,7 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
                         minHeight: 200,
                         maxHeight: 400,
                         style: 'border: 1px solid red;',
-                        actionColumns: [
+                        columns: [
                             {
                                 text: 'Agrupador',
                                 dataIndex: 'cdagrupa',
