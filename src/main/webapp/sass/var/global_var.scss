@@ -19,7 +19,7 @@ $blanco-s:#ffffff !important;
 
  /*Tipografía Corporativa DIN Regular-Medium*/
 $font_din: 'ext/packages/fonts/';
-$font-bold: 700;
+$font-bold: 600;
 $font-grey:#707372;
 
  /*Botones Corporativos*/
@@ -77,12 +77,14 @@ $ui-header-background-color:$azulo-s !important;
  /*Alertas*/
 $ui-header-background-color:$azulo-s !important;
 
- /*Tabs
+ /*Tabs*/
  $ui-color-active: $azulc-s !important;
- $ui-font-weight-active: $font-bold !important;
- $ui-font-weight: 600;*/
+ $tab-border-radius: 2px 2px 0px 0px !important;
+$tab-font-weight:$font-bold;
+ 
  
 
- 
- 
+
+
+
 

@@ -20,7 +20,7 @@ Ext.define('Ice.view.login.Login', {
     controller: 'login',
     
     viewModel: 'login',
-    style: 'min-height: 100%;padding: 100px 0px 0px 20px; background: url(resources/images/bg_sura_login_small.jpg); background-repeat: no-repeat; background-size: cover;background-position: 0% 0%; !important;',
+    style: 'min-height: 100%;padding: 9% 0 0 0; background: url(resources/images/bg_sura_login_small.jpg); background-repeat: no-repeat; background-size: cover;background-position: 0% 0%; !important;',
     bodyStyle: 'background: transparent;',
     maximized: true,
     modal: true,
@@ -54,7 +54,7 @@ Ext.define('Ice.view.login.Login', {
                     xtype: 'component',
                     reference: 'suraLogo',
                     cls: 'sura-logo',
-                    style:'text-align:right;padding: 15px 20px 0px 0px !important; background-color:#0033a0',
+                    style:'text-align:right; padding: 15px 20px 0px 0px !important; background-color:#0033a0',
                     html: '<div class="main-logo"><img src="resources/images/logo_sura_bco.png"></div>',
                     align:'stretch'
                 },                 
@@ -120,7 +120,6 @@ Ext.define('Ice.view.login.Login', {
                     text: 'Ir',
                     reference: 'loginbutton',
                     iconCls: '',
-                    id:'ir_01',
                     style: 'margin-right:30px !important;',
                     handler: 'onAceptarClic',
                     

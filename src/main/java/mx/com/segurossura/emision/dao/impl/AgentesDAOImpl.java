@@ -139,4 +139,35 @@ public class AgentesDAOImpl extends HelperJdbcDao implements AgentesDAO {
         }
     }
 	
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean validaAgente(String cdagente, String cdramo,String cdproceso) throws Exception{         
+        Map<String, Object> params = new LinkedHashMap<String, Object>();       
+        params.put("pv_cdagente_i", cdagente);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_cdproceso_i", cdproceso);
+        logger.debug("-->"+params);
+        Map<String, Object> resultado = ejecutaSP(new BuscaAgentesSP(getDataSource()), params);
+        Boolean listaDatos = (Boolean)resultado.get("pv_registro_o");
+        return listaDatos;
+    }
+                 
+    protected class ValidaAgenteSP extends StoredProcedure{
+        protected ValidaAgenteSP(DataSource dataSource) {
+            super(dataSource,"PKG_LOV_ALEA.P_LOV_AGENTES"); 
+            
+            declareParameter(new SqlParameter("pv_cdagente_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdproceso_i",Types.VARCHAR));
+            String[] cols=new String[]{
+                     "cdagente",
+                     "dsnombre"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            compile();
+        }
+    }
+	
 }

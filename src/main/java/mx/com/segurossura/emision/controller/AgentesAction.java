@@ -199,6 +199,40 @@ public class AgentesAction extends PrincipalCoreAction {
         return SUCCESS;
     }
 	
+	@Action(
+            value = "agentes/validarAgente", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String validarAgente () {
+		
+        logger.debug(Utils.log("### cargar params: ", params));
+        
+        try {
+        
+        	Utils.validateSession(session);
+            Utils.validate(params, "No se recibieron datos para cargar cotizaci\u00f3n");
+            String cdagente = params.get("cdagente");
+            String cdramo = params.get("cd");
+            String cdproceso = params.get("cdagente");
+            Utils.validate(cdagente, "Se debe indicar codigo de agente");
+            Utils.validate(cdramo, "Se debe indicar codigo de rol");
+            Utils.validate(cdproceso, "Se debe indicar codigo de agente");
+           
+            
+           // params.put ("valido", agentesManager.validaAgente(cdagente, cdramo, cdproceso)?"S":"N");
+            params.put ("valido","N");
+            
+            success = true;
+            
+        } catch (Exception ex) {
+            message = Utils.manejaExcepcion(ex);
+        }
+        
+        return SUCCESS;
+    }
+	
 
 	public boolean isSuccess() {
 		return success;
