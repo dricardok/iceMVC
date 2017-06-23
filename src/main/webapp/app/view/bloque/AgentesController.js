@@ -113,13 +113,20 @@ Ext.define('Ice.view.bloque.AgentesController', {
      		
      		var datos={}
         	var form = view.down("#agregaragente");
-        	
+        	     		
         	Ice.query('[getName]',form).forEach(function(it){
+        		 
         		if(it.getName().indexOf("_")!=-1){
-        			it.setName(it.getName().split("_")[0].trim())
-        		}
+	        			
+        			if (Ext.manifest.toolkit !== 'classic') {
+	        				it.setName(it.getName().split("_")[0].trim());
+		        	}else{
+		        		it.name = it.getName().split("_")[0].trim();
+		        	}
+	        	}
         		datos[it.getName()]=it.getValue();
         	});
+        	
         	
         	view.down("[xtype=gridice]").getStore().add(datos);
         	view.getAgentesAgregados().push(datos);
