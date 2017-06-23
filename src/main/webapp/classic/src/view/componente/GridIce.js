@@ -2,8 +2,24 @@ Ext.define('Ice.view.componente.GridIce', {
     extend		: 'Ext.grid.Panel',
     xtype		: 'gridice',
     config		:	{
-    	botones		:	[]
+    	botones		:	[],
+    	actionColumns :	[]
 		
+    },
+    
+    constructor:function(config){
+    	var paso="",
+		me=this;
+		try{
+			
+			config.columns = config.columns || [];	
+			config.actionColumns = config.actionColumns || [];
+			config.columns=config.columns.concat(config.actionColumns);
+			 
+		}catch(e){
+			Ice.generaExcepcion(e,paso);
+		}
+		me.callParent(arguments);
     },
     
     initComponent: function () {
@@ -22,7 +38,7 @@ Ext.define('Ice.view.componente.GridIce', {
     	}
     	
     	me.callParent(arguments);
-    },
+    }
     
     
     

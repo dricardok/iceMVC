@@ -1,8 +1,9 @@
 package mx.com.segurossura.emision.controller;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
@@ -53,12 +54,22 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
         logger.debug(Utils.log("###### valoresDefectoFijos params: ", params));
         try {
             Utils.validateSession(session);
-            if (params == null) {
-                params = new HashMap<String, String>();
-            }
+            Utils.validate(params, "No hay datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem"),
+                   status   = params.get("status");
             
-            params = datosGeneralesManager.valoresDefectoFijos(params.get("b1_cdunieco"), params.get("b1_cdramo"), params.get("b1_estado"),
-                    params.get("b1_nmpoliza"), params.get("b1_nmsuplem"), params.get("swcolind"), params.get("nmpolcoi"));
+            Utils.validate(cdunieco, "Falta cdunieco",
+                           cdramo,   "Falta cdramo",
+                           estado,   "Falta estado",
+                           nmsuplem, "Falta nmsuplem",
+                           status,   "Falta status");
+            
+            params = datosGeneralesManager.valoresDefectoFijos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, status, params.get("swcolind"),
+                    params.get("nmpolcoi"));
             
             success = true;
         } catch (Exception ex) {
@@ -87,15 +98,26 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
             
             Utils.validate(params, "No hay datos para valores por defecto variables para bloque de datos generales");
             
-            String cdunieco = params.get("b1_cdunieco"),
-                   cdramo   = params.get("b1_cdramo"),
-                   estado   = params.get("b1_estado"),
-                   nmpoliza = params.get("b1_nmpoliza");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem"),
+                   status   = params.get("status");
             
             Utils.validate(cdunieco , "Falta cdunieco",
                            cdramo   , "Falta cdramo",
                            estado   , "Falta estado",
-                           nmpoliza , "Falta nmpoliza");
+                           nmpoliza , "Falta nmpoliza",
+                           nmsuplem , "Falta nmsuplem",
+                           status   , "Falta status");
+            
+            Map<String, String> datosMpolizasPantalla = new LinkedHashMap<String, String>();
+            for (Entry<String, String> en : params.entrySet()) {
+                if (en.getKey().substring(0, 3).equals("b1_")) {
+                    datosMpolizasPantalla.put(en.getKey().substring(3), en.getValue());
+                }
+            }
             
             params = datosGeneralesManager.valoresDefectoVariables (
                     usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol(),
@@ -103,9 +125,10 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
                     cdramo,
                     estado,
                     nmpoliza,
-                    params.get("b1_nmsuplem"),
-                    params.get("b1_nmsuplem"),
-                    params.get("b1_status")
+                    nmsuplem,
+                    nmsuplem,
+                    status,
+                    datosMpolizasPantalla
                     );
             
             success = true;
@@ -160,11 +183,12 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
         try {
             UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             Utils.validate(params, "No se recibieron datos generales");
-            String cdunieco = params.get("b1_cdunieco"),
-                   cdramo   = params.get("b1_cdramo"),
-                   estado   = params.get("b1_estado"),
-                   nmpoliza = params.get("b1_nmpoliza"),
-                   nmsuplem = params.get("b1_nmsuplem");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem"),
+                   status   = params.get("status");
             Utils.validate(cdunieco , "Falta cdunieco",
                            cdramo   , "Falta cdramo",
                            estado   , "Falta estado",

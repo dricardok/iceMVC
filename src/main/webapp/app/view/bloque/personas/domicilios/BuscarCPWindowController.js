@@ -16,6 +16,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.BuscarCPWindowController', {
     			record=sel;
     		}
 			
+    		Ice.log("record cp",record);
 			
     		view.fireEvent('elegir',view,record,grid);
     		 if (Ext.manifest.toolkit === 'classic') {

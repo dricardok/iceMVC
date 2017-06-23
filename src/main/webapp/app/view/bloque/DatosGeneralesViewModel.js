@@ -5,6 +5,16 @@ Ext.define('Ice.view.bloque.DatosGeneralesViewModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.bloquedatosgenerales',
     
+    data: {
+        cdunieco: null,
+        cdramo: null,
+        estado: null,
+        nmpoliza: null,
+        nmsuplem: null,
+        status: null
+    }
+    
+    /* se comenta la parte de validaciones por modelo con viewmodel, porque usaba incluso campos ocultos
     requires: [
         'Ext.data.validator.*'
     ],
@@ -28,4 +38,5 @@ Ext.define('Ice.view.bloque.DatosGeneralesViewModel', {
             Ice.generaExcepcion(e, paso);
         }
     }
+    */
 });

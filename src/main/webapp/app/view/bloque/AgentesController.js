@@ -2,6 +2,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.bloqueagentes',
     
+    
     constructor: function (config) {
         Ice.log('Ice.view.bloque.AgentesController.constructor config:', config);
         this.callParent(arguments);
@@ -48,11 +49,11 @@ Ext.define('Ice.view.bloque.AgentesController', {
             	mascara: 'Cargando valores iniciales',
             	url: Ice.url.bloque.agentes.cargar,
             	params: {
-            		'params.cdunieco'	:		view.cdunieco,
-            		'params.cdramo'		:		view.cdramo,
-            		'params.estado'		:		view.estado,
-            		'params.nmpoliza'	:		view.nmpoliza,
-            		'params.nmsuplem'	:		view.nmsuplem
+            		'params.cdunieco'	:		view.getCdunieco(),
+            		'params.cdramo'		:		view.getCdramo(),
+            		'params.estado'		:		view.getEstado().toUpperCase(),
+            		'params.nmpoliza'	:		view.getNmpoliza(),
+            		'params.nmsuplem'	:		view.getNmsuplem()
             	},
             	success: function(action) {
             		
@@ -85,8 +86,14 @@ Ext.define('Ice.view.bloque.AgentesController', {
         	paso = 'Antes de agregar agente';
         
         try {
+        	var datos={}
+        	var form=view.down("#agregaragente");
+        	Ice.query('[getName]',form).forEach(function(it){
+        		datos[it.getName()]=it.getValue();
+        	});
         	
-            
+        	view.down("[xtype=gridice]").getStore().add(datos);
+        	view.getAgentesAgregados().push(datos);
             
         }catch (e) {
             Ice.manejaExcepcion(e, paso);
@@ -110,6 +117,8 @@ Ext.define('Ice.view.bloque.AgentesController', {
         	
         	paso = 'Guardando datos de agentes';
         	
+        	this.validacion();
+        	
         	var agentes = [],
         		store = view.down('grid').getStore(),
         		data = store.getData(),
@@ -124,11 +133,11 @@ Ext.define('Ice.view.bloque.AgentesController', {
                 url: Ice.url.bloque.agentes.guardar,
                 jsonData: {
                 	params: {
-                		'cdunieco'	:		view.cdunieco,
-                		'cdramo'	:		view.cdramo,
-                		'estado'	:		view.estado,
-                		'nmpoliza'	:		view.nmpoliza,
-                		'nmsuplem'	:		view.nmsuplem,
+                		'cdunieco'	:		view.getCdunieco(),
+                		'cdramo'	:		view.getCdramo(),
+                		'estado'	:		view.getEstado().toUpperCase(),
+                		'nmpoliza'	:		view.getNmpoliza(),
+                		'nmsuplem'	:		view.getNmsuplem(),
                 		'nmcuadro'	:		refs['nmcuadro'].getValue(),
                 		'porredau'	:		refs['porredau'].getValue()
                 	},
@@ -181,7 +190,26 @@ Ext.define('Ice.view.bloque.AgentesController', {
     
     
     onBuscarClic: function () {
-        this.buscarAgentes();
+       // this.buscarAgentes();
+    	var me = this,          
+		view = me.getView(),
+		refs = view.getReferences(),
+		paso = 'Antes de buscar agente';
+    	try{
+    		
+	    	Ext.create("Ice.view.bloque.agentes.BuscarAgenteWindow",{
+	    		listeners:{
+	    			elegiragente	:	function(bus,record){
+	    				
+	    				var agente=view.down("[getName][name=cdagente]");
+	    				Ice.log(view,"-------><",agente,record);
+	    				agente.setValue(record.get("cdagente"));
+	    			}
+	    		}
+	    	}).mostrar();
+    	}catch(e){
+    		Ice.manejaExcepcion(e, paso);
+    	}
     },
     
     buscarAgentes: function () {
@@ -220,6 +248,121 @@ Ext.define('Ice.view.bloque.AgentesController', {
         }catch(e) {
         	Ice.manejaExcepcion(e, paso);
         }
+    },
+    
+    editarPorcentaje	:	function(grid,rowIndex,colIndex){
+    	 var me = this,          
+ 		view = me.getView(),
+ 		refs = view.getReferences(),
+ 		paso = 'Editar porcentaje';
+    	 
+    	 try{
+    		 if(Ext.manifest.toolkit === 'classic'){
+     			var record=grid.getStore().getAt(rowIndex);            
+             } else {
+                 var cell = grid.getParent(),
+                     record = cell.getRecord(),
+                     data = record.getData();
+             }
+    		 Ice.log("record",record);
+    		 
+    		 Ext.create("Ice.view.componente.Ventana",{
+    			 
+    			 rec	:	record,
+    			 title	:	"Editar porcentaje",
+    			 layout	:	"fit",
+    			 bodyPadding: '20px 20px 20px 20px',
+    			 items	:	[
+    				 {
+    					 xtype	:	"formulario",
+    					 items	:[
+    						 {
+    							 xtype	:	'numberfieldice',
+    							 label	:	'Porcentaje'
+    						 }
+    					 ],
+    					 buttons	:	[
+    						 {
+ 						    	xtype	: 'button',
+ 						    	text	: 'Guardar',
+ 						    	handler : function(btn){
+ 						    		
+ 						    		var record=btn.up('[xtype=ventana]').rec;
+ 						    		Ice.log("record",record);
+ 						    		record.set("porredau",btn.up('[xtype=ventana]').down('numberfieldice').getValue());
+ 						    		btn.up('[xtype=ventana]').cerrar();
+ 						    	}
+ 		 			    	},
+ 		 			    	{
+ 						    	xtype	: 'button',
+ 						    	text	: 'Cancelar',
+ 						    	handler : function(btn){
+ 						    		btn.up('[xtype=ventana]').cerrar();
+ 						    	}
+ 		 			    	}
+    					 ]
+    				 }
+    			 ]
+    		 }).mostrar();
+    	 }catch(e){
+    		 Ice.manejaExcepcion(e, paso);
+    	 }
+    	 
+    },
+    eliminar : function(grid,rowIndex,colIndex){
+    	
+    var me   = this,          
+  		view = me.getView(),
+  		refs = view.getReferences(),
+  		paso = 'Editar porcentaje';
+    	try{
+    		if(Ext.manifest.toolkit === 'classic'){
+     			var record=grid.getStore().getAt(rowIndex);            
+             } else {
+                 var cell = grid.getParent(),
+                     record = cell.getRecord(),
+                     data = record.getData();
+             }
+    		var g=grid.up('[xtype=gridice]');
+    		
+    		var i=g.getStore().indexOf(record);
+    		g.getStore().removeAt(i);
+    		 Ice.log("record",record);
+    		 
+    		 
+    	}catch(e){
+    		Ice.manejaExcepcion(e,paso);
+    	}
+    },
+    
+    validacion:function(){
+    	 var me   = this,          
+   		view = me.getView(),
+   		refs = view.getReferences(),
+   		paso = 'valida porcentaje';
+     	try{
+     		
+     		 var sesion=Number(view.down("#datpoliza").down("[getName][name=porredau]").getValue());
+     		var agentes=[]
+     		 view.down("[xtype=gridice]").getStore().each(function(it){
+     			 agentes.push({
+     				porredau: Number(it.get("porredau"))
+     			 })
+     		 });
+     		 
+     		 var tot=sesion;
+     		 agentes.forEach(function(it){
+     			 tot+=it.porredau;
+     		 });
+     		 if(tot!=100){
+     			 paso='El porcentaje es más de 100.'
+     			 throw 'El porcentaje es diferente de 100%';
+     		 }
+     		 
+     		 
+     	}catch(e){
+     		Ice.generaExcepcion(e,paso);
+     	}
     }
         
 });
