@@ -15,4 +15,6 @@ public interface AgentesManager {
 			throws Exception;
 	
 	public List<Map<String, String>> buscarAgentes(String clave, String atributo) throws Exception;	
+	
+	public boolean validaAgente(String cdagente, String cdramo, String cdproceso) throws Exception;
 }
