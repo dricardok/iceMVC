@@ -47,6 +47,8 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
     items: [{
         xtype: 'container',
         items: [{
+        	
+        
             xtype: 'tabpanel',
             reference: 'tabpanel',
             listeners: {

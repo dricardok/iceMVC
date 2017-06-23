@@ -58,6 +58,7 @@ Ext.define('Ice.view.main.Main', {
                 }, {
                     iconCls: 'x-fa fa-user',
                     ui: 'header',
+                    margin: '0 65 0 0',
                     bind: {
                         hidden: '{!rolOUsuario}'
                     },
@@ -70,7 +71,7 @@ Ext.define('Ice.view.main.Main', {
         	id:'head_02',
         	items: [
         		{
-                    margin: '0 0 0 15',
+                    margin: '0 0 0 80',
                     ui: 'header',
                     iconCls:'x-fa fa-navicon ',
                     id: 'main-navigation-btn',
@@ -106,7 +107,7 @@ Ext.define('Ice.view.main.Main', {
                 },
                 {
                 	xtype: 'tbtext',
-                	style:'color:#fff !important;padding-right:45px;',
+                	style:'color:#fff !important;padding-right:95px;',
                 	cls: '',
                 	text: '01 800 00 83 693 /  5723 7944'
                 }

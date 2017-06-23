@@ -53,8 +53,9 @@ $font-icon-font-family: 'Material Icons';
 //----- Material generated variables
 //------------------------------------------
 // Calculated variables, can be overridden
+//$base-color: dynamic(material-color($base-color-name, '500'));----delia-220617
 
-$base-color: dynamic(material-color($azulo-s, '500'));
+$base-color:dynamic(material-color($base-color-name, '500'));
 $base-highlight-color: dynamic(material-color($base-color-name, '300'));
 $base-light-color: dynamic(material-color($base-color-name, '100'));
 $base-dark-color: dynamic(material-color($base-color-name, '700'));
