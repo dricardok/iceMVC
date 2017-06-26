@@ -110,6 +110,12 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                                        hidden: me.cdramo === '-1' ? true : false,
                                        text: 'Nuevo',
                                        handler: 'onNuevo'
+                                   },{
+                                       xtype: 'button',
+                                       text: 'Cerrar',
+                                       handler: function(){
+                                           this.up('window').close();
+                                       }
                                    }
                                ]
                            }
