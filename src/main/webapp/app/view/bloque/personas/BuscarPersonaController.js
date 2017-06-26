@@ -84,6 +84,10 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
         this.buscar();
     },
     
+    onNuevo: function(){
+        this.nuevo();
+    },
+    
     guardar: function(){
         Ice.log('Ice.view.bloque.BuscarPersonaController.guardar');
         var me = this,
@@ -91,7 +95,17 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
             refs = view.getReferences(),
             paso = 'Guardando persona';
         try{
-            
+            Ice.log('Mainview.refs',Ice.query('#mainView').refs);
+            if(refs.gridPersonas.getSelection()){
+                if(refs.gridPersonas.getSelection()[0]){
+                    data = refs.gridPersonas.getSelection()[0].getData();
+                    if(data){
+                        Ice.log('Seteando data',data);
+                        view.fireEvent('obtenerCdperson', view, data.cdperson, refs.cdrol.getValue(), refs.cdrol.getRawValue(), data.dsnombre);
+                        view.close();
+                    }
+                }
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -135,6 +149,55 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
         Ice.log('Ice.view.bloque.BuscarPersonaController.buscar');
     },
     
+    nuevo: function(){
+        Ice.log('Ice.view.bloque.BuscarPersonaController.nuevo');
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            paso = 'Nueva persona';
+        try{
+            Ice.log('nuevo refs',refs);
+            if(refs.cdrol.isValid()){
+                if(refs.cdrol.getValue()){
+                    if(refs.cdrol.isValid()){
+                        var persona = Ext.create('Ice.view.bloque.personas.Persona',{
+                            reference: 'persona',
+                            id: 'card-1',
+                            cdramo: view.getCdramo(),
+//                            scrollable: true,
+                            cdrol: refs.cdrol.getValue(),
+                            listeners: {
+                                'personaGuardada': function(personaView, cdperson){
+                                    view.setCdperson(cdperson);
+                                    
+                                    if(Ext.manifest.toolkit === 'classic'){
+                                        view.navigate(view, "prev");
+                                    } else {
+                                        view.pop();
+                                    }
+                                    
+                                    view.remove(this);
+                                }
+                            }
+                        });
+                        
+                        if(Ext.manifest.toolkit === 'classic'){
+                            me.navigate(view, "next", persona);                              
+                        } else {
+                            me.push(persona);
+                        }
+                    } else {
+                        Ice.mensajeWarning('Seleccione rol');
+                    }
+                }
+            }
+            
+        } catch(e){
+            Ice.generaExcepcion(e, paso);
+        }
+        Ice.log('Ice.view.bloque.BuscarPersonaController.nuevo');
+    },
+    
     validaBusqueda: function(refs){
         Ice.log('Ice.view.bloque.BuscarPersonaController.validaBusqueda',refs);
         var valid = true;
@@ -157,5 +220,24 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
         
         Ice.log('Ice.view.bloque.BuscarPersonaController.validaBusqueda');
         return valid;
+    },
+    
+    navigate: function(panel, direction, nuevoPanel){
+        Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.navigate ',panel,' ',direction);
+        var me = this,
+            view = me.getView(),
+            paso = 'Configurando navegacion de personas';
+        try{
+            var layout = panel.getLayout();
+            Ice.log('Layout',layout);
+            if(nuevoPanel){
+                panel.add(nuevoPanel);                
+            }
+            layout[direction]();
+            Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
+            Ext.getCmp('move-next').setDisabled(!layout.getNext());            
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
     }
 });

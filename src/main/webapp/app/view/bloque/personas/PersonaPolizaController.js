@@ -35,52 +35,52 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
             Ice.log('Ice.view.bloque.personas.PersonasPolizaController.custom refs:', refs);
 //            var cdrol = refs.cdrol;
             var cdatribu = refs.dsatribu;
-            var otvalor = refs.otvalor;
+            var cdperson = refs.form.items.getAt(0).items.getAt(0);
                         
-            refs.cdrol.on({
-                blur: function(){
-                    Ice.log('cdrol',refs.cdrol);
-                }
-            });
+//            refs.cdrol.on({
+//                blur: function(){
+//                    Ice.log('cdrol',refs.cdrol);
+//                }
+//            });
+//            
+//            cdatribu.on({
+//                blur: function(){
+//                    if(cdatribu.getValue()){
+//                        otvalor.getStore().getProxy().setTimeout(60000);
+//                        otvalor.getStore().getProxy().extraParams['params.cdunieco'] = view.getCdunieco();
+//                        otvalor.getStore().getProxy().extraParams['params.cdramo'] = view.getCdramo();
+//                        otvalor.getStore().getProxy().extraParams['params.estado'] = view.getEstado();
+//                        otvalor.getStore().getProxy().extraParams['params.nmpoliza'] = view.getNmpoliza();
+//                        otvalor.getStore().getProxy().extraParams['params.nmsuplem'] = view.getNmsuplem();
+//                        otvalor.getStore().getProxy().extraParams['params.nmsituac'] = view.getNmsituac();
+//                        otvalor.getStore().getProxy().extraParams['params.cdrol'] = view.getCdrol();
+//                        otvalor.getStore().getProxy().extraParams['params.cdperson'] = view.getCdperson();
+//                        otvalor.getStore().getProxy().extraParams['params.cdatribu'] = cdatribu.getValue();
+//                    }
+//                    Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdatribu.blur ',otvalor);
+//                }
+//            });
             
-            cdatribu.on({
-                blur: function(){
-                    if(cdatribu.getValue()){
-                        otvalor.getStore().getProxy().setTimeout(60000);
-                        otvalor.getStore().getProxy().extraParams['params.cdunieco'] = view.getCdunieco();
-                        otvalor.getStore().getProxy().extraParams['params.cdramo'] = view.getCdramo();
-                        otvalor.getStore().getProxy().extraParams['params.estado'] = view.getEstado();
-                        otvalor.getStore().getProxy().extraParams['params.nmpoliza'] = view.getNmpoliza();
-                        otvalor.getStore().getProxy().extraParams['params.nmsuplem'] = view.getNmsuplem();
-                        otvalor.getStore().getProxy().extraParams['params.nmsituac'] = view.getNmsituac();
-                        otvalor.getStore().getProxy().extraParams['params.cdrol'] = view.getCdrol();
-                        otvalor.getStore().getProxy().extraParams['params.cdperson'] = view.getCdperson();
-                        otvalor.getStore().getProxy().extraParams['params.cdatribu'] = cdatribu.getValue();
-                    }
-                    Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdatribu.blur ',otvalor);
-                }
-            });
-            
-            otvalor.on({
-                blur: function(){
-                    Ice.log('Ice.view.bloque.PersonasPolizaController.custom.otvalor.blur ',otvalor.getValue());
-                    if(otvalor.wasValid == true){
+            cdperson.on({
+                change: function(){
+                    Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdperson.change ',cdperson.getValue());
+                    if(cdperson.getValue()){
                         refs.gridDomicilios.getStore().load({
                             params: {
-                                'params.cdperson': otvalor.getValue()
+                                'params.cdperson': cdperson.getValue()
                             }
                         });
                         refs.gridDomicilios.show();
                     }
                     
-                    Ice.log('situacion de vista recibida',view.getNmsituac());
-                    if(view.getNmsituac() === '0'){
-                        refs.cdrol.setValue("TO");
-                        refs.cdrol.setDisabled(true);
-                    } else {
-                        refs.cdrol.setDisabled(false);
-                    }
-                    Ice.log('Ice.view.bloque.PersonasPolizaController.custom.otvalor.blur ',otvalor);
+//                    Ice.log('situacion de vista recibida',view.getNmsituac());
+//                    if(view.getNmsituac() === '0'){
+//                        refs.cdrol.setValue("TO");
+//                        refs.cdrol.setDisabled(true);
+//                    } else {
+//                        refs.cdrol.setDisabled(false);
+//                    }
+                    Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdperson.change ',cdperson);
                 }
             });
         } catch (e) {
@@ -107,42 +107,42 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
             if(refs.form.isValid()){
                 var selected = refs.gridDomicilios.selModel.getSelected();
                 if(selected.getCount() > 0){
-//                    Ice.request({
-//                        mascara: 'Agregando situacion de riesgo',
-//                        url: Ice.url.bloque.personas.movimientoPolizaPersona,
-//                        params: {
-//                            'params.cdunieco' : view.getCdunieco(),
-//                            'params.cdramo': view.getCdramo(),
-//                            'params.estado': view.getEstado(),
-//                            'params.nmpoliza': view.getNmpoliza(),
-//                            'params.nmsuplem': view.getNmsuplem(),
-//                            'params.nmsituac': view.getNmsituac(),
-//                            'params.cdrol': refs.cdrol.value,
-//                            'params.cdperson': selected.getAt(0).data.cdperson,
-//                            'params.nmsuplem': view.getNmsuplem(),
-//                            'params.status': 'V',
-//                            'params.nmorddom':  selected.getAt(0).data.nmorddom,
-//                            'params.swfallec': 'N',
-//                            'params.accion': 'I'
-//                        },
-//                        success: function (json) {
-//                            var paso2 = 'LLenando store';
-//                            try {
-//                                Ice.log("json ",json);
-//                                Ice.mensajeCorrecto('Guardado con exito');
+                    Ice.request({
+                        mascara: 'Agregando situacion de riesgo',
+                        url: Ice.url.bloque.personas.movimientoPolizaPersona,
+                        params: {
+                            'params.cdunieco' : view.getCdunieco(),
+                            'params.cdramo': view.getCdramo(),
+                            'params.estado': view.getEstado(),
+                            'params.nmpoliza': view.getNmpoliza(),
+                            'params.nmsuplem': view.getNmsuplem(),
+                            'params.nmsituac': view.getNmsituac(),
+                            'params.cdrol': refs.cdrol.cdrol,
+                            'params.cdperson': selected.getAt(0).data.cdperson,
+                            'params.nmsuplem': view.getNmsuplem(),
+                            'params.status': 'V',
+                            'params.nmorddom':  selected.getAt(0).data.nmorddom,
+                            'params.swfallec': 'N',
+                            'params.accion': 'I'
+                        },
+                        success: function (json) {
+                            var paso2 = 'LLenando store';
+                            try {
+                                Ice.log("json ",json);
+                                Ice.mensajeCorrecto('Guardado con exito');
                                 view.up('panel').refs.personapoliza.fireEvent('datosPersonaGuardada', me);
-//                            } catch (e) {
-//                                Ice.manejaExcepcion(e, paso2);
-//                            }
-//                        }
-//                    });
+                            } catch (e) {
+                                Ice.manejaExcepcion(e, paso2);
+                            }
+                        }
+                    });
                 } else {
                     Ice.mensajeWarning('Seleccione un domicilio');
                 }
             } else {
                 Ice.mensajeWarning('Datos invalidos');
             }
-//            var store = grid.getStore();
+//            var store = refs.gridDomicilios.getStore();
 //            Ice.log('Ice.view.bloque.personas.PersonasPolizaController.actualizar store ',store);
 //            var nmsituac = store.getAt(rowIndex).getData().nmsituac;
 //            Ice.debug('guardado ',nmsituac);
@@ -175,7 +175,8 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
                             } else {
                                 Ice.query('#mainView').getReferences().mainCard.pop();
                             }
-                            panel.remove(refs.persona);
+                            Ice.log('view',view.up('panel'));
+                            view.up('panel').remove(this);
                             Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.cerrarPersonaPoliza');
                         }
                     }

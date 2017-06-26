@@ -80,8 +80,7 @@ Ext.define('Ice.view.bloque.personas.SituacionPersonas', {
 	        	        },{
 	        	            xtype: 'listapersonas',
 	        	            reference: 'gridPersonas',
-	        	            title: 'Personas por situacion',
-	        	            
+	        	            title: 'Personas por situacion',	        	            
 	        	            width: '100%',
 	        	            cdunieco: me.getCdunieco(),
                             cdramo: me.getCdramo(),

@@ -60,7 +60,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
 	            var comps = Ice.generaComponentes({
                     pantalla: 'BLOQUE_PERSONAS',
                     seccion: 'FORMULARIO',
-                    cdramo: me.cdramo,
+                    cdramo: me.cdramo || '',
                     modulo: me.modulo || '',
                     items: true
                 });
@@ -69,7 +69,9 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                 
                 var modelName = Ext.id();
 	            
-	        	var gridDomicilios = {
+	        	var itemsForm = comps.BLOQUE_PERSONAS.FORMULARIO.items;
+	        	                
+                var gridDomicilios = {
         	        xtype: 'domicilios',
         	        reference: 'gridDomicilios',
         	        width: '100%',
@@ -82,7 +84,9 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
 	        	           xtype: 'form',
 	        	           reference: 'form',
 	        	           title: 'Buscar persona',
-	        	           items: comps.BLOQUE_PERSONAS.FORMULARIO.items,
+	        	           cdramo: me.cdramo,
+	        	           mostrarRol: true,
+	        	           items: itemsForm,
 	        	           modelo: modelName,
 	        	           layout: 'responsivecolumn',
 	        	           width: '100%',
@@ -99,16 +103,17 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                                    reference: 'btnGuardar',
                                    text: 'Guardar',
                                    handler: 'onGuardar'
-                               },{
-                                   xtype: 'button',
-                                   text: 'Nuevo',
-                                   scope: me,
-                                   handler: function(btn){
-                                       Ice.log('me.up',me.up('panel'));
-                                       Ice.log('me.up.up',me.up('panel').up('panel'));
-                                       this.getController().nuevaPersona(me.up('panel'));
-                                   }
                                }
+//                             ,{
+//                                   xtype: 'button',
+//                                   text: 'Nuevo',
+//                                   scope: me,
+//                                   handler: function(btn){
+//                                       Ice.log('me.up',me.up('panel'));
+//                                       Ice.log('me.up.up',me.up('panel').up('panel'));
+//                                       this.getController().nuevaPersona(me.up('panel'));
+//                                   }
+//                               }
                            ],
                            width: '100%'
 	        	       }

@@ -5,7 +5,8 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
     controller: 'personapolizanavigation',
     layout: 'card',
     title: 'Personas poliza',
-    height: '100%',
+//    width: '100%',
+//    height: '100%',
     bodyStyle: 'padding:15px',
     scrollable: true,
     
@@ -57,8 +58,10 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
             var modelName = Ext.id();
             
             Ext.apply(me, {
+//                width: '700',
                 items: [{
                     xtype: 'situacionpersonas',
+//                    width: '100%',
                     id: 'card-0',
                     reference: 'situacionpersonas',
                     cdunieco: me.getCdunieco(),

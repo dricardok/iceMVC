@@ -357,6 +357,7 @@ var Ice = Object.assign(Ice || {}, {
                     msg: texto || 'Cargando...',
                     maskLocal: true,
                     target: mainView,
+                    style: "z-index:999999;",
                     close: function () {
                         this.hide();
                     }
@@ -1234,7 +1235,8 @@ var Ice = Object.assign(Ice || {}, {
                 P: 'numberfieldice',
                 F: 'datefieldice',
                 T: 'textareaice',
-                S: 'switchice'
+                S: 'switchice',
+                CDPERSONPICKER: 'cdpersonpicker'
             }[config.tipocampo];
             if (!item.xtype) {
                 throw 'Tipocampo incorrecto para item';
