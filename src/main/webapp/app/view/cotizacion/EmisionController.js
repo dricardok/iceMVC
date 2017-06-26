@@ -1,15 +1,15 @@
 /**
- * Created by jtezva on 6/1/2017.
+ * Created by jtezva on 26/06/2017.
  */
-Ext.define('Ice.view.cotizacion.CotizacionController', {
+Ext.define('Ice.view.cotizacion.EmisionController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.cotizacion',
+    alias: 'controller.emision',
     
     init: function (view) {
-        Ice.log('Ice.view.cotizacion.CotizacionController');
+        Ice.log('Ice.view.cotizacion.EmisionController');
         var me = this,
             view = me.getView(),
-            paso = 'Iniciando controlador de cotizaci\u00f3n';
+            paso = 'Iniciando controlador de emisi\u00f3n';
         try {
             me.callParent(arguments);
             
@@ -36,7 +36,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
      *
      */
     irBloqueSiguiente: function () {
-        Ice.log('Ice.view.cotizacion.CotizacionController.irBloqueSiguiente');
+        Ice.log('Ice.view.cotizacion.EmisionController.irBloqueSiguiente');
         var me = this,
             view = me.getView(),
             refs = view.getReferences(),
@@ -112,7 +112,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
      *
      */
     irBloqueAnterior: function () {
-        Ice.log('Ice.view.cotizacion.CotizacionController.irBloqueAnterior');
+        Ice.log('Ice.view.cotizacion.EmisionController.irBloqueAnterior');
         var me = this,
             view = me.getView(),
             refs = view.getReferences(),
@@ -139,7 +139,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
     
     
     onTabchangeEvent: function (tabpanel, newCard, oldCard) {
-        Ice.log('Ice.view.cotizacion.CotizacionController.onTabchangeEvent args:', arguments);
+        Ice.log('Ice.view.cotizacion.EmisionController.onTabchangeEvent args:', arguments);
         var me = this,
             view = me.getView(),
             refs = view.getReferences() || {},
@@ -209,7 +209,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
     },
     
     cargar: function () {
-        Ice.log('Ice.view.cotizacion.CotizacionController cargar');
+        Ice.log('Ice.view.cotizacion.EmisionController cargar');
         var me = this,
             view = me.getView(),
             refs = view.getReferences(),
@@ -271,7 +271,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
     
     
     onCargarClic: function () {
-        Ice.log('Ice.view.cotizacion.CotizacionController.onCargarClic');
+        Ice.log('Ice.view.cotizacion.EmisionController.onCargarClic');
         var me = this,
             view = me.getView(),
             paso = 'Cargando cotizaci\u00f3n';
@@ -350,7 +350,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
     
     
     mostrarPrimas: function () {
-        Ice.log('Ice.view.cotizacion.CotizacionController.mostrarPrimas');
+        Ice.log('Ice.view.cotizacion.EmisionController.mostrarPrimas');
         var me = this,
             paso = 'Recuperando tarifa';
         try {
@@ -365,25 +365,13 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 estado: view.getEstado(),
                 nmpoliza: view.getNmpoliza(),
                 
-                botones: [
-                    {
-                        text: 'Aceptar',
-                        iconCls: 'x-fa fa-check',
-                        handler: function (me) {
-                            me.up('ventanaprimas').cerrar();
-                        }
-                    }, {
-                        text: 'Confirmar',
-                        iconCls: 'x-fa fa-dollar',
-                        handler: function (me) {
-                            me.up('ventanaprimas').cerrar();
-                            Ice.query('#mainView').getController().redirectTo('emision.action?cdunieco=' + view.getCdunieco() +
-                                '&cdramo=' + view.getCdramo() + '&estado=' + view.getEstado() + '&nmpoliza=' + view.getNmpoliza() +
-                                '&cdtipsit=' + view.getCdtipsit(),
-                            true);
-                        }
+                botones: [{
+                    text: 'Aceptar',
+                    iconCls: 'x-fa fa-check',
+                    handler: function (me) {
+                        me.up('ventanaprimas').cerrar();
                     }
-                ]
+                }]
             }).mostrar();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);

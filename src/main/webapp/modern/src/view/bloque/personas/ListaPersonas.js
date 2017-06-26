@@ -38,12 +38,14 @@ Ext.define('Ice.view.bloque.personas.ListaPersonas', {
 	                    throw 'No hay datos para lista de personas';
 	                }
 	                
+	                config.nmsuplem = config.nmsuplem || 0;
+	                
 	                if (!config.cdramo || !config.cdtipsit) {
 	                    throw 'Falta ramo y tipo de situaci\u00f3n para lista de personas';
 	                }
 	                
-	                if (!config.cdunieco || !config.estado || !config.nmpoliza || !config.nmsuplem) {
-                        throw 'Falta llave de p\u00f3liza';
+	                if (!config.cdunieco || !config.estado || !config.nmpoliza /*|| Ext.isEmpty(config.nmsuplem)*/) {
+                        throw 'Falta llave de p\u00f3lizaASD';
                     }
 	                
 //	                if (!config.nmsituac) {

@@ -38,11 +38,11 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
         var me = this,
             paso = 'Construyendo panel de situaciones - agrupador';
         try {
-            config.cdunieco = 1;
+            /*config.cdunieco = 1;
             config.cdramo   = 501;
             config.estado   = 'W';
             config.nmpoliza = 17422;
-            config.cdtipsit = 51;
+            config.cdtipsit = 51;*/
         
             if (!config ||
                 !config.cdunieco ||
@@ -62,7 +62,7 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
                     xtype: 'bloquelistasituaciones',
                     reference: 'gridsituacionesagrupador',
                     height: 300,
-                    style: 'border: 1px solid red;',
+                    style: 'border: 0px solid red;',
                     columns: [
                         {
                             text: 'Agrupador',
