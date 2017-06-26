@@ -17,7 +17,7 @@ Ext.define('Ice.view.main.Toolbar', {
             xtype: 'button',
             ui: 'header',
             iconCls: 'x-fa fa-bars',
-            margin: '0 0 0 10',
+            margin: '0 0 0 10px',
             listeners: {
                 tap: 'onToggleNavigationSize'
             }
@@ -31,7 +31,7 @@ Ext.define('Ice.view.main.Toolbar', {
             xtype: 'button',
             ui: 'header',
             iconCls: 'x-fa fa-user',
-            margin: '0 0 0 10',
+            margin: '0 0 0 40px',
             listeners: {
                 tap: 'onToggleUserNavigationSize'
             },

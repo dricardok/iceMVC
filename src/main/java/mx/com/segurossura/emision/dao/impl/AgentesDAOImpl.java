@@ -139,4 +139,35 @@ public class AgentesDAOImpl extends HelperJdbcDao implements AgentesDAO {
         }
     }
 	
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean validaAgente(String cdagente, String cdramo,String cdproceso) throws Exception{         
+        Map<String, Object> params = new LinkedHashMap<String, Object>();       
+        params.put("pv_cdagente_i", cdagente);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_cdproceso_i", cdproceso);
+        logger.debug("-->"+params);
+        Map<String, Object> resultado = ejecutaSP(new ValidaAgenteSP(getDataSource()), params);
+        logger.debug("pp"+resultado.toString());
+        Boolean dat = ((String)resultado.get("v_return")).equals("S");
+        return dat;
+    }
+                 
+    protected class ValidaAgenteSP extends StoredProcedure{
+        protected ValidaAgenteSP(DataSource dataSource) {
+            super(dataSource,"PKG_VALIDA_ALEA.F_VAL_CED_AGE"); 
+            
+            /** important that the out parameter is defined before the in parameter. */
+            declareParameter(new SqlOutParameter("v_return",    Types.VARCHAR));  
+            declareParameter(new SqlParameter("pv_cdagente_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdproceso_i",Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            /** use function instead of stored procedure */
+            setFunction(true);
+            compile();
+        }
+    }
+	
 }

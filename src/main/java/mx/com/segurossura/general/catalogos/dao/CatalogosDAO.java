@@ -114,4 +114,13 @@ public interface CatalogosDAO {
     
     public List<Map<String, String>> obtenerCatalogoTablaManteni (String cdtabla) throws Exception;
     
+    /**
+     * Obtiene el catalogo de productos
+     * 
+     * @param cdramo
+     * @return
+     * @throws Exception
+     */
+    public List<Map<String, String>> obtenerProductos() throws Exception;
+    
 }

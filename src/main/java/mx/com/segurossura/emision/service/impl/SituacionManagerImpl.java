@@ -8,17 +8,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.dao.SituacionDAO;
 import mx.com.segurossura.emision.service.SituacionManager;
 import mx.com.segurossura.general.catalogos.model.Bloque;
+import mx.com.segurossura.general.utils.ValoresMinimosUtils;
 
 @Service
 public class SituacionManagerImpl implements SituacionManager{
@@ -149,29 +152,79 @@ public class SituacionManagerImpl implements SituacionManager{
 	
 	@Override
 	public void movimientoMpolisit(String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsituac, String nmsuplem_Sesion, String nmsuplem_Bean, String status,
-            String cdtipsit, String swreduci, String cdagrupa, String cdestado, String fefecsit,
-            String fecharef, String indparbe, String feinipbs, String porparbe, String intfinan,
-            String cdmotanu, String feinisus, String fefinsus, String accion) throws Exception {
-		logger.debug(Utils.join(
-				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-				,"\n@@@@@@ movimientoMpolisitSP"				
-				));
-		String paso="";		
-		try{			
-			paso="Consultando datos";
-			situacionDAO.movimientoMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem_Sesion, nmsuplem_Bean, status, cdtipsit, swreduci, cdagrupa, cdestado, Utils.parse(fefecsit), Utils.parse(fecharef), indparbe, Utils.parse(feinipbs), porparbe, intfinan, cdmotanu, Utils.parse(feinisus), Utils.parse(fefinsus), accion);
-
-		} catch(Exception ex) {
+            String nmsituac, String nmsuplemEnd, String nmsuplem, String status, Map<String, String> datos,
+            String accion) throws Exception {
+		String paso = "Ejecutando movimiento de relaci\u00f3n p\u00f3liza situaci\u00f3n";		
+		try {
+		    if ("D".equals(accion)) {
+		        if (StringUtils.isBlank(nmsituac)) {
+		            throw new ApplicationException("Falta situaci\u00f3n");
+		        }
+		        situacionDAO.movimientoMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplemEnd, nmsuplem, status, null,
+		                null, null, null, null, null, null, null, null, null, null, null, null, accion);
+		    } else if ("I".equals(accion) || "U".equals(accion)) {
+		        // si no hay situacion, calcula la siguiente
+		        if (StringUtils.isBlank(nmsituac)) {
+		            nmsituac = situacionDAO.obtieneNmsituac(cdunieco, cdramo, estado, nmpoliza);
+		        }
+		        
+		        // recuperar registro actual
+		        Map<String, String> mpolisit = null;
+		        try {
+		            mpolisit = situacionDAO.obtieneMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplemEnd).get(0);
+		        } catch (Exception ex) {
+		            logger.warn("No se encuentra situaci\u00f3n");
+		        }
+		        if (mpolisit == null) {
+		            mpolisit = ValoresMinimosUtils.obtenerValores(Bloque.SITUACIONES);
+		        }
+		        
+		        // agregar los datos de pantalla al registro actual
+		        Map<String, String> camposLlave = new HashMap<String, String>();
+		        camposLlave.put("cdunieco", null);
+		        camposLlave.put("cdramo", null);
+		        camposLlave.put("estado", null);
+		        camposLlave.put("nmpoliza", null);
+		        camposLlave.put("nmsituac", null);
+		        camposLlave.put("nmsuplemEnd", null);
+		        camposLlave.put("nmsuplem", null);
+		        camposLlave.put("status", null);
+		        camposLlave.put("accion", null);
+		        for (Entry<String, String> en : datos.entrySet()) {
+		            String key = en.getKey();
+		            if (!camposLlave.containsKey(key)) {
+		                mpolisit.put(key, en.getValue());
+		            }
+		        }
+		        
+		        // invocar movimiento
+		        situacionDAO.movimientoMpolisit(
+		                // llave
+		                cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplemEnd, nmsuplem, status,
+		                
+		                // datos
+		                mpolisit.get("cdtipsit"),
+		                mpolisit.get("swreduci"),
+		                mpolisit.get("cdagrupa"),
+		                mpolisit.get("cdestado"),
+		                Utils.parse(mpolisit.get("fefecsit")),
+		                Utils.parse(mpolisit.get("fecharef")),
+		                mpolisit.get("indparbe"),
+		                Utils.parse(mpolisit.get("feinipbs")),
+		                mpolisit.get("porparbe"),
+		                mpolisit.get("intfinan"),
+		                mpolisit.get("cdmotanu"),
+		                Utils.parse(mpolisit.get("feinisus")),
+		                Utils.parse(mpolisit.get("fefinsus")),
+		                
+		                // accion
+		                accion);
+		    } else {
+		        throw new ApplicationException("Acc\u00f3n no v\u00e1lida");
+		    }
+		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}
-		
-		
-		logger.debug(Utils.join(
-				 "\n@@@@@@ movimientoMpolisitSP"
-				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-				));
-		
 	}
 
 	@Override

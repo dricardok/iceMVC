@@ -46,7 +46,7 @@
 	            });
 	            Ice.log('Ice.view.bloque.ListaSituaciones.initComponent comps:', comps);
 	            Ext.apply(me, {
-	                columns: comps.BLOQUE_LISTA_SITUACIONES.GRID.columns.concat(me.config.actionColumns),	                store  : {
+	                columns: comps.BLOQUE_LISTA_SITUACIONES.GRID.columns.concat(me.config.columns || []).concat(me.config.actionColumns),	                store  : {
 	                	fields: comps.BLOQUE_LISTA_SITUACIONES.GRID.fields,
 	                	autoLoad: true,
 	                	proxy: {
@@ -65,7 +65,7 @@
 	                            messageProperty: 'message',
 	                            rootProperty: 'situaciones'
 	                         }	                     }	                },
-	                buttons:me.config.buttons
+	                buttons:me.config.buttons,
 	            });
 	        } catch (e) {
 	            Ice.generaExcepcion(e, paso);

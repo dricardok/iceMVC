@@ -16,7 +16,7 @@ Ext.define('Ice.view.login.RolTree', {
     // configuracion que no usa config
     controller: 'roltree',
     
-    style: 'padding: 100px 0px 0px 20px; background: url(resources/images/BGEasyAlea.jpg); background-repeat: no-repeat; background-size: cover;background-position: 10% 25%; !important;',
+    style: 'padding: 12% 0 0 4%; background: url(resources/images/BGEasyAlea.jpg); background-repeat: no-repeat; background-size: cover;background-position: 10% 25%; !important;',
     tpl: new Ext.XTemplate(
         '<tpl for=".">',
             '<div class="btn_rol_suscriptor thumb-wrap">',            

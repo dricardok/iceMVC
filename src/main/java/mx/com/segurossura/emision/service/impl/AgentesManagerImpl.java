@@ -187,6 +187,23 @@ public class AgentesManagerImpl implements AgentesManager {
 		
 		return agentes;	
 	}
+
+	@Override
+	public boolean validaAgente(String cdagente, String cdramo, String cdproceso) throws Exception {
+		String paso = null;
+		boolean val =false;
+		
+        try{
+		
+        	paso = "Recuperando valida agente";
+        	val = agentesDAO.validaAgente(cdagente, cdramo, cdproceso);
+	        
+        }catch(Exception e){
+        	e.printStackTrace();
+        	Utils.generaExcepcion(e, paso);
+        }
+		return val;
+	}
 	
 	
 }

@@ -365,13 +365,25 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 estado: view.getEstado(),
                 nmpoliza: view.getNmpoliza(),
                 
-                botones: [{
-                    text: 'Aceptar',
-                    iconCls: 'x-fa fa-check',
-                    handler: function (me) {
-                        me.up('ventanaprimas').cerrar();
+                botones: [
+                    {
+                        text: 'Aceptar',
+                        iconCls: 'x-fa fa-check',
+                        handler: function (me) {
+                            me.up('ventanaprimas').cerrar();
+                        }
+                    }, {
+                        text: 'Confirmar',
+                        iconCls: 'x-fa fa-dollar',
+                        handler: function (me) {
+                            me.up('ventanaprimas').cerrar();
+                            Ice.query('#mainView').getController().redirectTo('emision.action?cdunieco=' + view.getCdunieco() +
+                                '&cdramo=' + view.getCdramo() + '&estado=' + view.getEstado() + '&nmpoliza=' + view.getNmpoliza() +
+                                '&cdtipsit=' + view.getCdtipsit(),
+                            true);
+                        }
                     }
-                }]
+                ]
             }).mostrar();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);

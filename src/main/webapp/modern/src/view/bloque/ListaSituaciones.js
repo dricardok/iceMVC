@@ -7,7 +7,10 @@ Ext.define('Ice.view.bloque.ListaSituaciones', {
 	    	controller: 'bloquelistasituaciones',
 //		    viewModel: 'bloquelistasituaciones',	    
 
-		    requires: [],  
+		    requires: [
+		        'Ext.Toolbar',
+		        'Ext.grid.cell.Widget'
+	        ],  
 		    
 
 		    // validacion de parametros de entrada
@@ -28,7 +31,7 @@ Ext.define('Ice.view.bloque.ListaSituaciones', {
 		                config.cdramo = config.cdramo || '';
 		                config.estado = config.estado || '';
 		                config.nmpoliza = config.nmpoliza || '';
-		                config.nmsuplem = config.nmsuplem || '';
+		                config.nmsuplem = config.nmsuplem || 0;
 		                config.flujo = config.flujo || {};
 	               
 		                config.modulo = config.modulo || 'COTIZACION';
@@ -39,7 +42,7 @@ Ext.define('Ice.view.bloque.ListaSituaciones', {
 		                
 		                var comps = Ice.generaComponentes({
 								pantalla : 'BLOQUE_LISTA_SITUACIONES',
-								seccion : 'LISTA',
+								seccion : 'GRID',
 								modulo : config.modulo || '',
 								estatus : (config.flujo && config.flujo.estatus) || '',
 								cdramo : config.cdramo || '',
@@ -50,8 +53,8 @@ Ext.define('Ice.view.bloque.ListaSituaciones', {
 							});
 						Ice.log('Ice.view.bloque.Coberturas.initComponent comps:',comps);
 						
-						config.columns=comps.BLOQUE_LISTA_SITUACIONES.LISTA.columns;
-						config.fields = comps.BLOQUE_LISTA_SITUACIONES.LISTA.fields;
+						config.columns=comps.BLOQUE_LISTA_SITUACIONES.GRID.columns.concat(config.columns || []);
+						config.fields = comps.BLOQUE_LISTA_SITUACIONES.GRID.fields;
 						
 						config.items = config.items || [];
 						config.buttons = config.buttons || [];
@@ -99,6 +102,8 @@ Ext.define('Ice.view.bloque.ListaSituaciones', {
 				estado : null,
 				nmpoliza : null,
 				nmsuplem : null,
+				
+				situacionCero: false,
 				
 				//fields generados en constructor
 				fields: []

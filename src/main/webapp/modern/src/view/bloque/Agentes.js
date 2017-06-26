@@ -21,7 +21,7 @@ Ext.define('Ice.view.bloque.Agentes', {
             paso = 'Validando bloque de agentes';
         try {
             
-        	if (!config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza || !config.nmsuplem) {
+        	if (!config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza || Ext.isEmpty(config.nmsuplem)) {
                 throw 'Faltan parametros para bloque de agentes';
             }
         	
@@ -136,10 +136,7 @@ Ext.define('Ice.view.bloque.Agentes', {
                      }
                 },	                
                 buttons: [
-                      {
-                          text: 'Eliminar',
-                          handler: ''
-                      },
+                      
                       {
                           text: 'Guardar',
                           iconCls: 'x-fa fa-save',
