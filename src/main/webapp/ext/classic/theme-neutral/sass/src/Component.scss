@@ -1,5 +1,5 @@
 .#{$prefix}body {
-    color: $color;
+    color: $blanco-s;
     font-size: $font-size;
     @if $line-height != normal {
         line-height: $line-height;

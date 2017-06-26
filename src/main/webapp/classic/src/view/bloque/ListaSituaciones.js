@@ -24,7 +24,7 @@
 	    	situacionCero: false
 	    },    	    
 	    // configuracio ext
-	    title: 'Lista Situaciones',	    	    
+	    title: 'Lista Situaciones',	    	    	    
 	    tbar: [],	    
 	    // contruccion usando metodos ext y parametros de entrada
 	    initComponent: function () {

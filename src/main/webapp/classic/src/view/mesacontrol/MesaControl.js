@@ -19,14 +19,14 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
     
     // configuracion que no usa parametros
     layout: 'responsivecolumn',
-    
+        
     defaultFocus: 'form',
     
     items: [
         {
             xtype: 'form',
             title: 'Filtro',
-            userCls: 'big-100 shadow',
+            userCls: 'big-100 shadow titulo_pnl',
             
             collapsible: true,
             titleCollapse: true,
@@ -40,7 +40,7 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
                 labelSeparator: '',
                 submitEmptyText: false,
                 anchor: '100%',
-                userCls: 'big-50 small-100'
+                userCls: 'big-50 small-100 titulo_pnl'
             },
             items: [
                 {
@@ -79,7 +79,7 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
         }, {
             xtype: 'grid',
             title: 'Tr\u00e1mites',
-            userCls: 'big-100 shadow',
+            userCls: 'big-100 shadow ',
             
             minHeight: 200,
             

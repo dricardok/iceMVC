@@ -12,10 +12,11 @@ $azulo3-s:#0F2F74;
 $azulc-s:#00B5CB;
 $azulc2-s:#002A64;
 $azulo-rgba:rgba(0, 51, 160, .75);
+$azulo-rgba-press:rgba(0, 51, 160, .25);
 $blanco-s:#ffffff !important;
 
 
-
+$gris-s:#888686;
 
  /*Tipografía Corporativa DIN Regular-Medium*/
 $font_din: 'ext/packages/fonts/';
@@ -29,7 +30,7 @@ $font-grey:#707372;
 $button-default-background-color:$azulo-s;
 $button-default-background-color-over:$azulo-rgba;
 $button-default-background-color-focus:$azulo-rgba;
-$button-default-background-color-pressed:$azulo-rgba;
+$button-default-background-color-pressed:$azulo-rgba-press
 $button-default-background-color-focus-over:$azulo-rgba;
 $button-default-background-color-focus-pressed:$azulo-rgba;
 
@@ -37,8 +38,7 @@ $button-default-background-color-focus-pressed:$azulo-rgba;
  /*Border*/
  $btn_transparent:transparent;
  $border_btn_sm:2px;
- 
- 
+  
  $button-default-border-color:$azulo-s;
  $button-default-border-color-over:$btn_transparent;
  $button-default-border-color-focus:$btn_transparent;
@@ -68,7 +68,12 @@ $button-default-background-color-focus-pressed:$azulo-rgba;
  /*Panel*/
 $sombra-pnl: 0 2px 5px 0 rgba(0,0,0,0.26);
 $mrg-pnl:5%;
-$ui-header-background-color:$azulo-s !important;
+//$ui-header-background-color:$azulo-s !important;
+
+/*header de panel*/
+$ui-header-color: $font-grey !important;
+$color-transparent-s: transparent;
+ 
 
  /*Footer*/
  $fuente-df:'Arial';
@@ -78,9 +83,10 @@ $ui-header-background-color:$azulo-s !important;
 $ui-header-background-color:$azulo-s !important;
 
  /*Tabs*/
- $ui-color-active: $azulc-s !important;
- $tab-border-radius: 2px 2px 0px 0px !important;
-$tab-font-weight:$font-bold;
+ $tab-font-weight:$font-bold;
+ $txt-center:center;
+ 
+
  
  
 

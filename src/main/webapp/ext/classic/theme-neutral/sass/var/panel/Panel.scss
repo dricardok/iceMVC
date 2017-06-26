@@ -153,13 +153,14 @@ $panel-header-font-size: dynamic($font-size);
  * @var {number}
  * The line-height of Panel Headers
  */
-$panel-header-line-height: dynamic(16px);
+$panel-header-line-height: dynamic(35px);
 
 /**
  * @var {string}
  * The font-weight of Panel Headers
  */
-$panel-header-font-weight: dynamic($font-weight-bold);
+
+$panel-header-font-weight: dynamic($font-bold);
 
 /**
  * @var {string}
@@ -215,13 +216,14 @@ $panel-header-inner-border-width: dynamic(0);
  * @var {color}
  * The text color of the Panel Header
  */
-$panel-header-color: dynamic($color);
+
+$panel-header-color: dynamic($font-grey);
 
 /**
  * @var {color}
  * The background-color of the Panel Header
  */
-$panel-header-background-color: dynamic($panel-base-color);
+$panel-header-background-color: dynamic($color-transparent-s);
 
 /**
  * @var {number}
