@@ -65,7 +65,7 @@
 	                            messageProperty: 'message',
 	                            rootProperty: 'situaciones'
 	                         }	                     }	                },
-	                buttons:me.config.buttons
+	                buttons:me.config.buttons,
 	            });
 	        } catch (e) {
 	            Ice.generaExcepcion(e, paso);

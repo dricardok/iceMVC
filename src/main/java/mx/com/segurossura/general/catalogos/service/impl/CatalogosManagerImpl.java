@@ -52,6 +52,17 @@ public class CatalogosManagerImpl implements CatalogosManager {
                         }
                     }
                     break;
+                
+                case PRODUCTOS:
+                    paso = "Recuperando productos";
+                    List<Map<String, String>> productos = catalogosDAO.obtenerProductos();
+                    lista = new ArrayList<BaseVO>();
+                    if (productos != null) {
+                        for (Map<String, String> sucursal : productos) {
+                            lista.add(new BaseVO(sucursal.get("cdramo"), sucursal.get("dsramo")));
+                        }
+                    }
+                    break;
                     
                 case TATRIPOL:
                     paso = "Recuperando lista de apoyo para atributo de p\u00f3liza";

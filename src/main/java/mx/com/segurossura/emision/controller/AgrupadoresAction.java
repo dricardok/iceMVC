@@ -179,6 +179,42 @@ public class AgrupadoresAction extends PrincipalCoreAction {
         
         return SUCCESS;
     }
+    
+    
+    @Action(
+            value = "obtenerMpoliagrVista",
+            results = {
+                    @Result(name = "success", type = "json")
+            }
+    )
+    public String obtenerMpoliagrVista () {
+        logger.debug(Utils.log("###### obtenerMpoliagrVista params = ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem"),
+                   status   = params.get("status"),
+                   nmsuplemEnd = params.get("nmsuplemEnd");
+            
+            Utils.validate(cdunieco, "Falta cdunieco",
+                           cdramo,   "Falta cdtamo",
+                           estado,   "Falta estado",
+                           nmpoliza, "Falta nmpoliza");
+            
+            nmsuplem = Utils.NVL(nmsuplem, "0");
+            status = Utils.NVL(status, "V");
+            nmsuplemEnd = Utils.NVL(nmsuplemEnd, "0");
+            list = agrupadoresManager.obtenerMpoliagrVista(cdunieco, cdramo, estado, nmpoliza, nmsuplemEnd);
+            success = true;
+        } catch (Exception ex) {
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
 
 	// Getters and setters:
 	

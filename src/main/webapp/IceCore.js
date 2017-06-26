@@ -85,6 +85,7 @@ var Ice = Object.assign(Ice || {}, {
                 cargarPersona:              'emision/obtenerPersonaPoliza.action',
                 obtenerDomicilios:          'emision/obtenerDomicilios.action',
                 movimientoPolizaPersona:    'emision/movimientoPolizaPersona.action',
+                obtenerPersonaCriterio:     'emision/obtenerPersonaCriterio.action',
                 guardarPersona:				'registroPersona/guardarPersona.action',
             	movimientoDomicilio:		'registroPersona/movimientoDomicilio.action',
             	obtenerPersona:				'registroPersona/obtienePersona.action',
@@ -95,12 +96,12 @@ var Ice = Object.assign(Ice || {}, {
             	cargar: 			'emision/agentes/cargar.action',
             	cargarAgentes: 		'emision/agentes/cargarAgentes.action',
             	guardar:			'emision/agentes/guardarAgentes.action',
-            	buscar:				'emision/agentes/buscarAgentes.action',
-            	validarAgente: 		'emision/agentes/validarAgente.action'
+            	buscar:				'emision/agentes/buscarAgentes.action'
             },
             agrupadores: {
-                obtenerAgrupador: 'emision/obtenerMpoliagr.action',
-                movimientoAgrupador: 'emision/realizarMovimientoMpoliagr.action'
+                obtenerAgrupador:        'emision/obtenerMpoliagr.action',
+                movimientoAgrupador:     'emision/realizarMovimientoMpoliagr.action',
+                obtenerAgrupadoresVista: 'emision/obtenerMpoliagrVista.action'
             }
          }
      },
@@ -361,6 +362,7 @@ var Ice = Object.assign(Ice || {}, {
                     msg: texto || 'Cargando...',
                     maskLocal: true,
                     target: mainView,
+                    style: "z-index:999999;",
                     close: function () {
                         this.hide();
                     }
@@ -1093,7 +1095,7 @@ var Ice = Object.assign(Ice || {}, {
         try {
             configComps = configComps || [];
             for (var i = 0; i < configComps.length; i++) {
-                if (configComps[i].swcolumn === 'S') {
+                if(configComps[i].swcolumn === 'S'){                    
                     columns.push(Ice.generaColumn(configComps[i]));
                 }
             }
@@ -1238,7 +1240,8 @@ var Ice = Object.assign(Ice || {}, {
                 P: 'numberfieldice',
                 F: 'datefieldice',
                 T: 'textareaice',
-                S: 'switchice'
+                S: 'switchice',
+                CDPERSONPICKER: 'cdpersonpicker'
             }[config.tipocampo];
             if (!item.xtype) {
                 throw 'Tipocampo incorrecto para item';
@@ -1467,7 +1470,8 @@ var Ice = Object.assign(Ice || {}, {
                     P: 'float',
                     F: 'date',
                     T: 'string',
-                    S: 'string'
+                    S: 'string',
+                    CDPERSONPICKER: 'string'
                 }[config.tipocampo];
             if (!field.type) {
                 throw 'Tipocampo incorrecto para field';
@@ -1847,6 +1851,64 @@ var Ice = Object.assign(Ice || {}, {
                     }
                     throw errorString;
                 }
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+    
+    /**
+     * Agrega un componente a pantalla
+     * @param config la configuracion del comp o la instancia del componente
+     */
+    push: function (config) {
+        var paso = 'Agregando vista a pantalla';
+        try {
+            if (Ext.manifest.toolkit === 'classic') {
+                var comp,
+                    mainCard = Ice.query('#mainView').getReferences().mainCardPanel,
+                    mainLayout = mainCard.getLayout(),
+                    actualItem = mainLayout.getActiveItem();
+                if (typeof config.isXType === 'function') {
+                    comp = config;
+                } else {
+                    comp = Ext.create(config);
+                }
+                mainCard.add(comp);
+                mainLayout.setActiveItem(comp);
+                // pila
+                mainCard.elementos = mainCard.elementos || [];
+                if (mainCard.elementos.length === 0) {
+                    mainCard.elementos.push(actualItem);
+                }
+                mainCard.elementos.push(comp);
+            } else {
+                Ice.query('#mainView').getReferences().mainCard.push(config);
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+    
+    /**
+     * Quita un componente a pantalla
+     */
+    pop: function () {
+        var paso = 'Regresando a vista anterior';
+        try {
+            if (Ext.manifest.toolkit === 'classic') {
+                var mainCard = Ice.query('#mainView').getReferences().mainCardPanel,
+                    mainLayout = mainCard.getLayout();
+                mainCard.elementos = mainCard.elementos || [];
+                if (mainCard.elementos.length < 2) {
+                    return;
+                    //throw 'No se puede regresar a la vista anterior';
+                }
+                //mainCard.remove(mainCard.elementos[mainCard.elementos.length - 1]);
+                mainCard.elementos.pop();
+                mainLayout.setActiveItem(mainCard.elementos[mainCard.elementos.length - 1]);
+            } else {
+                Ice.query('#mainView').getReferences().mainCard.pop();
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);

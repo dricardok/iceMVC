@@ -1,5 +1,5 @@
 Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.Panel',
     xtype: 'personapolizanavigation',
     
     controller: 'personapolizanavigation',
@@ -23,11 +23,53 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
                     throw 'Falta ramo y tipo de situaci\u00f3n para lista de personas';
                 }
                 
-                if (!config.cdunieco || !config.estado || !config.nmpoliza || !config.nmsuplem) {
+                if (!config.cdunieco || !config.estado || !config.nmpoliza || Ext.isEmpty(config.nmsuplem)) {
                     throw 'Falta llave de p\u00f3liza';
                 }
                 
                 config.modulo = config.modulo || 'COTIZACION';
+                
+                config.items = [
+                    {
+                        xtype: 'situacionpersonas',
+                        id: 'card-0',
+                        reference: 'situacionpersonas',
+                        cdunieco: config.cdunieco,
+                        cdramo: config.cdramo,
+                        estado: config.estado,
+                        nmpoliza: config.nmpoliza,
+                        nmsuplem: config.nmsuplem,
+                        cdtipsit: config.cdtipsit,
+                        buttonPersonas: [
+                            {
+                                text: 'Agregar',
+                                iconCls: 'x-fa fa-plus-circle',
+                                scope: me,
+                                handler: function(btn){
+                                    Ice.log('config ',btn.up('panel'));
+                                    this.getController().agregarPersona(btn.up('panel'));
+                                }
+                            }
+                        ]
+                    }
+                ];
+                
+                config.tbar = [
+                    {
+                        id: 'move-prev',
+                        text: 'Back',
+                        handler: function(btn) {
+                            me.getController().navigate(btn.up("panel"), "prev");
+                        },
+                        disabled: true
+                    },'->',{
+                        id: 'move-next',
+                        text: 'Next',
+                        handler: function(btn) {
+                            me.getController().navigate(btn.up("panel"), "next");
+                        }
+                    }
+                ];
                 
             } catch (e) {
                 Ice.generaExcepcion(e, paso);
@@ -47,64 +89,5 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
         nmsituac: null,
         cdbloque: null,
         cdtipsit: null
-    },
-    
-    initComponent: function () {
-        Ice.log('Ice.view.bloque.personas.PersonaPolizaNavigation initComponent');
-        var me = this,
-            paso = 'Construyendo navegacion de personas de poliza';
-        try{
-            var modelName = Ext.id();
-            
-            Ext.apply(me, {
-                items: [{
-                    xtype: 'situacionpersonas',
-                    id: 'card-0',
-                    reference: 'situacionpersonas',
-                    cdunieco: me.getCdunieco(),
-                    cdramo: me.getCdramo(),
-                    estado: me.getEstado(),
-                    nmpoliza: me.getNmpoliza(),
-                    nmsuplem: me.getNmsuplem(),
-                    cdtipsit: me.getCdtipsit(),
-                    buttonPersonas: [
-                        {
-                            text: 'Agregar',
-                            iconCls: 'x-fa fa-plus-circle',
-                            scope: me,
-                            handler: function(btn){
-                                this.getController().agregarPersona(me);
-                            }
-                        }
-                    ]
-                }],
-                tbar: [
-                    {
-                        id: 'move-prev',
-                        text: 'Back',
-                        handler: function(btn) {
-                            me.getController().navigate(btn.up("panel"), "prev");
-                        },
-                        disabled: true
-                    },'->',{
-                        id: 'move-next',
-                        text: 'Next',
-                        handler: function(btn) {
-                            me.getController().navigate(btn.up("panel"), "next");
-                        }
-                    }
-                ],                
-                renderTo: Ext.getBody()
-            });
-        } catch (e){
-            Ice.generaExcepcion(e, paso);
-        }
-        
-       // construir componente
-        me.callParent(arguments);
-        
-        
-        // comportamiento
-        paso = '';
     }
 });

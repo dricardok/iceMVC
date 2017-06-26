@@ -35,7 +35,7 @@ Ext.define('Ice.view.bloque.personas.SituacionPersonas', {
                         throw 'Falta ramo y tipo de situaci\u00f3n para lista de personas';
                     }
                     
-                    if (!config.cdunieco || !config.estado || !config.nmpoliza || !config.nmsuplem) {
+                    if (!config.cdunieco || !config.estado || !config.nmpoliza || Ext.isEmpty(config.nmsuplem)) {
                         throw 'Falta llave de p\u00f3liza y situacion';
                     }
 	            } catch (e) {
@@ -80,6 +80,7 @@ Ext.define('Ice.view.bloque.personas.SituacionPersonas', {
 	        	        },{
 	        	            xtype: 'listapersonas',
 	        	            reference: 'gridPersonas',
+	        	            title: 'Personas por situacion',	        	            
 	        	            width: '100%',
 	        	            cdunieco: me.getCdunieco(),
                             cdramo: me.getCdramo(),

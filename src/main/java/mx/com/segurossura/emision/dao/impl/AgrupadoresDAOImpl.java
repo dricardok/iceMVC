@@ -190,4 +190,46 @@ public class AgrupadoresDAOImpl extends HelperJdbcDao implements AgrupadoresDAO 
             compile();
         }
     }
+	
+	@Override
+	public List<Map<String, String>> obtenerMpoliagrVista (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplemSes)
+            throws Exception {
+	    Map<String, String> params = new LinkedHashMap<String, String>();
+	    params.put("pv_cdunieco_i", cdunieco);
+	    params.put("pv_cdramo_i",   cdramo);
+	    params.put("pv_estado_i",   estado);
+	    params.put("pv_nmpoliza_i", nmpoliza);
+	    params.put("pv_nmsuplem_i", nmsuplemSes);
+	    Map<String, Object> procRes = ejecutaSP(new ObtenerMpoliagrVistaSP(getDataSource()), params);
+	    List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+	    if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+	    }
+	    return lista;
+	}
+    
+    protected class ObtenerMpoliagrVistaSP extends StoredProcedure {
+        protected ObtenerMpoliagrVistaSP(DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_GET_MPOLIAGR_VISTA");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            String[] cols = new String[] {
+                    "cdunieco",
+                    "cdramo",
+                    "estado",
+                    "nmpoliza",
+                    "cdagrupa",
+                    "nmsuplem",
+                    "status",
+                    "dsnombre",
+                    "nmporcen"};
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
 }
