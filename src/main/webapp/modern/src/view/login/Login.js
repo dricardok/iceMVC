@@ -26,7 +26,7 @@ Ext.define('Ice.view.login.Login', {
             reference: 'form',
             bodyPadding: '0 0',
             bodyStyle: 'background: transparent;',
-            style: 'padding:60px 20px;min-height:100%; background: url(resources/images/bg_sura_login_small.jpg); background-repeat: no-repeat; background-size: cover;background-position: 20% 0%; !important;',
+            style: 'padding:30% 12%;min-height:100%; background: url(resources/images/bg_sura_login_small.jpg); background-repeat: no-repeat; background-size: cover;background-position: 20% 0%; !important;',
             cls:'bg_login',
             items: [
             	{
@@ -60,8 +60,7 @@ Ext.define('Ice.view.login.Login', {
                     docked: 'bottom',
                                        
                     items: [{
-                        text: 'Ir',
-                        
+                        text: 'Ir',                        
                         iconCls: 'x-fa fa-key',
                         handler: 'onAceptarClic',                        
                         bind: {

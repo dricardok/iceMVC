@@ -14,6 +14,7 @@ import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.core.model.BaseVO;
 
+import mx.com.segurossura.emision.dao.AgrupadoresDAO;
 import mx.com.segurossura.general.catalogos.dao.CatalogosDAO;
 import mx.com.segurossura.general.catalogos.model.Catalogos;
 import mx.com.segurossura.general.catalogos.service.CatalogosManager;
@@ -25,6 +26,9 @@ public class CatalogosManagerImpl implements CatalogosManager {
     
     @Autowired
     private CatalogosDAO catalogosDAO;
+    
+    @Autowired
+    private AgrupadoresDAO agrupadoresDAO;
     
     @Override
     public List<BaseVO> obtenerCatalogo (String catalogo, Map<String, String> params, String cdusuari, String cdsisrol) throws Exception {
@@ -212,6 +216,19 @@ public class CatalogosManagerImpl implements CatalogosManager {
             		   }
             	   }
             	   break;
+            	   
+               case AGRUPADORES_POLIZA:
+                   paso = "Recuperando cat\u00e1logo de agrupadores de p\u00f3liza";
+                   if (params != null) {
+                       lista = new ArrayList<>();
+                       int agrupadorMax = agrupadoresDAO.obtenerAgrupadorMaximo(
+                               params.get("cdunieco"), params.get("cdramo"), params.get("estado"), params.get("nmpoliza"),
+                               Utils.NVL(params.get("nmsuplem"), "0"));
+                       for (int i = 1; i <= agrupadorMax; i++) {
+                           lista.add(new BaseVO(i + "", i + ""));
+                       }
+                   }
+                   break;
                    
                 default:
                     throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));

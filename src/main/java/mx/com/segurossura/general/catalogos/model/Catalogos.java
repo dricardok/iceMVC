@@ -15,7 +15,8 @@ public enum Catalogos {
     TATRIPER(""),
     COLONIA(""),
     CUACOM_RAMO(""),
-    TMANTENI("");
+    TMANTENI(""),
+    AGRUPADORES_POLIZA("");
 
     
     private String cdtabla;

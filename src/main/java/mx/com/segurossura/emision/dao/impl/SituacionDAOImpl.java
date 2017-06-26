@@ -111,11 +111,11 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
             }
             tvalosit.put(key, otvalores.get(key));
         }
-        logger.debug(Utils.join("\n otvalor1", " ", tvalosit.getOtvalor01()));
-        logger.debug(Utils.join("\n otvalor2", " ", tvalosit.getOtvalor02()));
-        logger.debug(Utils.join("\n otvalor3", " ", tvalosit.getOtvalor03()));
-        logger.debug(Utils.join("\n otvalor4", " ", tvalosit.getOtvalor04()));
-        logger.debug(Utils.join("\n otvalor5", " ", tvalosit.getOtvalor05()));
+        logger.debug(Utils.log("\n otvalor1", " ", tvalosit.getOtvalor01()));
+        logger.debug(Utils.log("\n otvalor2", " ", tvalosit.getOtvalor02()));
+        logger.debug(Utils.log("\n otvalor3", " ", tvalosit.getOtvalor03()));
+        logger.debug(Utils.log("\n otvalor4", " ", tvalosit.getOtvalor04()));
+        logger.debug(Utils.log("\n otvalor5", " ", tvalosit.getOtvalor05()));
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("pv_status_registro_i", accion);
         params.put("pv_tvalo_record_i", new SqlStructValue<TvalositVO>(tvalosit));
@@ -146,7 +146,7 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
         params.put("pv_nmsuplem_i", nmsuplem);
         Map<String, Object> resultado = ejecutaSP(new ObtieneMpolisitSP(getDataSource()), params);
         List<Map<String, String>> listaDatos = (List<Map<String, String>>) resultado.get("pv_registro_o");
-        logger.debug(Utils.join("\nlistaDatos", listaDatos));
+        logger.debug(Utils.log("\nlistaDatos", listaDatos));
         if (listaDatos == null || listaDatos.size() == 0) {
             throw new ApplicationException("Sin resultados");
         }

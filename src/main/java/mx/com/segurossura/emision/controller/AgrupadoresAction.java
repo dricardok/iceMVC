@@ -45,14 +45,14 @@ public class AgrupadoresAction extends PrincipalCoreAction {
     private AgrupadoresManager agrupadoresManager;
 	
 	
-	// Methods:
 	@Action(
 			value = "obtenerAgrupadores",
 			results = {
 					@Result(name = "success", type = "json")
 			}
 	)
-	public String obtenerAgrupadores(){
+    public String obtenerAgrupadores() {
+	    
 		logger.debug(StringUtils.join(
                 "\n################################",
                 "\n###### obtenerAgrupadores ######",
@@ -88,7 +88,97 @@ public class AgrupadoresAction extends PrincipalCoreAction {
 		return SUCCESS;
 	}
 	
-
+	
+    @Action(
+            value = "obtenerMpoliagr",
+            results = {
+                    @Result(name = "success", type = "json")
+            }
+    )
+    public String obtenerMpoliagr() {
+        logger.debug(StringUtils.join("###### obtenerMpoliagr params ", params));
+        try {
+            Utils.validate(params, "No se recibieron parametros");          
+            String cdunieco = params.get("cdunieco");
+            String cdramo   = params.get("cdramo");
+            String estado   = params.get("estado");
+            String nmpoliza = params.get("nmpoliza");
+            String cdagrupa = params.get("cdagrupa");
+            String nmsuplem = params.get("nmsuplem");
+            
+            Utils.validate(cdunieco, "Falta cdunieco",
+                           cdramo,   "Falta cdramo",
+                           estado,   "Falta estado",
+                           nmpoliza, "Falta nmpoliza",
+                           cdagrupa, "Falta cdagrupa",
+                           nmsuplem, "Falta nmsuplem");
+            List<Map<String, String>> lista = agrupadoresManager.obtenerMpoliagr(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdagrupa);
+            if (lista != null && lista.size() > 0) {
+                params = lista.get(0);
+            }
+            success = true;
+        } catch (Exception ex) {
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
+    
+    @Action(
+            value = "realizarMovimientoMpoliagr",
+            results = {
+                    @Result(name = "success", type = "json")
+            }
+    )
+    public String realizarMovimientoMpoliagr() {
+        
+        logger.debug(StringUtils.join(
+                "\n################################",
+                "\n###### realizarMovimientoMpoliagr ######",
+                "\n###### params ", params
+               ));
+        try{
+            Utils.validate(params, "No se recibieron parametros");          
+            String cdunieco    = params.get("cdunieco"),
+                   cdramo      = params.get("cdramo"),
+                   estado      = params.get("estado"),
+                   nmpoliza    = params.get("nmpoliza"),
+                   cdagrupa    = params.get("cdagrupa"),
+                   nmsuplem    = params.get("nmsuplem"),
+                   status      = params.get("status"),
+                   nmsuplemEnd = params.get("nmsuplemEnd"),
+                   accion      = params.get("accion");
+            
+            nmsuplem = Utils.NVL(nmsuplem, "0");
+            status = Utils.NVL(status, "V");
+            nmsuplemEnd = Utils.NVL(nmsuplemEnd, "0");
+            
+            Utils.validate(cdunieco,    "No se recibi\u00f3 la oficina",
+                           cdramo,      "No se recibi\u00f3 el ramo",
+                           estado,      "No se recibi\u00f3 el estado de la p\u00f3liza",
+                           nmpoliza,    "No se recibi\u00f3 el n\u00famero de p\u00f3liza",
+                           cdagrupa,    "Falta subagrupador",
+                           nmsuplem,    "Falta nmsuplem",
+                           status,      "Falta status",
+                           nmsuplemEnd, "Falta nmsuplem sesi\u00f3n",
+                           accion,      "Falta acci\u00f3n");
+            
+            agrupadoresManager.realizarMovimientoMpoliagr(cdunieco, cdramo, estado, nmpoliza, cdagrupa, nmsuplemEnd, nmsuplem, 
+            		params, 
+            		accion);
+            
+            success = true;
+            
+        } catch (Exception ex) {
+            message = Utils.manejaExcepcion(ex);
+        }
+        logger.debug(StringUtils.join(
+                "\n################################",
+                "\n###### realizarMovimientoMpoliagr ######"
+               ));
+        
+        return SUCCESS;
+    }
 
 	// Getters and setters:
 	

@@ -47,34 +47,54 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     null
                     );
             
-            Map<String, Object> mpolizas = ValoresMinimosUtils.obtenerValores(Bloque.DATOS_GENERALES, valoresDefecto);
-            for (Entry<String, String> en : valoresDefecto.entrySet()) {
-                String key = en.getKey();
-                if (key.substring(0, 1).equals("f")) {
-                    mpolizas.put(key, Utils.parse(en.getValue()));
-                } else {
-                    mpolizas.put(key, en.getValue());
-                }
-            }
+            // se recuperan los valores minimos y se les agregan los valores por defecto 
+            Map<String, String> mpolizas = ValoresMinimosUtils.obtenerValores(Bloque.DATOS_GENERALES, valoresDefecto);
             
             // cuando viene una x de ValoresMinimosUtils
-            if ("x".equals(mpolizas.get("nmcuadro"))) {
+            if ("x".equalsIgnoreCase(mpolizas.get("nmcuadro"))) {
                 mpolizas.put("nmcuadro", emisionDAO.obtenerCuadroComisionesDefault(cdramo));
             }
             
             paso = "Insertando maestro de p\u00f3liza";
-            emisionDAO.movimientoMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem, "V",
-                    (String) mpolizas.get("swestado"), (String) mpolizas.get("nmsolici"), (Date)   mpolizas.get("feautori"),
-                    (String) mpolizas.get("cdmotanu"), (Date)   mpolizas.get("feanulac"), (String) mpolizas.get("swautori"),
-                    (String) mpolizas.get("cdmoneda"), (Date)   mpolizas.get("feinisus"), (Date)   mpolizas.get("fefinsus"),
-                    (String) mpolizas.get("ottempot"), (Date)   mpolizas.get("feefecto"), (String) mpolizas.get("hhefecto"),
-                    (Date)   mpolizas.get("feproren"), (Date)   mpolizas.get("fevencim"), (String) mpolizas.get("nmrenova"),
-                    (Date)   mpolizas.get("ferecibo"), (Date)   mpolizas.get("feultsin"), (String) mpolizas.get("nmnumsin"),
-                    (String) mpolizas.get("cdtipcoa"), (String) mpolizas.get("swtarifi"), (String) mpolizas.get("swabrido"),
-                    (Date)   mpolizas.get("feemisio"), (String) mpolizas.get("cdperpag"), (String) mpolizas.get("nmpoliex"),
-                    (String) mpolizas.get("nmcuadro"), (String) mpolizas.get("porredau"), (String) mpolizas.get("swconsol"),
-                    (String) mpolizas.get("nmpolcoi"), (String) mpolizas.get("adparben"), (String) mpolizas.get("nmcercoi"),
-                    (String) mpolizas.get("cdtipren"), "I");
+            emisionDAO.movimientoMpolizas(
+                    // llave
+                    cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem, "V",
+                    
+                    // datos
+                    mpolizas.get("swestado"),
+                    mpolizas.get("nmsolici"),
+                    Utils.parse(mpolizas.get("feautori")),
+                    mpolizas.get("cdmotanu"),
+                    Utils.parse(mpolizas.get("feanulac")),
+                    mpolizas.get("swautori"),
+                    mpolizas.get("cdmoneda"),
+                    Utils.parse(mpolizas.get("feinisus")),
+                    Utils.parse(mpolizas.get("fefinsus")),
+                    mpolizas.get("ottempot"),
+                    Utils.parse(mpolizas.get("feefecto")),
+                    mpolizas.get("hhefecto"),
+                    Utils.parse(mpolizas.get("feproren")),
+                    Utils.parse(mpolizas.get("fevencim")),
+                    mpolizas.get("nmrenova"),
+                    Utils.parse(mpolizas.get("ferecibo")),
+                    Utils.parse(mpolizas.get("feultsin")),
+                    mpolizas.get("nmnumsin"),
+                    mpolizas.get("cdtipcoa"),
+                    mpolizas.get("swtarifi"),
+                    mpolizas.get("swabrido"),
+                    Utils.parse(mpolizas.get("feemisio")),
+                    mpolizas.get("cdperpag"),
+                    mpolizas.get("nmpoliex"),
+                    mpolizas.get("nmcuadro"),
+                    mpolizas.get("porredau"),
+                    mpolizas.get("swconsol"),
+                    mpolizas.get("nmpolcoi"),
+                    mpolizas.get("adparben"),
+                    mpolizas.get("nmcercoi"),
+                    mpolizas.get("cdtipren"),
+                    
+                    // accion
+                    "I");
             
             paso = "Recuperando maestro de p\u00f3liza generado";
             Map<String, String> mpolizasRecuperado = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0);

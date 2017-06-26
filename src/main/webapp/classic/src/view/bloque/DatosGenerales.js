@@ -89,6 +89,7 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
         '->',
         {
             iconCls: 'x-fa fa-eye',
+            style: 'margin: 0 82px 0 0;',
             tooltip: 'Mostrar/ocultar',
             handler: function (me) {
                 Ice.toggleOcultos(me.up('form'));
@@ -109,7 +110,7 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
         },
         */
         {
-            text: 'Guardar datos generales',
+            text: 'Guardar Datos Generales',
             iconCls: 'x-fa fa-save',
             handler: 'onGuardarClic'
         }
