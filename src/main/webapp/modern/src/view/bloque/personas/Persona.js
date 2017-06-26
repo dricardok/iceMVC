@@ -19,7 +19,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	            paso = 'Validando construcci\u00f3n de bloque de datos generales';
 	            try {
 	            	 if(!config.cdramo || !config.cdrol){
-		                	throw 'No se recibio ramo o rol en el bloque de personas';
+		                	//throw 'No se recibio ramo o rol en el bloque de personas';
 		                }
 	            	 if(config.cdperson){
 		                	config.accion="U";
@@ -59,7 +59,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        		return it.name=="fenacimi";
 	        	});
 	        	
-	        	fenacimi.dateFormat="Y-m-d";
+	        	fenacimi.dateFormat="d-m-Y";
 	        	
 	        	var gridDomicilios={
 	        			xtype		:	'domicilios',

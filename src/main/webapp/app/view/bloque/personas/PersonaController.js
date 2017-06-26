@@ -34,7 +34,15 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     			
     			var valor=it.getValue();
     			if(it.getName()!="fenacimi" && typeof valor =="string" && (""+valor).indexOf("-")!=-1){
+    				
     				valor=(valor.split("-")[0]+"").trim();
+    			}
+    			
+    			if(it.getName()=="fenacimi"){
+    				if (Ext.manifest.toolkit === 'classic') {
+    					valor=valor.getDate()+"-"+(1+valor.getMonth())+"-"+valor.getFullYear();
+    				}
+    				Ice.log("fechaa",it.getName(),valor)
     			}
     			if((""+it.getName()).indexOf("otvalor")!=-1){
     				tvaloper[it.getName()]=valor;
@@ -45,6 +53,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     		});
     		Ice.log("Datos de persona a enviar: ",mpersona,tvaloper);
     		accion=view.getAccion();
+//    		view.fireEvent("personaGuardada", view, json.params.cdperson);
     		Ice.request({
     			url:Ice.url.bloque.personas.guardarPersona,
     			jsonData:{
@@ -64,6 +73,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     					call();
     				}
     				Ice.mensaje("Se guardo correctamente");
+    				view.fireEvent("personaGuardada", view, json.params.cdperson);
     			}
     			
     		});
@@ -149,6 +159,21 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 	    				var datos=json.params || {};
 	    				Ext.ComponentQuery.query('[getName]',root)
 	    				.forEach(function(it){
+//	    					if(it.getName()=='fenacimi'){
+//	    						var fecha = datos[it.getName()];
+//	    						var s=fecha.split("/");
+//	    						try{
+//	    							fecha = s[1]+"/"+s[0]+"/"+s[2];
+//	    							it.setValue(new Date(fecha));
+//	    							
+//	    						}catch(e){
+//	    							it.setValue(datos[it.getName()]);
+//	    							Ice.error("No se pudo parsear la fecha",e);
+//	    						}
+//	    						
+//	    					}else{
+//	    						it.setValue(datos[it.getName()]);
+//	    					}
 	    					it.setValue(datos[it.getName()]);
 	    				});
     				}catch(e){

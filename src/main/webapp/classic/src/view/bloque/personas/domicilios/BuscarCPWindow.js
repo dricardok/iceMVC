@@ -2,8 +2,9 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 	
 	extend		:	"Ice.view.componente.Ventana",
 	controller	:	"buscarcpwindow",
-	autoScroll	:	true,
+	xtype		:	"buscarcpwindow",
 	layout		:   "anchor",
+	scrollable	:	true,
 	title		:	"Buscar Domicilio",
 	width		:	"60%",
 	height		:	"80%",
@@ -49,6 +50,9 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 				{
 					xtype		:	'gridice',
 					title		:	"Resultados",
+					scrollable	:	true,
+					minHeight	:	300,
+					height		:	300,
 					botones		:	[],
 					columns		:	[
 						{

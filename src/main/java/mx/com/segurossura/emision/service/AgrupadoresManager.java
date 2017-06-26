@@ -31,7 +31,7 @@ public interface AgrupadoresManager {
      * @return
      * @throws Exception
      */
-    List<Map<String, String>> obtenerMpoligar(String cdunieco, String cdramo, String estado,
+    List<Map<String, String>> obtenerMpoliagr(String cdunieco, String cdramo, String estado,
 			String nmpoliza, String nmsuplem, String cdagrupa) throws Exception;
     
     /**
@@ -66,5 +66,6 @@ public interface AgrupadoresManager {
 			   String cdagrupa, String nmsuplem_sesion, String nmsuplem_bloque,
 			   Map<String, String> datos, String accion) throws Exception;
     
-    
+    public List<Map<String, String>> obtenerMpoliagrVista (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplemSes)
+            throws Exception;
 }

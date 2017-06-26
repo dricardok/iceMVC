@@ -2,6 +2,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 	
 	extend		:	"Ice.view.componente.Ventana",
 	controller	:	"agregardomiciliowindow",
+	xtype		:	'agregardomiciliowindow',
 	config		:	{
 		cdperson	:	null,
 		nmorddom	:	null,
@@ -10,6 +11,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 	autoShow		:	true,
 	title			:	'Agregar Domicilio',
 	layout			: 	"fit",
+	height			:	"80%",
 	defaults		:{
 		bodyPadding: 20
 	},
@@ -55,6 +57,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 				{
 					xtype		:	"formulario",
 					reference	:	"formulario",
+					scrollable	:	true,
 					layout		:	{
 						type		:	'table',
 						columns		:	2

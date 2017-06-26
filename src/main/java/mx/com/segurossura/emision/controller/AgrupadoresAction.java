@@ -90,48 +90,36 @@ public class AgrupadoresAction extends PrincipalCoreAction {
 	
 	
     @Action(
-            value = "obtenerMpoligar",
+            value = "obtenerMpoliagr",
             results = {
                     @Result(name = "success", type = "json")
             }
     )
-    public String obtenerMpoligar() {
-        
-        logger.debug(StringUtils.join(
-                "\n################################",
-                "\n###### obtenerMpoligar ######",
-                "\n###### params ", params
-               ));
-        try{
+    public String obtenerMpoliagr() {
+        logger.debug(StringUtils.join("###### obtenerMpoliagr params ", params));
+        try {
             Utils.validate(params, "No se recibieron parametros");          
             String cdunieco = params.get("cdunieco");
             String cdramo   = params.get("cdramo");
             String estado   = params.get("estado");
             String nmpoliza = params.get("nmpoliza");
-            String nmsuplem = params.get("nmsuplem");
             String cdagrupa = params.get("cdagrupa");
+            String nmsuplem = params.get("nmsuplem");
             
-            Utils.validate(cdunieco, "No se recibio la oficina");
-            Utils.validate(cdramo, "No se recibio el ramo");
-            Utils.validate(estado, "No se recibo el estado de la póliza");
-            Utils.validate(nmpoliza, "No se recibio el número de póliza");
-            Utils.validate(nmsuplem, "No se recibio el suplemento de la póliza");
-            Utils.validate(cdagrupa, "No se recibio el agrupador de la póliza");
-            
-            list = agrupadoresManager.obtenerMpoligar(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdagrupa);
-            
+            Utils.validate(cdunieco, "Falta cdunieco",
+                           cdramo,   "Falta cdramo",
+                           estado,   "Falta estado",
+                           nmpoliza, "Falta nmpoliza",
+                           cdagrupa, "Falta cdagrupa",
+                           nmsuplem, "Falta nmsuplem");
+            List<Map<String, String>> lista = agrupadoresManager.obtenerMpoliagr(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdagrupa);
+            if (lista != null && lista.size() > 0) {
+                params = lista.get(0);
+            }
             success = true;
-            
         } catch (Exception ex) {
             message = Utils.manejaExcepcion(ex);
         }
-        
-        logger.debug(StringUtils.join(
-                "\n################################",
-                "\n mpoligar : ", list,
-                "\n###### obtenerMpoligar ######"
-               ));
-        
         return SUCCESS;
     }
     
@@ -151,61 +139,32 @@ public class AgrupadoresAction extends PrincipalCoreAction {
                ));
         try{
             Utils.validate(params, "No se recibieron parametros");          
-            String cdunieco = params.get("cdunieco");
-            String cdramo   = params.get("cdramo");
-            String estado   = params.get("estado");
-            String nmpoliza = params.get("nmpoliza");
-            String cdagrupa = params.get("cdagrupa");
-            String nmsuplem_sesion = params.get("nmsuplem_sesion");
-            String nmsuplem_bloque = params.get("nmsuplem_bloque");
-            String cdperson = params.get("cdperson");
-            String nmorddom = params.get("nmorddom");
-            String cdforpag = params.get("cdforpag");
-            String cdbanco  = params.get("cdbanco");
-            String cdsucurs = params.get("cdsucurs");
-            String cdcuenta = params.get("cdcuenta");
-            String cdrazon  = params.get("cdrazon");
-            String swregula = params.get("swregula");
-            String cdperreg = params.get("cdperreg");
-            String feultreg = params.get("feultreg");
-            String cdgestor = params.get("cdgestor");
-            String cdtipred = params.get("cdtipred");
-            String fevencim = params.get("fevencim");
-            String cdtarcre = params.get("cdtarcre");
-            String nmcuota  = params.get("nmcuota");
-            String nmporcen = params.get("nmporcen");
-            String accion   = params.get("accion");
+            String cdunieco    = params.get("cdunieco"),
+                   cdramo      = params.get("cdramo"),
+                   estado      = params.get("estado"),
+                   nmpoliza    = params.get("nmpoliza"),
+                   cdagrupa    = params.get("cdagrupa"),
+                   nmsuplem    = params.get("nmsuplem"),
+                   status      = params.get("status"),
+                   nmsuplemEnd = params.get("nmsuplemEnd"),
+                   accion      = params.get("accion");
             
-            Utils.validate(cdunieco, "No se recibio la oficina");
-            Utils.validate(cdramo, "No se recibio el ramo");
-            Utils.validate(estado, "No se recibo el estado de la póliza");
-            Utils.validate(nmpoliza, "No se recibio el número de póliza");
+            nmsuplem = Utils.NVL(nmsuplem, "0");
+            status = Utils.NVL(status, "V");
+            nmsuplemEnd = Utils.NVL(nmsuplemEnd, "0");
             
-            Utils.validate(cdagrupa, "No se recibio cdagrupa");
-            Utils.validate(nmsuplem_sesion, "No se recibio nmsuplem_sesion");
-            Utils.validate(nmsuplem_bloque, "No se recibio nmsuplem_bloque");
-            Utils.validate(cdperson, "No se recibio cdperson");
-            Utils.validate(nmorddom, "No se recibio nmorddom");
-            Utils.validate(cdforpag, "No se recibio cdforpag");
-            Utils.validate(cdbanco, "No se recibio cdbanco");
-            Utils.validate(cdsucurs, "No se recibio cdsucurs");
-            Utils.validate(cdcuenta, "No se recibio cdcuenta");
-            Utils.validate(cdrazon, "No se recibio cdrazon");
-            Utils.validate(swregula, "No se recibio swregula");
-            Utils.validate(cdperreg, "No se recibio cdperreg");
-            Utils.validate(feultreg, "No se recibio feultreg");
-            Utils.validate(cdgestor, "No se recibio cdgestor");
-            Utils.validate(cdtipred, "No se recibio cdtipred");
-            Utils.validate(fevencim, "No se recibio fevencim");
-            Utils.validate(cdtarcre, "No se recibio cdtarcre");
-            Utils.validate(nmcuota, "No se recibio nmcuota");
-            Utils.validate(nmporcen, "No se recibio nmporcen");
-            Utils.validate(accion, "No se recibio accion");
+            Utils.validate(cdunieco,    "No se recibi\u00f3 la oficina",
+                           cdramo,      "No se recibi\u00f3 el ramo",
+                           estado,      "No se recibi\u00f3 el estado de la p\u00f3liza",
+                           nmpoliza,    "No se recibi\u00f3 el n\u00famero de p\u00f3liza",
+                           cdagrupa,    "Falta subagrupador",
+                           nmsuplem,    "Falta nmsuplem",
+                           status,      "Falta status",
+                           nmsuplemEnd, "Falta nmsuplem sesi\u00f3n",
+                           accion,      "Falta acci\u00f3n");
             
-            agrupadoresManager.realizarMovimientoMpoliagr(cdunieco, cdramo, estado, nmpoliza, cdagrupa, nmsuplem_sesion, nmsuplem_bloque, 
-            		
+            agrupadoresManager.realizarMovimientoMpoliagr(cdunieco, cdramo, estado, nmpoliza, cdagrupa, nmsuplemEnd, nmsuplem, 
             		params, 
-                    
             		accion);
             
             success = true;
@@ -218,6 +177,42 @@ public class AgrupadoresAction extends PrincipalCoreAction {
                 "\n###### realizarMovimientoMpoliagr ######"
                ));
         
+        return SUCCESS;
+    }
+    
+    
+    @Action(
+            value = "obtenerMpoliagrVista",
+            results = {
+                    @Result(name = "success", type = "json")
+            }
+    )
+    public String obtenerMpoliagrVista () {
+        logger.debug(Utils.log("###### obtenerMpoliagrVista params = ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem"),
+                   status   = params.get("status"),
+                   nmsuplemEnd = params.get("nmsuplemEnd");
+            
+            Utils.validate(cdunieco, "Falta cdunieco",
+                           cdramo,   "Falta cdtamo",
+                           estado,   "Falta estado",
+                           nmpoliza, "Falta nmpoliza");
+            
+            nmsuplem = Utils.NVL(nmsuplem, "0");
+            status = Utils.NVL(status, "V");
+            nmsuplemEnd = Utils.NVL(nmsuplemEnd, "0");
+            list = agrupadoresManager.obtenerMpoliagrVista(cdunieco, cdramo, estado, nmpoliza, nmsuplemEnd);
+            success = true;
+        } catch (Exception ex) {
+            message = Utils.manejaExcepcion(ex);
+        }
         return SUCCESS;
     }
 

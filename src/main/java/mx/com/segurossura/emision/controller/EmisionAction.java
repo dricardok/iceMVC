@@ -598,6 +598,37 @@ public class EmisionAction extends PrincipalCoreAction {
         return SUCCESS;
     }
     
+    @Action(        
+            value = "distribuirAgrupadores", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )   
+    public String distribuirAgrupadores() {
+    	logger.debug("Inicio distribuirAgrupadores...");
+    	try{
+    		 Utils.validate(params, "No se recibieron datos");
+             String cdunieco = params.get("cdunieco");
+             String cdramo =   params.get("cdramo");
+             String estado =   params.get("estado");
+             String nmpoliza = params.get("nmpoliza");
+             String nmsuplem = Utils.NVL(params.get("nmsuplem"), "0");
+             
+             Utils.validate(cdunieco, "Falta cdunieco");
+             Utils.validate(cdramo,   "Falta cdramo");
+             Utils.validate(estado,   "Falta estado");
+             Utils.validate(nmpoliza, "Falta nmpoliza");
+             
+             emisionManager.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+    		
+    	}catch(Exception ex){
+    		 success=false;
+             message = Utils.manejaExcepcion(ex);
+    	}
+    	
+    	return SUCCESS;
+    }
+    
 	
 	public Map<String, String> getParams() {
 		return params;

@@ -14,8 +14,8 @@ Ext.define('Ice.view.bloque.ListaSituacionesController', {
             Ice.log('store: ',store);
             store.on({
                 load: function(){
-                    Ice.log('Ice.view.bloque.ListaSituacionesController.custom load situacionCero ',view.getSituacionCero());
-                    if(view.getSituacionCero() == true){
+                    Ice.log('Ice.view.bloque.ListaSituacionesController.custom load situacionCero ',view.situacionCero);
+                    if(view.situacionCero == true){
                         if(store.getAt(0)){
                             Ice.log('Ice.view.bloque.ListaSituacionesController.custom load store[0] ',store.getAt(0));
                             if(store.getAt(0).getData()){

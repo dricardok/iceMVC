@@ -1,7 +1,8 @@
-Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
-	
+Ext.define('Ice.view.bloque.personas.PersonaPoliza', {	
 		extend  :       'Ext.panel.Panel',
 		xtype	:		'personapoliza',
+		controller : 'personapoliza',
+
 		config	:		{
 		    cdunieco: null,
             cdramo: null,
@@ -17,7 +18,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
             cdtipsit: null,
             botones: []
 		},
-		controller : 'personapoliza',
+		
 		layout	   : 'responsivecolumn',
 		bodyPadding: '10px 0px 0px 10px',
 	    defaults: {
@@ -37,7 +38,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                         throw 'Falta ramo y tipo de situaci\u00f3n para lista de personas';
                     }
                     
-                    if (!config.cdunieco || !config.estado || !config.nmpoliza || !config.nmsuplem) {
+                    if (!config.cdunieco || !config.estado || !config.nmpoliza || Ext.isEmpty(config.nmsuplem)) {
                         throw 'Falta llave de p\u00f3liza y situacion';
                     }
                     
@@ -59,11 +60,8 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
 	            var comps = Ice.generaComponentes({
                     pantalla: 'BLOQUE_PERSONAS',
                     seccion: 'FORMULARIO',
-                    modulo: me.modulo || '',
-                    estatus: (me.flujo && me.flujo.estatus) || '',
                     cdramo: me.cdramo || '',
-                    cdtipsit: me.cdtipsit ||'',
-                    auxKey: me.auxkey || '',
+                    modulo: me.modulo || '',
                     items: true
                 });
                 Ice.log('Ice.view.bloque.personas.ListaPersonas.initComponent comps:', comps);
@@ -71,7 +69,9 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                 
                 var modelName = Ext.id();
 	            
-	        	var gridDomicilios = {
+	        	var itemsForm = comps.BLOQUE_PERSONAS.FORMULARIO.items;
+	        	                
+                var gridDomicilios = {
         	        xtype: 'domicilios',
         	        reference: 'gridDomicilios',
         	        width: '100%',
@@ -84,7 +84,9 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
 	        	           xtype: 'form',
 	        	           reference: 'form',
 	        	           title: 'Buscar persona',
-	        	           items: comps.BLOQUE_PERSONAS.FORMULARIO.items,
+	        	           cdramo: me.cdramo,
+	        	           mostrarRol: true,
+	        	           items: itemsForm,
 	        	           modelo: modelName,
 	        	           layout: 'responsivecolumn',
 	        	           width: '100%',
@@ -100,24 +102,18 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                                    xtype: 'button',
                                    reference: 'btnGuardar',
                                    text: 'Guardar',
-                                   handler: 'onGuardar',/*function (me){
-                                       Ice.log('Ice.view.bloque.personas.ListaPersonas.initComponent me',me.up('panel'));
-                                       me.up('panel').close();
-                                   }*/
-                               //'onGuardarBloque'
-                               },{
-                                   xtype: 'button',
-                                   text: 'Nuevo',
-                                   handler: function (me){
-                                       var paso = '';
-                                       try{
-                                           paso = 'Antes de ocultar formulario de situacion';
-                                           me.up('form').close();
-                                       } catch (e){
-                                           Ice.generaExcepcion(e, paso);
-                                       }
-                                   }
+                                   handler: 'onGuardar'
                                }
+//                             ,{
+//                                   xtype: 'button',
+//                                   text: 'Nuevo',
+//                                   scope: me,
+//                                   handler: function(btn){
+//                                       Ice.log('me.up',me.up('panel'));
+//                                       Ice.log('me.up.up',me.up('panel').up('panel'));
+//                                       this.getController().nuevaPersona(me.up('panel'));
+//                                   }
+//                               }
                            ],
                            width: '100%'
 	        	       }

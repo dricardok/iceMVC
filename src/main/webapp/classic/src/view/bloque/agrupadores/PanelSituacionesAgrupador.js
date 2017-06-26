@@ -37,11 +37,11 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
             paso = 'Construyendo panel de situaciones - agrupador';
         try {
         
-            config.cdunieco = 1;
+            /*config.cdunieco = 1;
             config.cdramo   = 501;
             config.estado   = 'W';
             config.nmpoliza = 17422;
-            config.cdtipsit = 51;
+            config.cdtipsit = 51;*/
         
             if (!config ||
                 !config.cdunieco ||
@@ -73,7 +73,7 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
                         reference: 'gridsituacionesagrupador',
                         minHeight: 200,
                         maxHeight: 400,
-                        style: 'border: 1px solid red;',
+                        style: 'border: 0px solid red;',
                         columns: [
                             {
                                 text: 'Agrupador',
@@ -99,7 +99,7 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
                         xtype: 'form',
                         layout: 'hbox',
                         padding: '10 0 0 10',
-                        style: 'border: 1px solid red;',
+                        style: 'border: 0px solid red;',
                         defaults: {
                             margin: '0 10 10 0',
                         },
@@ -107,7 +107,7 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
                             {
                                 xtype: 'comboice',
                                 reference: 'comboagrupador',
-                                fieldLabel: 'Agrupador',
+                                label: 'Agrupador',
                                 name: 'cdagrupa',
                                 disabled: true,
                                 allowBlank: false,
