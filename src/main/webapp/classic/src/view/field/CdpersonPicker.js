@@ -136,13 +136,11 @@ Ext.define('Ice.view.field.CdpersonPicker', {
                         nmsuplem: me.getNmsuplem(),
                         cdrol: me.getCdrol(),
                         listeners: {
-                          'obtenerCdperson': function(view, cdperson, cdrol, dsrol, dsnombre){
-                              Ice.log('Ice.view.bloque.personas.BusquedaPersonas.cdperson',cdperson, cdrol, dsnombre);
-                              Ice.log('items', me.items);
-                              me.items.getAt(0).setValue(cdperson);
-                              me.items.getAt(1).cdrol = cdrol;
-                              me.items.getAt(2).setValue(dsrol);
-                              me.items.getAt(3).setValue(dsnombre);
+                          'obtenerCdperson': function(view, cdperson, dsnombre){
+                              Ice.query('[name=cdperson]', me).setValue(data.cdperson);
+                              Ice.query('[name=dsnombre]', me).setValue(data.dsnombre);
+//                              Ice.log('Ice.view.bloque.personas.BusquedaPersonas.cdperson',cdperson, cdrol, dsnombre);
+//                              Ice.log('items', me.items);
                           }
                       }
                     }).show();

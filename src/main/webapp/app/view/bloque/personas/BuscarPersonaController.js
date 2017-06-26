@@ -100,8 +100,7 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
                 if(refs.gridPersonas.getSelection()[0]){
                     data = refs.gridPersonas.getSelection()[0].getData();
                     if(data){
-                        Ice.log('Seteando data',data);
-                        view.fireEvent('obtenerCdperson', view, data.cdperson, refs.cdrol.getValue(), refs.cdrol.getRawValue(), data.dsnombre);
+                        view.fireEvent('obtenerCdperson', view, data.cdperson, data.dsnombre);
                         view.close();
                     }
                 }
