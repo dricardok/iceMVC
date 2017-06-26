@@ -100,6 +100,8 @@ Ext.define('Ice.view.main.MainController', {
             if (newView.isWindow) {
             	newView.show();
             }
+            
+            mainCard.elementos = []; // para Ice.push y Ice.pop
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }

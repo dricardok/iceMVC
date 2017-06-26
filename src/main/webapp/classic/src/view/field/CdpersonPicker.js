@@ -14,6 +14,15 @@ Ext.define('Ice.view.field.CdpersonPicker', {
         mostrarRol: 'true'
 //        cdperson: null
     },
+    setValue: function () {
+        Ice.log('cdpersonpicker.setValue TODO');
+    },
+    getName: function () {
+        return 'cdperson'; // jtezva TODO
+    },
+    setActiveError: function (param) {
+        Ice.mensajeWarning(param);
+    },
     constructor: function (config) {
         Ice.log('Ice.view.bloque.CdpersonPicker.constructor config:', config);
         var me = this,

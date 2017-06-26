@@ -66,5 +66,6 @@ public interface AgrupadoresManager {
 			   String cdagrupa, String nmsuplem_sesion, String nmsuplem_bloque,
 			   Map<String, String> datos, String accion) throws Exception;
     
-    
+    public List<Map<String, String>> obtenerMpoliagrVista (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplemSes)
+            throws Exception;
 }

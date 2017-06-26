@@ -59,11 +59,11 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
         var me = this,
             paso = 'Construyendo formulario de agrupador';
         try {
-            config.cdunieco = 1;
+            /*config.cdunieco = 1;
             config.cdramo   = 501;
             config.estado   = 'W';
             config.nmpoliza = 17422;
-            config.cdagrupa = 1.01;
+            config.cdagrupa = 1.01;*/
             
             if (!config ||
                 !config.cdunieco ||

@@ -26,7 +26,7 @@ Ext.define('Ice.view.bloque.personas.ListaPersonas', {
 	                    throw 'Falta ramo y tipo de situaci\u00f3n para lista de personas';
 	                }
 	                
-	                if (!config.cdunieco || !config.estado || !config.nmpoliza || !config.nmsuplem) {
+	                if (!config.cdunieco || !config.estado || !config.nmpoliza || Ext.isEmpty(config.nmsuplem)) {
                         throw 'Falta llave de p\u00f3liza';
                     }
 	                

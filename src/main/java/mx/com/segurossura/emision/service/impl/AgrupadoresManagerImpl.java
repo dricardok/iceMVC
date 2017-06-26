@@ -158,4 +158,17 @@ public class AgrupadoresManagerImpl implements AgrupadoresManager {
 			Utils.generaExcepcion(ex, paso);
 		}
 	}
+	
+	@Override
+	public List<Map<String, String>> obtenerMpoliagrVista (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplemSes)
+            throws Exception {
+	    String paso = "Recuperando agrupadores vista";
+	    List<Map<String, String>> lista = null;
+	    try {
+	        lista = agrupadoresDAO.obtenerMpoliagrVista(cdunieco, cdramo, estado, nmpoliza, nmsuplemSes);
+	    } catch (Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+	    }
+	    return lista;
+	}
 }
