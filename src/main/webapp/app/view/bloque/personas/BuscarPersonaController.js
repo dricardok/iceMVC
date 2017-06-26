@@ -157,41 +157,31 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
             paso = 'Nueva persona';
         try{
             Ice.log('nuevo refs',refs);
-            if(refs.cdrol.isValid()){
-                if(refs.cdrol.getValue()){
-                    if(refs.cdrol.isValid()){
-                        var persona = Ext.create('Ice.view.bloque.personas.Persona',{
-                            reference: 'persona',
-                            id: 'card-1',
-                            cdramo: view.getCdramo(),
-//                            scrollable: true,
-                            cdrol: refs.cdrol.getValue(),
-                            listeners: {
-                                'personaGuardada': function(personaView, cdperson){
-                                    view.setCdperson(cdperson);
-                                    
-                                    if(Ext.manifest.toolkit === 'classic'){
-                                        view.navigate(view, "prev");
-                                    } else {
-                                        view.pop();
-                                    }
-                                    
-                                    view.remove(this);
-                                }
-                            }
-                        });
+            var persona = Ext.create('Ice.view.bloque.personas.Persona',{
+                reference: 'persona',
+                id: 'card-1',
+//                cdramo: view.getCdramo(),
+//                cdrol: refs.cdrol.getValue(),
+                listeners: {
+                    'personaGuardada': function(personaView, cdperson){
+                        view.setCdperson(cdperson);
                         
                         if(Ext.manifest.toolkit === 'classic'){
-                            me.navigate(view, "next", persona);                              
+                            view.navigate(view, "prev");
                         } else {
-                            me.push(persona);
+                            view.pop();
                         }
-                    } else {
-                        Ice.mensajeWarning('Seleccione rol');
+                        
+                        view.remove(this);
                     }
                 }
-            }
+            });
             
+            if(Ext.manifest.toolkit === 'classic'){
+                me.navigate(view, "next", persona);                              
+            } else {
+                me.push(persona);
+            }
         } catch(e){
             Ice.generaExcepcion(e, paso);
         }
