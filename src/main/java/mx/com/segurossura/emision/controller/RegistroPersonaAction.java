@@ -153,7 +153,7 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            			new SimpleDateFormat("dd-MM-yyyy").parse(fenacimi), 
 	            				cdprovin, accion);
 	            
-	            registroPersonaManager.movimientoTvaloper(cdperson, tvaloper, accion);
+	            registroPersonaManager.movimientoTvaloper(cdperson, tvaloper, "U".equals(accion)?"M":accion);
 	            
 	            params=params==null?new HashMap():params;
 	            params.put("cdperson", cdperson);
