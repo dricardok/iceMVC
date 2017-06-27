@@ -1301,6 +1301,11 @@ var Ice = Object.assign(Ice || {}, {
                 item.readOnly = true;
             }
             
+            // value default
+            if (config.value ) {
+                item.value = config.value;
+            }
+            
             
             // hidden
             if (config.swoculto === 'S') {
