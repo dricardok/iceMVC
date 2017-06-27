@@ -14,6 +14,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 		},
 		
 		constructor: function (config) {
+			
 	        Ice.log('Ice.view.bloque.DatosGenerales.constructor config:', config);
 	        var me = this,
 	            paso = 'Validando construcci\u00f3n de bloque de datos generales';
