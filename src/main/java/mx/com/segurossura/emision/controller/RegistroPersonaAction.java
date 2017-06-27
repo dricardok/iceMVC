@@ -79,7 +79,7 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	        	componentes= new HashMap<String, List<Map<String,String>>>();
 	            componentes.put(
 	            		pantalla, 
-	            		registroPersonaManager.obtieneAttrXRol(pv_cdramo_i, pv_cdrol_i.toUpperCase())
+	            		registroPersonaManager.obtieneAttrXRol(pv_cdramo_i,pv_cdrol_i==null?null: pv_cdrol_i.toUpperCase())
 	            		);
 	            
 	            logger.debug("Datos de Tarificacion: {}", list);
