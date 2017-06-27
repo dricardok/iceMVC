@@ -316,6 +316,8 @@ public class EmisionManagerImpl implements EmisionManager{
             paso = "Tarificando conceptos globales";
             emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0", Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(),
                     "NULO");
+            
+            emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, "0");
         } catch (Exception ex) {
             Utils.generaExcepcion(ex, paso);
         }
@@ -345,8 +347,7 @@ public class EmisionManagerImpl implements EmisionManager{
 	        	 
 	         }catch(Exception ex){
 	        	 logger.error("Error al llamar funcion de distribucionAgrupadores");
-	         }
-	         
+	         }	         
 	         
 	     } catch (Exception ex) {
 	         Utils.generaExcepcion(ex, paso);
