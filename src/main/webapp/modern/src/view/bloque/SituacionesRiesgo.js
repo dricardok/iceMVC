@@ -166,15 +166,16 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
                            xtype: 'button',
                            text: 'Cancelar',
                            iconCls: 'x-fa fa-remove',
-                           handler: function (me){
-                               var paso = '';
-                               try{
-                                   paso = 'Antes de ocultar formulario de situacion';
-                                   me.up('formpanel').hide();
-                               } catch (e){
-                                   Ice.generaExcepcion(e, paso);
-                               }
-                           }
+                           handler: 'onCancelar'
+//                               function (me){
+//                               var paso = '';
+//                               try{
+//                                   paso = 'Antes de ocultar formulario de situacion';
+//                                   me.up('formpanel').hide();
+//                               } catch (e){
+//                                   Ice.generaExcepcion(e, paso);
+//                               }
+//                           }
                        }
                    ]
                });

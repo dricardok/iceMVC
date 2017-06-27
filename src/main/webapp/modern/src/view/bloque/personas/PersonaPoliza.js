@@ -42,10 +42,6 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                         throw 'Falta llave de p\u00f3liza y situacion';
                     }
                     
-//                    if (!config.nmsituac) {
-//                        throw 'Falta situacion de p\u00f3liza';
-//                    }
-                    
                   var comps = Ice.generaComponentes({
                       pantalla: 'BLOQUE_PERSONAS',
                       seccion: 'FORMULARIO',

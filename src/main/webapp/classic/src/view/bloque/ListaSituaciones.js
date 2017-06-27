@@ -4,8 +4,7 @@
 	    extend: 'Ext.grid.Panel',
 	    xtype: 'bloquelistasituaciones',	    
 	    controller: 'bloquelistasituaciones',
-//	    viewModel: 'bloquelistasituaciones',	    
-	    requires: [],  	    
+	    requires: [],
 	    // validacion de parametros de entrada
 	    constructor: function (config) {
 	        Ice.log('Ice.view.bloque.ListaSituaciones.constructor config:', config);
@@ -27,7 +26,7 @@
 	    title: 'Lista Situaciones',	    	    	    
 	    tbar: [],	    
 	    // contruccion usando metodos ext y parametros de entrada
-	    initComponent: function () {
+	    initComponent: function () {
 	        Ice.log('Ice.view.bloque.ListaSituaciones.initComponent');
 	        var me = this,
 	            paso = 'Construyendo bloque lista de situaciones';

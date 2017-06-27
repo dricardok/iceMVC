@@ -2,6 +2,7 @@ Ext.define('Ice.view.field.CdpersonPicker', {
     extend: 'Ext.container.Container',
     xtype: 'cdpersonpicker',
     
+    controller: 'cdpersonpickercontroller',
     layout: 'hbox',
     config  :       {
         cdunieco: null,
@@ -13,61 +14,17 @@ Ext.define('Ice.view.field.CdpersonPicker', {
         cdrol: null,
         mostrarRol: 'false'
     },
-    setValue: function (cdperson) {
-        var paso = 'Seteando valores de cdpersonpicker',
-            me = this;
-        try{
-            Ice.log(Ice.query('[name=cdperson]'));
-            Ice.log(Ice.query('[name=dsnombre]'));
-            var mask = Ice.mask('Recuperando datos de persona');
-            Ice.request({
-                mascara: 'Agregando situacion de riesgo',
-                url: Ice.url.bloque.personas.obtenerPersonaCriterio,
-                params: {
-                    'params.cdatribu': 'CDPERSON',
-                    'params.otvalor': cdperson
-                },
-                success: function (json) {
-                    var paso2 = 'LLenando store';
-                    try {
-                        Ice.log("json",json.listas);
-                        if(json.listas){
-                            if(json.listas[0]){
-                                var data = json.listas[0];
-                                Ice.query('[name=cdperson]', me).setValue(data.cdperson);
-                                Ice.query('[name=dsnombre]', me).setValue(data.dsnombre);
-                                mask.close();
-                            } else {
-                                mensajeWarning('No se recibieron datos');
-                                mask.close();
-                            }
-                        }
-                    } catch (e) {
-                        mask.close();
-                        Ice.manejaExcepcion(e, paso2);
-                    }
-                }
-            });
-        } catch (e) {
-            Ice.manejaExcepcion(e, paso);
-        }
-    },
     getValue: function () {
-        var paso = 'Obteniendo cdperson',
-            me = this,
-            cdperson = '';
-        try{
-            cdperson = Ice.query('[name=cdperson]', me).getValue();
-        } catch (e){
-            Ice.manejaExcepcion(e, paso)
-        }
-        return cdperson; // jtezva TODO
+        return this.getController().onGetValue();
     },
     getName: function () {
-        return 'cdperson'; // jtezva TODO        
+        return this.getController().onGetName();        
+    },
+    setValue: function (cdperson) {
+        this.getController().onSetValue(cdperson);
     },
     setActiveError: function (param) {
-        Ice.mensajeWarning(param);
+        this.getController().onSetActiveError(param);
     },
     constructor: function (config) {
         Ice.log('Ice.view.bloque.CdpersonPicker.constructor config:', config);
@@ -112,29 +69,7 @@ Ext.define('Ice.view.field.CdpersonPicker', {
                 iconCls: 'x-fa fa-search',
                 scope: me,
                 handler: function(){
-                    Ice.log('refs search',me);
-                    Ext.create('Ice.view.bloque.personas.BuscarPersona',{
-                        width: 600,
-                        heigth: 500,
-                        modal: true,
-                        closable: false,
-                        closeAction: 'destroy',
-                        cdunieco: me.getCdunieco(),
-                        cdramo: me.mostrarRol === 'true' ? me.value1 : '-1',
-                        estado: me.getEstado(),
-                        nmpoliza: me.getNmpoliza(),
-                        nmsituac: me.getNmsituac(),
-                        nmsuplem: me.getNmsuplem(),
-                        cdrol: me.getCdrol(),
-                        listeners: {
-                          'obtenerCdperson': function(view, cdperson, dsnombre){
-                              Ice.query('[name=cdperson]', me).setValue(data.cdperson);
-                              Ice.query('[name=dsnombre]', me).setValue(data.dsnombre);
-//                              Ice.log('Ice.view.bloque.personas.BusquedaPersonas.cdperson',cdperson, cdrol, dsnombre);
-//                              Ice.log('items', me.items);
-                          }
-                      }
-                    }).show();
+                    this.getController().onBuscar();
                 }
             }
         ];

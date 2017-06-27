@@ -91,6 +91,10 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
       this.actualizar(grid, rowIndex, colIndex);
   },
   
+  onCancelar: function(){
+      this.cancelar();  
+  },
+  
   agregar: function(){
       Ice.log('Ice.view.bloque.situacionesRiesgo.agregar');
       var me = this,
@@ -102,6 +106,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           paso = "Antes de agregar situacion de riesgo";
           var store = view.down('grid').getStore(),
               form = refs.form;
+          me.limpiarForm(form);
           Ice.request({
               mascara: 'Agregando situacion de riesgo',
               url: Ice.url.bloque.situacionesRiesgo.valoresDefectoFijos,
@@ -257,22 +262,6 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
               return;
           }          
           
-//          Ice.log('view', view.down('form').getValues().getValidation());
-//          
-//          if(!refs.nmsituac || !refs.nmsituac.getValue()){
-//              Ice.logWarn('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables view no tiene view.nmsituac');
-//              return;
-//          }
-//              
-//          var errores = Ext.create(view.modelo, view.down('form').getValues().getValidation().getData());
-//          
-//          for (var i = 0; i < view.getCamposDisparanValoresDefectoVariables().length; i++) {
-//              var name = view.getCamposDisparanValoresDefectoVariables()[i];
-//              if (refs[name] && errores[name] !== true) {
-//                  Ice.logWarn('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables invalido <', name, ':', errores[name], '>');
-//                  return;
-//              }
-//          }
           if(refs.form){
               var form = refs.form;
               Ice.log('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables valores cargados ok');
@@ -397,6 +386,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                           if(action.success){
                               Ice.mensajeCorrecto('Datos guardados');
                               refs.grid.getStore().reload();
+                              me.limpiarForm(refs.form);
                               Ice.log('proceso exitoso');
                           }
                           
@@ -577,6 +567,31 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
       try{
           refs.grid.getController().cargar();
       } catch(e) {
+          Ice.generaExcepcion(e, paso);
+      }
+  },
+  
+  cancelar: function(){
+      Ice.log('Ice.view.bloque.CoberturasController.cancelar');
+      var me = this,
+          view = me.getView(),
+          refs = view.getReferences();
+      try{
+          me.limpiarForm(refs.form);
+          refs.form.hide();
+      } catch(e) {
+          Ice.generaExcepcion(e, paso);
+      }
+  },
+  
+  limpiarForm: function(form){
+      Ice.log('Ice.view.bloque.CoberturasController.limpiarForm');
+      paso = 'Limpiando formulario de situaciones de riesgo';
+      try{
+          Ice.query('[getName]', form).forEach(function(it){
+              it.setValue(null);
+          });
+      } catch (e){
           Ice.generaExcepcion(e, paso);
       }
   }
