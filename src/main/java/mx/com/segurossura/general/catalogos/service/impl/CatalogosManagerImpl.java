@@ -230,6 +230,30 @@ public class CatalogosManagerImpl implements CatalogosManager {
                    }
                    break;
                    
+               case SUCURSALES_BANCARIAS:
+            	   paso = "Recuperando cat\u00e1logo de sucursales bancarias";
+            	   if (params != null) {
+            		   lista = new ArrayList<>();
+                	   List<Map<String, String>> sucBanc = catalogosDAO.obtenerSucuBanc(params.get("cdbanco"));
+                	   if(sucBanc != null){
+                		   for (Map<String, String> registro: sucBanc) {
+                			   lista.add(new BaseVO(registro.get("cdsucurs"), registro.get("dssucurs")));
+                		   }
+                	   }            		   
+            	   }
+            	   break;
+            	   
+               case GESTORES_COBRANZA:
+            	   paso = "Recuperando cat\u00e1logo de gestores de cobranza";
+            	   lista = new ArrayList<>();
+                   List<Map<String, String>> gestoresCobranza = catalogosDAO.obtienerGestoresCob();
+                   if (gestoresCobranza != null) {
+                       for (Map<String, String> registro: gestoresCobranza) {
+                           lista.add(new BaseVO(registro.get("cdgestor"), registro.get("dsgestor")));
+                       }
+                   }
+            	   break;
+                   
                 default:
                     throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));
                 }

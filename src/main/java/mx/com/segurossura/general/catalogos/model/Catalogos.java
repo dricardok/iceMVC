@@ -16,7 +16,9 @@ public enum Catalogos {
     COLONIA(""),
     CUACOM_RAMO(""),
     TMANTENI(""),
-    AGRUPADORES_POLIZA("");
+    AGRUPADORES_POLIZA(""),
+    SUCURSALES_BANCARIAS(""),
+    GESTORES_COBRANZA("");
 
     
     private String cdtabla;

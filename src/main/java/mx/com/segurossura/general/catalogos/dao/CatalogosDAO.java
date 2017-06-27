@@ -123,4 +123,10 @@ public interface CatalogosDAO {
      */
     public List<Map<String, String>> obtenerProductos() throws Exception;
     
+    
+    public List<Map<String, String>> obtenerSucuBanc(String cdbanco) throws Exception;
+    
+    
+    public List<Map<String,String>> obtienerGestoresCob() throws Exception;
+    
 }
