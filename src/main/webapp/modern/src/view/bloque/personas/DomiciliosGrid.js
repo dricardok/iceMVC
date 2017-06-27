@@ -16,6 +16,7 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
             Ice.log('Ice.view.bloque.personas.DomiciliosGrid.constructor config:', config);
             var me = this,
                 paso = 'Validando construcci\u00f3n de domicilios';
+            
                 try {
                     if (!config) {
                         throw 'No hay datos para lista de personas';
@@ -30,17 +31,29 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
                         columns: true
                     });
                     Ice.log('Ice.view.bloque.personas.DomiciliosGrid.initialize comps:', comps);
-                    var cols = comps.DOMICILIO.GRID.columns;
-                    if(config.actionColumns && config.actionColumns.length > 0){
-                        cols.concat(config.actionColumns);
-                    }
-                    config.columns = cols;
+                    config.columns = comps.DOMICILIO.GRID.columns;
+                    config.actionColumns = config.actionColumns || [];						
+        			if (config.actionColumns.length > 0) {
+        				var c = [];
+        				config.actionColumns.forEach(function(it){
+        					c.push({
+        			            width: '60',
+        			            ignoreExport: true,
+        			            cell: {
+        			                xtype: 'widgetcell',
+        			                widget: it
+        			            }
+        			        });
+        				});
+        				config.columns = config.columns.concat(c);
+        				Ice.log("##d",config.columns);
+        			}
                     config.store = {
                         fields: comps.DOMICILIO.GRID.fields,
                         autoLoad: true, //me.getSelector() === 'true' ? false : true,
                         proxy: {
                             type        : 'ajax',
-                            url         : Ice.url.bloque.personas.obtenerDomicilios,
+                            url         : Ice.url.bloque.personas.obtenerDomicilio,
                             extraParams : {
                                 'params.cdperson'   : config.cdperson
                             },
@@ -52,9 +65,9 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
                             }
                         }
                     };
-                    if(config.botones && config.botones.length > 0){                        
-                        config.tbar = config.botones;
-                    }
+//                    if(config.botones && config.botones.length > 0){                        
+//                        config.tbar = config.botones;
+//                    }
 //                    if (config.selector == true){
 //                        config.selModel = {
 //                            type: 'checkboxmodel',
@@ -63,6 +76,16 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
 //                            allowDeselect: true
 //                        };
 //                    }
+                    config.items   = config.items || [];
+            		config.buttons = config.buttons || [];
+        			Ice.log("buttons",config.buttons);
+        			if (config.buttons.length > 0) {
+        			    config.items.push({
+        		            xtype : 'toolbar',
+        		            docked: 'bottom',
+        		            items: config.buttons
+        		        });
+        			}
                 } catch (e) {
                     Ice.generaExcepcion(e, paso);
                 }
