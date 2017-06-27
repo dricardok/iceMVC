@@ -42,11 +42,11 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 	        ],
 	        modulo: null,
 	        flujo: null,
-	        cdunieco: null, //1,
-	        cdramo: null, //501,
-	        estado: null, //'W',
-	        nmpoliza: null, //17196,
-	        nmsuplem: null, //0,
+	        cdunieco: null,
+	        cdramo: null,
+	        estado: null,
+	        nmpoliza: null,
+	        nmsuplem: null,
 	        nmsituac: null,
 	        cdbloque: null,
 	        procesandoValoresDefecto: false,
@@ -107,19 +107,6 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 	            
 //	         // creando modelo para validaciones
                 var modelName = Ext.id();
-//                Ext.define(modelName, {
-//                    extend: 'Ext.data.Model',
-//                    fields: compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.fields,
-//                    validators: compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.validators
-//                });
-//	            
-//	         // creando modelo para validaciones
-//                var modelName = Ext.id();
-//                Ext.define(modelName, {
-//                    extend: 'Ext.data.Model',
-//                    fields: compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.fields,
-//                    validators: compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.validators
-//                });
                 me.setModelFields(compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.fields);
                 me.setModelValidators(compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.validators);
                 Ice.log('compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.validators ',me.getModelValidators());
@@ -169,8 +156,6 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 	                        title: 'Editar situacion de riesgo',
 	                        items: comps.BLOQUE_LISTA_SITUACIONES.LISTA.items.concat(compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.items),
 	                        modelo: modelName,
-//	                        modelFields: compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.fields,
-//                            modelValidators: compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.validators,
 	                        layout: 'responsivecolumn',
 	                        hidden: true,
 	                        buttons: [
@@ -182,15 +167,18 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 	                            },{
 	                                xtype: 'button',
 	                                text: 'Cancelar',
-	                                handler: function (me){
-	                                    var paso = '';
-	                                    try{
-	                                        paso = 'Antes de ocultar formulario de situacion';
-	                                        me.up('form').hide();
-	                                    } catch (e){
-	                                        Ice.generaExcepcion(e, paso);
-	                                    }
-	                                }
+	                                handler: 'onCancelar'
+//	                                    function (me){
+//	                                    var paso = '';
+//	                                    try{
+//	                                        paso = 'Antes de ocultar formulario de situacion';
+//	                                        Ice.log('controller',me.getController());
+//	                                        me.getController().limpiarForm(me.up('form'));
+//	                                        me.up('form').hide();
+//	                                    } catch (e){
+//	                                        Ice.generaExcepcion(e, paso);
+//	                                    }
+//	                                }
 	                            }
 	                        ],
 	                        bodyPadding: '10px 0px 0px 10px',

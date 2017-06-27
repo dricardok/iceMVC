@@ -33,34 +33,9 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
         try {
             var refs = view.getReferences() || {};
             Ice.log('Ice.view.bloque.personas.PersonasPolizaController.custom refs:', refs);
-//            var cdrol = refs.cdrol;
             var cdatribu = refs.dsatribu;
-            var cdperson = refs.form.items.getAt(0).items.getAt(0);
-                        
-//            refs.cdrol.on({
-//                blur: function(){
-//                    Ice.log('cdrol',refs.cdrol);
-//                }
-//            });
-//            
-//            cdatribu.on({
-//                blur: function(){
-//                    if(cdatribu.getValue()){
-//                        otvalor.getStore().getProxy().setTimeout(60000);
-//                        otvalor.getStore().getProxy().extraParams['params.cdunieco'] = view.getCdunieco();
-//                        otvalor.getStore().getProxy().extraParams['params.cdramo'] = view.getCdramo();
-//                        otvalor.getStore().getProxy().extraParams['params.estado'] = view.getEstado();
-//                        otvalor.getStore().getProxy().extraParams['params.nmpoliza'] = view.getNmpoliza();
-//                        otvalor.getStore().getProxy().extraParams['params.nmsuplem'] = view.getNmsuplem();
-//                        otvalor.getStore().getProxy().extraParams['params.nmsituac'] = view.getNmsituac();
-//                        otvalor.getStore().getProxy().extraParams['params.cdrol'] = view.getCdrol();
-//                        otvalor.getStore().getProxy().extraParams['params.cdperson'] = view.getCdperson();
-//                        otvalor.getStore().getProxy().extraParams['params.cdatribu'] = cdatribu.getValue();
-//                    }
-//                    Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdatribu.blur ',otvalor);
-//                }
-//            });
-            
+            var cdperson = Ice.query('[name=cdperson]', refs.cdperson);
+            Ice.log('custom cdperson',Ice.query('[name=cdperson]',cdperson));            
             cdperson.on({
                 change: function(){
                     Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdperson.change ',cdperson.getValue());
@@ -71,15 +46,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
                             }
                         });
                         refs.gridDomicilios.show();
-                    }
-                    
-//                    Ice.log('situacion de vista recibida',view.getNmsituac());
-//                    if(view.getNmsituac() === '0'){
-//                        refs.cdrol.setValue("TO");
-//                        refs.cdrol.setDisabled(true);
-//                    } else {
-//                        refs.cdrol.setDisabled(false);
-//                    }
+                    }                    
                     Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdperson.change ',cdperson);
                 }
             });
@@ -104,9 +71,11 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
             paso = 'Agregando persona a situacion de poliza';
         try {
             Ice.log('refs ',refs);
-            if(refs.form.isValid()){
+            Ice.log('view ',view.up('panel'));
+            if(refs.cdrol.isValid()){
                 var selected = refs.gridDomicilios.selModel.getSelected();
                 if(selected.getCount() > 0){
+                    var cdperson = refs.cdperson.getValue();
                     Ice.request({
                         mascara: 'Agregando situacion de riesgo',
                         url: Ice.url.bloque.personas.movimientoPolizaPersona,
@@ -117,8 +86,8 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
                             'params.nmpoliza': view.getNmpoliza(),
                             'params.nmsuplem': view.getNmsuplem(),
                             'params.nmsituac': view.getNmsituac(),
-                            'params.cdrol': refs.cdrol.cdrol,
-                            'params.cdperson': selected.getAt(0).data.cdperson,
+                            'params.cdrol': refs.cdrol.getValue(),
+                            'params.cdperson': cdperson,
                             'params.nmsuplem': view.getNmsuplem(),
                             'params.status': 'V',
                             'params.nmorddom':  selected.getAt(0).data.nmorddom,
@@ -130,7 +99,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
                             try {
                                 Ice.log("json ",json);
                                 Ice.mensajeCorrecto('Guardado con exito');
-                                view.up('panel').refs.personapoliza.fireEvent('datosPersonaGuardada', me);
+                                Ice.pop();
                             } catch (e) {
                                 Ice.manejaExcepcion(e, paso2);
                             }
@@ -140,12 +109,8 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
                     Ice.mensajeWarning('Seleccione un domicilio');
                 }
             } else {
-                Ice.mensajeWarning('Datos invalidos');
+                Ice.mensajeWarning('Seleccione un rol');
             }
-//            var store = refs.gridDomicilios.getStore();
-//            Ice.log('Ice.view.bloque.personas.PersonasPolizaController.actualizar store ',store);
-//            var nmsituac = store.getAt(rowIndex).getData().nmsituac;
-//            Ice.debug('guardado ',nmsituac);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

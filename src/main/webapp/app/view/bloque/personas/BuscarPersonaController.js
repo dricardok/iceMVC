@@ -97,12 +97,32 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
         try{
             Ice.log('Mainview.refs',Ice.query('#mainView').refs);
             if(refs.gridPersonas.getSelection()){
-                if(refs.gridPersonas.getSelection()[0]){
-                    data = refs.gridPersonas.getSelection()[0].getData();
-                    if(data){
-                        view.fireEvent('obtenerCdperson', view, data.cdperson, data.dsnombre);
-                        view.close();
+                var selection = refs.gridPersonas.getSelection(),
+                    data = '';                
+                
+                if(selection){
+                    
+                    if(Ext.manifest.toolkit === 'classic'){
+                        if(selection[0].data){
+                            data = selection[0].data;
+                        } else {
+                            Ice.mensajeWarning('Seleccione un registro');
+                        }
+                    } else {
+                        if(selection.getData()){
+                            data = selection.getData();
+                        } else {
+                            Ice.mensajeWarning('Seleccione un registro');
+                        }
                     }
+                    
+                    if(data){
+                        view.fireEvent('obtenerCdperson', view, data.cdperson);
+                        Ice.query('#mainView').getReferences().mainCard.pop();
+                    }
+                    
+                } else {
+                    Ice.mensajeWarning('No existen resultados');
                 }
             }
         } catch (e) {
@@ -120,21 +140,21 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
         try{
             if(this.validaBusqueda(refs) == true){
                 Ice.log('refs validado',refs);
-                Ice.log('refs cdunieco',refs.cdunieco.value);
-                Ice.log('refs cdramo',refs.cdramo.value);
-                Ice.log('refs nmpoliza',refs.nmpoliza.value);
-                Ice.log('refs otvalor',refs.otvalor.value);
+                Ice.log('refs cdunieco',refs.cdunieco.getValue());
+                Ice.log('refs cdramo',refs.cdramo.getValue());
+                Ice.log('refs nmpoliza',refs.nmpoliza.getValue());
+                Ice.log('refs otvalor',refs.otvalor.getValue());
                 var store = refs.gridPersonas.getStore();
                 store.removeAll();
                 var mask = Ice.mask('Cargando informacion de usuarios');
                 store.load({
                     params: {
-                        'params.cdunieco': refs.cdunieco.value,
-                        'params.cdramo': refs.cdramo.value,
+                        'params.cdunieco': refs.cdunieco.getValue(),
+                        'params.cdramo': refs.cdramo.getValue(),
                         'params.estado': 'W',
-                        'params.nmpoliza': refs.nmpoliza.value,
-                        'params.cdatribu': refs.dsatribu.value,
-                        'params.otvalor': refs.otvalor.value
+                        'params.nmpoliza': refs.nmpoliza.getValue(),
+                        'params.cdatribu': refs.dsatribu.getValue(),
+                        'params.otvalor': refs.otvalor.getValue()
                     },
                     callback: function() {
                         mask.close();
@@ -179,7 +199,7 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
             if(Ext.manifest.toolkit === 'classic'){
                 me.navigate(view, "next", persona);                              
             } else {
-                me.push(persona);
+                Ice.query('#mainView').getReferences().mainCard.push(persona);
             }
         } catch(e){
             Ice.generaExcepcion(e, paso);
@@ -190,14 +210,14 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
     validaBusqueda: function(refs){
         Ice.log('Ice.view.bloque.BuscarPersonaController.validaBusqueda',refs);
         var valid = true;
-        if(refs.dsatribu.isValid()){            
+        if(refs.dsatribu){
             if(refs.dsatribu.value === 'POLIZA'){
                 if(!refs.cdunieco.value || !refs.cdramo.value || !refs.nmpoliza.value){
                     valid = false;
                     Ice.mensajeWarning('Seleccione un oficina, producto y poliza');
                 }
             } else {
-                if(!refs.otvalor.value){
+                if(!refs.otvalor.getValue()){
                     valid = false;
                     Ice.mensajeWarning('Seleccione valor');
                 }
