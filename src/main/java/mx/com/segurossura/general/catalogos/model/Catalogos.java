@@ -3,6 +3,7 @@ package mx.com.segurossura.general.catalogos.model;
 public enum Catalogos {
     
     SUCURSALES(""),
+    PRODUCTOS(""),
     TATRIPOL(""),
     TATRISIT(""),
     TATRIGAR(""),

@@ -67,4 +67,6 @@ public interface AgrupadoresDAO {
             String cdperreg, Date feultreg, String cdgestor, String cdtipred, Date fevencim, String cdtarcre,
             String nmcuota, String nmporcen, String accion) throws Exception;
     
+    public List<Map<String, String>> obtenerMpoliagrVista (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplemSes)
+            throws Exception;
 }

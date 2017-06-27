@@ -1,8 +1,9 @@
 Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 	
-	extend		:	"Ice.view.componente.Ventana",
+	extend		:	"Ice.view.componente.VentanaPanel",
 	controller	:	"agregardomiciliowindow",
 	xtype		:	"agregardomiciliowindow",
+	scrollable	:	true,
 	config		:	{
 		cdperson	:	null,
 		nmorddom	:	null,

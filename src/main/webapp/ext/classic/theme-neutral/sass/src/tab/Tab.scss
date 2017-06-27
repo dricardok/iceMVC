@@ -2126,7 +2126,7 @@
 
     .#{$prefix}tab-inner-#{$ui} {
         font: $ui-font-weight #{$ui-font-size}/#{$ui-line-height} $ui-font-family;
-        color: $ui-color;
+        color: $gris-s !important;
         @if $ui-text-padding != 0 {
             padding: 0 $ui-text-padding;
         }

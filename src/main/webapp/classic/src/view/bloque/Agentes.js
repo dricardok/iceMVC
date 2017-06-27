@@ -31,11 +31,11 @@ Ext.define('Ice.view.bloque.Agentes', {
             paso = 'Validando bloque de agentes';
         try {
             
-        	if (!config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza || !config.nmsuplem) {
+        	if (!config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza || Ext.isEmpty(config.nmsuplem)) {
                 throw 'Faltan parametros para bloque de agentes';
             }
         	
-        	config.modulo = config.modulo || '';
+        	config.modulo = config.modulo || 'EMISION';
             
         } catch (e) {
             Ice.generaExcepcion(e, paso);

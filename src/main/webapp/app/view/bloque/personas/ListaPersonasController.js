@@ -56,6 +56,7 @@ Ext.define('Ice.view.bloque.personas.ListaPersonasController', {
             Ice.log('Ice.view.bloque.ListaPersonas.cargar view ', view);
             Ice.log('Ice.view.bloque.ListaPersonas.cargar refs ', refs);
             var store = view.getStore();
+            store.removeAll();
             store.load({
                 params: {
                     'params.cdunieco': view.getCdunieco(),

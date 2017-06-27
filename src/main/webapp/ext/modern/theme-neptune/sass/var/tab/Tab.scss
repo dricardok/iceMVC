@@ -68,7 +68,10 @@ $tab-border-style: dynamic(solid);
  * @var {number}
  * Tab border-radius
  */
-$tab-border-radius: dynamic(.25em);
+//$tab-border-radius: dynamic(.25em);
+
+$tab-border-radius: dynamic(0em);
+
 
 /**
  * @var {number}

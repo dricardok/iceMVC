@@ -5,7 +5,8 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
     controller: 'personapolizanavigation',
     layout: 'card',
     title: 'Personas poliza',
-    height: '100%',
+//    width: '100%',
+//    height: '100%',
     bodyStyle: 'padding:15px',
     scrollable: true,
     
@@ -23,7 +24,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
                     throw 'Falta ramo y tipo de situaci\u00f3n para lista de personas';
                 }
                 
-                if (!config.cdunieco || !config.estado || !config.nmpoliza || !config.nmsuplem) {
+                if (!config.cdunieco || !config.estado || !config.nmpoliza || Ext.isEmpty(config.nmsuplem)) {
                     throw 'Falta llave de p\u00f3liza';
                 }
                 
@@ -57,8 +58,10 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
             var modelName = Ext.id();
             
             Ext.apply(me, {
+//                width: '700',
                 items: [{
                     xtype: 'situacionpersonas',
+//                    width: '100%',
                     id: 'card-0',
                     reference: 'situacionpersonas',
                     cdunieco: me.getCdunieco(),

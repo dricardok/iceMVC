@@ -628,7 +628,6 @@ public class EmisionAction extends PrincipalCoreAction {
     	
     	return SUCCESS;
     }
-    
 	
 	public Map<String, String> getParams() {
 		return params;

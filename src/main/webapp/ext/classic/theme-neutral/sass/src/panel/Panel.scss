@@ -390,21 +390,23 @@
     }
 
     .#{$prefix}panel-header-title-#{$ui} {
-        @if not is-null($ui-header-color) { color: $ui-header-color; }
-
-        @if not is-null($ui-header-font-size) {   font-size: $ui-header-font-size; }
-        @if not is-null($ui-header-font-weight) { font-weight: $ui-header-font-weight; }
+        //@if not is-null($ui-header-color) { color:$font-grey; }
+        @if not is-null($ui-header-color) { color:$blanco-s; }
+        @if not is-null($ui-header-font-size) { font-size: $ui-header-font-size; }
+        // @if not is-null($ui-header-font-weight) { font-weight:$font-bold;}
+        @if not is-null($ui-header-font-weight) { font-weight: $ui-header-font-weight;}
         @if not is-null($ui-header-font-family) { font-family: $ui-header-font-family; }
         @if not is-null($ui-header-line-height) { line-height: $ui-header-line-height; }
-
         @if $ui-header-text-margin != 0 {
             margin: $ui-header-text-margin;
         }
+       
 
         > {
             .#{$prefix}title-text-#{$ui} {
                 text-transform: $ui-header-text-transform;
                 padding: $ui-header-text-padding;
+                 //text-align: $txt-center;
 
                 @if $ext-trial {
                     &:after {
@@ -678,10 +680,12 @@
     } @else {
         @if not is-null($ui-header-background-color) {
             .#{$prefix}panel-header-#{$ui} {
+              
                 @include background-gradient($azulo-s);
             }
 
             .#{$prefix}panel-header-#{$ui}-vertical {
+                
                 @include background-gradient($azulo-s, $ui-header-background-gradient, right);
             }
 
@@ -984,7 +988,22 @@ content: "\f107" !important;
 content:"" !important;
 }
 
-
+    /*Header con gradient
+  
+    
+.titulo_pnl{
+   background-color: #0033a0 !important;
+   background-image: -webkit-gradient(linear, top, bottom, color-stop(0%, #0033a0), color-stop(0%, #002c8c));
+   background-image: -webkit-linear-gradient(top, #0033a0, #002c8c) !important;
+   background-image: -moz-linear-gradient(top, #0033a0, #002c8c);
+   background-image: -o-linear-gradient(top, #0033a0, #002c8c);
+   background-image: -ms-linear-gradient(top, #0033a0, #002c8c);
+   background-image: linear-gradient(top, #0033a0, #002c8c);  
+   color: #FFF !important;
+   text-align:center !important; 
+   font-weight: 400 !important; 
+}
+*/
 
 
 

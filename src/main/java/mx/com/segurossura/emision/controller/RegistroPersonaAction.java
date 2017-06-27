@@ -31,7 +31,11 @@ import mx.com.segurossura.emision.service.RegistroPersonaManager;
 @Namespace("/registroPersona")
 public class RegistroPersonaAction extends PrincipalCoreAction{
 	
-	    private static final Logger logger = LoggerFactory.getLogger(RegistroPersonaAction.class);
+	    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+		private static final Logger logger = LoggerFactory.getLogger(RegistroPersonaAction.class);
 		private Map<String,String> params;
 		private Map<String,String> tvaloper;
 		private Map<String,String> mpersona;
@@ -41,11 +45,6 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 		private List<Map<String, String>> list;
 		private List<Map<String, String>> listas;
 		private Map<String, List<Map<String, String>>> componentes;
-		private static SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
-		
-		@Autowired
-		private BloqueCoberturasManager bloqueCoberturasManager;
-		
 		@Autowired
 		private RegistroPersonaManager registroPersonaManager;
 	
@@ -74,13 +73,13 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 				String pv_cdrol_i= datos.get("cdrol");
 				
 				String pantalla=datos.get("pantalla");
-				Utils.validate(pv_cdramo_i,"No hay ramo");
-				Utils.validate(pv_cdrol_i,"No hay cdtipsit");
+//				Utils.validate(pv_cdramo_i,"No hay ramo");
+//				Utils.validate(pv_cdrol_i,"No hay cdtipsit");
 				
 	        	componentes= new HashMap<String, List<Map<String,String>>>();
 	            componentes.put(
 	            		pantalla, 
-	            		registroPersonaManager.obtieneAttrXRol(pv_cdramo_i, pv_cdrol_i.toUpperCase())
+	            		registroPersonaManager.obtieneAttrXRol(pv_cdramo_i,pv_cdrol_i==null?null: pv_cdrol_i.toUpperCase())
 	            		);
 	            
 	            logger.debug("Datos de Tarificacion: {}", list);
@@ -146,13 +145,15 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            	fenacimi=fenacimi.split("T")[0];
 	            }
 	            fenacimi=fenacimi==null?null:fenacimi.replaceAll("/", "-");
+	            logger.debug(fenacimi);
+	            logger.debug(new SimpleDateFormat("dd-MM-yyyy").parse(fenacimi).toString());
 	            
 	            registroPersonaManager.movimientoMpersona(cdperson, cdtipide, cdideper, dsnombre, dsnombr1, dsnombr2, dsapell1, dsapell2, cdtipper, otfisjur, otsexo,
 	            		"null".equals(fenacimi) || fenacimi==null?null:
-	            			new SimpleDateFormat("yyyy-MM-dd").parse(fenacimi), 
+	            			new SimpleDateFormat("dd-MM-yyyy").parse(fenacimi), 
 	            				cdprovin, accion);
 	            
-	            registroPersonaManager.movimientoTvaloper(cdperson, tvaloper, accion);
+	            registroPersonaManager.movimientoTvaloper(cdperson, tvaloper, "U".equals(accion)?"M":accion);
 	            
 	            params=params==null?new HashMap():params;
 	            params.put("cdperson", cdperson);

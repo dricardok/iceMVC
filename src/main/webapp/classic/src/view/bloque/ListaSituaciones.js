@@ -24,7 +24,7 @@
 	    	situacionCero: false
 	    },    	    
 	    // configuracio ext
-	    title: 'Lista Situaciones',	    	    
+	    title: 'Lista Situaciones',	    	    	    
 	    tbar: [],	    
 	    // contruccion usando metodos ext y parametros de entrada
 	    initComponent: function () {
@@ -65,7 +65,7 @@
 	                            messageProperty: 'message',
 	                            rootProperty: 'situaciones'
 	                         }	                     }	                },
-	                buttons:me.config.buttons
+	                buttons:me.config.buttons,
 	            });
 	        } catch (e) {
 	            Ice.generaExcepcion(e, paso);

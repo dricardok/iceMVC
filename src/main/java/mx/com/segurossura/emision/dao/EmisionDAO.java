@@ -96,4 +96,18 @@ public interface EmisionDAO {
 
 	public Map<String, Object> distribuirAgrupadores(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
 	
+	/**
+	 *  Actualiza Poliza de Working a Master
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsuplem
+	 * @param newestad
+	 * @param newpoliza
+	 * @param pnmrecibo
+	 * @return
+	 * @throws Exception
+	 */
+	public Map<String, Object> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception;
 }

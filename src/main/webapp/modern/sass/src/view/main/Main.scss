@@ -306,7 +306,6 @@ $logo-image-height: 25px;
         line-height: $main-phone-toolbar-height;
 
         &:before {
-            vertical align:middle !important:
             background-size: 75%;
         }
     }
@@ -315,8 +314,7 @@ $logo-image-height: 25px;
         line-height: $main-phone-toolbar-height;
 
         &:before {
-            left: 0px;
-            vertical align:middle !important:
+            left: 0px;            
            /* top: ($main-phone-toolbar-height - $logosura-image-height) / 1.8;*/
             background-size: 75%;
         }
