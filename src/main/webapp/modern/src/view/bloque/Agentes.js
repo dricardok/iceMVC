@@ -25,7 +25,7 @@ Ext.define('Ice.view.bloque.Agentes', {
                 throw 'Faltan parametros para bloque de agentes';
             }
         	
-        	config.modulo = config.modulo || '';
+        	config.modulo = config.modulo || 'EMISION';
         	
         	// generar componentes
 	        var formPol = Ice.generaComponentes({
