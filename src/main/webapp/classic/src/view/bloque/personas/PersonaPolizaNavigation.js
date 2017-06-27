@@ -5,10 +5,21 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
     controller: 'personapolizanavigation',
     layout: 'card',
     title: 'Personas poliza',
-//    width: '100%',
-//    height: '100%',
     bodyStyle: 'padding:15px',
     scrollable: true,
+    // configuracion del componente (no EXT)
+    config: {
+        modulo: null,
+        flujo: null,
+        cdunieco: null, //1,
+        cdramo: null, //501,
+        estado: null, //'W',
+        nmpoliza: null, //17196,
+        nmsuplem: null, //0,
+        nmsituac: null,
+        cdbloque: null,
+        cdtipsit: null
+    },
     
  // validacion de parametros de entrada
     constructor: function (config) {
@@ -36,19 +47,6 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
         me.callParent(arguments);
     },
     
-    // configuracion del componente (no EXT)
-    config: {
-        modulo: null,
-        flujo: null,
-        cdunieco: null, //1,
-        cdramo: null, //501,
-        estado: null, //'W',
-        nmpoliza: null, //17196,
-        nmsuplem: null, //0,
-        nmsituac: null,
-        cdbloque: null,
-        cdtipsit: null
-    },
     
     initComponent: function () {
         Ice.log('Ice.view.bloque.personas.PersonaPolizaNavigation initComponent');
@@ -58,45 +56,57 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
             var modelName = Ext.id();
             
             Ext.apply(me, {
-//                width: '700',
-                items: [{
-                    xtype: 'situacionpersonas',
-//                    width: '100%',
-                    id: 'card-0',
-                    reference: 'situacionpersonas',
-                    cdunieco: me.getCdunieco(),
-                    cdramo: me.getCdramo(),
-                    estado: me.getEstado(),
-                    nmpoliza: me.getNmpoliza(),
-                    nmsuplem: me.getNmsuplem(),
-                    cdtipsit: me.getCdtipsit(),
-                    buttonPersonas: [
-                        {
-                            text: 'Agregar',
-                            iconCls: 'x-fa fa-plus-circle',
-                            scope: me,
-                            handler: function(btn){
-                                this.getController().agregarPersona(me);
-                            }
-                        }
-                    ]
-                }],
-                tbar: [
+                items: [
                     {
-                        id: 'move-prev',
-                        text: 'Back',
-                        handler: function(btn) {
-                            me.getController().navigate(btn.up("panel"), "prev");
-                        },
-                        disabled: true
-                    },'->',{
-                        id: 'move-next',
-                        text: 'Next',
-                        handler: function(btn) {
-                            me.getController().navigate(btn.up("panel"), "next");
-                        }
+                        xtype: 'bloquelistasituaciones',
+                        itemId: 'gridSituaciones',
+                        reference: 'gridSituaciones',
+                        cdunieco: me.getCdunieco(),
+                        cdramo: me.getCdramo(),
+                        estado: me.getEstado(),
+                        nmpoliza: me.getNmpoliza(),
+                        nmsuplem: me.getNmsuplem(),
+                        cdtipsit: me.getCdtipsit(),
+                        situacionCero: true,
+                        actionColumns: [
+                            {
+                                xtype:'actioncolumn',
+                                items: [
+                                    {
+                                        iconCls: 'x-fa fa-edit',
+                                        tooltip: 'Editar',
+                                        handler: function(grid, rowIndex, colIndex) {
+                                            me.getController().onActualizar(grid, rowIndex, colIndex);
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },{
+                        xtype: 'listapersonas',
+                        itemId: 'gridPersonas',
+                        reference: 'gridPersonas',
+                        title: 'Personas por situacion',
+                        cdunieco: me.getCdunieco(),
+                        cdramo: me.getCdramo(),
+                        estado: me.getEstado(),
+                        nmpoliza: me.getNmpoliza(),
+                        nmsuplem: me.getNmsuplem(),
+                        cdtipsit: me.getCdtipsit(),
+                        hidden: true,
+                        tbar: [
+                            {
+                                text: 'Agregar',
+                                iconCls: 'x-fa fa-plus-circle',
+                                scope: me,
+                                handler: function(btn){
+                                    this.getController().agregarPersona(me);
+                                }
+                            }
+                        ]
                     }
-                ],                
+                ],
+                layout: 'responsivecolumn',
                 renderTo: Ext.getBody()
             });
         } catch (e){

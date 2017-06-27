@@ -8,10 +8,7 @@ Ext.define('Ice.view.bloque.personas.ListaPersonas', {
 	    controller: 'listapersonas',
 	    viewModel: 'listapersonas',
 	    scrollable: true,
-//	    requires: [
-//	        'Ext.ux.layout.ResponsiveColumn'
-//	    ],
-	    
+	    actionColumns: [],
 	    // validacion de parametros de entrada
 	    constructor: function (config) {
 	        Ice.log('Ice.view.bloque.personas.ListaPersonas.constructor config:', config);
@@ -82,7 +79,7 @@ Ext.define('Ice.view.bloque.personas.ListaPersonas', {
 	            
                 var modelName = Ext.id();
                 Ext.apply(me, {
-                    columns: comps.BLOQUE_PERSONAS.GRID.columns,
+                    columns: comps.BLOQUE_PERSONAS.GRID.columns.concat(me.actionColumns),
                     store  : {
                         fields: comps.BLOQUE_PERSONAS.GRID.fields,
                         autoLoad: false,
