@@ -301,16 +301,8 @@ public class EmisionManagerImpl implements EmisionManager {
 		Map<String, Object> res = null;
 
 		try {
-			paso = "Distribuyendo agrupadores";
-
-			try {
-
-				res = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo);
-
-			} catch (Exception ex) {
-				logger.error("Error al llamar funcion de distribucionAgrupadores");
-			}
-
+			paso = "Confirmando p\u00f3liza";
+			res = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}

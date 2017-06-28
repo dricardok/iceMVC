@@ -964,7 +964,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	
 	@Override
 	public Map<String, Object> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception {
+			String nmsuplem, String pnmrecibo) throws Exception {
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
         params.put("pv_cdunieco_i", cdunieco);
@@ -973,8 +973,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_nmpoliza_i", nmpoliza);
         params.put("pv_nmsuplem_i", nmsuplem);
         
-        params.put("pv_newestad_i", newestad);
-        params.put("pv_newpoliza_i", newpoliza);
+        // params.put("pv_newestad_i", newestad);
+        // params.put("pv_newpoliza_i", newpoliza);
         params.put("pv_nmrecibo_i", pnmrecibo);
         
         Map<String, Object> resultado = ejecutaSP(new ActualizaPolizaF(getDataSource()), params);
@@ -993,8 +993,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_nmpoliza_i"  , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i"  , Types.VARCHAR));
             
-            declareParameter(new SqlParameter("pv_newestad_i"  , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_newpoliza_i" , Types.VARCHAR));
+            // declareParameter(new SqlParameter("pv_newestad_i"  , Types.VARCHAR));
+            // declareParameter(new SqlParameter("pv_newpoliza_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmrecibo_i"  , Types.VARCHAR));
             		
             declareParameter(new SqlOutParameter("pv_comando_o" , Types.VARCHAR));

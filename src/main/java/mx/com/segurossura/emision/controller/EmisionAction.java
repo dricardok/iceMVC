@@ -637,37 +637,33 @@ public class EmisionAction extends PrincipalCoreAction {
             }
         )   
     public String confirmarPoliza() {
-    	logger.debug("Inicio confirmarPoliza...");
-    	try{
-    		 Utils.validate(params, "No se recibieron datos");
-    		 String cdunieco = params.get("cdunieco");
-    		 String cdramo = params.get("cdramo"); 
-    		 String estado =   params.get("estado"); 
-    		 String nmpoliza = params.get("nmpoliza");
- 			 String nmsuplem = Utils.NVL(params.get("nmsuplem"), "0");
- 			 String newestad = params.get("newestad");
- 			 String newpoliza = params.get("newpoliza");
- 			 String pnmrecibo = params.get("pnmrecibo");
- 			 
-             Utils.validate(cdunieco, "Falta cdunieco");
-             Utils.validate(cdramo,   "Falta cdramo");
-             Utils.validate(estado,   "Falta estado");             
-             Utils.validate(nmpoliza, "Falta nmpoliza");
-             
-             /*
-             Utils.validate(newestad,  "Falta newstad");
-             Utils.validate(newpoliza, "Falta newpoliza");
-             Utils.validate(pnmrecibo, "Falta pnmrecibo");*/
-
-             
-             
-             emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo);
-    		
-    	}catch(Exception ex){
-    		 success=false;
-             message = Utils.manejaExcepcion(ex);
+    	logger.debug(Utils.log("###### confirmarPoliza params = ", params));
+    	try {
+    	    Utils.validate(params, "No se recibieron datos");
+    	    String cdunieco  = params.get("cdunieco"),
+    	           cdramo    = params.get("cdramo"),
+    	           estado    = params.get("estado"),
+    	           nmpoliza  = params.get("nmpoliza"),
+    	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
+    	           newestad  = params.get("newestad"),
+    	           newpoliza = params.get("newpoliza"),
+    	           pnmrecibo = params.get("pnmrecibo");
+    	    Utils.validate(cdunieco, "Falta cdunieco",
+    	                   cdramo,   "Falta cdramo",
+    	                   estado,   "Falta estado",
+    	                   nmpoliza, "Falta nmpoliza");
+    	    
+    	    /*
+            Utils.validate(newestad,  "Falta newstad");
+            Utils.validate(newpoliza, "Falta newpoliza");
+            Utils.validate(pnmrecibo, "Falta pnmrecibo");
+            */
+    	    
+    	    emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo);
+    		success = true;
+    	} catch (Exception ex) {
+    	    message = Utils.manejaExcepcion(ex);
     	}
-    	
     	return SUCCESS;
     }
 	
