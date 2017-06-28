@@ -5,6 +5,18 @@
 	    xtype: 'bloquelistasituaciones',	    
 	    controller: 'bloquelistasituaciones',
 	    requires: [],
+	    config: {
+            modulo: null,
+            flujo: null,
+            cdtipsit: null,
+            cdunieco: null,
+            cdramo: null,
+            estado: null,
+            nmpoliza: null,
+            nmsuplem: null,
+            actionColumns:[],
+            situacionCero: false
+        },
 	    // validacion de parametros de entrada
 	    constructor: function (config) {
 	        Ice.log('Ice.view.bloque.ListaSituaciones.constructor config:', config);
@@ -16,14 +28,21 @@
 	                }
 	                if (!config.cdramo || !config.cdtipsit) {
 	                    throw 'Falta ramo y tipo de situaci\u00f3n para bloque de lista de situaciones';
-	                }               	                config.modulo = config.modulo || 'COTIZACION';               	            } catch (e) {	                Ice.generaExcepcion(e, paso);	            }	        me.callParent(arguments);	    },
-	       	    // configuracion del componente (no EXT)
-	    config: {
-	    	actionColumns:[],
-	    	situacionCero: false
-	    },    	    
-	    // configuracio ext
-	    title: 'Lista Situaciones',	    	    	    
+	                }               
+	                if (!config.estado) {
+                        throw 'Falta estado de p\u00f3liza';
+                    }
+	                
+	                if (!config.nmpoliza) {
+                        throw 'Falta numero de p\u00f3liza';
+                    }
+	                
+//	                if (!config.nmsuplem) {
+//                        throw 'Falta suplemento de p\u00f3liza';
+//                    }
+	                	                config.modulo = config.modulo || 'COTIZACION';               	            } catch (e) {	                Ice.generaExcepcion(e, paso);	            }	        me.callParent(arguments);	    },   	    
+//	    // configuracio ext
+//	    title: 'Lista Situaciones',	    	    	    
 	    tbar: [],	    
 	    // contruccion usando metodos ext y parametros de entrada
 	    initComponent: function () {
@@ -45,6 +64,7 @@
 	            });
 	            Ice.log('Ice.view.bloque.ListaSituaciones.initComponent comps:', comps);
 	            Ext.apply(me, {
+	                title: 'Situaciones de p\u00f3liza '+me.cdunieco+'-'+me.cdramo+'-'+me.estado+'-'+me.nmpoliza,
 	                columns: comps.BLOQUE_LISTA_SITUACIONES.GRID.columns.concat(me.config.columns || []).concat(me.config.actionColumns),	                store  : {
 	                	fields: comps.BLOQUE_LISTA_SITUACIONES.GRID.fields,
 	                	autoLoad: true,
