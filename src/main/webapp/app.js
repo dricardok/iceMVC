@@ -9,7 +9,8 @@ Ext.application({
     extend: 'Ice.Application',
 
     requires: [
-        'Ice.*'
+        'Ice.*',
+        'Ext.data.validator.*'
     ],
 
     // The name of the initial view to create. With the classic toolkit this class
