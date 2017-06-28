@@ -20,11 +20,6 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                     paso2 = 'Definiendo comportamiento de bloque de situaciones de riesgo';
                     me.custom();
                     
-//                    if (view.cdunieco && view.cdramo && view.estado && view.nmpoliza
-//                        && !Ext.isEmpty(view.nmsuplem) && view.modulo) {
-//                        paso2 = 'Cargando bloque de situaciones de riesgo';
-//                        me.cargar();
-//                    }
                 } catch (e) {
                     Ice.manejaExcepcion(e, paso2);
                 }
@@ -107,6 +102,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           var store = view.down('grid').getStore(),
               form = refs.form;
           me.limpiarForm(form);
+          view.setDatosVariablesNuevos(true);
           Ice.request({
               mascara: 'Agregando situacion de riesgo',
               url: Ice.url.bloque.situacionesRiesgo.valoresDefectoFijos,
@@ -588,9 +584,10 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
       Ice.log('Ice.view.bloque.CoberturasController.limpiarForm');
       paso = 'Limpiando formulario de situaciones de riesgo';
       try{
-          Ice.query('[getName]', form).forEach(function(it){
-              it.setValue(null);
-          });
+          form.reset();          
+//          Ice.query('[getName]', form).forEach(function(it){
+//              it.setValue(null);
+//          });
       } catch (e){
           Ice.generaExcepcion(e, paso);
       }
