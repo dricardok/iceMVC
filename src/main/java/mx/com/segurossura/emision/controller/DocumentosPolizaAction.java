@@ -6,16 +6,24 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 
 import mx.com.segurossura.emision.service.impl.DocumentosPolizaManagerImpl;
 
+@Controller
+@Scope("prototype")
+@ParentPackage(value="json-default")
+@Namespace("/emision")
 public class DocumentosPolizaAction extends PrincipalCoreAction {
 
 	private static final long serialVersionUID = -8150842831873780873L;
