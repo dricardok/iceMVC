@@ -977,7 +977,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_newpoliza_i", newpoliza);
         params.put("pv_nmrecibo_i", pnmrecibo);
         
-        Map<String, Object> resultado = ejecutaSP(new BbvlcotiF(getDataSource()), params);
+        Map<String, Object> resultado = ejecutaSP(new ActualizaPolizaF(getDataSource()), params);
         return resultado;
 	}
 	

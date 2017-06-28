@@ -93,7 +93,16 @@ public interface EmisionDAO {
      */
 	public List<Map<String,String>> obtenerDatosTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
 	
-
+	/**
+	 * Distribuye los agrupadores de la poliza
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsuplem
+	 * @return
+	 * @throws Exception
+	 */
 	public Map<String, Object> distribuirAgrupadores(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
 	
 	/**
