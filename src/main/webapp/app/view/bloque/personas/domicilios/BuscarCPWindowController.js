@@ -15,6 +15,10 @@ Ext.define('Ice.view.bloque.personas.domicilios.BuscarCPWindowController', {
     		}else{
     			record=sel;
     		}
+    		
+    		if(!record){
+    			throw 'No se seleccionó ningun elemento';
+    		}
 			
     		Ice.log("record cp",record);
 			
