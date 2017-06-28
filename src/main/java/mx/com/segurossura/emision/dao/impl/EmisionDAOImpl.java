@@ -963,7 +963,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     }
 	
 	@Override
-	public Map<String, Object> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
+	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String pnmrecibo) throws Exception {
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
@@ -977,15 +977,19 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         // params.put("pv_newpoliza_i", newpoliza);
         params.put("pv_nmrecibo_i", pnmrecibo);
         
-        Map<String, Object> resultado = ejecutaSP(new ActualizaPolizaF(getDataSource()), params);
-        return resultado;
+        Map<String, Object> resultado = ejecutaSP(new ActualizaPolizaSP(getDataSource()), params);
+        String nuevoNmpoliza = (String) resultado.get("pv_nmpoliza_o");
+        if (StringUtils.isBlank(nuevoNmpoliza)) {
+            throw new ApplicationException("No se gener\u00f3 p\u00f3liza");
+        }
+        return nuevoNmpoliza;
 	}
 	
-	protected class ActualizaPolizaF extends StoredProcedure {
-        protected ActualizaPolizaF (DataSource dataSource) {
-            super(dataSource, "PKG_PROCESS_ALEA.F_ALEAACTP");
+	protected class ActualizaPolizaSP extends StoredProcedure {
+        protected ActualizaPolizaSP (DataSource dataSource) {
+            super(dataSource, "PKG_PROCESS_ALEA.P_ALEAACTP");
             /** important that the out parameter is defined before the in parameter. */
-            declareParameter(new SqlOutParameter("v_return",    Types.VARCHAR));
+            //declareParameter(new SqlOutParameter("v_return",    Types.VARCHAR));
             
             declareParameter(new SqlParameter("pv_cdunieco_i"  , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i"    , Types.VARCHAR));
@@ -997,13 +1001,14 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             // declareParameter(new SqlParameter("pv_newpoliza_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmrecibo_i"  , Types.VARCHAR));
             		
+            declareParameter(new SqlOutParameter("pv_nmpoliza_o" , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_comando_o" , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_error_o"   , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o"  , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"   , Types.VARCHAR));
 
             /** use function instead of stored procedure */
-            setFunction(true);
+            //setFunction(true);
             compile();
         }
     }

@@ -118,6 +118,6 @@ public interface EmisionDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public Map<String, Object> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
+	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
 	        String pnmrecibo) throws Exception;
 }

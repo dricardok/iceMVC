@@ -404,7 +404,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 success: function (action) {
                     Ice.mensajeCorrecto({
                         titulo: 'P\u00f3liza emitida',
-                        mensaje: 'La p\u00f3liza ha sido emitida correctamente',
+                        mensaje: 'Se emiti\u00f3 la p\u00f3liza ' + action.params.nmpoliza,
                         callback: Ice.index
                     });
                 }

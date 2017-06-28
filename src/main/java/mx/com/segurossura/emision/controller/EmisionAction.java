@@ -3,6 +3,7 @@ package mx.com.segurossura.emision.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -659,7 +660,10 @@ public class EmisionAction extends PrincipalCoreAction {
             Utils.validate(pnmrecibo, "Falta pnmrecibo");
             */
     	    
-    	    emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo);
+    	    params = new HashMap<String, String>();
+    	    
+    	    params.put("nmpoliza", emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza,
+    	            pnmrecibo));
     		success = true;
     	} catch (Exception ex) {
     	    message = Utils.manejaExcepcion(ex);

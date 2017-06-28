@@ -295,11 +295,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	}
 
 	@Override
-	public Map<String, Object> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
+	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception {
-		String paso = null;
-		Map<String, Object> res = null;
-
+		String paso = null, res = null;
 		try {
 			paso = "Confirmando p\u00f3liza";
 			res = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
@@ -307,7 +305,6 @@ public class EmisionManagerImpl implements EmisionManager {
 			Utils.generaExcepcion(ex, paso);
 		}
 		return res;
-
 	}
 
 }
