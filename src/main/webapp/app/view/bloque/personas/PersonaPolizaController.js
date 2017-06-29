@@ -92,7 +92,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
                             'params.status': 'V',
                             'params.nmorddom':  selected.getAt(0).data.nmorddom,
                             'params.swfallec': 'N',
-                            'params.accion': 'I'
+                            'params.accion': view.accion
                         },
                         success: function (json) {
                             var paso2 = 'LLenando store';

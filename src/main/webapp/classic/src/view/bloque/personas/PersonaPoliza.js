@@ -16,6 +16,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
         nmorddom: null,
         swfallec: null,
         cdtipsit: null,
+        accion: null,
         botones: []
 	},
 	

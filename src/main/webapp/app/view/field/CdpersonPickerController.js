@@ -107,28 +107,26 @@ Ext.define('Ice.view.field.CdpersonPickerController', {
             refs = view.getReferences();
         try{
             var windowBuscar = Ext.create('Ice.view.bloque.personas.BuscarPersona',{
+                width: 400,
                 listeners: {
                     'obtenerCdperson': function(view, cdperson){
                         me.setValue(cdperson);
-                        if(Ext.manifest.toolkit === 'classic'){
-                            view.close();
-                        } else {                            
-                            Ice.query('#mainView').getReferences().mainCard.pop();
-                        }
+                        Ice.pop();
                     }
                 }
-            });
-            
-            if(Ext.manifest.toolkit === 'classic'){
-                windowBuscar.width = 600;
-                windowBuscar.height = 500;
-                windowBuscar.closable = false;
-                windowBuscar.closeAction = 'destroy';
-                windowBuscar.modal = true;
-                windowBuscar.show();
-            } else {
-                windowBuscar.mostrar();
-            }
+            });            
+//            windowBuscar.width = 400;
+//            windowBuscar.closable = false;
+//            windowBuscar.floating = false;
+            Ice.push(windowBuscar);
+//            if(Ext.manifest.toolkit === 'classic'){
+//                windowBuscar.height = 500;
+//                windowBuscar.closeAction = 'destroy';
+//                windowBuscar.modal = true;
+//                windowBuscar.show();
+//            } else {
+//                windowBuscar.mostrar();
+//            }
         } catch (e){
             Ice.generaExcepcion(e, paso);
         }

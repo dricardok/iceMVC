@@ -94,6 +94,26 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
                         nmsuplem: me.getNmsuplem(),
                         cdtipsit: me.getCdtipsit(),
                         hidden: true,
+                        actionColumns: [
+                            {
+                                xtype:'actioncolumn',
+                                items: [
+                                    {
+                                        iconCls: 'x-fa fa-edit',
+                                        tooltip: 'Editar',
+                                        handler: function(grid, rowIndex, colIndex) {
+                                            me.getController().onActualizarPersona(grid, rowIndex, colIndex);
+                                        }
+                                    },{
+                                        iconCls: 'x-fa fa-minus-circle',
+                                        tooltip: 'Borrar',
+                                        handler: function(grid, rowIndex, colIndex){
+                                            me.getController().onBorrarPersona(grid, rowIndex, colIndex);
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
                         tbar: [
                             {
                                 text: 'Agregar',
