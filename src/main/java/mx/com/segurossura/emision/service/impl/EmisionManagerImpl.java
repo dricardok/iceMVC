@@ -295,27 +295,16 @@ public class EmisionManagerImpl implements EmisionManager {
 	}
 
 	@Override
-	public Map<String, Object> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
+	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception {
-		String paso = null;
-		Map<String, Object> res = null;
-
+		String paso = null, res = null;
 		try {
-			paso = "Distribuyendo agrupadores";
-
-			try {
-
-				res = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo);
-
-			} catch (Exception ex) {
-				logger.error("Error al llamar funcion de distribucionAgrupadores");
-			}
-
+			paso = "Confirmando p\u00f3liza";
+			res = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}
 		return res;
-
 	}
 
 }

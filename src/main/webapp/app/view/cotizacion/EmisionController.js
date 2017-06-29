@@ -368,11 +368,47 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 botones: [{
                     text: 'Aceptar',
                     iconCls: 'x-fa fa-check',
-                    handler: function (me) {
-                        me.up('ventanaprimas').cerrar();
+                    handler: function (bot) {
+                        bot.up('ventanaprimas').cerrar();
+                    }
+                }, {
+                    text: 'Emitir',
+                    iconCls: 'x-fa fa-key',
+                    handler: function (bot) {
+                        bot.up('ventanaprimas').cerrar();
+                        me.emitir();
                     }
                 }]
             }).mostrar();
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+    },
+    
+    
+    emitir: function () {
+        Ice.log('controller.emision emitir');
+        var me = this,
+            view = me.getView(),
+            paso = 'Confirmando p\u00f3liza';
+        try {
+            Ice.request({
+                mascara: paso,
+                url: Ice.url.emision.emitir,
+                params: Ice.convertirAParams({
+                    cdunieco: view.getCdunieco(),
+                    cdramo: view.getCdramo(),
+                    estado: view.getEstado(),
+                    nmpoliza: view.getNmpoliza()
+                }),
+                success: function (action) {
+                    Ice.mensajeCorrecto({
+                        titulo: 'P\u00f3liza emitida',
+                        mensaje: 'Se emiti\u00f3 la p\u00f3liza ' + action.params.nmpoliza,
+                        callback: Ice.index
+                    });
+                }
+            });
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }

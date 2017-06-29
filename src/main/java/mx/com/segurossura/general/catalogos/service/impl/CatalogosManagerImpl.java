@@ -1,6 +1,7 @@
 package mx.com.segurossura.general.catalogos.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -232,17 +233,17 @@ public class CatalogosManagerImpl implements CatalogosManager {
                    
                case SUCURSALES_BANCARIAS:
             	   paso = "Recuperando cat\u00e1logo de sucursales bancarias";
-            	   if (params != null) {
-            		   lista = new ArrayList<>();
-                	   List<Map<String, String>> sucBanc = catalogosDAO.obtenerSucuBanc(params.get("cdbanco"));
-                	   if(sucBanc != null){
-                		   for (Map<String, String> registro: sucBanc) {
-                			   lista.add(new BaseVO(registro.get("cdsucurs"), registro.get("dssucurs")));
-                		   }
-                	   }            		   
+            	   if (params == null) {
+            	       params = new HashMap<String, String>();
+            	   }
+        		   lista = new ArrayList<>();
+            	   List<Map<String, String>> sucBanc = catalogosDAO.obtenerSucuBanc(params.get("idPadre"));
+            	   if(sucBanc != null){
+            		   for (Map<String, String> registro: sucBanc) {
+            			   lista.add(new BaseVO(registro.get("cdsucurs"), registro.get("dssucurs")));
+            		   }
             	   }
             	   break;
-            	   
                case GESTORES_COBRANZA:
             	   paso = "Recuperando cat\u00e1logo de gestores de cobranza";
             	   lista = new ArrayList<>();
@@ -253,7 +254,6 @@ public class CatalogosManagerImpl implements CatalogosManager {
                        }
                    }
             	   break;
-                   
                 default:
                     throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));
                 }

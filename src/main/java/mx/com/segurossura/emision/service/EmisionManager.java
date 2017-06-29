@@ -3,7 +3,6 @@ package mx.com.segurossura.emision.service;
 
 import java.util.Date;
 import java.util.List;
-
 import java.util.Map;
 
 public interface EmisionManager {
@@ -73,6 +72,6 @@ public interface EmisionManager {
     public Map<String, Object> distribuirAgrupadores(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
     
     
-    public Map<String, Object> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
+    public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception;
 }

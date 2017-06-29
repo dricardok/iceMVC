@@ -46,7 +46,8 @@ var Ice = Object.assign(Ice || {}, {
          // URLs de emision
          emision: {
             tarificar:     'emision/generarTarificacion.action',
-            obtenerTarifa: 'emision/obtenerDatosTarificacion.action'
+            obtenerTarifa: 'emision/obtenerDatosTarificacion.action',
+            emitir:        'emision/confirmarPoliza.action'
          },
          
          bloque: {
@@ -1242,7 +1243,8 @@ var Ice = Object.assign(Ice || {}, {
                 F: 'datefieldice',
                 T: 'textareaice',
                 S: 'switchice',
-                CDPERSONPICKER: 'cdpersonpicker'
+                CDPERSONPICKER: 'cdpersonpicker',
+                PASSWORD: 'textfieldice'
             }[config.tipocampo];
             if (!item.xtype) {
                 throw 'Tipocampo incorrecto para item';
@@ -1348,6 +1350,12 @@ var Ice = Object.assign(Ice || {}, {
                 if (config.maxvalue && !config.catalogo) {
                     item.maxValue = config.maxvalue;
                 }
+            }
+            
+            
+            // password
+            if (config.tipocampo === 'PASSWORD') {
+                item.inputType = 'password';
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
@@ -1477,7 +1485,8 @@ var Ice = Object.assign(Ice || {}, {
                     F: 'date',
                     T: 'string',
                     S: 'string',
-                    CDPERSONPICKER: 'string'
+                    CDPERSONPICKER: 'string',
+                    PASSWORD: 'string'
                 }[config.tipocampo];
             if (!field.type) {
                 throw 'Tipocampo incorrecto para field';
@@ -1919,5 +1928,12 @@ var Ice = Object.assign(Ice || {}, {
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
+    },
+    
+    /**
+     * Esta funcion hace submit al index de la aplicacion
+     */
+    index: function () {
+        Ice.query('#mainView').getController().redirectTo('mesacontrol.action');
     }
 });
