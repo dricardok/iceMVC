@@ -104,6 +104,11 @@ var Ice = Object.assign(Ice || {}, {
                 obtenerAgrupador:        'emision/obtenerMpoliagr.action',
                 movimientoAgrupador:     'emision/realizarMovimientoMpoliagr.action',
                 obtenerAgrupadoresVista: 'emision/obtenerMpoliagrVista.action'
+            },
+            mesacontrol:{
+            	historial:{
+            		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json"
+            	}
             }
          }
      },
