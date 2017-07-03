@@ -30,9 +30,6 @@
     <system-properties>
         <property name="config.path" value="${env.CONFIG_PATH}"/>
         <property name="logs.path" value="${env.LOGS_PATH}"/>
-        <property name="org.apache.catalina.connector.URI_ENCODING" value="UTF-8"/>
-        <property name="jboss.as.management.blocking.timeout" value="900"/>
-		<property name="org.apache.tomcat.util.http.Parameters.MAX_COUNT" value="5000"/>
     </system-properties>
     <management>
         <security-realms>
@@ -138,6 +135,39 @@
         <subsystem xmlns="urn:jboss:domain:datasources:1.2">
             <datasources>
                 <!-- ##DATASOURCES## -->
+                <datasource jndi-name="java:jboss/datasources/${env.OPENSHIFT_ORACLE_DATASOURCE}" enabled="true" use-java-context="true" pool-name="${env.OPENSHIFT_ORACLE_DATASOURCE}" use-ccm="true">
+                    <connection-url>jdbc:oracle:thin:@${env.EXTERNAL_ORACLE_SERVICE_HOST}:${env.EXTERNAL_ORACLE_SERVICE_PORT}:${env.OPENSHIFT_ORACLE_DB_NAME}</connection-url>
+                    <new-connection-sql>SELECT * from dual</new-connection-sql>
+                    <driver>oracle</driver>
+                    <security>
+                      <user-name>${env.OPENSHIFT_ORACLE_DB_USERNAME}</user-name>
+                      <password>${env.OPENSHIFT_ORACLE_DB_PASSWORD}</password>
+                    </security>
+                    <validation>
+                        <!--
+                        <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+                        <background-validation>true</background-validation>
+                        <background-validation-millis>60000</background-validation-millis
+                        -->
+                        <validate-on-match>true</validate-on-match>
+                        <check-valid-connection-sql>SELECT * from dual</check-valid-connection-sql>
+			<background-validation>false</background-validation>
+                    </validation>
+                    <timeout>
+                        <set-tx-query-timeout>false</set-tx-query-timeout>
+                        <blocking-timeout-millis>0</blocking-timeout-millis>
+                        <idle-timeout-minutes>0</idle-timeout-minutes>
+                        <query-timeout>0</query-timeout>
+                        <use-try-lock>0</use-try-lock>
+                        <allocation-retry>0</allocation-retry>
+                        <allocation-retry-wait-millis>0</allocation-retry-wait-millis>
+                    </timeout>
+                    <pool>
+                        <min-pool-size>5</min-pool-size>
+                        <max-pool-size>40</max-pool-size>
+                        <flush-strategy>IdleConnections</flush-strategy>
+                    </pool>
+                </datasource>
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
@@ -148,6 +178,7 @@
                     <driver name="postgresql" module="org.postgresql">
                         <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
                     </driver>
+                    <driver name="oracle" module="com.oracle.ojdbc"/>
                 </drivers>
             </datasources>
         </subsystem>
@@ -379,9 +410,7 @@
     <subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">
         <connector name="http" protocol="HTTP/1.1" scheme="http" socket-binding="http"/>
         <!-- ##HTTPS## -->
-        <virtual-server name="default-host" enable-welcome-root="false">
-	
-	</virtual-server>
+        <virtual-server name="default-host" enable-welcome-root="false"/>
     </subsystem>
     <subsystem xmlns="urn:jboss:domain:webservices:1.2">
         <modify-wsdl-address>true</modify-wsdl-address>

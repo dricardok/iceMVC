@@ -34,6 +34,14 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
         this.agregar(grid, rowIndex, colIndex);
     },
     
+    onActualizarPersona: function (grid, rowIndex, colIndex){
+        this.actualizarPersona(grid, rowIndex, colIndex);
+    },
+    
+    onBorrarPersona: function (grid, rowIndex, colIndex){
+        this.borrarPersona(grid, rowIndex, colIndex);
+    },
+    
     actualizar: function(grid, rowIndex, colIndex){
         Ice.log('Ice.view.bloque.situacionPersonas.actualizar grid ',grid,' rowIndex ',rowIndex,' colIndex ',colIndex);
         var me = this,
@@ -94,13 +102,11 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
             paso = 'Agregando persona a situacion',
             refs = view.getReferences();
         try{
-//            Ice.log('refs ',refs);
             Ice.log('me ',me);
             var situacionpersonas = refs.situacionpersonas,
                 gridPersonas = refs.gridPersonas;
             var personapoliza = Ext.create('Ice.view.bloque.personas.PersonaPoliza',{
                 reference: 'personapoliza',
-                id: 'card-1',
                 cdunieco: view.getCdunieco(),
                 cdramo: view.getCdramo(),
                 estado: view.getEstado(),
@@ -108,6 +114,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
                 nmsuplem: view.getNmsuplem(),
                 nmsituac: gridPersonas.nmsituac,
                 cdtipsit: view.getCdtipsit(),
+                accion: 'I',
                 listeners: {
                     'datosPersonaGuardada': function(){
                         Ice.query('#mainView').getReferences().mainCard.pop();
@@ -124,7 +131,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
                 ]
             });
             
-            Ice.push(personapoliza);   
+            Ice.push(personapoliza);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -144,6 +151,73 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
             layout[direction]();
             Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
             Ext.getCmp('move-next').setDisabled(!layout.getNext());            
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+    
+    actualizarPersona: function (grid, rowIndex, colIndex){
+        Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.actualizarPersona ',grid, rowIndex, colIndex);
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            data,
+            paso = 'Configurando navegacion de personas';
+        try{
+            var gridSituaciones = refs.gridSituaciones,
+                gridPersonas = refs.gridPersonas;
+            
+            if(Ext.manifest.toolkit === 'classic'){
+                dataPer = gridPersonas.getStore().getAt(rowIndex).getData();
+            } else {
+                var cellPer = gridPersonas.getParent(),
+                    recordPer = cellPer.getRecord(),
+                    dataPer = recordPer.getData();
+            }
+            
+            var personapoliza = Ext.create('Ice.view.bloque.personas.PersonaPoliza',{
+                reference: 'personapoliza',
+                cdunieco: view.getCdunieco(),
+                cdramo: view.getCdramo(),
+                estado: view.getEstado(),
+                nmpoliza: view.getNmpoliza(),
+                nmsuplem: view.getNmsuplem(),
+                nmsituac: dataPer.nmsituac,
+                cdtipsit: view.getCdtipsit(),
+                accion: 'U',
+                listeners: {
+                    'datosPersonaGuardada': function(){
+                        Ice.query('#mainView').getReferences().mainCard.pop();
+                        Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.cerrarPersonaPoliza');
+                    }
+                },
+                botones: [
+                    {
+                        xtype: 'button',
+                        reference: 'btnGuardar',
+                        text: 'Guardar',
+                        handler: 'onGuardarBloque'
+                    }
+                ]
+            });
+            Ice.log('personapoliza.refs',personapoliza.getReferences());
+            personapoliza.getReferences().cdperson.setValue(dataPer.cdperson);
+            personapoliza.getReferences().cdrol.setValue(dataPer.cdrol);
+            Ice.push(personapoliza);
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+    
+    borrarPersona: function (grid, rowIndex, colIndex){
+        Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.borrarPersona ',grid, rowIndex, colIndex);
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            paso = 'Configurando navegacion de personas';
+        try{
+            Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.actualizarPersona.refs',refs);
+            
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

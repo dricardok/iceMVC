@@ -178,29 +178,29 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
             Ice.log('nuevo refs',refs);
             var persona = Ext.create('Ice.view.bloque.personas.Persona',{
                 reference: 'persona',
-                id: 'card-1',
-//                cdramo: view.getCdramo(),
-//                cdrol: refs.cdrol.getValue(),
                 listeners: {
                     'personaGuardada': function(personaView, cdperson){
-                        view.setCdperson(cdperson);
-                        
-                        if(Ext.manifest.toolkit === 'classic'){
-                            view.navigate(view, "prev");
-                        } else {
-                            view.pop();
-                        }
-                        
-                        view.remove(this);
+                        Ice.log('personaGuardado.view',view);
+                        Ice.query('[name=dsatribu]', view.getReferences().formBusquedaPersonas).setValue('CDPERSON');
+                        Ice.query('[name=otvalor]', view.getReferences().formBusquedaPersonas).setValue(cdperson);
+                        Ice.pop();
+//                        if(Ext.manifest.toolkit === 'classic'){
+//                            view.navigate(view, "prev");
+//                        } else {
+//                            view.pop();
+//                        }
+//                        view.remove(this);
                     }
                 }
             });
             
-            if(Ext.manifest.toolkit === 'classic'){
-                me.navigate(view, "next", persona);                              
-            } else {
-                Ice.query('#mainView').getReferences().mainCard.push(persona);
-            }
+            Ice.push(persona);
+            
+//            if(Ext.manifest.toolkit === 'classic'){
+//                me.navigate(view, "next", persona);                              
+//            } else {
+//                Ice.query('#mainView').getReferences().mainCard.push(persona);
+//            }
         } catch(e){
             Ice.generaExcepcion(e, paso);
         }

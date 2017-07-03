@@ -1,0 +1,36 @@
+#!/bin/bash
+. /usr/local/s2i/common.sh
+
+#AMBIENTE=QA
+#RUTA_BASE_APACHE=http://apache.qadev.royalsun.mx/
+
+LOCAL_SOURCE_DIR=${HOME}/source
+
+if [ -n "$CONFIG_EAP" ]; then
+  echo "Descargando configuracion jboss eap"
+  curl $RUTA_BASE_APACHE/$CONFIGURACION_EAP --silent --insecure --output $JBOSS_HOME/standalone/configuration/standalone-openshift.xml
+fi
+
+if [ -n "$CONFIG_MAVEN" ]; then
+  echo "Descargando configuracion maven"
+  mkdir -p $HOME/.m2
+  curl $RUTA_BASE_APACHE/$CONFIGURACION_MAVEN --silent --insecure --output $HOME/.m2/settings.xml
+fi
+
+if [ -n "$JBOSS_MODULOS" ]; then
+  echo "Descargando modulos"
+  IFS=';' read -ra MODULOS <<< "$JBOSS_MODULOS"
+  for i in "${MODULOS[@]}"; do
+    echo "  Instalando $i"
+    curl $RUTA_BASE_APACHE/$i --noproxy --silent --insecure --output /tmp/$i
+    tar xfz /tmp/$i --directory=$JBOSS_HOME/modules/system/layers/base
+    rm -f /tmp/$i
+  done
+  chmod -R ugo+rwx $JBOSS_HOME/modules/system/layers/base
+fi
+
+# PARA PRUEBAS
+# Cambio de lenguaje de la instancia de jboss eap a español
+echo 'JAVA_OPTS="$JAVA_OPTS -Duser.country=MX -Duser.language=es"' >> $JBOSS_HOME/bin/standalone.conf
+
+source /usr/local/s2i/assemble

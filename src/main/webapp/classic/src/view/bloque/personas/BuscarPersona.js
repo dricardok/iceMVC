@@ -1,9 +1,10 @@
-Ext.define('Ice.view.bloque.personas.BuscarPersona', {  
-    extend: 'Ext.window.Window',
+Ext.define('Ice.view.bloque.personas.BuscarPersona', {
+    extend: 'Ext.panel.Panel',
+//    extend: 'Ice.view.componente.Ventana',
     xtype: 'buscarpersona',
     controller: 'buscarpersona',
     
-    layout: 'card',
+//    layout: 'vbox',
     config: {
         cdunieco: null,
         cdramo: null,
@@ -52,6 +53,7 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                            reference: 'formBusquedaPersonas',
                            items: comps.BUSQUEDA_PERSONA.FORMULARIO.items,
                            modelo: modelName,
+                           width: 700,
                            layout: 'responsivecolumn',
                            bodyPadding: '10px 0px 0px 10px',
                            defaults: {
@@ -68,6 +70,7 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                            xtype: 'gridpanel',
                            reference: 'gridPersonas',
                            scrollable: true,
+                           height: 300,
                            columns: compsGrid.BUSQUEDA_PERSONA.GRID.columns,
                            store: {
                                autoLoad: false,
@@ -83,9 +86,8 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                                        messageProperty: 'message'
                                    }
                                }                               
-                           }
-                       },{
-                           buttons: [
+                           },
+                           fbar: [
                                {
                                    xtype: 'button',
                                    reference: 'btnGuardar',
@@ -105,6 +107,27 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                                }
                            ]
                        }
+//                       ,{
+//                           buttons: [
+//                               {
+//                                   xtype: 'button',
+//                                   reference: 'btnGuardar',
+//                                   text: 'Guardar',
+//                                   handler: 'onGuardar'
+//                               },{
+//                                   xtype: 'button',
+//                                   reference: 'btnNuevo',
+//                                   text: 'Nuevo',
+//                                   handler: 'onNuevo'
+//                               },{
+//                                   xtype: 'button',
+//                                   text: 'Cerrar',
+//                                   handler: function(){
+//                                       this.up('window').close();
+//                                   }
+//                               }
+//                           ]
+//                       }
                      ]
                  }
              });
