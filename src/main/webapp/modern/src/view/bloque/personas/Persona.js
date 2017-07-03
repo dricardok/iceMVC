@@ -115,6 +115,12 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        			],
 	        			buttons		:	[
 	        				{
+	        					text:"Cancelar",
+	        					handler:function(){
+	        						Ice.pop()
+	        					}
+	        				},
+	        				{
 	        					text		:	'Guardar',
 	        					handler		:	'guardarPersona'
 	        				}
@@ -126,7 +132,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 			}catch(e){
 				Ice.manejaExcepcion(e,paso);
 			}
-			
+			 me.callParent(arguments);
 			paso = 'custom';
 			try {
 				me.getController().custom();

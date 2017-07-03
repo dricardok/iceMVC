@@ -232,6 +232,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
                         Ice.manejaExcepcion(e, paso2);
                         Ice.resumeEvents(view);
                     }*/
+                	Ice.mensaje("Se guardo correctamente");
                 },
                 failure: function () {
                     //view.procesandoValoresDefecto = false;
