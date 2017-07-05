@@ -95,7 +95,7 @@ Ext.define('Ice.view.bloque.Agentes', {
             Ext.apply(me, {
             	
             	items: [{
-	            	xtype: 'formulario',
+	            	xtype: 'formice',
 	            	title: 'Datos de Poliza',
 	            	layout: 'responsivecolumn',
 	            	itemId:"datpoliza",
@@ -110,7 +110,7 @@ Ext.define('Ice.view.bloque.Agentes', {
 	                items: formPol.BLOQUE_AGENTES.FORM_POLIZA.items
 	                
             	},{
-	            	xtype: 'formulario',
+	            	xtype: 'formice',
 	            	title: 'Agregar Agente',
 
 	            	itemId:"agregaragente",

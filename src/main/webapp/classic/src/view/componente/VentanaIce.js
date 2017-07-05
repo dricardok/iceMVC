@@ -1,8 +1,6 @@
-Ext.define('Ice.view.componente.Ventana', {
+Ext.define('Ice.view.componente.VentanaIce', {
     extend: 'Ext.window.Window',
-    xtype: 'ventana',
-    
-  
+    xtype: 'ventanaice',
     
     mostrar: function () {
         this.show();
@@ -10,10 +8,5 @@ Ext.define('Ice.view.componente.Ventana', {
     
     cerrar:	function(){
     	this.close();
-    },
-    
-    
-    
-    
-	
+    }
 });

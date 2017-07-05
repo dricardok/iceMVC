@@ -28,7 +28,7 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGridController', {
 //                validators: true
 //            });
 //    		
-//    		Ext.create('Ice.view.componente.Ventana', {
+//    		Ext.create('Ice.view.componente.VentanaIce', {
 //    			title		:	'Añadir Domicilio',
 // 			    height		:	550,
 // 			    width		:	450,
