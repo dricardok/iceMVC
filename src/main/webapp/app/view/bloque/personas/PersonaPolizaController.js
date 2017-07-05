@@ -75,7 +75,6 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
             if(refs.cdrol.isValid()){
                 var selected = refs.gridDomicilios.selModel.getSelected();
                 if(selected.getCount() > 0){
-                    var cdperson = refs.cdperson.getValue();
                     Ice.request({
                         mascara: 'Agregando situacion de riesgo',
                         url: Ice.url.bloque.personas.movimientoPolizaPersona,
@@ -86,12 +85,14 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
                             'params.nmpoliza': view.getNmpoliza(),
                             'params.nmsuplem': view.getNmsuplem(),
                             'params.nmsituac': view.getNmsituac(),
-                            'params.cdrol': refs.cdrol.getValue(),
-                            'params.cdperson': cdperson,
+                            'params.cdrol': view.accion === 'I' ? refs.cdrol.getValue() : view.getCdrol(),
+                            'params.cdperson': view.accion === 'I' ? refs.cdperson.getValue() : view.getCdperson(),
                             'params.nmsuplem': view.getNmsuplem(),
                             'params.status': 'V',
                             'params.nmorddom':  selected.getAt(0).data.nmorddom,
                             'params.swfallec': 'N',
+                            'params.cdpersonNew': refs.cdperson.getValue(),
+                            'params.cdrolNew': refs.cdrol.getValue(),
                             'params.accion': view.accion
                         },
                         success: function (json) {

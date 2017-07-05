@@ -223,6 +223,8 @@ public class PersonasPolizaAction extends PrincipalCoreAction{
             String cdrol = params.get("cdrol");
             String cdperson = params.get("cdperson");
             String nmsuplem = params.get("nmsuplem");
+            String cdpersonNew = params.get("cdpersonNew");
+            String cdrolNew = params.get("cdrolNew");
             String status = params.get("status");
             String nmorddom = params.get("nmorddom");
             String swfallec = params.get("swfallec");
@@ -235,11 +237,11 @@ public class PersonasPolizaAction extends PrincipalCoreAction{
             Utils.validate(cdrol, "No se recibio el rol");
             Utils.validate(cdperson, "No se recibio el codigo de persona");
             Utils.validate(nmsuplem, "No se recibio el suplemento de la póliza");
-            Utils.validate(status, "No se recibio status");
-            Utils.validate(nmorddom, "No se recibio domicilio");
-            Utils.validate(swfallec, "No se recibio switch fallecimiento");
+//            Utils.validate(status, "No se recibio status");
+//            Utils.validate(nmorddom, "No se recibio domicilio");
+//            Utils.validate(swfallec, "No se recibio switch fallecimiento");
             Utils.validate(accion, "No se recibio la accion");
-            personasPolizaManager.movimientoMpoliper(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdrol, cdperson, nmsuplem, nmsuplem, nmorddom, swfallec, accion);
+            personasPolizaManager.movimientoMpoliper(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdrol, cdperson, cdrolNew, cdpersonNew, nmsuplem, nmsuplem, nmorddom, swfallec, accion);
             success = true;
         } catch(Exception ex){
             success = false;

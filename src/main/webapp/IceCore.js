@@ -107,9 +107,15 @@ var Ice = Object.assign(Ice || {}, {
                 movimientoAgrupador:     'emision/realizarMovimientoMpoliagr.action',
                 obtenerAgrupadoresVista: 'emision/obtenerMpoliagrVista.action'
             },
+            documentos: {
+                obtenerDocumentos: 'documentos/obtenerDocumentos.action',
+                movimientoTdocupol: 'documentos/movimientoTdocupol.action',
+                obtenerDocumento: 'documentos/obtenerDocumento.action'
+            },
             mesacontrol:{
             	historial:{
-            		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json"
+            		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json",
+            		obtenerThmesacontrol:"jsonLocal/obtieneThmesacontrol.json"
             	}
             }
          }
@@ -1250,6 +1256,7 @@ var Ice = Object.assign(Ice || {}, {
                 F: 'datefieldice',
                 T: 'textareaice',
                 S: 'switchice',
+                FF: 'filefieldice',
                 CDPERSONPICKER: 'cdpersonpicker',
                 PASSWORD: 'textfieldice'
             }[config.tipocampo];
@@ -1473,25 +1480,18 @@ var Ice = Object.assign(Ice || {}, {
         try {
             if (!config) {
                 throw 'No se recibi\u00f3 configuraci\u00f3n de field';
-
-
             }
             
             
             // type
             field.type = {
-
-
-
-
-
-
                     A: 'string',
                     N: 'float',
                     P: 'float',
                     F: 'date',
                     T: 'string',
                     S: 'string',
+                    FF: 'filefieldice',
                     CDPERSONPICKER: 'string',
                     PASSWORD: 'string'
                 }[config.tipocampo];
@@ -1508,8 +1508,6 @@ var Ice = Object.assign(Ice || {}, {
             // dateFormat
             if (field.type === 'date') {
                 field.dateFormat = Ext.util.Format.dateFormat; // viene de ext/locale/overrides/ext-locale-[idioma]
-
-
             }
             
             
@@ -1532,10 +1530,6 @@ var Ice = Object.assign(Ice || {}, {
         }
         
         return field;
-
-
-
-
     },
     
     
