@@ -29,6 +29,8 @@ public interface PersonasPolizaManager {
 	 * @param nmsituac
 	 * @param cdrol
 	 * @param cdperson
+	 * @param cdrolNew
+	 * @param cdpersonNew
 	 * @param nmsuplem_sesion
 	 * @param nmsuplem_bloque
 	 * @param nmorddom
@@ -37,8 +39,8 @@ public interface PersonasPolizaManager {
 	 * @throws Exception
 	 */
 	void movimientoMpoliper(String cdunieco, String cdramo, String estado, String nmpoliza,
-               String nmsituac, String cdrol, String cdperson, String nmsuplem_sesion,
-               String nmsuplem_bloque, String nmorddom, String swfallec, String accion) throws Exception;
+               String nmsituac, String cdrol, String cdperson, String cdrolNew, String cdpersonNew, 
+               String nmsuplem_sesion, String nmsuplem_bloque, String nmorddom, String swfallec, String accion) throws Exception;
 	
 	/**obtenerPersonasCriterio
      * Recupera datos de personas por criterio

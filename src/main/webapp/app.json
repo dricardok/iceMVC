@@ -58,7 +58,8 @@
         "font-awesome",
         //"DIN-Regular",
         "ux",
-        "ext-locale"
+        "ext-locale",
+        "charts"
     ],
 
     /**

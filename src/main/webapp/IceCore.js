@@ -2,12 +2,14 @@ var Ice = Object.assign(Ice || {}, {
 
     logActivo: true,
 
+    /*
     constantes: {
         toolbarHeight: {
             classic: 44,
             modern: 64
         }
     },
+    */
     
     /*
      * Urls del sistema por modulos 
@@ -36,11 +38,11 @@ var Ice = Object.assign(Ice || {}, {
              recuperarDatosSesion: 'authentication/obtenerDatosSesion.action',
              recuperarMenus:       'authentication/obtenerMenu.action',
              obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
-             obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
              recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
              recuperarTatrisit:    'emision/obtieneTatrisit.action',
              recuperarTatripol:    'emision/obtieneTatripol.action',
-             recuperarTatriper:    'registroPersona/obtieneTatriper.action'
+             recuperarTatriper:    'registroPersona/obtieneTatriper.action',
+             recuperacionSimple:   'recuperacion/recuperar.action'
          },
          
          // URLs de emision
@@ -105,8 +107,19 @@ var Ice = Object.assign(Ice || {}, {
                 movimientoAgrupador:     'emision/realizarMovimientoMpoliagr.action',
                 obtenerAgrupadoresVista: 'emision/obtenerMpoliagrVista.action'
             },
-            mesacontrol: {
-                obtenerTramites:		'mesacontrol/obtenerTramites.action'
+            mesacontrol:{
+            	
+            	obtenerTramites:		'mesacontrol/obtenerTramites.action',
+            	
+            	documentos: {
+                    obtenerDocumentos: 'documentos/obtenerDocumentos.action',
+                    movimientoTdocupol: 'documentos/movimientoTdocupol.action',
+                    obtenerDocumento: 'documentos/obtenerDocumento.action'
+                },
+            	
+            	historial:{
+            		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json"
+            	}            	
             }
          }
      },
@@ -1246,6 +1259,7 @@ var Ice = Object.assign(Ice || {}, {
                 F: 'datefieldice',
                 T: 'textareaice',
                 S: 'switchice',
+                FF: 'filefieldice',
                 CDPERSONPICKER: 'cdpersonpicker',
                 PASSWORD: 'textfieldice'
             }[config.tipocampo];
@@ -1469,25 +1483,18 @@ var Ice = Object.assign(Ice || {}, {
         try {
             if (!config) {
                 throw 'No se recibi\u00f3 configuraci\u00f3n de field';
-
-
             }
             
             
             // type
             field.type = {
-
-
-
-
-
-
                     A: 'string',
                     N: 'float',
                     P: 'float',
                     F: 'date',
                     T: 'string',
                     S: 'string',
+                    FF: 'filefieldice',
                     CDPERSONPICKER: 'string',
                     PASSWORD: 'string'
                 }[config.tipocampo];
@@ -1504,8 +1511,6 @@ var Ice = Object.assign(Ice || {}, {
             // dateFormat
             if (field.type === 'date') {
                 field.dateFormat = Ext.util.Format.dateFormat; // viene de ext/locale/overrides/ext-locale-[idioma]
-
-
             }
             
             
@@ -1528,10 +1533,6 @@ var Ice = Object.assign(Ice || {}, {
         }
         
         return field;
-
-
-
-
     },
     
     

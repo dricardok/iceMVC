@@ -129,6 +129,12 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        			],
 	        			buttons		:	[
 	        				{
+	        					text:"Cancelar",
+	        					handler:function(){
+	        						Ice.pop()
+	        					}
+	        				},
+	        				{
 	        					text		:	'Guardar',
 	        					handler		:	'guardarPersona'
 	        				}

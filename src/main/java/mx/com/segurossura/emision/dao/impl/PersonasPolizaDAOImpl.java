@@ -75,32 +75,29 @@ public class PersonasPolizaDAOImpl extends HelperJdbcDao implements PersonasPoli
 	}
 	
 	   @Override
-	    public void movimientoMpoliper(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i, String pv_nmpoliza_i,
-	                                   String pv_nmsituac_i, String pv_cdrol_i, String pv_cdperson_i, String pv_nmsuplem_sesion_i,
-	                                   String pv_nmsuplem_bloque_i, String pv_nmorddom_i, String pv_swfallec_i, String pv_accion_i)
-	                                   throws Exception {
-
-	        Map<String, Object> params = new LinkedHashMap<String, Object>();
-	        
-	        params.put("pv_cdunieco_i", pv_cdunieco_i);
-	        params.put("pv_cdramo_i", pv_cdramo_i);
-	        params.put("pv_estado_i", pv_estado_i);
-	        params.put("pv_nmpoliza_i", pv_nmpoliza_i);
-	        params.put("pv_nmsituac_i", pv_nmsituac_i);
-	        params.put("pv_cdrol_i", pv_cdrol_i);
-	        params.put("pv_cdperson_i", pv_cdperson_i);
-	        params.put("pv_nmsuplem_sesion_i", pv_nmsuplem_sesion_i);
-	        params.put("pv_nmsuplem_bloque_i", pv_nmsuplem_bloque_i);
-	        params.put("pv_nmorddom_i", pv_nmorddom_i);
-	        params.put("pv_swfallec_i", pv_swfallec_i);
-	        params.put("pv_accion_i", pv_accion_i);
-	        
+	    public void movimientoMpoliper(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, 
+	            String cdrol, String cdperson, String cdrolNew, String cdpersonNew, String nmsuplem_sesion, String nmsuplem_bloque, 
+	            String nmorddom, String swfallec, String accion) throws Exception {
+	        Map<String, Object> params = new LinkedHashMap<String, Object>();	        
+	        params.put("pv_cdunieco_i", cdunieco);
+	        params.put("pv_cdramo_i", cdramo);
+	        params.put("pv_estado_i", estado);
+	        params.put("pv_nmpoliza_i", nmpoliza);
+	        params.put("pv_nmsituac_i", nmsituac);
+	        params.put("pv_cdrol_i", cdrol);
+	        params.put("pv_cdperson_i", cdperson);
+	        params.put("pv_nmsuplem_sesion_i", nmsuplem_sesion);
+	        params.put("pv_nmsuplem_bloque_i", nmsuplem_bloque);
+	        params.put("pv_nmorddom_i", nmorddom);
+	        params.put("pv_swfallec_i", swfallec);
+	        params.put("pv_newrol_i", cdrolNew);
+            params.put("pv_newperson_i", cdpersonNew);
+	        params.put("pv_accion_i", accion);	        
 	        ejecutaSP(new MovimientoMpoliperSP(getDataSource()), params);
 	    }
 	    
 	    protected class MovimientoMpoliperSP extends StoredProcedure {
-	        protected MovimientoMpoliperSP (DataSource dataSource) {
-	            
+	        protected MovimientoMpoliperSP (DataSource dataSource) {	            
 	            super(dataSource,"PKG_DATA_ALEA.P_MOV_MPOLIPER");
 	            declareParameter(new SqlParameter("pv_cdunieco_i"           , Types.VARCHAR));
 	            declareParameter(new SqlParameter("pv_cdramo_i"             , Types.VARCHAR));
@@ -113,8 +110,9 @@ public class PersonasPolizaDAOImpl extends HelperJdbcDao implements PersonasPoli
 	            declareParameter(new SqlParameter("pv_nmsuplem_bloque_i"    , Types.VARCHAR));
 	            declareParameter(new SqlParameter("pv_nmorddom_i"           , Types.VARCHAR));
 	            declareParameter(new SqlParameter("pv_swfallec_i"           , Types.VARCHAR));        
-	            declareParameter(new SqlParameter("pv_accion_i"             , Types.VARCHAR));
-	            
+	            declareParameter(new SqlParameter("pv_newrol_i"             , Types.VARCHAR));
+	            declareParameter(new SqlParameter("pv_newperson_i"          , Types.VARCHAR));
+	            declareParameter(new SqlParameter("pv_accion_i"             , Types.VARCHAR));	            
 	            declareParameter(new SqlOutParameter("pv_rowid_o"           , Types.VARCHAR));
 	            declareParameter(new SqlOutParameter("pv_msg_id_o"          , Types.NUMERIC));
 	            declareParameter(new SqlOutParameter("pv_title_o"           , Types.VARCHAR));

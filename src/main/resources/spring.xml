@@ -17,6 +17,7 @@
             <list>
                  <value>file:///${config.path}/cotizadores/mvc/global.properties</value>
                  <value>file:///${config.path}/cotizadores/mvc/spring-bps-application.properties</value>
+                 <value>file:///${config.path}/cotizadores/mvc/client.properties</value>
             </list>
         </property>
 	</bean>
@@ -31,5 +32,7 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
+    
+    <import resource="classpath:client.xml" />
     
 </beans>

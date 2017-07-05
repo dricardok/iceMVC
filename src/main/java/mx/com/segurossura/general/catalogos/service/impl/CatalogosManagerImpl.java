@@ -41,7 +41,13 @@ public class CatalogosManagerImpl implements CatalogosManager {
             if(catalogo.toUpperCase().startsWith("CAT_")) {
                 lista = catalogosDAO.obtenerCatalogoTablaApoyo(catalogo.toUpperCase().substring(4));
             } else {
-                Catalogos cat = Catalogos.valueOf(catalogo);
+                Catalogos cat = null;
+                try {
+                    cat = Catalogos.valueOf(catalogo);
+                } catch (Exception ex) {
+                    logger.warn("Warning al instanciar enum de catalogo", ex);
+                    throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));
+                }
                 switch (cat) {
                 case SUCURSALES:
                     paso = "Recuperando sucursales";
