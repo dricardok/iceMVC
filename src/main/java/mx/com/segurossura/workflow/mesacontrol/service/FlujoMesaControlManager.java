@@ -10,9 +10,7 @@ import mx.com.segurossura.workflow.mesacontrol.model.FlujoVO;
 public interface FlujoMesaControlManager
 {
 	
-	public Map<String,Item> workflow(
-			String cdsisrol
-			)throws Exception;
+	public Map<String, List<Map<String, String>>> workflow (String cdsisrol) throws Exception;
 	
 	public String movimientoTtipflumc(
 			String accion

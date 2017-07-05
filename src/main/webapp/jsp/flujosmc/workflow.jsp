@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Configurador de procesos</title>
 <style>
 #canvasdiv
 {
@@ -340,7 +341,18 @@
     font-weight: bold;
 }
 </style>
-<script type="text/javascript" src="${ctx}/resources/jsPlumb/jsPlumb-2.0.4.js?${now}"></script>
+<script type="text/javascript" src="${ctx}/IceCore.js"></script>
+
+<script type="text/javascript">
+    // se inyecta una variable al objeto global Ice, se usa dentro de SelectorMultiple.js
+    var Ice = Ice || {};
+    Ice.contexto = "${ctx}/";
+</script>
+
+<script type="text/javascript" src="${ctx}/res/js/extjs4/ext-all.js"></script>
+<script type="text/javascript" src="${ctx}/res/js/jsPlumb/jsPlumb-2.0.4.js"></script>
+<script type="text/javascript" src="${ctx}/res/js/extjs4/base_extjs4.js?${now}"></script>
+<link rel="stylesheet" type="text/css" href="${ctx}/res/js/extjs4/resources/my-custom-theme/my-custom-theme-all.css" />
 <script>
 ////// iframe //////
 var stop = false;
@@ -365,7 +377,7 @@ var _p52_urlBorrarEntidad          = '<s:url namespace="/flujomesacontrol" actio
 var _p52_urlRegistrarConnection    = '<s:url namespace="/flujomesacontrol" action="registrarConnection"    />';
 var _p52_urlBorrarConnection       = '<s:url namespace="/flujomesacontrol" action="borrarConnection"       />';
 var _p52_urlGuardarCoords          = '<s:url namespace="/flujomesacontrol" action="guardarCoordenadas"     />';
-var _p52_urlRecuperacion           = '<s:url namespace="/recuperacion"     action="recuperar"              />';
+var _p52_urlRecuperacion           = '${ctx}/' + Ice.url.core.recuperacionSimple; /*'<s:url namespace="/recuperacion" action="recuperar" />';*/
 var _p52_urlMovimientoTtipflumc    = '<s:url namespace="/flujomesacontrol" action="movimientoTtipflumc"    />';
 var _p52_urlMovimientoTflujomc     = '<s:url namespace="/flujomesacontrol" action="movimientoTflujomc"     />';
 var _p52_urlMovimientoCatalogo     = '<s:url namespace="/flujomesacontrol" action="movimientoCatalogo"     />';
@@ -440,7 +452,7 @@ var _p52_cargando = false;
 var _p52_debug = false;
 
 var _p52_params = <s:property value="%{convertToJSON('params')}" escapeHtml="false" />;
-debug('_p52_params:', _p52_params, '.');
+Ice.log('_p52_params:', _p52_params, '.');
 
 var _p52_tituloPrincipal;
 ////// variables //////
@@ -491,7 +503,7 @@ Ext.onReady(function()
     }
     ////// requires //////
     Ext.Loader.setConfig({enabled: true});
-    Ext.syncRequire(_GLOBAL_DIRECTORIO_DEFINES+'SelectorMultiple');
+    Ext.syncRequire('${ctx}/res/js/icedefines/SelectorMultiple');
 	/* Ext.require(['Ext.form.Panel',
 				 'Ext.ux.form.MultiSelect',
 				 'Ext.ux.form.ItemSelector',
@@ -847,7 +859,7 @@ Ext.onReady(function()
                         try
                         {
                             var json = Ext.decode(response.responseText);
-                            debug('### ttipflurol:',json,'.');
+                            Ice.log('### ttipflurol:',json,'.');
                             if(json.success === true)
                             {
                                 ck = 'Iterando permisos';
@@ -916,7 +928,7 @@ Ext.onReady(function()
                                 try
                                 {
                                     var json = Ext.decode(response.responseText);
-                                    debug('### mov ttipflumc:',json);
+                                    Ice.log('### mov ttipflumc:',json);
                                     if(json.success==true)
                                     {
                                         ck = 'Guardando permisos';
@@ -943,7 +955,7 @@ Ext.onReady(function()
                                             }
                                         });
                                         
-                                        debug('jsonPerm:',jsonPerm,'.');
+                                        Ice.log('jsonPerm:',jsonPerm,'.');
                                         
                                         _mask(ck);
                                         Ext.Ajax.request(
@@ -957,7 +969,7 @@ Ext.onReady(function()
                                                 try
                                                 {
                                                     var jsonRespPerm = Ext.decode(response.responseText);
-                                                    debug('### guardar ttipflurol:',jsonRespPerm,'.');
+                                                    Ice.log('### guardar ttipflurol:',jsonRespPerm,'.');
                                                     if(jsonRespPerm.success === true)
                                                     {
                                                         win.hide();
@@ -1163,7 +1175,7 @@ Ext.onReady(function()
         ,showEdit : function(record)
         {
             var me = this;
-            debug('record:',record);
+            Ice.log('record:',record);
             me.down('form').getForm().loadRecord(record);
             me.down('[name=ACCION]').setValue('U');
             
@@ -1171,7 +1183,7 @@ Ext.onReady(function()
             
             if(!Ext.isEmpty(record.get('SWGRUPO')))
             {
-                debug('se marcara radio:',record.get('SWGRUPO'),',');
+                Ice.log('se marcara radio:',record.get('SWGRUPO'),',');
                 me.down('[name=SWGRUPO][inputValue='+record.get('SWGRUPO')+']').setValue(true);
             }
             
@@ -1204,7 +1216,7 @@ Ext.onReady(function()
                         try
                         {
                             var json = Ext.decode(response.responseText);
-                            debug('### tflujorol:',json,'.');
+                            Ice.log('### tflujorol:',json,'.');
                             if(json.success === true)
                             {
                                 ck = 'Iterando permisos';
@@ -1276,7 +1288,7 @@ Ext.onReady(function()
                                 try
                                 {
                                     var json = Ext.decode(response.responseText);
-                                    debug('### mov tflujomc:',json);
+                                    Ice.log('### mov tflujomc:',json);
                                     if(json.success==true)
                                     {
                                         ck = 'Guardando permisos';
@@ -1305,7 +1317,7 @@ Ext.onReady(function()
                                             }
                                         });
                                         
-                                        debug('jsonPerm:',jsonPerm,'.');
+                                        Ice.log('jsonPerm:',jsonPerm,'.');
                                         
                                         _mask(ck);
                                         Ext.Ajax.request(
@@ -1319,7 +1331,7 @@ Ext.onReady(function()
                                                 try
                                                 {
                                                     var jsonRespPerm = Ext.decode(response.responseText);
-                                                    debug('### guardar ttipflurol:',jsonRespPerm,'.');
+                                                    Ice.log('### guardar ttipflurol:',jsonRespPerm,'.');
                                                     if(jsonRespPerm.success === true)
                                                     {
                                                         win.hide();
@@ -1740,7 +1752,7 @@ Ext.onReady(function()
                                         try
                                         {
                                             var json = Ext.decode(response.responseText);
-                                            debug('### mov tdocume:',json);
+                                            Ice.log('### mov tdocume:',json);
                                             if(json.success==true)
                                             {
                                                 win.hide();
@@ -1849,7 +1861,7 @@ Ext.onReady(function()
                                         try
                                         {
                                             var json = Ext.decode(response.responseText);
-                                            debug('### mov trequisi:',json);
+                                            Ice.log('### mov trequisi:',json);
                                             if(json.success==true)
                                             {
                                                 win.hide();
@@ -1911,7 +1923,7 @@ Ext.onReady(function()
  		,buttons     : [
  		                {
  		                	text  : 'Guardar',
- 		                	icon  : _GLOBAL_DIRECTORIO_ICONOS+'disk.png',
+ 		                	icon  : '${icons}disk.png',
  		                	handler : function(me){
  		                		var win = me.up('window');
  		                		var nameVar   = win.nameCmpVar;
@@ -2438,7 +2450,7 @@ Ext.onReady(function()
                                             var ck = 'Copiando propiedades de estatus';
                                             try {
                                                 var panel = tool.up('panel');
-                                                debug('panel:', panel);
+                                                Ice.log('panel:', panel);
                                                 var store = panel.down('grid').getStore();
                                                 var roles = {};
                                                 store.each(function (record) {
@@ -2466,14 +2478,14 @@ Ext.onReady(function()
                                                     'SWFINNODE'
                                                 ];
                                                 var values = panel.down('form').getValues();
-                                                debug('values:', values);
+                                                Ice.log('values:', values);
                                                 for (var i = 0; i < names.length; i++) {
                                                     var name = names[i];
                                                     props[name] = values[name];
                                                 }
-                                                debug('props:', props);
+                                                Ice.log('props:', props);
                                                 var encode = Ext.encode(props);
-                                                debug('encode:', encode);
+                                                Ice.log('encode:', encode);
                                                 executeCopy(encode);
                                             } catch (e) {
                                                 manejaException(e, ck);
@@ -2489,11 +2501,11 @@ Ext.onReady(function()
                                                 if (Ext.isEmpty(encode)) {
                                                     return;
                                                 }
-                                                debug('encode:', encode);
+                                                Ice.log('encode:', encode);
                                                 var decode = Ext.decode(encode);
-                                                debug('decode:', decode);
+                                                Ice.log('decode:', decode);
                                                 var panel = tool.up('panel');
-                                                debug('panel:', panel);
+                                                Ice.log('panel:', panel);
                                                 var names = [
                                                     'TIMEWRN1H',
                                                     'TIMEWRN1M',
@@ -2863,7 +2875,7 @@ Ext.onReady(function()
                                             ,tooltip  : 'Agregar'
                                             ,callback : function(panel)
                                             {
-                                                debug('panel.',panel);
+                                                Ice.log('panel.',panel);
                                                 panel.store.add({});
                                             }
                                         }]
@@ -3820,7 +3832,7 @@ Ext.onReady(function()
                                             var ck = 'Copiando propiedades de conector';
                                             try {
                                                 var panel = tool.up('panel');
-                                                debug('panel:', panel);
+                                                Ice.log('panel:', panel);
                                                 var iconos = $('[name=iconoaccion]:checked');
                                                 var icono = '';
                                                 if (iconos.length > 0) {
@@ -3839,9 +3851,9 @@ Ext.onReady(function()
                                                     ICONO    : icono,
                                                     roles    : roles
                                                 };
-                                                debug('props:', props);
+                                                Ice.log('props:', props);
                                                 var encode = Ext.encode(props);
-                                                debug('encode:', encode);
+                                                Ice.log('encode:', encode);
                                                 executeCopy(encode);
                                             } catch (e) {
                                                 manejaException(e, ck);
@@ -3857,11 +3869,11 @@ Ext.onReady(function()
                                                 if (Ext.isEmpty(encode)) {
                                                     return;
                                                 }
-                                                debug('encode:', encode);
+                                                Ice.log('encode:', encode);
                                                 var decode = Ext.decode(encode);
-                                                debug('decode:', decode);
+                                                Ice.log('decode:', decode);
                                                 var panel = tool.up('panel');
-                                                debug('panel:', panel);
+                                                Ice.log('panel:', panel);
                                                 panel.down('[name=DSACCION]').setValue(decode.DSACCION);
                                                 panel.down('[name=CDVALOR]').setValue(decode.CDVALOR);
                                                 panel.down('[name=AUX]').setValue(decode.AUX);
@@ -4090,17 +4102,17 @@ Ext.onReady(function()
                                                         change : function(me,val)
                                                         {
                                                             me.indice = 0;
-                                                            debug('indice 0');
+                                                            Ice.log('indice 0');
                                                         }
                                                     }
                                                     ,buscar : function()
                                                     {
                                                         var me = this, val = me.getValue();
-                                                        debug('buscar indice:',me.indice,',val:',val,'.');
+                                                        Ice.log('buscar indice:',me.indice,',val:',val,'.');
                                                         if(!Ext.isEmpty(val))
                                                         {
                                                             var iconos = $('[name=iconoaccion][value*='+val.toLowerCase().split(' ').join('_')+']');
-                                                            debug('iconos:',iconos,'.');
+                                                            Ice.log('iconos:',iconos,'.');
                                                             if(iconos.length>0)
                                                             {
                                                                 iconos[me.indice%iconos.length].focus();
@@ -4128,7 +4140,7 @@ Ext.onReady(function()
                                             ,handler : function(me)
                                             {
                                                 var iconos = $('[name=iconoaccion]:checked');
-                                                debug('iconos:',iconos,'.');
+                                                Ice.log('iconos:',iconos,'.');
                                                 if(iconos.length>0)
                                                 {
                                                     iconos[0].focus();
@@ -4253,7 +4265,7 @@ Ext.onReady(function()
         
         toolkit.bind('click',function(con)
         {
-            debug('toolkit.bind.click con:',con);
+            Ice.log('toolkit.bind.click con:',con);
             if (con.type === 'Dot') {
                 return alert('Debe seleccionar la flecha, no el punto');
             }
@@ -4269,7 +4281,7 @@ Ext.onReady(function()
         
         toolkit.bind('connection',function(con)
         {
-            debug('connection con:',con,'.');
+            Ice.log('connection con:',con,'.');
             if(_p52_cargando==false)
             {
                 _p52_registrarConnection(con);
@@ -4278,7 +4290,7 @@ Ext.onReady(function()
         
         toolkit.bind('connectionDetached',function(con)
         {
-            debug('connectionDetached con:',con,'.');
+            Ice.log('connectionDetached con:',con,'.');
             if(_p52_cargando==false)
             {
                 _p52_borrarConnection(con.connection.cdaccion);
@@ -4287,7 +4299,7 @@ Ext.onReady(function()
         
         toolkit.bind('connectionMoved',function(con)
         {
-            debug('connectionMoved con:',con,'.');
+            Ice.log('connectionMoved con:',con,'.');
             _p52_borrarConnection(con.connection.cdaccion);
         });
     });
@@ -4318,7 +4330,7 @@ function _p52_navega(nivel)
 
 function _p52_cargarEstados()
 {
-    debug('_p52_cargarEstados');
+    Ice.log('_p52_cargarEstados');
     
     var ck = 'Cargando status';
     try
@@ -4338,7 +4350,7 @@ function _p52_cargarEstados()
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### load status:',json);
+                    Ice.log('### load status:',json);
                     if(json.success==true)
                     {
                         _p52_catalogoEstados.removeAll();
@@ -4382,7 +4394,7 @@ function _p52_cargarEstados()
 
 function _p52_cargarSucursales()
 {
-    debug('_p52_cargarSucursales');
+    Ice.log('_p52_cargarSucursales');
     
     var ck = 'Cargando sucursales';
     try
@@ -4402,7 +4414,7 @@ function _p52_cargarSucursales()
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### load sucursales:',json);
+                    Ice.log('### load sucursales:',json);
                     if(json.success==true)
                     {
                         _p52_catalogoSucursales.removeAll();
@@ -4446,7 +4458,7 @@ function _p52_cargarSucursales()
 
 function _p52_cargarPantallas()
 {
-    debug('_p52_cargarPantallas');
+    Ice.log('_p52_cargarPantallas');
     
     var ck = 'Cargando pantallas';
     try
@@ -4466,7 +4478,7 @@ function _p52_cargarPantallas()
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### load pantallas:',json);
+                    Ice.log('### load pantallas:',json);
                     if(json.success==true)
                     {
                         _p52_catalogoPantallas.removeAll();
@@ -4510,7 +4522,7 @@ function _p52_cargarPantallas()
 
 function _p52_cargarComponentes()
 {
-    debug('_p52_cargarComponentes');
+    Ice.log('_p52_cargarComponentes');
     
     var ck = 'Cargando componentes';
     try
@@ -4530,7 +4542,7 @@ function _p52_cargarComponentes()
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### load componentes:',json);
+                    Ice.log('### load componentes:',json);
                     if(json.success==true)
                     {
                         _p52_catalogoComponentes.removeAll();
@@ -4574,7 +4586,7 @@ function _p52_cargarComponentes()
 
 function _p52_cargarProcesos()
 {
-    debug('_p52_cargarProcesos');
+    Ice.log('_p52_cargarProcesos');
     
     var ck = 'Cargando Procesos';
     try
@@ -4594,7 +4606,7 @@ function _p52_cargarProcesos()
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### load procesos:',json);
+                    Ice.log('### load procesos:',json);
                     if(json.success==true)
                     {
                         _p52_catalogoProcesos.removeAll();
@@ -4638,7 +4650,7 @@ function _p52_cargarProcesos()
 
 function _p52_cargarValidaciones()
 {
-    debug('_p52_cargarValidaciones');
+    Ice.log('_p52_cargarValidaciones');
     _p52_catalogoValidaciones.removeAll();
     _p52_catalogoValidaciones.add(
     {
@@ -4655,7 +4667,7 @@ function _p52_cargarValidaciones()
 
 function _p52_cargarRevisiones()
 {
-    debug('_p52_cargarRevisiones');
+    Ice.log('_p52_cargarRevisiones');
     _p52_catalogoRevisiones.removeAll();
     _p52_catalogoRevisiones.add(
     {
@@ -4672,7 +4684,7 @@ function _p52_cargarRevisiones()
 
 function _p52_cargarCorreos()
 {
-    debug('_p52_cargarCorreos');
+    Ice.log('_p52_cargarCorreos');
     _p52_catalogoCorreos.removeAll();
     _p52_catalogoCorreos.add(
     {
@@ -4690,7 +4702,7 @@ function _p52_cargarCorreos()
 
 function _p52_cargarTitulos()
 {
-    debug('_p52_cargarTitulos');
+    Ice.log('_p52_cargarTitulos');
     _p52_catalogoTitulos.removeAll();
     _p52_catalogoTitulos.add(
     [
@@ -4719,7 +4731,7 @@ function _p52_cargarTitulos()
 
 function _p52_cargarIconos()
 {
-    debug('_p52_cargarIconos');
+    Ice.log('_p52_cargarIconos');
     
     var ck = 'Cargando iconos';
     try
@@ -4739,7 +4751,7 @@ function _p52_cargarIconos()
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### load iconos:',json);
+                    Ice.log('### load iconos:',json);
                     if(json.success==true)
                     {
                         _p52_catalogoIconos.removeAll();
@@ -4782,15 +4794,15 @@ function _p52_cargarIconos()
 
 function _p52_dragstart(event)
 {
-    debug('_p52_dragstart event:',event);
+    Ice.log('_p52_dragstart event:',event);
     event.dataTransfer.setData('clave'   , event.target.id);
     event.dataTransfer.setData('descrip' , $('#'+event.target.id).attr('descrip'));
-    debug('getData:',event.dataTransfer.getData("clave"),event.dataTransfer.getData("descrip"));
+    Ice.log('getData:',event.dataTransfer.getData("clave"),event.dataTransfer.getData("descrip"));
 }
 
 function _p52_drop(event)
 {
-    debug('_p52_drop event:',event);
+    Ice.log('_p52_drop event:',event);
     
     var catId   = event.dataTransfer.getData("clave");
     var descrip = event.dataTransfer.getData("descrip");
@@ -4880,14 +4892,14 @@ function _p52_generaId()
 
 function _p52_addEndpoint(id,tipo)
 {
-    debug('_p52_addEndpoint id,tipo:',id,tipo);
+    Ice.log('_p52_addEndpoint id,tipo:',id,tipo);
     var ep = toolkit.addEndpoint(id,epProps[tipo]);
     return ep;
 }
 
 function _p52_editEndpoint(id,tipo,clave)
 {
-    debug('_p52_editEndpoint id,tipo,clave:',id,tipo,clave,'.');
+    Ice.log('_p52_editEndpoint id,tipo,clave:',id,tipo,clave,'.');
     if(tipo=='E')
     {
         _p52_panelCanvas.disable();
@@ -4958,7 +4970,7 @@ function _p52_editEndpoint(id,tipo,clave)
 
 function _p52_removeEndpoint(id,tipo,clave)
 {
-    debug('_p52_removeEndpoint id,tipo,clave:',id,tipo,clave,'.');
+    Ice.log('_p52_removeEndpoint id,tipo,clave:',id,tipo,clave,'.');
     var ck = 'Borrando entidad';
     try
     {
@@ -4984,7 +4996,7 @@ function _p52_removeEndpoint(id,tipo,clave)
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### -entidad:',json);
+                    Ice.log('### -entidad:',json);
                     if(json.success==true)
                     {
                         toolkit.remove(id);
@@ -5015,7 +5027,7 @@ function _p52_removeEndpoint(id,tipo,clave)
 
 function _p52_editCatClic(tipo,id)
 {
-    debug('_p52_editCatClic tipo,id:',tipo,id,'.');
+    Ice.log('_p52_editCatClic tipo,id:',tipo,id,'.');
     
     if(tipo=='E')
     {
@@ -5025,7 +5037,7 @@ function _p52_editCatClic(tipo,id)
         }
         else
         {
-            debug('recuperando:',_fieldById(id).initialConfig.data,'.');
+            Ice.log('recuperando:',_fieldById(id).initialConfig.data,'.');
             var rec =
             {
                 datos    : _fieldById(id).initialConfig.data
@@ -5045,7 +5057,7 @@ function _p52_editCatClic(tipo,id)
         }
         else
         {
-            debug('recuperando:',_fieldById(id).initialConfig.data,'.');
+            Ice.log('recuperando:',_fieldById(id).initialConfig.data,'.');
             var rec =
             {
                 datos    : _fieldById(id).initialConfig.data
@@ -5065,7 +5077,7 @@ function _p52_editCatClic(tipo,id)
         }
         else
         {
-            debug('recuperando:',_fieldById(id).initialConfig.data,'.');
+            Ice.log('recuperando:',_fieldById(id).initialConfig.data,'.');
             var rec =
             {
                 datos    : _fieldById(id).initialConfig.data
@@ -5085,7 +5097,7 @@ function _p52_editCatClic(tipo,id)
         }
         else
         {
-            debug('recuperando:',_fieldById(id).initialConfig.data,'.');
+            Ice.log('recuperando:',_fieldById(id).initialConfig.data,'.');
             var rec =
             {
                 datos    : _fieldById(id).initialConfig.data
@@ -5102,8 +5114,8 @@ function _p52_editCatClic(tipo,id)
 
 function _p52_registrarEntidad(tipo,clave,id,x,y,callback)
 {
-    debug('_p52_registrarEntidad :',tipo,clave,id,'.');
-    debug(x,y,'.');
+    Ice.log('_p52_registrarEntidad :',tipo,clave,id,'.');
+    Ice.log(x,y,'.');
     var ck = 'Registrando entidad';
     try
     {
@@ -5128,7 +5140,7 @@ function _p52_registrarEntidad(tipo,clave,id,x,y,callback)
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### +entidad:',json);
+                    Ice.log('### +entidad:',json);
                     if(json.success==true)
                     {
                         callback(json);
@@ -5159,7 +5171,7 @@ function _p52_registrarEntidad(tipo,clave,id,x,y,callback)
 
 function _p52_registrarConnection(con)
 {
-    debug('_p52_registrarConnection con:',con,'.');
+    Ice.log('_p52_registrarConnection con:',con,'.');
     var ck = 'Registrando conexi\u00f3n';
     try
     {
@@ -5181,11 +5193,11 @@ function _p52_registrarConnection(con)
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### +conex:',json);
+                    Ice.log('### +conex:',json);
                     if(json.success==true)
                     {
                         con.connection.cdaccion=json.params.cdaccion;
-                        debug('con:',con);
+                        Ice.log('con:',con);
                     }
                     else
                     {
@@ -5215,7 +5227,7 @@ function _p52_registrarConnection(con)
 
 function _p52_borrarConnection(cdaccion)
 {
-    debug('_p52_borrarConnection cdaccion:',cdaccion,'.');
+    Ice.log('_p52_borrarConnection cdaccion:',cdaccion,'.');
     var ck = 'Borrando conexi\u00f3n';
     try
     {
@@ -5236,7 +5248,7 @@ function _p52_borrarConnection(cdaccion)
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### +conex:',json);
+                    Ice.log('### +conex:',json);
                     if(json.success==true)
                     {
                     }
@@ -5265,7 +5277,7 @@ function _p52_borrarConnection(cdaccion)
 
 function _p52_guardarCoords(callback)
 {
-    debug('_p52_guardarCoords callback?',!Ext.isEmpty(callback));
+    Ice.log('_p52_guardarCoords callback?',!Ext.isEmpty(callback));
     var ck = 'Guardando coordenadas';
     try
     {
@@ -5281,7 +5293,7 @@ function _p52_guardarCoords(callback)
         
         ck       = 'Recopilando coordenadas';
         var divs = $('.entidad');
-        debug('divs:',divs);
+        Ice.log('divs:',divs);
         
         for(var i=0;i<divs.length;i++)
         {
@@ -5296,7 +5308,7 @@ function _p52_guardarCoords(callback)
             });
         }
         
-        debug('jsonData:',jsonData);
+        Ice.log('jsonData:',jsonData);
         
         _setLoading(true,_p52_panelDibujo);
         Ext.Ajax.request(
@@ -5310,7 +5322,7 @@ function _p52_guardarCoords(callback)
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### guardar coords:',json);
+                    Ice.log('### guardar coords:',json);
                     if(json.success==true)
                     {
                         mensajeCorrecto('Coordenadas guardadas','Coordenadas guardadas',callback);
@@ -5341,7 +5353,7 @@ function _p52_guardarCoords(callback)
 
 function _p52_guardarCatalogo(boton,tipo)
 {
-    debug('_p52_guardarCatalogo boton,tipo:',boton,tipo,'.');
+    Ice.log('_p52_guardarCatalogo boton,tipo:',boton,tipo,'.');
     var ck   = 'Guardando cat\u00e1logo '+tipo;
     var win  = boton.up('window');
     var form = boton.up('form').getForm();
@@ -5367,7 +5379,7 @@ function _p52_guardarCatalogo(boton,tipo)
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### guardar cat,json:',tipo,json,'.');
+                    Ice.log('### guardar cat,json:',tipo,json,'.');
                     if(json.success==true)
                     {
                         win.hide();
@@ -5414,12 +5426,12 @@ function _p52_guardarCatalogo(boton,tipo)
 
 function _p52_cargarModelado()
 {
-    debug('_p52_cargarModelado');
+    Ice.log('_p52_cargarModelado');
     var ck = 'Borrando modelado';
     try
     {
         var divs = $('.entidad');
-        debug('divs:',divs);
+        Ice.log('divs:',divs);
         
         for(var i=0;i<divs.length;i++)
         {
@@ -5446,7 +5458,7 @@ function _p52_cargarModelado()
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### modelado:',json);
+                    Ice.log('### modelado:',json);
                     if(json.success==true)
                     {
                         if(json.list.length>0)
@@ -5522,7 +5534,7 @@ function _p52_cargarModelado()
                                     // JTEZVA 2016 12 05
                                     con.dsaccion = ite.DSACCION;
                                     con.bind('mouseover', function (conn) {
-                                        debug('mouseover args:', arguments);
+                                        Ice.log('mouseover args:', arguments);
                                         conn.addOverlay(['Label',
                                             {
                                                 label    : '<span style="background:white;font-size:8px;">' + (conn.dsaccion || '(vacio)') + '</span>',
@@ -5539,7 +5551,7 @@ function _p52_cargarModelado()
                                         ]);
                                     });
                                     con.bind('mouseout', function (conn) {
-                                        debug('mouseout args:', arguments);
+                                        Ice.log('mouseout args:', arguments);
                                         conn.removeOverlay("connLabel");
                                         conn.removeOverlay("connLabel2");
                                     });
@@ -5579,7 +5591,7 @@ function _p52_cargarModelado()
 
 function _p52_addDiv(id,tipo,clave,descrip,x,y)
 {
-    debug('_p52_addDiv arguments:',arguments,'.');
+    Ice.log('_p52_addDiv arguments:',arguments,'.');
     
     if(Ext.isEmpty(descrip))
     {
@@ -5631,7 +5643,7 @@ function _p52_addDiv(id,tipo,clave,descrip,x,y)
 
 function _p52_cargarDatosEstado(cdestadomc)
 {
-    debug('_p52_cargarDatosEstado cdestadomc:',cdestadomc,'.');
+    Ice.log('_p52_cargarDatosEstado cdestadomc:',cdestadomc,'.');
     var ck = 'Borrando datos de status';
     try
     {
@@ -5670,7 +5682,7 @@ function _p52_cargarDatosEstado(cdestadomc)
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### datos estado:',json);
+                    Ice.log('### datos estado:',json);
                     if(json.success==true)
                     {
                         _p52_panelEstado.down('form').loadRecord(
@@ -5752,7 +5764,7 @@ function _p52_cargarDatosEstado(cdestadomc)
 
 function _p52_cargarDatosRevision(cdrevisi)
 {
-    debug('_p52_cargarDatosRevision cdrevisi:',cdrevisi,'.');
+    Ice.log('_p52_cargarDatosRevision cdrevisi:',cdrevisi,'.');
     var ck = 'Borrando datos de revisi\u00f3n';
     try
     {
@@ -5793,7 +5805,7 @@ function _p52_cargarDatosRevision(cdrevisi)
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### datos revision:',json);
+                    Ice.log('### datos revision:',json);
                     if(json.success==true)
                     {
                         _p52_panelRevision.down('form').loadRecord(
@@ -5869,7 +5881,7 @@ function _p52_cargarDatosRevision(cdrevisi)
 
 function _p52_cargarDatosTitulo(webid)
 {
-    debug('_p52_cargarDatosTitulo webid:',webid,'.');
+    Ice.log('_p52_cargarDatosTitulo webid:',webid,'.');
     var ck = 'Borrando datos de revisi\u00f3n';
     try
     {
@@ -5894,7 +5906,7 @@ function _p52_cargarDatosTitulo(webid)
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### datos titulo:',json);
+                    Ice.log('### datos titulo:',json);
                     if(json.success==true)
                     {
                         _p52_panelTitulo.down('form').loadRecord(
@@ -5932,7 +5944,7 @@ function _p52_cargarDatosTitulo(webid)
 
 function _p52_cargarDatosValidacion(cdvalida)
 {
-    debug('_p52_cargarDatosValidacion cdvalida:',cdvalida,'.');
+    Ice.log('_p52_cargarDatosValidacion cdvalida:',cdvalida,'.');
     var ck = 'Borrando datos de validaci\u00f3n';
     try
     {
@@ -5957,7 +5969,7 @@ function _p52_cargarDatosValidacion(cdvalida)
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### datos validacion:',json);
+                    Ice.log('### datos validacion:',json);
                     if(json.success==true)
                     {
                         _p52_formValidacion.loadRecord(
@@ -5995,7 +6007,7 @@ function _p52_cargarDatosValidacion(cdvalida)
 
 function _p52_cargarDatosCorreo(cdmail)
 {
-	debug('_p52_cargarDatosCorreo cdmail:',cdmail,'.');
+	Ice.log('_p52_cargarDatosCorreo cdmail:',cdmail,'.');
     var ck = 'Borrando datos de validaci\u00f3n';
     try
     {
@@ -6020,7 +6032,7 @@ function _p52_cargarDatosCorreo(cdmail)
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### datos validacion:',json);
+                    Ice.log('### datos validacion:',json);
                     if(json.success==true)
                     {
                         _p52_formCorreos.loadRecord(
@@ -6058,7 +6070,7 @@ function _p52_cargarDatosCorreo(cdmail)
 
 function _p52_cargarDatosAccion(cdaccion)
 {
-    debug('_p52_cargarDatosAccion cdaccion:',cdaccion,'.');
+    Ice.log('_p52_cargarDatosAccion cdaccion:',cdaccion,'.');
     var ck = 'Borrando datos de acci\u00f3n';
     try
     {
@@ -6091,7 +6103,7 @@ function _p52_cargarDatosAccion(cdaccion)
                 try
                 {
                     var json = Ext.decode(response.responseText);
-                    debug('### datos accion:',json);
+                    Ice.log('### datos accion:',json);
                     if(json.success==true)
                     {
                         _p52_panelAccion.down('form').loadRecord(
@@ -6144,7 +6156,7 @@ function _p52_cargarDatosAccion(cdaccion)
 
 function _p52_guardarDatosEstado(bot,callback)
 {
-    debug('_p52_guardarDatosEstado');
+    Ice.log('_p52_guardarDatosEstado');
     var ck = 'Guardando datos de status';
     try
     {
@@ -6181,7 +6193,7 @@ function _p52_guardarDatosEstado(bot,callback)
             jsonData.list.push(datos);
         });
         
-        debug('jsonData:',jsonData);
+        Ice.log('jsonData:',jsonData);
         
         _setLoading(true,_p52_panelEstado);
         Ext.Ajax.request(
@@ -6225,7 +6237,7 @@ function _p52_guardarDatosEstado(bot,callback)
 
 function _p52_guardarDatosRevision(bot,callback)
 {
-    debug('_p52_guardarDatosRevision');
+    Ice.log('_p52_guardarDatosRevision');
     var ck = 'Guardando datos de revisi\u00f3n';
     try
     {
@@ -6261,7 +6273,7 @@ function _p52_guardarDatosRevision(bot,callback)
             jsonData.list.push(datos);
         });
         
-        debug('jsonData:',jsonData);
+        Ice.log('jsonData:',jsonData);
         
         _setLoading(true,_p52_panelRevision);
         Ext.Ajax.request(
@@ -6305,7 +6317,7 @@ function _p52_guardarDatosRevision(bot,callback)
 
 function _p52_guardarDatosTitulo(bot,callback)
 {
-    debug('_p52_guardarDatosTitulo');
+    Ice.log('_p52_guardarDatosTitulo');
     var ck = 'Guardando datos de t\u00edtulo';
     try
     {
@@ -6357,7 +6369,7 @@ function _p52_guardarDatosTitulo(bot,callback)
 
 function _p52_guardarDatosAccion(bot,callback)
 {
-    debug('_p52_guardarDatosAccion');
+    Ice.log('_p52_guardarDatosAccion');
     var ck = 'Guardando datos de acci\u00f3n';
     try
     {
@@ -6383,7 +6395,7 @@ function _p52_guardarDatosAccion(bot,callback)
         
         jsonData.params.CDICONO = $('[name=iconoaccion]:checked').val();
         
-        debug('jsonData:',jsonData);
+        Ice.log('jsonData:',jsonData);
         
         _setLoading(true,_p52_panelAccion);
         Ext.Ajax.request(
@@ -6427,7 +6439,7 @@ function _p52_guardarDatosAccion(bot,callback)
 
 function _p52_guardarDatosValidacion(bot,callback)
 {
-    debug('_p52_guardarDatosValidacion');
+    Ice.log('_p52_guardarDatosValidacion');
     var ck = 'Guardando datos de validaci\u00f3n';
     try
     {
@@ -6479,7 +6491,7 @@ function _p52_guardarDatosValidacion(bot,callback)
 
 function _p52_guardarDatosCorreo(bot,callback)
 {
-    debug('_p52_guardarDatosCorreo');
+    Ice.log('_p52_guardarDatosCorreo');
     var ck = 'Guardando datos de correo';
     try
     {
@@ -6531,7 +6543,7 @@ function _p52_guardarDatosCorreo(bot,callback)
 
 function _p52_actualizaLabel(tipo,webid,label)
 {
-    debug('_p52_actualizaLabel tipo,webid,label:',tipo,webid,label,'.');
+    Ice.log('_p52_actualizaLabel tipo,webid,label:',tipo,webid,label,'.');
     $('#'+webid+'>.label'+tipo).html(label);
 }
 
@@ -6554,7 +6566,7 @@ function _p52_ejecutaValidacion(cdunieco,cdramo,estado,nmpoliza,nmsituac,nmsuple
         ,success : function(response)
         {
             alert();
-            debug(Ext.decode(response.responseText));
+            Ice.log(Ext.decode(response.responseText));
         }
         ,failure : function()
         {
@@ -6590,7 +6602,7 @@ function _p52_ventanaTips(tips)
 }
 
 function _p52_mostrarVentanaVariablesCorreo(nameVar, name){	
-	debug('_p52_mostrarVentanaVariablesCorreo',name);
+	Ice.log('_p52_mostrarVentanaVariablesCorreo',name);
 	_p52_winVarsCorreo.down('[itemId=panVars]').setValue(_p52_formCorreos.down('[name='+nameVar+']').getValue());
 	_p52_winVarsCorreo.nameCmpVar = nameVar;
 	_p52_winVarsCorreo.nameCmp    = name;
