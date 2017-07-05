@@ -1,0 +1,44 @@
+{  
+    "filename":null,
+    "inputstream":null,
+    "limit":0,
+    "list":[  
+        {  
+            "fefecha":"01\/09\/2016 17:23",
+            "ntramite":"24639",
+            "cdusuari":"smatmai",
+            "dsusuari":"UNO",
+            "cdsisrol":"cotizador",
+            "status":"14",
+            "cdunidspch":null,
+            "cdtipasig":null,
+            "cdusuari_fin":null,
+            "cdsisrol_fin":null,
+            "status_fin":null,
+            "fefecha_fin":"01\/09\/2016 17:19"
+        },
+        {  
+            "fefecha":"01\/09\/2016 17:20",
+            "ntramite":"24639",
+            "cdusuari":"smatmai",
+            "dsusuari":"DOS",
+            "cdsisrol":"cotizador",
+            "status":"14",
+            "cdunidspch":null,
+            "cdtipasig":null,
+            "cdusuari_fin":null,
+            "cdsisrol_fin":null,
+            "status_fin":null,
+            "fefecha_fin":"01\/09\/2016 17:60"
+        }
+    ],
+    "message":null,
+    "params":{  
+        "consulta":"recuperar_historial_tramite",
+        "ntramite":"24639"
+    },
+    "rutadocumentostemporal":"\/res\/docs\/tmp",
+    "start":0,
+    "success":true,
+    "total":null
+}

@@ -68,12 +68,20 @@ public class ComponentesAction extends PrincipalCoreAction {
 //            rol.setActivo(false);
 //            usuario.setRolActivo(rol);
 //            Utils.validate(secciones, "No se recibieron datos");
+            String cdsisrol=null;
+        	try{
+        		UsuarioVO usr=(UsuarioVO) Utils.validateSession(session);
+        		cdsisrol=usr.getRolActivo().getCdsisrol();
+        	}catch (Exception e) {
+				logger.warn("No hay rol de sesion",e);
+			}
             if(null != secciones){
                 if(secciones.size() > 0){
                     pant = secciones.get(0).get("pantalla").toLowerCase();
                     for (Map<String, String> map : secciones) {
                         String pantalla = map.get("pantalla");
                         String seccion = map.get("seccion");
+                        map.put("cdsisrol", cdsisrol);
                         Utils.validate(pantalla, "No se recibio el nombre de la pantalla");
                         // Utils.validate(seccion, "No se recibio la seccion");                
                     }
@@ -84,6 +92,7 @@ public class ComponentesAction extends PrincipalCoreAction {
             }            
             Object o = getScreenSesion(pant, usuario);
             if (null == o) {
+            	
                 componentes = componentesManager.obtenerComponentes(secciones);
             } 
             else if (o instanceof String) {
