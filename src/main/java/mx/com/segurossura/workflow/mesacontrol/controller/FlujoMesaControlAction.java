@@ -21,7 +21,6 @@ import org.springframework.stereotype.Controller;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
-import com.biosnettcs.portal.model.RolSistema;
 import com.biosnettcs.portal.model.UsuarioVO;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -57,6 +56,8 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 	
 	private List<Map<String,String>> list;
 	
+	private Map<String, List<Map<String, String>>> mapaListas;
+	
 	private int start
 	            ,limit
 	            ,total;
@@ -75,7 +76,7 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 	@Action(value   = "workflow",
 	        results = {
 			    @Result(name="error"   , location="/jsp-script/general/errorPantalla.jsp"),
-                @Result(name="success" , location="/jsp-script/proceso/flujoMesaControl/workflow.jsp")
+                @Result(name="success" , location="/jsp/flujosmc/workflow.jsp")
             }
 	)
 	public String workflow () {
@@ -86,10 +87,10 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 		String result = ERROR;
 		try {
 			UsuarioVO usuario = (UsuarioVO)Utils.validateSession(session);
-			if (!"ICE".equals(usuario.getCdusuari()) || !RolSistema.PARAMETRIZADOR_SISTEMAS.getCdsisrol().equals(usuario.getRolActivo().getCdsisrol())) {
+			/*if (!"ICE".equals(usuario.getCdusuari()) || !RolSistema.PARAMETRIZADOR_SISTEMAS.getCdsisrol().equals(usuario.getRolActivo().getCdsisrol())) {
 				throw new ApplicationException("Usuario sin permisos");
-			}
-			items = flujoMesaControlManager.workflow(usuario.getRolActivo().getCdsisrol());
+			}*/
+			mapaListas = flujoMesaControlManager.workflow(usuario.getRolActivo().getCdsisrol());
 			if (params == null) {
 				params = new LinkedHashMap<String, String>();
 			}
@@ -2846,6 +2847,15 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 		this.datosTramite = datosTramite;                 //
 	}                                                     //
                                                           //
-    ////////////////////////////////////////////////////////
-	
+	                                                      ///////////////////////////
+                                                                                   //
+	public Map<String, List<Map<String, String>>> getMapaListas() {                //
+        return mapaListas;                                                         //
+    }                                                                              //
+                                                                                   //
+    public void setMapaListas(Map<String, List<Map<String, String>>> mapaListas) { //
+        this.mapaListas = mapaListas;                                              //
+    }                                                                              //
+	                                                                               //
+    /////////////////////////////////////////////////////////////////////////////////
 }

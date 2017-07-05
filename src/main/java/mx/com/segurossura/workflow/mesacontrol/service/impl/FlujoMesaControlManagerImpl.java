@@ -19,6 +19,7 @@ import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.portal.model.RolSistema;
 
+import mx.com.segurossura.general.cmp.dao.ComponentesDAO;
 import mx.com.segurossura.general.producto.model.Ramo;
 import mx.com.segurossura.workflow.confcomp.dao.PantallasDAO;
 import mx.com.segurossura.workflow.confcomp.model.ComponenteVO;
@@ -65,56 +66,41 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	@Autowired
 	private DespachadorManager despachadorManager;
 	
+	@Autowired
+	private ComponentesDAO componentesDAO;
+	
 	@Override
-	public Map<String,Item> workflow(String cdsisrol) throws Exception
-	{
+	public Map<String, List<Map<String, String>>> workflow (String cdsisrol) throws Exception {
 		logger.debug(Utils.log(
 				 "\n@@@@@@@@@@@@@@@@@@@@@@"
 				,"\n@@@@@@ workflow @@@@@@"
 				,"\n@@@@@@ cdsisrol=",cdsisrol
 				));
-		
-		Map<String,Item> items = new HashMap<String,Item>();
-		String           paso  = null;
-		
-		try
-		{
+		Map<String, List<Map<String, String>>> items = new HashMap<String, List<Map<String, String>>>();
+		String paso = null;
+		try {
 			paso = "Recuperando componentes";
 			logger.debug(paso);
 			
 			GeneradorCampos gc=new GeneradorCampos(ServletActionContext.getServletContext().getServletContextName());
 			
-			List<ComponenteVO> ttipfluCmp = pantallasDAO.obtenerComponentes(null, null, null, null, null, cdsisrol, "FLUJOMC", "TTIPFLU", null);
-			gc.generaComponentes(ttipfluCmp, true, false, true, false, false, false);
+			items.put("ttipfluFormItems", componentesDAO.obtenerListaComponentesSP("FLUJOMC", "TTIPFLU", null, null,
+			        null, null, cdsisrol, null));
 			
-			items.put("ttipfluFormItems" , gc.getItems());
+			items.put("tdocumeFormItems", componentesDAO.obtenerListaComponentesSP("FLUJOMC", "TDOCUME", null, null,
+                    null, null, cdsisrol, null));
 			
-			List<ComponenteVO> tdocumeCmp = pantallasDAO.obtenerComponentes(null, null, null, null, null, cdsisrol, "FLUJOMC", "TDOCUME", null);
-			gc.generaComponentes(tdocumeCmp, true, false, true, false, false, false);
+			items.put("trequisiFormItems", componentesDAO.obtenerListaComponentesSP("FLUJOMC", "TREQUISI", null, null,
+                    null, null, cdsisrol, null));
 			
-			items.put("tdocumeFormItems" , gc.getItems());
+			items.put("comboCdtipram", componentesDAO.obtenerListaComponentesSP("FLUJOMC", "COMBO_CDTIPRAM", null, null,
+                    null, null, cdsisrol, null));
 			
-			List<ComponenteVO> trequisiCmp = pantallasDAO.obtenerComponentes(null, null, null, null, null, cdsisrol, "FLUJOMC", "TREQUISI", null);
-			gc.generaComponentes(trequisiCmp, true, false, true, false, false, false);
-			
-			items.put("trequisiFormItems" , gc.getItems());
-			
-			List<ComponenteVO> comboCdtipram = pantallasDAO.obtenerComponentes(null, null, null, null, null, cdsisrol, "FLUJOMC", "COMBO_CDTIPRAM", null);
-			gc.generaComponentes(comboCdtipram, true, false, true, false, false, false);
-			
-			items.put("comboCdtipram" , gc.getItems());
-			
-			List<ComponenteVO> comboEtapa = pantallasDAO.obtenerComponentes(null, null, null, null, null, cdsisrol, "FLUJOMC", "COMBO_ETAPA", null);
-			gc.generaComponentes(comboEtapa, true, false, true, false, false, false);
-			
-			items.put("comboEtapa" , gc.getItems());
-			
-		}
-		catch(Exception ex)
-		{
+			items.put("comboEtapa", componentesDAO.obtenerListaComponentesSP("FLUJOMC", "COMBO_ETAPA", null, null,
+                    null, null, cdsisrol, null));
+		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}
-		
 		logger.debug(Utils.log(
 				 "\n@@@@@@ workflow @@@@@@"
 				,"\n@@@@@@@@@@@@@@@@@@@@@@"

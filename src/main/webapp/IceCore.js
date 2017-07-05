@@ -2,12 +2,14 @@ var Ice = Object.assign(Ice || {}, {
 
     logActivo: true,
 
+    /*
     constantes: {
         toolbarHeight: {
             classic: 44,
             modern: 64
         }
     },
+    */
     
     /*
      * Urls del sistema por modulos 
@@ -36,11 +38,11 @@ var Ice = Object.assign(Ice || {}, {
              recuperarDatosSesion: 'authentication/obtenerDatosSesion.action',
              recuperarMenus:       'authentication/obtenerMenu.action',
              obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
-             obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
              recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
              recuperarTatrisit:    'emision/obtieneTatrisit.action',
              recuperarTatripol:    'emision/obtieneTatripol.action',
-             recuperarTatriper:    'registroPersona/obtieneTatriper.action'
+             recuperarTatriper:    'registroPersona/obtieneTatriper.action',
+             recuperacionSimple:   'recuperacion/recuperar.action'
          },
          
          // URLs de emision

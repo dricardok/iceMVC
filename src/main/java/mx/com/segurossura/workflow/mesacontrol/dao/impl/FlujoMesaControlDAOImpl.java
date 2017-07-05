@@ -114,7 +114,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 		{
 			super(dataSource,"PKG_MESACONTROL.P_GET_TESTADOMC");
 			declareParameter(new SqlParameter("cdestadomc" , Types.VARCHAR));
-			String[] cols=new String[]{ "CDESTADOMC" , "DSESTADOMC" };
+			String[] cols=new String[]{ "ESTATUS" , "DSESTADOMC" };
 			declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
