@@ -1,3 +1,4 @@
+//Panel (mixins y ui) de la carpeta CLASSIC de WEBAPP
 /**
  * Creates a visual theme for a Panel.
  *
@@ -390,9 +391,9 @@
     }
 
     .#{$prefix}panel-header-title-#{$ui} {
-        @if not is-null($ui-header-color) { color: $ui-header-color; }
+        @if not is-null($ui-header-color) { color: blue; }
         @if not is-null($ui-header-font-size) { font-size: $ui-header-font-size; }
-        @if not is-null($ui-header-font-weight) { font-weight:$font-bold;}
+        @if not is-null($ui-header-font-weight) { font-weight:$font-bold-s;}        
         @if not is-null($ui-header-font-family) { font-family: $ui-header-font-family; }
         @if not is-null($ui-header-line-height) { line-height: $ui-header-line-height; }
         @if $ui-header-text-margin != 0 {
@@ -404,7 +405,7 @@
             .#{$prefix}title-text-#{$ui} {
                 text-transform: $ui-header-text-transform;
                 padding: $ui-header-text-padding;
-                 //text-align: $txt-center;
+                text-align: $txt-center !important;
 
                 @if $ext-trial {
                     &:after {
@@ -416,7 +417,7 @@
                         right: 0;
                         // since IE8 does not support opacity on pseudo elements we simulate it by
                         // mixing the text color with the background color
-                        color: mix($ui-header-color, $ui-header-background-color, 40%);
+                        color: none;
                     }
 
                     @if $include-rtl {
@@ -436,7 +437,7 @@
                         right: 0;
                         // since IE8 does not support opacity on pseudo elements we simulate it by
                         // mixing the text color with the background color
-                        color: mix($ui-header-color, $ui-header-background-color, 40%);
+                        color: none;
                     }
 
                     @if $include-rtl {
@@ -943,7 +944,66 @@
 }
 
 
+@if $include-panel-default-ui {
+    @include extjs-panel-ui(
+        $ui: 'mesacontrol',
+        $ui-header-background-color:$base-color,
+        $ui-header-color: $blanco-s,
+    );
+}
+
+
+
+
+ /*----------------Estilos Sura 2017*---------------------/
+    /*Clases icon Chevron del Panel e  input
+
+.x-tool-collapse-top:before {
+    content: "\f106";
+}
+.x-tool-expand-bottom:before{
+    content: "\f107";
+}
+
+.x-form-spinner-default{
+height: 11px !important;
+}
+
+
+.x-form-spinner-up-default:before{
+    content: "\f106" !important;
+    font-family:FontAwesome !important;
+    height: 11px !important;
+}
+
+.x-form-spinner-down-default:before{
+content: "\f107" !important;
+font-family:FontAwesome !important;
+height: 13px !important;
+}
+
+.x-column-header-over .x-column-header-trigger:before, .x-column-header-open .x-column-header-trigger:before{
+content: "\f107" !important;
+}
+        
+ .x-treelist-item-expander:after{
+  content: "\f105" !important;
+ }
+    
  
+ .x-treelist-item-expanded > * > * > .x-treelist-item-expander:after{
+ content: "\f107" !important;
+ }
+ 
+ .x-scroller > .x-inner:before, .x-scroller > .x-inner:after {
+content:"" !important;
+}
+*/
+
+
+
+
+
 
 
 

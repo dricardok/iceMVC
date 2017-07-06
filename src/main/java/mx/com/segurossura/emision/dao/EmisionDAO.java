@@ -120,4 +120,60 @@ public interface EmisionDAO {
 	 */
 	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
 	        String pnmrecibo) throws Exception;
-}
+	
+	/**
+	 * Borra ZWORKCT2_COT y ZWORKCT1_COT
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsuplem
+	 * @throws Exception
+	 */
+	public void movimientoZworkcts(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+	
+	/**
+	 * Copia cotizacion base a nuevas tablas
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsuplem
+	 * @throws Exception
+	 */
+	public void movimientoZworkctsCopiado(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+	
+	/**
+	 * Obtiene lista de formas de pago
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsuplem
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Map<String, String>> obtenerFormasPago(String cdunieco, String  cdramo, String estado, String  nmpoliza, String nmsuplem) throws Exception;
+	
+	/**
+	 * Obtiene tarifas multiples temporales
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Map<String, String>> obtenerTarifaMultipleTemp(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
+	
+	/**
+	 * Obtiene detalle de la tarifa generada
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Map<String, String>> obtenerDetalleTarifaTemp(String cdunieco, String cdramo, String estado, String nmpoliza, String cdperpag) throws Exception;
+ }
