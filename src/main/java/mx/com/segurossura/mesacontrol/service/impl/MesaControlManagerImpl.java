@@ -14,7 +14,7 @@ import com.biosnettcs.core.Utils;
 import mx.com.segurossura.mesacontrol.dao.MesaControlDAO;
 import mx.com.segurossura.mesacontrol.service.MesaControlManager;
 
-@Service
+@Service("mesaControlManagerImplNew")
 public class MesaControlManagerImpl implements MesaControlManager {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MesaControlManagerImpl.class);

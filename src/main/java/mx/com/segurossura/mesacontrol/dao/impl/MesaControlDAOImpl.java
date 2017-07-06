@@ -23,7 +23,7 @@ import com.biosnettcs.core.dao.mapper.GenericMapper;
 
 import mx.com.segurossura.mesacontrol.dao.MesaControlDAO;
 
-@Repository
+@Repository("mesaControlDAOImplNew")
 public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MesaControlDAOImpl.class);

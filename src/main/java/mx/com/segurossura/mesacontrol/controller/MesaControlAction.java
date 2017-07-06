@@ -21,7 +21,7 @@ import com.biosnettcs.portal.controller.PrincipalCoreAction;
 
 import mx.com.segurossura.mesacontrol.service.MesaControlManager;
 
-@Controller
+@Controller("mesaControlActionNew")
 @Scope("prototype")
 @ParentPackage(value="json-default")
 @Namespace("/mesacontrol")
