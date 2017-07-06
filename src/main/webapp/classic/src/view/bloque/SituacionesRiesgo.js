@@ -123,7 +123,8 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 	                        cdtipsit: this.config.cdtipsit,
 	                        maxHeigth: '250',
 	                        tbar: [
-	                            {
+	                        	'->',
+	                        	{
 	                                text: 'Agregar',
 	                                iconCls: 'x-fa fa-plus-circle',
 	                                handler: function(){

@@ -4,5 +4,12 @@
 		<dependencies>
 			<module name="com.oracle.ojdbc" />
 		</dependencies>
+		<exclusions>
+			<module name="org.apache.log4j" />
+			<module name="org.slf4j" />
+		</exclusions>
+		<exclude-subsystems>
+			<subsystem name="logging" />
+		</exclude-subsystems>
 	</deployment>
 </jboss-deployment-structure>
