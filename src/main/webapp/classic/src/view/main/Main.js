@@ -80,7 +80,7 @@ Ext.define('Ice.view.main.Main', {
                 	xtype: 'tbtext',
                 	cls: '',
                 	style:'color:#fff !important;',
-                	text: 'GUROS'
+                	text: 'SEGUROS'
                 },'->', 
                 
                 {
