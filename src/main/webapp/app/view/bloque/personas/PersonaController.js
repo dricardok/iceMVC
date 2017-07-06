@@ -435,8 +435,22 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     			fecha=dia+"-"+mes+"-"+fecha.getFullYear();
 			}
     		Ice.log("--->",fecha);
-    		var brfc =validaRFC(tipoPersona, nom, !nom2?null:nom2, apP, apM, fecha, rfc)
-    		if(!brfc){
+    		var res=null;
+    		if(Number(tipoPersona) == 1) {// Persona fisica
+	        	
+	        	res=/[A-Z&Ñ]{4}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]/.test(rfc);
+	        	
+	        } else if(Number(tipoPersona) == 2  || tipoPersona == 'S') { // Persona moral y regimen Simplificado
+	            
+	        	res=/[A-Z&Ñ]{3}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]/.test(rfc);
+	        	
+	        } else {
+	            throw 'Error en la validacion, tipo de persona invalido: "' + tipoPersona + '"';
+	        }
+    		
+    		
+    		
+    		if(!res){
     			throw 'RFC inválido';
     		}
     		

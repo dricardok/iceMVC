@@ -1,12 +1,10 @@
 Ext.define("Ice.store.bloque.mesacontrol.historial.EventosStore",{
         extend      :   'Ext.data.Store',
         alias       :   'store.eventosstore',
-        config		:	{
-        	ntramite		:	null
-        },
+
         autoLoad	:	true,
         
-        fields      :   ["cdusuari_fin"
+        fields      :   ["cdusuari"
                         ,"cdusuari_ini"
                         ,"dsusuari_ini"
                         ,"dsusuari_fin"
@@ -17,9 +15,9 @@ Ext.define("Ice.store.bloque.mesacontrol.historial.EventosStore",{
                         ,"cdclausu"
                         ,"cdsisrol_ini"
                         ,"usuario_fin"
-                        ,"fechaini"
+                        ,"fecha"
                         ,"dsstatus"
-                        ,"usuario_ini"
+                        ,"dsusuari"
                         ,"ntramite"
                         ,"fechafin"
                         ,"dsusuari_dest"
@@ -37,7 +35,7 @@ Ext.define("Ice.store.bloque.mesacontrol.historial.EventosStore",{
                       type        : 'ajax',
                       url         : Ice.url.bloque.mesacontrol.historial.obtenerTdmesacontrol,
                       extraParams : {
-                          'params.cdperson'   : config.cdperson
+                          'params.ntramite'   : config.ntramite
                       },
                       reader      : {
                           type : 'json',
@@ -54,18 +52,55 @@ Ext.define("Ice.store.bloque.mesacontrol.historial.EventosStore",{
             	  
             	  data.forEach(function(it){
             		  Ice.log("load store",it)
-                	  var d=it.get("fechaini");
+                	  var d=it.get("fecha");
                 	  
                 	  var f=d.split(" ")[0];
                 	  var hora=d.split(" ")[1];
                 	  var arr=f.split("/");
-                	   f=new Date(Number(arr[2]),Number(arr[1]),Number(arr[0]),Number(hora.split(":")[0]),Number(hora.split(":")[1]));
-                	  Ice.log("fecha ini",f);
-                	   it.set("fechaini",f.getTime());
+                	   f=new Date(Number(arr[2]),Number(arr[1])-1,Number(arr[0]),Number(hora.split(":")[0]),Number(hora.split(":")[1]));
+                	  Ice.log("fecha ini",f.getTime());
+                	   it.set("fecha",f.getTime());
+                	   Ice.log("fecha ini",it.get("fecha"));
+                	   
+                	   it.set("usuarioY",it.get("cdusuari")+"-"+it.get("dssisrol_fin"))
             	  });
             	  
               }
-          }
+          },
+          
+          sorters: [
+        	  {
+        			direction: 'asc',
+        			property:	"nmordina"
+//        			sorterFn: function(v1, v2) {
+//        				
+//        				Ice.log("sort;",v1)
+//        				var value1 = Number(v1.get('fecha'));
+//        				var value2 = Number(v2.get('fecha'));
+//        				Ice.log("sort;",v1,"----",value1,"#",value2)
+//        				
+//        				if(value1 > value2)
+//        					return -1;
+//        				
+//        				if(value1 < value2)
+//        					return 1
+//        				
+//        				//return 0;
+//        				value1 = Number(""+(v1.get('nmordina')));
+//            			value2 = Number(""+(v2.get('nmordina')));
+//            			
+//            			
+//        					
+//            			return value1 > value2 ? -1 : (value1 < value2 ? 1 : 0);
+//        			}
+        		}
+//        	  ,
+//        		{
+//        		  direction: 'desc',
+//      			property:	"nmordina"
+//        		}
+          ],
+        
                    
                         
 });

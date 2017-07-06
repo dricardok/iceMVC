@@ -114,7 +114,8 @@ var Ice = Object.assign(Ice || {}, {
             },
             mesacontrol:{
             	historial:{
-            		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json"
+            		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json",
+            		obtenerThmesacontrol:"jsonLocal/obtieneThmesacontrol.json"
             	}
             }
          }
