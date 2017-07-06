@@ -57,7 +57,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 			Ice.log("-->",comps.AGREGAR_PERSONAS.MDOMICIL.items);
 			me.add(
 				{
-					xtype		:	"formulario",
+					xtype		:	"formice",
 					reference	:	"formulario",
 					
 					

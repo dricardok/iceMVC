@@ -20,7 +20,7 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 			
 			var items = [
 				{
-					xtype	:	"formulario",
+					xtype	:	"formice",
 					items	:	[
 						{
 							xtype		:	"textfieldice",

@@ -334,7 +334,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
     			 bodyPadding: '25px 20px 20px 20px',
     			 items	:	[
     				 {
-    					 xtype	:	"formulario",
+    					 xtype	:	"formice",
     					 items	:[
     						 {
     							 xtype	:	'numberfieldice',
