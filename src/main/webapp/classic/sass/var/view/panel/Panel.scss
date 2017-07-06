@@ -1,3 +1,4 @@
+//Panel (variables) de la carpeta CLASSIC de WEBAPP
 /**
  * @class Ext.panel.Panel
  */
@@ -16,7 +17,7 @@ $panel-border-width: dynamic(1px);
  * @var {color}
  * The base color of Panels
  */
-$panel-base-color: dynamic($base-color);
+$panel-base-color: dynamic($blanco-s);
 
 /**
  * @var {color}
@@ -160,7 +161,7 @@ $panel-header-line-height: dynamic(35px);
  * The font-weight of Panel Headers
  */
 
-$panel-header-font-weight: dynamic($font-bold);
+$panel-header-font-weight: dynamic($font-bold_s);
 
 /**
  * @var {string}
@@ -223,7 +224,7 @@ $panel-header-color: dynamic($font-grey);
  * @var {color}
  * The background-color of the Panel Header
  */
-$panel-header-background-color: dynamic($base-color);
+$panel-header-background-color: dynamic($blanco-s);
 
 /**
  * @var {number}

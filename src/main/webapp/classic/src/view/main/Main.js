@@ -68,8 +68,7 @@ Ext.define('Ice.view.main.Main', {
         }, {
         	xtype: 'toolbar',
         	cls: 'head_02 shadow',
-        	//id:'head_02',
-        	items: [
+        		items: [
         		{
                     margin: '0 0 0 80',
                     ui: 'header',
@@ -81,7 +80,7 @@ Ext.define('Ice.view.main.Main', {
                 	xtype: 'tbtext',
                 	cls: '',
                 	style:'color:#fff !important;',
-                	text: 'SEGUROS'
+                	text: 'GUROS'
                 },'->', 
                 
                 {
