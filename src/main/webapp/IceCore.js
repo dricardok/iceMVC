@@ -115,8 +115,18 @@ var Ice = Object.assign(Ice || {}, {
                 descargarArchivo: 'documentos/descargarArchivo.action'
             },
             mesacontrol:{
+            	
+            	obtenerTramites:		'mesacontrol/obtenerTramites.action',
+            	
+            	documentos: {
+                    obtenerDocumentos: 'documentos/obtenerDocumentos.action',
+                    movimientoTdocupol: 'documentos/movimientoTdocupol.action',
+                    obtenerDocumento: 'documentos/obtenerDocumento.action'
+                },
+            	
             	historial:{
-            		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json"
+            		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json",
+            		obtenerThmesacontrol:"jsonLocal/obtieneThmesacontrol.json"
             	}
             }
          }

@@ -2,7 +2,7 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 	
 	extend		:	"Ice.view.componente.Ventana",
 	controller	:	"buscaragentewindow",
-	width		:	"60%",
+	//width		:	"60%",
 	height		:	400,
 	
 	

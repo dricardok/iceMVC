@@ -70,7 +70,7 @@
     </logger>
     
     <logger name="org.springframework">
-        <level value="WARN" />
+        <level value="INFO" />
         <appender-ref ref="dev" />
         <appender-ref ref="err" />
         <appender-ref ref="stdout" />
