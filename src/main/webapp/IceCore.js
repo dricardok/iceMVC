@@ -426,12 +426,15 @@ var Ice = Object.assign(Ice || {}, {
         try {
             var titulo = (params && params.titulo) || 'Aviso',
                 mensaje = (params && params.mensaje) || (params && typeof params === 'string' && params) || '(sin mensaje)',
-                callback = (params && params.callback) || null;
+                callback = (params && params.callback) || null,
+                ui=(params && params.ui) || null;
+            	
             if (Ext.manifest.toolkit === 'classic') {
                 Ext.create('Ext.window.Window', {
 
 
                     width: 300,
+                    ui:	ui,
                     height: 150,
                     closeAction: 'destroy',
                     title: titulo,
@@ -497,7 +500,7 @@ var Ice = Object.assign(Ice || {}, {
                     showAnimation: 'pop',
                     hideAnimation: 'popOut',
                     hideOnMaskTap: true,
-                    
+                    ui:ui,
                     closable: false,
                     closeAction: 'destroy',
                     

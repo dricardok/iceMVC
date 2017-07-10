@@ -80,7 +80,14 @@ Ext.define('Ice.view.bloque.Coberturas', {
 					    listeners:{
 					    	itemtap:function(grid,idx,target,record){
 					    		me.getController().onItemTabSituaciones(grid,idx,target,record)
-					    	}
+					    	},
+					    	cargarstore:function(store,datos,grid){
+		                    	
+		                    		me.getController().mostrarCoberturas(
+		                    				grid,0,0
+		                    				)
+		                    				
+		                    	}
 					    },
 						xtype : 'bloquelistasituaciones',
 						cdtipsit : me.config.cdtipsit,

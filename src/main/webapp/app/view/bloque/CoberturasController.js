@@ -308,7 +308,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             this.cargarValores(form);   
     		
     	}catch(e){
-    		Ice.generaExcepcion(e, paso);
+    		Ice.manejaExcepcion(e, paso);
     	}
     },
     
@@ -895,6 +895,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 					'params.pv_nmsuplem_i' : view.getNmsuplem(),
 					'params.pv_nmsituac_i' : record.get('nmsituac')
 				}
+				 gridCoberturas.setTitle("Coberturas de la situación  " +record.get('nmsituac'));
 				paso = "estableciendo nmsituac";
 				me.config.nmsituac = record.get('nmsituac');
 				me.setNmsituac(record.get('nmsituac'));

@@ -83,7 +83,12 @@
 	                            successProperty: 'success',
 	                            messageProperty: 'message',
 	                            rootProperty: 'situaciones'
-	                         }	                     }	                },
+	                         }	                     },
+	                     listeners:{
+	                    	 load:function(store,datos){
+	                    		 me.fireEvent("cargarstore",store,datos,me);
+	                    	 }
+	                     }	                },
 	                buttons:me.config.buttons,
 	            });
 	        } catch (e) {

@@ -83,7 +83,15 @@ public class SituacionManagerImpl implements SituacionManager{
                 valores.put("cdestado", "0");
             }
             if(valores.get("fefecsit") == null || valores.get("fefecsit").isEmpty()){
-                valores.put("fefecsit", new Date().toString());
+            	
+            	final Map<String, String> a=valores;
+            	emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem)
+            	.stream()
+            	.findFirst()
+            	.ifPresent(
+            			(m)->
+            				a.put("fefecsit", m.get("feefecto"))
+            				);
             }
         } catch (Exception ex){
             Utils.generaExcepcion(ex, paso);

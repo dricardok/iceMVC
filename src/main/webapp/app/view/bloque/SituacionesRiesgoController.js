@@ -130,6 +130,24 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                       }
                       Ice.log('form',form);
                       form.show();
+                      Ext.ComponentQuery.query("[reference=TIPO_SITUACION]").forEach(
+                    		function(it){ 
+                    			//alert()
+                    			it.getStore().on(
+                    				{
+                    					load:function(s,d){
+                    						if(s.count()==1 && store.count()==0){ 
+                    							it.setValue(d[0])
+                    							me.cargarValoresDefectoVariables(it);
+                    						} 
+                    					}
+                    				}
+                    			);
+                    			it.getStore().load();
+                    			
+                    		}
+                    	);
+                      
                   } catch (e) {
                       Ice.manejaExcepcion(e, paso2);
                   }

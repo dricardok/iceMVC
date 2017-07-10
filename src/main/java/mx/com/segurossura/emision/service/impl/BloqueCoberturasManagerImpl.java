@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import com.biosnettcs.core.Utils;
 import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.service.BloqueCoberturasManager;
 import mx.com.segurossura.general.catalogos.model.Bloque;
+import mx.com.segurossura.general.cmp.dao.ComponentesDAO;
 @Service	
 public class BloqueCoberturasManagerImpl implements BloqueCoberturasManager {
 
@@ -22,6 +24,8 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 	
 	@Autowired
 	private EmisionDAO emisionDAO;
+	@Autowired
+    private ComponentesDAO componentesDAO;
 	
 
 	@Override
@@ -116,6 +120,57 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				));
 		return datos;
+	}
+	
+	@Override
+	public List<Map<String,String>> obtieneTatrigarTconfscr(String pantalla,
+															String seccion,
+															String modulo,
+															String estatus,
+															String cdsisrol,
+															String pv_cdramo_i  ,
+															String pv_cdtipsit_i  ,
+															String pv_cdgarant_i  ,
+															String pv_cdatribu_i) throws Exception {
+		logger.debug(Utils.join(
+				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				,"\n@@@@@@ obtieneTatrigarTconfscr"
+				));
+		String paso="";
+		List<Map<String, String>> datos=null;
+		List<Map<String, String>> tconfscr=null;
+		List<Map<String, String>> resultado=new ArrayList<>();
+		try{
+			
+			paso="Consultando datos";
+			tconfscr=componentesDAO.obtenerListaComponentesSP(pantalla, seccion, modulo, estatus, pv_cdramo_i, pv_cdtipsit_i, cdsisrol, pv_cdgarant_i);
+			datos=emisionDAO.obtieneTatrigar(pv_cdramo_i, pv_cdtipsit_i, pv_cdgarant_i, pv_cdatribu_i);
+			//resultado=datos;
+			logger.debug("oo--->"+tconfscr);
+			for(Map<String, String> m: tconfscr){
+				Optional<Map<String, String>> res = datos.stream().filter(
+															d-> d.get("cdatribu").equals(m.get("name_cdatribu"))
+													).findFirst();
+				if(res.isPresent()){
+					m.putAll(res.get());
+					logger.debug("fuss"+m.toString());
+					resultado.add(m);
+				}
+				
+				
+			}
+
+		}catch(Exception ex)
+		{
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		
+		logger.debug(Utils.join(
+				 "\n@@@@@@ obtieneTatrigarTconfscr"
+				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				));
+		return resultado;
 	}
 	
 
