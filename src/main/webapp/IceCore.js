@@ -107,6 +107,13 @@ var Ice = Object.assign(Ice || {}, {
                 movimientoAgrupador:     'emision/realizarMovimientoMpoliagr.action',
                 obtenerAgrupadoresVista: 'emision/obtenerMpoliagrVista.action'
             },
+            documentos: {
+                obtenerDocumentos: 'documentos/obtenerDocumentos.action',
+                movimientoTdocupol: 'documentos/movimientoTdocupol.action',
+                obtenerDocumento: 'documentos/obtenerDocumento.action',
+                verArchivo: 'documentos/verArchivo.action',
+                descargarArchivo: 'documentos/descargarArchivo.action'
+            },
             mesacontrol:{
             	
             	obtenerTramites:		'mesacontrol/obtenerTramites.action',
@@ -1498,7 +1505,7 @@ var Ice = Object.assign(Ice || {}, {
                     F: 'date',
                     T: 'string',
                     S: 'string',
-                    FF: 'filefieldice',
+                    FF: 'string',
                     CDPERSONPICKER: 'string',
                     PASSWORD: 'string'
                 }[config.tipocampo];
