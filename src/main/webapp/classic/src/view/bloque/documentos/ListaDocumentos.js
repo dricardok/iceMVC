@@ -5,7 +5,6 @@ Ext.define('Ice.view.bloque.documentos.ListaDocumentos', {
         extend: 'Ice.view.componente.GridIce',
         xtype: 'listadocumentos',
         
-        controller: 'ventanadocumentos',
         requires: [
             'Ext.toolbar.Paging',
             'Ext.ux.PreviewPlugin'
