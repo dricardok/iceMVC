@@ -49,7 +49,9 @@ var Ice = Object.assign(Ice || {}, {
          emision: {
             tarificar:     'emision/generarTarificacion.action',
             obtenerTarifa: 'emision/obtenerDatosTarificacion.action',
-            emitir:        'emision/confirmarPoliza.action'
+            emitir:        'emision/confirmarPoliza.action',
+        	obtenerPlanes: 'emision/obtenerTarifaMultipleTemp.action',
+        	obtenerPlanDetalle: 'emision/obtenerDetalleTarifaTemp.action'
          },
          
          bloque: {
