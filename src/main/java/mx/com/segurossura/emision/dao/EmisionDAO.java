@@ -62,8 +62,21 @@ public interface EmisionDAO {
 
 	public String obtenerCuadroComisionesDefault (String cdramo) throws Exception;
 	
+	/**
+	 * Ejecuta las validaciones de una poliza para el bloque indicado
+	 * @param cdunieco Sucursal de la poliza
+	 * @param cdramo   Ramo de la poliza
+	 * @param estado   Estado de la poliza
+	 * @param nmpoliza Numero de poliza
+	 * @param nmsituac Situacion de la poliza
+	 * @param nmsuplem Suplemento de la poliza
+	 * @param cdperson Codigo de la persona a validar o null si no se validara
+	 * @param cdbloque Codigo del bloque de datos a validar
+	 * @return Lista de errores de validacion del bloque
+	 * @throws Exception
+	 */
 	public List<Map<String, String>> ejecutarValidaciones (String cdunieco, String cdramo, String estado, String nmpoliza,
-	        String nmsituac, String nmsuplem, String cdbloque) throws Exception;
+	        String nmsituac, String nmsuplem, String cdperson, String cdbloque) throws Exception;
 	
 	public List<Map<String,String>> obtieneMpoligarTabla(String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception;

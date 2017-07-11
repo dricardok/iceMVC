@@ -361,3 +361,28 @@
     $border-color: $azulo-s,
     $border-width: 0
 );
+
+
+//PANEL//
+
+    @include extjs-panel-ui(
+        $ui: 'ice-mesacontrol-framed',    
+        $ui-header-background-color: $azulo-s,    
+        $ui-border-color: $azulo-s,
+        $ui-header-font-weight: $bold-400,   
+        $ui-header-color: #FFF
+    );
+  
+
+  
+    
+//WINDOW//
+
+    @include extjs-window-ui( 
+        $ui: 'ice-window-framed',    
+        $ui-header-background-color: $azulo-s,    
+        $ui-border-color: $azulo-s,
+        $ui-header-font-weight: $bold-400, 
+        $ui-header-color: #FFF
+    );
+

@@ -4,6 +4,7 @@
 Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.bloquesituacionesriesgo',
+    editando:false,
     
     init: function (view) {
         Ice.log('Ice.view.bloque.SituacionesRiesgoController.init view:', view);
@@ -40,30 +41,44 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             Ice.log('Ice.view.bloque.DatosGeneralesController refs:', refs);
             
          // agregar disparadores valores defecto variables
-            for (var i = 0; i < view.getCamposDisparanValoresDefectoVariables().length; i++) {
-                var name = view.getCamposDisparanValoresDefectoVariables()[i];
-                if (refs[name]) {
-                    if (Ext.manifest.toolkit === 'classic') {
-                        refs[name].setFieldStyle('border-left: 1px solid yellow;');
-                    } else {
-                        refs[name].setStyle('border-left: 1px solid yellow;');
-                    }
-                    
-                    if (Ext.manifest.toolkit !== 'classic' && refs[name].isXType('selectfield')) { // para los select
-                        refs[name].on({
-                            change: function () {
-                                me.cargarValoresDefectoVariables();
-                            }
-                        });
-                    } else {
-                        refs[name].on({
-                            blur: function (ref) {
-                                me.cargarValoresDefectoVariables(ref);
-                            }
-                        });
-                    }
-                }
-            }
+//            for (var i = 0; i < view.getCamposDisparanValoresDefectoVariables().length; i++) {
+//                var name = view.getCamposDisparanValoresDefectoVariables()[i];
+//                if (refs[name]) {
+//                    if (Ext.manifest.toolkit === 'classic') {
+//                        refs[name].setFieldStyle('border-left: 1px solid yellow;');
+//                    } else {
+//                        refs[name].setStyle('border-left: 1px solid yellow;');
+//                    }
+//                    
+//                    if (Ext.manifest.toolkit !== 'classic' && refs[name].isXType('selectfield')) { // para los select
+//                        refs[name].on({
+//                            change: function () {
+//                                me.cargarValoresDefectoVariables();
+//                            }
+//                        });
+//                    } else {
+//                        refs[name].on({
+//                            blur: function (ref) {
+//                                me.cargarValoresDefectoVariables(ref);
+//                            }
+//                        });
+//                    }
+//                }
+//            }
+            
+            Ext.ComponentQuery.query("[reference=TIPO_SITUACION]").forEach(function(it){
+            	it.on({
+            		change:function(ref){
+            			me.cargarValoresDefectoVariables(ref);
+            		}
+            	});
+            });
+            var store = view.down('grid').getStore()
+            store.load(function(r){
+            	if(r.length==0){
+            		me.agregar();
+            	}
+            })
             
         } catch (e) {
             Ice.generaExcepcion(e, paso);
@@ -97,6 +112,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           refs = me.getReferences(),
           paso = "";
       try{
+    	  me.editando=false;
           Ice.log('View items ',view.down('grid'));
           paso = "Antes de agregar situacion de riesgo";
           var store = view.down('grid').getStore(),
@@ -116,7 +132,8 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
               success: function (json) {
                   var paso2 = 'LLenando store';
                   try {
-                      Ice.log("situacion",json.situacion);                        
+                      Ice.log("situacion__+",json.situacion); 
+                      
                       if(json.situacion){
 //                          store.add(json.situacion);
                           var refs = view.getReferences();
@@ -128,8 +145,27 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                           }
                           Ice.resumeEvents(view);
                       }
-                      Ice.log('form',form);
                       form.show();
+                      Ice.log('form',form);
+                      store.load();
+                      Ext.ComponentQuery.query("[reference=TIPO_SITUACION]").forEach(
+                        		function(it){ 
+                        			var s=it.getStore();
+                        			s.load(function(r){
+                        				if(r.length==1 && json.situacion){
+                        					if(!Ice.query("[name=nmsituac][xtype=textfieldice]",form).getValue()){
+                        						Ice.query("[name=nmsituac][xtype=textfieldice]",form).setValue(json.situacion.nmsituac)
+                        					}
+                        					//alert(Ext.ComponentQuery.query("[name=nmsituac]")[0].getValue());
+                        					it.setValue(r[0]);
+                        				}
+                        			})
+                        			//it.getStore().load();
+                        			
+                        		}
+                        	);
+                      
+                      
                   } catch (e) {
                       Ice.manejaExcepcion(e, paso2);
                   }
@@ -147,6 +183,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           refs = view.getReferences(),
           paso = "";
       try{
+    	  me.editando=true;
           Ice.log('View items ',refs.grid.getStore());
           paso = "Antes de editar situacion de riesgo";
           var store = refs.grid.getStore(),
@@ -176,17 +213,24 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
               success: function (json) {
                   var paso2 = 'LLenando store';
                   try {
-                      Ice.log('json',json);
+                      Ice.log('json editando:::',json);
                       if(json.situacion){
                           var situacion = json.situacion; 
                           Ice.log("situacion",situacion);
 //                          store.add(json.situacion);
                           Ice.suspendEvents(view);
                           for (var att in situacion) {
+                        	  Ice.log("attr:",att)
                               if (refs[att]) {
                                   refs[att].setValue(situacion[att]);
                               }
                           }
+                         // refs['cdtipsit'].setValue(data.cdtipsit);
+                          Ext.ComponentQuery.query("[getName][name=cdtipsit][xtype=comboice]").forEach(function(it){
+                        	  it.setValue(data.cdtipsit);
+                          });
+                          
+                          Ice.log("--->",refs['cdtipsit']);
                           Ice.resumeEvents(view);
                       }
                       Ice.log('form',form);
@@ -550,7 +594,9 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           Ice.log('situacion',situacion);
 //          store.reload();
       } catch (e) {
+    	  console.error(e);
           Ice.manejaExcepcion(e, paso);
+          
       }   
       Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardar ok');
   },
@@ -573,7 +619,37 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           view = me.getView(),
           refs = view.getReferences();
       try{
+    	  var form = refs.form;
+          var values = form.getValues();  
+    	  var store = refs.grid.getStore();
+    	  
+    	  Ice.log("values...>",values);
+    	  if(!me.editando){
+	    	  Ice.request({
+	              mascara: 'Borrando situacion de riesgo',
+	              url: Ice.url.bloque.situacionesRiesgo.borrar,
+	              params: {
+	                  'params.cdunieco': values.cdunieco,
+	                  'params.cdramo': values.cdramo,
+	                  'params.estado': values.estado,
+	                  'params.nmpoliza': values.nmpoliza,
+	                  'params.nmsituac': values.nmsituac,
+	                  'params.nmsuplem': values.nmsuplem
+	              },
+	              success: function (json) {
+	                  var paso2 = 'Antes de recargar store';
+	                  try {
+	                      store.reload();
+	                  } catch (e) {
+	                      Ice.manejaExcepcion(e, paso2);
+	                  }
+	              }
+	          });
+    	  }
+    	  
+    	  Ice.suspendEvents(view);
           me.limpiarForm(refs.form);
+          Ice.resumeEvents(view);
           refs.form.hide();
       } catch(e) {
           Ice.generaExcepcion(e, paso);

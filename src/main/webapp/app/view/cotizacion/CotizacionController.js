@@ -367,7 +367,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 
                 botones: [
                     {
-                        text: 'Aceptar',
+                        text: 'Editar',
                         iconCls: 'x-fa fa-check',
                         handler: function (me) {
                             me.up('ventanaprimas').cerrar();

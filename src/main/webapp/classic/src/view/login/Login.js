@@ -4,6 +4,8 @@
 Ext.define('Ice.view.login.Login', {
     extend: 'Ext.window.Window',
     xtype: 'login',
+    ui: 'ice-window',
+    frame: true,
     
     requires: [
         'Ext.form.Panel',
@@ -25,6 +27,7 @@ Ext.define('Ice.view.login.Login', {
     maximized: true,
     modal: true,
     closable: false,
+    ui:'ice-window',
     title: 'Iniciar Sesión',
     titleAlign: 'center',
     
@@ -53,9 +56,9 @@ Ext.define('Ice.view.login.Login', {
             	{
                     xtype: 'component',
                     reference: 'suraLogo',
-                    cls: 'sura-logo',
-                    style:'text-align:right; padding: 15px 20px 0px 0px !important; background-color:#0033a0',
-                    html: '<div class="main-logo"><img src="resources/images/logo_sura_bco.png"></div>',
+                    cls: 'sura-logo_bco ',
+                    style:'text-align:left; padding: 15px 20px 0px 0px !important; background-color:#0033a0',
+                    html: '<div class="main-logo log-left"><img src="resources/images/logo_sura_bco.png"></div>',
                     align:'stretch'
                 },                 
             
