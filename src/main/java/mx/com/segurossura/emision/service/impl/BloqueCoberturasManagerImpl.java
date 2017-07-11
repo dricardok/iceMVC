@@ -209,14 +209,14 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 			}
 			paso="Validando";
 			lista.addAll(
-					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, Bloque.CAPITALES.getCdbloque())
+					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, Bloque.CAPITALES.getCdbloque())
 						);
 			
 			lista.addAll(
-					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, Bloque.GARANTIAS.getCdbloque())
+					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, Bloque.GARANTIAS.getCdbloque())
 						);
 			lista.addAll(
-					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, Bloque.ATRIBUTOS_GARANTIAS.getCdbloque())
+					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, Bloque.ATRIBUTOS_GARANTIAS.getCdbloque())
 						);
 			
 

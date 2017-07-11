@@ -1,7 +1,6 @@
 package mx.com.segurossura.emision.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -400,6 +399,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmpoliza,
                     nmsituac,
                     nmsuplem,
+                    null,
                     Bloque.SITUACIONES.getCdbloque()
                     ));
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
@@ -409,6 +409,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmpoliza,
                     nmsituac,
                     nmsuplem,
+                    null,
                     Bloque.ATRIBUTOS_SITUACIONES.getCdbloque()
                     ));
         } catch (Exception ex){
@@ -438,6 +439,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmpoliza,
                     "0",
                     nmsuplem,
+                    null,
                     Bloque.SITUACIONES.getCdbloque()
                     ));
             paso = "Antes de validar bloque "+Bloque.ATRIBUTOS_SITUACIONES.getCdbloque();
@@ -448,6 +450,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmpoliza,
                     "0",
                     nmsuplem,
+                    null,
                     Bloque.ATRIBUTOS_SITUACIONES.getCdbloque()
                     ));
         } catch (Exception ex){

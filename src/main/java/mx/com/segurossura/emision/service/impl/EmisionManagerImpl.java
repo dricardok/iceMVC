@@ -226,7 +226,7 @@ public class EmisionManagerImpl implements EmisionManager {
 
 			List<Map<String, String>> lista = new ArrayList<>();
 			for (String bloque : cdbloque) {
-				lista.addAll(emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem,
+				lista.addAll(emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, null,
 						bloque));
 			}
 
