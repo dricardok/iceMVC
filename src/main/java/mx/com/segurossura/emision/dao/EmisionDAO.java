@@ -120,4 +120,13 @@ public interface EmisionDAO {
 	 */
 	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
 	        String pnmrecibo) throws Exception;
+	
+	public List<Map<String, String>> obtenerTvaloaux (String cdunieco, String cdramo, String estado, String nmpoliza,
+	        String cdbloque, String nmsituac, String cdgarant, String nmsuplem, String status) throws Exception;
+	
+	public void ejecutarMovimientoTvaloaux (String cdunieco, String cdramo, String estado, String nmpoliza,
+            String cdbloque, String nmsituac, String cdgarant, String nmsuplem, String status, String otvalor01, String otvalor02,
+            String otvalor03, String otvalor04, String otvalor05, String otvalor06, String otvalor07, String otvalor08,
+            String otvalor09, String otvalor10, String otvalor11, String otvalor12, String otvalor13, String otvalor14,
+            String otvalor15, String accion) throws Exception;
 }

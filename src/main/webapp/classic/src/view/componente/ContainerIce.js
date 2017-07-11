@@ -1,0 +1,4 @@
+Ext.define('Ice.view.componente.ContainerIce', {
+    extend: 'Ext.panel.Panel', // extiende de panel para poder tener buttons
+    xtype: 'containerice'
+});
