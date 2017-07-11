@@ -151,6 +151,14 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 	                                }]
 	                            }
 	                        ]
+//	                    ,
+//	                        listeners:{
+//	                        	cargarstore:function(store,datos){
+//	                        		Ice.log('Agregar ',this);
+//	                        		if(store.count()==0)
+//	                        			me.getController().onAgregarClic();
+//	                        	}
+//	                        }
 	                    },{
 	                        xtype: 'form',
 	                        reference: 'form',

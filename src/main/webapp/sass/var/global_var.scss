@@ -13,7 +13,7 @@ $azulc-s:#00B5CB;
 $azulc2-s:#002A64;
 $azulo-rgba:rgba(0, 51, 160, .75);
 $azulo-rgba-press:rgba(0, 51, 160, .25);
-$blanco-s:#ffffff !important;
+$blanco-s:#ffffff;
 
 $gris-s:#888686;
 
@@ -21,9 +21,11 @@ $amarillo-s:#e3e829;
 
  /*-----------Tipografía Corporativa DIN Regular-Medium-------*/
 $font_din: 'ext/packages/fonts/';
-$font-bold: 600;
 $font-bold_s: 600;
+$bold-400: 400;
 $font-grey:#707372;
+$font-pnl: 18px;
+$font-wdw: 13px;
 
  /*.-----------Botones Corporativos------------*/
  
@@ -98,6 +100,8 @@ $button-default-background-color-focus-pressed:$azulo-rgba;
  /*Panel*/
 $sombra-pnl: 0 2px 5px 0 rgba(0,0,0,0.26);
 $mrg-pnl:5%;
+$panel-header-color: dynamic($font-grey);
+$panel-header-background-color: dynamic($btn_transparent);
 
 
 /*header de panel*/
@@ -113,7 +117,7 @@ $mrg-pnl:5%;
 $ui-header-background-color:$azulo-s !important;*/
 
  /*Tabs*/
- $tab-font-weight:$font-bold;
+ $tab-font-weight:$font-bold_s;
  $txt-center:center !important;
  
 

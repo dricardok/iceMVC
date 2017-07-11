@@ -98,7 +98,7 @@
         $padding-top: round(($ui-height - $ui-line-height) / 2);
 
         color: $ui-font-color;
-        font: $ui-font-weight #{$ui-font-size}/#{$ui-line-height} $ui-font-family;
+        font: $font-bold_s #{$ui-font-size}/#{$ui-line-height} $ui-font-family;
         min-height: $ui-height;
         padding-top: $padding-top;
         padding-right: $ui-horizontal-spacing;

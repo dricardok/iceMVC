@@ -107,7 +107,7 @@ $window-header-line-height: dynamic($panel-header-line-height);
  * @var {color}
  * The text color of Window Headers
  */
-$window-header-color: dynamic($panel-header-color);
+$window-header-color: dynamic($blanco-s);
 
 /**
  * @var {color}
@@ -285,7 +285,7 @@ $window-ignore-frame-padding: dynamic($panel-ignore-frame-padding);
  * @var {number}
  * The default font-size of the Window body
  */
-$window-body-font-size: dynamic($panel-body-font-size);
+$window-body-font-size: dynamic($font-wdw);
 
 /**
  * @var {string}
