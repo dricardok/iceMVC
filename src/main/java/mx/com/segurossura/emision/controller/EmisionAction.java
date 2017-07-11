@@ -726,8 +726,9 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   nmpoliza, "Falta nmpoliza");
     	    
     	    list = emisionManager.obtenerTarifaMultipleTemp(cdunieco, cdramo, estado, nmpoliza);
-    	    
+    	    success = true;
     	} catch (Exception ex) {
+    		success = false;
     	    message = Utils.manejaExcepcion(ex);
     	}
     	return SUCCESS;
@@ -756,8 +757,9 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   cdperpag, "Falta cdperpag");
     	    
     	    list = emisionManager.obtenerDetalleTarifaTemp(cdunieco, cdramo, estado, nmpoliza, cdperpag);
-    	    
+    	    success = true;
     	} catch (Exception ex) {
+    		success = false;
     	    message = Utils.manejaExcepcion(ex);
     	}
     	return SUCCESS;
