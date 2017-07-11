@@ -103,6 +103,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
                             }
                             
                         ]
+               
                 };
                me.add({
                    xtype: 'toolbar',

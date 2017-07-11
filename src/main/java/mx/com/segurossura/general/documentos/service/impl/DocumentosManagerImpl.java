@@ -5,12 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.biosnettcs.core.Utils;
+
+import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
 import mx.com.segurossura.general.documentos.service.DocumentosManager;
 
 @Service
 public class DocumentosManagerImpl implements DocumentosManager {
+    
+    @Autowired
+    DocumentosDAO documentosDAO;
 
     @Override
     public List<Map<String, String>> obtenerDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, 
@@ -19,6 +25,7 @@ public class DocumentosManagerImpl implements DocumentosManager {
         List<Map<String, String>> lista = new ArrayList<Map<String, String>>();
         try{
             paso = "Obteniendo lista documentos";
+            lista = documentosDAO.obtenerDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, ntramite, cdsisrol, dsdocume, start, limit);
         } catch(Exception ex){
             Utils.generaExcepcion(ex, paso);
         }

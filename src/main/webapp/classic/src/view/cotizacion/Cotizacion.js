@@ -44,6 +44,7 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
     // configuracion que no usa parametros
     layout: 'fit',
     header: false,
+    height:"auto",
     items: [{
         xtype: 'container',
         items: [{

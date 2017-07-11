@@ -110,15 +110,33 @@ var Ice = Object.assign(Ice || {}, {
             documentos: {
                 obtenerDocumentos: 'documentos/obtenerDocumentos.action',
                 movimientoTdocupol: 'documentos/movimientoTdocupol.action',
-                obtenerDocumento: 'documentos/obtenerDocumento.action'
+                obtenerDocumento: 'documentos/obtenerDocumento.action',
+                verArchivo: 'documentos/verArchivo.action',
+                descargarArchivo: 'documentos/descargarArchivo.action'
             },
             mesacontrol:{
+            	
+            	obtenerTramites:		'mesacontrol/obtenerTramites.action',
+            	
+            	documentos: {
+                    obtenerDocumentos: 'documentos/obtenerDocumentos.action',
+                    movimientoTdocupol: 'documentos/movimientoTdocupol.action',
+                    obtenerDocumento: 'documentos/obtenerDocumento.action'
+                },
+            	
             	historial:{
             		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json",
             		obtenerThmesacontrol:"jsonLocal/obtieneThmesacontrol.json"
             	}
             }
          }
+     },
+     /*
+      * Datos del usuario en sesion
+      */
+     sesion:{
+    	 cdusuari:null,
+    	 cdsisrol:null
      },
 
     
@@ -422,12 +440,15 @@ var Ice = Object.assign(Ice || {}, {
         try {
             var titulo = (params && params.titulo) || 'Aviso',
                 mensaje = (params && params.mensaje) || (params && typeof params === 'string' && params) || '(sin mensaje)',
-                callback = (params && params.callback) || null;
+                callback = (params && params.callback) || null,
+                ui=(params && params.ui) || null;
+            	
             if (Ext.manifest.toolkit === 'classic') {
                 Ext.create('Ext.window.Window', {
 
 
                     width: 300,
+                    ui:	ui,
                     height: 150,
                     closeAction: 'destroy',
                     title: titulo,
@@ -493,7 +514,7 @@ var Ice = Object.assign(Ice || {}, {
                     showAnimation: 'pop',
                     hideAnimation: 'popOut',
                     hideOnMaskTap: true,
-                    
+                    ui:ui,
                     closable: false,
                     closeAction: 'destroy',
                     
@@ -887,6 +908,7 @@ var Ice = Object.assign(Ice || {}, {
                 url: secciones.url ? secciones.url :Ice.url.core.recuperarComponentes,
                 jsonData: data,
                 success: function (response) {
+                	
                     paso = 'Decodificando respuesta al recuperar componentes';
                     var json = Ext.JSON.decode(response.responseText);
                     Ice.log('Ice.generaComponentes json response:', json);
@@ -894,6 +916,13 @@ var Ice = Object.assign(Ice || {}, {
                         throw json.message;
 
                     }
+                    
+                    try{
+                		Ice.sesion.cdusuari=json.params.cdusuari;
+                		Ice.sesion.cdsisrol=json.params.cdsisrol;
+                	}catch(e){
+                		console.warn(e)
+                	}
                     if (json.params && json.params.redirect) {
                         paso = 'Redirigiendo componente';
                         var mainView = Ice.query('#mainView'),
@@ -1491,7 +1520,7 @@ var Ice = Object.assign(Ice || {}, {
                     F: 'date',
                     T: 'string',
                     S: 'string',
-                    FF: 'filefieldice',
+                    FF: 'string',
                     CDPERSONPICKER: 'string',
                     PASSWORD: 'string'
                 }[config.tipocampo];

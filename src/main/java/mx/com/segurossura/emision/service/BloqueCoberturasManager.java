@@ -29,4 +29,7 @@ public interface BloqueCoberturasManager {
 	void agregaCobertura(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
 			String nmsuplem,  List<Map<String, String>> lista)throws Exception;
 
+	List<Map<String, String>> obtieneTatrigarTconfscr(String pantalla, String seccion, String modulo, String estatus,String cdsisrol,
+			String pv_cdramo_i, String pv_cdtipsit_i, String pv_cdgarant_i, String pv_cdatribu_i) throws Exception;
+
 }

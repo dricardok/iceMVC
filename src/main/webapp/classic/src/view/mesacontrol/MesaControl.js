@@ -25,8 +25,9 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
     items: [
         {
             xtype: 'form',
+            //ui: 'mesacontrol',
             title: 'Filtro',
-            userCls: 'big-100 shadow titulo_pnl',
+            userCls: 'big-100 shadow',
             
             collapsible: true,
             titleCollapse: true,
@@ -34,13 +35,14 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
             defaultFocus: 'numberfield:not([value]):focusable:not([disabled])',
             
             layout: 'responsivecolumn',
+            bodyPadding: '0 0 0 80',
             defaults: {
                 labelWidth: 90,
                 labelAlign: 'top',
                 labelSeparator: '',
                 submitEmptyText: false,
                 anchor: '100%',
-                userCls: 'big-50 small-100 titulo_pnl'
+                userCls: 'big-50 small-100'
             },
             items: [
                 {
@@ -79,6 +81,7 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
         }, {
             xtype: 'grid',
             title: 'Tr\u00e1mites',
+            //ui: 'mesacontrol',
             userCls: 'big-100 shadow ',
             
             minHeight: 200,
