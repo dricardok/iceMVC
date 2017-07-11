@@ -361,6 +361,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     nmpoliza,
                     "0", // nmsituac
                     nmsuplem,
+                    null,
                     Bloque.DATOS_GENERALES.getCdbloque()
                     ));
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
@@ -370,6 +371,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     nmpoliza,
                     "0", // nmsituac
                     nmsuplem,
+                    null,
                     Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque()
                     ));
             

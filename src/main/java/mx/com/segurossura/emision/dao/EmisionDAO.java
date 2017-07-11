@@ -62,8 +62,21 @@ public interface EmisionDAO {
 
 	public String obtenerCuadroComisionesDefault (String cdramo) throws Exception;
 	
+	/**
+	 * Ejecuta las validaciones de una poliza para el bloque indicado
+	 * @param cdunieco Sucursal de la poliza
+	 * @param cdramo   Ramo de la poliza
+	 * @param estado   Estado de la poliza
+	 * @param nmpoliza Numero de poliza
+	 * @param nmsituac Situacion de la poliza
+	 * @param nmsuplem Suplemento de la poliza
+	 * @param cdperson Codigo de la persona a validar o null si no se validara
+	 * @param cdbloque Codigo del bloque de datos a validar
+	 * @return Lista de errores de validacion del bloque
+	 * @throws Exception
+	 */
 	public List<Map<String, String>> ejecutarValidaciones (String cdunieco, String cdramo, String estado, String nmpoliza,
-	        String nmsituac, String nmsuplem, String cdbloque) throws Exception;
+	        String nmsituac, String nmsuplem, String cdperson, String cdbloque) throws Exception;
 	
 	public List<Map<String,String>> obtieneMpoligarTabla(String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception;
@@ -121,10 +134,67 @@ public interface EmisionDAO {
 	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
 	        String pnmrecibo) throws Exception;
 	
-	public List<Map<String, String>> obtenerTvaloaux (String cdunieco, String cdramo, String estado, String nmpoliza,
-	        String cdbloque, String nmsituac, String cdgarant, String nmsuplem, String status) throws Exception;
+	/**
+	 * Borra ZWORKCT2_COT y ZWORKCT1_COT
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsuplem
+	 * @throws Exception
+	 */
+	public void movimientoZworkcts(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
 	
-	public void ejecutarMovimientoTvaloaux (String cdunieco, String cdramo, String estado, String nmpoliza,
+	/**
+	 * Copia cotizacion base a nuevas tablas
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsuplem
+	 * @throws Exception
+	 */
+	public void movimientoZworkctsCopiado(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+	
+	/**
+	 * Obtiene lista de formas de pago
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsuplem
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Map<String, String>> obtenerFormasPago(String cdunieco, String  cdramo, String estado, String  nmpoliza, String nmsuplem) throws Exception;
+	
+	/**
+	 * Obtiene tarifas multiples temporales
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Map<String, String>> obtenerTarifaMultipleTemp(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
+	
+	/**
+	 * Obtiene detalle de la tarifa generada
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Map<String, String>> obtenerDetalleTarifaTemp(String cdunieco, String cdramo, String estado, String nmpoliza,
+	        String cdperpag) throws Exception;
+    
+    public List<Map<String, String>> obtenerTvaloaux (String cdunieco, String cdramo, String estado, String nmpoliza,
+            String cdbloque, String nmsituac, String cdgarant, String nmsuplem, String status) throws Exception;
+    
+    public void ejecutarMovimientoTvaloaux (String cdunieco, String cdramo, String estado, String nmpoliza,
             String cdbloque, String nmsituac, String cdgarant, String nmsuplem, String status, String otvalor01, String otvalor02,
             String otvalor03, String otvalor04, String otvalor05, String otvalor06, String otvalor07, String otvalor08,
             String otvalor09, String otvalor10, String otvalor11, String otvalor12, String otvalor13, String otvalor14,

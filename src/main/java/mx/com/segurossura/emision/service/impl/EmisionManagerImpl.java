@@ -1,6 +1,7 @@
 
 package mx.com.segurossura.emision.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -225,7 +226,7 @@ public class EmisionManagerImpl implements EmisionManager {
 
 			List<Map<String, String>> lista = new ArrayList<>();
 			for (String bloque : cdbloque) {
-				lista.addAll(emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem,
+				lista.addAll(emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, null,
 						bloque));
 			}
 
@@ -263,7 +264,117 @@ public class EmisionManagerImpl implements EmisionManager {
 		}
 		return res;
 	}
-
+	
+	@Override
+	public List<Map<String, Object>> generarTarificacion2(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception {
+		String paso = null;
+		Map<String, Object> res = null;
+		List<Map<String, Object>> resultados = new ArrayList<Map<String, Object>>();
+		String formaPagoValor = null;
+		SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
+		
+		List<Map<String, String>> formasPago = null;
+		List<Map<String, String>> mpolizas = null;
+		Map<String, String> mpoliza = null;
+		
+		try {			
+			paso = "Tarificando situaciones";
+			
+			// Paso 1 Borrar tablas temporales ZWORKCT1_COT Y ZWORKCT2_COT			
+			emisionDAO.movimientoZworkcts(cdunieco, cdramo, estado, nmpoliza, "0");
+			
+			// Paso 2 Recuperar lista de formas de pago
+			formasPago = emisionDAO.obtenerFormasPago(cdunieco, cdramo, estado, nmpoliza, "0");
+			
+			// Paso 3 Respandar MPOLIZAS
+			mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, "0");
+						
+			if(mpolizas!=null && !mpolizas.isEmpty()) {
+				mpoliza = mpolizas.get(0);
+				formaPagoValor = mpoliza.get("cdperpag");
+			}
+			
+			for(Map<String, String> formaPago : formasPago) {
+								
+				// 4 Por cada forma de pago actualizar MPOLIZAS CDPERPAGO
+				logger.info("Actualizando mpolizas con forma de pago " + formaPago.get("codigo"));
+				emisionDAO.movimientoMpolizas(mpoliza.get("cdunieco"), mpoliza.get("cdramo"), mpoliza.get("estado"), mpoliza.get("nmpoliza"),
+						  mpoliza.get("nmsuplem"), mpoliza.get("nmsuplem"), mpoliza.get("status"), mpoliza.get("swestado"),
+						  mpoliza.get("nmsolici"), 
+						  mpoliza.get("feautori") != null && !mpoliza.get("feautori").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feautori")) : null, 
+						  mpoliza.get("cdmotanu"), 
+						  mpoliza.get("feanulac") != null && !mpoliza.get("feanulac").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feanulac")) : null, 
+						  mpoliza.get("swautori"), mpoliza.get("cdmoneda"), 
+						  mpoliza.get("feinisus") != null && !mpoliza.get("feinisus").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feinisus")) : null,
+						  mpoliza.get("fefinsus") != null && !mpoliza.get("fefinsus").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("fefinsus")) : null,
+						  mpoliza.get("ottempot"), 
+						  mpoliza.get("feefecto") != null && !mpoliza.get("feefecto").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feefecto")) : null, 
+						  mpoliza.get("hhefecto"),
+						  mpoliza.get("feproren") != null && !mpoliza.get("feproren").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feproren")) : null, 
+						  mpoliza.get("fevencim") != null && !mpoliza.get("fevencim").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("fevencim")) : null, 
+						  mpoliza.get("nmrenova"), 
+						  mpoliza.get("ferecibo") != null && !mpoliza.get("ferecibo").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("ferecibo")) : null,
+						  mpoliza.get("feultsin") != null && !mpoliza.get("feultsin").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feultsin")) : null, 
+						  mpoliza.get("nmnumsin"), mpoliza.get("cdtipcoa"), mpoliza.get("swtarifi"), mpoliza.get("swabrido"), 
+						  mpoliza.get("feemisio") != null && !mpoliza.get("feemisio").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feemisio")) : null,
+						  formaPago.get("codigo"), mpoliza.get("nmpoliex"), mpoliza.get("nmcuadro"), mpoliza.get("porredau"),
+						  mpoliza.get("swconsol"), mpoliza.get("nmpolcoi"), mpoliza.get("adparben"), mpoliza.get("nmcercoi"), mpoliza.get("cdtipren"), 
+						  "U");
+				
+				
+				List<Map<String, String>> situacionesPoliza = situacionDAO.obtieneMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, "0");
+				
+				for (Map<String, String> situac : situacionesPoliza) {
+					
+					logger.debug("Inicio tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",	situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
+					
+					resultados.add(res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac")));
+					
+					logger.debug("Fin    tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",
+							situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
+				}
+				
+				paso = "Tarificando conceptos globales";
+				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0", Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO");
+				
+				
+				emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, "0");
+				
+				emisionDAO.movimientoZworkctsCopiado(cdunieco, cdramo, estado, nmpoliza, "0");
+			}			
+			
+			// 5 Restaurar MPOLIZAS CDPERPAGO
+			logger.info("Actualizando mpolizas con el valor original" + mpoliza.get("cdperpag"));
+			emisionDAO.movimientoMpolizas(mpoliza.get("cdunieco"), mpoliza.get("cdramo"), mpoliza.get("estado"), mpoliza.get("nmpoliza"),
+										  mpoliza.get("nmsuplem"), mpoliza.get("nmsuplem"), mpoliza.get("status"), mpoliza.get("swestado"),
+										  mpoliza.get("nmsolici"), 
+										  mpoliza.get("feautori") != null && !mpoliza.get("feautori").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feautori")) : null, 
+										  mpoliza.get("cdmotanu"), 
+										  mpoliza.get("feanulac") != null && !mpoliza.get("feanulac").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feanulac")) : null, 
+										  mpoliza.get("swautori"), mpoliza.get("cdmoneda"), 
+										  mpoliza.get("feinisus") != null && !mpoliza.get("feinisus").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feinisus")) : null,
+										  mpoliza.get("fefinsus") != null && !mpoliza.get("fefinsus").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("fefinsus")) : null,
+										  mpoliza.get("ottempot"), 
+										  mpoliza.get("feefecto") != null && !mpoliza.get("feefecto").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feefecto")) : null, 
+										  mpoliza.get("hhefecto"),
+										  mpoliza.get("feproren") != null && !mpoliza.get("feproren").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feproren")) : null, 
+										  mpoliza.get("fevencim") != null && !mpoliza.get("fevencim").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("fevencim")) : null, 
+										  mpoliza.get("nmrenova"), 
+										  mpoliza.get("ferecibo") != null && !mpoliza.get("ferecibo").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("ferecibo")) : null,
+										  mpoliza.get("feultsin") != null && !mpoliza.get("feultsin").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feultsin")) : null, 
+										  mpoliza.get("nmnumsin"), mpoliza.get("cdtipcoa"), mpoliza.get("swtarifi"), mpoliza.get("swabrido"), 
+										  mpoliza.get("feemisio") != null && !mpoliza.get("feemisio").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feemisio")) : null,
+										  mpoliza.get("cdperpag"), mpoliza.get("nmpoliex"), mpoliza.get("nmcuadro"), mpoliza.get("porredau"), 
+										  mpoliza.get("swconsol"), mpoliza.get("nmpolcoi"), mpoliza.get("adparben"), mpoliza.get("nmcercoi"), mpoliza.get("cdtipren"), 
+										  "U");
+			
+		} catch (Exception ex) {
+			Utils.generaExcepcion(ex, paso);
+		}
+		
+		return resultados;
+	}
+	
 	@Override
 	public List<Map<String, String>> obtenerDatosTarificacion(String cdunieco, String cdramo, String estado,
 			String nmpoliza) throws Exception {
@@ -276,13 +387,12 @@ public class EmisionManagerImpl implements EmisionManager {
 
 		String paso = null;
 		Map<String, Object> res = null;
-		Map<String, Object> resultado = null;
 		try {
 			paso = "Distribuyendo agrupadores";
 
 			try {
 
-				resultado = emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+				res = emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
 
 			} catch (Exception ex) {
 				logger.error("Error al llamar funcion de distribucionAgrupadores");
@@ -307,4 +417,35 @@ public class EmisionManagerImpl implements EmisionManager {
 		return res;
 	}
 
+	@Override
+	public List<Map<String, String>> obtenerTarifaMultipleTemp(String cdunieco, String cdramo, String estado,
+			String nmpoliza) throws Exception {
+		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "\n@@@@@@ obtenerTarifaMultipleTemp"));
+		String paso = "";
+		List<Map<String, String>> datos = null;
+		try {
+			paso = "Consultando datos";
+			datos = emisionDAO.obtenerTarifaMultipleTemp(cdunieco, cdramo, estado, nmpoliza);
+		} catch (Exception ex) {
+			Utils.generaExcepcion(ex, paso);
+		}
+		logger.debug(Utils.join("\n@@@@@@ obtenerTarifaMultipleTemp", "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
+		return datos;
+	}
+
+	@Override
+	public List<Map<String, String>> obtenerDetalleTarifaTemp(String cdunieco, String cdramo, String estado,
+			String nmpoliza, String cdperpag) throws Exception {
+		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "\n@@@@@@ obtenerTarifaMultipleTemp"));
+		String paso = "";
+		List<Map<String, String>> datos = null;
+		try {
+			paso = "Consultando datos";
+			datos = emisionDAO.obtenerDetalleTarifaTemp(cdunieco, cdramo, estado, nmpoliza, cdperpag);
+		} catch (Exception ex) {
+			Utils.generaExcepcion(ex, paso);
+		}
+		logger.debug(Utils.join("\n@@@@@@ obtenerTarifaMultipleTemp", "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
+		return datos;
+	}
 }

@@ -157,6 +157,11 @@ Ext.define('Ice.view.bloque.ListaSituaciones', {
 	                            messageProperty: 'message',
 	                            rootProperty: 'situaciones'
 	                         }
+	                     },
+	                     listeners:{
+	                    	 load:function(store,datos){
+	                    		 me.fireEvent("cargarstore",store,datos,me);
+	                    	 }
 	                     }
 	                });
 		        	

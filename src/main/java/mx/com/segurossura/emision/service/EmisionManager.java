@@ -57,6 +57,9 @@ public interface EmisionManager {
             throws Exception;
     
     
+    public List<Map<String, Object>> generarTarificacion2(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception;
+    
+    
     /**
      * Obtiene los datos de la tarificacion
      * @param cdunieco
@@ -74,4 +77,9 @@ public interface EmisionManager {
     
     public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception;
+    
+    
+    public List<Map<String, String>> obtenerTarifaMultipleTemp(String cdunieco, String  cdramo, String estado, String  nmpoliza) throws Exception;
+    
+    public List<Map<String, String>> obtenerDetalleTarifaTemp(String cdunieco, String  cdramo, String estado, String  nmpoliza, String cdperpag) throws Exception;
 }
