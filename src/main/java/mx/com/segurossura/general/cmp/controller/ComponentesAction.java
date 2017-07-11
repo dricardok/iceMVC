@@ -72,6 +72,11 @@ public class ComponentesAction extends PrincipalCoreAction {
         	try{
         		UsuarioVO usr=(UsuarioVO) Utils.validateSession(session);
         		cdsisrol=usr.getRolActivo().getCdsisrol();
+        		if(params==null){
+        			params=new HashMap<>();
+        		}
+        		params.put("cdusuari", usr.getCdusuari());
+        		params.put("cdsisrol", usr.getRolActivo().getCdsisrol());
         	}catch (Exception e) {
 				logger.warn("No hay rol de sesion",e);
 			}

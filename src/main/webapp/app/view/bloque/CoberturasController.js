@@ -50,7 +50,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             	//Ice.log("store- :",store)
 			var win=Ext.create('Ext.window.Window', {
 			    title: 'Añadir cobertura',
-			    height: 550,
+			    height: 250,
 			    width: 450,
 			    layout: 'fit',
 			    scrollable:true,
@@ -295,7 +295,9 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             	it.tabla="MPOLICAP"
             })
             
-            form.setTitle(record.get('cdgarant')+" - "+record.get('dsgarant'))
+            form.setTitle("Cobertura: "+record.get('cdgarant')+" - "+record.get('dsgarant') +" Póliza: "+view.getCdunieco() +" - "
+					 +view.getCdramo()+" - "+ view.getEstado()+ " - "	
+						 +view.getNmpoliza())
             form.removeAll();
             
             form.add(mpolicap.BLOQUE_COBERTURAS.MPOLICAP.items);
@@ -895,7 +897,9 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 					'params.pv_nmsuplem_i' : view.getNmsuplem(),
 					'params.pv_nmsituac_i' : record.get('nmsituac')
 				}
-				 gridCoberturas.setTitle("Coberturas de la situación  " +record.get('nmsituac'));
+				 gridCoberturas.setTitle("Coberturas de la situación:  " +record.get('nmsituac')+" Póliza: "+view.getCdunieco() +" - "
+						 												 +view.getCdramo()+" - "+ view.getEstado()+ " - "	
+						 												 +view.getNmpoliza());
 				paso = "estableciendo nmsituac";
 				me.config.nmsituac = record.get('nmsituac');
 				me.setNmsituac(record.get('nmsituac'));
