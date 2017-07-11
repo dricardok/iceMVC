@@ -174,8 +174,11 @@
          *      +-----------------+
          */
         "src": [
+            "sass/src/global_src.scss",    
             "sass/src",
+            "${toolkit.name}/sass/src/global_src.scss",
             "${toolkit.name}/sass/src"
+            
         ]
     },
 
