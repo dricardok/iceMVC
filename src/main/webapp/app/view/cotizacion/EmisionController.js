@@ -366,7 +366,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 nmpoliza: view.getNmpoliza(),
                 
                 botones: [{
-                    text: 'Aceptar',
+                    text: 'Editar',
                     iconCls: 'x-fa fa-check',
                     handler: function (bot) {
                         bot.up('ventanaprimas').cerrar();
