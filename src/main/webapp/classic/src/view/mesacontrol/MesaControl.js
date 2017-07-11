@@ -1,3 +1,4 @@
+
 Ext.define('Ice.view.mesacontrol.MesaControl', {
     extend: 'Ext.container.Container',
     xtype: 'mesacontrol',
@@ -25,7 +26,8 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
     items: [
         {
             xtype: 'form',
-            //ui: 'mesacontrol',
+            ui: 'ice-mesacontrol',
+            frame: true,
             title: 'Filtro',
             userCls: 'big-100 shadow',
             
@@ -81,7 +83,8 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
         }, {
             xtype: 'grid',
             title: 'Tr\u00e1mites',
-            //ui: 'mesacontrol',
+            ui: 'ice-mesacontrol',
+            frame: true,
             userCls: 'big-100 shadow ',
             
             minHeight: 200,
