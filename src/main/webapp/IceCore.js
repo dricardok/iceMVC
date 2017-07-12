@@ -1,6 +1,6 @@
 /*
  * Objeto principal en la aplicacion ice
- * 
+ * Delia prueba
  */
 
 // var Ice = Object.assign(Ice || {}, { // (Object.assign da error en explorer)
