@@ -803,7 +803,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsituac_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdperson_i" , Types.VARCHAR));
+            //declareParameter(new SqlParameter("pv_cdperson_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdbloque_i" , Types.VARCHAR));
             String[] cols=new String[]{ "tipo", "otvalor" };
             declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
@@ -1199,6 +1199,10 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     protected class ObtenerTvaloauxSP extends StoredProcedure {
         protected ObtenerTvaloauxSP (DataSource dataSource) {
             super(dataSource, "PKG_DATA_ALEA.P_GET_TVALOAUX");
+            declareParameter(new SqlParameter("pv_cdunieco_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"    , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"    , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i"  , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsituac_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_status_i"   , Types.VARCHAR));

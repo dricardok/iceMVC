@@ -45,7 +45,6 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
                     reference: 'formdatosgenerales',
                     
                     title: 'Datos de p\u00f3liza',
-                    height: Ice.constantes.componente.form.altura,
                     listeners: {
                         llaveGenerada: 'llaveGenerada'
                     }
@@ -54,7 +53,6 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
                     reference: 'formdatosauxiliares',
 
                     title: 'Datos adicionales',
-                    maxHeight: Ice.constantes.componente.form.altura,
 
                     bloque: 'B1',
                     cdtipsit: '*'

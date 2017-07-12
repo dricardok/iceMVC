@@ -8,8 +8,9 @@ Ext.define('Ice.view.componente.FormIce', {
     ],
     
 	// config ext
+	height: Ice.constantes.componente.form.altura.modern,
     scrollable: true,
-	userCls: ['ice-form', 'ice-form-modern'],
+	userCls: ['ice-container', 'ice-container-modern', 'ice-panel', 'ice-panel-modern', 'ice-form', 'ice-form-modern'],
 
 	// config no ext
 	config: {
@@ -23,9 +24,13 @@ Ext.define('Ice.view.componente.FormIce', {
         var me = this,
             paso = 'Construyendo formulario';
         try {
-	    	config.items = config.items || [];
+			config.items = config.items || [];
+            for (var i = 0; i < config.items.length; i++) {
+                config.items[i].userCls = ['ice-form-item', 'ice-form-item-modern']
+                    .concat(config.items[i].userCls || []);
+            }
 
-			config.items.push({
+	    	config.items = [{
 				xtype: 'toolbar',
 				docked: 'top',
 				items: [
@@ -40,10 +45,9 @@ Ext.define('Ice.view.componente.FormIce', {
 						}
 					}
 				].concat(config.tbar || [])
-			});
+			}].concat(config.items);
 			
-			config.buttons = config.buttons || [];
-			if (config.buttons.length > 0) {
+			if ((config.buttons || []).length > 0) {
 			    config.items.push({
 		            xtype: 'toolbar',
 		            docked: 'bottom',

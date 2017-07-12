@@ -96,5 +96,20 @@ Ext.define('Ice.app.controller.FormIceController', {
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
+    },
+
+    /**
+     * Recibe los datos para setear en el formulario
+     */
+    cargarFormulario: function (datos) {
+        Ice.log('Ice.app.controller.FormIceController.cargarFormulario datos:', datos);
+        var me = this,
+            view = me.getView(),
+            paso = 'Cargando formulario';
+        try {
+            Ice.cargarFormulario(view, datos);
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
     }
 });

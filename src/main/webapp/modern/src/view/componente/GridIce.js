@@ -3,8 +3,17 @@ Ext.define('Ice.view.componente.GridIce', {
     xtype: 'gridice',
 
 	requires: [
-		'Ext.Toolbar'
+		'Ext.Toolbar',
+		'Ext.grid.cell.Widget'
 	],
+
+	// config ice
+	height: Ice.constantes.componente.grid.altura.modern,
+	scrollable: {
+		x: true,
+		y: true
+	},
+	userCls: ['ice-container', 'ice-container-modern', 'ice-panel', 'ice-panel-modern', 'ice-grid', 'ice-grid-modern'],
     
     constructor: function (config) {
 		Ice.log('Ice.view.componente.GridIce.constructor config:', config);

@@ -1,11 +1,34 @@
-var Ice = Object.assign(Ice || {}, {
+// var Ice = Object.assign(Ice || {}, { // (Object.assign da error en explorer)
+var Ice = (
+        // funcion anonima para mezclar (reemplaza a Object.assign)
+        function () {
+            var resObj = {};
+            for(var i = 0; i < arguments.length; i++) {
+                var obj = arguments[i],
+                    keys = Object.keys(obj);
+                for (var j = 0; j < keys.length; j++) {
+                    resObj[keys[j]] = obj[keys[j]];
+                }
+            }
+            return resObj;
+        }
+    )(Ice || {}, {
 
     logActivo: true,
 
     constantes: {
         componente: {
             form: {
-                altura: 400
+                altura: {
+                    classic: 400,
+                    modern: 400
+                }
+            },
+            grid: {
+                altura: {
+                    classic: 400,
+                    modern: 300
+                }
             }
         }
     },
@@ -1673,5 +1696,24 @@ var Ice = Object.assign(Ice || {}, {
      */
     index: function () {
         Ice.query('#mainView').getController().redirectTo('mesacontrol.action');
+    },
+
+    utils: {
+        /**
+         * Funcion que recibe n objetos y te regresa uno solo mezclado (Object.assign da error en explorer)
+         * (se usa de manera anonima al inicio de este archivo)
+         * https://stackoverflow.com/questions/30498318/object-assign-equivalent-function-in-javascript
+         */
+        mergeObjects: function () {
+            var resObj = {};
+            for(var i = 0; i < arguments.length; i++) {
+                var obj = arguments[i],
+                    keys = Object.keys(obj);
+                for (var j = 0; j < keys.length; j++) {
+                    resObj[keys[j]] = obj[keys[j]];
+                }
+            }
+            return resObj;
+        }
     }
 });

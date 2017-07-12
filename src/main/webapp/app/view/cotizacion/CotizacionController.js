@@ -68,21 +68,22 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                             cdtipsit: view.getCdtipsit()
                         });
                         
-                        if (view.getNuevaCotizacion() === true && index === 0 && bloqueExistente.xtype === 'bloquedatosgenerales') {
+                        if (view.getNuevaCotizacion() === true && index === 0 &&
+                            bloqueExistente.xtype === 'datosiniciales') {
                             bloqueExistente.on({
-                                llaveGenerada: function (bloqueDatosGen, cdunieco, cdramo, estado, nmpoliza, nmsuplem, status) {
-                                    Ice.log('Ice.view.cotizacion.CotizacionController bloquedatosgenerales.llaveGenerada args:', arguments);
+                                llaveGenerada: function (bloqueDatosIni, cdunieco, cdramo, estado, nmpoliza, nmsuplem, status) {
+                                    Ice.log('Ice.view.cotizacion.CotizacionController datosiniciales.llaveGenerada args:', arguments);
                                     if (!cdunieco || !cdramo || !estado || !nmpoliza || Ext.isEmpty(nmsuplem)) {
                                         throw 'No se pudo recuperar la llave de datos generales';
                                     }
-                                    
+
                                     view.setCdunieco(cdunieco);
                                     view.setCdramo(cdramo);
                                     view.setEstado(estado);
                                     view.setNmpoliza(nmpoliza);
                                     view.setNmsuplem(nmsuplem);
                                     view.setStatus(status);
-                                    Ice.log('Ice.view.cotizacion.CotizacionController bloquedatosgenerales.llaveGenerada viewCotizacion:', view);
+                                    Ice.log('Ice.view.cotizacion.CotizacionController datosiniciales.llaveGenerada viewCotizacion:', view);
                                 }
                             });
                         }

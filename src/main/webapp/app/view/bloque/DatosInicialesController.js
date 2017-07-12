@@ -37,8 +37,8 @@ Ext.define('Ext.view.bloque.DatosInicialesController', {
             } else {
                 Ice.logWarn('No existe formulario de datos auxiliares para datos iniciales');
             }
-
-            me.fireEvent('llaveGenerada', formDatosGenerales, cdunieco, cdramo, estado, nmpoliza, nmsuplem, status);
+            
+            view.fireEvent('llaveGenerada', formDatosGenerales, cdunieco, cdramo, estado, nmpoliza, nmsuplem, status);
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -51,8 +51,8 @@ Ext.define('Ext.view.bloque.DatosInicialesController', {
             refs = me.getReferences(),
             paso = 'Cargando datos iniciales';
         try {
-            refs.formdatosgenerales.cargar();
-            refs.formdatosauxiliares.cargar();
+            refs.formdatosgenerales.getController().cargar();
+            refs.formdatosauxiliares.getController().cargar();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }

@@ -4,7 +4,7 @@ Ext.define('Ice.view.componente.PanelIce', {
     
     // config ext
     layout: 'auto',
-    cls: ['ice-panel', 'ice-panel-classic'],
+    cls: ['ice-container', 'ice-container-classic', 'ice-panel', 'ice-panel-classic'],
     defaults: {
         cls: ['ice-panel-item', 'ice-panel-item-classic']
     }

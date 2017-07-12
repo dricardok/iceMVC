@@ -4,8 +4,9 @@ Ext.define('Ice.view.componente.FormIce', {
     
     // config ext
     bodyPadding: '20 0 0 20',
+    maxHeight: Ice.constantes.componente.form.altura.classic,
     scrollable: true,
-    cls: ['ice-form', 'ice-form-classic'],
+    cls: ['ice-container', 'ice-container-classic', 'ice-panel', 'ice-panel-classic', 'ice-form', 'ice-form-classic'],
     defaults: {
         cls: ['ice-form-item', 'ice-form-item-classic'],
         style: 'margin: 0px 20px 20px 0px;'

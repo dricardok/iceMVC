@@ -14,7 +14,7 @@ Ext.define('Ice.view.componente.FormDosColumnasIce', {
             config.items = config.items || [];
             for (var i = 0; i < config.items.length; i++) {
                 config.items[i].style = 'float: left; margin: 0px 20px 20px 0px; ' + (config.items[i].style || '');
-                config.items[i].userCls = ['big-50', 'small-100', 'ice-form-item', 'ice-form-item-modern']
+                config.items[i].userCls = ['big-50', 'small-100']
                     .concat(config.items[i].userCls || []);
             }
         } catch (e) {

@@ -71,4 +71,21 @@ public class DatosAuxiliaresManagerImpl implements DatosAuxiliaresManager {
             Utils.generaExcepcion(ex, paso);
         }
     }
+    
+    @Override
+    public Map<String, String> cargarDatosAuxiliares (String cdunieco, String cdramo, String estado, String nmpoliza, String cdbloque,
+            String nmsituac, String cdgarant, String nmsuplem, String status) throws Exception {
+        Map<String, String> tvaloaux = null;
+        String paso = "Recuperando valores auxiliares";
+        try {
+            List<Map<String, String>> auxActuales = emisionDAO.obtenerTvaloaux(cdunieco, cdramo, estado, nmpoliza, cdbloque,
+                nmsituac, cdgarant, nmsuplem, status);
+            if (auxActuales != null && auxActuales.size() > 0) {
+                tvaloaux = auxActuales.get(0);
+            }
+        } catch (Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }
+        return tvaloaux;
+    }
 }

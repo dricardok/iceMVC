@@ -6,6 +6,7 @@ Ext.define('Ice.view.componente.PanelPaddingIce', {
     bodyPadding: '20 0 0 20',
 
     constructor: function (config) {
+        Ice.log('Ice.view.componente.PanelPaddingIce.constructor config:', config);
         var me = this,
             paso = 'Construyendo panel';
         try {

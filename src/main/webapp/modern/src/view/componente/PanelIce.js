@@ -3,8 +3,8 @@ Ext.define('Ice.view.componente.PanelIce', {
     xtype: 'panelice',
     
     // config ext
-    layout: 'default',
-    userCls: ['ice-panel', 'ice-panel-modern'],
+    layout: 'vbox',
+    userCls: ['ice-container', 'ice-container-modern', 'ice-panel', 'ice-panel-modern'],
 
     // config no ext
     config: {
@@ -16,12 +16,12 @@ Ext.define('Ice.view.componente.PanelIce', {
         var me = this,
             paso = 'Construyendo panel';
         try {
-            me.callParent();
+            me.callParent(arguments);
 
             // userCls
             var items = me.getItems().items;
             for (var i = 0; i < items.length; i++) {
-                var userCls = items[i].userCls;
+                var userCls = items[i].getUserCls();
                 if (typeof userCls === 'string') {
                     userCls = [userCls];
                 }

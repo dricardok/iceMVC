@@ -68,6 +68,45 @@ private static final Logger logger = LoggerFactory.getLogger(DatosGeneralesActio
         }
         return SUCCESS;
     }
+    
+    @Action(
+            value = "datosAuxiliares/cargarDatosAuxiliares", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String cargarDatosAuxiliares () {
+        logger.debug(Utils.log("###### cargarDatosAuxiliares params = ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay par\u00e1metros para cargar datos auxiliares");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   cdbloque = params.get("cdbloque"),
+                   nmsituac = params.get("nmsituac"),
+                   cdgarant = params.get("cdgarant"),
+                   nmsuplem = params.get("nmsuplem"),
+                   status   = params.get("status");
+                   
+            Utils.validate(cdunieco , "Falta cdunieco",
+                           cdramo   , "Falta cdramo",
+                           estado   , "Falta estado",
+                           nmpoliza , "Falta nmpoliza",
+                           cdbloque , "Falta cdbloque",
+                           nmsituac , "Falta nmsituac",
+                           cdgarant , "Falta cdgarant",
+                           nmsuplem , "Falta nmsuplem",
+                           status   , "Falta status");
+            params = datosAuxiliaresManager.cargarDatosAuxiliares(cdunieco, cdramo, estado, nmpoliza, cdbloque, nmsituac, cdgarant,
+                    nmsuplem, status);
+            success = true;
+        } catch (Exception ex) {
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
 
     public boolean isSuccess() {
         return success;
