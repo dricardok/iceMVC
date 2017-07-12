@@ -103,25 +103,4 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
         }
     }
 
-    @Override
-    public Map<String, String> obtenerDocumento() throws Exception {
-        Map<String, String> params = new LinkedHashMap<String, String>();
-        List<Map<String, String>> lista = new ArrayList<Map<String, String>>();
-        return lista.get(0);
-    }
-
-    protected class ObtenerDocumento extends StoredProcedure {
-        protected ObtenerDocumento(DataSource dataSource) {
-            super(dataSource, "PACK_CONFIG_SCREEN.P_GET");
-            declareParameter(new SqlParameter("pv_pantalla_i", Types.VARCHAR));
-            String[] cols = new String[] { 
-                    "pantalla", 
-                    "seccion"
-            };
-            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
-            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
-            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
-            compile();
-        }
-    }
 }

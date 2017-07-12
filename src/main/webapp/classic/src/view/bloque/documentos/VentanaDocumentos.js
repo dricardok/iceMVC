@@ -2,14 +2,14 @@
  * Created by DEORTIZT on 03/07/2017.
  */
 Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {   
-        extend: 'Ice.view.componente.VentanaPanel',
+        extend: 'Ice.view.componente.VentanaIce',
         xtype: 'ventanadocumentos',
         
         controller: 'ventanadocumentos',
         width: 650,
         minHeight: 350,
         collapsible: true,
-        titleCollapse: true,        
+        titleCollapse: true,
         config: {
             cdunieco: null,
             cdramo: null,

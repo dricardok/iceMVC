@@ -44,28 +44,26 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
             }
             Ice.log('data', data);
             if(data){
-                Ice.log('Url', data.url);
-                var numRand = Math.floor((Math.random()*100000)+1);
-                Ice.log('numRand', numRand);
-                var windowVerDocu = Ext.create('Ice.view.componente.Ventana',
-                    {
-                        title: data.dsdocume,
-                        width: 700,
-                        height: 500,
-                        collapsible: true,
-                        titleCollapse: true,
-                        html: '<iframe innerframe="'+numRand+'" frameborder="0" style="overflow: hidden; height: 100%;width: 100%; position: absolute;" height="100%" width="100%" '+
-                            'src='+data.url+'>'+
-                            '</iframe>',
-//                        listeners: {
-//                            resize : function(win,width,height,opt){
-//                                Ice.log('width,height',width,height);
-//                                Ice.query('[innerframe="'+numRand+'"]').attr({'width':width-20,'height':height-60});
-//                            }
-//                        }
-                    }
-                );
-                windowVerDocu.mostrar();
+                if(Ext.manifest.toolkit === 'classic'){
+                    Ext.create('Ext.form.Panel').submit(
+                            {
+                                url: Ice.url.bloque.documentos.verArchivo,
+                                standardSubmit: true,
+                                target: '_blank',
+                                params:{
+                                    'params.url': data.url,
+                                    'params.cddocume': data.cddocume
+                                }
+                            }
+                    );
+                } else {
+                    window.open(Ice.url.bloque.documentos.verArchivo+'?'+
+                        'params.url='+encodeURIComponent(data.url)+
+                        '&params.filename='+data.cddocume,
+                        '_blank',
+                        'width=800, height=600'
+                    );
+                }
             }
         } catch(e){
             Ice.generaExcepcion(e, paso);
@@ -91,17 +89,32 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
             }
             Ice.log('Data',data);
             if(data){
-                Ext.create('Ext.form.Panel').submit(
-                    {
-                        url: Ice.url.bloque.documentos.descargarArchivo,
-                        standardSubmit: true,
-                        target: '_blank',
-                        params:{
-                            'params.url': data.url,
-                            'params.cddocume': data.cddocume
-                        }
-                    }
-                );
+                if(Ext.manifest.toolkit === 'classic'){
+                    Ext.create('Ext.form.Panel').submit(
+                            {
+                                url: Ice.url.bloque.documentos.descargarArchivo,
+                                standardSubmit: true,
+                                target: '_blank',
+                                params:{
+                                    'params.url': data.url,
+                                    'params.cddocume': data.cddocume
+                                }
+                            }
+                    );                    
+                } else {
+                    var panel = Ext.create('Ext.form.Panel').submit(
+                            {
+                                url: Ice.url.bloque.documentos.descargarArchivo,
+                                standardSubmit: true,
+                                target: '_blank',
+                                params:{
+                                    'params.url': data.url,
+                                    'params.cddocume': data.cddocume
+                                }
+                            }
+                    );
+                    Ice.push(panel);
+                }
             }
         } catch(e){
             Ice.generaExcepcion(e, paso);
@@ -163,6 +176,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
         try{
             if(refs.dsdocume){
                 if(refs.dsdocume.getValue()){
+                    Ice.log('extraparams',refs.listadocumentos.getStore().getProxy());
                     refs.listadocumentos.getStore().getProxy().extraParams['params.dsdocume'] = null;
                     refs.listadocumentos.getStore().load();
                 }
