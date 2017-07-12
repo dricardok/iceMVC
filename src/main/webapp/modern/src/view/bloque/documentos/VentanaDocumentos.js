@@ -92,6 +92,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                         },{
                             xtype: 'button',
                             iconCls: 'x-fa fa-refresh',
+                            handler: 'onLimpiarFiltro'
                         }
                     ]
                 });

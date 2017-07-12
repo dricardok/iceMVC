@@ -3,7 +3,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
     xtype: 'personapolizanavigation',
     
     controller: 'personapolizanavigation',
-    layout: 'card',
+    layout: 'vbox',
     title: 'Personas poliza',
     bodyStyle: 'padding:15px',
     scrollable: true,

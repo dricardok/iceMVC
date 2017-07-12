@@ -1420,21 +1420,21 @@ var Ice = Object.assign(Ice || {}, {
             }
             
             
-            // width / flex
+            // width // flex
             if(!config.flex){
                 if(!config.width){
                     column.flex = 1;
                     column.minWidth = 80;
                 } else {
-                    column.width = config.width;
+                    column.width = Number(config.width);
                 }
             } else {
                 if(!config.width){
-                    column.flex = config.flex;
+                    column.flex = Number(config.flex);
                     column.minWidth = 80;
                 } else {
-                    column.minWidth = config.width;
-                    column.flex = config.flex;
+                    column.minWidth = Number(config.width);
+                    column.flex =Number( config.flex);
                 }
             }
             

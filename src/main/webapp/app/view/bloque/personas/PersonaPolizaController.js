@@ -62,6 +62,10 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
     onNuevaPersona: function(panel){
       this.nuevaPersona(panel);
     },
+
+    onCancelar: function(){
+        this.cancelar();
+    },
     
     guardar: function(btn){
         Ice.log('Ice.view.bloque.personas.PersonasPolizaController.agregar btn ',btn);
@@ -161,5 +165,18 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
             Ice.generaExcepcion(e, paso);
         }
         Ice.log('Ice.view.bloque.personas.PersonasPolizaController.nuevaPersona');
+    },
+
+    cancelar: function(){
+        Ice.log('Ice.view.bloque.personas.PersonasPolizaController.cancelar');
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            paso = 'Agregando nueva persona';
+        try{
+            Ice.pop();
+        } catch(e) {
+            Ice.generaExcepcion(e, paso);
+        }
     }
 });

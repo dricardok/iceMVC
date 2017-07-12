@@ -64,63 +64,6 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                         'width=800, height=600'
                     );
                 }
-//                Ice.log('Url', data.url);
-//                var numRand = Math.floor((Math.random()*100000)+1);
-//                Ice.log('numRand', numRand);
-//                if(Ext.manifest.toolkit === 'classic'){
-//                    var windowVerDocu = Ext.create('Ice.view.componente.Ventana',
-//                            {
-//                                title: data.dsdocume,
-//                                width: 700,
-//                                height: 500,
-//                                collapsible: true,
-//                                titleCollapse: true,
-//                                html: '<iframe innerframe="'+numRand+'" frameborder="0" style="overflow: hidden; height: 100%;width: 100%; position: absolute;" height="100%" width="100%" '+
-//                                    'src='+data.url+'>'+
-//                                    '</iframe>',
-////                                listeners: {
-////                                    resize : function(win,width,height,opt){
-////                                        Ice.log('width,height',width,height);
-////                                        Ice.query('[innerframe="'+numRand+'"]').attr({'width':width-20,'height':height-60});
-////                                    }
-////                                }
-//                            }
-//                        );
-//                        windowVerDocu.mostrar();
-//                } else {
-//                    var panelVerDocu = Ext.create('Ext.Panel',
-//                            {
-//                                title: data.dsdocume,
-//                                width: 700,
-//                                height: 500,
-//                                html: '<iframe innerframe="'+numRand+'" frameborder="0" style="overflow: hidden; height: 100%;width: 100%; position: absolute;" height="100%" width="100%" '+
-//                                    'src='+data.url+'>'+
-//                                    '</iframe>',
-//                                items: [
-//                                    {
-//                                        xtype: 'toolbar',
-//                                        docked: 'top',
-//                                        items: [
-//                                            '->',{
-//                                                text: 'Cerrar',
-//                                                xtype: 'button',
-//                                                handler: function(){
-//                                                    Ice.pop();
-//                                                }
-//                                            }
-//                                        ]
-//                                    }
-//                                ]
-////                                listeners: {
-////                                    resize : function(win,width,height,opt){
-////                                        Ice.log('width,height',width,height);
-////                                        Ice.query('[innerframe="'+numRand+'"]').attr({'width':width-20,'height':height-60});
-////                                    }
-////                                }
-//                            }
-//                        );
-//                        Ice.push(panelVerDocu);
-//                }
             }
         } catch(e){
             Ice.generaExcepcion(e, paso);
@@ -233,6 +176,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
         try{
             if(refs.dsdocume){
                 if(refs.dsdocume.getValue()){
+                    Ice.log('extraparams',refs.listadocumentos.getStore().getProxy());
                     refs.listadocumentos.getStore().getProxy().extraParams['params.dsdocume'] = null;
                     refs.listadocumentos.getStore().load();
                 }

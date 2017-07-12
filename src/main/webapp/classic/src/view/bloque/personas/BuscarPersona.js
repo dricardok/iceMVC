@@ -15,7 +15,6 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
         cdrol: null,
         mostrarRol: false
     },
-    bodyPadding: '10px 0px 0px 10px',
     initComponent: function () {
         Ice.log('Ice.view.bloque.personas.BuscarPersona.initComponent [this, args]:', this, arguments);
         var me = this,
@@ -51,83 +50,62 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                          {
                            xtype: 'form',
                            reference: 'formBusquedaPersonas',
+                           height: 150,
+                           bodyPadding: '10px 0px 0px 10px',
+	                       defaults: {
+	                           margin: '0px 10px 10px 0px',
+	                           cls: 'big-50 small-100'
+                           },
+                           layout: 'responsivecolumn',
                            items: comps.BUSQUEDA_PERSONA.FORMULARIO.items,
                            modelo: modelName,
-                           width: 700,
-                           layout: 'responsivecolumn',
-                           bodyPadding: '10px 0px 0px 10px',
-                           defaults: {
-                               margin: '0px 10px 10px 0px',
-                               cls: 'big-50 small-100'
-                           },
                            buttons: [
                                {
                                    text: 'Buscar',
                                    handler: 'onBuscar'
                                }
                            ]
-                       },{
-                           xtype: 'gridpanel',
-                           reference: 'gridPersonas',
-                           scrollable: true,
-                           height: 300,
-                           columns: compsGrid.BUSQUEDA_PERSONA.GRID.columns,
-                           store: {
-                               autoLoad: false,
-                               fields: compsGrid.BUSQUEDA_PERSONA.GRID.fields,
-                               proxy: {
-                                   type: 'ajax',
-                                   timeout: 45000,
-                                   url: Ice.url.bloque.personas.obtenerPersonaCriterio,
-                                   reader: {
-                                       type: 'json',
-                                       rootProperty: 'listas',
-                                       successProperty: 'success',
-                                       messageProperty: 'message'
-                                   }
-                               }                               
-                           },
-                           fbar: [
-                               {
-                                   xtype: 'button',
-                                   reference: 'btnGuardar',
-                                   text: 'Guardar',
-                                   handler: 'onGuardar'
-                               },{
-                                   xtype: 'button',
-                                   reference: 'btnNuevo',
-                                   text: 'Nuevo',
-                                   handler: 'onNuevo'
-                               },{
-                                   xtype: 'button',
-                                   text: 'Cerrar',
-                                   handler: function(){
-                                       this.up('window').close();
-                                   }
-                               }
-                           ]
-                       }
-//                       ,{
-//                           buttons: [
-//                               {
-//                                   xtype: 'button',
-//                                   reference: 'btnGuardar',
-//                                   text: 'Guardar',
-//                                   handler: 'onGuardar'
-//                               },{
-//                                   xtype: 'button',
-//                                   reference: 'btnNuevo',
-//                                   text: 'Nuevo',
-//                                   handler: 'onNuevo'
-//                               },{
-//                                   xtype: 'button',
-//                                   text: 'Cerrar',
-//                                   handler: function(){
-//                                       this.up('window').close();
-//                                   }
-//                               }
-//                           ]
-//                       }
+                         },{
+                             xtype: 'gridpanel',
+                             reference: 'gridPersonas',
+                             scrollable: true,
+                             height: 300,
+                             columns: compsGrid.BUSQUEDA_PERSONA.GRID.columns,
+                             store: {
+                                 autoLoad: false,
+                                 fields: compsGrid.BUSQUEDA_PERSONA.GRID.fields,
+                                 proxy: {
+                                     type: 'ajax',
+                                     timeout: 45000,
+                                     url: Ice.url.bloque.personas.obtenerPersonaCriterio,
+                                     reader: {
+                                         type: 'json',
+                                         rootProperty: 'listas',
+                                         successProperty: 'success',
+                                         messageProperty: 'message'
+                                     }
+                                 }                               
+                             },
+                             fbar: [
+                                 {
+                                     xtype: 'button',
+                                     reference: 'btnGuardar',
+                                     text: 'Guardar',
+                                     handler: 'onGuardar'
+                                 },{
+                                     xtype: 'button',
+                                     reference: 'btnNuevo',
+                                     text: 'Nuevo',
+                                     handler: 'onNuevo'
+                                 },{
+                                     xtype: 'button',
+                                     text: 'Cerrar',
+                                     handler: function(){
+                                         Ice.pop();
+                                     }
+                                 }
+                             ]
+                         }
                      ]
                  }
              });
