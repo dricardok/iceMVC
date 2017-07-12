@@ -1,3 +1,7 @@
+/*
+ * Objeto principal en la aplicacion ice
+ * 
+ */
 var Ice = Object.assign(Ice || {}, {
 
     logActivo: true,
@@ -137,6 +141,12 @@ var Ice = Object.assign(Ice || {}, {
      sesion:{
     	 cdusuari:null,
     	 cdsisrol:null
+     },
+     
+     constantes:{
+    	 roles:{
+    		 AGENTE:'AGENTE'
+    	 }
      },
 
     
