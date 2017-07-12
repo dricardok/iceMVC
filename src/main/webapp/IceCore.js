@@ -1194,18 +1194,22 @@ var Ice = (
             }
             
             
-            // width / flex       
-            if(config.width){
-                if(Number(config.width) > 10){
+            // width // flex
+            if(!config.flex){
+                if(!config.width){
+                    column.flex = 1;
+                    column.minWidth = 80;
+                } else {
                     column.width = Number(config.width);
                 }
-                else{
-                    column.flex = Number(config.width);
-                    column.minWidth = 50;
-                }
             } else {
-                column.flex = 1;
-                column.minWidth = 50;
+                if(!config.width){
+                    column.flex = Number(config.flex);
+                    column.minWidth = 80;
+                } else {
+                    column.minWidth = Number(config.width);
+                    column.flex =Number( config.flex);
+                }
             }
             
             if(config.swoculto === 'S'){
