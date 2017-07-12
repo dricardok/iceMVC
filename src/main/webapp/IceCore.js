@@ -1,3 +1,8 @@
+/*
+ * Objeto principal en la aplicacion ice
+ * Delia prueba
+ */
+
 // var Ice = Object.assign(Ice || {}, { // (Object.assign da error en explorer)
 var Ice = (
         // funcion anonima para mezclar (reemplaza a Object.assign)
@@ -13,6 +18,7 @@ var Ice = (
             return resObj;
         }
     )(Ice || {}, {
+
 
     logActivo: true,
 
@@ -30,7 +36,11 @@ var Ice = (
                     modern: 300
                 }
             }
-        }
+        },
+    
+	    roles:{
+			 AGENTE:'AGENTE'
+		 }
     },
     
     /*
@@ -153,16 +163,18 @@ var Ice = (
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
                 guardar: 'emision/datosAuxiliares/guardarDatosAuxiliares.action'
             }
-        }
-    },
 
-    /*
-     * Datos del usuario en sesion
-     */
-    sesion: {
-        cdusuari: null,
-        cdsisrol: null
-    },
+         }
+     },
+     /*
+      * Datos del usuario en sesion
+      */
+     sesion:{
+    	 cdusuari:null,
+    	 cdsisrol:null
+     },
+     
+
 
     /*
      * Invoca console.log si Ice.logActivo === true
@@ -395,6 +407,7 @@ var Ice = (
      * }
      */
     mensaje: function (params) {
+    	params.ui='ice-window';
         var paso = 'Mostrando mensaje';
         try {
             var titulo = (params && params.titulo) || 'Aviso',
@@ -405,7 +418,8 @@ var Ice = (
             if (Ext.manifest.toolkit === 'classic') {
                 Ext.create('Ext.window.Window', {
                     width: 300,
-                    ui:	ui,
+//                    ui:	'ice-window',
+                    frame:true,
                     height: 150,
                     closeAction: 'destroy',
                     title: titulo,
@@ -413,7 +427,7 @@ var Ice = (
                     modal: true,
                     animateTarget: Ext.getBody(),
                     layout: 'fit',
-                    bodyStyle: 'border:none; background-color: transparent; padding: 10px;',
+                    bodyStyle: 'border:none; padding: 10px;',
                     buttonAlign: 'center',
 
                     items: [{

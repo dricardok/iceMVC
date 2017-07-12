@@ -291,7 +291,7 @@ $window-body-font-size: dynamic($font-wdw);
  * @var {string}
  * The default font-weight of the Window body
  */
-$window-body-font-weight: dynamic($panel-body-font-weight);
+$window-body-font-weight: dynamic($bold-400);
 
 /**
  * @var {string}
