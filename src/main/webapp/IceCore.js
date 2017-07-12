@@ -1,3 +1,8 @@
+/*
+ * Objeto principal en la aplicacion ice
+ * 
+ */
+
 // var Ice = Object.assign(Ice || {}, { // (Object.assign da error en explorer)
 var Ice = (
         // funcion anonima para mezclar (reemplaza a Object.assign)
@@ -13,6 +18,7 @@ var Ice = (
             return resObj;
         }
     )(Ice || {}, {
+
 
     logActivo: true,
 
@@ -153,16 +159,23 @@ var Ice = (
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
                 guardar: 'emision/datosAuxiliares/guardarDatosAuxiliares.action'
             }
-        }
-    },
 
-    /*
-     * Datos del usuario en sesion
-     */
-    sesion: {
-        cdusuari: null,
-        cdsisrol: null
-    },
+         }
+     },
+     /*
+      * Datos del usuario en sesion
+      */
+     sesion:{
+    	 cdusuari:null,
+    	 cdsisrol:null
+     },
+     
+     constantes:{
+    	 roles:{
+    		 AGENTE:'AGENTE'
+    	 }
+     },
+
 
     /*
      * Invoca console.log si Ice.logActivo === true
