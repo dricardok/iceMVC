@@ -36,7 +36,11 @@ var Ice = (
                     modern: 300
                 }
             }
-        }
+        },
+    
+	    roles:{
+			 AGENTE:'AGENTE'
+		 }
     },
     
     /*
@@ -170,11 +174,6 @@ var Ice = (
     	 cdsisrol:null
      },
      
-     constantes:{
-    	 roles:{
-    		 AGENTE:'AGENTE'
-    	 }
-     },
 
 
     /*
