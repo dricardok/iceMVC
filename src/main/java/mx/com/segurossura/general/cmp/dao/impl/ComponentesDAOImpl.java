@@ -69,7 +69,7 @@ public class ComponentesDAOImpl extends HelperJdbcDao implements ComponentesDAO 
                     "auxkey", "orden", "label", "tipocampo", "catalogo", "minlength", "maxlength", "minvalue",
                     "maxvalue", "swobliga", "swcolumn", "renderer", "name_cdatribu", "swlectura", "queryparam", "value",
                     "swoculto", "param1", "value1", "param2", "value2", "param3", "value3", "param4", "value4",
-                    "param5", "value5", "swfinal", "icono", "handler", "swnoload", "width", "padres", "referencia" };
+                    "param5", "value5", "swfinal", "icono", "handler", "swnoload", "width", "padres", "referencia","flex"};
             declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));

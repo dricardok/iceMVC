@@ -5,36 +5,27 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.cotizacion',
     
-    init: function (view) {
-        Ice.log('Ice.view.cotizacion.CotizacionController');
+    init: function () {
+        this.callParent(arguments);
+
+        Ice.log('Ice.view.cotizacion.CotizacionController.init');
         var me = this,
             view = me.getView(),
             paso = 'Iniciando controlador de cotizaci\u00f3n';
-        try {
-            me.callParent(arguments);
-            
-            Ext.defer(function () {
-                var paso2;
-                try {
-                    if (view.getCdunieco() && view.getCdramo() && view.getEstado() && view.getNmpoliza()
-                        && !Ext.isEmpty(view.getNmsuplem())) {
-                        me.cargar();
-                    } else {
-                        me.irBloqueSiguiente();
-                    }
-                } catch (e) {
-                    Ice.manejaExcepcion(e, paso2);
+        Ext.defer(function () {
+            try {
+                if (view.getCdunieco() && view.getCdramo() && view.getEstado() && view.getNmpoliza()
+                    && !Ext.isEmpty(view.getNmsuplem())) {
+                    me.cargar();
+                } else {
+                    me.irBloqueSiguiente();
                 }
-            }, 200);
-        } catch (e) {
-            Ice.generaExcepcion(e, paso);
-        }
+            } catch (e) {
+                Ice.manejaExcepcion(e, paso);
+            }
+        }, 600);
     },
-    
-    
-    /**
-     *
-     */
+
     irBloqueSiguiente: function () {
         Ice.log('Ice.view.cotizacion.CotizacionController.irBloqueSiguiente');
         var me = this,
@@ -50,67 +41,77 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             if (!bloque) {
                 throw 'No existe el bloque';
             }
-            
-            
-            if (!bloqueExistente) { // no existe, se crea
-                bloqueExistente = Ext.create({
-                    xtype: bloque.name,
-                    title: bloque.label,
-                    reference: 'ref' + index,
-                    indice: index,
-                    
-                    //scrollable: true,
-                    //height: view.getHeight() - (Ice.constantes.toolbarHeight[Ext.manifest.toolkit] * 2), // se restan las barras
-                    
-                    cdunieco: view.getCdunieco(),
-                    cdramo: view.getCdramo(),
-                    estado: view.getEstado(),
-                    nmpoliza: view.getNmpoliza(),
-                    
-                    nmsuplem: view.getNmsuplem(),
-                    status: view.getStatus(),
-                    
-                    modulo: view.getModulo(),
-                    flujo: view.getFlujo(),
-                    cdtipsit: view.getCdtipsit()
-                });
-                
-                if (view.getNuevaCotizacion() === true && index === 0 && bloqueExistente.xtype === 'bloquedatosgenerales') {
-                    bloqueExistente.on({
-                        llaveGenerada: function (bloqueDatosGen, cdunieco, cdramo, estado, nmpoliza, nmsuplem, status) {
-                            Ice.log('Ice.view.cotizacion.CotizacionController bloquedatosgenerales.llaveGenerada args:', arguments);
-                            if (!cdunieco || !cdramo || !estado || !nmpoliza || Ext.isEmpty(nmsuplem)) {
-                                throw 'No se pudo recuperar la llave de datos generales';
-                            }
+
+            var agregarYEnfocarBloque = function () {
+                var paso2 = 'Construyendo siguiente bloque';
+                try {
+                    if (!bloqueExistente) { // no existe, se crea
+                        bloqueExistente = Ext.create({
+                            xtype: bloque.name,
+                            title: bloque.label,
+                            reference: 'ref' + index,
+                            indice: index,
                             
-                            view.setCdunieco(cdunieco);
-                            view.setCdramo(cdramo);
-                            view.setEstado(estado);
-                            view.setNmpoliza(nmpoliza);
-                            view.setNmsuplem(nmsuplem);
-                            view.setStatus(status);
-                            Ice.log('Ice.view.cotizacion.CotizacionController bloquedatosgenerales.llaveGenerada viewCotizacion:', view);
+                            //scrollable: true,
+                            //height: view.getHeight() - (Ice.constantes.toolbarHeight[Ext.manifest.toolkit] * 2), // se restan las barras
+                            
+                            cdunieco: view.getCdunieco(),
+                            cdramo: view.getCdramo(),
+                            estado: view.getEstado(),
+                            nmpoliza: view.getNmpoliza(),
+                            
+                            nmsuplem: view.getNmsuplem(),
+                            status: view.getStatus(),
+                            
+                            modulo: view.getModulo(),
+                            flujo: view.getFlujo(),
+                            cdtipsit: view.getCdtipsit()
+                        });
+                        
+                        if (view.getNuevaCotizacion() === true && index === 0 &&
+                            bloqueExistente.xtype === 'datosiniciales') {
+                            bloqueExistente.on({
+                                llaveGenerada: function (bloqueDatosIni, cdunieco, cdramo, estado, nmpoliza, nmsuplem, status) {
+                                    Ice.log('Ice.view.cotizacion.CotizacionController datosiniciales.llaveGenerada args:', arguments);
+                                    if (!cdunieco || !cdramo || !estado || !nmpoliza || Ext.isEmpty(nmsuplem)) {
+                                        throw 'No se pudo recuperar la llave de datos generales';
+                                    }
+
+                                    view.setCdunieco(cdunieco);
+                                    view.setCdramo(cdramo);
+                                    view.setEstado(estado);
+                                    view.setNmpoliza(nmpoliza);
+                                    view.setNmsuplem(nmsuplem);
+                                    view.setStatus(status);
+                                    Ice.log('Ice.view.cotizacion.CotizacionController datosiniciales.llaveGenerada viewCotizacion:', view);
+                                }
+                            });
                         }
-                    });
+                        
+                        tabpanel.add(bloqueExistente);
+                    }
+                    
+                    view.setGuardadoAutomaticoSuspendido(true); // para que no valide el guardado
+                    tabpanel.setActiveTab(bloqueExistente);
+                    view.setGuardadoAutomaticoSuspendido(false);
+                } catch (e) {
+                    Ice.manejaExcepcion(e, paso2);
                 }
-                
-                tabpanel.add(bloqueExistente);
-            }
-            
-            if (Ext.manifest.toolkit === 'classic') {
-                tabpanel.setActiveTab(bloqueExistente);
+            };
+
+            if (index > 0) { // si es el segundo bloque (1) o mayor, guardar primero
+                var bloqueActual = refs['ref' + (index - 1)];
+                bloqueActual.getController().guardar({
+                    success: agregarYEnfocarBloque
+                });
             } else {
-                tabpanel.setActiveItem(bloqueExistente);
+                agregarYEnfocarBloque();
             }
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
     },
     
-    
-    /**
-     *
-     */
     irBloqueAnterior: function () {
         Ice.log('Ice.view.cotizacion.CotizacionController.irBloqueAnterior');
         var me = this,
@@ -121,22 +122,24 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             var index = view.getBloqueActual() - 1,
                 bloque = view.getBloques()[index],
                 tabpanel = view.getReferences().tabpanel,
-                bloqueExistente = refs && refs['ref' + index];
+                bloqueExistente = refs && refs['ref' + index],
+                bloqueActual = refs['ref' + view.getBloqueActual()];
             
             if (!bloque || !bloqueExistente) {
                 throw 'No existe el bloque';
             }
-            
-            if (Ext.manifest.toolkit === 'classic') {
-                tabpanel.setActiveTab(bloqueExistente);
-            } else {
-                tabpanel.setActiveItem(bloqueExistente);
-            }
+
+            bloqueActual.getController().guardar({
+                success: function () {
+                    view.setGuardadoAutomaticoSuspendido(true); // para que no valide el guardado
+                    tabpanel.setActiveTab(bloqueExistente);
+                    view.setGuardadoAutomaticoSuspendido(false);
+                }
+            });
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
     },
-    
     
     onTabchangeEvent: function (tabpanel, newCard, oldCard) {
         Ice.log('Ice.view.cotizacion.CotizacionController.onTabchangeEvent args:', arguments);
@@ -149,7 +152,6 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 throw 'No se puede actualizar el indice';
             }
             view.setBloqueActual(newCard.indice);
-            
             
             paso = 'Actualizando botones';
             if (refs.anteriorbutton) {
@@ -168,14 +170,11 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     : 'hide']();
             }
             
-            
-            if (view.getGuardadoAutomaticoSuspendido() !== true && oldCard && oldCard.getController && oldCard.getController()
-                && oldCard.getController().guardar) {
+            if (view.getGuardadoAutomaticoSuspendido() !== true && oldCard) {
                 paso = 'Guardando datos';
                 var callbackSuccess = function () {
-                    var pasoCargar = "";
+                    var pasoCargar = 'Cargando atributos de bloque';
                     try{
-                        pasoCargar = "Cargando atributos de bloque";
                         newCard.getController().cargar();
                     } catch (e){
                         Ice.manejaExcepcion(e, pasoCargar);
@@ -185,13 +184,11 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 var callbackFailure = function () {
                     var paso2 = 'Regresando a paso anterior';
                     try {
-                        view.setGuardadoAutomaticoSuspendido(true);
-                        if (Ext.manifest.toolkit === 'classic') {
+                        Ext.defer(function () {
+                            view.setGuardadoAutomaticoSuspendido(true);
                             tabpanel.setActiveTab(oldCard);
-                        } else {
-                            tabpanel.setActiveItem(oldCard);
-                        }
-                        view.setGuardadoAutomaticoSuspendido(false);
+                            view.setGuardadoAutomaticoSuspendido(false);
+                        }, 600); // se da un tiempo de espera para que el tab de modern haga la animacion del original antes del regreso
                     } catch (e) {
                         Ice.manejaExcepcion(e, paso2);
                     }
@@ -202,7 +199,6 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     failure: callbackFailure
                 });
             }
-            
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -246,29 +242,20 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             }
             
             refs.tabpanel.add(comps);
-            
-            if (Ext.manifest.toolkit === 'classic') {
-                refs.tabpanel.setActiveTab(comps[0]);
-            } else {
-                refs.tabpanel.setActiveItem(comps[0]);
-            }
-            
+            refs.tabpanel.setActiveTab(comps[0]);
             me.mostrarPrimas();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
     },
     
-    
     onAnteriorclic: function () {
         this.irBloqueAnterior();
     },
     
-    
     onSiguienteClic: function () {
         this.irBloqueSiguiente();
     },
-    
     
     onCargarClic: function () {
         Ice.log('Ice.view.cotizacion.CotizacionController.onCargarClic');
@@ -292,7 +279,6 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             Ice.manejaExcepcion(e, paso);
         }
     },
-    
     
     onCotizarClic: function () {
         var me = this,
@@ -347,7 +333,6 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             Ice.manejaExcepcion(e, paso);
         }
     },
-    
     
     mostrarPrimas: function () {
         Ice.log('Ice.view.cotizacion.CotizacionController.mostrarPrimas');

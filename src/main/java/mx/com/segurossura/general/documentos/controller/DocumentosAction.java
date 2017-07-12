@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -22,6 +23,7 @@ import com.biosnettcs.portal.controller.PrincipalCoreAction;
 import mx.com.royalsun.alea.client.DocumentoAPI;
 import mx.com.royalsun.alea.commons.bean.DocumentoContext;
 import mx.com.segurossura.emision.controller.ImpresionAction;
+import mx.com.segurossura.general.documentos.model.Archivo;
 import mx.com.segurossura.general.documentos.model.TipoArchivo;
 import mx.com.segurossura.general.documentos.service.DocumentosManager;
 
@@ -102,7 +104,7 @@ public class DocumentosAction extends PrincipalCoreAction {
                             "contentType"       ,"${contentType}",
                             "inputName"         ,"fileInputStream",
                             "bufferSize"        ,"4096",
-                            "contentDisposition","attachment; filename=\"${filename}\""
+                            "contentDisposition","inline; filename=\"${filename}\""
                         }
                 )
         }
@@ -114,18 +116,25 @@ public class DocumentosAction extends PrincipalCoreAction {
                ,"\n###### params", params
                ));
         try{
-            String nombre = params.get("cddocume");
             Utils.validate(params, "No se recibieron parametros");
             String url = params.get("url");
             Utils.validate(url, "No se recibio la url");
+            String nombre = params.get("cddocume");
             contentType = TipoArchivo.PDF.getContentType();
-            filename = nombre;
-            fileInputStream = HttpUtil.obtenInputStream(url);
+            Archivo archivo = documentosManager.obtenerDocumento(url, contentType, nombre);
+            fileInputStream = archivo.getFileInputStream();
+            filename = archivo.getFilename();
             success = true;
         } catch(Exception ex){
             success = false;
             mensaje = Utils.manejaExcepcion(ex);
         }
+        logger.debug(StringUtils.join(
+                "\n###################"
+               ,"\n###### verArchivo ######"
+               ,"\n###### filename", filename
+               ,"\n###### contentType", contentType
+               ));
         return SUCCESS;
     }
     
@@ -140,7 +149,7 @@ public class DocumentosAction extends PrincipalCoreAction {
                             "contentType"       ,"${contentType}",
                             "inputName"         ,"fileInputStream",
                             "bufferSize"        ,"4096",
-                            "contentDisposition","inline; filename=\"${filename}\""
+                            "contentDisposition","attachment; filename=\"${filename}\""
                         }
                 )
         }
@@ -152,13 +161,14 @@ public class DocumentosAction extends PrincipalCoreAction {
                ,"\n###### params", params
                ));
         try{
-            String nombre = params.get("cddocume");
             Utils.validate(params, "No se recibieron parametros");
             String url = params.get("url");
             Utils.validate(url, "No se recibio la url");
+            String nombre = params.get("cddocume");
             contentType = TipoArchivo.PDF.getContentType();
-            filename = nombre;
-            fileInputStream = HttpUtil.obtenInputStream(url);
+            Archivo archivo = documentosManager.obtenerDocumento(url, contentType, nombre);
+            fileInputStream = archivo.getFileInputStream();
+            filename = archivo.getFilename();
             success = true;
         } catch(Exception ex){
             success = false;
@@ -200,7 +210,12 @@ public class DocumentosAction extends PrincipalCoreAction {
                ,"\n###### params", params
                ));
         try{
-            lista = documentosManager.obtenerDocumento();
+            String url = params.get("url");
+            String name = params.get("name");
+            contentType = TipoArchivo.PDF.getContentType();
+            Archivo archivo = documentosManager.obtenerDocumento(url, contentType, name);
+            fileInputStream = archivo.getFileInputStream();
+            filename = archivo.getFilename();
         } catch(Exception ex){
             Utils.manejaExcepcion(ex);
         }

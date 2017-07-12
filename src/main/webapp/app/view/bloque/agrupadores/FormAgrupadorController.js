@@ -53,7 +53,7 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupadorController', {
             
             var valores = view.getValues();
             
-            valores = Object.assign(valores, {
+            valores = Ice.utils.mergeObjects(valores, {
                 cdunieco: view.getCdunieco(),
                 cdramo: view.getCdramo(),
                 estado: view.getEstado(),

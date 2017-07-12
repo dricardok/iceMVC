@@ -304,7 +304,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 		view=me.getView();
 		try{
 			var datos={};
-			datos=Object.assign({},accion);
+			datos=Ice.utils.mergeObjects({},accion);
 			var form=Ice.query("#frmDomicilio")
 			if(!(accion && accion.accion=='D')) me.validarCampos(form);
 			Ext.ComponentQuery.query('[getName]',form).forEach(function(it){
