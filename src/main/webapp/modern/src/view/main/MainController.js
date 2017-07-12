@@ -119,7 +119,7 @@ Ext.define('Ice.view.main.MainController', {
                         ) || {};
                 Ice.log('Ice.view.main.MainController.setCurrentView nombreComp:', nombreComp, 'params:', params);
                 
-                var config = Object.assign({
+                var config = Ice.utils.mergeObjects({
                     xtype: nombreComp
                     //routeId: hashTag,  // for existingItem search later (jtezva: comentado)
                 }, params);

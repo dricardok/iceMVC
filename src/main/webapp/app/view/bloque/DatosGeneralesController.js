@@ -2,13 +2,8 @@
  * Created by jtezva on 5/22/2017.
  */
 Ext.define('Ice.view.bloque.DatosGeneralesController', {
-    extend: 'Ext.app.ViewController',
+    extend: 'Ice.app.controller.FormIceController',
     alias: 'controller.bloquedatosgenerales',
-    
-    constructor: function (config) {
-        Ice.log('Ice.view.bloque.DatosGeneralesController.constructor config:', config);
-        this.callParent(arguments);
-    },
     
     init: function (view) {
         Ice.log('Ice.view.bloque.DatosGeneralesController.init view:', view);
@@ -145,18 +140,18 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 return;
             }
             
-            if (view.procesandoValoresDefecto === true) {
+            if (view.getProcesandoValoresDefecto() === true) {
                 Ice.logWarn('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoFijos valores defecto ya en proceso');
                 return;
             }
             
-            var errores = me.obtenerErrores(),
+            var errores = me.obtenerErrores() || {},
                 viewValues = view.getValues(),
                 valores = {};
             
             for (var i = 0; i < view.getCamposDisparanValoresDefectoFijos().length; i++) {
                 var name = view.getCamposDisparanValoresDefectoFijos()[i];
-                if (refs[name] && errores[name] !== true) {
+                if (refs[name] && errores[name]) {
                     Ice.logWarn('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoFijos invalido <', name, ':', errores[name], '>');
                     return;
                 }
@@ -179,10 +174,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 params: valores,
                 success: function (action) {
                     var paso2 = 'Seteando valores por defecto';
-                    try {
-                        view.setDatosFijosNuevos(false);
-                        view.setProcesandoValoresDefecto(false);
-                        
+                    try {                        
                         if (!action.params) {
                             throw 'No se cargaron datos';
                         }
@@ -217,25 +209,30 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                                 refs[name].setReadOnly(true);
                             }
                         }
+
+                        view.setDatosFijosNuevos(false);
+                        view.setProcesandoValoresDefecto(false);
+
+                        Ext.defer(me.cargarValoresDefectoVariables, 300, me);
                     } catch (e) {
                         view.setProcesandoValoresDefecto(false);
                         Ice.manejaExcepcion(e, paso2);
                     }
                 },
                 failure: function () {
-                    view.getProcesandoValoresDefecto(false);
+                    view.setProcesandoValoresDefecto(false);
                 }
             });
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
             if (accedeProcesar === true) {
-                view.getProcesandoValoresDefecto(false);
+                view.setProcesandoValoresDefecto(false);
             }
         }
     },
     
-    cargarValoresDefectoVariables: function (ref) {
-        Ice.log('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoVariables ref:', ref);
+    cargarValoresDefectoVariables: function () {
+        Ice.log('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoVariables');
         var me = this,
             view = me.getView(),
             refs = view.getReferences(),
@@ -262,10 +259,10 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 return;
             }
             
-            var errores = me.obtenerErrores();
+            var errores = me.obtenerErrores() || {};
             for (var i = 0; i < view.getCamposDisparanValoresDefectoVariables().length; i++) {
                 var name = view.getCamposDisparanValoresDefectoVariables()[i];
-                if (refs[name] && errores[name] !== true) {
+                if (refs[name] && errores[name]) {
                     Ice.logWarn('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoVariables invalido <', name, ':', errores[name], '>');
                     return;
                 }
@@ -289,9 +286,6 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 success: function (action) {
                     var paso2 = 'Seteando valores por defecto';
                     try {
-                        view.setDatosVariablesNuevos(false);
-                        view.setProcesandoValoresDefecto(false);
-                        
                         if (!action.params) {
                             return;
                         }
@@ -303,6 +297,9 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                             }
                         }
                         Ice.resumeEvents(view);
+                        
+                        view.setDatosVariablesNuevos(false);
+                        view.setProcesandoValoresDefecto(false);
                     } catch (e) {
                         view.setProcesandoValoresDefecto(false);
                         Ice.manejaExcepcion(e, paso2);
@@ -561,9 +558,9 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
-    },
+    }
     
-    
+    /*
     obtenerErrores: function () {
         Ice.log('Ice.view.bloque.DatosGeneralesController.obtenerErrores');
         var me = this,
@@ -598,11 +595,12 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
         }
         return errores;
     },
+    */
     
     /**
      * Valida los datos visibles del formulario
      * @return boolean valido
-     */
+     *
     validarDatos: function () {
         Ice.log('Ice.view.bloque.DatosGeneralesController.validarDatos');
         var me = this,
@@ -639,4 +637,5 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             Ice.generaExcepcion(e, paso);
         }
     }
+    */
 });

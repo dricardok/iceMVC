@@ -168,7 +168,7 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadoresController', {
         var me = this,
             paso = 'Creando formulario de agrupador';
         try {
-            Ice.push(Object.assign(config, {
+            Ice.push(Ice.utils.mergeObjects(config, {
                 xtype: 'formagrupador',
                 padreCtr: me, // le paso este controlador
                 listeners: {

@@ -1,47 +1,53 @@
 Ext.define('Ice.view.componente.GridIce', {
     extend: 'Ext.grid.Grid',
     xtype: 'gridice',
-    config		:	{
-    	buttons		:	[]	
-    },
+
+	requires: [
+		'Ext.Toolbar',
+		'Ext.grid.cell.Widget'
+	],
+
+	// config ice
+	height: Ice.constantes.componente.grid.altura.modern,
+	scrollable: {
+		x: true,
+		y: true
+	},
+	userCls: ['ice-container', 'ice-container-modern', 'ice-panel', 'ice-panel-modern', 'ice-grid', 'ice-grid-modern'],
     
-    constructor:function(config){
-    	
-    	var me=this,
-    		paso='';
-    		
-    	try{
-    		config.items   = config.items || [];
-    		config.buttons = config.buttons || [];
-			Ice.log("buttons",config.buttons);
-			if (config.buttons.length > 0) {
-			    config.items.push({
-		            xtype : 'toolbar',
-		            docked: 'bottom',
-		            items: config.buttons
-		        });
-			}
-			
-			config.actionColumns = config.actionColumns || [];						
-			if (config.actionColumns.length > 0) {
-				var c = [];
-				config.actionColumns.forEach(function(it){
-					c.push({
+    constructor: function (config) {
+		Ice.log('Ice.view.componente.GridIce.constructor config:', config);
+    	var me = this,
+    		paso = 'Construyendo grid';
+    	try {
+			// se agregan los action column
+			if ((config.actionColumns || []).length > 0) {
+				var widgetColumns = [];
+				config.actionColumns.forEach(function (actionColumn) {
+					widgetColumns.push({
 			            width: '60',
 			            ignoreExport: true,
 			            cell: {
 			                xtype: 'widgetcell',
-			                widget: it
+			                widget: actionColumn
 			            }
 			        });
 				});
-				config.columns = config.columns.concat(c);
-				Ice.log("##d",config.columns);
+				config.columns = (config.columns || []).concat(widgetColumns);
 			}
-    	}catch(e){
-    		Ice.manejaExcepcion(e,paso);
+
+			// botones
+			if ((config.buttons || []).length > 0) {
+				config.items = config.items || [];
+				config.items.push({
+					xtype: 'toolbar',
+					docked: 'top',
+					items: ['->'].concat(config.buttons)
+				});
+			}
+    	} catch (e) {
+    		Ice.generaExcepcion(e,paso);
     	}
     	me.callParent(arguments);
     }
-    
 });

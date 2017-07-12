@@ -153,8 +153,8 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                         			var s=it.getStore();
                         			s.load(function(r){
                         				if(r.length==1 && json.situacion){
-                        					if(!Ice.query("[name=nmsituac]",form).getValue()){
-                        						Ice.query("[name=nmsituac]",form).setValue(json.situacion.nmsituac)
+                        					if(!Ice.query("[name=nmsituac][xtype=textfieldice]",form).getValue()){
+                        						Ice.query("[name=nmsituac][xtype=textfieldice]",form).setValue(json.situacion.nmsituac)
                         					}
                         					//alert(Ext.ComponentQuery.query("[name=nmsituac]")[0].getValue());
                         					it.setValue(r[0]);
@@ -226,7 +226,10 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                               }
                           }
                          // refs['cdtipsit'].setValue(data.cdtipsit);
-                          Ice.query("[getName][name=cdtipsit]").setValue(data.cdtipsit);
+                          Ext.ComponentQuery.query("[getName][name=cdtipsit][xtype=comboice]").forEach(function(it){
+                        	  it.setValue(data.cdtipsit);
+                          });
+                          
                           Ice.log("--->",refs['cdtipsit']);
                           Ice.resumeEvents(view);
                       }
@@ -591,7 +594,9 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           Ice.log('situacion',situacion);
 //          store.reload();
       } catch (e) {
+    	  console.error(e);
           Ice.manejaExcepcion(e, paso);
+          
       }   
       Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardar ok');
   },

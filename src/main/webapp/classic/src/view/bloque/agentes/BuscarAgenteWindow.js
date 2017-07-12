@@ -1,6 +1,6 @@
 Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 	
-	extend		:	"Ice.view.componente.Ventana",
+	extend		:	"Ice.view.componente.VentanaIce",
 	controller	:	"buscaragentewindow",
 	width		:	"60%",
 	height		:	400,
@@ -20,7 +20,7 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 			
 			var items = [
 				{
-					xtype	:	"formulario",
+					xtype	:	"formice",
 					items	:	[
 						{
 							xtype		:	"textfieldice",

@@ -1,6 +1,6 @@
 Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 	
-	extend		:	"Ice.view.componente.VentanaPanel",
+	extend		:	"Ice.view.componente.VentanaIce",
 	controller	:	"buscarcpwindow",
 	xtype		:	"buscarcpwindow",
 	scrollable	:	true,
@@ -28,7 +28,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 			
 			config.items=[
 				{
-					xtype		:	'formulario',
+					xtype		:	'formice',
 					scrollable	:	true,
 					
 //					defaults	:	{

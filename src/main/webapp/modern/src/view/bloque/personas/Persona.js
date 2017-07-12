@@ -95,9 +95,9 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        	};
 	        
 	        	var frmPersonas={
-	        			xtype		:	'formulario',
+	        			xtype		:	'formice',
 	        			itemId		:	"frmPersona",
-	        			modelValidators:Object.assign({},compsMpersona.AGREGAR_PERSONAS.MPERSONA.validators,compsTatriper.TATRIPER.TATRIPER.validators),
+	        			modelValidators:Ice.utils.mergeObjects({},compsMpersona.AGREGAR_PERSONAS.MPERSONA.validators,compsTatriper.TATRIPER.TATRIPER.validators),
 	        			modelFields:compsMpersona.AGREGAR_PERSONAS.MPERSONA.fields.concat(compsTatriper.TATRIPER.TATRIPER.fields),
 	        			items		:	[
 	        				{
