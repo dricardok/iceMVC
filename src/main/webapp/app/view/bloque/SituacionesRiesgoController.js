@@ -66,7 +66,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
 //                }
 //            }
             
-            Ext.ComponentQuery.query("[reference=TIPO_SITUACION]").forEach(function(it){
+            Ext.ComponentQuery.query("[reference=TIPO_SITUACION]",view).forEach(function(it){
             	it.on({
             		change:function(ref){
             			me.cargarValoresDefectoVariables(ref);

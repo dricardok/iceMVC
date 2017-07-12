@@ -1572,6 +1572,15 @@ var Ice = (
                         }
                     }
                 }
+                
+                for(var refName in refs){
+                	var ref=refs[refName];
+                	if(ref.heredar){
+                		
+                		
+                		ref.heredar();
+                	}
+                }
             }
             Ice.resumeEvents(form);
         } catch (e) {

@@ -31,6 +31,7 @@ Ext.define('Ice.view.componente.FormIce', {
                     iconCls: 'x-fa fa-eye',
                     //style: 'margin: 0 82px 0 0;',
                     tooltip: 'Mostrar/ocultar',
+                    hidden:Ice.sesion.cdsisrol==Ice.constantes.roles.AGENTE,
                     handler: function (me) {
                         Ice.toggleOcultos(me.up('form'));
                     }

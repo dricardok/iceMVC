@@ -12,7 +12,8 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadores', {
     height: 400,
     
     listeners: {
-        itemtap: 'onItemTap'
+        itemtap: 'onItemTap',
+       // beforeshow:	'onVistaAgente'
     },
     
     // configuracion no ext

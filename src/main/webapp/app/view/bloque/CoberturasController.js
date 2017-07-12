@@ -872,15 +872,18 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 				var view=this.getView();
 				var me = grid.up('bloquecoberturas')
 				var paso = 'limpiando grids'
-				var gridCoberturas = me
+					Ice.log("mmm..",me);
+				var gridCoberturas = view
 						.down('#gridCoberturas');
-				gridCoberturas.store
+				Ice.log("mmm..",gridCoberturas);
+				global=gridCoberturas;
+				gridCoberturas.getStore()
 						.removeAll();
 				gridCoberturas.setHidden(false);
 				
 				me
 						.down(
-								'[xtype=form]')
+								'[xtype=formtrescolumnasice]')
 						.removeAll();
 				paso = 'consultando coberturas'
 				var record = grid

@@ -72,6 +72,7 @@ Ext.define('Ice.view.bloque.agrupadores.BloqueAgrupadores', {
                     auxkey: config.auxkey
                 }, {
                     xtype: 'gridagrupadores',
+                    reference:'gridagrupadores',
                     cdunieco: config.cdunieco,
                     cdramo: config.cdramo,
                     estado: config.estado,
