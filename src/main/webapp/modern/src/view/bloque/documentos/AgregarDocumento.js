@@ -2,11 +2,11 @@
  * Created by DEORTIZT on 03/07/2017.
  */
 Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {   
-        extend: 'Ice.view.componente.Formulario',
+        extend: 'Ice.view.componente.FormDosColumnasIce',
         xtype: 'agregardocumento',
         
-        scrollable: true,
-        bodyPadding: '0 0 0 80',
+        // scrollable: true,
+        // bodyPadding: '0 0 0 80',
 //        defaults: {
 //            cls: 'big-50 small-100'
 //        },
@@ -46,7 +46,7 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
             me.callParent(arguments);            
             
             // comportamiento
-            paso = '';
+            // paso = '';
 //          try {
 //              me.getController().custom();
 //          } catch (e) {
