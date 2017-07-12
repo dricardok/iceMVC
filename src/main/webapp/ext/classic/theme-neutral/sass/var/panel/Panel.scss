@@ -4,13 +4,20 @@
 
 // TODO: setting this probably does not work well, since border-radius is typically
 // reserved for framed-panels - should we remove this?
+
 $panel-border-radius: dynamic(0);
+
+/**
+ * @var {string}
+ * The default border-style of Panels
+ */
+$panel-header-border-style: dynamic(solid);
 
 /**
  * @var {number}
  * The default border-width of Panels
  */
-$panel-border-width: dynamic(1px);
+$panel-border-width: dynamic(2px);
 
 /**
  * @var {color}
@@ -22,7 +29,7 @@ $panel-base-color: dynamic($base-color);
  * @var {color}
  * The default border-color of Panels
  */
-$panel-border-color: dynamic($panel-base-color);
+$panel-border-color: dynamic($azulo-s);
 
 /**
  * @var {number}
@@ -75,7 +82,7 @@ $panel-body-border-width: dynamic(1px);
  * @var {number}
  * The default font-size of the Panel body
  */
-$panel-body-font-size: dynamic($font-size);
+$panel-body-font-size: dynamic($font-pnl);
 
 /**
  * @var {string}
@@ -147,7 +154,7 @@ $panel-header-padding: dynamic(5px);
  * @var {number}
  * The font-size of Panel Headers
  */
-$panel-header-font-size: dynamic($font-size);
+$panel-header-font-size: dynamic($font-pnl);
 
 /**
  * @var {number}
@@ -160,13 +167,14 @@ $panel-header-line-height: dynamic(35px);
  * The font-weight of Panel Headers
  */
 
-$panel-header-font-weight: dynamic($font-bold);
+$panel-header-font-weight: dynamic($font-bold_s);
 
 /**
  * @var {string}
  * The font-family of Panel Headers
  */
 $panel-header-font-family: dynamic($font-family);
+
 
 /**
  * @var {string}

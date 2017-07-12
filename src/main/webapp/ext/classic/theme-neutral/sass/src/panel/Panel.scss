@@ -391,12 +391,13 @@
 
     .#{$prefix}panel-header-title-#{$ui} {
         @if not is-null($ui-header-color) { color: $ui-header-color; }
-        @if not is-null($ui-header-font-size) { font-size: $ui-header-font-size; }
-        @if not is-null($ui-header-font-weight) { font-weight:$font-bold;}
+        @if not is-null($ui-header-font-size) { font-size: $ui-header-font-size;}
+        @if not is-null($ui-header-font-weight) { font-weight:$ui-header-font-weight;}
         @if not is-null($ui-header-font-family) { font-family: $ui-header-font-family; }
         @if not is-null($ui-header-line-height) { line-height: $ui-header-line-height; }
         @if $ui-header-text-margin != 0 {
             margin: $ui-header-text-margin;
+           
         }
        
 
@@ -404,7 +405,7 @@
             .#{$prefix}title-text-#{$ui} {
                 text-transform: $ui-header-text-transform;
                 padding: $ui-header-text-padding;
-                 //text-align: $txt-center;
+                //text-align: $txt-center;
 
                 @if $ext-trial {
                     &:after {
@@ -919,6 +920,7 @@
 @if $include-panel-default-ui {
     @include extjs-panel-ui(
         $ui: 'default'
+        
     );
 }
 
@@ -930,12 +932,14 @@
         $ui-border-width: $panel-frame-border-width,
         $ui-border-radius: $panel-frame-border-radius,
         $ui-padding: $panel-frame-padding,
+        
 
         $ui-header-border-color: $panel-frame-border-color,
         $ui-header-border-width: $panel-frame-header-border-width,
         $ui-header-inner-border-color: $panel-frame-header-inner-border-color,
         $ui-header-inner-border-width: $panel-frame-header-inner-border-width,
         $ui-header-padding: $panel-frame-header-padding,
+       
 
         $ui-body-border-width: $panel-frame-body-border-width,
         $ui-body-background-color: $panel-frame-background-color
@@ -943,7 +947,7 @@
 }
 
 
- 
+
 
 
 
