@@ -435,6 +435,7 @@ var Ice = Object.assign(Ice || {}, {
      * }
      */
     mensaje: function (params) {
+    	params.ui='ice-window';
         var paso = 'Mostrando mensaje';
 
         try {
@@ -448,7 +449,8 @@ var Ice = Object.assign(Ice || {}, {
 
 
                     width: 300,
-                    ui:	ui,
+//                    ui:	'ice-window',
+                    frame:true,
                     height: 150,
                     closeAction: 'destroy',
                     title: titulo,
@@ -456,7 +458,7 @@ var Ice = Object.assign(Ice || {}, {
                     modal: true,
                     animateTarget: Ext.getBody(),
                     layout: 'fit',
-                    bodyStyle: 'border:none; background-color: transparent; padding: 10px;',
+                    bodyStyle: 'border:none; padding: 10px;',
                     buttonAlign: 'center',
 
                     items: [{
