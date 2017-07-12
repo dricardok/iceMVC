@@ -82,7 +82,7 @@ $panel-body-font-size: dynamic($font-size);
  * @var {string}
  * The default font-weight of the Panel body
  */
-$panel-body-font-weight: dynamic($font-weight);
+$panel-body-font-weight: dynamic($font-bold_s);
 
 
 
@@ -150,7 +150,7 @@ $panel-header-padding: dynamic(5px);
  * @var {number}
  * The font-size of Panel Headers
  */
-$panel-header-font-size: dynamic($font-size);
+$panel-header-font-size: dynamic($font-pnl);
 
 /**
  * @var {number}
@@ -171,12 +171,6 @@ $panel-header-font-weight: dynamic($font-bold_s);
  */
 $panel-header-font-family: dynamic($font-family);
 
-/**
- * @var {string}
- * The default text-align of the Panel body
- */
-
-$ui-header-text-align: dynamic($txt-center);
 
 /**
  * @var {string}

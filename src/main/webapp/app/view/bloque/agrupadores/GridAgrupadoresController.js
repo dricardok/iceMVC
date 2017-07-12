@@ -80,7 +80,10 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadoresController', {
             var max = 0,
                 view = me.getView(),
                 cdagrupa;
-            if (Ext.manifest.toolkit === 'classic') {
+            if(Ice.sesion.cdsisrol==Ice.constantes.roles.AGENTE){
+            	cdagrupa = view.getStore().getAt(0).get('cdagrupa');
+            }
+            else if (Ext.manifest.toolkit === 'classic') {
                 cdagrupa = view.getSelection()[0].get('cdagrupa');
             } else {
                 cdagrupa = view.getSelection().get('cdagrupa');
@@ -207,5 +210,26 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadoresController', {
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
+    },
+    
+    onVistaAgente:function(){
+    	 Ice.log('controller.gridagrupadores.onVistaAgente');
+         var paso = 'Cerrando vista agente';
+         
+         var me = this,
+             view = me.getView(),
+             refs = me.getReferences();
+         try {
+             if(Ice.sesion.cdsisrol==Ice.constantes.roles.AGENTE){
+            	 view.getStore().load(function(r){
+            		 if(r.length>0){
+            			 me.onEditarClic();
+            		 }
+            	 });
+            	 
+             }
+         } catch (e) {
+             Ice.manejaExcepcion(e, paso);
+         }
     }
 });
