@@ -19,13 +19,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
         accion: null,
         botones: []
 	},
-	
-	layout	   : 'responsivecolumn',
-	bodyPadding: '10px 0px 0px 10px',
-    defaults: {
-        margin: '0px 10px 10px 0px',
-        cls: 'big-50 small-100'
-    },
+	scrollable: true,
 	constructor: function (config) {
         Ice.log('Ice.view.bloque.PersonaPoliza.constructor config:', config);
         var me = this,
@@ -71,7 +65,6 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
             var gridDomicilios = {
     	        xtype: 'domicilios',
     	        reference: 'gridDomicilios',
-    	        width: '100%',
     	        selector: true
         	};
         	
@@ -79,15 +72,9 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
         	     items: [
         	         {
         	           xtype: 'cdpersoncdrol',
-        	           reference: 'form',
-        	           cdramo: me.cdramo,
-        	           layout: 'responsivecolumn',
-        	           width: '100%',
-                       bodyPadding: '10px 0px 0px 10px',
-                       defaults: {
-                           margin: '0px 10px 10px 0px',
-                           cls: 'big-50 small-100'
-                       }
+                       reference: 'form',
+                       height: 150,
+                       cdramo: me.cdramo
         	       },gridDomicilios,{
         	           buttons: [
                            {
@@ -95,9 +82,12 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                                reference: 'btnGuardar',
                                text: 'Guardar',
                                handler: 'onGuardar'
+                           },{
+                               xtype: 'button',
+                               text: 'Cancelar',
+                               handler: 'onCancelar'
                            }
-                       ],
-                       width: '100%'
+                       ]
         	       }
                  ]
              });

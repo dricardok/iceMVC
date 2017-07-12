@@ -1,5 +1,5 @@
 Ext.define('Ice.view.bloque.personas.BuscarPersona', {  
-    extend: 'Ice.view.componente.Ventana',
+    extend: 'Ice.view.componente.VentanaIce',
     xtype: 'buscarpersona',
     controller: 'buscarpersona',
     

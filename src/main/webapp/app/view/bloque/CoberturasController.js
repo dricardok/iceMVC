@@ -303,8 +303,8 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             form.add(mpolicap.BLOQUE_COBERTURAS.MPOLICAP.items);
             form.add(comps.TATRIGAR.TATRIGAR.items);
             
-            form.modelValidators=Object.assign({},comps.TATRIGAR.TATRIGAR.validators,mpolicap.BLOQUE_COBERTURAS.MPOLICAP.validators)
-            form.modelFields=mpolicap.BLOQUE_COBERTURAS.MPOLICAP.fields.concat(comps.TATRIGAR.TATRIGAR.fields);
+            form.modelValidators = Ice.utils.mergeObjects({},comps.TATRIGAR.TATRIGAR.validators,mpolicap.BLOQUE_COBERTURAS.MPOLICAP.validators)
+            form.modelFields = mpolicap.BLOQUE_COBERTURAS.MPOLICAP.fields.concat(comps.TATRIGAR.TATRIGAR.fields);
             
             Ice.log("-------->",form.modelValidators)
             this.cargarValores(form);   
@@ -577,8 +577,8 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             	it.tabla="MPOLICAP"
             })
             
-            form.modelValidators=Object.assign({},comps.TATRIGAR.TATRIGAR.validators,mpolicap.BLOQUE_COBERTURAS.MPOLICAP.validators)
-            form.modelFields=mpolicap.BLOQUE_COBERTURAS.MPOLICAP.fields.concat(comps.TATRIGAR.TATRIGAR.fields);
+            form.modelValidators = Ice.utils.mergeObjects({},comps.TATRIGAR.TATRIGAR.validators,mpolicap.BLOQUE_COBERTURAS.MPOLICAP.validators)
+            form.modelFields = mpolicap.BLOQUE_COBERTURAS.MPOLICAP.fields.concat(comps.TATRIGAR.TATRIGAR.fields);
             
             Ice.log("-------->",form.modelValidators)
             

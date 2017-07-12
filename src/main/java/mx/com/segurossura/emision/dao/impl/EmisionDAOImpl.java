@@ -803,7 +803,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsituac_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdperson_i" , Types.VARCHAR));
+            //declareParameter(new SqlParameter("pv_cdperson_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdbloque_i" , Types.VARCHAR));
             String[] cols=new String[]{ "tipo", "otvalor" };
             declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
@@ -1173,6 +1173,119 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
 			compile();
+        }
+    }
+
+	public List<Map<String, String>> obtenerTvaloaux (String cdunieco, String cdramo, String estado, String nmpoliza,
+            String cdbloque, String nmsituac, String cdgarant, String nmsuplem, String status) throws Exception {
+	    Map<String, String> params = new LinkedHashMap<String, String>();
+	    params.put("pv_cdunieco_i" , cdunieco);
+	    params.put("pv_cdramo_i"   , cdramo);
+	    params.put("pv_estado_i"   , estado);
+	    params.put("pv_nmpoliza_i" , nmpoliza);
+	    params.put("pv_nmsituac_i" , nmsituac);
+	    params.put("pv_nmsuplem_i" , nmsuplem);
+	    params.put("pv_status_i"   , status);
+	    params.put("pv_cdbloque_i" , cdbloque);
+	    params.put("pv_cdgarant_i" , cdgarant);
+	    List<Map<String, String>> lista = (List<Map<String, String>>) (ejecutaSP(new ObtenerTvaloauxSP(getDataSource()), params))
+	            .get("pv_registro_o");
+	    if (lista == null) {
+	        lista = new ArrayList<Map<String, String>>();
+	    }
+	    logger.debug(Utils.log("****** obtenerTvaloaux lista = ", lista));
+	    return lista;
+	}
+    
+    protected class ObtenerTvaloauxSP extends StoredProcedure {
+        protected ObtenerTvaloauxSP (DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_GET_TVALOAUX");
+            declareParameter(new SqlParameter("pv_cdunieco_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"    , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"    , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_status_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdbloque_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdgarant_i" , Types.VARCHAR));
+            String[] cols = new String[] { "cdunieco", "cdramo", "estado", "nmpoliza", "nmsituac", "nmsuplem", "status",
+                    "cdbloque", "cdgarant", "otvalor01", "otvalor02", "otvalor03", "otvalor04", "otvalor05",
+                    "otvalor06", "otvalor07", "otvalor08", "otvalor09", "otvalor10", "otvalor11", "otvalor12",
+                    "otvalor13", "otvalor14", "otvalor15"};
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  ,  Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+	public void ejecutarMovimientoTvaloaux (String cdunieco, String cdramo, String estado, String nmpoliza,
+            String cdbloque, String nmsituac, String cdgarant, String nmsuplem, String status, String otvalor01, String otvalor02,
+            String otvalor03, String otvalor04, String otvalor05, String otvalor06, String otvalor07, String otvalor08,
+            String otvalor09, String otvalor10, String otvalor11, String otvalor12, String otvalor13, String otvalor14,
+            String otvalor15, String accion) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i"  , cdunieco);
+        params.put("pv_cdramo_i"    , cdramo);
+        params.put("pv_estado_i"    , estado);
+        params.put("pv_nmpoliza_i"  , nmpoliza);
+        params.put("pv_nmsituac_i"  , nmsituac);
+        params.put("pv_nmsuplem_i"  , nmsuplem);
+        params.put("pv_status_i"    , status);
+        params.put("pv_cdbloque_i"  , cdbloque);
+        params.put("pv_cdgarant_i"  , cdgarant);
+        params.put("pv_otvalor01_i" , otvalor01);
+        params.put("pv_otvalor02_i" , otvalor02);
+        params.put("pv_otvalor03_i" , otvalor03);
+        params.put("pv_otvalor04_i" , otvalor04);
+        params.put("pv_otvalor05_i" , otvalor05);
+        params.put("pv_otvalor06_i" , otvalor06);
+        params.put("pv_otvalor07_i" , otvalor07);
+        params.put("pv_otvalor08_i" , otvalor08);
+        params.put("pv_otvalor09_i" , otvalor09);
+        params.put("pv_otvalor10_i" , otvalor10);
+        params.put("pv_otvalor11_i" , otvalor11);
+        params.put("pv_otvalor12_i" , otvalor12);
+        params.put("pv_otvalor13_i" , otvalor13);
+        params.put("pv_otvalor14_i" , otvalor14);
+        params.put("pv_otvalor15_i" , otvalor15);
+        params.put("pv_accion_i"    , accion);
+        ejecutaSP(new EjecutarMovimientoTvaloauxSP(getDataSource()), params);
+    }
+    
+    protected class EjecutarMovimientoTvaloauxSP extends StoredProcedure {
+        protected EjecutarMovimientoTvaloauxSP (DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_MOV_TVALOAUX");
+            declareParameter(new SqlParameter("pv_cdunieco_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"    , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"    , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_status_i"    , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdbloque_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdgarant_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor01_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor02_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor03_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor04_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor05_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor06_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor07_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor08_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor09_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor10_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor11_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor12_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor13_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor14_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otvalor15_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_accion_i"    , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  ,  Types.VARCHAR));
+            compile();
         }
     }
 }

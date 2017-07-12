@@ -1,5 +1,5 @@
 Ext.define('Ice.view.cotizacion.VentanaPrimas', {
-    extend: 'Ice.view.componente.Ventana',
+    extend: 'Ice.view.componente.VentanaIce',
     xtype: 'ventanaprimas',
     
     requires: [

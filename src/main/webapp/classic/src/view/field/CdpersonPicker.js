@@ -35,8 +35,14 @@ Ext.define('Ice.view.field.CdpersonPicker', {
     initComponent: function () {
         var me = this,
             configIce = me.config, // la configuracion recibida de TCONFSCR
-            configTra = {};        // la transformacion en atributos ext (ejemplo: label se pasa a fieldLabel en toolkit classic)
+            configTra = {}, // la transformacion en atributos ext (ejemplo: label se pasa a fieldLabel en toolkit classic)
+            labelLength = 0;
         Ice.log('Ice.view.bloque.CdpersonPicker.initComponent me:', me);
+        if(configIce.label){
+            if(configIce.label.length){
+                labelLength = configIce.label.length;
+            }
+        }
         configTra.items= [
             {
                 xtype: 'numberfieldice',
@@ -45,28 +51,18 @@ Ext.define('Ice.view.field.CdpersonPicker', {
                 reference: 'cdperson'
             },{
                 xtype: 'textfieldice',
-                hidden: true,
-                label: 'Rol',
-                reference: 'cdrol',
-                name: 'cdrol',
-                readOnly: true
-            },{
-                xtype: 'textfieldice',
-                hidden: me.mostrarRol === 'true' ? false : true,
-                label: 'Rol',
-                reference: 'dsrol',
-                name: 'dsrol',
-                readOnly: true
-            },{
-                xtype: 'textfieldice',
+                minWidth: 300,
                 label: configIce.label || 'Persona',
+                labelWidth: labelLength === 0 ? 50  : labelLength,
                 labelAlign: configIce.labelAlign || 'top',
+                margin: '0 5 0 0',
                 name: 'dsnombre',
                 reference: 'dsnombre',
                 readOnly: true
             },{
                 xtype: 'button',
                 iconCls: 'x-fa fa-search',
+                minWidth: 30,
                 scope: me,
                 handler: function(){
                     this.getController().onBuscar();

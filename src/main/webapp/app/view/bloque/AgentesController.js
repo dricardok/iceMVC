@@ -326,7 +326,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
              }
     		 Ice.log("record",record);
     		 
-    		 Ext.create("Ice.view.componente.VentanaPanel",{
+    		 Ext.create("Ice.view.componente.VentanaIce",{
     			 
     			 rec	:	record,
     			 title	:	"Editar porcentaje",
@@ -334,7 +334,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
     			 bodyPadding: '25px 20px 20px 20px',
     			 items	:	[
     				 {
-    					 xtype	:	"formulario",
+    					 xtype	:	"formice",
     					 items	:[
     						 {
     							 xtype	:	'numberfieldice',
@@ -347,17 +347,17 @@ Ext.define('Ice.view.bloque.AgentesController', {
  						    	text	: 'Guardar',
  						    	handler : function(btn){
  						    		
- 						    		var record=btn.up('[xtype=ventanapanel]').rec;
+ 						    		var record=btn.up('[xtype=ventanaice]').rec;
  						    		Ice.log("record",record);
- 						    		record.set("porredau",btn.up('[xtype=ventanapanel]').down('numberfieldice').getValue());
- 						    		btn.up('[xtype=ventanapanel]').cerrar();
+ 						    		record.set("porredau",btn.up('[xtype=ventanaice]').down('numberfieldice').getValue());
+ 						    		btn.up('[xtype=ventanaice]').cerrar();
  						    	}
  		 			    	},
  		 			    	{
  						    	xtype	: 'button',
  						    	text	: 'Cancelar',
  						    	handler : function(btn){
- 						    		btn.up('[xtype=ventanapanel]').cerrar();
+ 						    		btn.up('[xtype=ventanaice]').cerrar();
  						    	}
  		 			    	}
     					 ]
