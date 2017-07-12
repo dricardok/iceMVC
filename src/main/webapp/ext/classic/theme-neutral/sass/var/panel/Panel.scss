@@ -82,13 +82,13 @@ $panel-body-border-width: dynamic(1px);
  * @var {number}
  * The default font-size of the Panel body
  */
-$panel-body-font-size: dynamic($font-pnl);
+$panel-body-font-size: dynamic($font-size);
 
 /**
  * @var {string}
  * The default font-weight of the Panel body
  */
-$panel-body-font-weight: dynamic($font-weight);
+$panel-body-font-weight: dynamic($font-bold_s);
 
 /**
  * @var {string}

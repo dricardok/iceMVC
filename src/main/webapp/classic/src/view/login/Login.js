@@ -28,6 +28,7 @@ Ext.define('Ice.view.login.Login', {
     modal: true,
     closable: false,
     ui:'ice-window',
+    frame:true,
     title: 'Iniciar Sesión',
     titleAlign: 'center',
     

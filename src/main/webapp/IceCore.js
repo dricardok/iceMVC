@@ -1,3 +1,8 @@
+/*
+ * Objeto principal en la aplicacion ice
+ * Delia prueba
+ */
+
 // var Ice = Object.assign(Ice || {}, { // (Object.assign da error en explorer)
 var Ice = (
         // funcion anonima para mezclar (reemplaza a Object.assign)
@@ -13,6 +18,7 @@ var Ice = (
             return resObj;
         }
     )(Ice || {}, {
+
 
     logActivo: true,
 
@@ -30,49 +36,53 @@ var Ice = (
                     modern: 300
                 }
             }
-        }
+        },
+    
+	    roles:{
+			 AGENTE:'AGENTE'
+		 }
     },
     
     /**
      * Urls del sistema por modulos 
      */
-     url: {
-         // coreLocal
-         coreLocal: {
-             recuperarComponentes: 'jsonLocal/recuperarComponentes.json',
-             login:                'jsonLocal/login.json',
-             recuperarRoles:       'jsonLocal/getRoles.json',
-             seleccionaRol:        'jsonLocal/seleccionaRol.json',
-             logout:               'jsonLocal/logout.json',
-             recuperarDatosSesion: 'jsonLocal/recuperarDatosSesion.json',
-             recuperarMenus:       'jsonLocal/getMenus.json'
-         },
-         
-         // URLs del core
-         core: {
-             recuperarComponentes: 'componentes/recuperarComponentes.action',
-             login:                'authentication/validaUsuario.action',
-             recuperarRoles:       'authentication/obtenerRoles.action',
-             seleccionaRol:        'authentication/seleccionarRol.action',
-             logout:               'authentication/logout.action',
-             recuperarDatosSesion: 'authentication/obtenerDatosSesion.action',
-             recuperarMenus:       'authentication/obtenerMenu.action',
-             obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
-             recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
-             recuperarTatrisit:    'emision/obtieneTatrisit.action',
-             recuperarTatripol:    'emision/obtieneTatripol.action',
-             recuperarTatriper:    'registroPersona/obtieneTatriper.action',
-             recuperacionSimple:   'recuperacion/recuperar.action'
-         },
-         
-         // URLs de emision
-         emision: {
+    url: {
+        // coreLocal
+        coreLocal: {
+            recuperarComponentes: 'jsonLocal/recuperarComponentes.json',
+            login:                'jsonLocal/login.json',
+            recuperarRoles:       'jsonLocal/getRoles.json',
+            seleccionaRol:        'jsonLocal/seleccionaRol.json',
+            logout:               'jsonLocal/logout.json',
+            recuperarDatosSesion: 'jsonLocal/recuperarDatosSesion.json',
+            recuperarMenus:       'jsonLocal/getMenus.json'
+        },
+        
+        // URLs del core
+        core: {
+            recuperarComponentes: 'componentes/recuperarComponentes.action',
+            login:                'authentication/validaUsuario.action',
+            recuperarRoles:       'authentication/obtenerRoles.action',
+            seleccionaRol:        'authentication/seleccionarRol.action',
+            logout:               'authentication/logout.action',
+            recuperarDatosSesion: 'authentication/obtenerDatosSesion.action',
+            recuperarMenus:       'authentication/obtenerMenu.action',
+            obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
+            recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
+            recuperarTatrisit:    'emision/obtieneTatrisit.action',
+            recuperarTatripol:    'emision/obtieneTatripol.action',
+            recuperarTatriper:    'registroPersona/obtieneTatriper.action',
+            recuperacionSimple:   'recuperacion/recuperar.action'
+        },
+        
+        // URLs de emision
+        emision: {
             tarificar:     'emision/generarTarificacion.action',
             obtenerTarifa: 'emision/obtenerDatosTarificacion.action',
             emitir:        'emision/confirmarPoliza.action'
-         },
-         
-         bloque: {
+        },
+
+        bloque: {
             datosGenerales: {
                 cargar: 'emision/datosGenerales/cargar.action',
                 guardar: 'emision/datosGenerales/guardar.action',
@@ -394,6 +404,7 @@ var Ice = (
      * }
      */
     mensaje: function (params) {
+    	params.ui='ice-window';
         var paso = 'Mostrando mensaje';
         try {
             var titulo = (params && params.titulo) || 'Aviso',
@@ -404,7 +415,8 @@ var Ice = (
             if (Ext.manifest.toolkit === 'classic') {
                 Ext.create('Ext.window.Window', {
                     width: 300,
-                    ui:	ui,
+//                    ui:	'ice-window',
+                    frame:true,
                     height: 150,
                     closeAction: 'destroy',
                     title: titulo,
@@ -412,7 +424,7 @@ var Ice = (
                     modal: true,
                     animateTarget: Ext.getBody(),
                     layout: 'fit',
-                    bodyStyle: 'border:none; background-color: transparent; padding: 10px;',
+                    bodyStyle: 'border:none; padding: 10px;',
                     buttonAlign: 'center',
 
                     items: [{
