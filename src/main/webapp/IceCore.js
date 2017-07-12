@@ -70,8 +70,9 @@ var Ice = (
             tarificar:     'emision/generarTarificacion.action',
             obtenerTarifa: 'emision/obtenerDatosTarificacion.action',
             emitir:        'emision/confirmarPoliza.action',
-        	obtenerPlanes: 'emision/obtenerTarifaMultipleTemp.action',
-        	obtenerPlanDetalle: 'emision/obtenerDetalleTarifaTemp.action'
+            tarificarPlanes: 'emision/generarTarificacionPlanes',
+        	obtenerTarifaPlanes: 'emision/obtenerTarifaMultipleTemp.action',
+        	obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action'
          },
          
          bloque: {
