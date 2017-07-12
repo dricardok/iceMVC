@@ -33,7 +33,7 @@ var Ice = (
         }
     },
     
-    /*
+    /**
      * Urls del sistema por modulos 
      */
      url: {
@@ -156,7 +156,7 @@ var Ice = (
         }
     },
 
-    /*
+    /**
      * Datos del usuario en sesion
      */
     sesion: {
@@ -164,7 +164,7 @@ var Ice = (
         cdsisrol: null
     },
 
-    /*
+    /**
      * Invoca console.log si Ice.logActivo === true
      */
     log: function () {
@@ -208,7 +208,7 @@ var Ice = (
         }
     },
     
-    /*
+    /**
      * Invoca console.warn si Ice.logActivo === true
      */
     logWarn: function () {
@@ -252,9 +252,8 @@ var Ice = (
         }
     },
     
-    /*
+    /**
      * Invoca console.error si Ice.logActivo === true
-
      */
     logError: function () {
         if (Ice.logActivo === true && arguments.length > 0) {
@@ -297,8 +296,9 @@ var Ice = (
         }
     },
     
-    /*
-     * Imprime en consola una excepcion y manda aviso de error
+    /**
+     * Recibe una excepcion, y la vuelve a lanzar. Si es string ya fue tratada y no hace nada,
+     * en otro caso la loguea y formatea antes de lanzarla
      */
     generaExcepcion: function (e, paso, mask) {
         if (typeof e === 'string') {
@@ -314,8 +314,9 @@ var Ice = (
         }
     },
     
-    /*
-     * Imprime en consola una excepcion y manda aviso de error
+    /**
+     * Recibe una excepcion y muestra mensaje de error. Si es string ya fue tratada y se muestra,
+     * en otro caso la loguea y formatea antes de mostrarla
      */
     manejaExcepcion: function (e, paso, mask) {
         if (typeof e === 'string') {
@@ -335,8 +336,9 @@ var Ice = (
         }
     },
     
-    /*
-     * Atajo para Ext.ComponentQuery.query
+    /**
+     * Atajo para Ext.ComponentQuery.query.
+     * Si el arreglo de resultados es de longitud 1, se regresa el objeto en lugar del arreglo
      */
     query: function (selector, root) {
         var comps = Ext.ComponentQuery.query(selector, root);
@@ -346,8 +348,8 @@ var Ice = (
         return comps;
     },
     
-    /*
-     * Crea y muestra una mascara en pantalla con el texto recibo o la palabra "Cargando"
+    /**
+     * Crea y muestra una mascara en pantalla con el texto recibido o la palabra "Cargando".
      * Retorna la mascara a la cual se debe hacer .close()
      */
     mask: function (texto) {
@@ -355,8 +357,8 @@ var Ice = (
         var paso = 'Creando m\u00e1scara',
             mask;
         try {
+            var mainView = Ice.query('#mainView');
             if (Ext.manifest.toolkit === 'classic') {
-                var mainView = Ice.query('#mainView');
                 mask = new Ext.LoadMask({
                     msg: texto || 'Cargando...',
                     maskLocal: true,
@@ -368,7 +370,6 @@ var Ice = (
                 });
                 mask.show();
             } else {
-                var mainView = Ice.query('#mainView');
                 mask = new Ext.LoadMask({
                     message: texto || 'Cargando...',
                     maskLocal: true,
@@ -384,14 +385,12 @@ var Ice = (
         }
     },
     
-    /*
+    /**
      * Presenta mensaje en pantalla, recibe objeto params:
      * params: {
      *     titulo: 'Datos guardados',               <<< titulo de la ventana (opcional)
      *     mensaje: 'Poliza emitida correctamente', <<< mensaje
      *     callback: function () {}                 <<< callback (opcional)
-
-
      * }
      */
     mensaje: function (params) {
@@ -400,7 +399,7 @@ var Ice = (
             var titulo = (params && params.titulo) || 'Aviso',
                 mensaje = (params && params.mensaje) || (params && typeof params === 'string' && params) || '(sin mensaje)',
                 callback = (params && params.callback) || null,
-                ui=(params && params.ui) || null;
+                ui = (params && params.ui) || null;
             	
             if (Ext.manifest.toolkit === 'classic') {
                 Ext.create('Ext.window.Window', {
@@ -516,7 +515,7 @@ var Ice = (
     },
     
     
-    /*
+    /**
      * Presenta mensaje en pantalla, recibe objeto params:
      * params: {
      *     titulo: 'Datos guardados',               <<< titulo de la ventana (opcional)
@@ -528,7 +527,7 @@ var Ice = (
         Ice.mensaje(params);
     },
     
-    /*
+    /**
      * Presenta mensaje en pantalla, recibe objeto params:
      * params: {
      *     titulo: 'Datos guardados',               <<< titulo de la ventana (opcional)
@@ -541,7 +540,7 @@ var Ice = (
     },
     
     
-    /*
+    /**
      * Presenta mensaje en pantalla, recibe objeto params:
      * params: {
      *     titulo: 'Datos guardados',               <<< titulo de la ventana (opcional)
@@ -554,7 +553,7 @@ var Ice = (
     },
     
     
-    /*
+    /**
      * Ejecuta una peticion AJAX, recibe objeto params:
      * params: {
      *     url: 'someUrl',                          <<< URL a ejecutar
@@ -632,7 +631,7 @@ var Ice = (
     },
     
     
-    /*
+    /**
      * Funcion que recibe la lista (o un solo mapa) de componentes deseados y retorna los elementos generados
      * @param secciones: [
      *     {
@@ -852,7 +851,7 @@ var Ice = (
     },
     
     
-    /*
+    /**
      * Se genera una seccion con sus items, columns y/o buttons
      * @param configComps: [
      *     {
@@ -920,8 +919,8 @@ var Ice = (
     },
     
     
-    /*
-     *
+    /**
+     * Genera un arreglo de items para formulario
      */
     generaItems: function (configComps) {
         Ice.log('Ice.generaItems args:', arguments);
@@ -939,8 +938,9 @@ var Ice = (
     },
     
     
-    /*
-     *
+    /**
+     * Genera un arreglo de columnas para grid.
+     * Solo considera swcolumn = S
      */
     generaColumns: function (configComps) {
         Ice.log('Ice.generaColumns args:', arguments);
@@ -960,8 +960,8 @@ var Ice = (
     },
     
     
-    /*
-     *
+    /**
+     * Genera un arreglo de botones
      */
     generaButtons: function (configComps) {
         Ice.log('Ice.generaButtons args:', arguments);
@@ -979,8 +979,8 @@ var Ice = (
     },
     
     
-    /*
-     *
+    /**
+     * Genera un arreglo de listeners
      */
     generaListeners: function (configComps) {
         Ice.log('Ice.generaListeners args:', arguments);
@@ -998,8 +998,8 @@ var Ice = (
     },
     
     
-    /*
-     *
+    /**
+     * Genera un arreglo de fields para model.fields o store.fields
      */
     generaFields: function (configComps) {
         Ice.log('Ice.generaFields args:', arguments);
@@ -1017,8 +1017,8 @@ var Ice = (
     },
     
     
-    /*
-     *
+    /**
+     * Genera un objeto de validadores para model.validators
      */
     generaValidators: function (configComps) {
         Ice.log('Ice.generaValidators args:', arguments);
@@ -1039,8 +1039,8 @@ var Ice = (
     },
     
     
-    /*
-     *
+    /**
+     * Genera un item para formulario
      */
     generaItem: function (config) {
         //Ice.log('Ice.generaItem args:', arguments);
@@ -1181,8 +1181,8 @@ var Ice = (
     },
     
     
-    /*
-     *
+    /**
+     * Genera una columna para grid
      */
     generaColumn: function (config) {
         Ice.log('Ice.generaColumn args:', arguments);
@@ -1241,8 +1241,8 @@ var Ice = (
     },
     
     
-    /*
-     *
+    /**
+     * Genera un boton
      */
     generaButton: function (config) {
         Ice.log('Ice.generaButton args:', arguments);
@@ -1250,8 +1250,8 @@ var Ice = (
     },
     
     
-    /*
-     *
+    /**
+     * Genera un listener
      */
     generaListener: function (config) {
         Ice.log('Ice.generaListener args:', arguments);
@@ -1259,8 +1259,8 @@ var Ice = (
     },
     
     
-    /*
-     *
+    /**
+     * Genera un field para model.fields o store.fields
      */
     generaField: function (config) {
         //Ice.log('Ice.generaField args:', arguments);
@@ -1316,8 +1316,8 @@ var Ice = (
     },
     
     
-    /*
-     *
+    /**
+     * Genera un objeto de validacion {name: 'fieldname', arreglo: [validaciones...]}
      */
     generaValidator: function (config) {
         //Ice.log('Ice.generaValidator args:', arguments);
@@ -1425,7 +1425,6 @@ var Ice = (
     
     /**
      * logout
-
      */
     logout: function () {
         Ice.log('Ice.logout');
@@ -1452,10 +1451,12 @@ var Ice = (
         }
     },
     
+    /**
+     * Suspende todos los eventos de los items de una vista (contenedor, panel, form, grid, etc.)
+     */
     suspendEvents: function (view) {
         Ice.log('Ice.suspendEvents view:', view);
         var paso = 'Suspendiendo eventos';
-
         try {
             if (!view) {
                 throw 'Falta vista para suspender eventos';
@@ -1472,10 +1473,12 @@ var Ice = (
         }
     },
     
+    /**
+     * Reanuda todos los eventos de los items de una vista (contenedor, panel, form, grid, etc.)
+     */
     resumeEvents: function (view) {
         Ice.log('Ice.resumeEvents view:', view);
         var paso = 'Reanudando eventos';
-
         try {
             if (!view) {
                 throw 'Falta vista para reaundar eventos';
@@ -1492,10 +1495,14 @@ var Ice = (
         }
     },
     
-    
+    /**
+     * Muestra todos los elementos de una vista que tengan la propiedad 'oculto' u
+     * Oculta todos los elementos de una vista que tengan la propiedad 'oculto'.
+     * Lo hace en forma toggle (si estan ocultos los muestra, si estan visibles los oculta)
+     */
     toggleOcultos: function (view) {
         Ice.log('Ice.toggleOcultos view:', view);
-        var paso = 'Mostrando/ocultando atributos',
+        var paso = 'Mostrando/ocultando componentes',
             estadoOcultos;
         try {
             if (view.estadoOcultos === 'show') { // ocultar
@@ -1515,7 +1522,9 @@ var Ice = (
         }
     },
     
-    
+    /**
+     * Recibe un objeto y a todos sus atributos les pone el prefijo 'params.'
+     */
     convertirAParams: function (values) {
         Ice.log('convertirAParams values:', values);
         var paso = 'Transformando datos',
@@ -1532,9 +1541,105 @@ var Ice = (
         return params;
     },
     
+    /**
+     * Recupera los errores de un formulario, el formulario debe tener getModelFields y getModelValidators.
+     * Regresa un objeto de errores o null.
+     * {
+     *     cdunieco: 'Favor de introducir la sucursal',
+     *     nmpoliza: 'La cotizaci\u00f3n es obligatoria',
+     *     edad: 'Debe ser mayor de edad'
+     * }
+     */
+    obtenerErrores: function (form) {
+        Ice.log('Ice.obtenerErrores form:', form);
+        var paso = 'Recuperando validaci\u00f3n de formulario',
+            errores;
+        try {
+            if (!form || !form.getModelFields || !form.getModelValidators) {
+                throw 'No se puede validar el formulario';
+            }
+
+            var refs = form.getReferences(),
+                valores = form.getValues() || {},
+                fields = form.getModelFields() || [],
+                validators = form.getModelValidators() || {},
+                modelName = Ext.id(),
+                validatorsAplican = {};
+            
+            Ice.log('Ice.obtenerErrores valores:', valores, 'fields:', fields,
+                'validators:', validators);
+            
+            // solo aplican validators para campos que no esten ocultos
+            for (var att in refs) {
+                ref = refs[att];
+                if (ref.isHidden() !== true && validators[ref.getName()]) {
+                    validatorsAplican[ref.getName()] = validators[ref.getName()];
+                }
+            }
+
+            Ice.log('Ice.obtenerErrores validatorsAplican: ', validatorsAplican);
+            
+            Ext.define(modelName, {
+                extend: 'Ext.data.Model',
+                fields: fields,
+                validators: validatorsAplican
+            });
+
+            var validaciones = Ext.create(modelName, valores).getValidation().getData();
+            
+            Ice.log('Ice.obtenerErrores validaciones:', validaciones);
+            
+            for (var att in validaciones) {
+                if (validaciones[att] !== true) {
+                    errores = errores || {};
+                    errores[att] = validaciones[att];
+                }
+            }
+            
+            Ice.log('Ice.obtenerErrores errores:', errores);
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+        return errores;
+    },
+    
+    /**
+     * Valida los campos de un formulario, el formulario debe tener getModelFields y getModelValidators.
+     * Lanza excepcion si hay datos invalidos (en classic marca los campos en rojo, en modern la excepcion
+     * contiene la descripcion de errores)
+     */
+    validarFormulario: function (form) {
+        Ice.log('Ice.validarFormulario form:', form);
+        var paso = 'Validando formulario';
+        try {
+            var errores = Ice.obtenerErrores(form);
+            if (errores) {
+                if (Ext.manifest.toolkit === 'classic') {
+                    for (var name in errores) {
+                        refs[name].setActiveError(errores[name]);
+                    }
+                    throw 'Favor de validar los datos';
+                } else {
+                    var errorString = '';
+                    for (var name in errores) {
+                        var ref = refs[name];
+                        errorString = errorString + ref.getLabel() + ': ' + errores[name] + '<br/>';
+                    }
+                    throw errorString;
+                }
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+    
+    /**
+     * Carga un formulario. Recibe el form, los datos y carga los campos que existan y
+     * dispara la herencia de anidados
+     */
     cargarFormulario: function (form, datos) {
         Ice.log('Ice.cargarFormulario form:', form, 'datos:', datos);
-        var paso = 'Estableciendo valores de formulario';
+        var paso = 'Asignando valores de formulario';
         try {
             if (!form) {
                 throw 'Falta el formulario';
@@ -1560,78 +1665,6 @@ var Ice = (
                 }
             }
             Ice.resumeEvents(form);
-        } catch (e) {
-            Ice.generaExcepcion(e, paso);
-        }
-    },
-    
-    
-    /**
-     * Este metodo valida los campos de un formulario, usando un Model.
-     * El formulario debe tener en sus propiedades (config) modelFields.
-     * El formulario debe tener en sus propiedades (config) modelValidators.
-     * @param form
-     * @return no regresa nada, pero arroja excepcion si no es valido
-     */
-    validaFormulario: function (form) {
-        Ice.log('Ice.validaFormulario form:', form);
-        var paso = 'Validando formulario';
-        try {
-            if (!form || !form.getModelFields || !form.getModelValidators) {
-                throw 'No se puede validar el formulario';
-            }
-            var refs = form.getReferences(),
-                valores = form.getValues() || {},
-                fields = form.getModelFields() || [],
-                validators = form.getModelValidators() || {},
-                modelName = Ext.id(),
-                validatorsAplican = {};
-            
-            Ice.log('Ice.validaFormulario refs:', refs, 'valores:', valores, 'fields:', fields, 'validators:', validators);
-            
-            // solo aplican validators para campos que no esten ocultos
-            for (var att in refs) {
-                ref = refs[att];
-                if (ref.isHidden() !== true && validators[ref.getName()]) {
-                    validatorsAplican[ref.getName()] = validators[ref.getName()];
-                }
-            }
-            
-            Ext.define(modelName, {
-                extend: 'Ext.data.Model',
-                fields: fields,
-                validators: validatorsAplican
-            });
-            var validaciones = Ext.create(modelName, valores).getValidation().getData(),
-                errores = {},
-                valido = true;
-            
-            Ice.log('Ice.validaFormulario validaciones:', validaciones);
-            
-            for (var att in validaciones) {
-                if (validaciones[att] !== true) {
-                    valido = false;
-                    errores[att] = validaciones[att];
-                }
-            }
-            
-            Ice.log('Ice.validaFormulario errores:', errores);
-            
-            if (valido !== true) {
-                if (Ext.manifest.toolkit === 'classic') {
-                    for (var name in errores) {
-                        refs[name].setActiveError(errores[name]);
-                    }
-                    throw 'Favor de validar los datos';
-                } else {
-                    var errorString = '';
-                    for (var name in errores) {
-                        var ref = refs[name];
-                        errorString = errorString + ref.getLabel() + ': ' + errores[name] + '<br/>';
-                    }
-                    throw errorString;
-                }
-            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -1701,7 +1734,7 @@ var Ice = (
     index: function () {
         Ice.query('#mainView').getController().redirectTo('mesacontrol.action');
     },
-
+    
     utils: {
         /**
          * Funcion que recibe n objetos y te regresa uno solo mezclado (Object.assign da error en explorer)

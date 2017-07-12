@@ -425,7 +425,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             refs = view.getReferences(),
             paso = 'Validando datos generales';
         try {
-            me.validarDatos();
+            me.validarFormulario();
             
             var valores = Ice.convertirAParams(view.getValues());
             valores['params.cdunieco'] = view.getValues().cdunieco || view.getCdunieco();

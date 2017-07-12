@@ -376,7 +376,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
       view.procesandoValoresDefecto = false;
       view.setDatosFijosNuevos = false;
       try{
-          me.validarDatos();
+          me.validarFormulario();
           
           paso = 'Guardando datos de situacion';
           Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardarBloque guardando datos');
@@ -450,6 +450,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
       Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardarBloque ok');
   },
   
+  /*
   obtenerErrores: function () {
       Ice.log('Ice.view.bloque.SituacionesRiesgoController.obtenerErrores');
       var me = this,
@@ -489,7 +490,9 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
       }
       return errores;
   },
+  */
   
+  /*
   validarDatos: function () {
       Ice.log('Ice.view.bloque.SituacionesRiesgo.validarDatos');
       var me = this,
@@ -526,6 +529,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           Ice.generaExcepcion(e, paso);
       }
   },
+  */
   
   guardar: function (params){
       Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardar');
@@ -537,7 +541,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
       view.procesandoValoresDefecto = false;
       view.setDatosFijosNuevos = false;
       try{
-//          me.validarDatos();
+//          me.validarFormulario();
           situacion = {};
           Ice.request({
               mascara: 'Antes de lanzar validaciones de bloque de situacion',
