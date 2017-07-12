@@ -1420,18 +1420,22 @@ var Ice = Object.assign(Ice || {}, {
             }
             
             
-            // width / flex       
-            if(config.width){
-                if(Number(config.width) > 10){
-                    column.width = Number(config.width);
-                }
-                else{
-                    column.flex = Number(config.width);
-                    column.minWidth = 50;
+            // width / flex
+            if(!config.flex){
+                if(!config.width){
+                    column.flex = 1;
+                    column.minWidth = 80;
+                } else {
+                    column.width = config.width;
                 }
             } else {
-                column.flex = 1;
-                column.minWidth = 50;
+                if(!config.width){
+                    column.flex = config.flex;
+                    column.minWidth = 80;
+                } else {
+                    column.minWidth = config.width;
+                    column.flex = config.flex;
+                }
             }
             
             if(config.swoculto === 'S'){
@@ -1459,7 +1463,8 @@ var Ice = Object.assign(Ice || {}, {
             if (config.label) {
                 column.text = config.label
 
-            }        
+            }
+
         } catch (e) {
             Ice.generaExcepcion(e, paso);
 
