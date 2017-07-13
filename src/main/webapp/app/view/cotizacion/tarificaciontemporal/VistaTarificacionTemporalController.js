@@ -35,7 +35,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 						handler: function (me) {
 							
 							var paso = 'Tarificando el plan seleccionado'; 							
-							me.up('ventanatarifastemporales').cerrar();
+							//me.up('ventanatarifastemporales').cerrar();
 													
 							try{
 								// Tarifincando cotizacion con el plan seleccionado y redirecconando a emitir
@@ -48,12 +48,15 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                        estado: view.getEstado(),
 					                        nmpoliza: view.getNmpoliza(),
 					                        nmsuplem: view.getNmsuplem(),					                     
-					                        cdtipsit: view.getCdtipsit(),
-					                        nmsituac: view.getNmsituac(),
+					                        cdtipsit: view.getCdtipsit(),					                        
 					                        cdperpag: rec.data.cdperpag
 					                    }),
 					                success: function (action) {
-					                    alert(action);
+					                	me.up('ventanatarifastemporales').cerrar();
+					                	Ice.query('#mainView').getController().redirectTo('emision.action?cdunieco=' + view.getCdunieco() +
+				                                '&cdramo=' + view.getCdramo() + '&estado=' + view.getEstado() + '&nmpoliza=' + view.getNmpoliza() +
+				                                '&cdtipsit=' + view.getCdtipsit(),
+				                            true);
 					                }
 					            });
 								

@@ -416,7 +416,11 @@ public class EmisionManagerImpl implements EmisionManager {
 			}
 			
 			
-			res = generarTarificacion(cdunieco, cdramo, estado, nmpoliza, "0");
+			res = generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+			
+			
+			// Borrar ZWORK
+			emisionDAO.movimientoZworkcts(cdunieco, cdramo, estado, nmpoliza, "0");
 			
 		}catch(Exception e) {
 			Utils.generaExcepcion(e, paso);

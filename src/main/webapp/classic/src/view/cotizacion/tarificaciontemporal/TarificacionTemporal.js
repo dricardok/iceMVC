@@ -44,7 +44,10 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 					cdunieco: config.cdunieco,
 					cdramo: config.cdramo,
 					estado: config.estado,
-					nmpoliza: config.nmpoliza
+					nmpoliza: config.nmpoliza,
+					nmsuplem: config.nmsuplem,
+					nmsituac: config.nmsituac,
+					cdtipsit: config.cdtipsit
 				}
 			];
 			
