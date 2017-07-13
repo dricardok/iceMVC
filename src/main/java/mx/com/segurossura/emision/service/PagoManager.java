@@ -7,4 +7,6 @@ public interface PagoManager{
 	
 	public TransactionResponse realizaPago(RequestWs request) throws Exception;
 
+	void aplicaPago(RequestWs request) throws Exception;
+
 }
