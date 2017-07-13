@@ -1,8 +1,8 @@
 package mx.com.segurossura.general.documentos.dao.impl;
 
-import java.math.BigDecimal;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
+
 import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
 
 @Repository
@@ -103,4 +104,87 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
         }
     }
 
+    @Override
+    public Map<String, String> obtenerDocumento() throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        List<Map<String, String>> lista = new ArrayList<Map<String, String>>();
+        return lista.get(0);
+    }
+
+    protected class ObtenerDocumento extends StoredProcedure {
+        protected ObtenerDocumento(DataSource dataSource) {
+            super(dataSource, "PACK_CONFIG_SCREEN.P_GET");
+            declareParameter(new SqlParameter("pv_pantalla_i", Types.VARCHAR));
+            String[] cols = new String[] { 
+                    "pantalla", 
+                    "seccion"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public void realizarMovimientoDocsPoliza(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsolici, String nmsuplem,
+            String ntramite, Date feinici, String cddocume, String dsdocume, String tipmov, String swvisible, String cdtiptra,
+            String codidocu, Date fefecha, String cdorddoc, String cdmoddoc, String nmcertif, String nmsituac, String url, String accion) 
+    throws Exception {
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsolici_i", nmsolici);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        params.put("pv_ntramite_i", ntramite);
+        params.put("pv_feinici_i", feinici);
+        params.put("pv_cddocume_i", cddocume);
+        params.put("pv_dsdocume_i", dsdocume);
+        params.put("pv_tipmov_i", tipmov);
+        params.put("pv_swvisible_i", swvisible);
+        params.put("pv_cdtiptra_i", cdtiptra);
+        params.put("pv_codidocu_i", codidocu);
+        params.put("pv_fefecha_i", fefecha);
+        params.put("pv_cdorddoc_i", cdorddoc);
+        params.put("pv_cdmoddoc_i", cdmoddoc);
+        params.put("pv_nmcertif_i", nmcertif);
+        params.put("pv_nmsituac_i", nmsituac);
+        params.put("pv_url_i",      url);
+        params.put("pv_accion_i", accion);
+        
+        ejecutaSP(new MovimientoTdocupolSP(getDataSource()), params);
+    }
+
+    
+    protected class MovimientoTdocupolSP extends StoredProcedure {
+        protected MovimientoTdocupolSP(DataSource dataSource) {
+            super(dataSource, "PKG_REPORT_ALEA.P_MOV_TDOCUPOL");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i",   Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i",   Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsolici_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_ntramite_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_feinici_i",  Types.DATE));
+            declareParameter(new SqlParameter("pv_cddocume_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_dsdocume_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_tipmov_i",   Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_swvisible_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdtiptra_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_codidocu_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_fefecha_i",  Types.DATE));
+            declareParameter(new SqlParameter("pv_cdorddoc_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdmoddoc_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmcertif_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_url_i"     , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_accion_i",   Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o",Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
 }

@@ -26,7 +26,9 @@ import mx.com.royalsun.alea.commons.bean.Documento;
 @Namespace("/emision")
 public class ImpresionAction extends PrincipalCoreAction {
 
-	private static final Logger logger = LoggerFactory.getLogger(ImpresionAction.class);
+    private static final long serialVersionUID = -6494398903397776422L;
+
+    private static final Logger logger = LoggerFactory.getLogger(ImpresionAction.class);
 	
 	private boolean success;
 	private String message;

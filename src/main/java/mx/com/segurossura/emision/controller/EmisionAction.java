@@ -688,16 +688,10 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   estado,   "Falta estado",
     	                   nmpoliza, "Falta nmpoliza");
     	    
-    	    /*
-            Utils.validate(newestad,  "Falta newstad");
-            Utils.validate(newpoliza, "Falta newpoliza");
-            Utils.validate(pnmrecibo, "Falta pnmrecibo");
-            */
+    	    String nmpolizaEmitida = emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem,newestad, newpoliza, pnmrecibo);
     	    
     	    params = new HashMap<String, String>();
-    	    
-    	    params.put("nmpoliza", emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza,
-    	            pnmrecibo));
+            params.put("nmpoliza", nmpolizaEmitida);
     		success = true;
     	} catch (Exception ex) {
     	    message = Utils.manejaExcepcion(ex);

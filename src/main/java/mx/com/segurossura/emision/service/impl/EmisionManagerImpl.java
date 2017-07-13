@@ -12,12 +12,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.biosnettcs.core.Constantes;
 import com.biosnettcs.core.Utils;
 
+import mx.com.royalsun.alea.commons.bean.Documento;
 import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.dao.SituacionDAO;
 import mx.com.segurossura.emision.service.EmisionManager;
+import mx.com.segurossura.emision.service.ImpresionManager;
 import mx.com.segurossura.general.catalogos.model.Bloque;
+import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
+import mx.com.segurossura.general.producto.model.EstadoPoliza;
 
 @Service
 public class EmisionManagerImpl implements EmisionManager {
@@ -29,6 +34,12 @@ public class EmisionManagerImpl implements EmisionManager {
 
 	@Autowired
 	private SituacionDAO situacionDAO;
+	
+	@Autowired
+	private ImpresionManager impresionManager;
+	
+	@Autowired
+	private DocumentosDAO documentosDAO;
 
 	@Override
 	public void movimientoTvalogar(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
@@ -407,14 +418,51 @@ public class EmisionManagerImpl implements EmisionManager {
 	@Override
 	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception {
-		String paso = null, res = null;
+		String paso = null, nmpolizaEmitida = null;
 		try {
+		    paso = "Cobrar primer recibo (pago con tarjeta)";
+		    // TODO: Invocar primer servicio de cobro
+		    
 			paso = "Confirmando p\u00f3liza";
-			res = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
+			nmpolizaEmitida = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
+			estado = EstadoPoliza.MASTER.getClave();
+			nmpoliza = nmpolizaEmitida;
+			logger.info("Poliza emitida: {}", nmpoliza);
+			
+			paso = new StringBuilder("Aplicando recibo en ALEA de la p\u00f3liza ").append(nmpoliza).toString();
+			//TODO: Invocar segundo servicio de cobro
+			
+			paso = new StringBuilder("Obteniendo documentos de la p\u00f3liza ").append(nmpoliza).toString();
+			
+			logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+			List<Documento> documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+			logger.debug("Documentos de impresion: {}", documentos);
+			
+			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();
+			// Se guardan la lista de documentos:
+			for (Documento documento : documentos) {
+			    
+                String nmsolici = null; //TODO: agregar
+                String ntramite = "0";  //TODO: agregar
+                String tipmov   = null; //TODO: agregar
+                String cdtiptra = null; //TODO: agregar
+                String codidocu = null; //TODO: agregar
+                String cdorddoc = null; //TODO: agregar
+                String cdmoddoc = null; //TODO: agregar
+                String nmcertif = null; //TODO: agregar
+                String nmsituac = null; //TODO: agregar
+                
+                documentosDAO.realizarMovimientoDocsPoliza(
+                        cdunieco, cdramo, estado, nmpoliza, nmsolici, nmsuplem, ntramite, 
+                        new Date(), documento.getId(), documento.getNombre(), tipmov, 
+                        Constantes.SI, cdtiptra, codidocu, new Date(), cdorddoc, cdmoddoc, 
+                        nmcertif, nmsituac, documento.getUrl(), Constantes.INSERT_MODE);
+            }
+			
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}
-		return res;
+		return nmpolizaEmitida;
 	}
 
 	@Override

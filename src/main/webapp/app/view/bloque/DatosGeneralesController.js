@@ -193,13 +193,9 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                         view.fireEvent('llaveGenerada', view, view.getCdunieco(), view.getCdramo(), view.getEstado(), view.getNmpoliza(),
                             view.getNmsuplem(), view.getStatus());
                         
-                        Ice.suspendEvents(view);
-                        for (var att in action.params) {
-                            if (refs[att] && !refs[att].getValue()) {
-                                refs[att].setValue(action.params[att]);
-                            }
-                        }
-                        Ice.resumeEvents(view);
+                        me.cargarFormulario(action.params, {
+                            sinReset: true
+                        });
                         
                         //me.cargarValoresDefectoVariables();
                         // no permitir modificar la llave
@@ -290,13 +286,9 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                             return;
                         }
                         
-                        Ice.suspendEvents(view);
-                        for (var att in action.params) {
-                            if (refs[att] && !refs[att].getValue()) {
-                                refs[att].setValue(action.params[att]);
-                            }
-                        }
-                        Ice.resumeEvents(view);
+                        me.cargarFormulario(action.params, {
+                            sinReset: true
+                        });
                         
                         view.setDatosVariablesNuevos(false);
                         view.setProcesandoValoresDefecto(false);
