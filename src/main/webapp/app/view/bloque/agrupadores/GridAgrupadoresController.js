@@ -189,14 +189,20 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadoresController', {
         var paso = 'Recargando agrupadores';
         try {
             Ice.pop();
+            if(Ice.sesion.cdsisrol==Ice.constantes.roles.AGENTE){
+            	Ice.query('[xtype=tabpanel]',Ice.query("[xtype=emision]")).setActiveItem(0); 
+            }
             var me = this.padreCtr,
                 view = me.getView(),
                 refs = me.getReferences();
-            me.getView().getStore().reload();
+            if(Ice.sesion.cdsisrol!=Ice.constantes.roles.AGENTE){
+            	me.getView().getStore().reload();
+            }
             refs.agregarbutton.disable();
             refs.editarbutton.disable();
             refs.eliminarbutton.disable();
             view.fireEvent('agrupadorModificado', view);
+            
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -204,9 +210,16 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadoresController', {
     
     onCancelarForm: function () {
         Ice.log('controller.gridagrupadores.onCancelarForm');
-        var paso = 'Cerrando formulario de agrupador';
+        var paso = 'Cerrando formulario de agrupador'
+        	,me = this;
+//        ,
+//        	view = me.getView();
+        Ice.log(me);
         try {
             Ice.pop();
+            if(Ice.sesion.cdsisrol==Ice.constantes.roles.AGENTE){
+            	Ice.query('[xtype=tabpanel]',Ice.query("[xtype=emision]")).setActiveItem(0); 
+            }
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }

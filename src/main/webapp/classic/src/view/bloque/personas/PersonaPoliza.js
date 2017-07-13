@@ -61,12 +61,6 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
             var modelName = Ext.id();
             
         	var itemsForm = comps.BLOQUE_PERSONAS.FORMULARIO.items;
-        	                
-            var gridDomicilios = {
-    	        xtype: 'domicilios',
-    	        reference: 'gridDomicilios',
-    	        selector: true
-        	};
         	
         	 Ext.apply(me, {
         	     items: [
@@ -75,7 +69,13 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                        reference: 'form',
                        height: 150,
                        cdramo: me.cdramo
-        	       },gridDomicilios,{
+        	       },{
+                       xtype: 'domicilios',
+                       reference: 'gridDomicilios',
+                       selector: true,
+                       scrollable: true,
+                       width: 700
+                   },{
         	           buttons: [
                            {
                                xtype: 'button',

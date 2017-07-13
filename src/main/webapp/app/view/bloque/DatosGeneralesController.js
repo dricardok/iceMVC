@@ -425,7 +425,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             refs = view.getReferences(),
             paso = 'Validando datos generales';
         try {
-            me.validarDatos();
+            me.validarFormulario();
             
             var valores = Ice.convertirAParams(view.getValues());
             valores['params.cdunieco'] = view.getValues().cdunieco || view.getCdunieco();
@@ -547,7 +547,6 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             view.setNmsuplem(0);
             Ice.resumeEvents(view);
             
-            
             // permitir modificar la llave
             for (var i = 0; i < view.getCamposDisparanValoresDefectoFijos().length; i++) {
                 var name = view.getCamposDisparanValoresDefectoFijos()[i];
@@ -559,83 +558,4 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             Ice.generaExcepcion(e, paso);
         }
     }
-    
-    /*
-    obtenerErrores: function () {
-        Ice.log('Ice.view.bloque.DatosGeneralesController.obtenerErrores');
-        var me = this,
-            view = me.getView(),
-            refs = view.getReferences(),
-            paso = 'Recuperando errores de formulario',
-            errores = {};
-        try {
-            // validar con un modelo dinamico
-            // sin usar el data binding
-            paso = 'Construyendo modelo de validaci\u00f3n';
-            var validators = {}, ref;
-            for (var att in refs) {
-                ref = refs[att];
-                if (ref.isHidden() !== true && view.getModelValidators()[ref.getName()]) { // solo para no ocultos
-                    validators[ref.getName()] = view.getModelValidators()[ref.getName()];
-                }
-            }
-            Ice.log('Ice.view.bloque.DatosGeneralesController.obtenerErrores validators:', validators);
-            
-            var modelName = Ext.id();
-            Ext.define(modelName, {
-                extend: 'Ext.data.Model',
-                fields: view.getModelFields(),
-                validators: validators
-            });
-            
-            paso = 'Validando datos';
-            errores = Ext.create(modelName, view.getValues()).getValidation().getData();
-        } catch (e) {
-            Ice.generaExcepcion(e, paso);
-        }
-        return errores;
-    },
-    */
-    
-    /**
-     * Valida los datos visibles del formulario
-     * @return boolean valido
-     *
-    validarDatos: function () {
-        Ice.log('Ice.view.bloque.DatosGeneralesController.validarDatos');
-        var me = this,
-            view = me.getView(),
-            refs = view.getReferences(),
-            paso = 'Validando datos generales visibles';
-        try {
-            var errores = me.obtenerErrores();
-            
-            var sinErrores = true,
-                erroresString = '';
-            Ext.suspendLayouts();
-            for (var name in errores) {
-                if (errores[name] !== true) {
-                    sinErrores = false;
-                    var ref = view.down('[name=' + name + ']');
-                    if (Ext.manifest.toolkit === 'classic') {
-                        ref.setActiveError(errores[name]);
-                    } else {
-                        erroresString = erroresString + ref.getLabel() + ': ' + errores[name] + '<br/>';
-                    }
-                }
-            }
-            Ext.resumeLayouts();
-            
-            if (sinErrores !== true) {
-                if (Ext.manifest.toolkit === 'classic') {
-                    throw 'Favor de revisar los datos';
-                } else {
-                    throw erroresString;
-                }
-            }
-        } catch (e) {
-            Ice.generaExcepcion(e, paso);
-        }
-    }
-    */
 });

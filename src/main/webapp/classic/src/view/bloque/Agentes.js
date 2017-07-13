@@ -220,14 +220,14 @@ Ext.define('Ice.view.bloque.Agentes', {
     
     scrollable: true,
     
-    tbar: [
-           '->',
-           {
-               iconCls: 'x-fa fa-eye',
-               tooltip: 'Mostrar/ocultar',
-               handler: function (me) {
-                   Ice.toggleOcultos(me.up('form'));
-               }
-    }]    
+//    tbar: [
+//           '->',
+//           {
+//               iconCls: 'x-fa fa-eye',
+//               tooltip: 'Mostrar/ocultar',
+//               handler: function (me) {
+//                   Ice.toggleOcultos(me.up('form'));
+//               }
+//    }]    
 	
 });

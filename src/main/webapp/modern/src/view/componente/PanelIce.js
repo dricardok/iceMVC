@@ -5,6 +5,7 @@ Ext.define('Ice.view.componente.PanelIce', {
     // config ext
     layout: 'vbox',
     userCls: ['ice-container', 'ice-container-modern', 'ice-panel', 'ice-panel-modern'],
+    referenceHolder: true, // para que se pueda hacer getReferences()
 
     // config no ext
     config: {
