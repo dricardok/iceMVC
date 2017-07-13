@@ -2,18 +2,15 @@
  * Created by DEORTIZT on 5/22/2017.
  */
 Ext.define('Ice.view.bloque.personas.ListaPersonas', {
-	    extend: 'Ext.grid.Grid',
+	    extend: 'Ice.view.componente.GridIce',
 	    xtype: 'listapersonas',
 	    
 	    controller: 'listapersonas',
-	    viewModel: 'listapersonas',
-	    scrollable: true,
+		viewModel: 'listapersonas',
 	    // configuracio ext
 	    title: 'Personas',
-	    
 	    //se inicializa la barra de encabezado
 	    tbar: [],
-
 	    // configuracion del componente (no EXT)
 	    config: {
 	        modulo: null,
@@ -48,9 +45,9 @@ Ext.define('Ice.view.bloque.personas.ListaPersonas', {
                         throw 'Falta llave de p\u00f3lizaASD';
                     }
 	                
-//	                if (!config.nmsituac) {
-//                        throw 'Falta situacion de riesgo';
-//                    }
+	                if (config.estado === 'w') {
+                        config.estado = 'W';
+                    }
 	                
 	                config.modulo = config.modulo || 'COTIZACION';
 	                
@@ -97,9 +94,6 @@ Ext.define('Ice.view.bloque.personas.ListaPersonas', {
                              }
                          }
                     };
-//                    buttons: config.buttons;
-	                
-	                
 	            } catch (e) {
 	                Ice.generaExcepcion(e, paso);
 	            }
