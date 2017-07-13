@@ -38,11 +38,12 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
     },
     
     config: {
-		cdunieco: null,
+    	cdunieco: null,
 		cdramo: null,
 		estado: null,
 		nmpoliza: null,
-		nmsuplem: null
+		nmsuplem: null,
+		cdtipsit: null
 	},
 	
 	 // validacion y modificacion de config
@@ -52,11 +53,12 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
     	var me = this,
          	paso = 'Contruyendo selector de planes';
     	try{
+    		/*
     		config.cdunieco = 1;
 			config.cdramo = 201;
 			config.estado = 'W';
 			config.nmpoliza = 613805;
-			
+			*/
 			if(!config
 					|| !config.cdunieco
 					|| !config.cdramo
@@ -77,7 +79,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 				remoteSort: false,
 				proxy: {					
 					type: 'ajax',
-					url: Ice.url.emision.obtenerPlanes,
+					url: Ice.url.emision.obtenerTarifaPlanes,
 					extraParams: Ice.convertirAParams({
 						cdunieco: config.cdunieco,
 	                    cdramo: config.cdramo,

@@ -10,11 +10,14 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
     layout: 'fit',
     
     config: {
-        cdunieco: null,
-        cdramo: null,
-        estado: null,
-        nmpoliza: null,
-        cdperpag: null
+    	cdunieco: null,
+		cdramo: null,
+		estado: null,
+		nmpoliza: null,
+		nmsuplem: null,
+		cdtipsit: null,
+		nmsituac: null,
+    	cdperpag: null
     },
     
     constructor: function(config) {
@@ -83,7 +86,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
                     ],
                     proxy: {
                         type: 'ajax',
-                        url: Ice.url.emision.obtenerPlanDetalle,
+                        url: Ice.url.emision.obtenerTarifaPlan,
                         extraParams: {
                         	'params.cdunieco': config.cdunieco,
                             'params.cdramo': config.cdramo,

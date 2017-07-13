@@ -9,7 +9,10 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 		cdramo: null,
 		estado: null,
 		nmpoliza: null,
-		nmsuplem: null
+		nmsuplem: null,
+		cdperpag: null,
+		nmsituac: null,
+		cdtipsit: null
 	},
 	
 	constructor: function (config) {
@@ -39,9 +42,12 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 	    			reference: 'vistatarificaciontemporal',
 	    				
 	    			cdunieco: config.cdunieco,
-	    			cdramo: config.cdramo,
-	    			estado: config.estado,
-	    			nmpoliza: config.nmpoliza
+					cdramo: config.cdramo,
+					estado: config.estado,
+					nmpoliza: config.nmpoliza,
+					nmsuplem: config.nmsuplem,
+					nmsituac: config.nmsituac,
+					cdtipsit: config.cdtipsit
 	    		}
 	        ]			
 			
