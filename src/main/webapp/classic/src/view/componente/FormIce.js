@@ -11,6 +11,7 @@ Ext.define('Ice.view.componente.FormIce', {
         cls: ['ice-form-item', 'ice-form-item-classic'],
         style: 'margin: 0px 20px 20px 0px;'
     },
+    referenceHolder: true, // para que se pueda hacer getReferences()
     
     // config no ext
     config: {

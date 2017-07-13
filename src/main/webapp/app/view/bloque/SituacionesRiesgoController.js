@@ -16,14 +16,13 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             
             // esperamos a que se cree el viewmodel antes de invocar custom
             Ext.defer(function () {
-                var paso2;
+                var paso2 = 'Definiendo comportamiento de bloque de situaciones de riesgo';
                 try {
-                    paso2 = 'Definiendo comportamiento de bloque de situaciones de riesgo';
                     me.custom();
                 } catch (e) {
                     Ice.manejaExcepcion(e, paso2);
                 }
-            }, 200);
+            }, 300);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -36,121 +35,135 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             paso = 'Configurando comportamiento de bloque situaciones de riesgo';
             Ice.log('view: ',view);
         try {
-            var refs = view.getReferences() || {};            
-            Ext.ComponentQuery.query("[reference=TIPO_SITUACION]").forEach(function(it){
-            	it.on({
-            		change:function(ref){
-            			me.cargarValoresDefectoVariables(ref);
-            		}
-            	});
-            });
-            var store = view.down('grid').getStore()
-            store.load(function(r){
-            	if(r.length==0){
+            var refs = view.getReferences() || {},
+                form = refs.form;
+            if (!form) {
+                throw 'No hay formulario de situaci\u00f3n';
+            }
+
+            var formRefs = form.getReferences(),
+                cdtipsitCmp = formRefs.cdtipsit;
+            
+            if (!cdtipsitCmp) {
+                throw 'No hay campo de tipo de situaci\u00f3n';
+            }
+
+            if (Ext.manifest.toolkit !== 'classic' && cdtipsitCmp.isXType('selectfield')) { // para los select
+                cdtipsitCmp.on({
+                    change: function(){
+                        me.cargarValoresDefectoVariables();
+                    }
+                });
+            } else {
+                cdtipsitCmp.on({
+                    blur: function(){
+                        me.cargarValoresDefectoVariables();
+                    }
+                });
+            }
+
+            refs.grid.getStore().load(function (r) {
+            	if (r.length === 0) {
             		me.agregar();
             	}
             })
-            
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
     },
-    
-  onAgregarClic: function () {
-      this.agregar();
-  },
-  
-  onBorrarClic: function (grid, rowIndex, colIndex) {
-      this.borrar(grid, rowIndex, colIndex);
-  },
-  
-  onGuardarBloque: function () {
-      this.guardarBloque();
-  },
-  
-  onActualizar: function (grid, rowIndex, colIndex) {
-      this.actualizar(grid, rowIndex, colIndex);
-  },
-  
-  onCancelar: function(){
-      this.cancelar();  
-  },
-  
-  agregar: function(){
-      Ice.log('Ice.view.bloque.situacionesRiesgo.agregar');
-      var me = this,
-          view = me.getView(),
-          refs = me.getReferences(),
-          paso = "";
-      try{
-    	  me.editando=false;
-          Ice.log('View items ',view.down('grid'));
-          var paso = "Antes de agregar situacion de riesgo",
-              grid = refs.grid,
-              store = grid.getStore();
-              form = refs.form, 
-          me.limpiarForm(form);
-          view.setDatosVariablesNuevos(true);
-          Ice.request({
-              mascara: 'Agregando situacion de riesgo',
-              url: Ice.url.bloque.situacionesRiesgo.valoresDefectoFijos,
-              params: {
-                  'params.cdunieco' : view.getCdunieco(),
-                  'params.cdramo': view.getCdramo(),
-                  'params.estado': view.getEstado(),
-                  'params.nmpoliza': view.getNmpoliza(),
-                  'params.nmsuplem': view.getNmsuplem()
-              },
-              success: function (json) {
-                  var paso2 = 'LLenando store';
-                  try {
-                      Ice.log("situacion__+",json.situacion); 
-                      if(json.situacion){
-                          var refs = view.getReferences();
-                          Ice.suspendEvents(view);
-                          for (var att in json.situacion) {
-                              if (refs[att]) {
-                                  refs[att].setValue(json.situacion[att]);
-                              }
-                          }
-                          Ice.resumeEvents(view);
-                      }
-                      form.show();
-                      Ice.log('form',form);
-                      store.load();
-                      Ext.ComponentQuery.query("[reference=TIPO_SITUACION]").forEach(
-                        		function(it){ 
-                        			var s=it.getStore();
-                        			s.load(function(r){
-                        				if(r.length==1 && json.situacion){
-                        					if(!Ice.query("[name=nmsituac][xtype=textfieldice]",form).getValue()){
-                        						Ice.query("[name=nmsituac][xtype=textfieldice]",form).setValue(json.situacion.nmsituac)
-                        					}
-                        					//alert(Ext.ComponentQuery.query("[name=nmsituac]")[0].getValue());
-                        					it.setValue(r[0]);
-                        				}
-                        			})
-                        			//it.getStore().load();
-                        			
-                        		}
-                        	);
-                      
-                      
-                  } catch (e) {
-                      Ice.manejaExcepcion(e, paso2);
-                  }
-              }
-          });
-      } catch (e) {
-          Ice.manejaExcepcion(e, paso);
-      }
-  },
+
+    onAgregarClic: function () {
+        this.agregar();
+    },
+
+    onBorrarClic: function (grid, rowIndex, colIndex) {
+        this.borrar(grid, rowIndex, colIndex);
+    },
+
+    onGuardarBloque: function () {
+        this.guardarBloque();
+    },
+
+    onActualizar: function (grid, rowIndex, colIndex) {
+        this.actualizar(grid, rowIndex, colIndex);
+    },
+
+    onCancelar: function () {
+        this.cancelar();
+    },
+
+    agregar: function () {
+        Ice.log('Ice.view.bloque.situacionesRiesgo.agregar');
+        var me = this,
+            view = me.getView(),
+            refs = me.getReferences(),
+            paso = "";
+        try {
+            me.editando=false;
+            Ice.log('View items ',view.down('grid'));
+            var paso = "Antes de agregar situacion de riesgo",
+                grid = refs.grid,
+                store = grid.getStore(),
+                form = refs.form,
+                formRefs = form.getReferences();
+            me.limpiarForm(form);
+            view.setDatosVariablesNuevos(true);
+            Ice.request({
+                mascara: 'Agregando situacion de riesgo',
+                url: Ice.url.bloque.situacionesRiesgo.valoresDefectoFijos,
+                params: {
+                    'params.cdunieco' : view.getCdunieco(),
+                    'params.cdramo': view.getCdramo(),
+                    'params.estado': view.getEstado(),
+                    'params.nmpoliza': view.getNmpoliza(),
+                    'params.nmsuplem': view.getNmsuplem()
+                },
+                success: function (json) {
+                    var paso2 = 'LLenando store';
+                    try {
+                        Ice.log("situacion__+",json.situacion); 
+                        if (json.situacion) {
+                            /*
+                            var refs = view.getReferences();
+                            Ice.suspendEvents(view);
+                            for (var att in json.situacion) {
+                                if (refs[att]) {
+                                    refs[att].setValue(json.situacion[att]);
+                                }
+                            }
+                            Ice.resumeEvents(view);
+                            */
+                            Ice.cargarFormulario(refs.form, json.situacion);
+                        }
+                        form.show();
+                        Ice.log('form',form);
+                        store.load();
+                        formRefs.cdtipsit.getStore().load(function (r) {
+                            if (r.length === 1 && json.situacion) {
+                                if (!formRefs.nmsituac.getValue()) {
+                                    formRefs.nmsituac.setValue(json.situacion.nmsituac);
+                                }
+                                //alert(Ext.ComponentQuery.query("[name=nmsituac]")[0].getValue());
+                                formRefs.cdtipsit.setValue(r[0]);
+                                formRefs.cdtipsit.fireEvent('blur', formRefs.cdtipsit);
+                            }
+                        });
+                    } catch (e) {
+                        Ice.manejaExcepcion(e, paso2);
+                    }
+                }
+            });
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+    },
   
   actualizar: function(grid, rowIndex, colIndex){
       Ice.log('Ice.view.bloque.situacionesRiesgo.actualizar grid',grid,' rowIndex ',rowIndex,' colIndex ',colIndex);
       var me = this,
           view = me.getView(),
           refs = view.getReferences(),
+          formRefs = refs.form.getReferences(),
           paso = "";
       try{
     	  me.editando=true;
@@ -196,9 +209,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                               }
                           }
                          // refs['cdtipsit'].setValue(data.cdtipsit);
-                          Ext.ComponentQuery.query("[getName][name=cdtipsit][xtype=comboice]").forEach(function(it){
-                        	  it.setValue(data.cdtipsit);
-                          });
+                          formRefs.cdtipsit.setValue(data.cdtipsit);
                           
                           Ice.log("--->",refs['cdtipsit']);
                           Ice.resumeEvents(view);
@@ -270,10 +281,16 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           if (view.getDatosVariablesNuevos() !== true) {
               Ice.logWarn('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables los datos variables no son nuevos');
               return;
-          }          
-          
+          }
+
           if(refs.form){
               var form = refs.form;
+
+              var errores = Ice.obtenerErrores(form);
+              if (errores.cdtipsit) {
+                  Ice.logWarn('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables falta cdtipsit');
+              }
+
               Ice.log('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables valores cargados ok');
               var valores = {
                       'params.cdunieco': view.getCdunieco(),

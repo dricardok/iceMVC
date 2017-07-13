@@ -1577,14 +1577,18 @@ var Ice = (
                 validators = form.getModelValidators() || {},
                 modelName = Ext.id(),
                 validatorsAplican = {};
-            
-            Ice.log('Ice.obtenerErrores valores:', valores, 'fields:', fields,
+
+            Ice.log('Ice.obtenerErrores refs:', refs, 'valores:', valores, 'fields:', fields,
                 'validators:', validators);
+            
+            if (!refs) {
+                throw 'No hay referencias para validar errores';
+            }
             
             // solo aplican validators para campos que no esten ocultos
             for (var att in refs) {
-                ref = refs[att];
-                if (ref.isHidden() !== true && validators[ref.getName()]) {
+                var ref = refs[att];
+                if (ref.isHidden() !== true && ref.getName && validators[ref.getName()]) {
                     validatorsAplican[ref.getName()] = validators[ref.getName()];
                 }
             }
@@ -1624,7 +1628,12 @@ var Ice = (
         Ice.log('Ice.validarFormulario form:', form);
         var paso = 'Validando formulario';
         try {
-            var errores = Ice.obtenerErrores(form);
+            if (!form) {
+                throw 'No se puede validar el formulario';
+            }
+
+            var refs = form.getReferences(),
+                errores = Ice.obtenerErrores(form);
             if (errores) {
                 if (Ext.manifest.toolkit === 'classic') {
                     for (var name in errores) {

@@ -11,6 +11,7 @@ Ext.define('Ice.view.componente.FormIce', {
 	height: Ice.constantes.componente.form.altura.modern,
     scrollable: true,
 	userCls: ['ice-container', 'ice-container-modern', 'ice-panel', 'ice-panel-modern', 'ice-form', 'ice-form-modern'],
+	referenceHolder: true, // para que se pueda hacer getReferences()
 
 	// config no ext
 	config: {
