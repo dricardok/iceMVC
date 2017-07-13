@@ -360,85 +360,85 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           Ice.manejaExcepcion(e, paso);
       }
   },
-  
-  guardarBloque: function (){
-      Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardarBloque');
-      var me = this,          
-          view = me.getView(),
-          refs = view.getReferences(),
-          paso = 'Antes de guardar valores situacion';          
-      view.procesandoValoresDefecto = false;
-      view.setDatosFijosNuevos = false;
-      try{         
-          paso = 'Guardando datos de situacion';
-          var form = refs.form,
-              values = form.getValues(),
-              situacion = {};
-          Ice.validarFormulario(form);
-          if(form){
-              for(var i = 1; i <= 120; i++){
-                  var numVal = (('x000' + i).slice(Number(i) > 99 ? -3 : -2));
-                  var llave = 'otvalor'+ numVal;
-                  var obj = {};
-                  if(refs['b5b_otvalor'+ numVal]){
-                      situacion[llave] = values['b5b_'+llave];
-                  } else {
-                      situacion[llave] = null;
-                  }
-                  Ice.log('obj',situacion);
-              }
-              Ice.request({
-                  mascara: paso,
-                  url: Ice.url.bloque.situacionesRiesgo.actualizar,              
-                  jsonData: {
-                      params: values,
-                      situacion : situacion
-                  },
-                  success: function (action) {
-                      var paso2 = 'Seteando valores por defecto';
-                      try {
-                          if (action.validaciones && action.validaciones.length > 0) {
-                              Ext.create('Ice.view.bloque.VentanaValidaciones', {
-                                  lista: action.validaciones
-                              }).mostrar();
-                              
-                              var error = false;
-                              for (var i = 0; i < action.validaciones.length; i++) {
-                                  if (action.validaciones[i].tipo.toLowerCase() === 'error') {
-                                      //error = true; para que no avance si hay validaciones tipo "error"
-                                      break;
-                                  }
-                              }
-                              if (error === true) {
-                                  throw 'Favor de revisar las validaciones';
-                              }
-                          
-                          }
-                          if(action.success){
-                              Ice.mensajeCorrecto('Datos guardados');
-                              form.hide();
-                              refs.grid.getStore().reload();
-                              me.limpiarForm(form);
-                              Ice.log('proceso exitoso');
-                          }
-                      } catch (e) {
-                          Ice.manejaExcepcion(e, paso2);
-                          Ice.resumeEvents(view);
-                      }
-                  },
-                  failure: function () {
-                      view.procesandoValoresDefecto = false;
-                  }
-              });
-          } else {
-              Ice.mensajeWarning('Error al setear valores del formulario', refs);
-          }
-//          store.reload();
-      } catch (e) {
-          Ice.manejaExcepcion(e, paso);
-      }   
-      Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardarBloque ok');
-  },
+
+    guardarBloque: function () {
+        Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardarBloque');
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            paso = 'Antes de guardar valores situacion';
+        view.procesandoValoresDefecto = false;
+        view.setDatosFijosNuevos = false;
+        try {
+            paso = 'Guardando datos de situacion';
+            var form = refs.form,
+                values = form.getValues(),
+                situacion = {},
+                formRefs = form.getReferences();
+            if (form) {
+                Ice.validarFormulario(form);
+                for (var i = 1; i <= 120; i++) {
+                    var numVal = (('x000' + i).slice(Number(i) > 99 ? -3 : -2)),
+                        llave = 'otvalor' + numVal,
+                        obj = {};
+                    if (formRefs['b5b_otvalor' + numVal]) {
+                        situacion[llave] = values['b5b_' + llave];
+                    } else {
+                        situacion[llave] = null;
+                    }
+                    Ice.log('obj', situacion);
+                }
+                Ice.request({
+                    mascara: paso,
+                    url: Ice.url.bloque.situacionesRiesgo.actualizar,
+                    jsonData: {
+                        params: values,
+                        situacion : situacion
+                    },
+                    success: function (action) {
+                        var paso2 = 'Seteando valores por defecto';
+                        try {
+                            if (action.validaciones && action.validaciones.length > 0) {
+                                Ext.create('Ice.view.bloque.VentanaValidaciones', {
+                                    lista: action.validaciones
+                                }).mostrar();
+                                
+                                var error = false;
+                                for (var i = 0; i < action.validaciones.length; i++) {
+                                    if (action.validaciones[i].tipo.toLowerCase() === 'error') {
+                                        //error = true; para que no avance si hay validaciones tipo "error"
+                                        break;
+                                    }
+                                }
+                                if (error === true) {
+                                    throw 'Favor de revisar las validaciones';
+                                }
+                            }
+                            if (action.success) {
+                                Ice.mensajeCorrecto('Datos guardados');
+                                form.hide();
+                                refs.grid.getStore().reload();
+                                me.limpiarForm(form);
+                                Ice.log('proceso exitoso');
+                            }
+                        } catch (e) {
+                            Ice.manejaExcepcion(e, paso2);
+                            Ice.resumeEvents(view);
+                        }
+                    },
+                    failure: function () {
+                        view.procesandoValoresDefecto = false;
+                    }
+                });
+            } else {
+                Ice.mensajeWarning('Error al setear valores del formulario', refs);
+            }
+            // store.reload();
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+        Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardarBloque ok');
+    },
   
   guardar: function (params){
       Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardar');
@@ -451,7 +451,9 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
       view.setDatosFijosNuevos = false;
       try{
           var form = refs.form;
-          Ice.validarFormulario(form);
+          if (form.isHidden() !== true) {
+              Ice.validarFormulario(form);
+          }
           situacion = {};
           Ice.request({
               mascara: 'Antes de lanzar validaciones de bloque de situacion',
