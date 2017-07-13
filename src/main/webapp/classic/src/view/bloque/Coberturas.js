@@ -187,13 +187,9 @@
  															store : store
  														},
  														{
- 															xtype : 'form',
+ 															xtype : 'formtrescolumnasice',
  															reference: 'form',
- 															layout : {
- 																type : 'column'
- 															},
- 															defaults : {
- 															},
+ 															
  															buttons : [ {
  																text : 'Guardar',
  																hidden: true,

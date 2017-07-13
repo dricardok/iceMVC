@@ -44,7 +44,7 @@ Ext.define('Ice.view.bloque.datosauxiliares.FormAuxiliarController', {
             refs = me.getReferences(),
             paso = 'Guardando datos adicionales';
         try {
-            me.validarDatos();
+            me.validarFormulario();
 
             var valores = view.getValues();
             valores.cdunieco = view.getCdunieco();
