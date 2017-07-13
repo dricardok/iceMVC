@@ -383,13 +383,13 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 
                 botones: [
                     {
-                        text: 'Editar',
+                        text: 'Modificar Cotización',
                         iconCls: 'x-fa fa-check',
                         handler: function (me) {
                             me.up('ventanaprimas').cerrar();
                         }
                     }, {
-                        text: 'Confirmar',
+                        text: 'Emitir',
                         iconCls: 'x-fa fa-dollar',
                         handler: function (me) {
                             me.up('ventanaprimas').cerrar();

@@ -1,5 +1,5 @@
 Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal', {
-	extend: 'Ice.view.componente.Ventana',
+	extend: 'Ice.view.componente.VentanaIce',
 	xtype: 'ventanatarifastemporales',
 	
 	requires: [

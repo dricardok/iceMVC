@@ -35,11 +35,12 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
     },
     
     config: {
-		cdunieco: null,
+    	cdunieco: null,
 		cdramo: null,
 		estado: null,
 		nmpoliza: null,
-		nmsuplem: null
+		nmsuplem: null,
+		cdtipsit: null
 	},
 	
 	constructor: function (config) {
@@ -48,10 +49,11 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 			paso = 'Construyendo dataview de vista previa';
 		
 		try{
+			/*
 			config.cdunieco = 1;
 			config.cdramo = 201;
 			config.estado = 'W';
-			config.nmpoliza = 613805;
+			config.nmpoliza = 613805;*/
 			
 			if(!config
 				|| !config.cdunieco
@@ -73,7 +75,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 				remoteSort: false,
 				proxy: {					
 					type: 'ajax',
-					url: Ice.url.emision.obtenerPlanes,
+					url: Ice.url.emision.obtenerTarifaPlanes,
 					extraParams: Ice.convertirAParams({
 						cdunieco: config.cdunieco,
                         cdramo: config.cdramo,

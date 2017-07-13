@@ -1,5 +1,5 @@
 Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
-	extend: 'Ext.panel.Panel',
+	extend: 'Ice.view.componente.PanelIce',
 	xtype: 'tarificaciontemporal',
 	
 	title: 'Elige tu Plan',
@@ -10,19 +10,21 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 		cdramo: null,
 		estado: null,
 		nmpoliza: null,
-		nmsuplem: null
+		nmsuplem: null,
+		cdtipsit: null
 	},
 	
 	constructor: function (config) {
-		Ice.log('Ice.view.bloque.emsion.vistaprevia.BloqueVistaPrevia.constructor config', config);		
+		Ice.log('Ice.view.bloque.emsion.vistaprevia.TarificacionTemporal.constructor config', config);		
 		var me = this,
 			paso = 'Construyendo bloque de tarificacion temporal';
 		
 		try{
+			/*
 			config.cdunieco = 1;
 			config.cdramo = 201;
 			config.estado = 'W';
-			config.nmpoliza = 613805;
+			config.nmpoliza = 613805;*/
 			
 			if (!config
 	                || !config.cdunieco

@@ -1,5 +1,5 @@
 Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal', {
-    extend: 'Ice.view.componente.Ventana',
+    extend: 'Ice.view.componente.VentanaIce',
     xtype: 'ventanatarifastemporales',
     
     requires: [
@@ -13,9 +13,11 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
     
     config: {
     	cdunieco: null,
-    	cdramo: null,
-    	estado: null,
-    	nmpoliza: null,
+		cdramo: null,
+		estado: null,
+		nmpoliza: null,
+		nmsuplem: null,
+		cdtipsit: null,
     	cdperpag: null
     },
     
@@ -84,7 +86,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
                     ],
                     proxy: {
                         type: 'ajax',
-                        url: Ice.url.emision.obtenerPlanDetalle,
+                        url: Ice.url.emision.obtenerTarifaPlan,
                         extraParams: {
                             'params.cdunieco': config.cdunieco,
                             'params.cdramo': config.cdramo,

@@ -33,7 +33,8 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadores', {
     ],
     
     listeners: {
-        itemclick: 'onItemClic'
+        itemclick: 'onItemClic'//,
+        //beforerender:	'onVistaAgente'
     },
     
     // configuracion no ext

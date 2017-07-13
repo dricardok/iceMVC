@@ -11,6 +11,7 @@ Ext.define('Ice.view.componente.FormIce', {
 	height: Ice.constantes.componente.form.altura.modern,
     scrollable: true,
 	userCls: ['ice-container', 'ice-container-modern', 'ice-panel', 'ice-panel-modern', 'ice-form', 'ice-form-modern'],
+	referenceHolder: true, // para que se pueda hacer getReferences()
 
 	// config no ext
 	config: {
@@ -29,7 +30,6 @@ Ext.define('Ice.view.componente.FormIce', {
                 config.items[i].userCls = ['ice-form-item', 'ice-form-item-modern']
                     .concat(config.items[i].userCls || []);
             }
-
 	    	config.items = [{
 				xtype: 'toolbar',
 				docked: 'top',
@@ -40,6 +40,7 @@ Ext.define('Ice.view.componente.FormIce', {
 						itemId: 'botonMostrarOcultarTodo',
 						tooltip: 'Mostrar/ocultar',
 						padre: me,
+						hidden:Ice.sesion.cdsisrol==Ice.constantes.roles.AGENTE,
 						handler: function (me) {
 							Ice.toggleOcultos(me.padre);
 						}

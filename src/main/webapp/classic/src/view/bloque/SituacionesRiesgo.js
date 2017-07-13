@@ -106,8 +106,6 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 			
 //	         // creando modelo para validaciones
 			var modelName = Ext.id();
-			me.setModelFields(compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.fields);
-			me.setModelValidators(compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.validators);
 			Ice.log('compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.validators ',me.getModelValidators());
 			Ext.apply(me, {
 				items: [
@@ -147,14 +145,6 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 								}]
 							}
 						]
-//	                    ,
-//	                        listeners:{
-//	                        	cargarstore:function(store,datos){
-//	                        		Ice.log('Agregar ',this);
-//	                        		if(store.count()==0)
-//	                        			me.getController().onAgregarClic();
-//	                        	}
-//	                        }
 					},{
 						xtype: 'formdoscolumnasice',
 						reference: 'form',
@@ -174,27 +164,11 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 								xtype: 'button',
 								text: 'Cancelar',
 								handler: 'onCancelar'
-//	                                    function (me){
-//	                                    var paso = '';
-//	                                    try{
-//	                                        paso = 'Antes de ocultar formulario de situacion';
-//	                                        Ice.log('controller',me.getController());
-//	                                        me.getController().limpiarForm(me.up('form'));
-//	                                        me.up('form').hide();
-//	                                    } catch (e){
-//	                                        Ice.generaExcepcion(e, paso);
-//	                                    }
-//	                                }
 							}
 						],
-						// bodyPadding: '10px 0px 0px 10px',
-						// defaults: {
-						//     margin: '0px 10px 10px 0px',
-						//     cls: 'big-50 small-100'
-						// }
-					}//,{
-					//     xtype: 'form'
-					// }
+						modelFields: compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.fields,
+						modelValidators: compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.validators
+					}
 				]
 			});
 		} catch (e) {

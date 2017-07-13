@@ -266,7 +266,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	}
 	
 	@Override
-	public List<Map<String, Object>> generarTarificacion2(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception {
+	public List<Map<String, Object>> generarTarificacionPlanes(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception {
 		String paso = null;
 		Map<String, Object> res = null;
 		List<Map<String, Object>> resultados = new ArrayList<Map<String, Object>>();
@@ -374,6 +374,56 @@ public class EmisionManagerImpl implements EmisionManager {
 		
 		return resultados;
 	}
+	
+	@Override
+	public Map<String, Object> generarTarificacionPlan(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsituac, String cdperpag) throws Exception {
+		String paso = null;
+		Map<String, Object> res = null;		
+		List<Map<String, String>> mpolizas = null;
+		Map<String, String> mpoliza = null;
+		SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
+		try{
+			
+			mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, "0");
+			
+			if(mpolizas!=null && !mpolizas.isEmpty() && mpolizas.get(0) != null ){
+				mpoliza = mpolizas.get(0);
+				
+				emisionDAO.movimientoMpolizas(mpoliza.get("cdunieco"), mpoliza.get("cdramo"), mpoliza.get("estado"), mpoliza.get("nmpoliza"),
+						  mpoliza.get("nmsuplem"), mpoliza.get("nmsuplem"), mpoliza.get("status"), mpoliza.get("swestado"),
+						  mpoliza.get("nmsolici"), 
+						  mpoliza.get("feautori") != null && !mpoliza.get("feautori").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feautori")) : null, 
+						  mpoliza.get("cdmotanu"), 
+						  mpoliza.get("feanulac") != null && !mpoliza.get("feanulac").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feanulac")) : null, 
+						  mpoliza.get("swautori"), mpoliza.get("cdmoneda"), 
+						  mpoliza.get("feinisus") != null && !mpoliza.get("feinisus").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feinisus")) : null,
+						  mpoliza.get("fefinsus") != null && !mpoliza.get("fefinsus").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("fefinsus")) : null,
+						  mpoliza.get("ottempot"), 
+						  mpoliza.get("feefecto") != null && !mpoliza.get("feefecto").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feefecto")) : null, 
+						  mpoliza.get("hhefecto"),
+						  mpoliza.get("feproren") != null && !mpoliza.get("feproren").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feproren")) : null, 
+						  mpoliza.get("fevencim") != null && !mpoliza.get("fevencim").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("fevencim")) : null, 
+						  mpoliza.get("nmrenova"), 
+						  mpoliza.get("ferecibo") != null && !mpoliza.get("ferecibo").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("ferecibo")) : null,
+						  mpoliza.get("feultsin") != null && !mpoliza.get("feultsin").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feultsin")) : null, 
+						  mpoliza.get("nmnumsin"), mpoliza.get("cdtipcoa"), mpoliza.get("swtarifi"), mpoliza.get("swabrido"), 
+						  mpoliza.get("feemisio") != null && !mpoliza.get("feemisio").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feemisio")) : null,
+						  cdperpag, mpoliza.get("nmpoliex"), mpoliza.get("nmcuadro"), mpoliza.get("porredau"),
+						  mpoliza.get("swconsol"), mpoliza.get("nmpolcoi"), mpoliza.get("adparben"), mpoliza.get("nmcercoi"), mpoliza.get("cdtipren"), 
+						  "U");
+				
+			}
+			
+			
+			res = generarTarificacion(cdunieco, cdramo, estado, nmpoliza, "0");
+			
+		}catch(Exception e) {
+			Utils.generaExcepcion(e, paso);
+		}
+		
+		return res;
+	}	
 	
 	@Override
 	public List<Map<String, String>> obtenerDatosTarificacion(String cdunieco, String cdramo, String estado,
