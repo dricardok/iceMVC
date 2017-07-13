@@ -190,7 +190,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
                 accion: 'U',
                 listeners: {
                     'datosPersonaGuardada': function(){
-                        Ice.query('#mainView').getReferences().mainCard.pop();
+                        Ice.pop();
                         Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.cerrarPersonaPoliza');
                     }
                 },

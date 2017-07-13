@@ -11,6 +11,7 @@ Ext.define('Ice.view.componente.FormIce', {
 	height: Ice.constantes.componente.form.altura.modern,
     scrollable: true,
 	userCls: ['ice-container', 'ice-container-modern', 'ice-panel', 'ice-panel-modern', 'ice-form', 'ice-form-modern'],
+	referenceHolder: true, // para que se pueda hacer getReferences()
 
 	// config no ext
 	config: {
@@ -29,7 +30,6 @@ Ext.define('Ice.view.componente.FormIce', {
                 config.items[i].userCls = ['ice-form-item', 'ice-form-item-modern']
                     .concat(config.items[i].userCls || []);
             }
-
 	    	config.items = [{
 				xtype: 'toolbar',
 				docked: 'top',
@@ -40,12 +40,18 @@ Ext.define('Ice.view.componente.FormIce', {
 						itemId: 'botonMostrarOcultarTodo',
 						tooltip: 'Mostrar/ocultar',
 						padre: me,
+						hidden: Ice.sesion.cdsisrol == Ice.constantes.roles.AGENTE,
 						handler: function (me) {
 							Ice.toggleOcultos(me.padre);
 						}
 					}
 				].concat(config.tbar || [])
 			}].concat(config.items);
+
+			// cuando solo tenemos las opciones tbar default y somos agente, mejor las quitamos
+			if (config.items[0].items.length === 2 && Ice.sesion.cdsisrol == Ice.constantes.roles.AGENTE) {
+				config.items[0].hidden = true;
+			}
 			
 			if ((config.buttons || []).length > 0) {
 			    config.items.push({

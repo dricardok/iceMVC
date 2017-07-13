@@ -380,7 +380,12 @@ public class SituacionManagerImpl implements SituacionManager{
             String fefinsus, Map<String, String> valores) throws Exception{
 	    logger.debug(Utils.join(
                 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
-                "\n@@@@@@ actualizaSituacion"
+                "\n@@@@@@ actualizaSituacion",
+                "\n@@@@@@ cdunieco",cdunieco,
+                "\n@@@@@@ cdramo",cdramo,
+                "\n@@@@@@ estado",estado,
+                "\n@@@@@@ nmpoliza",nmpoliza,
+                "\n@@@@@@ nmsuplem",nmsuplem
                ));
 	    List<Map<String, String>> coberturas = new ArrayList<>();
 	    List<Map<String, String>> validaciones = new ArrayList<>();

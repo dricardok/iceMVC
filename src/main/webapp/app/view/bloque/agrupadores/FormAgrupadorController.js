@@ -49,7 +49,7 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupadorController', {
             view = me.getView(),
             paso = 'Guardando subagrupador';
         try {
-            Ice.validaFormulario(view);
+            Ice.validarFormulario(view);
             
             var valores = view.getValues();
             

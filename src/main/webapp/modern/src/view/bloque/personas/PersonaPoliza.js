@@ -2,7 +2,8 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
 		extend : 'Ext.Panel',
 		xtype : 'personapoliza',
 		controller : 'personapoliza',
-		
+        
+        layout: 'vbox',
 		config : {
 		    cdunieco: null,
 		    cdramo: null,
@@ -18,13 +19,6 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
 		    cdtipsit: null,
 		    botones: []
 		},
-//		layout : 'responsivecolumn',
-		bodyPadding : '10px 0px 0px 10px',
-		width : '100%',
-	    defaults: {
-	        margin: '0px 10px 10px 0px',
-	        cls: 'big-50 small-100'
-	    },
 		constructor: function (config) {
 	        Ice.log('Ice.view.bloque.PersonaPoliza.constructor config:', config);
 	        var me = this,
@@ -63,11 +57,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                           xtype: 'button',
                           reference: 'btnGuardar',
                           text: 'Guardar',
-                          handler: 'onGuardar',/*function (me){
-                              Ice.log('Ice.view.bloque.personas.ListaPersonas.initComponent me',me.up('panel'));
-                              me.up('panel').close();
-                          }*/
-                      //'onGuardarBloque'
+                          handler: 'onGuardar',
                       },{
                           xtype: 'button',
                           text: 'Nuevo',
@@ -85,23 +75,16 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                   
                   config.items = [
                       {
-                          xtype: 'formpanel',
+                          xtype: 'cdpersoncdrol',
                           reference: 'form',
-                          title: 'Buscar persona',
-                          items: comps.BLOQUE_PERSONAS.FORMULARIO.items,
-                          modelo: modelName,
-//                          layout: 'responsivecolumn',
-                          width: '100%',
-                          bodyPadding: '10px 0px 0px 10px',
-                          defaults: {
-                              margin: '0px 10px 10px 0px',
-                              cls: 'big-50 small-100'
-                          }
+                          height: 300,
+                          cdramo: config.cdramo,
                       },{
                           xtype: 'domicilios',
                           reference: 'gridDomicilios',
-                          width: '100%',
+                          height: 200,
                           selector: true,
+                          scrollable: true,
                           items: {
                               xtype: 'toolbar',
                               docked: 'top',
@@ -126,30 +109,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                                   }
                               ]
                           }
-                      }/*,{
-                          xtype: 'toolbar',
-                          docked: 'top',
-                          items: [
-                              {
-                                  xtype: 'button',
-                                  reference: 'btnGuardar',
-                                  text: 'Guardar',
-                                  handler: 'onGuardar',
-                              },{
-                                  xtype: 'button',
-                                  text: 'Nuevo',
-                                  handler: function (me){
-                                      var paso = '';
-                                      try{
-                                          paso = 'Antes de ocultar formulario de situacion';
-                                          me.up('form').close();
-                                      } catch (e) {
-                                          Ice.generaExcepcion(e, paso);
-                                      }
-                                  }
-                              }
-                          ]
-                      }*/
+                      }
                   ];
 	            } catch (e) {
 	                Ice.generaExcepcion(e, paso);

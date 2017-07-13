@@ -66,7 +66,7 @@ public class PersonasPolizaDAOImpl extends HelperJdbcDao implements PersonasPoli
 			      
             String[] cols = new String[] { "cdunieco", "cdramo", "estado", "nmpoliza", "nmsituac",
                     					   "cdrol", "cdperson", "nmsuplem", "status", "nmorddom", "swfallec",
-                    					   "dsnombre", "dstipide","cdideper"};
+                    					   "dsnombre", "dstipide","cdideper","dsrol"};
             
 			declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));

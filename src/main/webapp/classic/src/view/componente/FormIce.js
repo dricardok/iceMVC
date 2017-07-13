@@ -11,6 +11,7 @@ Ext.define('Ice.view.componente.FormIce', {
         cls: ['ice-form-item', 'ice-form-item-classic'],
         style: 'margin: 0px 20px 20px 0px;'
     },
+    referenceHolder: true, // para que se pueda hacer getReferences()
     
     // config no ext
     config: {
@@ -31,11 +32,17 @@ Ext.define('Ice.view.componente.FormIce', {
                     iconCls: 'x-fa fa-eye',
                     //style: 'margin: 0 82px 0 0;',
                     tooltip: 'Mostrar/ocultar',
+                    hidden: Ice.sesion.cdsisrol === Ice.constantes.roles.AGENTE,
                     handler: function (me) {
                         Ice.toggleOcultos(me.up('form'));
                     }
                 }
             ].concat(config.tbar || []);
+
+            // cuando solo tenemos las opciones tbar default y somos agente, mejor las quitamos
+            if (config.tbar.length === 2 && Ice.sesion.cdsisrol === Ice.constantes.roles.AGENTE) {
+                config.tbar = [];
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
