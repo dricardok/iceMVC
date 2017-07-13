@@ -20,7 +20,6 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                 try {
                     paso2 = 'Definiendo comportamiento de bloque de situaciones de riesgo';
                     me.custom();
-                    
                 } catch (e) {
                     Ice.manejaExcepcion(e, paso2);
                 }
@@ -37,35 +36,8 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             paso = 'Configurando comportamiento de bloque situaciones de riesgo';
             Ice.log('view: ',view);
         try {
-            var refs = view.getReferences() || {};
-            Ice.log('Ice.view.bloque.DatosGeneralesController refs:', refs);
-            
-         // agregar disparadores valores defecto variables
-//            for (var i = 0; i < view.getCamposDisparanValoresDefectoVariables().length; i++) {
-//                var name = view.getCamposDisparanValoresDefectoVariables()[i];
-//                if (refs[name]) {
-//                    if (Ext.manifest.toolkit === 'classic') {
-//                        refs[name].setFieldStyle('border-left: 1px solid yellow;');
-//                    } else {
-//                        refs[name].setStyle('border-left: 1px solid yellow;');
-//                    }
-//                    
-//                    if (Ext.manifest.toolkit !== 'classic' && refs[name].isXType('selectfield')) { // para los select
-//                        refs[name].on({
-//                            change: function () {
-//                                me.cargarValoresDefectoVariables();
-//                            }
-//                        });
-//                    } else {
-//                        refs[name].on({
-//                            blur: function (ref) {
-//                                me.cargarValoresDefectoVariables(ref);
-//                            }
-//                        });
-//                    }
-//                }
-//            }
-            
+
+            var refs = view.getReferences() || {};            
             Ext.ComponentQuery.query("[reference=TIPO_SITUACION]",view).forEach(function(it){
             	it.on({
             		change:function(ref){
@@ -114,9 +86,10 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
       try{
     	  me.editando=false;
           Ice.log('View items ',view.down('grid'));
-          paso = "Antes de agregar situacion de riesgo";
-          var store = view.down('grid').getStore(),
-              form = refs.form;
+          var paso = "Antes de agregar situacion de riesgo",
+              grid = refs.grid,
+              store = grid.getStore();
+              form = refs.form, 
           me.limpiarForm(form);
           view.setDatosVariablesNuevos(true);
           Ice.request({
@@ -133,9 +106,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                   var paso2 = 'LLenando store';
                   try {
                       Ice.log("situacion__+",json.situacion); 
-                      
                       if(json.situacion){
-//                          store.add(json.situacion);
                           var refs = view.getReferences();
                           Ice.suspendEvents(view);
                           for (var att in json.situacion) {
@@ -375,16 +346,13 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           paso = 'Antes de guardar valores situacion';          
       view.procesandoValoresDefecto = false;
       view.setDatosFijosNuevos = false;
-      try{
-          me.validarDatos();
-          
+      try{         
           paso = 'Guardando datos de situacion';
-          Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardarBloque guardando datos');
-          if(refs.form){
-              var form = refs.form;
-              form.hide();
-              values = form.getValues();          
+          var form = refs.form,
+              values = form.getValues(),
               situacion = {};
+          Ice.validaFormulario(form);
+          if(form){
               for(var i = 1; i <= 120; i++){
                   var numVal = (('x000' + i).slice(Number(i) > 99 ? -3 : -2));
                   var llave = 'otvalor'+ numVal;
@@ -425,11 +393,11 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                           }
                           if(action.success){
                               Ice.mensajeCorrecto('Datos guardados');
+                              form.hide();
                               refs.grid.getStore().reload();
-                              me.limpiarForm(refs.form);
+                              me.limpiarForm(form);
                               Ice.log('proceso exitoso');
                           }
-                          
                       } catch (e) {
                           Ice.manejaExcepcion(e, paso2);
                           Ice.resumeEvents(view);
@@ -439,7 +407,6 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                       view.procesandoValoresDefecto = false;
                   }
               });
-              Ice.log('situacion',situacion);
           } else {
               Ice.mensajeWarning('Error al setear valores del formulario', refs);
           }
@@ -448,83 +415,6 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           Ice.manejaExcepcion(e, paso);
       }   
       Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardarBloque ok');
-  },
-  
-  obtenerErrores: function () {
-      Ice.log('Ice.view.bloque.SituacionesRiesgoController.obtenerErrores');
-      var me = this,
-          view = me.getView(),
-          refs = view.getReferences(),
-          paso = 'Recuperando errores de formulario',
-          errores = {};
-      try {
-          // validar con un modelo dinamico
-          // sin usar el data binding
-          paso = 'Construyendo modelo de validaci\u00f3n';
-          var validators = {}, ref;
-          var formRefs = refs.form.getReferences();
-          Ice.log('Ice.view.bloque.SituacionesRiesgoController.obtenerErrores refs',refs);
-          Ice.log('Ice.view.bloque.SituacionesRiesgoController.obtenerErrores formRefs',formRefs);
-          Ice.log('Ice.view.bloque.SituacionesRiesgoController.obtenerErrores validators',view.getModelValidators());
-          for (var att in refs) {
-              ref = refs[att];
-              if (ref.isHidden() !== true && view.getModelValidators()[ref.name]) { // solo para no ocultos
-                  Ice.log('Ice.view.bloque.SituacionesRiesgoController.obtenerErrores ref name ', ref.name);
-                  validators[ref.name] = view.getModelValidators()[ref.name];
-              }
-          }
-          Ice.log('Ice.view.bloque.SituacionesRiesgoController.obtenerErrores validators:', validators);
-          
-          var modelName = Ext.id();
-          Ext.define(modelName, {
-              extend: 'Ext.data.Model',
-              fields: view.getModelFields(),
-              validators: validators
-          });
-          
-          paso = 'Validando datos';
-          errores = Ext.create(modelName, refs.form.getValues()).getValidation().getData();
-      } catch (e) {
-          Ice.generaExcepcion(e, paso);
-      }
-      return errores;
-  },
-  
-  validarDatos: function () {
-      Ice.log('Ice.view.bloque.SituacionesRiesgo.validarDatos');
-      var me = this,
-          view = me.getView(),
-          refs = view.getReferences(),
-          paso = 'Validando datos de situación';
-      try {
-          var errores = me.obtenerErrores();
-          Ice.log('Ice.view.bloque.SituacionesRiesgo.validarDatos errores ',errores);
-          var sinErrores = true,
-              erroresString = '';
-          Ext.suspendLayouts();
-          for (var name in errores) {
-              if (errores[name] !== true) {
-                  sinErrores = false;
-                  var ref = view.down('[name=' + name + ']');
-                  if (Ext.manifest.toolkit === 'classic') {
-                      ref.setActiveError(errores[name]);
-                  } else {
-                      erroresString = erroresString + ref.getLabel() + ': ' + errores[name] + '<br/>';
-                  }
-              }
-          }
-          Ext.resumeLayouts();
-          
-          if (sinErrores !== true) {
-              if (Ext.manifest.toolkit === 'classic') {
-                  throw 'Favor de revisar los datos';
-              } else {
-                  throw erroresString;
-              }
-          }
-      } catch (e) {
-          Ice.generaExcepcion(e, paso);
-      }
   },
   
   guardar: function (params){
@@ -537,7 +427,8 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
       view.procesandoValoresDefecto = false;
       view.setDatosFijosNuevos = false;
       try{
-//          me.validarDatos();
+          var form = refs.form;
+          Ice.validaFormulario(form);
           situacion = {};
           Ice.request({
               mascara: 'Antes de lanzar validaciones de bloque de situacion',
@@ -660,10 +551,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
       Ice.log('Ice.view.bloque.CoberturasController.limpiarForm');
       paso = 'Limpiando formulario de situaciones de riesgo';
       try{
-          form.reset();          
-//          Ice.query('[getName]', form).forEach(function(it){
-//              it.setValue(null);
-//          });
+          form.reset();
       } catch (e){
           Ice.generaExcepcion(e, paso);
       }
