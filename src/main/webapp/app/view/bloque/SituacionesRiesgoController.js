@@ -198,9 +198,14 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                   try {
                       Ice.log('json editando:::',json);
                       if(json.situacion){
-                          var situacion = json.situacion; 
+                          var situacion = json.situacion;
+                          
+                          me.limpiarForm(form);
+                          view.setDatosVariablesNuevos(false);
+
                           Ice.log("situacion",situacion);
 //                          store.add(json.situacion);
+                          /*
                           Ice.suspendEvents(view);
                           for (var att in situacion) {
                         	  Ice.log("attr:",att)
@@ -213,6 +218,8 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                           
                           Ice.log("--->",refs['cdtipsit']);
                           Ice.resumeEvents(view);
+                          */
+                          Ice.cargarFormulario(form, situacion);
                       }
                       Ice.log('form',form);
                       form.show();
