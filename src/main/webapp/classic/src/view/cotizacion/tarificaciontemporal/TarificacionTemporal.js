@@ -11,6 +11,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 		estado: null,
 		nmpoliza: null,
 		nmsuplem: null,
+		cdperpag: null,
+		nmsituac: null,
 		cdtipsit: null
 	},
 	
@@ -24,8 +26,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 			config.cdunieco = 1;
 			config.cdramo = 201;
 			config.estado = 'W';
-			config.nmpoliza = 613805;*/
-			
+			config.nmpoliza = 613805;
+			*/
 			if (!config
 	                || !config.cdunieco
 	                || !config.cdramo

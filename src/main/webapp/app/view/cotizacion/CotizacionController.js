@@ -344,11 +344,14 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
     		var view = me.getView();
     		
     		var planes = Ext.create('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
+
         		cdunieco: view.getCdunieco(),
         		cdramo: view.getCdramo(),
         		estado: view.getEstado(),
         		nmpoliza: view.getNmpoliza(),
         		nmsuplem: view.getNmsuplem(),
+        		cdtipsit: view.getCdtipsit(),
+        		
         		buttons : [{
         			text: 'Editar',
         			iconCls: 'x-fa fa-check',

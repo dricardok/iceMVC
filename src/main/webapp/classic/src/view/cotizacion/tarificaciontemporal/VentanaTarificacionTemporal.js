@@ -18,6 +18,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
 		nmpoliza: null,
 		nmsuplem: null,
 		cdtipsit: null,
+		nmsituac: null,
     	cdperpag: null
     },
     

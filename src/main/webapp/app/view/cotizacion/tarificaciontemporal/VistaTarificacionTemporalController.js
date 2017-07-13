@@ -6,24 +6,26 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 		Ice.log('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalController.onItemClic');
 		
 		var me = this,
+			view = this.getView(),
 			paso = 'Recuperando tarifa temporal';
 		
 		
-		try {			
+		try {	
 			
 			Ext.create({
 				xtype: 'ventanatarifastemporales',
 				
-				cdunieco: rec.data.cdunieco,
-				cdramo: rec.data.cdramo,
-				estado: rec.data.estado,
-				nmpoliza: rec.data.nmpoliza,
+				cdunieco: view.getCdunieco(),
+				cdramo: view.getCdramo(),
+				estado: view.getEstado(),
+				nmpoliza: view.getNmpoliza(),
 				cdperpag: rec.data.cdperpag,
+				cdtipsit: view.getCdtipsit(),
 				
 				botones: [
 					{
 						text: 'Cerrar',
-						iconCls: 'x-fa fa-check',
+						iconCls: 'x-tool-close',
 						handler: function (me) {
 							me.up('ventanatarifastemporales').cerrar();
 						}
@@ -31,26 +33,34 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 						text: 'Confirmar',
 	                    iconCls: 'x-fa fa-dollar',
 						handler: function (me) {
-							var paso = 'Tarificando el plan seleccionado'; 
 							
+							var paso = 'Tarificando el plan seleccionado'; 							
 							me.up('ventanatarifastemporales').cerrar();
-							
-							/*
-							 Ice.request({
+													
+							try{
+								// Tarifincando cotizacion con el plan seleccionado y redirecconando a emitir
+								Ice.request({
 					                mascara: paso,
-					                url: Ice.url.core.recuperarDatosSesion,
+					                url: Ice.url.emision.tarificarPlan,
+					                params: Ice.convertirAParams({
+					                        cdunieco: view.getCdunieco(),
+					                        cdramo: view.getCdramo(),
+					                        estado: view.getEstado(),
+					                        nmpoliza: view.getNmpoliza(),
+					                        nmsuplem: view.getNmsuplem(),					                     
+					                        cdtipsit: view.getCdtipsit(),
+					                        nmsituac: view.getNmsituac(),
+					                        cdperpag: rec.data.cdperpag
+					                    }),
 					                success: function (action) {
-					                    var paso2 = 'Redirecconando a la ventana de emitir;
-					                    try {
-					                    	Ice.query('#mainView').getController().redirectTo('emision.action?cdunieco=' + rec.data.cdunieco +
-					                                '&cdramo=' + rec.data.cdramo + '&estado=' + rec.data.estado + '&nmpoliza=' + rec.data.nmpoliza +
-					                                '&cdtipsit=' + view.getCdtipsit(),
-					                            true);
-					                    } catch (e) {
-					                        Ice.manejaExcepcion(e, paso2);
-					                    }
+					                    alert(action);
 					                }
-					            }); */
+					            });
+								
+								
+							}catch(e){
+								Ice.manejaExcepcion(e, paso);
+							}
 						}
 					}
 				]
