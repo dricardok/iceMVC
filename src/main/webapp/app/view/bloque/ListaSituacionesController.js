@@ -3,19 +3,21 @@
  */
 Ext.define('Ice.view.bloque.ListaSituacionesController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.bloquelistasituaciones',    
+    alias: 'controller.bloquelistasituaciones',    
+
     custom: function () {
         Ice.log('Ice.view.bloque.ListaSituacionesController.custom');
         var me = this,
-            view = me.getView(),            paso = 'Configurando comportamiento de bloque lista de situaciones';
+            view = me.getView(),
+            paso = 'Configurando comportamiento de bloque lista de situaciones';
             Ice.log('view: ',view);
         try {
             var store = view.getStore();
             Ice.log('store: ',store);
             store.on({
                 load: function(){
-                    Ice.log('Ice.view.bloque.ListaSituacionesController.custom load situacionCero ',view.situacionCero);
-                    if(view.situacionCero == true){
+                    Ice.log('Ice.view.bloque.ListaSituacionesController.custom load situacionCero ',view.getSituacionCero());
+                    if(view.getSituacionCero() == true){
                         if(store.getAt(0)){
                             Ice.log('Ice.view.bloque.ListaSituacionesController.custom load store[0] ',store.getAt(0));
                             if(store.getAt(0).getData()){
@@ -32,10 +34,12 @@ Ext.define('Ice.view.bloque.ListaSituacionesController', {
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
-    },    
+    },    
+
     onCargarClic: function () {
         this.cargar();
-    },
+    },
+
     cargar: function () {
         Ice.log('Ice.view.bloque.ListaSituacionesController.cargar');
         var me = this,

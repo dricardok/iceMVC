@@ -3,12 +3,9 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
     xtype: 'personapolizanavigation',
     
     controller: 'personapolizanavigation',
-    layout: 'card',
     title: 'Personas poliza',
-    height: '100%',
-    bodyStyle: 'padding:15px',
     scrollable: true,
-    
+    //layout: 'vbox',
  // validacion de parametros de entrada
     constructor: function (config) {
         Ice.log('Ice.view.bloque.personas.ListaPersonas.constructor config:', config);
@@ -27,6 +24,10 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
                     throw 'Falta llave de p\u00f3liza';
                 }
                 
+                if (config.estado == 'w'){
+                    config.estado === 'W';
+                }
+
                 config.modulo = config.modulo || 'COTIZACION';
                 
                 config.items = [
@@ -47,8 +48,8 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
                                 ui: 'action',
                                 iconCls: 'x-fa fa-edit',
                                 handler: function(grid, rowIndex, colIndex) {
-                                            me.getController().onActualizar(grid, rowIndex, colIndex);
-                                        }
+                                    me.getController().onActualizar(grid, rowIndex, colIndex);
+                                }
                             }
                         ]
                     },{
