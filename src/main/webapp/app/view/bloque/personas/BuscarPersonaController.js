@@ -95,14 +95,15 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
             refs = view.getReferences(),
             paso = 'Guardando persona';
         try{
-            Ice.log('Mainview.refs',Ice.query('#mainView').refs);
+            Ice.log('Mainview.refs',refs);
+            Ice.log('gridPersonas selection',refs.gridPersonas.getSelection());
             if(refs.gridPersonas.getSelection()){
                 var selection = refs.gridPersonas.getSelection(),
-                    data = '';
-                
+                    data;
+                Ice.log('selection',selection);
                 if(selection){
                     if(Ext.manifest.toolkit === 'classic'){
-                        if(selection[0].data){
+                        if(selection[0].getData()){
                             data = selection[0].data;
                         } else {
                             Ice.mensajeWarning('Seleccione un registro');
