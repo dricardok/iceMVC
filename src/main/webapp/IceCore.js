@@ -1658,20 +1658,25 @@ var Ice = (
             Ice.generaExcepcion(e, paso);
         }
     },
-    
+
     /**
-     * Carga un formulario. Recibe el form, los datos y carga los campos que existan y
-     * dispara la herencia de anidados
+     * Carga un formulario. Recibe el form, los datos y opciones. Carga los campos que existan y
+     * dispara la herencia de anidados.
+     * opciones: {
+     *     sinReset (boolean)
+     * }
      */
-    cargarFormulario: function (form, datos) {
-        Ice.log('Ice.cargarFormulario form:', form, 'datos:', datos);
+    cargarFormulario: function (form, datos, opciones) {
+        Ice.log('Ice.cargarFormulario form:', form, 'datos:', datos, 'opciones:', opciones);
         var paso = 'Asignando valores de formulario';
         try {
             if (!form) {
                 throw 'Falta el formulario';
             }
             Ice.suspendEvents(form);
-            form.reset();
+            if (!(opciones && opciones.sinReset === true)) {
+                form.reset();
+            }
             if (datos) {
                 var refs = form.getReferences() || {};
                 for (var att in datos) {

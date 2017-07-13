@@ -41,15 +41,18 @@ Ext.define('Ice.app.controller.FormIceController', {
     },
 
     /**
-     * Carga el formulario. Recibe los datos y carga los campos que existan y
-     * dispara la herencia de anidados
+     * Carga el formulario. Recibe los datos y opciones. Carga los campos que existan y
+     * dispara la herencia de anidados.
+     * opciones: {
+     *     sinReset (boolean)
+     * }
      */
-    cargarFormulario: function (datos) {
-        Ice.log('Ice.app.controller.FormIceController.cargarFormulario datos:', datos);
+    cargarFormulario: function (datos, opciones) {
+        Ice.log('Ice.app.controller.FormIceController.cargarFormulario datos:', datos, 'opciones:', opciones);
         var view = this.getView(),
             paso = 'Cargando formulario';
         try {
-            Ice.cargarFormulario(view, datos);
+            Ice.cargarFormulario(view, datos, opciones);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

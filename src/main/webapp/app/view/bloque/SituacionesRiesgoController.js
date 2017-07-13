@@ -275,91 +275,92 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
       } catch (e) {
           Ice.manejaExcepcion(e, paso);
       }
-  },  
-  
-  cargarValoresDefectoVariables: function () {
-      Ice.log('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables');
-      var me = this,
-          view = me.getView(),
-          refs = view.getReferences(),
-          paso = 'Cargando valores por defecto variables de situaciones de riesgo';
-          Ice.log('refs',refs);
-      try {
-          if (view.getDatosVariablesNuevos() !== true) {
-              Ice.logWarn('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables los datos variables no son nuevos');
-              return;
-          }
-
-          if(refs.form){
-              var form = refs.form;
-
-              var errores = Ice.obtenerErrores(form);
-              if (errores.cdtipsit) {
-                  Ice.logWarn('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables falta cdtipsit');
-              }
-
-              Ice.log('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables valores cargados ok');
-              var valores = {
-                      'params.cdunieco': view.getCdunieco(),
-                      'params.cdramo': view.getCdramo(),
-                      'params.estado': view.getEstado(),
-                      'params.nmpoliza': view.getNmpoliza(),
-                      'params.nmsuplem': view.getNmsuplem(),
-                      'params.nmsituac': form.getValues().nmsituac,
-                      'params.cdtipsit': form.getValues().cdtipsit,
-                      'params.status' : form.getValues().status, 
-                      'params.cdtipsit' : form.getValues().cdtipsit,
-                      'params.swreduci' : form.getValues().swreduci,
-                      'params.cdagrupa' : form.getValues().cdagrupa,
-                      'params.cdestado' : form.getValues().cdestado,
-                      'params.fefecsit' : form.getValues().fefecsit,
-                      'params.fecharef' : form.getValues().fecharef,
-                      'params.indparbe' : form.getValues().indparbe,
-                      'params.feinipbs' : form.getValues().feinipbs,
-                      'params.porparbe' : form.getValues().porparbe,
-                      'params.intfinan' : form.getValues().intfinan,
-                      'params.cdmotanu' : form.getValues().cdmotanu,
-                      'params.feinisus' : form.getValues().feinisus,
-                      'params.fefinsus' : form.getValues().fefinsus
-              };
-              Ice.log('valores ',valores);
-              Ice.request({
-                  mascara: 'Cargando valores por defecto',
-                  url: Ice.url.bloque.situacionesRiesgo.valoresDefectoVariables,
-                  params: valores,
-                  success: function (action) {
-                      var paso2 = 'Seteando valores por defecto';
-                      try {
-                          view.setDatosVariablesNuevos(false);
-                          view.procesandoValoresDefecto = false;
-                          
-                          if (!action.situacion) {
-                              return;
-                          }
-                          
-                          Ice.suspendEvents(view);
-                          for (var att in action.situacion) {
-                              if (refs[att] && !refs[att].getValue()) {
-                                  refs[att].setValue(action.situacion[att]);
-                              }
-                          }
-                          Ice.resumeEvents(view);
-                      } catch (e) {
-                          view.procesandoValoresDefecto = false;
-                          Ice.manejaExcepcion(e, paso2);
-                      }
-                  },
-                  failure: function () {
-                      view.procesandoValoresDefecto = false;
-                  }
-              });
-          } else {
-              Ice.mensajeWarning('Error al setear valores del formulario', refs);
-          }         
-      } catch (e) {
-          Ice.manejaExcepcion(e, paso);
-      }
   },
+
+    cargarValoresDefectoVariables: function () {
+        Ice.log('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables');
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            paso = 'Cargando valores por defecto variables de situaciones de riesgo';
+        Ice.log('refs', refs);
+        try {
+            if (view.getDatosVariablesNuevos() !== true) {
+                Ice.logWarn('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables los datos variables no son nuevos');
+                return;
+            }
+            
+            if (refs.form) {
+                var form = refs.form;
+                var errores = Ice.obtenerErrores(form);
+                if (errores.cdtipsit) {
+                    Ice.logWarn('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables falta cdtipsit');
+                }
+                Ice.log('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables valores cargados ok');
+                var valores = {
+                    'params.cdunieco': view.getCdunieco(),
+                    'params.cdramo': view.getCdramo(),
+                    'params.estado': view.getEstado(),
+                    'params.nmpoliza': view.getNmpoliza(),
+                    'params.nmsuplem': view.getNmsuplem(),
+                    'params.nmsituac': form.getValues().nmsituac,
+                    'params.cdtipsit': form.getValues().cdtipsit,
+                    'params.status' : form.getValues().status, 
+                    'params.cdtipsit' : form.getValues().cdtipsit,
+                    'params.swreduci' : form.getValues().swreduci,
+                    'params.cdagrupa' : form.getValues().cdagrupa,
+                    'params.cdestado' : form.getValues().cdestado,
+                    'params.fefecsit' : form.getValues().fefecsit,
+                    'params.fecharef' : form.getValues().fecharef,
+                    'params.indparbe' : form.getValues().indparbe,
+                    'params.feinipbs' : form.getValues().feinipbs,
+                    'params.porparbe' : form.getValues().porparbe,
+                    'params.intfinan' : form.getValues().intfinan,
+                    'params.cdmotanu' : form.getValues().cdmotanu,
+                    'params.feinisus' : form.getValues().feinisus,
+                    'params.fefinsus' : form.getValues().fefinsus
+                };
+                Ice.log('valores ',valores);
+                Ice.request({
+                    mascara: 'Cargando valores por defecto',
+                    url: Ice.url.bloque.situacionesRiesgo.valoresDefectoVariables,
+                    params: valores,
+                    success: function (action) {
+                        var paso2 = 'Seteando valores por defecto';
+                        try {
+                            view.setDatosVariablesNuevos(false);
+                            view.procesandoValoresDefecto = false;
+                            if (!action.situacion) {
+                                return;
+                            }
+
+                            Ice.cargarFormulario(refs.form, action.situacion, {
+                                sinReset: true
+                            });
+                            
+                            /*Ice.suspendEvents(view);
+                            for (var att in action.situacion) {
+                                if (refs[att] && !refs[att].getValue()) {
+                                    refs[att].setValue(action.situacion[att]);
+                                }
+                            }
+                            Ice.resumeEvents(view);*/
+                        } catch (e) {
+                            view.procesandoValoresDefecto = false;
+                            Ice.manejaExcepcion(e, paso2);
+                        }
+                    },
+                    failure: function () {
+                        view.procesandoValoresDefecto = false;
+                    }
+                });
+            } else {
+                Ice.mensajeWarning('Error al setear valores del formulario', refs);
+            }
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+    },
 
     guardarBloque: function () {
         Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardarBloque');

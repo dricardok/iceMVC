@@ -34,5 +34,6 @@
     </bean>
     
     <import resource="classpath:client.xml" />
+    <import resource="classpath:pago-client.xml" />
     
 </beans>
