@@ -2,7 +2,7 @@
  * 
  */
 Ext.define('Ice.view.bloque.personas.PersonaRol', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ice.view.componente.PanelIce',
     xtype: 'cdpersoncdrol',
     
     config: {
@@ -27,7 +27,7 @@ Ext.define('Ice.view.bloque.personas.PersonaRol', {
         Ice.log('Ice.view.bloque.PersonaRol.constructor');
         me.callParent(arguments);
     },
-    initComponent: function () {
+    initialize: function () {
         Ice.log('Ice.view.bloque.personas.PersonaPoliza.initComponent [this, args]:', this, arguments);
         var me = this,
             paso = 'Construyendo panel persona con rol';
@@ -36,19 +36,19 @@ Ext.define('Ice.view.bloque.personas.PersonaRol', {
             var comps = Ice.generaComponentes({
                 pantalla: 'PERSONA_ROL',
                 seccion: 'FORMULARIO',
-                cdramo: me.cdramo,
+                cdramo: me.getCdramo(),
                 items: true
             });
             var modelName = Ext.id();
             Ice.log('Ice.view.bloque.personas.BuscarPersona.initComponent comps:', comps);
-            Ext.apply(me, {
+            me.add({
                 items: [
                     {
-                        xtype: 'form',
+                        xtype: 'formpanel',
                         reference: 'form',
                         title: 'Buscar persona',
                         minWidth: 850,
-                        cdramo: me.cdramo,
+                        cdramo: me.getCdramo(),
                         mostrarRol: true,
                         items: comps.PERSONA_ROL.FORMULARIO.items,
                         modelo: modelName,
@@ -56,8 +56,7 @@ Ext.define('Ice.view.bloque.personas.PersonaRol', {
                         defaults: {
                             margin: '0px 10px 10px 0px',
                             cls: 'big-50 small-100'
-                        },
-                        layout: 'responsivecolumn'
+                        }
                     }
                 ]
             });

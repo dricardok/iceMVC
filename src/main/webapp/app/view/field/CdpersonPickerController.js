@@ -111,7 +111,6 @@ Ext.define('Ice.view.field.CdpersonPickerController', {
                 listeners: {
                     'obtenerCdperson': function(view, cdperson){
                         me.setValue(cdperson);
-                        Ice.pop();
                     }
                 }
             });            

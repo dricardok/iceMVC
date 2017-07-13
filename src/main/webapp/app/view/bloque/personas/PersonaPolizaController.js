@@ -31,11 +31,16 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
             paso = 'Configurando comportamiento de lista de personas';
             Ice.log('view: ',view);
         try {
-            var refs = view.getReferences() || {};
+            var refs = view.getReferences() || {},
+                cdatribu = refs.dsatribu,
+                cdperson;
             Ice.log('Ice.view.bloque.personas.PersonasPolizaController.custom refs:', refs);
-            var cdatribu = refs.dsatribu;
-            var cdperson = Ice.query('[name=cdperson]', refs.cdperson);
-            Ice.log('custom cdperson',Ice.query('[name=cdperson]',cdperson));            
+            if(Ext.manifest.toolkit === 'classic'){
+                cdperson = Ice.query('[xtype=numberfieldice]', refs.cdperson);
+            } else {
+                cdperson = Ice.query('[xtype=numberfieldice]', refs.cdperson);
+            }
+            Ice.log('cdperson',cdperson);
             cdperson.on({
                 change: function(){
                     Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdperson.change ',cdperson.getValue());
@@ -46,8 +51,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
                             }
                         });
                         refs.gridDomicilios.show();
-                    }                    
-                    Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdperson.change ',cdperson);
+                    }
                 }
             });
         } catch (e) {
@@ -72,13 +76,21 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
         var me = this,
             view = me.getView(),
             refs = view.getReferences(),
-            paso = 'Agregando persona a situacion de poliza';
+            paso = 'Agregando persona a situacion de poliza',
+            valid = false;
         try {
-            Ice.log('refs ',refs);
-            Ice.log('view ',view.up('panel'));
-            if(refs.cdrol.isValid()){
-                var selected = refs.gridDomicilios.selModel.getSelected();
-                if(selected.getCount() > 0){
+            Ice.log('cdrol value',refs.cdrol.getValue());
+            if(Ext.manifest.toolkit === 'classic'){
+                valid = refs.cdrol.isValid();
+            } else {
+                if(refs.cdrol.getValue()){
+                    valid = true;
+                }
+            }
+            if(valid){
+                var selected = refs.gridDomicilios.getSelection();
+                Ice.log('selected',selected);
+                if(selected){
                     Ice.request({
                         mascara: 'Agregando situacion de riesgo',
                         url: Ice.url.bloque.personas.movimientoPolizaPersona,
@@ -93,7 +105,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
                             'params.cdperson': view.accion === 'I' ? refs.cdperson.getValue() : view.getCdperson(),
                             'params.nmsuplem': view.getNmsuplem(),
                             'params.status': 'V',
-                            'params.nmorddom':  selected.getAt(0).data.nmorddom,
+                            'params.nmorddom':  selected.getData().nmorddom,
                             'params.swfallec': 'N',
                             'params.cdpersonNew': refs.cdperson.getValue(),
                             'params.cdrolNew': refs.cdrol.getValue(),
