@@ -186,7 +186,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 					
 					////////// formulario editar coberuras
 					var form={
-						xtype: 'formpanel',
+						xtype: 'formtrescolumnasice',
 						reference: 'form',
 						scrollable:true,
 						height:300,
