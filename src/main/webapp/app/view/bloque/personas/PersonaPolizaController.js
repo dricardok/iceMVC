@@ -77,20 +77,27 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
             view = me.getView(),
             refs = view.getReferences(),
             paso = 'Agregando persona a situacion de poliza',
-            valid = false;
+            valid = false,
+            gridDomicilios = refs.gridDomicilios;
         try {
-            Ice.log('cdrol value',refs.cdrol.getValue());
             if(Ext.manifest.toolkit === 'classic'){
                 valid = refs.cdrol.isValid();
             } else {
+                refs = refs.form.getReferences();
                 if(refs.cdrol.getValue()){
                     valid = true;
                 }
             }
+            Ice.log('agregar refs',refs);
             if(valid){
-                var selected = refs.gridDomicilios.getSelection();
-                Ice.log('selected',selected);
+                var selected = gridDomicilios.getSelection(),
+                    data;
                 if(selected){
+                    if(Ext.manifest.toolkit === 'classic'){
+                        data = selected[0].data;
+                    } else {
+                        data = selected.getData();
+                    }
                     Ice.request({
                         mascara: 'Agregando situacion de riesgo',
                         url: Ice.url.bloque.personas.movimientoPolizaPersona,
@@ -105,7 +112,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
                             'params.cdperson': view.accion === 'I' ? refs.cdperson.getValue() : view.getCdperson(),
                             'params.nmsuplem': view.getNmsuplem(),
                             'params.status': 'V',
-                            'params.nmorddom':  selected.getData().nmorddom,
+                            'params.nmorddom':  data.nmorddom,
                             'params.swfallec': 'N',
                             'params.cdpersonNew': refs.cdperson.getValue(),
                             'params.cdrolNew': refs.cdrol.getValue(),
