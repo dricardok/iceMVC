@@ -43,7 +43,7 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
                         flex: 2
                     }, {
                         text: 'Prima',
-                        dataIndex: 'nmimport',
+                        dataIndex: 'total',
                         minWidth: 150,
                         flex: 1,
                         renderer: Ext.util.Format.usMoney,
@@ -59,9 +59,16 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
                 store: {
                     autoLoad: true,
                     fields: [
-                        'cdgarant', 'nmsituac', 'dscontar', 
-                        { name: 'nmimport', type: 'float'},
-                        'dsgarant', 'cdcontar'
+                    	'estado', 
+                        { name: 'subsecuentes', type: 'float' },
+                        { name: 'total', type: 'float' },
+                        'cdramo',
+                        'nmpoliza',
+                        'cdtipcon',
+                        'cdunieco',
+                        'cdperpag',
+                        { name: 'primer_recibo', type: 'float' },
+                        'dsgarant', 'dscontar'
                     ],
                     proxy: {
                         type: 'ajax',

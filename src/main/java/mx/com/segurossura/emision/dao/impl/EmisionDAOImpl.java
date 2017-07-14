@@ -930,7 +930,39 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             compile();
         }
     }
-
+    
+    @Override
+	public List<Map<String, String>> obtenerDetalleTarificacion(String cdunieco, String cdramo, String estado,
+			String nmpoliza) throws Exception {
+    	Map<String, Object> params = new LinkedHashMap<String, Object>();       
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        Map<String, Object> res = ejecutaSP(new DetalleTarificion(getDataSource()), params);
+        List<Map<String, String>> listaDatos = (List<Map<String, String>>)res.get("pv_registro_o");
+        if (listaDatos == null || listaDatos.size() == 0) {
+            throw new ApplicationException("No hay resultados de cotizacion");
+        }
+        return listaDatos;
+	}
+    
+    protected class DetalleTarificion extends StoredProcedure {
+        protected DetalleTarificion (DataSource dataSource) {
+        	super(dataSource, "PKG_DATA_ALEA.P_GET_PRI_DET_ZWORK");           
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            String[] cols = new String[] { "cdunieco", "cdramo", "estado", "nmpoliza",
+            							   "cdgarant", "dsgarant", "cdcontar", "dscontar",
+            							   "cdtipcon", "primer_recibo", "subsecuentes", "total"};
+			declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
+			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+			compile();
+        }
+    }
 
 	@Override
 	public Map<String, Object> distribuirAgrupadores(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception {
@@ -1288,4 +1320,5 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             compile();
         }
     }
+    
 }
