@@ -28,17 +28,6 @@ Ext.define('Ice.view.bloque.Coberturas', {
 
 			
 			config.columns = config.columns || [];
-			config.columns.push(
-				{
-					text: 'cesar',
-					minWidth: 50,
-					flex: 1
-				}, {
-					text: 'alvaro',
-					minWidth: 50,
-					flex: 1
-				}
-			);
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);
 		}
@@ -95,7 +84,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 				reference: 'grid',
 				// width: '100%',
 				// height: 300
-			}
+			};
 			me.add(it);
 
 			//////////// grid coberturas //////
@@ -166,7 +155,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 						}
 					}
 				]
-			}
+			};
 			me.add(gridCoberturas);
 			
 			////////// formulario editar coberuras
@@ -182,7 +171,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 					itemId: "btnGuardarCobertura",
 					handler: 'guardarCoberturaMovil'
 				}]
-			}
+			};
 			me.add(form);
 
 			
@@ -249,7 +238,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 						handler: 'cerrarAgregar'
 					}
 				]
-			}
+			};
 			me.add(panelnc);
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);

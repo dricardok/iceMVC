@@ -249,7 +249,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
                 validators: true
 			});
             mpolicap.BLOQUE_COBERTURAS.MPOLICAP.items.forEach(function (it, idx) {
-				it.tabla="MPOLICAP"
+				it.tabla = "MPOLICAP";
             });
 
 			form.setTitle("Cobertura: " + record.get('cdgarant') + " - "
@@ -520,7 +520,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 			    mpolicap.BLOQUE_COBERTURAS.MPOLICAP.validators);
             form.modelFields = mpolicap.BLOQUE_COBERTURAS.MPOLICAP.fields.concat(comps.TATRIGAR.TATRIGAR.fields);
          
-            form.add(mpolicap.BLOQUE_COBERTURAS.MPOLICAP.items);
+			form.add(mpolicap.BLOQUE_COBERTURAS.MPOLICAP.items);
             form.add(comps.TATRIGAR.TATRIGAR.items);
 
 			grid.down('#botonBorrar')[sel.get('opcional') === 'N' ? 'hide' : 'show']();

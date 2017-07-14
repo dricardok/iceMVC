@@ -2,19 +2,9 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
     extend: 'Ice.view.componente.VentanaIce',
     xtype: 'ventanaprimas',
     
-    requires: [
-        'Ext.toolbar.Toolbar'
-    ],
-    
-    // controller: '',
-    // viewModel: '',
-    
-    
     modal: true,
     title: 'Tarifa',
-    closeAction: 'destroy',
     layout: 'fit',
-    
     
     config: {
         cdunieco: null,
@@ -22,7 +12,6 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
         estado: null,
         nmpoliza: null
     },
-    
     
     constructor: function (config) {
         Ice.log('Ext.view.cotizacion.VentanaPrimas.constructor config:', config);
@@ -33,23 +22,14 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
                 throw 'Faltan par\u00e1metros para construir ventana de tarifa';
             }
             
-            
             // dimensiones
             config.height = config.height || Ext.getBody().getHeight() - 100;
             config.width = config.width || Ext.getBody().getWidth() - 100;
             
-            
-            // bbar
-            config.botones = config.botones || [];
-            if (config.botones.length > 0) {
-                config.bbar = config.botones;
-            }
-            
-            
             //grid
             config.items = config.items || [];
             config.items.push({
-                xtype: 'grid',
+                xtype: 'gridice',
                 columns: [
                     {
                         text: 'Cobertura',
@@ -103,15 +83,5 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
             Ice.generaExcepcion(e, paso);
         }
         me.callParent(arguments);
-    },
-    
-    
-    mostrar: function () {
-        this.show();
-    },
-    
-    
-    cerrar: function () {
-        this.destroy();
     }
 });

@@ -2,17 +2,8 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
     extend: 'Ice.view.componente.VentanaIce',
     xtype: 'ventanaprimas',
     
-    requires: [
-        'Ext.Toolbar'
-    ],
-    
-    // controller: '',
-    // viewModel: '',
-    
-    
     title: 'Tarifa',
     layout: 'fit',
-    
     
     config: {
         cdunieco: null,
@@ -20,7 +11,6 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
         estado: null,
         nmpoliza: null
     },
-    
     
     constructor: function (config) {
         Ice.log('Ext.view.cotizacion.VentanaPrimas.constructor config:', config);
@@ -31,23 +21,10 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
                 throw 'Faltan par\u00e1metros para construir ventana de tarifa';
             }
             
-            
-            // bbar
-            config.botones = config.botones || [];
-            if (config.botones.length > 0) {
-                config.items = config.items || [];
-                config.items.push({
-                    xtype: 'toolbar',
-                    docked: 'bottom',
-                    items: config.botones
-                });
-            }
-            
-            
             //grid
             config.items = config.items || [];
             config.items.push({
-                xtype: 'grid',
+                xtype: 'gridice',
                 columns: [
                     {
                         text: 'Cobertura',
@@ -101,15 +78,5 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
             Ice.generaExcepcion(e, paso);
         }
         me.callParent(arguments);
-    },
-    
-    
-    mostrar: function () {
-        Ice.query('#mainView').getReferences().mainCard.push(this);
-    },
-    
-    
-    cerrar: function () {
-        Ice.query('#mainView').getReferences().mainCard.pop();
     }
 });
