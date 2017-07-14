@@ -79,10 +79,15 @@ var Ice = (
         emision: {
             tarificar:     'emision/generarTarificacion.action',
             obtenerTarifa: 'emision/obtenerDatosTarificacion.action',
-            emitir:        'emision/confirmarPoliza.action'
-        },
-
-        bloque: {
+            emitir:        'emision/confirmarPoliza.action',
+            tarificarPlanes: 'emision/generarTarificacionPlanes.action',
+            tarificarPlan: 'emision/generarTarificacionPlan.action',
+        	obtenerTarifaPlanes: 'emision/obtenerTarifaMultipleTemp.action',
+        	obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action'
+         },
+         
+         bloque: {
+        	 
             datosGenerales: {
                 cargar: 'emision/datosGenerales/cargar.action',
                 guardar: 'emision/datosGenerales/guardar.action',

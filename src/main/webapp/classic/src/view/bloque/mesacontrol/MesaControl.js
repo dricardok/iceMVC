@@ -1,6 +1,6 @@
 Ext.define('Ice.view.bloque.mesacontrol.MesaControl', {
     extend: 'Ext.panel.Panel',
-    xtype: 'mesacontrol',
+    xtype: 'bloquemesacontrol',
 
     controller: 'bloquemesacontrol',
     

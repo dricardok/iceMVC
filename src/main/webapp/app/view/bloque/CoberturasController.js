@@ -474,6 +474,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	},
 
 	editarCoberturaMovil: function (grid, idx, tar, sel) {
+		var paso = "";
 		try {
 			var view = this.getView();
 			view.down("#btnGuardarCobertura").setHidden(false);
@@ -518,11 +519,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             form.modelValidators = Ice.utils.mergeObjects(comps.TATRIGAR.TATRIGAR.validators,
 			    mpolicap.BLOQUE_COBERTURAS.MPOLICAP.validators);
             form.modelFields = mpolicap.BLOQUE_COBERTURAS.MPOLICAP.fields.concat(comps.TATRIGAR.TATRIGAR.fields);
-            
-            Ice.log("-------->", form.modelValidators);
-            
-            form.setTitle(sel.get("cdgarant") + " - " + sel.get('dsgarant'));
-            form.removeAll();
+         
             form.add(mpolicap.BLOQUE_COBERTURAS.MPOLICAP.items);
             form.add(comps.TATRIGAR.TATRIGAR.items);
             this.cargarValores(form);
@@ -760,79 +757,43 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 						}
 						view.down("#gridCoberturas").getStore().load();
 					} catch (e) {
-						Ice.generaExcepcion(e,paso);
+						Ice.generaExcepcion(e, paso);
 					}
 				}
 			});
-			// this.guardar();
+			//this.guardar()
 		} catch (e) {
 			Ice.manejaExcepcion(e, paso);
 		}
 	},
 	
 	mostrarCoberturas: function (grid, rowIndex, colIndex) {
+		var paso = 'Mostrando coberturas';
 		try {
 			var view = this.getView(),
 			    me = grid.up('bloquecoberturas'),
 				paso = 'limpiando grids';
+			
 			Ice.log("mmm..", me);
+
 			var gridCoberturas = view.down('#gridCoberturas');
-			Ice.log("mmm..",gridCoberturas);
-			// global = gridCoberturas;
+			Ice.log("mmm..", gridCoberturas);
+			global = gridCoberturas;
 			gridCoberturas.getStore().removeAll();
 			gridCoberturas.setHidden(false);
 			me.down('[xtype=formtrescolumnasice]').removeAll();
+
 			paso = 'consultando coberturas';
 			var record = grid.getStore().getAt(rowIndex);
+			
 			paso = "Evento selecciona cobertura";
-
-			gridCoberturas.store.proxy.extraParams = {
-				'params.pv_cdunieco_i': view.getCdunieco(),
-				'params.pv_cdramo_i': view.getCdramo(),
-				'params.pv_estado_i': view.getEstado(),
-				'params.pv_nmpoliza_i': view.getNmpoliza(),
-				'params.pv_nmsuplem_i': view.getNmsuplem(),
-				'params.pv_nmsituac_i': record.get('nmsituac')
-			};
-			
-			gridCoberturas.setTitle("Coberturas de la situación: " + record.get('nmsituac') + " Póliza: " + view.getCdunieco() 
-			    + " - " + view.getCdramo() + " - " + view.getEstado() + " - " + view.getNmpoliza());
-			paso = "estableciendo nmsituac";
-			me.config.nmsituac = record.get('nmsituac');
-			me.setNmsituac(record.get('nmsituac'));
-			
-			view.setNmsituac(record.get('nmsituac'));
-			gridCoberturas.getStore().load();
-			gridCoberturas.getStore().filter('amparada', 'S');
-			view.setNmsituac(record.get('nmsituac'));
-		} catch (e) {
-			Ice.generaExcepcion(e, paso);
-		}
-	},
-	
-	onItemTabSituaciones: function (grid, idx, target, record) {
-		try {
-			var me = grid.up("bloquecoberturas");
-			me.down("[xtype=formpanel]").removeAll();
-			me.setNmsituac(record.get("nmsituac"));
-			me.down("bloquelistasituaciones").getStore().on({
-				load: function (store) {
-					var paso = 'cargando coberturas';
-					try {
-						if (store.count() > 0) {
-							Ice.log("deshabilitando");
-							Ice.query("[xtype=button]", me.down("#gridCoberturas")).forEach(function (it) {
-								it.setDisabled(false);
-							});
-						} else {
-							Ice.log("habilitando");
-							Ice.query("[xtype=button]", me.down("#gridCoberturas")).forEach(function (it) {
-								it.setDisabled(true);
-							});
-						}
-					} catch (e) {
-						Ice.manejaExcepcion(e,paso);
-					}
+			gridCoberturas.getStore().proxy.extraParams = {
+					'params.pv_cdunieco_i': view.getCdunieco(),
+					'params.pv_cdramo_i': view.getCdramo(),
+					'params.pv_estado_i': view.getEstado(),
+					'params.pv_nmpoliza_i': view.getNmpoliza(),
+					'params.pv_nmsuplem_i': view.getNmsuplem(),
+					'params.pv_nmsituac_i': record.get('nmsituac')
 				}
 			});
 			me.down("#gridCoberturas").getStore().proxy.extraParams['params.pv_nmsituac_i'] = me.getNmsituac();
@@ -845,6 +806,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	},
 
 	mostrarPanelCoberturas: function (btn) {
+		var paso = 'Mostrando panel de coberturas';
 		try {
 			var view = this.getView();
 			btn.up("[xtype=bloquecoberturas]").getItems().items.forEach(function (it) {

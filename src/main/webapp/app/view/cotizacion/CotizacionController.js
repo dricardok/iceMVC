@@ -291,7 +291,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 try {
                     Ice.request({
                         mascara: paso2,
-                        url: Ice.url.emision.tarificar,
+                        url: Ice.url.emision.tarificarPlanes,
                         params: {
                             'params.cdunieco': view.getCdunieco(),
                             'params.cdramo': view.getCdramo(),
@@ -303,7 +303,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                         success: function (action) {
                             var paso3 = 'Mostrando tarifa';
                             try {
-                                me.mostrarPrimas();
+                                 me.mostrarTarifasPlan();                   	
                             } catch (e) {
                                 Ice.manejaExcepcion(e, paso3);
                             }
@@ -332,6 +332,40 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
+    },
+    
+    
+    mostrarTarifasPlan: function () {
+    	Ice.log('Ice.view.cotizacion.CotizacionController.mostrarTarifasPlan');
+    	var me = this,
+    		paso = 'Recuperando tarifas por plan';
+    	try {
+    		
+    		var view = me.getView();
+    		
+    		var planes = Ext.create('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
+
+        		cdunieco: view.getCdunieco(),
+        		cdramo: view.getCdramo(),
+        		estado: view.getEstado(),
+        		nmpoliza: view.getNmpoliza(),
+        		nmsuplem: view.getNmsuplem(),
+        		cdtipsit: view.getCdtipsit(),
+        		
+        		buttons : [{
+        			text: 'Editar',
+        			iconCls: 'x-fa fa-check',
+        			handler: function(me){
+        				Ice.pop();
+        			}
+        		}]
+        	});
+        	
+        	Ice.push(planes);        	
+        	
+    	}catch(e) {
+    		Ice.manejaExcepcion(e, paso);
+    	}
     },
     
     mostrarPrimas: function () {

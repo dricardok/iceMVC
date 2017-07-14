@@ -568,12 +568,12 @@ public class EmisionAction extends PrincipalCoreAction {
 	
     
     @Action(        
-            value = "generarTarificacion2", 
+            value = "generarTarificacionPlanes", 
             results = { 
                 @Result(name = "success", type = "json") 
             }
         )   
-    public String generarTarificacion2() {
+    public String generarTarificacionPlanes() {
     	logger.debug("Inicio generarTarificacion...");
         try {
             Utils.validate(params, "No se recibieron datos");
@@ -587,7 +587,44 @@ public class EmisionAction extends PrincipalCoreAction {
             Utils.validate(estado,   "Falta estado");
             Utils.validate(nmpoliza, "Falta nmpoliza");
             
-            List<Map<String, Object>> resultados = emisionManager.generarTarificacion2(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+            List<Map<String, Object>> resultados = emisionManager.generarTarificacionPlanes(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+            logger.debug("resultado Tarificacion: {}", resultados);
+            
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        
+        logger.debug("Fin generarTarificacion.");
+        return SUCCESS;
+    }
+    
+    
+    @Action(        
+            value = "generarTarificacionPlan", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )   
+    public String generarTarificacionPlan() {
+    	logger.debug("Inicio generarTarificacion...");
+        try {
+            Utils.validate(params, "No se recibieron datos");
+            String cdunieco = params.get("cdunieco");
+            String cdramo =   params.get("cdramo");
+            String estado =   params.get("estado");
+            String nmpoliza = params.get("nmpoliza");
+            String nmsituac = "0".equals(params.get("nmsituac")) ? null : params.get("nmsituac");
+            String cdperpag = params.get("cdperpag");
+            
+            Utils.validate(cdunieco, "Falta cdunieco");
+            Utils.validate(cdramo,   "Falta cdramo");
+            Utils.validate(estado,   "Falta estado");
+            Utils.validate(nmpoliza, "Falta nmpoliza");
+            Utils.validate(cdperpag, "Falta cdperpag");
+            
+            Map<String, Object> resultados = emisionManager.generarTarificacionPlan(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdperpag);
             logger.debug("resultado Tarificacion: {}", resultados);
             
             success = true;
@@ -663,8 +700,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	
     	return SUCCESS;
     }
-    
-    
+        
     @Action(        
             value = "confirmarPoliza", 
             results = { 
@@ -720,8 +756,9 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   nmpoliza, "Falta nmpoliza");
     	    
     	    list = emisionManager.obtenerTarifaMultipleTemp(cdunieco, cdramo, estado, nmpoliza);
-    	    
+    	    success = true;
     	} catch (Exception ex) {
+    		success = false;
     	    message = Utils.manejaExcepcion(ex);
     	}
     	return SUCCESS;
@@ -750,8 +787,9 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   cdperpag, "Falta cdperpag");
     	    
     	    list = emisionManager.obtenerDetalleTarifaTemp(cdunieco, cdramo, estado, nmpoliza, cdperpag);
-    	    
+    	    success = true;
     	} catch (Exception ex) {
+    		success = false;
     	    message = Utils.manejaExcepcion(ex);
     	}
     	return SUCCESS;
