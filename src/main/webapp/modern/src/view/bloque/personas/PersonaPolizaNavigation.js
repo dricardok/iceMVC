@@ -5,7 +5,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
     controller: 'personapolizanavigation',
     title: 'Personas poliza',
     scrollable: true,
-    //layout: 'vbox',
+    layout: 'vbox',
  // validacion de parametros de entrada
     constructor: function (config) {
         Ice.log('Ice.view.bloque.personas.ListaPersonas.constructor config:', config);
@@ -53,6 +53,16 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
                             }
                         ]
                     },{
+                        xtype: 'toolbar',
+                        items: {
+                            xtype: 'button',
+                            iconCls: 'x-fa fa-plus-circle',
+                            text: 'Agregar',
+                            handler: function(btn){
+                                me.getController().agregarPersona(me);
+                            }
+                        }
+                    },{
                         xtype: 'listapersonas',
                         itemId: 'gridPersonas',
                         reference: 'gridPersonas',
@@ -62,18 +72,19 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
                         estado: config.estado,
                         nmpoliza: config.nmpoliza,
                         nmsuplem: config.nmsuplem,
+                        nmsituac: config.nmsituac,
                         cdtipsit: config.cdtipsit,
                         hidden: true,
                         actionColumns: [
                             {
-                                type: 'button',
+                                xtype: 'button',
                                 ui: 'action',
                                 iconCls: 'x-fa fa-edit',
                                 handler: function(grid, rowIndex, colIndex) {
                                     me.getController().onActualizarPersona(grid, rowIndex, colIndex);
                                 }
                             },{
-                                type: 'button',
+                                xtype: 'button',
                                 ui: 'action',
                                 iconCls: 'x-fa fa-minus-circle',
                                 handler: function(grid, rowIndex, colIndex){

@@ -106,6 +106,9 @@ public interface EmisionDAO {
      */
 	public List<Map<String,String>> obtenerDatosTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
 	
+	public List<Map<String, String>> obtenerDetalleTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
+	
+	
 	/**
 	 * Distribuye los agrupadores de la poliza
 	 * @param cdunieco

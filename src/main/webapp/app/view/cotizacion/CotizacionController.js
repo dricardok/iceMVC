@@ -384,7 +384,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 estado: view.getEstado(),
                 nmpoliza: view.getNmpoliza(),
                 
-                botones: [
+                buttons: [
                     {
                         text: 'Modificar Cotización',
                         iconCls: 'x-fa fa-check',

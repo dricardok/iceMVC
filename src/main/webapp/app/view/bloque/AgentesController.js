@@ -213,7 +213,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
                             var error = false;
                             for (var i = 0; i < action.validaciones.length; i++) {
                                 if (action.validaciones[i].tipo.toLowerCase() === 'error') {
-                                    //error = true; para que no avance si hay validaciones tipo "error"
+                                    error = true; para que no avance si hay validaciones tipo "error"
                                     break;
                                 }
                             }

@@ -10,10 +10,24 @@ Ext.define('Ice.view.componente.PanelPaddingIce', {
         var me = this,
             paso = 'Construyendo panel';
         try {
-            config.items = config.items || [];
-            for (var i = 0; i < config.items.length; i++) {
-                config.items[i].userCls = ['shadow'].concat(config.items[i].userCls || []);
-                config.items[i].style = 'margin: 0px 20px 20px 0px; ' + (config.items[i].style || '');
+            if ((config.items || []).length > 0) {
+                Ice.agregarClases(config.items, 'shadow');
+                Ice.agregarEstilo(config.items, 'margin: 0px 20px 20px 0px;');
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+        me.callParent(arguments);
+    },
+
+    add: function () {
+        Ice.log('Ice.view.componente.PanelPaddingIce.add args', arguments);
+        var me = this,
+            paso = 'Agregando componentes al panel';
+        try {
+            if (arguments.length > 0) {
+                Ice.agregarClases(arguments, 'shadow');
+                Ice.agregarEstilo(arguments, 'margin: 0px 20px 20px 0px;');
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);

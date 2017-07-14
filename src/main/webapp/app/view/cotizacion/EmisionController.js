@@ -373,7 +373,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 estado: view.getEstado(),
                 nmpoliza: view.getNmpoliza(),
                 
-                botones: [{
+                buttons: [{
                     text: 'Modificar Datos de Emisión',
                     iconCls: 'x-fa fa-check',
                     handler: function (bot) {

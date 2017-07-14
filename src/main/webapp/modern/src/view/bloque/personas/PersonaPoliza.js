@@ -36,6 +36,14 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                         throw 'Falta llave de p\u00f3liza y situacion';
                     }
                     
+                    if(!config.nmsituac){
+                        throw 'No se recibio situacion de riesgo';
+                    }
+
+                    if(config.estado = 'w'){
+                        config.estado = 'W';
+                    }
+
                   var comps = Ice.generaComponentes({
                       pantalla: 'BLOQUE_PERSONAS',
                       seccion: 'FORMULARIO',
@@ -105,6 +113,12 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                                           } catch (e) {
                                               Ice.generaExcepcion(e, paso);
                                           }
+                                      }
+                                  },{
+                                      xtype: 'button',
+                                      text: 'Cerrar',
+                                      handler: function(){
+                                          Ice.pop();
                                       }
                                   }
                               ]
