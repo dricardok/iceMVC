@@ -357,7 +357,7 @@
              <webResources>
                <resource>
                  <!-- source directory relative to pom.xml: -->
-                 <directory>src/main/webapp/build/production/Ice</directory>
+                 <directory>src/main/webapp/build/development/Ice</directory>
                  <!-- target directory relative to root -->
                  <targetPath>/</targetPath> 
                </resource>

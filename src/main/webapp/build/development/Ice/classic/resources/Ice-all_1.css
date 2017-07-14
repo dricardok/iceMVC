@@ -310,23 +310,15 @@
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:102 */
 .x-treelist-toolstrip {
-    background-color: #002a64;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:107 */
-.x-treelist-item-selected.x-treelist-item {
-    background-color: #00b5cb;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:111 */
-.x-treelist-item-selected.x-treelist-item-tool {
-    background-color: #0f2f74;
+    background-color: #f8f8f8;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:133 */
 .x-treelist-item-selected > .x-treelist-row {
-    background-color: #0f2f74;
+    background-color: #ffefbb;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:137 */
 .x-treelist-item-selected > .x-treelist-row-over {
-    background-color: #042d85;
+    background-color: #ffefbb;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:142 */
 .x-treelist-item-tool {
@@ -355,7 +347,7 @@
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:192 */
 .x-treelist-item-icon,
 .x-treelist-item-tool {
-    color: #35baf6;
+    color: #00aec7;
     font-size: 16px;
     width: 16px;
 }
@@ -365,7 +357,7 @@
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:215 */
 .x-treelist-item-expander {
-    color: #35baf6;
+    color: #00aec7;
     font-size: 16px;
     width: 18px;
 }
@@ -399,7 +391,7 @@
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:294 */
 .x-treelist-item-floated > .x-treelist-row {
-    background-color: #002a64;
+    background-color: #f8f8f8;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:298 */
 .x-treelist-item-floated > .x-treelist-container {
@@ -419,15 +411,11 @@
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:319 */
 .x-treelist-item-floated > .x-treelist-row-over {
-    background-color: #002a64;
+    background-color: #f8f8f8;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:322 */
 .x-treelist-item-floated > .x-treelist-row-over > * > .x-treelist-item-text {
     color: #404040;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:328 */
-.x-treelist-item-expanded {
-    background-color: #0f2f74 !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:335 */
 .x-treelist-item-expanded > .x-treelist-item-expander:after {
@@ -441,7 +429,7 @@
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:346 */
 &.x-treelist-highlight-path .x-treelist-item-over > * > * > .x-treelist-item-icon {
-    color: #35baf6;
+    color: #00aec7;
     transition: color 0.5s;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:350 */
@@ -451,16 +439,16 @@
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:354 */
 &.x-treelist-highlight-path .x-treelist-item-over > * > * > .x-treelist-item-expander {
-    color: #35baf6;
+    color: #00aec7;
     transition: color 0.5s;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:361 */
 .x-treelist-row-over {
-    background-color: #042d85;
+    background-color: #e2f0f2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:364 */
 .x-treelist-row-over > * > .x-treelist-item-icon {
-    color: #35baf6;
+    color: #00aec7;
     transition: color 0.5s;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:368 */
@@ -470,7 +458,7 @@
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:372 */
 .x-treelist-row-over > * > .x-treelist-item-expander {
-    color: #35baf6;
+    color: #00aec7;
     transition: color 0.5s;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:379 */
@@ -1953,7 +1941,7 @@ the height of a multi-line element */
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/src/view/View.scss:1 */
 .x-view-item-focused {
-    outline: 1px dashed #35baf6!important;
+    outline: 1px dashed #00aec7!important;
     outline-offset: -1px;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/src/view/BoundList.scss:8 */
@@ -2398,7 +2386,7 @@ the height of a multi-line element */
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/src/grid/column/Action.scss:5 */
 .x-grid-cell-inner-action-col :focus {
-    outline: 1px solid #35baf6;
+    outline: 1px solid #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/src/grid/column/Action.scss:10 */
 .x-action-col-icon {
@@ -2419,7 +2407,7 @@ the height of a multi-line element */
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/src/grid/column/Check.scss:18 */
 .x-grid-checkcolumn-cell-inner :focus {
-    outline: 1px solid #35baf6;
+    outline: 1px solid #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/src/grid/feature/Grouping.scss:1 */
 .x-group-hd-container {
@@ -2649,7 +2637,7 @@ the height of a multi-line element */
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/src/grid/plugin/RowExpander.scss:7 */
 .x-grid-row-expander:focus {
-    outline: 1px solid #35baf6;
+    outline: 1px solid #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/src/grid/plugin/RowExpander.scss:11 */
 .x-grid-hide-row-expander-spacer .x-grid-row-expander-spacer {
@@ -3096,7 +3084,7 @@ the height of a multi-line element */
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:1 */
 .x-body {
-    color: #fff !important;
+    color: #fff;
     font-size: 13px;
     line-height: 17px;
     font-weight: 400;
@@ -3201,7 +3189,7 @@ body > .x-mask {
 .x-mask.x-focus {
     border-style: solid;
     border-width: 1px;
-    border-color: #35baf6;
+    border-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/LoadMask.scss:29 */
 .x-mask-msg {
@@ -3231,7 +3219,7 @@ body > .x-mask {
     background-color: #ececec;
     border-width: 0;
     height: 24px;
-    border-color: #35baf6;
+    border-color: #00aec7;
     border-style: solid;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/ProgressBar.scss:111 */
@@ -3261,7 +3249,7 @@ body > .x-mask {
     right: 0;
     bottom: 0;
     left: 0;
-    border: 0 solid #35baf6;
+    border: 0 solid #00aec7;
     pointer-events: none;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
@@ -3590,7 +3578,7 @@ body > .x-mask {
 .x-btn.x-btn-disabled.x-btn-default-small {
     border-color: transparent;
     background-image: none;
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:940 */
 .x-btn-focus .x-btn-default-small-tl,
@@ -3716,7 +3704,7 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1076 */
 .x-btn.x-btn-disabled .x-btn-default-small-mc {
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1086 */
 .x-nbr .x-btn-default-small {
@@ -4174,7 +4162,7 @@ body > .x-mask {
 .x-btn.x-btn-disabled.x-btn-default-medium {
     border-color: transparent;
     background-image: none;
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:940 */
 .x-btn-focus .x-btn-default-medium-tl,
@@ -4300,7 +4288,7 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1076 */
 .x-btn.x-btn-disabled .x-btn-default-medium-mc {
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1086 */
 .x-nbr .x-btn-default-medium {
@@ -4758,7 +4746,7 @@ body > .x-mask {
 .x-btn.x-btn-disabled.x-btn-default-large {
     border-color: transparent;
     background-image: none;
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:940 */
 .x-btn-focus .x-btn-default-large-tl,
@@ -4884,7 +4872,7 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1076 */
 .x-btn.x-btn-disabled .x-btn-default-large-mc {
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1086 */
 .x-nbr .x-btn-default-large {
@@ -5322,7 +5310,7 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:789 */
 .x-btn-default-toolbar-small.x-arrow-focus .x-btn-arrow-el {
-    border: 1px solid #35baf6;
+    border: 1px solid #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:796 */
 .x-btn-over.x-btn-default-toolbar-small {
@@ -5559,18 +5547,18 @@ body > .x-mask {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1201 */
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-default-toolbar-small:after {
     border-width: 1px;
-    border-color: #35baf6;
+    border-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1215 */
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-over.x-btn-default-toolbar-small:after {
     border-width: 1px;
-    border-color: #35baf6;
+    border-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1230 */
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-menu-active.x-btn-default-toolbar-small:after,
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-pressed.x-btn-default-toolbar-small:after {
     border-width: 1px;
-    border-color: #35baf6;
+    border-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
 .x-cmd-slicer.x-btn-focus.x-btn-default-toolbar-small:before {
@@ -5904,7 +5892,7 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:789 */
 .x-btn-default-toolbar-medium.x-arrow-focus .x-btn-arrow-el {
-    border: 1px solid #35baf6;
+    border: 1px solid #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:796 */
 .x-btn-over.x-btn-default-toolbar-medium {
@@ -6141,18 +6129,18 @@ body > .x-mask {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1201 */
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-default-toolbar-medium:after {
     border-width: 1px;
-    border-color: #35baf6;
+    border-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1215 */
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-over.x-btn-default-toolbar-medium:after {
     border-width: 1px;
-    border-color: #35baf6;
+    border-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1230 */
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-menu-active.x-btn-default-toolbar-medium:after,
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-pressed.x-btn-default-toolbar-medium:after {
     border-width: 1px;
-    border-color: #35baf6;
+    border-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
 .x-cmd-slicer.x-btn-focus.x-btn-default-toolbar-medium:before {
@@ -6486,7 +6474,7 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:789 */
 .x-btn-default-toolbar-large.x-arrow-focus .x-btn-arrow-el {
-    border: 1px solid #35baf6;
+    border: 1px solid #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:796 */
 .x-btn-over.x-btn-default-toolbar-large {
@@ -6723,18 +6711,18 @@ body > .x-mask {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1201 */
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-default-toolbar-large:after {
     border-width: 1px;
-    border-color: #35baf6;
+    border-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1215 */
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-over.x-btn-default-toolbar-large:after {
     border-width: 1px;
-    border-color: #35baf6;
+    border-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1230 */
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-menu-active.x-btn-default-toolbar-large:after,
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-pressed.x-btn-default-toolbar-large:after {
     border-width: 1px;
-    border-color: #35baf6;
+    border-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
 .x-cmd-slicer.x-btn-focus.x-btn-default-toolbar-large:before {
@@ -6808,7 +6796,7 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Tool.scss:29 */
 .x-tool-focus {
-    outline: 1px solid #35baf6;
+    outline: 1px solid #00aec7;
     outline-offset: 1px;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/css-outline.scss:64 */
@@ -6827,7 +6815,7 @@ body > .x-mask {
     right: -2px;
     bottom: -2px;
     left: -2px;
-    border: 1px solid #35baf6;
+    border: 1px solid #00aec7;
     pointer-events: none;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Tool.scss:38 */
@@ -7346,7 +7334,7 @@ body > .x-mask {
     right: 1px;
     bottom: 1px;
     left: 1px;
-    border: 1px solid #2a95c5;
+    border: 1px solid #008b9f;
     pointer-events: none;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/toolbar/Toolbar.scss:232 */
@@ -7419,7 +7407,7 @@ body > .x-mask {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/toolbar/Toolbar.scss:328 */
 .x-toolbar-text-default {
     padding: 0 4px;
-    color: #464a4c;
+    color: #29474c;
     font: 400 13px/16px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/toolbar/Toolbar.scss:334 */
@@ -7611,7 +7599,7 @@ body > .x-mask {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/toolbar/Toolbar.scss:328 */
 .x-toolbar-text-footer {
     padding: 0 4px;
-    color: #464a4c;
+    color: #29474c;
     font: 400 13px/16px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/toolbar/Toolbar.scss:334 */
@@ -7763,17 +7751,17 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:276 */
 .x-panel-default {
-    border-color: #35baf6;
+    border-color: #0033a0;
     padding: 0;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:279 */
 .x-panel-default.x-masked {
-    border-color: #9addfb;
+    border-color: #8099d0;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:287 */
 .x-panel-header-default {
     font-size: 16px;
-    border: 1px solid #35baf6;
+    border: 1px solid #0033a0;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:312 */
 .x-panel-header-default .x-tool-tool-el {
@@ -7835,25 +7823,26 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:392 */
 .x-panel-header-title-default {
-    color: #fff !important;
+    color: #707372;
     font-size: 16px;
     font-weight: 500;
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
     line-height: 20px;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:406 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:405 */
 .x-panel-header-title-default > .x-title-text-default {
     text-transform: none;
     padding: 0;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:412 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:411 */
 .x-panel-header-title-default > .x-title-text-default:after {
     font-family: ext-watermark;
     font-size: 32.25px;
+    content: '';
     position: absolute;
     top: 0;
     right: 0;
-    color: none;
+    color: rgba(112, 115, 114, 0.4);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:424 */
 .x-panel-header-title-default > .x-title-text-default.x-rtl:after {
@@ -7895,12 +7884,12 @@ body > .x-mask {
     width: 16px;
     height: 16px;
     font-size: 16px;
-    color: #f0f0f0;
+    color: #707372;
     background-position: center center;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:507 */
 .x-ie8 .x-panel-header-title-default > .x-title-icon-wrap-default > .x-title-icon-default.x-title-glyph {
-    color: #f0f0f0;
+    color: #707372;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:518 */
 .x-panel-body-default {
@@ -7908,7 +7897,7 @@ body > .x-mask {
     border-color: #d0d0d0;
     color: #404040;
     font-size: 13px;
-    font-weight: 400;
+    font-weight: 600;
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
     border-width: 1px;
     border-style: solid;
@@ -7916,18 +7905,12 @@ body > .x-mask {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:682 */
 .x-panel-header-default {
     background-image: none;
-    background-color: #0033a0;
-    background-image: -webkit-gradient(linear, top, bottom, color-stop(0%, #0038af), color-stop(0%, #002c8c));
-    background-image: -webkit-linear-gradient(top, #0038af, #002c8c);
-    background-image: -moz-linear-gradient(top, #0038af, #002c8c);
-    background-image: -o-linear-gradient(top, #0038af, #002c8c);
-    background-image: -ms-linear-gradient(top, #0038af, #002c8c);
-    background-image: linear-gradient(top, #0038af, #002c8c);
+    background-color: transparent;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:687 */
 .x-panel-header-default-vertical {
     background-image: none;
-    background-color: #0033a0;
+    background-color: transparent;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:693 */
 .x-rtl.x-panel-header-default-vertical {
@@ -8045,120 +8028,120 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:2 */
 .x-panel-default-outer-border-l {
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:6 */
 .x-panel-default-outer-border-b {
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:10 */
 .x-panel-default-outer-border-bl {
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:16 */
 .x-panel-default-outer-border-r {
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:20 */
 .x-panel-default-outer-border-rl {
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:26 */
 .x-panel-default-outer-border-rb {
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:32 */
 .x-panel-default-outer-border-rbl {
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:40 */
 .x-panel-default-outer-border-t {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:44 */
 .x-panel-default-outer-border-tl {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:50 */
 .x-panel-default-outer-border-tb {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:56 */
 .x-panel-default-outer-border-tbl {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:64 */
 .x-panel-default-outer-border-tr {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:70 */
 .x-panel-default-outer-border-trl {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:78 */
 .x-panel-default-outer-border-trb {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:86 */
 .x-panel-default-outer-border-trbl {
-    border-color: #35baf6 !important;
+    border-color: #0033a0 !important;
     border-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:276 */
 .x-panel-default-framed {
-    border-color: #35baf6;
+    border-color: #0033a0;
     padding: 0;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:279 */
 .x-panel-default-framed.x-masked {
-    border-color: #9addfb;
+    border-color: #8099d0;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:287 */
 .x-panel-header-default-framed {
     font-size: 16px;
-    border: 2px solid #35baf6;
+    border: 2px solid #0033a0;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:312 */
 .x-panel-header-default-framed .x-tool-tool-el {
@@ -8220,25 +8203,26 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:392 */
 .x-panel-header-title-default-framed {
-    color: #fff !important;
+    color: #707372;
     font-size: 16px;
     font-weight: 500;
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
     line-height: 20px;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:406 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:405 */
 .x-panel-header-title-default-framed > .x-title-text-default-framed {
     text-transform: none;
     padding: 0;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:412 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:411 */
 .x-panel-header-title-default-framed > .x-title-text-default-framed:after {
     font-family: ext-watermark;
     font-size: 30px;
+    content: '';
     position: absolute;
     top: 0;
     right: 0;
-    color: none;
+    color: rgba(112, 115, 114, 0.4);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:424 */
 .x-panel-header-title-default-framed > .x-title-text-default-framed.x-rtl:after {
@@ -8280,12 +8264,12 @@ body > .x-mask {
     width: 16px;
     height: 16px;
     font-size: 16px;
-    color: #f0f0f0;
+    color: #707372;
     background-position: center center;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:507 */
 .x-ie8 .x-panel-header-title-default-framed > .x-title-icon-wrap-default-framed > .x-title-icon-default-framed.x-title-glyph {
-    color: #f0f0f0;
+    color: #707372;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:518 */
 .x-panel-body-default-framed {
@@ -8293,7 +8277,7 @@ body > .x-mask {
     border-color: #d0d0d0;
     color: #404040;
     font-size: 13px;
-    font-weight: 400;
+    font-weight: 600;
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
     border-width: 1px;
     border-style: solid;
@@ -9338,150 +9322,106 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:2 */
 .x-panel-default-framed-outer-border-l {
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:6 */
 .x-panel-default-framed-outer-border-b {
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:10 */
 .x-panel-default-framed-outer-border-bl {
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:16 */
 .x-panel-default-framed-outer-border-r {
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:20 */
 .x-panel-default-framed-outer-border-rl {
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:26 */
 .x-panel-default-framed-outer-border-rb {
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:32 */
 .x-panel-default-framed-outer-border-rbl {
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:40 */
 .x-panel-default-framed-outer-border-t {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:44 */
 .x-panel-default-framed-outer-border-tl {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:50 */
 .x-panel-default-framed-outer-border-tb {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:56 */
 .x-panel-default-framed-outer-border-tbl {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:64 */
 .x-panel-default-framed-outer-border-tr {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:70 */
 .x-panel-default-framed-outer-border-trl {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #0033a0 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:78 */
 .x-panel-default-framed-outer-border-trb {
-    border-top-color: #35baf6 !important;
+    border-top-color: #0033a0 !important;
     border-top-width: 1px !important;
-    border-right-color: #35baf6 !important;
+    border-right-color: #0033a0 !important;
     border-right-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #0033a0 !important;
     border-bottom-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:86 */
 .x-panel-default-framed-outer-border-trbl {
-    border-color: #35baf6 !important;
+    border-color: #0033a0 !important;
     border-width: 1px !important;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:950 */
-.x-tool-collapse-top:before {
-    /*----------------Estilos Sura 2017*---------------------/
- 	/*Clases icon Chevron del Panel e  input*/
-    content: "\f106";
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:953 */
-.x-tool-expand-bottom:before {
-    content: "\f107";
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:957 */
-.x-form-spinner-default {
-    height: 11px !important;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:962 */
-.x-form-spinner-up-default:before {
-    content: "\f106" !important;
-    font-family: FontAwesome !important;
-    height: 11px !important;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:968 */
-.x-form-spinner-down-default:before {
-    content: "\f107" !important;
-    font-family: FontAwesome !important;
-    height: 13px !important;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:974 */
-.x-column-header-over .x-column-header-trigger:before,
-.x-column-header-open .x-column-header-trigger:before {
-    content: "\f107" !important;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:978 */
-.x-treelist-item-expander:after {
-    content: "\f105" !important;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:983 */
-.x-treelist-item-expanded > * > * > .x-treelist-item-expander:after {
-    content: "\f107" !important;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:987 */
-.x-scroller > .x-inner:before,
-.x-scroller > .x-inner:after {
-    content: "" !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/container/ButtonGroup.scss:101 */
 .x-btn-group-default {
@@ -9932,7 +9872,7 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/window/Window.scss:259 */
 .x-window-body-default {
-    border-color: #35baf6;
+    border-color: #00aec7;
     border-width: 1px;
     border-style: solid;
     background: #fff;
@@ -9968,7 +9908,7 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/window/Window.scss:314 */
 .x-window-header-title-default {
-    color: #f0f0f0;
+    color: #fff;
     font-size: 16px;
     font-weight: 500;
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
@@ -9987,7 +9927,7 @@ body > .x-mask {
     position: absolute;
     top: 0;
     right: 0;
-    color: #80d0f4;
+    color: #66cedd;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/window/Window.scss:341 */
 .x-window-header-title-default > .x-title-text-default.x-rtl:after {
@@ -10029,12 +9969,12 @@ body > .x-mask {
     width: 16px;
     height: 16px;
     font-size: 16px;
-    color: #f0f0f0;
+    color: #fff;
     background-position: center center;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/window/Window.scss:424 */
 .x-ie8 .x-window-header-title-default > .x-title-icon-wrap-default > .x-title-icon-default.x-title-glyph {
-    color: #f0f0f0;
+    color: #fff;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-window-header-default-top {
@@ -10053,11 +9993,11 @@ body > .x-mask {
     padding: 10px 14px 10px 14px;
     border-width: 2px 2px 2px 2px;
     border-style: solid;
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:237 */
 .x-window-header-default-top-mc {
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:264 */
 .x-nbr .x-window-header-default-top {
@@ -10170,11 +10110,11 @@ body > .x-mask {
     padding: 14px 10px 14px 10px;
     border-width: 2px 2px 2px 2px;
     border-style: solid;
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:237 */
 .x-window-header-default-right-mc {
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:264 */
 .x-nbr .x-window-header-default-right {
@@ -10296,11 +10236,11 @@ body > .x-mask {
     padding: 10px 14px 10px 14px;
     border-width: 2px 2px 2px 2px;
     border-style: solid;
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:237 */
 .x-window-header-default-bottom-mc {
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:264 */
 .x-nbr .x-window-header-default-bottom {
@@ -10413,11 +10353,11 @@ body > .x-mask {
     padding: 14px 10px 14px 10px;
     border-width: 2px 2px 2px 2px;
     border-style: solid;
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:237 */
 .x-window-header-default-left-mc {
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:264 */
 .x-nbr .x-window-header-default-left {
@@ -10539,11 +10479,11 @@ body > .x-mask {
     padding: 10px 14px 10px 14px;
     border-width: 2px;
     border-style: solid;
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:237 */
 .x-window-header-default-collapsed-top-mc {
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:264 */
 .x-nbr .x-window-header-default-collapsed-top {
@@ -10656,11 +10596,11 @@ body > .x-mask {
     padding: 14px 10px 14px 10px;
     border-width: 2px;
     border-style: solid;
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:237 */
 .x-window-header-default-collapsed-right-mc {
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:264 */
 .x-nbr .x-window-header-default-collapsed-right {
@@ -10782,11 +10722,11 @@ body > .x-mask {
     padding: 10px 14px 10px 14px;
     border-width: 2px;
     border-style: solid;
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:237 */
 .x-window-header-default-collapsed-bottom-mc {
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:264 */
 .x-nbr .x-window-header-default-collapsed-bottom {
@@ -10899,11 +10839,11 @@ body > .x-mask {
     padding: 14px 10px 14px 10px;
     border-width: 2px;
     border-style: solid;
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:237 */
 .x-window-header-default-collapsed-left-mc {
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:264 */
 .x-nbr .x-window-header-default-collapsed-left {
@@ -11012,20 +10952,20 @@ body > .x-mask {
 .x-window-header-default .x-window-header-icon {
     width: 16px;
     height: 16px;
-    color: #f0f0f0;
+    color: #fff;
     font-size: 16px;
     line-height: 16px;
     background-position: center center;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/window/Window.scss:558 */
 .x-window-header-default .x-window-header-glyph {
-    color: #f0f0f0;
+    color: #fff;
     font-size: 16px;
     line-height: 16px;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/window/Window.scss:575 */
 .x-ie8 .x-window-header-default .x-window-header-glyph {
-    color: #f0f0f0;
+    color: #fff;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/window/Window.scss:584 */
 .x-window-header-default-horizontal .x-tool-after-title {
@@ -11093,105 +11033,105 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:2 */
 .x-window-default-outer-border-l {
-    border-left-color: #35baf6 !important;
+    border-left-color: #00aec7 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:6 */
 .x-window-default-outer-border-b {
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #00aec7 !important;
     border-bottom-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:10 */
 .x-window-default-outer-border-bl {
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #00aec7 !important;
     border-bottom-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #00aec7 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:16 */
 .x-window-default-outer-border-r {
-    border-right-color: #35baf6 !important;
+    border-right-color: #00aec7 !important;
     border-right-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:20 */
 .x-window-default-outer-border-rl {
-    border-right-color: #35baf6 !important;
+    border-right-color: #00aec7 !important;
     border-right-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #00aec7 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:26 */
 .x-window-default-outer-border-rb {
-    border-right-color: #35baf6 !important;
+    border-right-color: #00aec7 !important;
     border-right-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #00aec7 !important;
     border-bottom-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:32 */
 .x-window-default-outer-border-rbl {
-    border-right-color: #35baf6 !important;
+    border-right-color: #00aec7 !important;
     border-right-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #00aec7 !important;
     border-bottom-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #00aec7 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:40 */
 .x-window-default-outer-border-t {
-    border-top-color: #35baf6 !important;
+    border-top-color: #00aec7 !important;
     border-top-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:44 */
 .x-window-default-outer-border-tl {
-    border-top-color: #35baf6 !important;
+    border-top-color: #00aec7 !important;
     border-top-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #00aec7 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:50 */
 .x-window-default-outer-border-tb {
-    border-top-color: #35baf6 !important;
+    border-top-color: #00aec7 !important;
     border-top-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #00aec7 !important;
     border-bottom-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:56 */
 .x-window-default-outer-border-tbl {
-    border-top-color: #35baf6 !important;
+    border-top-color: #00aec7 !important;
     border-top-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #00aec7 !important;
     border-bottom-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #00aec7 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:64 */
 .x-window-default-outer-border-tr {
-    border-top-color: #35baf6 !important;
+    border-top-color: #00aec7 !important;
     border-top-width: 1px !important;
-    border-right-color: #35baf6 !important;
+    border-right-color: #00aec7 !important;
     border-right-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:70 */
 .x-window-default-outer-border-trl {
-    border-top-color: #35baf6 !important;
+    border-top-color: #00aec7 !important;
     border-top-width: 1px !important;
-    border-right-color: #35baf6 !important;
+    border-right-color: #00aec7 !important;
     border-right-width: 1px !important;
-    border-left-color: #35baf6 !important;
+    border-left-color: #00aec7 !important;
     border-left-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:78 */
 .x-window-default-outer-border-trb {
-    border-top-color: #35baf6 !important;
+    border-top-color: #00aec7 !important;
     border-top-width: 1px !important;
-    border-right-color: #35baf6 !important;
+    border-right-color: #00aec7 !important;
     border-right-width: 1px !important;
-    border-bottom-color: #35baf6 !important;
+    border-bottom-color: #00aec7 !important;
     border-bottom-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:86 */
 .x-window-default-outer-border-trbl {
-    border-color: #35baf6 !important;
+    border-color: #00aec7 !important;
     border-width: 1px !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/window/Window.scss:717 */
@@ -11201,7 +11141,7 @@ body > .x-mask {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/form/Labelable.scss:97 */
 .x-form-item-label-default {
     color: #404040;
-    font: 400 13px/17px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    font: 600 13px/17px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
     min-height: 32px;
     padding-top: 8px;
     padding-right: 5px;
@@ -11276,7 +11216,7 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/form/field/Text.scss:229 */
 .x-form-trigger-wrap-default.x-form-trigger-wrap-focus {
-    border-color: #53c4f7;
+    border-color: #26bacf;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/form/field/Text.scss:233 */
 .x-form-trigger-wrap-default.x-form-trigger-wrap-invalid {
@@ -11486,11 +11426,11 @@ body > .x-mask {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/var/form/field/Checkbox.scss:144 */
 .x-form-checkbox-focus.x-form-radio-default {
-    color: #53c4f7;
+    color: #26bacf;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/var/form/field/Checkbox.scss:156 */
 .x-form-checkbox-focus.x-form-checkbox-default {
-    color: #53c4f7;
+    color: #26bacf;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/var/form/field/Checkbox.scss:169 */
 .x-form-cb-label-default {
@@ -11794,14 +11734,14 @@ body > .x-mask {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/view/BoundList.scss:25 */
 .x-boundlist-selected {
     color: #fff;
-    background: #35baf6;
-    border-color: #35baf6;
+    background: #00aec7;
+    border-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/view/BoundList.scss:33 */
 .x-boundlist-item-over {
     color: #fff;
-    background: #5dc8f8;
-    border-color: #5dc8f8;
+    background: #33bed2;
+    border-color: #33bed2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/view/BoundList.scss:42 */
 .x-boundlist-floating {
@@ -11946,11 +11886,11 @@ div.x-datepicker-date:hover {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/picker/Date.scss:178 */
 .x-datepicker-selected {
     border-style: solid;
-    border-color: #5dc8f8;
+    border-color: #33bed2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/picker/Date.scss:181 */
 .x-datepicker-selected div.x-datepicker-date {
-    background-color: #35baf6;
+    background-color: #00aec7;
     color: #fff;
     font-weight: 400;
 }
@@ -11958,7 +11898,7 @@ div.x-datepicker-date:hover {
 .x-datepicker-today {
     border-color: darkred;
     border-style: solid;
-    background-color: #aee3fb;
+    background-color: #99dfe9;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/picker/Date.scss:199 */
 .x-datepicker-prevday .x-datepicker-date,
@@ -12036,10 +11976,10 @@ a.x-monthpicker-item-inner:hover {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/picker/Date.scss:301 */
 .x-monthpicker-item a.x-monthpicker-selected {
-    background-color: #35baf6;
+    background-color: #00aec7;
     color: #fff;
     border-style: solid;
-    border-color: #5dc8f8;
+    border-color: #33bed2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/picker/Date.scss:308 */
 .x-monthpicker-yearnav {
@@ -12128,7 +12068,7 @@ a.x-monthpicker-yearnav-button:hover {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/var/form/field/Display.scss:59 */
 .x-form-display-field-default.x-field-form-focus {
-    outline: 1px solid #53c4f7;
+    outline: 1px solid #26bacf;
     outline-offset: -1px;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/css-outline.scss:64 */
@@ -12147,7 +12087,7 @@ a.x-monthpicker-yearnav-button:hover {
     right: 0px;
     bottom: 0px;
     left: 0px;
-    border: 1px solid #53c4f7;
+    border: 1px solid #26bacf;
     pointer-events: none;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/var/form/field/Display.scss:69 */
@@ -12784,8 +12724,8 @@ a.x-color-picker-item:hover {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/var/form/field/Tag.scss:352 */
 .x-form-text-default .x-tagfield-item.x-tagfield-item-selected {
-    background-color: #5dc8f8;
-    border-color: #5dc8f8;
+    background-color: #33bed2;
+    border-color: #33bed2;
     color: #fff;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/var/form/field/Tag.scss:361 */
@@ -12863,7 +12803,7 @@ a.x-color-picker-item:hover {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/view/Table.scss:35 */
 .x-grid-item-over {
     color: #404040;
-    background-color: #e6f1f6;
+    background-color: #e2f0f2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/view/Table.scss:42 */
 .x-grid-item-focused {
@@ -12884,7 +12824,7 @@ a.x-color-picker-item:hover {
     bottom: 0px;
     left: 0px;
     pointer-events: none;
-    border: 1px solid #35baf6;
+    border: 1px solid #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/view/Table.scss:76 */
 .x-grid-item-selected {
@@ -12904,12 +12844,12 @@ a.x-color-picker-item:hover {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/view/Table.scss:94 */
 .x-grid-with-row-lines .x-grid-item.x-grid-item-over {
     border-style: solid;
-    border-color: #dbe5ea;
+    border-color: #d7e4e6;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/view/Table.scss:99 */
 .x-grid-with-row-lines .x-grid-item-over + .x-grid-item {
     border-top-style: solid;
-    border-top-color: #dbe5ea;
+    border-top-color: #d7e4e6;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/view/Table.scss:104 */
 .x-grid-with-row-lines .x-grid-item.x-grid-item-selected {
@@ -12979,7 +12919,7 @@ a.x-color-picker-item:hover {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/view/Table.scss:244 */
 .x-grid-with-col-lines .x-grid-item-over .x-grid-cell {
-    border-color: #dbe5ea;
+    border-color: #d7e4e6;
     border-style: solid;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/view/Table.scss:249 */
@@ -13123,7 +13063,7 @@ a.x-color-picker-item:hover {
     right: 0px;
     bottom: 0px;
     left: 0px;
-    border: 1px solid #5dc8f8;
+    border: 1px solid #33bed2;
     pointer-events: none;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/grid/column/Column.scss:64 */
@@ -13133,7 +13073,7 @@ a.x-color-picker-item:hover {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/grid/column/Column.scss:77 */
 .x-column-header-over {
     background-image: none;
-    background-color: #e6f1f6;
+    background-color: #e2f0f2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/grid/column/Column.scss:81 */
 .x-column-header-sort-ASC,
@@ -13143,11 +13083,11 @@ a.x-color-picker-item:hover {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/grid/column/Column.scss:109 */
 .x-column-header-open {
-    background-color: #e6f1f6;
+    background-color: #e2f0f2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/grid/column/Column.scss:112 */
 .x-column-header-open .x-column-header-trigger {
-    background-color: #dbe5ea;
+    background-color: #d7e4e6;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/grid/column/Column.scss:117 */
 .x-column-header-over .x-column-header-trigger,
@@ -13995,12 +13935,12 @@ a.x-color-picker-item:hover {
 .x-menu-item-default.x-menu-item-focus,
 .x-menu-item-default.x-menu-item-active {
     background-image: none;
-    background-color: #5dc8f8;
+    background-color: #33bed2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/menu/Menu.scss:363 */
 .x-nlg .x-menu-item-default.x-menu-item-focus,
 .x-nlg .x-menu-item-default.x-menu-item-active {
-    background: #5dc8f8 repeat-x left top;
+    background: #33bed2 repeat-x left top;
     background-image: url(images/menu/menu-item-default-active-bg.gif);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/menu/Menu.scss:370 */
@@ -14348,12 +14288,12 @@ a.x-color-picker-item:hover {
 .x-menu-item-default-menubar.x-menu-item-focus,
 .x-menu-item-default-menubar.x-menu-item-active {
     background-image: none;
-    background-color: #5dc8f8;
+    background-color: #33bed2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/menu/Menu.scss:363 */
 .x-nlg .x-menu-item-default-menubar.x-menu-item-focus,
 .x-nlg .x-menu-item-default-menubar.x-menu-item-active {
-    background: #5dc8f8 repeat-x left top;
+    background: #33bed2 repeat-x left top;
     background-image: url(images/menu/menu-item-default-menubar-active-bg.gif);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/menu/Menu.scss:370 */
@@ -14761,7 +14701,7 @@ a.x-color-picker-item:hover {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/grid/locking/Lockable.scss:59 */
 .x-rtl.x-grid-inner-locked {
-    border-right-color: #35baf6;
+    border-right-color: #0033a0;
     border-left-color: #d0d0d0;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/grid/locking/Lockable.scss:61 */
@@ -14866,7 +14806,7 @@ a.x-color-picker-item:hover {
     border-top: 1px solid #d0d0d0 !important;
     border-bottom: 1px solid #d0d0d0 !important;
     padding: 5px 0 5px 0;
-    background-color: #e0f0f7;
+    background-color: #daeff2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/grid/plugin/RowEditing.scss:60 */
 .x-grid-with-col-lines .x-grid-row-editor .x-form-cb {
@@ -14894,11 +14834,11 @@ a.x-color-picker-item:hover {
     padding: 5px 5px 5px 5px;
     border-width: 0 1px 1px 1px;
     border-style: solid;
-    background-color: #e0f0f7;
+    background-color: #daeff2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:237 */
 .x-grid-row-editor-buttons-default-bottom-mc {
-    background-color: #e0f0f7;
+    background-color: #daeff2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:264 */
 .x-nbr .x-grid-row-editor-buttons-default-bottom {
@@ -15011,11 +14951,11 @@ a.x-color-picker-item:hover {
     padding: 5px 5px 5px 5px;
     border-width: 1px 1px 0 1px;
     border-style: solid;
-    background-color: #e0f0f7;
+    background-color: #daeff2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:237 */
 .x-grid-row-editor-buttons-default-top-mc {
-    background-color: #e0f0f7;
+    background-color: #daeff2;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:264 */
 .x-nbr .x-grid-row-editor-buttons-default-top {
@@ -15187,11 +15127,11 @@ a.x-color-picker-item:hover {
 .x-ssm-extender-drag-handle {
     height: 7px;
     width: 7px;
-    background-color: #35baf6;
+    background-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/grid/selection/SpreadsheetModel.scss:22 */
 .x-ssm-extender-mask {
-    border: 1px dotted #35baf6;
+    border: 1px dotted #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/layout/container/Accordion.scss:1 */
 .x-accordion-layout-ct {
@@ -15213,7 +15153,7 @@ a.x-color-picker-item:hover {
 .x-accordion-item .x-accordion-hd {
     background: #fff;
     border-width: 0;
-    border-color: #35baf6;
+    border-color: #0033a0;
     padding: 12px 10px;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/layout/container/Accordion.scss:24 */
@@ -15222,7 +15162,7 @@ a.x-color-picker-item:hover {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/layout/container/Accordion.scss:29 */
 .x-accordion-item .x-accordion-hd-sibling-expanded {
-    border-top-color: #35baf6;
+    border-top-color: #0033a0;
     border-top-width: 0;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/layout/container/Accordion.scss:34 */
@@ -15237,7 +15177,7 @@ a.x-color-picker-item:hover {
 .x-accordion-hd .x-tool-img {
     background-image: url(images/tools/tool-sprites-dark.png);
     background-color: #fff;
-    color: #35baf6;
+    color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/layout/container/Accordion.scss:58 */
 .x-accordion-hd .x-tool-collapse-top,
@@ -15532,7 +15472,7 @@ div.x-border-layout-ct {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/slider/Multi.scss:33 */
 .x-slider-thumb-over {
     background-color: #fcfcfc;
-    border-color: #c5cfd4;
+    border-color: #c0ced0;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/slider/Multi.scss:36 */
 .x-slider-thumb-over:before {
@@ -15541,11 +15481,11 @@ div.x-border-layout-ct {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/slider/Multi.scss:41 */
 .x-slider-focus .x-slider-thumb {
     background-color: #f6f6f6;
-    border-color: #35baf6;
+    border-color: #00aec7;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/slider/Multi.scss:44 */
 .x-slider-focus .x-slider-thumb:before {
-    color: #91d3f1;
+    color: #76cdda;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/slider/Multi.scss:49 */
 .x-slider-focus .x-slider-thumb-over {
@@ -15554,7 +15494,7 @@ div.x-border-layout-ct {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/slider/Multi.scss:53 */
 .x-slider-thumb-drag {
     background-color: #f1f1f1;
-    border-color: #bbcbd2;
+    border-color: #b5c9cc;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/slider/Multi.scss:56 */
 .x-slider-thumb-drag:before {
@@ -16273,7 +16213,7 @@ div.x-border-layout-ct {
 .x-tab-focus.x-tab-default {
     border-color: transparent;
     background-color: transparent;
-    outline: 1px solid #35baf6;
+    outline: 1px solid #00aec7;
     outline-offset: -3px;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/css-outline.scss:64 */
@@ -16292,7 +16232,7 @@ div.x-border-layout-ct {
     right: 2px;
     bottom: 2px;
     left: 2px;
-    border: 1px solid #35baf6;
+    border: 1px solid #00aec7;
     pointer-events: none;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2320 */
@@ -16348,4 +16288,37 @@ div.x-border-layout-ct {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2507 */
 .x-ie8 .x-tab-focus.x-tab-over.x-tab-default.x-tab-rotate-right {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+}
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2533 */
+.x-tab-bar-plain .x-tab-focus.x-tab-over.x-tab-default .x-tab-inner-default {
+    color: #606060;
+}
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2564 */
+.x-tab-bar-plain .x-tab-focus.x-tab-over.x-tab-default .x-tab-icon-el {
+    color: #606060;
+}
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2587 */
+.x-tab.x-tab-active.x-tab-default {
+    border-color: #fff;
+    background-color: #fff;
+}
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2643 */
+.x-tab.x-tab-active.x-tab-default .x-tab-inner-default {
+    color: #008b9f;
+}
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2648 */
+.x-tab-bar-plain .x-tab.x-tab-active.x-tab-default .x-tab-inner-default {
+    color: #404040;
+}
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2663 */
+.x-tab.x-tab-active.x-tab-default .x-tab-icon-el {
+    color: #008b9f;
+}
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2671 */
+.x-ie8 .x-tab.x-tab-active.x-tab-default .x-tab-icon-el {
+    color: #4daebc;
+}
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2677 */
+.x-tab-bar-plain .x-tab.x-tab-active.x-tab-default .x-tab-icon-el {
+    color: #404040;
 }

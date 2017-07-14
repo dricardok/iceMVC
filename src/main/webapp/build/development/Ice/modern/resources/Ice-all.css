@@ -33,12 +33,12 @@
 .x-pullrefresh-md-arrow-main {
     margin-top: 10px;
     transform: rotate(-37deg);
-    border-color: #35baf6 #35baf6 transparent;
+    border-color: #00aec7 #00aec7 transparent;
     border-color: var(--base-color) var(--base-color) transparent;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-material/sass/var/plugin/PullRefresh.scss:50 */
 .x-pullrefresh-md-arrow-main:before {
-    border-color: #35baf6 transparent transparent transparent;
+    border-color: #00aec7 transparent transparent transparent;
     border-color: var(--base-color) transparent transparent transparent;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-material/sass/var/plugin/PullRefresh.scss:54 */
@@ -73,7 +73,7 @@
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-material/sass/var/plugin/PullRefresh.scss:82 */
 .x-pullrefresh-md-spinner-main .x-pullrefresh-md-spinner-left .x-pullrefresh-md-half-circle,
 .x-pullrefresh-md-spinner-main .x-pullrefresh-md-spinner-right .x-pullrefresh-md-half-circle {
-    border-top-color: #35baf6;
+    border-top-color: #00aec7;
     border-top-color: var(--base-color);
     animation-iteration-count: infinite;
     animation-duration: 1.3125s;
@@ -87,7 +87,7 @@
 .x-pullrefresh-md-spinner-main .x-pullrefresh-md-spinner-left .x-pullrefresh-md-half-circle {
     left: 0;
     border-right-color: transparent;
-    border-left-color: #35baf6;
+    border-left-color: #00aec7;
     border-left-color: var(--base-color);
     animation-name: x-pullrefresh-spinner-left-wobble;
 }
@@ -99,7 +99,7 @@
 .x-pullrefresh-md-spinner-main .x-pullrefresh-md-spinner-right .x-pullrefresh-md-half-circle {
     right: 0;
     border-left-color: transparent;
-    border-right-color: #35baf6;
+    border-right-color: #00aec7;
     border-right-color: var(--base-color);
     animation-name: x-pullrefresh-spinner-right-wobble;
 }
@@ -459,23 +459,8 @@
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:102 */
 .x-treelist-toolstrip {
-    background-color: #002a64;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:107 */
-.x-treelist-item-selected.x-treelist-item {
-    background-color: #00b5cb;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:111 */
-.x-treelist-item-selected.x-treelist-item-tool {
-    background-color: #0f2f74;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:133 */
-.x-treelist-item-selected > .x-treelist-row {
-    background-color: #0f2f74;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:137 */
-.x-treelist-item-selected > .x-treelist-row-over {
-    background-color: #042d85;
+    background-color: #fafafa;
+    background-color: var(--background-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:142 */
 .x-treelist-item-tool {
@@ -577,7 +562,8 @@
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:294 */
 .x-treelist-item-floated > .x-treelist-row {
-    background-color: #002a64;
+    background-color: #fafafa;
+    background-color: var(--background-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:298 */
 .x-treelist-item-floated > .x-treelist-container {
@@ -597,16 +583,13 @@
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:319 */
 .x-treelist-item-floated > .x-treelist-row-over {
-    background-color: #002a64;
+    background-color: #fafafa;
+    background-color: var(--background-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:322 */
 .x-treelist-item-floated > .x-treelist-row-over > * > .x-treelist-item-text {
     color: #111;
     color: var(--color);
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:328 */
-.x-treelist-item-expanded {
-    background-color: #0f2f74 !important;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:335 */
 .x-treelist-item-expanded > .x-treelist-item-expander:after {
@@ -642,7 +625,8 @@
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:361 */
 .x-treelist-row-over {
-    background-color: #042d85;
+    background-color: rgba(0, 0, 0, 0.03);
+    background-color: var(--overlay-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:364 */
 .x-treelist-row-over > * > .x-treelist-item-icon {
@@ -6197,11 +6181,10 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Panel.scss:635 */
 .x-panel-header {
-    background-color: #35baf6;
+    background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
-    color: #fff;
-    color: var(--base-foreground-color);
+    color: #707372;
     padding: 0.44445em 0.88889em;
     font: 600 1.5rem/1.44445em Roboto, sans-serif;
     border: solid 1px #c3c3c3;
@@ -6520,7 +6503,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:650 */
 .x-button {
-    color: #35baf6;
+    color: #00aec7;
     color: var(--base-color);
     padding: 0.3077em 0.61539em;
     font: 600 1.08334rem/1.23077em Roboto, sans-serif;
@@ -6548,16 +6531,16 @@ html.x-big {
 .x-button.x-button-pressed {
     color: #fafafa;
     color: var(--background-color);
-    background-color: rgba(53, 186, 246, 0.8);
+    background-color: rgba(0, 174, 199, 0.8);
     background-color: var(--base-pressed-color);
     background-image: none;
-    border-color: rgba(14, 173, 244, 0.8);
+    border-color: rgba(0, 138, 158, 0.8);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:679 */
 .x-button .x-button-icon {
     width: 1.23077em;
     height: 1.23077em;
-    color: #35baf6;
+    color: #00aec7;
     color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-base/sass/etc/mixins/icon.scss:63 */
@@ -6638,8 +6621,8 @@ html.x-big {
 .x-button-action {
     color: #fff;
     color: var(--base-foreground-color);
-    border-color: #0eadf4;
-    background-color: #35baf6;
+    border-color: #008a9e;
+    background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
 }
@@ -6647,9 +6630,9 @@ html.x-big {
 .x-button-action.x-button-pressing,
 .x-button-action.x-button-pressed {
     color: #fff;
-    background-color: #0aa0e4;
+    background-color: #00788a;
     background-image: none;
-    border-color: #0885bd;
+    border-color: #005561;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:679 */
 .x-button-action .x-button-icon {
@@ -6665,19 +6648,19 @@ html.x-big {
 .x-button-alt {
     color: #fff;
     color: var(--base-foreground-color);
-    border-color: #0eadf4;
-    background-color: #35baf6;
+    border-color: #008a9e;
+    background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:672 */
 .x-button-alt.x-button-pressing,
 .x-button-alt.x-button-pressed {
-    color: #000;
-    background-color: #35baf6;
+    color: #fff;
+    background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
-    border-color: #0eadf4;
+    border-color: #008a9e;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:679 */
 .x-button-alt .x-button-icon {
@@ -6687,7 +6670,7 @@ html.x-big {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:696 */
 .x-button-alt.x-button-pressing .x-button-icon,
 .x-button-alt.x-button-pressed .x-button-icon {
-    color: #000;
+    color: #fff;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:650 */
 .x-button-confirm {
@@ -6773,19 +6756,19 @@ html.x-big {
 .x-button-segmented {
     color: #fff;
     color: var(--base-foreground-color);
-    border-color: #0eadf4;
-    background-color: #35baf6;
+    border-color: #008a9e;
+    background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:672 */
 .x-button-segmented.x-button-pressing,
 .x-button-segmented.x-button-pressed {
-    color: rgba(0, 0, 0, 0.8);
-    background-color: rgba(53, 186, 246, 0.8);
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 174, 199, 0.8);
     background-color: var(--base-pressed-color);
     background-image: none;
-    border-color: rgba(14, 173, 244, 0.8);
+    border-color: rgba(0, 138, 158, 0.8);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:679 */
 .x-button-segmented .x-button-icon {
@@ -6795,7 +6778,7 @@ html.x-big {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:696 */
 .x-button-segmented.x-button-pressing .x-button-icon,
 .x-button-segmented.x-button-pressed .x-button-icon {
-    color: rgba(0, 0, 0, 0.8);
+    color: rgba(255, 255, 255, 0.8);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/src/Menu.scss:1 */
 .x-menu {
@@ -6828,7 +6811,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/field/Field.scss:313 */
 .x-field.x-focused .x-label-el {
-    color: #35baf6;
+    color: #00aec7;
     color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/field/Field.scss:333 */
@@ -6900,7 +6883,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/field/trigger/Trigger.scss:235 */
 .x-trigger.x-interactive:active .x-icon-el {
-    color: rgba(53, 186, 246, 0.8);
+    color: rgba(0, 174, 199, 0.8);
     color: var(--base-pressed-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/src/field/trigger/Trigger.scss:21 */
@@ -6980,7 +6963,7 @@ html.x-big {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/field/Text.scss:436 */
 .x-textfield.x-focused .x-input {
     border-width: 0 0 2px 0;
-    border-color: #35baf6;
+    border-color: #00aec7;
     border-color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/field/Text.scss:447 */
@@ -7098,9 +7081,9 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Toolbar.scss:321 */
 .x-titlebar {
-    background-color: #fff !important;
+    background-color: #fff;
     background-image: none;
-    border-color: #021e2a;
+    border-color: #000;
     font: 500 1.33334rem/1.25em Roboto, sans-serif;
     color: #fff;
     color: var(--base-foreground-color);
@@ -7180,7 +7163,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Toolbar.scss:321 */
 .x-toolbar {
-    background-color: #fff !important;
+    background-color: #fff;
     background-image: none;
     border-color: #767676;
     font: 500 1.33334rem/1.25em Roboto, sans-serif;
@@ -7269,7 +7252,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/carousel/Carousel.scss:56 */
 .x-carousel-indicator-light span.x-carousel-indicator-active {
-    background-color: #35baf6;
+    background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
 }
@@ -7281,7 +7264,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/carousel/Carousel.scss:56 */
 .x-carousel-indicator-dark span.x-carousel-indicator-active {
-    background-color: #35baf6;
+    background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
 }
@@ -7419,16 +7402,16 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/dataview/ListItem.scss:561 */
 .x-listitem.x-listitem.x-pressed {
-    background-color: rgba(53, 186, 246, 0.8);
+    background-color: rgba(0, 174, 199, 0.8);
     background-color: var(--base-pressed-color);
     color: #fff;
     color: var(--reverse-color);
-    border-color: rgba(53, 186, 246, 0.8);
+    border-color: rgba(0, 174, 199, 0.8);
     border-color: var(--base-pressed-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/dataview/ListItem.scss:567 */
 .x-listitem.x-pressed + .x-listitem {
-    border-top-color: rgba(53, 186, 246, 0.8);
+    border-top-color: rgba(0, 174, 199, 0.8);
     border-top-color: var(--base-pressed-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/dataview/ListItem.scss:440 */
@@ -7485,7 +7468,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/dataview/ListItem.scss:493 */
 .x-listitem-disclosure .x-icon-el:active {
-    background-color: rgba(53, 186, 246, 0.8);
+    background-color: rgba(0, 174, 199, 0.8);
     background-color: var(--base-pressed-color);
     color: #fff;
     color: var(--reverse-color);
@@ -7746,7 +7729,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/field/Checkbox.scss:159 */
 .x-checkboxfield.x-checked .x-input {
-    color: #35baf6;
+    color: #00aec7;
     color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-base/sass/etc/mixins/icon.scss:63 */
@@ -7897,7 +7880,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/src/field/Select.scss:14 */
 .x-selectfield-overlay .x-listitem.x-selected .x-list-label:after {
-    color: #35baf6;
+    color: #00aec7;
     color: var(--base-color);
     position: absolute;
     right: 0.6em;
@@ -7906,7 +7889,7 @@ html.x-big {
 .x-thumb {
     height: 18px;
     width: 18px;
-    background-color: #35baf6;
+    background-color: #00aec7;
     background-color: var(--base-color);
     border-radius: 9px;
     margin-top: -9px;
@@ -8044,7 +8027,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/slider/Thumb.scss:228 */
 .x-thumb-toggle-on {
-    background-color: #35baf6;
+    background-color: #00aec7;
     background-color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/slider/Thumb.scss:242 */
@@ -8079,7 +8062,7 @@ html.x-big {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/src/form/FieldContainer.scss:7 */
 .x-form-field-separators > .x-textfield.x-focused {
     border-width: 2px;
-    border-color: #35baf6;
+    border-color: #00aec7;
     border-color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/src/form/FieldContainer.scss:15 */
@@ -8321,7 +8304,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/grid/cell/Check.scss:165 */
 .x-checkcell.x-checked .x-checkbox-el {
-    color: #35baf6;
+    color: #00aec7;
     color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-base/sass/etc/mixins/icon.scss:63 */
@@ -8398,7 +8381,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/grid/column/Check.scss:400 */
 .x-checkcolumn.x-checked .x-checkbox-el {
-    color: #35baf6;
+    color: #00aec7;
     color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-base/sass/etc/mixins/icon.scss:63 */
@@ -8425,7 +8408,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Toolbar.scss:321 */
 .x-pagingtoolbar {
-    background-color: #fff !important;
+    background-color: #fff;
     background-image: none;
     color: #111;
     color: var(--color);
@@ -8511,7 +8494,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/src/grid/plugin/ViewOptions.scss:46 */
 .x-column-options-visibleindicator {
-    color: #35baf6;
+    color: #00aec7;
     color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-base/sass/etc/mixins/icon.scss:63 */
@@ -8548,7 +8531,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/src/grid/plugin/ViewOptions.scss:77 */
 .x-column-options-grouped .x-column-options-groupindicator {
-    color: #35baf6;
+    color: #00aec7;
     color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/src/panel/Tool.scss:1 */
@@ -8910,7 +8893,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/src/plugin/ListPaging.scss:8 */
 .x-list-paging .x-list-paging-msg {
-    color: #00abf8;
+    color: #008194;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     -ms-border-radius: 6px;
@@ -8960,7 +8943,7 @@ html.x-big {
     color: var(--base-foreground-color);
     padding: 0.5em;
     font: 600 1rem/1.33334em Roboto, sans-serif;
-    background-color: #35baf6;
+    background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
 }
@@ -8974,7 +8957,7 @@ html.x-big {
 .x-tab.x-tab-active {
     color: #fff;
     color: var(--base-foreground-color);
-    background-color: #35baf6;
+    background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
     box-shadow: inset 0 -4px 0 0 #ffe0b2;
@@ -9068,7 +9051,7 @@ html.x-big {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Toolbar.scss:321 */
 .x-tabbar {
-    background-color: #fff !important;
+    background-color: #fff;
     background-image: none;
     border-color: #c3c3c3;
     border-color: var(--faded-color);
@@ -9089,12 +9072,12 @@ html.x-big {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:5 */
 :root {
     --dark-mode: false;
-    --base-color: #35baf6;
+    --base-color: #00aec7;
     --base-highlight-color: #64b5f6;
     --base-light-color: #bbdefb;
     --base-dark-color: #1976d2;
-    --base-pressed-color: rgba(53, 186, 246, 0.8);
-    --base-invisible-color: rgba(53, 186, 246, 0);
+    --base-pressed-color: rgba(0, 174, 199, 0.8);
+    --base-invisible-color: rgba(0, 174, 199, 0);
     --base-foreground-color: #fff;
     --accent-color: #ff9800;
     --accent-light-color: #ffe0b2;
@@ -13012,20 +12995,20 @@ body {
     color: #fafafa;
     color: var(--background-color);
     box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.12), 2px 2px 5px 0 rgba(0, 0, 0, 0.08);
-    border-color: #0eadf4;
-    background-color: #35baf6;
+    border-color: #008a9e;
+    background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:672 */
 .x-button-raised.x-button-pressing,
 .x-button-raised.x-button-pressed {
-    color: rgba(0, 0, 0, 0.8);
+    color: rgba(255, 255, 255, 0.8);
     box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.18), 2px 2px 5px 0 rgba(0, 0, 0, 0.12);
-    background-color: rgba(53, 186, 246, 0.8);
+    background-color: rgba(0, 174, 199, 0.8);
     background-color: var(--base-pressed-color);
     background-image: none;
-    border-color: rgba(14, 173, 244, 0.8);
+    border-color: rgba(0, 138, 158, 0.8);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:679 */
 .x-button-raised .x-button-icon {
@@ -13035,7 +13018,7 @@ body {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:696 */
 .x-button-raised.x-button-pressing .x-button-icon,
 .x-button-raised.x-button-pressed .x-button-icon {
-    color: rgba(0, 0, 0, 0.8);
+    color: rgba(255, 255, 255, 0.8);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Button.scss:650 */
 .x-button-raised-confirm {
@@ -13279,7 +13262,7 @@ body {
 .x-msgbox .x-toolbar-docked-bottom .x-button,
 .x-container.x-floated .x-toolbar-docked-bottom .x-button,
 .x-panel.x-floated .x-toolbar-docked-bottom .x-button {
-    color: #35baf6;
+    color: #00aec7;
     color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/MessageBox.scss:21 */
@@ -13311,7 +13294,7 @@ body {
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Toolbar.scss:20 */
 .x-floating .x-toolbar.x-docked-bottom .x-button,
 .x-floated .x-toolbar.x-docked-bottom .x-button {
-    color: #35baf6;
+    color: #00aec7;
     color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Toolbar.scss:23 */
@@ -13339,7 +13322,7 @@ body {
 .x-indexbar-indicator {
     width: 64px;
     height: 64px;
-    background-color: #35baf6;
+    background-color: #00aec7;
     background-color: var(--base-color);
     position: absolute;
     top: 0;
@@ -13726,7 +13709,7 @@ body {
 .sura-logo .main-logo {
     /*---------- Componentes Generales Main Sura 2017--------------*/
     /*Head 01*/
-    margin-left: 95px !important;
+    margin-left: 95px;
     line-height: 65px;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:82 */
@@ -13735,107 +13718,110 @@ body {
     top: 8px;
     position: relative;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:94 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:95 */
 .head_02 {
     /*Head 02*/
     background-color: #0033a0;
-    width: 100%;
-    /*height:52px !important;*/
     position: relative;
-    color: #fff !important;
+    color: #fff;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:104 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:103 */
 .phone_sura {
     padding: 0 4px;
     color: #fff !important;
     font: 400 13px/16px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:108 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:107 */
 .phone_sura .mail_sura {
     text-decoration: underline;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:113 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:112 */
 #mail_s .x-btn {
     cursor: default !important;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:119 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:118 */
 .fa-envelope:before {
     color: #fff !important;
     cursor: default !important;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:124 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:123 */
 .fa-phone:before {
     color: #fff !important;
     cursor: default !important;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:133 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:132 */
 .fd_body {
     /*Body*/
     background-color: #deebf4;
     min-height: 100%;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:146 */
-.sura-logo_bco .main-logo img {
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:144 */
+.sura-logo_bco .main-logo {
     /*Botones*/
     /*Login*/
+    margin-left: 30px;
+    line-height: 65px;
+}
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:147 */
+.sura-logo_bco .main-logo img {
     width: 118px;
     top: 8px;
     position: relative;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:154 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:160 */
 .linksura {
     color: #707372 !important;
     font-size: 12px !important;
     line-height: 30px;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:164 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:170 */
 .bd-panel {
     /*Panel*/
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    background-color: #fff !important;
+    background-color: #fff;
     padding: 3%;
     margin: 5%;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:171 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:177 */
 .hd-panel {
     background-color: #0033a0;
-    color: #fff !important;
+    color: #fff;
     vertical-align: middle;
     text-align: center;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:179 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:185 */
 .fd-hdmenu {
     background-color: #042d85;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:184 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:190 */
 .footer {
     /*Footer*/
-    background-color: #fff !important;
+    background-color: #fff;
     font-family: 'Arial';
     color: #707372;
     width: 100%;
     height: 55px;
     text-align: center;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:191 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:197 */
 .footer a {
     text-decoration: underline;
     color: #0033a0;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:193 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:199 */
 .footer a:hover {
     color: #707372;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:202 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:208 */
 #head_02 .head_02 {
     /*---------- Termina Componentes Generales Main Sura 2017--------------*/
     color: #fff;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:206 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:212 */
 #main-navigation-btn-btnIconEl:before {
     color: #fff;
 }
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:212 */
+/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/sass/src/view/main/Main.scss:218 */
 #toolbar-1039-innerCt:before {
     background-color: #fff;
 }
@@ -14100,21 +14086,17 @@ body.x-ios.x-webview.x-portrait {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:482 */
 .x-treelist-navigation {
-    background-color: #002a64;
+    background-color: #32404e;
     background-position: 44px 0%;
     padding: 0 0 0 0;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:102 */
 .x-treelist-navigation .x-treelist-toolstrip {
-    background-color: #002a64;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:107 */
-.x-treelist-navigation .x-treelist-item-selected.x-treelist-item {
-    background-color: #00b5cb;
+    background-color: #32404e;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:111 */
 .x-treelist-navigation .x-treelist-item-selected.x-treelist-item-tool {
-    background-color: #0f2f74;
+    background-color: #475360;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:116 */
 .x-treelist-navigation .x-treelist-item-selected.x-treelist-item-tool:after {
@@ -14124,15 +14106,12 @@ body.x-ios.x-webview.x-portrait {
     left: 0;
     content: " ";
     width: 5px;
-    background-color: #00b5cb;
+    background-color: #00aec7;
+    background-color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:133 */
 .x-treelist-navigation .x-treelist-item-selected > .x-treelist-row {
-    background-color: #0f2f74;
-}
-/* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:137 */
-.x-treelist-navigation .x-treelist-item-selected > .x-treelist-row-over {
-    background-color: #042d85;
+    background-color: #475360;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:142 */
 .x-treelist-navigation .x-treelist-item-tool {
@@ -14147,7 +14126,7 @@ body.x-ios.x-webview.x-portrait {
     left: 0;
     content: " ";
     width: 5px;
-    background-color: #35baf6;
+    background-color: #00aec7;
     background-color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:165 */
@@ -14212,15 +14191,16 @@ body.x-ios.x-webview.x-portrait {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:277 */
 .x-treelist-navigation .x-treelist-row-over:before {
-    background-color: #00b5cb;
+    background-color: transparent;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:281 */
 .x-treelist-navigation .x-treelist-item-selected > .x-treelist-row-over:before {
-    background-color: #57c6f8;
+    background-color: #00cdeb;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:285 */
 .x-treelist-navigation .x-treelist-item-selected > .x-treelist-row:before {
-    background-color: #00b5cb;
+    background-color: #00aec7;
+    background-color: var(--base-color);
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:291 */
 .x-treelist-navigation .x-treelist-item-floated .x-treelist-container {
@@ -14228,7 +14208,7 @@ body.x-ios.x-webview.x-portrait {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:294 */
 .x-treelist-navigation .x-treelist-item-floated > .x-treelist-row {
-    background-color: #002a64;
+    background-color: #32404e;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:298 */
 .x-treelist-navigation .x-treelist-item-floated > .x-treelist-container {
@@ -14248,7 +14228,7 @@ body.x-ios.x-webview.x-portrait {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:319 */
 .x-treelist-navigation .x-treelist-item-floated > .x-treelist-row-over {
-    background-color: #002a64;
+    background-color: #32404e;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:322 */
 .x-treelist-navigation .x-treelist-item-floated > .x-treelist-row-over > * > .x-treelist-item-text {
@@ -14256,7 +14236,7 @@ body.x-ios.x-webview.x-portrait {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:328 */
 .x-treelist-navigation .x-treelist-item-expanded {
-    background-color: #0f2f74 !important;
+    background-color: #2c3845;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:346 */
 .x-treelist-navigation.x-treelist-highlight-path .x-treelist-item-over > * > * > .x-treelist-item-icon {
@@ -14272,7 +14252,7 @@ body.x-ios.x-webview.x-portrait {
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:361 */
 .x-treelist-navigation .x-treelist-row-over {
-    background-color: #042d85;
+    background-color: #3c4a57;
 }
 /* E:/projects/eclipse_neon/iceMVC/src/main/webapp/ext/packages/core/sass/src/list/TreeItem.scss:364 */
 .x-treelist-navigation .x-treelist-row-over > * > .x-treelist-item-icon {
