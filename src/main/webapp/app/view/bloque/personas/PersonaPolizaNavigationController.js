@@ -102,38 +102,48 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
             paso = 'Agregando persona a situacion',
             refs = view.getReferences();
         try{
-            Ice.log('me ',me);
             var situacionpersonas = refs.situacionpersonas,
-                gridPersonas = refs.gridPersonas;
-            gridPersonas.getStore().removeAll();
-            gridPersonas.hide();
-            var personapoliza = Ext.create('Ice.view.bloque.personas.PersonaPoliza',{
-                reference: 'personapoliza',
-                cdunieco: view.getCdunieco(),
-                cdramo: view.getCdramo(),
-                estado: view.getEstado(),
-                nmpoliza: view.getNmpoliza(),
-                nmsuplem: view.getNmsuplem(),
-                nmsituac: gridPersonas.nmsituac,
-                cdtipsit: view.getCdtipsit(),
-                accion: 'I',
-                listeners: {
-                    'datosPersonaGuardada': function(){
-                        Ice.query('#mainView').getReferences().mainCard.pop();
-                        Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.cerrarPersonaPoliza');
+                gridPersonas = refs.gridPersonas,
+                valid = false;
+            Ice.log('gridPersonas ', gridPersonas.getNmsituac());
+            if(gridPersonas){
+                if(gridPersonas.getStore()){
+                    if(gridPersonas.getNmsituac()){
+                        valid = true;
+                        gridPersonas.hide();
+                        var personapoliza = Ext.create('Ice.view.bloque.personas.PersonaPoliza',{
+                            reference: 'personapoliza',
+                            cdunieco: view.getCdunieco(),
+                            cdramo: view.getCdramo(),
+                            estado: view.getEstado(),
+                            nmpoliza: view.getNmpoliza(),
+                            nmsuplem: view.getNmsuplem(),
+                            nmsituac: gridPersonas.getNmsituac(),
+                            cdtipsit: view.getCdtipsit(),
+                            accion: 'I',
+                            listeners: {
+                                'datosPersonaGuardada': function(){
+                                    Ice.query('#mainView').getReferences().mainCard.pop();
+                                    Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.cerrarPersonaPoliza');
+                                }
+                            },
+                            botones: [
+                                {
+                                    xtype: 'button',
+                                    reference: 'btnGuardar',
+                                    text: 'Guardar',
+                                    handler: 'onGuardarBloque'
+                                }
+                            ]
+                        });
+                        gridPersonas.getStore().removeAll();
+                        Ice.push(personapoliza);
                     }
-                },
-                botones: [
-                    {
-                        xtype: 'button',
-                        reference: 'btnGuardar',
-                        text: 'Guardar',
-                        handler: 'onGuardarBloque'
-                    }
-                ]
-            });
-            
-            Ice.push(personapoliza);
+                }
+            }
+            if(!valid){
+                Ice.mensajeWarning('Debe seleccionar una situacion de riesgo');
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -166,16 +176,18 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
             data,
             paso = 'Configurando navegacion de personas';
         try{
-            var gridPersonas = refs.gridPersonas;            
+            var gridPersonas = grid;            
             if(Ext.manifest.toolkit === 'classic'){
                 dataPer = gridPersonas.getStore().getAt(rowIndex).getData();
             } else {
+                Ice.log('recordPer',gridPersonas.getParent().getRecord().getData());
                 var cellPer = gridPersonas.getParent(),
                     recordPer = cellPer.getRecord(),
                     dataPer = recordPer.getData();
             }
+                
+            refs.gridPersonas.getStore().removeAll();
             
-            gridPersonas.getStore().removeAll();
             var personapoliza = Ext.create('Ice.view.bloque.personas.PersonaPoliza',{
                 reference: 'personapoliza',
                 cdunieco: view.getCdunieco(),
@@ -203,9 +215,15 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
                     }
                 ]
             });
-            Ice.log('personapoliza.refs',personapoliza.getReferences());
-            personapoliza.getReferences().cdperson.setValue(dataPer.cdperson);
-            personapoliza.getReferences().cdrol.setValue(dataPer.cdrol);
+            Ice.log('personapoliza.refs',personapoliza.getReferences().form.getReferences());
+            var refs;
+            if(Ext.manifest.toolkit === 'classic'){
+                refs = personapoliza.getReferences();
+            } else {
+                refs = personapoliza.getReferences().form.getReferences();
+            }
+            refs.cdperson.setValue(dataPer.cdperson);
+            refs.cdrol.setValue(dataPer.cdrol);
             Ice.push(personapoliza);
         } catch (e) {
             Ice.generaExcepcion(e, paso);

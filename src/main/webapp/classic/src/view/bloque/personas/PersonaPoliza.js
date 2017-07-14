@@ -37,6 +37,9 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                     throw 'Falta llave de p\u00f3liza y situacion';
                 }
                 
+                if(!config.nmsituac){
+                    throw 'No se recibio situacion de riesgo';
+                }
             } catch (e) {
                 Ice.generaExcepcion(e, paso);
             }
