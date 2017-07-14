@@ -23,14 +23,14 @@ public class PagoManagerImpl implements PagoManager {
 		
 		TransactionResponse response = null;
 		
-		try{
-			
-			response = multipagosClientSR.realizarPago(request);
-			System.out.println(response);
-		
-		}catch(ResponseException  e){
-			e.printStackTrace();
-		}
+//		try{
+//			
+//			response = multipagosClientSR.realizarPago(request);
+//			System.out.println(response);
+//		
+//		}catch(ResponseException  e){
+//			e.printStackTrace();
+//		}
 		
 		return response;
 	}
@@ -39,14 +39,14 @@ public class PagoManagerImpl implements PagoManager {
 	@Override
 	public void aplicaPago(RequestWs request) throws Exception {
 		
-		try{
-			
-			multipagosClientAP.aplicaPago(request);
-			System.out.println("aplicaPago");
-			
-		}catch(ResponseException e){
-			e.printStackTrace();
-		}
+//		try{
+//			
+//			multipagosClientAP.aplicaPago(request);
+//			System.out.println("aplicaPago");
+//			
+//		}catch(ResponseException e){
+//			e.printStackTrace();
+//		}
 	}
 
 }
