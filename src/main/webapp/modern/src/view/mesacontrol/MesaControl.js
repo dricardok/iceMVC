@@ -17,14 +17,14 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
     
     // configuracion que no usa parametros
     cls: 'dashboard',
-    
+    bodyPadding: '0 0 0 20',
     scrollable: true,
     
     items: [
         {
             xtype: 'formpanel',
             title: 'Sin responsive',
-            
+                     
             userCls: 'big-100 small-100 dashboard-item shadow',
             
             items: [

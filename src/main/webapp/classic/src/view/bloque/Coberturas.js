@@ -10,6 +10,7 @@
  					requires : [],
  					layout : "responsivecolumn",
  					// scrollable:true,
+ 					bodyPadding: '80',
  					defaults : {
  						userCls : 'big-100 small-100'
  					},
@@ -143,10 +144,11 @@
  														{
  															xtype : 'gridpanel',
  															itemId : 'gridCoberturas',
+ 															bodyPadding: '30',
  															hidden: true,
  															title : 'Coberturas de la situación '+me.getNmsituac() ,
  															// width : "700px",
- 															tbar : [
+ 															tbar : [ '->',
 	 																	{
 	 																		xtype : 'tbfill'
 	 																	},
@@ -189,7 +191,7 @@
  														{
  															xtype : 'formtrescolumnasice',
  															reference: 'form',
- 															
+ 															cls:'sinfondo',
  															buttons : [ {
  																text : 'Guardar',
  																hidden: true,

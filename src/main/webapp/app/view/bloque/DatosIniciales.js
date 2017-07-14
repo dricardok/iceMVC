@@ -44,7 +44,7 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
                     xtype: 'bloquedatosgenerales',
                     reference: 'formdatosgenerales',
                     
-                    title: 'Datos de p\u00f3liza',
+                    title: 'Datos de P\u00f3liza',
                     listeners: {
                         llaveGenerada: 'llaveGenerada'
                     }
@@ -52,7 +52,7 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
                     xtype: 'formauxiliar',
                     reference: 'formdatosauxiliares',
 
-                    title: 'Datos adicionales',
+                    title: 'Datos Adicionales',
 
                     bloque: 'B1',
                     cdtipsit: '*'

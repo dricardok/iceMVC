@@ -29,7 +29,7 @@ $panel-base-color: dynamic($base-color);
  * @var {color}
  * The default border-color of Panels
  */
-$panel-border-color: dynamic($azulo-s);
+$panel-border-color: dynamic(transparent);
 
 /**
  * @var {number}

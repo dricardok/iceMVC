@@ -285,7 +285,7 @@
 
     // header
     .#{$prefix}panel-header-#{$ui} {
-        @if not is-null($ui-header-font-size) { font-size: $ui-header-font-size; }
+        @if not is-null($font-pnl) { font-size: $font-pnl; }
 
         @if $ui-header-border-width != 0 {
             border: $ui-header-border-width $ui-header-border-style $ui-header-border-color;
@@ -947,7 +947,26 @@
 }
 
 
+//CLASES  DONDE NO ENCONTRE LAS VARIABLES EN la CARPETA VAR
 
+.x-panel-header-title-default {
+    color: #707372;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    line-height: 25px;
+        border-color: #ebebeb;
+        border-left: transparent;
+        border-right: transparent;
+        border-top: transparent;
+        border-width: 2px;
+        border-style: solid;        
+    padding-bottom: 13px;
+    }
+
+.x-action-col-icon{
+    margin: 0 5px;
+}
 
 
 

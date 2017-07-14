@@ -87,3 +87,33 @@
 }
 
 
+
+
+.plan_pago_base{
+    -webkit-transition: all .25s ease-in-out;
+      background-color:#fff;
+        &:hover{
+         -webkit-transform: scale(1.1);
+          }
+}
+
+
+.plan_pago_monto{
+    border-style: solid;
+    border-left-width: 12px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-color: #0033a0;
+    padding: 10px;
+    background-color: #00b5cb;
+    color: #fff;
+    font-size: 27px;
+    /* min-height: 99px; */
+    line-height: 65px;
+    text-align: center;            
+}
+
+
+
+
