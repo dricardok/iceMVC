@@ -6,7 +6,8 @@ Ext.define('Ice.view.bloque.Coberturas', {
 	xtype: 'bloquecoberturas',
 
 	requires: [
-		'Ext.PagingToolbar'
+		'Ext.PagingToolbar',
+		'Ext.selection.CheckboxModel'
 	],
 	
 	controller: 'bloquecoberturas',
@@ -122,11 +123,11 @@ Ext.define('Ice.view.bloque.Coberturas', {
 							}
 						],
 						listeners: {
-							cargarstore: function (store,datos,grid) {
+							cargarstore: function (store, datos, grid) {
 								// Ice.log('Agregar ',this);
-								if (store.count() > 0) {
-									me.getController().mostrarCoberturas(grid, 0, 0);
-								}
+								// if (store.count() > 0) {
+								me.getController().mostrarCoberturas(grid, 0, 0);
+								// }
 							}
 						}
 					}, {
@@ -137,14 +138,15 @@ Ext.define('Ice.view.bloque.Coberturas', {
 						// width : "700px",
 						buttons: [
 							{
-								xtype: 'button',
+								// xtype: 'button',
 								itemId: 'btnAgregar',
 								iconCls: 'x-fa fa-plus-circle',
 								text: 'Agregar',
 								handler: 'agregarCobertura'
 							}
 						],
-						columns: comps.COBERTURAS.COBERTURAS.columns.concat({
+						columns: comps.COBERTURAS.COBERTURAS.columns,
+						actionColumns: [{
 							xtype: 'actioncolumn',
 							width: 50,
 							items: [
@@ -159,7 +161,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 									isDisabled: 'coberturaObligatoria'
 								}
 							]
-						}),
+						}],
 						bbar: Ext.create('Ext.PagingToolbar', {
 							store: store,
 							displayInfo: true,

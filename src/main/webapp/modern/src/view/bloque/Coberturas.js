@@ -4,6 +4,8 @@ Ext.define('Ice.view.bloque.Coberturas', {
 
 	controller: 'bloquecoberturas',
 
+	scrollable: true,
+
 	constructor: function (config) {
 		Ice.log('Ice.view.bloque.Coberturas.constructor config:', config);
 		var me = this,
@@ -91,8 +93,8 @@ Ext.define('Ice.view.bloque.Coberturas', {
 				nmpoliza: me.config.nmpoliza,
 				nmsuplem: me.config.nmsuplem,
 				reference: 'grid',
-				width: '100%',
-				height: 300
+				// width: '100%',
+				// height: 300
 			}
 			me.add(it);
 
@@ -112,10 +114,10 @@ Ext.define('Ice.view.bloque.Coberturas', {
 			var gridCoberturas = {
 				xtype:'gridice',
 				itemId: 'gridCoberturas',
-				scrollable: true,
+				// scrollable: true,
 				title: "Coberturas",
-				width: '100%',
-				height: 300,
+				// width: '100%',
+				// height: 300,
 				columns: comps.COBERTURAS.COBERTURAS.columns,
 				listeners: {
 					itemtap: 'editarCoberturaMovil'
@@ -150,14 +152,15 @@ Ext.define('Ice.view.bloque.Coberturas', {
 					}, {
 						// xtype: 'button',
 						text: 'Borrar',
+						itemId: 'botonBorrar',
 						iconCls: 'x-fa fa-remove',
-						disabled: true,
+						hidden: true,
 						handler: 'borraCoberturaMovil'
 					}, {
 						// xtype: 'button',
+						text: 'Agregar',
 						iconCls: 'x-fa fa-plus-circle',
-						disabled: true,
-						text: 'Agregar Cobertura',
+						// hidden: true,
 						handler: function (btn) {
 							me.getController().mostrarPanelCoberturas(btn);
 						}
@@ -168,14 +171,14 @@ Ext.define('Ice.view.bloque.Coberturas', {
 			
 			////////// formulario editar coberuras
 			var form = {
-				xtype: 'formice',
+				xtype: 'formtrescolumnasice',
 				reference: 'form',
 				// scrollable: true,
 				// height: 300,
+				hidden: true,
 				buttons: [{
 					// xtype: 'button',
 					text: 'Guardar',
-					hidden: true,
 					itemId: "btnGuardarCobertura",
 					handler: 'guardarCoberturaMovil'
 				}]
@@ -185,64 +188,56 @@ Ext.define('Ice.view.bloque.Coberturas', {
 			
 			/////////panel agregar coberturas
 			var panelnc = {
-				xtype: 'panelpaddingice',
+				xtype: 'gridice',
+				title: 'Agregar Cobertura',
 				itemId: 'panela',
 				hidden: true,
-				title: 'Agregar Cobertura',
-				items: [
-					{
-						xtype:'gridice',
-						// width:'500px',
-						// height:300,
-						itemId: 'agregables',
-						columns: [
-							{ xtype: 'checkcolumn', text: 'Amparar', dataIndex: 'amparada', sortable:false},
-							{ text: 'Clave', dataIndex: 'cdgarant'  },
-							{ text: 'Cobertura', dataIndex: 'dsgarant',flex: 2 }
-						],
-						store: {
-							fields: ['opcional', 'cdgarant', 'dsgarant', 'deducible', 'cdcapita',
-							    'suma_asegurada', 'amparada'],
-							proxy: {
-								type: 'ajax',
-								autoLoad: true,
-								extraParams: {
-									'params.pv_cdunieco_i': me.config.cdunieco,
-									'params.pv_cdramo_i': me.config.cdramo,
-									'params.pv_estado_i': me.config.estado,
-									'params.pv_nmpoliza_i': me.config.nmpoliza,
-									'params.pv_nmsuplem_i': me.config.nmsuplem,
-									'params.pv_nmsituac_i': me.config.nmsituac
-								},
-								url: Ice.url.bloque.coberturas.datosCoberturas,
-								reader: {
-									type: 'json',
-									rootProperty: 'list',
-									successProperty: 'success',
-									messageProperty: 'message'
+				columns: [
+					{ xtype: 'checkcolumn', text: 'Amparar', dataIndex: 'amparada', sortable:false},
+					{ text: 'Clave', dataIndex: 'cdgarant', width: 100  },
+					{ text: 'Cobertura', dataIndex: 'dsgarant', flex: 1, minWidth: 200 }
+				],
+				store: {
+					fields: ['opcional', 'cdgarant', 'dsgarant', 'deducible', 'cdcapita',
+						'suma_asegurada', 'amparada'],
+					proxy: {
+						type: 'ajax',
+						autoLoad: true,
+						extraParams: {
+							'params.pv_cdunieco_i': me.config.cdunieco,
+							'params.pv_cdramo_i': me.config.cdramo,
+							'params.pv_estado_i': me.config.estado,
+							'params.pv_nmpoliza_i': me.config.nmpoliza,
+							'params.pv_nmsuplem_i': me.config.nmsuplem,
+							'params.pv_nmsituac_i': me.config.nmsituac
+						},
+						url: Ice.url.bloque.coberturas.datosCoberturas,
+						reader: {
+							type: 'json',
+							rootProperty: 'list',
+							successProperty: 'success',
+							messageProperty: 'message'
+						}
+					},
+					listeners: {
+						load: function (st) {
+							var paso = '';
+							try {
+								paso = 'filtrando en grid agrega cobertura';
+								var remover = -1;
+								while ((remover = st.find('amparada','S')) != -1) {
+									st.removeAt(remover);
 								}
-							},
-							listeners: {
-								load: function (st) {
-									var paso = '';
-									try {
-										paso = 'filtrando en grid agrega cobertura';
-										var remover = -1;
-										while ((remover = st.find('amparada','S')) != -1) {
-											st.removeAt(remover);
-										}
-										st.data.items.forEach(function (it, idx) {
-											Ice.log("-->", it);
-											it.data.amparada = true;
-										});
-									} catch (e) {
-										Ice.generaExcepcion(e, paso);
-									}
-								}
+								st.data.items.forEach(function (it, idx) {
+									Ice.log("-->", it);
+									it.data.amparada = true;
+								});
+							} catch (e) {
+								Ice.generaExcepcion(e, paso);
 							}
 						}
 					}
-				],
+				},
 				buttons: [
 					{
 						// xtype: 'button',
