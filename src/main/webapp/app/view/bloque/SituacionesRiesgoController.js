@@ -297,29 +297,13 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                     Ice.logWarn('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables falta cdtipsit');
                 }
                 Ice.log('Ice.view.bloque.SituacionesRiesgoController.cargarValoresDefectoVariables valores cargados ok');
-                var valores = {
-                    'params.cdunieco': view.getCdunieco(),
-                    'params.cdramo': view.getCdramo(),
-                    'params.estado': view.getEstado(),
-                    'params.nmpoliza': view.getNmpoliza(),
-                    'params.nmsuplem': view.getNmsuplem(),
-                    'params.nmsituac': form.getValues().nmsituac,
-                    'params.cdtipsit': form.getValues().cdtipsit,
-                    'params.status' : form.getValues().status, 
-                    'params.cdtipsit' : form.getValues().cdtipsit,
-                    'params.swreduci' : form.getValues().swreduci,
-                    'params.cdagrupa' : form.getValues().cdagrupa,
-                    'params.cdestado' : form.getValues().cdestado,
-                    'params.fefecsit' : form.getValues().fefecsit,
-                    'params.fecharef' : form.getValues().fecharef,
-                    'params.indparbe' : form.getValues().indparbe,
-                    'params.feinipbs' : form.getValues().feinipbs,
-                    'params.porparbe' : form.getValues().porparbe,
-                    'params.intfinan' : form.getValues().intfinan,
-                    'params.cdmotanu' : form.getValues().cdmotanu,
-                    'params.feinisus' : form.getValues().feinisus,
-                    'params.fefinsus' : form.getValues().fefinsus
-                };
+                var valores = Ice.convertirAParams(Ice.utils.mergeObjects(form.getValues(), {
+                    cdunieco: view.getCdunieco(),
+                    cdramo: view.getCdramo(),
+                    estado: view.getEstado(),
+                    nmpoliza: view.getNmpoliza(),
+                    nmsuplem: view.getNmsuplem()
+                }));
                 Ice.log('valores ',valores);
                 Ice.request({
                     mascara: 'Cargando valores por defecto',
@@ -373,28 +357,29 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
         try {
             paso = 'Guardando datos de situacion';
             var form = refs.form,
-                values = form.getValues(),
-                situacion = {},
+                values = Ice.utils.mergeObjects(form.getValues(), {
+                    cdunieco: view.getCdunieco(),
+                    cdramo: view.getCdramo(),
+                    estado: view.getEstado(),
+                    nmpoliza: view.getNmpoliza(),
+                    nmsuplem: view.getNmsuplem()
+                }),
                 formRefs = form.getReferences();
             if (form) {
                 Ice.validarFormulario(form);
                 for (var i = 1; i <= 120; i++) {
                     var numVal = (('x000' + i).slice(Number(i) > 99 ? -3 : -2)),
-                        llave = 'otvalor' + numVal,
-                        obj = {};
+                        llave = 'otvalor' + numVal;
                     if (formRefs['b5b_otvalor' + numVal]) {
-                        situacion[llave] = values['b5b_' + llave];
-                    } else {
-                        situacion[llave] = null;
+                        values[llave] = values['b5b_' + llave];
                     }
-                    Ice.log('obj', situacion);
+                    Ice.log('values:', values);
                 }
                 Ice.request({
                     mascara: paso,
                     url: Ice.url.bloque.situacionesRiesgo.actualizar,
                     jsonData: {
-                        params: values,
-                        situacion : situacion
+                        params: values
                     },
                     success: function (action) {
                         var paso2 = 'Seteando valores por defecto';
@@ -407,7 +392,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                                 var error = false;
                                 for (var i = 0; i < action.validaciones.length; i++) {
                                     if (action.validaciones[i].tipo.toLowerCase() === 'error') {
-                                        //error = true; para que no avance si hay validaciones tipo "error"
+                                        error = true; // para que no avance si hay validaciones tipo "error"
                                         break;
                                     }
                                 }
@@ -477,7 +462,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                           var error = false;
                           for (var i = 0; i < action.validaciones.length; i++) {
                               if (action.validaciones[i].tipo.toLowerCase() === 'error') {
-                                  //error = true; para que no avance si hay validaciones tipo "error"
+                                  error = true; // para que no avance si hay validaciones tipo "error"
                                   break;
                               }
                           }
