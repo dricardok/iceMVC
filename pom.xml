@@ -32,7 +32,8 @@
         <struts2.version>2.5.10.1</struts2.version>
         <spring.version>4.3.8.RELEASE</spring.version>
         <jackson.version>1.9.10</jackson.version>
-        <alea.client.version>2.1</alea.client.version>
+        <alea.client.version>2.2</alea.client.version>
+        <pago.client.version>1.6.1</pago.client.version>
     </properties>
     
     <dependencies>
@@ -290,6 +291,11 @@
 			<version>${alea.client.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>mx.com.royalsun.alea</groupId>
+			<artifactId>pago-client</artifactId>
+			<version>${pago.client.version}</version>
+		</dependency>
                 
     </dependencies>
     

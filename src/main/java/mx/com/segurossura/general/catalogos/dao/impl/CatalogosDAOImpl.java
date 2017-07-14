@@ -463,4 +463,27 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
 		}
 	}
 
+	@Override
+	public List<Map<String, String>> obtenerEstatusTramite() throws Exception {
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put("pv_cdestadomc_i", null);
+		Map<String, Object> procRes = ejecutaSP(new ObtenerEstatusTramite(getDataSource()), params);
+		List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+		if (lista == null) {
+			lista = new ArrayList<Map<String, String>>();
+		}
+		return lista;
+	}
+	
+	protected class ObtenerEstatusTramite extends StoredProcedure {
+		protected ObtenerEstatusTramite(DataSource dataSource){
+			super(dataSource, "OPS$DHPERNIA.PKG_MESACONTROL.P_GET_TESTADOMC");
+			declareParameter(new SqlParameter("pv_cdestadomc_i", Types.VARCHAR));
+			String[] cols = new String[] { "estatus", "dsestadomc" };
+			declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+			declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+			declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+			compile();
+		}
+	}
 }

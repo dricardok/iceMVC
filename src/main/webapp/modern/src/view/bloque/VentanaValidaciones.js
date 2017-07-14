@@ -1,5 +1,5 @@
 Ext.define('Ice.view.bloque.VentanaValidaciones', {
-    extend: 'Ice.view.componente.Ventana',
+    extend: 'Ice.view.componente.VentanaIce',
     xtype: 'ventanavalidaciones',
     
     requires: [

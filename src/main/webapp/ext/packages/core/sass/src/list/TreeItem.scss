@@ -100,17 +100,17 @@
     $row-over-background-color: null
 ) {
     .#{$prefix}treelist-toolstrip {
-        background-color: $azulc2-s;
+        background-color: $toolstrip-background-color;
     }
 
     .#{$prefix}treelist-item-selected {
         &.#{$prefix}treelist-item {
-            background-color:$azulc-s;
+            background-color:$item-selected-background-color;
         }
 
         &.#{$prefix}treelist-item-tool {
             color: $tool-selected-color;
-            background-color:$azulo3-s;
+            background-color: $tool-selected-background-color;
 
             @if $tool-indicator-selected-width != null {
                 &:after {
@@ -125,17 +125,17 @@
                     left: 0;
                     content: " ";
                     width: $tool-indicator-selected-width;
-                    background-color:$azulc-s;
+                    background-color: $tool-indicator-selected-color;
                 }
             }
         }
 
         > .#{$prefix}treelist-row {
-            background-color:$azulo3-s;
+            background-color: $row-selected-background-color;
         }
 
         > .#{$prefix}treelist-row-over {
-            background-color:$azulo2-s;
+            background-color: $row-selected-over-background-color;
         }
     }
 
@@ -275,7 +275,7 @@
         }
 
         .#{$prefix}treelist-row-over:before {
-            background-color:$azulc-s;
+            background-color: $row-indicator-over-color;
         }
 
         .#{$prefix}treelist-item-selected > .#{$prefix}treelist-row-over:before {
@@ -283,7 +283,7 @@
         }
 
         .#{$prefix}treelist-item-selected > .#{$prefix}treelist-row:before {
-            background-color:$azulc-s;
+            background-color:$row-indicator-selected-color;
         }
     }
 
@@ -292,7 +292,7 @@
             width: auto;
         }
         > .#{$prefix}treelist-row {
-            background-color: $azulc2-s;
+            background-color: $toolstrip-background-color;
         }
 
         > .#{$prefix}treelist-container {
@@ -317,7 +317,7 @@
         }
 
         > .#{$prefix}treelist-row-over {
-            background-color: $azulc2-s;
+            background-color:  $toolstrip-background-color;
 
             > * > .#{$prefix}treelist-item-text {
                 color: $item-text-color;
@@ -326,7 +326,7 @@
     }
 
     .#{$prefix}treelist-item-expanded {
-        background-color:$azulo3-s !important;
+        background-color:$item-expanded-background-color;
 
         & .#{$prefix}treelist-item {
             background-color: $item-expanded-child-background-color;
@@ -359,7 +359,7 @@
     }
 
     .#{$prefix}treelist-row-over {
-        background-color: $azulo2-s;
+        background-color: $row-over-background-color;
 
         > * > .#{$prefix}treelist-item-icon {
             color: $item-icon-over-color;
@@ -480,7 +480,7 @@
     // and it will reduce down to potentially nothing as appropriate.
     //
     .#{$prefix}treelist-#{$ui}{
-        background-color:$azulc2-s;
+        background-color:$background-color;
         // Some browsers (FF, IE) don't support reading background-position-x
         background-position: $item-icon-width 0%;
         @if $enable-big {

@@ -310,7 +310,7 @@
             // in winXP/IE8 when the image element has a transparent background.
             // to fix this, we give the element the same background-color as the header.
             .#{$prefix}tool-tool-el {
-                background-color: transparent;
+                background-color: $ui-header-background-color;
             }
         }
     }
@@ -390,15 +390,14 @@
     }
 
     .#{$prefix}panel-header-title-#{$ui} {
-        //@if not is-null($ui-header-color) { color:$font-grey; }
-        @if not is-null($ui-header-color) { color:$blanco-s; }
-        @if not is-null($ui-header-font-size) { font-size: $ui-header-font-size; }
-        // @if not is-null($ui-header-font-weight) { font-weight:$font-bold;}
-        @if not is-null($ui-header-font-weight) { font-weight: $ui-header-font-weight;}
+        @if not is-null($ui-header-color) { color: $ui-header-color; }
+        @if not is-null($ui-header-font-size) { font-size: $ui-header-font-size;}
+        @if not is-null($ui-header-font-weight) { font-weight:$ui-header-font-weight;}
         @if not is-null($ui-header-font-family) { font-family: $ui-header-font-family; }
         @if not is-null($ui-header-line-height) { line-height: $ui-header-line-height; }
         @if $ui-header-text-margin != 0 {
             margin: $ui-header-text-margin;
+           
         }
        
 
@@ -406,18 +405,19 @@
             .#{$prefix}title-text-#{$ui} {
                 text-transform: $ui-header-text-transform;
                 padding: $ui-header-text-padding;
-                 //text-align: $txt-center;
+                //text-align: $txt-center;
 
                 @if $ext-trial {
                     &:after {
                         font-family: ext-watermark;
                         font-size: ($ui-header-line-height + vertical($ui-header-padding)) * 0.75;
+                        content: '';
                         position: absolute;
                         top: 0;
                         right: 0;
                         // since IE8 does not support opacity on pseudo elements we simulate it by
                         // mixing the text color with the background color
-                        color: none;
+                        color: mix($ui-header-color, $ui-header-background-color, 40%);
                     }
 
                     @if $include-rtl {
@@ -431,7 +431,7 @@
                     &:after {
                         font-family: ext-watermark;
                         font-size: ($ui-header-line-height + vertical($ui-header-padding)) * 0.75;
-                        content: 'b';
+                        content: '';
                         position: absolute;
                         top: 0;
                         right: 0;
@@ -681,12 +681,12 @@
         @if not is-null($ui-header-background-color) {
             .#{$prefix}panel-header-#{$ui} {
               
-                @include background-gradient($azulo-s);
+                @include background-gradient($ui-header-background-color, $ui-header-background-gradient);
             }
 
             .#{$prefix}panel-header-#{$ui}-vertical {
                 
-                @include background-gradient($azulo-s, $ui-header-background-gradient, right);
+                @include background-gradient($ui-header-background-color, $ui-header-background-gradient, right);
             }
 
             @if $include-rtl {
@@ -920,6 +920,7 @@
 @if $include-panel-default-ui {
     @include extjs-panel-ui(
         $ui: 'default'
+        
     );
 }
 
@@ -931,79 +932,20 @@
         $ui-border-width: $panel-frame-border-width,
         $ui-border-radius: $panel-frame-border-radius,
         $ui-padding: $panel-frame-padding,
+        
 
         $ui-header-border-color: $panel-frame-border-color,
         $ui-header-border-width: $panel-frame-header-border-width,
         $ui-header-inner-border-color: $panel-frame-header-inner-border-color,
         $ui-header-inner-border-width: $panel-frame-header-inner-border-width,
         $ui-header-padding: $panel-frame-header-padding,
+       
 
         $ui-body-border-width: $panel-frame-body-border-width,
         $ui-body-background-color: $panel-frame-background-color
     );
 }
 
-
- /*----------------Estilos Sura 2017*---------------------/
- 	/*Clases icon Chevron del Panel e  input*/
-
-.x-tool-collapse-top:before {
-    content: "\f106";
-}
-.x-tool-expand-bottom:before{
-	content: "\f107";
-}
-
-.x-form-spinner-default{
-height: 11px !important;
-}
-
-
-.x-form-spinner-up-default:before{
-	content: "\f106" !important;
-	font-family:FontAwesome !important;
-	height: 11px !important;
-}
-
-.x-form-spinner-down-default:before{
-content: "\f107" !important;
-font-family:FontAwesome !important;
-height: 13px !important;
-}
-
-.x-column-header-over .x-column-header-trigger:before, .x-column-header-open .x-column-header-trigger:before{
-content: "\f107" !important;
-}
-        
- .x-treelist-item-expander:after{
-  content: "\f105" !important;
- }
-    
- 
- .x-treelist-item-expanded > * > * > .x-treelist-item-expander:after{
- content: "\f107" !important;
- }
- 
- .x-scroller > .x-inner:before, .x-scroller > .x-inner:after {
-content:"" !important;
-}
-
-    /*Header con gradient
-  
-    
-.titulo_pnl{
-   background-color: #0033a0 !important;
-   background-image: -webkit-gradient(linear, top, bottom, color-stop(0%, #0033a0), color-stop(0%, #002c8c));
-   background-image: -webkit-linear-gradient(top, #0033a0, #002c8c) !important;
-   background-image: -moz-linear-gradient(top, #0033a0, #002c8c);
-   background-image: -o-linear-gradient(top, #0033a0, #002c8c);
-   background-image: -ms-linear-gradient(top, #0033a0, #002c8c);
-   background-image: linear-gradient(top, #0033a0, #002c8c);  
-   color: #FFF !important;
-   text-align:center !important; 
-   font-weight: 400 !important; 
-}
-*/
 
 
 

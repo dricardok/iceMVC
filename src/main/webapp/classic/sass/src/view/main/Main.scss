@@ -1,28 +1,32 @@
+//Main (mixins y ui) de la carpeta CLASSIC de WEBAPP
+
 @include treelist-ui(
     $ui: 'navigation',
     $padding: 0 10px,
 
-    // Black-ish background color
-    $background-color: $panel-navigation-background-color,
-    $toolstrip-background-color: #32404e,
+    // Black-ish background color (Paleta de Azul Sura*2017)
+    $background-color: $azulc2-s,
+    $toolstrip-background-color: $azulo3-s,
 
-    $tool-float-indicator-color: $panel-header-background-color,
+    $tool-float-indicator-color: $azulc-s,
     $tool-float-indicator-width: 5px,
 
-    $tool-indicator-selected-color: $panel-header-background-color,
+    $tool-indicator-selected-color: $azulc-s,
     $tool-indicator-selected-width: 5px,
-    $tool-selected-background-color: mix(white, $panel-navigation-background-color, 10%),
+    $tool-selected-background-color: $azulo3-s,
+    
     //$tool-selected-color: #fff,
     //$tool-selected-background-color: $panel-header-background-color,
 
     // Darker background for expanded subtrees
-    $item-expanded-background-color: #2c3845,
+    $item-expanded-background-color: $azulo2-s,
 
     // Taller line height
     $item-line-height : $panel-navigation-item-line-height,
 
-    $row-over-background-color: mix(white, $panel-navigation-background-color, 5%),
-    $row-selected-background-color: mix(white, $panel-navigation-background-color, 10%),
+    $row-over-background-color:$azulo3-s, //mix(white, $panel-navigation-background-color, 5%),
+    $row-selected-background-color: $azulo3-s,
+    $row-selected-over-background-color:$azulo2-s,
 
     // Off-white text
     $item-icon-color: $panel-navigation-item-text-color,
@@ -34,7 +38,7 @@
     $item-expander-over-color: #fff,
     $item-text-over-color: mix(white, $panel-navigation-item-text-color, 50%),
     $item-text-font-size: 14px,
-
+    
     // Various sizes for the pieces:
     $item-icon-font-size: 18px,
     $item-icon-width: 44px,
@@ -43,9 +47,9 @@
 
     // Style the "row indicator" (the vertical stripe on the left edge):
     $row-indicator-width: 5px,
-    $row-indicator-selected-color: $panel-header-background-color,
-    $row-indicator-selected-over-color: lighten($panel-header-background-color, 7%),
-    $row-indicator-over-color: transparent
+    $row-indicator-selected-color: $azulc-s,
+    $row-indicator-selected-over-color: $azulc-s,
+    $row-indicator-over-color: $azulc-s
 );
 
 //--------------------------------------------------------
@@ -320,3 +324,65 @@
     $background-color: transparent,
     $border-width: 0
 );
+
+
+@include extjs-button-small-ui(
+    $ui: 'Primario-sm',
+    $color: #0033a0,
+    $glyph-color: #0033a0,
+    $background-color: $amarillo-s,
+    $border-color: $amarillo-s,
+    $border-width: 0
+);
+@include extjs-button-large-ui(
+    $ui: 'Primario-lg',
+    $color: #0033a0,
+    $line-height: 34px,
+    $glyph-color: #0033a0,
+    $background-color:$amarillo-s,
+    $border-color: $amarillo-s,
+    $border-width: 0
+);
+
+@include extjs-button-small-ui(
+    $ui: 'Secundario-sm',
+    $color: #fff,
+    $glyph-color: #fff,
+    $background-color: $azulo-s,
+    $border-color: $azulo-s,
+    $border-width: 0
+);
+@include extjs-button-large-ui(
+    $ui: 'Secundario-lg',
+    $line-height: 34px,
+    $color: #fff,
+    $glyph-color: #fff,
+    $background-color:$azulo-s,
+    $border-color: $azulo-s,
+    $border-width: 0
+);
+
+
+//PANEL//
+
+    @include extjs-panel-ui(
+        $ui: 'ice-mesacontrol-framed',    
+        $ui-header-background-color: $azulo-s,    
+        $ui-border-color: $azulo-s,
+        $ui-header-font-weight: $bold-400,   
+        $ui-header-color: #FFF
+    );
+  
+
+  
+    
+//WINDOW//
+
+    @include extjs-window-ui( 
+        $ui: 'ice-window-framed',    
+        $ui-header-background-color: $azulo-s,    
+        $ui-border-color: $azulo-s,
+        $ui-header-font-weight: $bold-400, 
+        $ui-header-color: #FFF
+    );
+

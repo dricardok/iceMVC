@@ -36,11 +36,7 @@ Ext.define('Ice.view.bloque.personas.PersonaRol', {
             var comps = Ice.generaComponentes({
                 pantalla: 'PERSONA_ROL',
                 seccion: 'FORMULARIO',
-                modulo: me.modulo || '',
-                estatus: (me.flujo && me.flujo.estatus) || '',
                 cdramo: me.cdramo,
-                cdtipsit: me.cdtipsit ||'',
-                auxKey: me.auxkey || '',
                 items: true
             });
             var modelName = Ext.id();
@@ -48,21 +44,21 @@ Ext.define('Ice.view.bloque.personas.PersonaRol', {
             Ext.apply(me, {
                 items: [
                     {
-                      xtype: 'form',
-                      reference: 'form',
-                      title: 'Buscar persona',
-                      cdramo: me.cdramo,
-                      mostrarRol: true,
-                      items: comps.PERSONA_ROL.FORMULARIO.items,
-                      modelo: modelName,
-                      layout: 'responsivecolumn',
-                      width: '100%',
-                      bodyPadding: '10px 0px 0px 10px',
-                      defaults: {
-                          margin: '0px 10px 10px 0px',
-                          cls: 'big-50 small-100'
-                      }
-                  }
+                        xtype: 'form',
+                        reference: 'form',
+                        title: 'Buscar persona',
+                        minWidth: 850,
+                        cdramo: me.cdramo,
+                        mostrarRol: true,
+                        items: comps.PERSONA_ROL.FORMULARIO.items,
+                        modelo: modelName,
+                        bodyPadding: '10px 0px 0px 10px',
+                        defaults: {
+                            margin: '0px 10px 10px 0px',
+                            cls: 'big-50 small-100'
+                        },
+                        layout: 'responsivecolumn'
+                    }
                 ]
             });
             me.callParent(arguments);

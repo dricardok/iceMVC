@@ -1,7 +1,6 @@
 package mx.com.segurossura.emision.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -83,7 +82,15 @@ public class SituacionManagerImpl implements SituacionManager{
                 valores.put("cdestado", "0");
             }
             if(valores.get("fefecsit") == null || valores.get("fefecsit").isEmpty()){
-                valores.put("fefecsit", new Date().toString());
+            	
+            	final Map<String, String> a=valores;
+            	emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem)
+            	.stream()
+            	.findFirst()
+            	.ifPresent(
+            			(m)->
+            				a.put("fefecsit", m.get("feefecto"))
+            				);
             }
         } catch (Exception ex){
             Utils.generaExcepcion(ex, paso);
@@ -373,7 +380,12 @@ public class SituacionManagerImpl implements SituacionManager{
             String fefinsus, Map<String, String> valores) throws Exception{
 	    logger.debug(Utils.join(
                 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
-                "\n@@@@@@ actualizaSituacion"
+                "\n@@@@@@ actualizaSituacion",
+                "\n@@@@@@ cdunieco",cdunieco,
+                "\n@@@@@@ cdramo",cdramo,
+                "\n@@@@@@ estado",estado,
+                "\n@@@@@@ nmpoliza",nmpoliza,
+                "\n@@@@@@ nmsuplem",nmsuplem
                ));
 	    List<Map<String, String>> coberturas = new ArrayList<>();
 	    List<Map<String, String>> validaciones = new ArrayList<>();
@@ -392,6 +404,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmpoliza,
                     nmsituac,
                     nmsuplem,
+                    null,
                     Bloque.SITUACIONES.getCdbloque()
                     ));
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
@@ -401,6 +414,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmpoliza,
                     nmsituac,
                     nmsuplem,
+                    null,
                     Bloque.ATRIBUTOS_SITUACIONES.getCdbloque()
                     ));
         } catch (Exception ex){
@@ -430,6 +444,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmpoliza,
                     "0",
                     nmsuplem,
+                    null,
                     Bloque.SITUACIONES.getCdbloque()
                     ));
             paso = "Antes de validar bloque "+Bloque.ATRIBUTOS_SITUACIONES.getCdbloque();
@@ -440,6 +455,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmpoliza,
                     "0",
                     nmsuplem,
+                    null,
                     Bloque.ATRIBUTOS_SITUACIONES.getCdbloque()
                     ));
         } catch (Exception ex){

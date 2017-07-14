@@ -260,6 +260,18 @@ public class CatalogosManagerImpl implements CatalogosManager {
                        }
                    }
             	   break;
+               case ESTATUS_TRAMITE:
+            	   paso = "Recuperando cat\u00e1logo de estatus de tramite";
+            	   lista = new ArrayList<>();
+            	   List<Map<String, String>> estatusTramite = catalogosDAO.obtenerEstatusTramite();
+                   if (estatusTramite != null) {
+                	   lista.add(new BaseVO("-1", "TAREAS PENDIENTES"));
+                	   lista.add(new BaseVO("0", "TODOS"));
+                       for (Map<String, String> registro: estatusTramite) {
+                           lista.add(new BaseVO(registro.get("estatus"), registro.get("dsestadomc")));
+                       }
+                   }
+                   break;                
                 default:
                     throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));
                 }

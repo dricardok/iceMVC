@@ -168,7 +168,14 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     : 'hide']();
             }
             
-            
+            try {
+            	
+            	newCard.getController().getReferences()['gridagrupadores'].getController().onVistaAgente();
+            	
+            } catch (e) {
+            	Ice.logWarn('warning al activar item.controller.setActivo', e);
+            }
+          
             if (view.getGuardadoAutomaticoSuspendido() !== true && oldCard && oldCard.getController && oldCard.getController()
                 && oldCard.getController().guardar) {
                 paso = 'Guardando datos';
@@ -177,6 +184,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     try{
                         pasoCargar = "Cargando atributos de bloque";
                         newCard.getController().cargar();
+                        
                     } catch (e){
                         Ice.manejaExcepcion(e, pasoCargar);
                     }
@@ -253,7 +261,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 refs.tabpanel.setActiveItem(comps[0]);
             }
             
-            me.mostrarPrimas();
+           // me.mostrarPrimas();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -366,13 +374,13 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 nmpoliza: view.getNmpoliza(),
                 
                 botones: [{
-                    text: 'Aceptar',
+                    text: 'Modificar Datos de Emisión',
                     iconCls: 'x-fa fa-check',
                     handler: function (bot) {
                         bot.up('ventanaprimas').cerrar();
                     }
                 }, {
-                    text: 'Emitir',
+                    text: 'Confirmar Emisión',
                     iconCls: 'x-fa fa-key',
                     handler: function (bot) {
                         bot.up('ventanaprimas').cerrar();

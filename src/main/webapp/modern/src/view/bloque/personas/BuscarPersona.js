@@ -1,5 +1,5 @@
 Ext.define('Ice.view.bloque.personas.BuscarPersona', {  
-    extend: 'Ice.view.componente.Ventana',
+    extend: 'Ice.view.componente.VentanaIce',
     xtype: 'buscarpersona',
     controller: 'buscarpersona',
     
@@ -49,19 +49,12 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                             
             config.items = [
                 {
-                    xtype: 'toolbar',
-                    docked: 'top',
-                    items: {
-                        text: 'Buscar',
-                        handler: 'onBuscar'
-                    }
-                }, {
                     xtype: 'formpanel',
                     title: 'Buscar persona',
                     reference: 'formBusquedaPersonas',
                     items: comps.BUSQUEDA_PERSONA.FORMULARIO.items,
                     modelo: modelName,
-                    height: 300,
+                    height: 200,
                     bodyPadding: '10px 0px 0px 10px',
                     defaults: {
                         margin: '0px 10px 10px 0px',
@@ -75,7 +68,36 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                     ]
                 },{
                     xtype: 'toolbar',
-//                    docked: 'bottom',
+                    items: [
+                        {
+                            text: 'Buscar',
+                            handler: 'onBuscar'
+                        }
+                    ]
+                },{
+                    xtype: 'gridice',
+                    scrollable: true,
+                    reference: 'gridPersonas',
+                    height: 200,
+                    columns: compsGrid.BUSQUEDA_PERSONA.GRID.columns,
+                    store: {
+                        autoLoad: false,
+                        fields: compsGrid.BUSQUEDA_PERSONA.GRID.fields,
+                        proxy: {
+                            type: 'ajax',
+                            timeout: 45000,
+                            url: Ice.url.bloque.personas.obtenerPersonaCriterio,
+                            reader: {
+                                type: 'json',
+                                rootProperty: 'listas',
+                                successProperty: 'success',
+                                messageProperty: 'message'
+                            }
+                        }                               
+                    }
+                },{
+                    xtype: 'toolbar',
+                    height: 100,
                     items: [
                         {
                             reference: 'btnGuardar',
@@ -93,27 +115,6 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                             }
                         }      
                     ]
-                },{
-                    xtype: 'gridice',
-                    //title: 'Resultados',
-                    reference: 'gridPersonas',
-                    height: 300,
-                    columns: compsGrid.BUSQUEDA_PERSONA.GRID.columns,
-                    store: {
-                        autoLoad: false,
-                        fields: compsGrid.BUSQUEDA_PERSONA.GRID.fields,
-                        proxy: {
-                            type: 'ajax',
-                            timeout: 45000,
-                            url: Ice.url.bloque.personas.obtenerPersonaCriterio,
-                            reader: {
-                                type: 'json',
-                                rootProperty: 'listas',
-                                successProperty: 'success',
-                                messageProperty: 'message'
-                            }
-                        }                               
-                    }
                 }
             ];
 //                            ,{

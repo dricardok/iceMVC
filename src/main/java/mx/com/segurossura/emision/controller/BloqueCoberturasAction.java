@@ -17,6 +17,8 @@ import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
+import com.biosnettcs.portal.model.UsuarioVO;
+import com.opensymphony.xwork2.ActionContext;
 
 import mx.com.segurossura.emision.service.BloqueCoberturasManager;
 import mx.com.segurossura.emision.service.EmisionManager;
@@ -188,10 +190,19 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 			Utils.validate(pv_cdgarant_i,"No hay cdgarant");
 			Utils.validate(pantalla,"No hay pantalla");
 			
+			String cdsisrol=null;
+        	try{
+        		this.session = ActionContext.getContext().getSession(); //porque se uso SMD y eso pierde la sesion
+        		UsuarioVO usr=(UsuarioVO) Utils.validateSession(session);
+        		cdsisrol=usr.getRolActivo().getCdsisrol();
+        	}catch (Exception e) {
+				logger.warn("No hay rol de sesion",e);
+			}
 			componentes= new HashMap<String, List<Map<String,String>>>();
             componentes.put(
             		pantalla, 
-            		bloqueCoberturasManager.obtieneTatrigar(pv_cdramo_i, pv_cdtipsit_i, pv_cdgarant_i, pv_cdatribu_i));
+            		bloqueCoberturasManager.obtieneTatrigarTconfscr("COBERTURAS", "TATRIGAR", "COTIZACION", null, cdsisrol, pv_cdramo_i, pv_cdtipsit_i, pv_cdgarant_i, null)
+            		);
 			//slist1=emisionManager.obtieneTatrigar(pv_cdramo_i, pv_cdtipsit_i, pv_cdgarant_i, pv_cdatribu_i);
 			
 			

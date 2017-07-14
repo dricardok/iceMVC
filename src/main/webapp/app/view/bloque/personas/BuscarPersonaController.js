@@ -95,15 +95,15 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
             refs = view.getReferences(),
             paso = 'Guardando persona';
         try{
-            Ice.log('Mainview.refs',Ice.query('#mainView').refs);
+            Ice.log('Mainview.refs',refs);
+            Ice.log('gridPersonas selection',refs.gridPersonas.getSelection());
             if(refs.gridPersonas.getSelection()){
                 var selection = refs.gridPersonas.getSelection(),
-                    data = '';                
-                
+                    data;
+                Ice.log('selection',selection);
                 if(selection){
-                    
                     if(Ext.manifest.toolkit === 'classic'){
-                        if(selection[0].data){
+                        if(selection[0].getData()){
                             data = selection[0].data;
                         } else {
                             Ice.mensajeWarning('Seleccione un registro');
@@ -117,8 +117,9 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
                     }
                     
                     if(data){
+                        Ice.log('data ',data);
                         view.fireEvent('obtenerCdperson', view, data.cdperson);
-                        Ice.query('#mainView').getReferences().mainCard.pop();
+                        Ice.pop();
                     }
                     
                 } else {
@@ -184,23 +185,10 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
                         Ice.query('[name=dsatribu]', view.getReferences().formBusquedaPersonas).setValue('CDPERSON');
                         Ice.query('[name=otvalor]', view.getReferences().formBusquedaPersonas).setValue(cdperson);
                         Ice.pop();
-//                        if(Ext.manifest.toolkit === 'classic'){
-//                            view.navigate(view, "prev");
-//                        } else {
-//                            view.pop();
-//                        }
-//                        view.remove(this);
                     }
                 }
-            });
-            
+            });            
             Ice.push(persona);
-            
-//            if(Ext.manifest.toolkit === 'classic'){
-//                me.navigate(view, "next", persona);                              
-//            } else {
-//                Ice.query('#mainView').getReferences().mainCard.push(persona);
-//            }
         } catch(e){
             Ice.generaExcepcion(e, paso);
         }

@@ -1,58 +1,93 @@
-var Ice = Object.assign(Ice || {}, {
+/*
+ * Objeto principal en la aplicacion ice
+ * Delia prueba
+ */
+
+// var Ice = Object.assign(Ice || {}, { // (Object.assign da error en explorer)
+var Ice = (
+        // funcion anonima para mezclar (reemplaza a Object.assign)
+        function () {
+            var resObj = {};
+            for(var i = 0; i < arguments.length; i++) {
+                var obj = arguments[i],
+                    keys = Object.keys(obj);
+                for (var j = 0; j < keys.length; j++) {
+                    resObj[keys[j]] = obj[keys[j]];
+                }
+            }
+            return resObj;
+        }
+    )(Ice || {}, {
+
 
     logActivo: true,
 
-    /*
     constantes: {
-        toolbarHeight: {
-            classic: 44,
-            modern: 64
-        }
-    },
-    */
+        componente: {
+            form: {
+                altura: {
+                    classic: 400,
+                    modern: 400
+                }
+            },
+            grid: {
+                altura: {
+                    classic: 400,
+                    modern: 300
+                }
+            }
+        },
     
-    /*
+	    roles:{
+			 AGENTE:'AGENTE'
+		 }
+    },
+    
+    /**
      * Urls del sistema por modulos 
-
      */
-     url: {
-         
-         // coreLocal
-         coreLocal: {
-             recuperarComponentes: 'jsonLocal/recuperarComponentes.json',
-             login:                'jsonLocal/login.json',
-             recuperarRoles:       'jsonLocal/getRoles.json',
-             seleccionaRol:        'jsonLocal/seleccionaRol.json',
-             logout:               'jsonLocal/logout.json',
-             recuperarDatosSesion: 'jsonLocal/recuperarDatosSesion.json',
-             recuperarMenus:       'jsonLocal/getMenus.json'
-         },
-         
-         // URLs del core
-         core: {
-             recuperarComponentes: 'componentes/recuperarComponentes.action',
-             login:                'authentication/validaUsuario.action',
-             recuperarRoles:       'authentication/obtenerRoles.action',
-             seleccionaRol:        'authentication/seleccionarRol.action',
-             logout:               'authentication/logout.action',
-             recuperarDatosSesion: 'authentication/obtenerDatosSesion.action',
-             recuperarMenus:       'authentication/obtenerMenu.action',
-             obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
-             recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
-             recuperarTatrisit:    'emision/obtieneTatrisit.action',
-             recuperarTatripol:    'emision/obtieneTatripol.action',
-             recuperarTatriper:    'registroPersona/obtieneTatriper.action',
-             recuperacionSimple:   'recuperacion/recuperar.action'
-         },
-         
-         // URLs de emision
-         emision: {
+    url: {
+        // coreLocal
+        coreLocal: {
+            recuperarComponentes: 'jsonLocal/recuperarComponentes.json',
+            login:                'jsonLocal/login.json',
+            recuperarRoles:       'jsonLocal/getRoles.json',
+            seleccionaRol:        'jsonLocal/seleccionaRol.json',
+            logout:               'jsonLocal/logout.json',
+            recuperarDatosSesion: 'jsonLocal/recuperarDatosSesion.json',
+            recuperarMenus:       'jsonLocal/getMenus.json'
+        },
+        
+        // URLs del core
+        core: {
+            recuperarComponentes: 'componentes/recuperarComponentes.action',
+            login:                'authentication/validaUsuario.action',
+            recuperarRoles:       'authentication/obtenerRoles.action',
+            seleccionaRol:        'authentication/seleccionarRol.action',
+            logout:               'authentication/logout.action',
+            recuperarDatosSesion: 'authentication/obtenerDatosSesion.action',
+            recuperarMenus:       'authentication/obtenerMenu.action',
+            obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
+            recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
+            recuperarTatrisit:    'emision/obtieneTatrisit.action',
+            recuperarTatripol:    'emision/obtieneTatripol.action',
+            recuperarTatriper:    'registroPersona/obtieneTatriper.action',
+            recuperacionSimple:   'recuperacion/recuperar.action'
+        },
+        
+        // URLs de emision
+        emision: {
             tarificar:     'emision/generarTarificacion.action',
             obtenerTarifa: 'emision/obtenerDatosTarificacion.action',
-            emitir:        'emision/confirmarPoliza.action'
+            emitir:        'emision/confirmarPoliza.action',
+            tarificarPlanes: 'emision/generarTarificacionPlanes.action',
+            tarificarPlan: 'emision/generarTarificacionPlan.action',
+        	obtenerTarifaPlanes: 'emision/obtenerTarifaMultipleTemp.action',
+        	obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action'
          },
          
          bloque: {
+        	 
             datosGenerales: {
                 cargar: 'emision/datosGenerales/cargar.action',
                 guardar: 'emision/datosGenerales/guardar.action',
@@ -110,20 +145,41 @@ var Ice = Object.assign(Ice || {}, {
             documentos: {
                 obtenerDocumentos: 'documentos/obtenerDocumentos.action',
                 movimientoTdocupol: 'documentos/movimientoTdocupol.action',
-                obtenerDocumento: 'documentos/obtenerDocumento.action'
+                obtenerDocumento: 'documentos/obtenerDocumento.action',
+                verArchivo: 'documentos/verArchivo.action',
+                descargarArchivo: 'documentos/descargarArchivo.action'
             },
             mesacontrol:{
+            	
+            	obtenerTramites:		'mesacontrol/obtenerTramites.action',
+            	
+            	documentos: {
+                    obtenerDocumentos: 'documentos/obtenerDocumentos.action',
+                    movimientoTdocupol: 'documentos/movimientoTdocupol.action',
+                    obtenerDocumento: 'documentos/obtenerDocumento.action'
+                },
+            	
             	historial:{
             		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json",
             		obtenerThmesacontrol:"jsonLocal/obtieneThmesacontrol.json"
             	}
+            },
+            datosAuxiliares: {
+                cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
+                guardar: 'emision/datosAuxiliares/guardarDatosAuxiliares.action'
             }
-         }
-     },
+        }
+    },
 
-    
-    
-    /*
+    /**
+     * Datos del usuario en sesion
+     */
+    sesion: {
+        cdusuari: null,
+        cdsisrol: null
+    },
+
+    /**
      * Invoca console.log si Ice.logActivo === true
      */
     log: function () {
@@ -166,10 +222,8 @@ var Ice = Object.assign(Ice || {}, {
             }
         }
     },
-
     
-    
-    /*
+    /**
      * Invoca console.warn si Ice.logActivo === true
      */
     logWarn: function () {
@@ -209,170 +263,117 @@ var Ice = Object.assign(Ice || {}, {
                 default:
                     console.warn('Warning!:', arguments);
                     break;
-
-
-
-
             }
         }
     },
     
-    
-    /*
+    /**
      * Invoca console.error si Ice.logActivo === true
-
      */
     logError: function () {
         if (Ice.logActivo === true && arguments.length > 0) {
             switch (arguments.length) {
-
                 case 1:
                     console.error('Error!: ', arguments[0]);
-
-
                     break;
                 case 2:
                     console.error('Error!: ', arguments[0], arguments[1]);
-
-
                     break;
                 case 3:
                     console.error('Error!: ', arguments[0], arguments[1], arguments[2]);
-
-
                     break;
                 case 4:
                     console.error('Error!: ', arguments[0], arguments[1], arguments[2], arguments[3]);
-
-
                     break;
                 case 5:
                     console.error('Error!: ', arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
-
-
                     break;
                 case 6:
                     console.error('Error!: ', arguments[0], arguments[1], arguments[2], arguments[3], arguments[4],
                         arguments[5]);
-
-
                     break;
                 case 7:
                     console.error('Error!: ', arguments[0], arguments[1], arguments[2], arguments[3], arguments[4],
                         arguments[5], arguments[6]);
-
-
                     break;
                 case 8:
                     console.error('Error!: ', arguments[0], arguments[1], arguments[2], arguments[3], arguments[4],
                         arguments[5], arguments[6], arguments[7]);
-
-
                     break;
                 case 9:
                     console.error('Error!: ', arguments[0], arguments[1], arguments[2], arguments[3], arguments[4],
                         arguments[5], arguments[6], arguments[7], arguments[8]);
-
-
                     break;
                 default:
                     console.error('Error!: ', arguments);
-
-
-
-
-
                     break;
             }
         }
     },
     
-    
-    /*
-     * Imprime en consola una excepcion y manda aviso de error
-
+    /**
+     * Recibe una excepcion, y la vuelve a lanzar. Si es string ya fue tratada y no hace nada,
+     * en otro caso la loguea y formatea antes de lanzarla
      */
     generaExcepcion: function (e, paso, mask) {
         if (typeof e === 'string') {
-
             throw e;
         } else {
             Ice.logError(e);
-
             try {
                 if (mask.maskLocal === true) {
                     mask.close();
-
                 }
             } catch (e) {}
             throw 'Error ' + ((paso || 'del sistema').toLowerCase());
-
-
-
         }
     },
     
-    
-    /*
-     * Imprime en consola una excepcion y manda aviso de error
-
+    /**
+     * Recibe una excepcion y muestra mensaje de error. Si es string ya fue tratada y se muestra,
+     * en otro caso la loguea y formatea antes de mostrarla
      */
     manejaExcepcion: function (e, paso, mask) {
         if (typeof e === 'string') {
             if (e.indexOf('break') === -1) { // cuando viene la palabra BREAK no muestro el error 
                 Ice.mensajeWarning(e);
-
             } else {
                 Ice.logWarn('BREAK:', e);
-
             }
         } else {
             Ice.logError(e);
-
             try {
                 if (mask.maskLocal === true) {
                     mask.close();
-
                 }
             } catch (e) {}
             Ice.mensajeError('Error ' + ((paso || 'del sistema').toLowerCase()));
-
-
-
         }
     },
     
-    
-    /*
-     * Atajo para Ext.ComponentQuery.query
-
+    /**
+     * Atajo para Ext.ComponentQuery.query.
+     * Si el arreglo de resultados es de longitud 1, se regresa el objeto en lugar del arreglo
      */
     query: function (selector, root) {
         var comps = Ext.ComponentQuery.query(selector, root);
         if (comps && comps.length === 1) { // Cuando encuentro array con 1 elemento, regreso el elemento
             return comps[0];
-
         }
         return comps;
-
-
     },
     
-    
-    /*
-     * Crea y muestra una mascara en pantalla con el texto recibo o la palabra "Cargando"
+    /**
+     * Crea y muestra una mascara en pantalla con el texto recibido o la palabra "Cargando".
      * Retorna la mascara a la cual se debe hacer .close()
-
      */
     mask: function (texto) {
         Ice.log('Ice.mask() args:', arguments);
         var paso = 'Creando m\u00e1scara',
-
-
             mask;
         try {
+            var mainView = Ice.query('#mainView');
             if (Ext.manifest.toolkit === 'classic') {
-                var mainView = Ice.query('#mainView');
                 mask = new Ext.LoadMask({
                     msg: texto || 'Cargando...',
                     maskLocal: true,
@@ -383,9 +384,7 @@ var Ice = Object.assign(Ice || {}, {
                     }
                 });
                 mask.show();
-
             } else {
-                var mainView = Ice.query('#mainView');
                 mask = new Ext.LoadMask({
                     message: texto || 'Cargando...',
                     maskLocal: true,
@@ -394,40 +393,35 @@ var Ice = Object.assign(Ice || {}, {
                     }
                 });
                 mainView.add(mask);
-
             }
             return mask;
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
-
-
-
         }
     },
     
-    
-    /*
+    /**
      * Presenta mensaje en pantalla, recibe objeto params:
      * params: {
      *     titulo: 'Datos guardados',               <<< titulo de la ventana (opcional)
      *     mensaje: 'Poliza emitida correctamente', <<< mensaje
      *     callback: function () {}                 <<< callback (opcional)
-
-
      * }
      */
     mensaje: function (params) {
+    	params.ui='ice-window';
         var paso = 'Mostrando mensaje';
-
         try {
             var titulo = (params && params.titulo) || 'Aviso',
                 mensaje = (params && params.mensaje) || (params && typeof params === 'string' && params) || '(sin mensaje)',
-                callback = (params && params.callback) || null;
+                callback = (params && params.callback) || null,
+                ui = (params && params.ui) || null;
+            	
             if (Ext.manifest.toolkit === 'classic') {
                 Ext.create('Ext.window.Window', {
-
-
                     width: 300,
+//                    ui:	'ice-window',
+                    frame:true,
                     height: 150,
                     closeAction: 'destroy',
                     title: titulo,
@@ -435,55 +429,36 @@ var Ice = Object.assign(Ice || {}, {
                     modal: true,
                     animateTarget: Ext.getBody(),
                     layout: 'fit',
-                    bodyStyle: 'border:none; background-color: transparent; padding: 10px;',
+                    bodyStyle: 'border:none; padding: 10px;',
                     buttonAlign: 'center',
 
                     items: [{
                         xtype: 'container',
-
-
-
                         html: mensaje
                     }],
                     buttons: [{
                         text: 'Aceptar',
-
-
                         listeners: {
                             click: {
                                 fn: function (item, e) {
                                     this.up('window').close();
-
-
-
-
-
                                 }
                             }
                         }
                     }],
                     listeners: {
                         close: function () {
-
                             if (callback) {
                                 var paso2 = 'Ejecutando callback despues de mensaje';
-
-
-
                                 try {
                                     callback();
                                 } catch (e) {
                                     Ice.manejaExcepcion(e, paso2);
-
-
-
-
                                 }
                             }
                         }
                     }
                 }).show();
-
             } else {
                 Ext.create('Ext.Container', {
                     floated: true,
@@ -493,7 +468,7 @@ var Ice = Object.assign(Ice || {}, {
                     showAnimation: 'pop',
                     hideAnimation: 'popOut',
                     hideOnMaskTap: true,
-                    
+                    ui:ui,
                     closable: false,
                     closeAction: 'destroy',
                     
@@ -557,74 +532,58 @@ var Ice = Object.assign(Ice || {}, {
     },
     
     
-    /*
+    /**
      * Presenta mensaje en pantalla, recibe objeto params:
      * params: {
      *     titulo: 'Datos guardados',               <<< titulo de la ventana (opcional)
      *     mensaje: 'Poliza emitida correctamente', <<< mensaje
      *     callback: function () {}                 <<< callback (opcional)
-
-
      * }
      */
     mensajeCorrecto: function (params) {
         Ice.mensaje(params);
-
-
     },
     
-    
-    /*
+    /**
      * Presenta mensaje en pantalla, recibe objeto params:
      * params: {
      *     titulo: 'Datos guardados',               <<< titulo de la ventana (opcional)
      *     mensaje: 'Poliza emitida correctamente', <<< mensaje
      *     callback: function () {}                 <<< callback (opcional)
-
-
      * }
      */
     mensajeError: function (params) {
         Ice.mensaje(params);
-
-
     },
     
     
-    /*
+    /**
      * Presenta mensaje en pantalla, recibe objeto params:
      * params: {
      *     titulo: 'Datos guardados',               <<< titulo de la ventana (opcional)
      *     mensaje: 'Poliza emitida correctamente', <<< mensaje
      *     callback: function () {}                 <<< callback (opcional)
-
-
      * }
      */
     mensajeWarning: function (params) {
         Ice.mensaje(params);
-
-
     },
     
     
-    /*
+    /**
      * Ejecuta una peticion AJAX, recibe objeto params:
      * params: {
      *     url: 'someUrl',                          <<< URL a ejecutar
      *     params: {                                <<< parametros a enviar (opcional) (se envia este o se envia jsonData)
      *         param1: value1, ...
-
      *     },
      *     jsonData: jsonObject,                    <<< parametros json (opcional) (se envia este o se envia params)
      *     success: function (responseJsonData) {}, <<< callback en caso de exito (opcional)
      *     failure: function () {},                 <<< callback en caso de error (opcional)
      *     mascara: 'Guardando datos',              <<< Texto a mostrar mientras se espera respuesta (opcional)
      *     background: true                         <<< Para que no robe el focus en pantalla (opcional)
-
      * }
      * throws exception
-
      */
     request: function (params) {
         Ice.log('Ice.request:', params);
@@ -632,7 +591,6 @@ var Ice = Object.assign(Ice || {}, {
             mask = params.background === true
                 ? {close: function (){}}
                 : Ice.mask(paso);
-
         try {
             var requestParams = {
                 url: params.url,
@@ -648,29 +606,21 @@ var Ice = Object.assign(Ice || {}, {
                             throw json.message || (params.mascara
                                 ? 'Error ' + params.mascara.toLowerCase()
                                 : 'La petici\u00f3n no fue exitosa');
-
                         }
                         if (params.success && typeof params.success === 'function') {
                             paso2 = 'Ejecutando callback posterior al request';
                             params.success(json);
-
-
                         }
                     } catch (e) {
                         if (params.failure && typeof params.failure === 'function') {
 
                             try {
                                 params.failure();
-
                             } catch (e) {
                                 Ice.logWarn('Error al ejecutar callback failure despues de request:', e);
-
-
                             }
                         }
                         Ice.manejaExcepcion(e, paso2);
-
-
                     }
                 },
                 failure: function () {
@@ -679,38 +629,28 @@ var Ice = Object.assign(Ice || {}, {
 
                         try {
                             params.failure();
-
                         } catch (e) {
                             Ice.logWarn('Error al ejecutar callback failure despues de error de red de request:', e);
-
-
                         }
                     }
                     Ice.mensajeError('Error de red ' + (params.mascara || '').toLowerCase());
-
-
                 }
             };
             if (params.params) {
                 requestParams.params = params.params;
             } else if (params.jsonData) {
                 requestParams.jsonData = params.jsonData;
-
             }
             Ext.Ajax.request(requestParams);
         } catch (e) {
             Ice.generaExcepcion(e, paso, mask);
-
-
-
         }
     },
     
     
-    /*
+    /**
      * Funcion que recibe la lista (o un solo mapa) de componentes deseados y retorna los elementos generados
      * @param secciones: [
-
      *     {
      *         pantalla: 'MESA_CONTROL',
      *         seccion: 'FILTRO',
@@ -719,7 +659,6 @@ var Ice = Object.assign(Ice || {}, {
      *         cdramo: '5',
      *         cdtipsit: '51',
      *         auxkey: '',
-
      *         
      *         items: true,
      *         columns: false,
@@ -727,17 +666,9 @@ var Ice = Object.assign(Ice || {}, {
      *         listeners: true,
      *         fields: true,
      *         validators: true
-
-
-
-
-
      *     }, {
      *         pantalla: 'MESA_CONTROL',
      *         seccion: 'FORMULARIO',
-
-
-
      *         ...
      *     }
      * ]
@@ -750,7 +681,6 @@ var Ice = Object.assign(Ice || {}, {
      *             listeners: [...],
      *             fields: [...],
      *             validators: [...]
-
      *         },
      *         FORMULARIO: {
      *             items: [...],
@@ -759,10 +689,6 @@ var Ice = Object.assign(Ice || {}, {
      *             listeners: [...],
      *             fields: [...],
      *             validators: [...]
-
-
-
-
      *         }
      *     }
      * }
@@ -771,15 +697,11 @@ var Ice = Object.assign(Ice || {}, {
         Ice.log('Ice.generaComponentes args:', arguments);
         var paso = 'Recuperando componentes',
             comps = {};
-
-        
         try { 
             if(secciones){
                 Ice.log("sec ",secciones)
-                if("TATRIGAR"==secciones.pantalla && "TATRIGAR"==secciones.seccion){
-                    
+                if ("TATRIGAR" == secciones.pantalla && "TATRIGAR" == secciones.seccion) {
                      secciones.mapperAttr=function(obj){
-                            
                             obj.label=obj.dsatribu;
                             obj.tipocampo=obj.swformat
                             obj.name_cdatribu=obj.cdatribu
@@ -799,11 +721,10 @@ var Ice = Object.assign(Ice || {}, {
                             
                             obj.param3 = 'params.cdatribu';
                             obj.value3 = obj.cdatribu;
-                            
                         };
                       secciones.url=Ice.url.core.recuperarTatrigar;
                       secciones.rootRequestData="list"
-                }else if("TATRIPER"==secciones.pantalla && "TATRIPER"==secciones.seccion){
+                } else if ("TATRIPER" == secciones.pantalla && "TATRIPER" == secciones.seccion) {
                     secciones.url= Ice.url.core.recuperarTatriper;
                     secciones.rootRequestData="list";
                     secciones.mapperAttr=function(obj){
@@ -827,7 +748,7 @@ var Ice = Object.assign(Ice || {}, {
                         obj.param3 = 'params.cdatribu';
                         obj.value3 = obj.cdatribu;
                     }     
-                }else if("TATRISIT"==secciones.pantalla && "TATRISIT"==secciones.seccion){
+                } else if ("TATRISIT" == secciones.pantalla && "TATRISIT" == secciones.seccion) {
                     secciones.mapperAttr=function(obj){
                         
                         obj.label=obj.dsatribu;
@@ -840,7 +761,7 @@ var Ice = Object.assign(Ice || {}, {
                   secciones.url=Ice.url.core.recuperarTatrisit;
                   secciones.rootRequestData="list";
                     
-                }else if("TATRIPOL"==secciones.pantalla && "TATRIPOL"==secciones.seccion){
+                } else if ("TATRIPOL" == secciones.pantalla && "TATRIPOL" == secciones.seccion) {
                     secciones.mapperAttr=function(obj){
                         
                         obj.label=obj.dsatribu;
@@ -857,43 +778,37 @@ var Ice = Object.assign(Ice || {}, {
             var lista,
                 secciones = secciones || [];
             if (secciones.pantalla) { // cuando se recibe un solo elemento
-
                 lista = [];
                 lista.push(secciones);
-
             } else {
                 lista = secciones;
-
-
-
-
-
-
-
             }
             var data = {
-
-                    secciones: lista
-
-                }
-            if(secciones.rootRequestData){
-                
+                secciones: lista
+            };
+            if (secciones.rootRequestData) {
                 data[secciones.rootRequestData]=lista;
-                
-              }
+            }
 
             Ext.Ajax.request({
                 async: false,
                 url: secciones.url ? secciones.url :Ice.url.core.recuperarComponentes,
                 jsonData: data,
                 success: function (response) {
+                	
                     paso = 'Decodificando respuesta al recuperar componentes';
                     var json = Ext.JSON.decode(response.responseText);
                     Ice.log('Ice.generaComponentes json response:', json);
                     if (json.success !== true) {
                         throw json.message;
-
                     }
+                    
+                    try{
+                		Ice.sesion.cdusuari=json.params.cdusuari;
+                		Ice.sesion.cdsisrol=json.params.cdsisrol;
+                	}catch(e){
+                		console.warn(e)
+                	}
                     if (json.params && json.params.redirect) {
                         paso = 'Redirigiendo componente';
                         var mainView = Ice.query('#mainView'),
@@ -902,48 +817,31 @@ var Ice = Object.assign(Ice || {}, {
                             navigationTreeList;
                         if (Ext.manifest.toolkit === 'classic') {
                             navigationTreeList = mainReferences.navigationTreeList;
-
                         } else {
                             navigationTreeList = mainReferences.navigation.down('treelist');
-
                         }
                         navigationTreeList.getStore().getRoot().removeAll();
                         navigationTreeList.getStore().reload();
                         mainController.cargarDatosSesion();
                         mainController.redirectTo(json.params.redirect + '.action');
                         throw 'break -se va a redireccionar la pantalla: ' + json.params.redirect;
-
                     }
                     
                     if (lista.length > 0 && lista[0].pantalla !== 'LOGIN' && lista[0].pantalla !== 'ROLTREE') {
                         paso = 'Construyendo componentes';
                         for (var i = 0; i < lista.length; i++) {
                             comps[lista[i].pantalla] = comps[lista[i].pantalla] || {};
-
-
-
                           //mapper
                             if(secciones.mapperAttr){
                                 paso="Mapeando campos"
                                 
                                 if(Ext.isArray(json.componentes[lista[i].seccion])){
-                                    
                                     json.componentes[lista[i].seccion].forEach(function(it,idx){
                                         secciones.mapperAttr(it);
-                                    
                                     })
-                                
                                 }
-                                
-                                
                             }
-
-
-
-
-
                             comps[lista[i].pantalla][lista[i].seccion] = Ice.generaSeccion(json.componentes[lista[i].seccion],
-
                                 {
                                     items: lista[i].items === true,
                                     columns: lista[i].columns === true,
@@ -951,47 +849,32 @@ var Ice = Object.assign(Ice || {}, {
                                     listeners: lista[i].listeners === true,
                                     fields: lista[i].fields === true,
                                     validators: lista[i].validators === true
-
-
-
-
                                 }
                             );
                         }
                     } else {
                         Ice.log('No se construye porque no hay secciones o es login o es roltree lista:', lista);
-
-
                     }
                 },
                 failure: function () {
                     throw 'Error de red al recuperar componentes';
-
-
                 }
             });
         } catch (e) {
             Ice.generaExcepcion(e, paso);
-
         }
         Ice.log('Ice.generaComponentes comps:', comps);
         return comps;
-
-
     },
     
     
-    /*
+    /**
      * Se genera una seccion con sus items, columns y/o buttons
      * @param configComps: [
-
      *     {
      *         tipocampo: 'A',
      *         name_cdatribu: 'cdunieco',
      *         label: 'SUCURSAL'
-
-
-
      *     },
      *     ...
      * ]
@@ -1002,18 +885,13 @@ var Ice = Object.assign(Ice || {}, {
      *     listeners: (boolean),
      *     fields: (boolean),
      *     validators: (boolean)
-
      * }
      * @return seccion: {
      *     items: [
-
      *         {
      *             xtype: 'numberfield',
      *             fieldLabel: 'SUCURSAL',
      *             name: 'cdunieco'
-
-
-
      *         },
      *         ...
      *     ],
@@ -1022,91 +900,69 @@ var Ice = Object.assign(Ice || {}, {
      *     listeners: [ ... ],
      *     fields: [ ... ],
      *     validators: [ ... ]
-
-
      * }
      */
     generaSeccion: function (configComps, banderas) {
         Ice.log('Ice.generaSeccion args:', arguments);
         var paso = 'Generando secci\u00f3n',
             seccion = {};
-
         try {
             if (!banderas) {
                 throw 'Sin par\u00e1metros para generar secci\u00f3n';
-
             }
             var configComps = configComps || [];
             if (banderas.items === true) {
                 seccion.items = Ice.generaItems(configComps);
-
             }
             if (banderas.columns === true) {
                 seccion.columns = Ice.generaColumns(configComps);
-
             }
             if (banderas.buttons === true) {
                 seccion.buttons = Ice.generaButtons(configComps);
-
             }
             if (banderas.listeners === true) {
                 seccion.listeners = Ice.generaListeners(configComps);
-
             }
             if (banderas.fields === true) {
                 seccion.fields = Ice.generaFields(configComps);
-
             }
             if (banderas.validators === true) {
                 seccion.validators = Ice.generaValidators(configComps);
-
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
-
         }
         return seccion;
-
-
-
-
     },
     
     
-    /*
-     *
+    /**
+     * Genera un arreglo de items para formulario
      */
     generaItems: function (configComps) {
         Ice.log('Ice.generaItems args:', arguments);
         var paso = 'Generando items',
             items = [];
-
         try {
             configComps = configComps || [];
             for (var i = 0; i < configComps.length; i++) {
                 items.push(Ice.generaItem(configComps[i]));
-
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
-
         }
         return items;
-
-
-
-
     },
     
     
-    /*
-     *
+    /**
+     * Genera un arreglo de columnas para grid.
+     * Solo considera swcolumn = S
      */
     generaColumns: function (configComps) {
         Ice.log('Ice.generaColumns args:', arguments);
         var paso = 'Generando columnas',
             columns = [];
-
         try {
             configComps = configComps || [];
             for (var i = 0; i < configComps.length; i++) {
@@ -1116,137 +972,101 @@ var Ice = Object.assign(Ice || {}, {
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
-
         }
         return columns;
-
-
-
-
     },
     
     
-    /*
-     *
+    /**
+     * Genera un arreglo de botones
      */
     generaButtons: function (configComps) {
         Ice.log('Ice.generaButtons args:', arguments);
         var paso = 'Generando botones',
             buttons = [];
-
         try {
             configComps = configComps || [];
             for (var i = 0; i < configComps.length; i++) {
                 buttons.push(Ice.generaButton(configComps[i]));
-
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
-
         }
         return buttons;
-
-
-
-
     },
     
     
-    /*
-     *
+    /**
+     * Genera un arreglo de listeners
      */
     generaListeners: function (configComps) {
         Ice.log('Ice.generaListeners args:', arguments);
         var paso = 'Generando listeners',
             listeners = [];
-
         try {
             configComps = configComps || [];
             for (var i = 0; i < configComps.length; i++) {
                 listeners.push(Ice.generaListener(configComps[i]));
-
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
-
         }
         return listeners;
-
-
-
-
     },
     
     
-    /*
-     *
+    /**
+     * Genera un arreglo de fields para model.fields o store.fields
      */
     generaFields: function (configComps) {
         Ice.log('Ice.generaFields args:', arguments);
         var paso = 'Generando fields',
             fields = [];
-
         try {
             configComps = configComps || [];
             for (var i = 0; i < configComps.length; i++) {
                 fields.push(Ice.generaField(configComps[i]));
-
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
-
         }
         return fields;
-
-
-
-
     },
     
     
-    /*
-     *
+    /**
+     * Genera un objeto de validadores para model.validators
      */
     generaValidators: function (configComps) {
         Ice.log('Ice.generaValidators args:', arguments);
         var paso = 'Generando validators',
             validators = {};
-
         try {
             configComps = configComps || [];
             for (var i = 0; i < configComps.length; i++) {
                 var validator = Ice.generaValidator(configComps[i]);
                 if (validator) {
                     validators[validator.nombre] = validator.arreglo;
-
-
                 }
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
-
         }
         return validators;
-
-
-
-
     },
     
     
-    /*
-     *
+    /**
+     * Genera un item para formulario
      */
     generaItem: function (config) {
         //Ice.log('Ice.generaItem args:', arguments);
         var paso = 'Construyendo item',
             item = {};
-
         try {
             if (!config) {
                 throw 'No se recibi\u00f3 configuraci\u00f3n de item';
             }
-            
             
             // xtype
             item.xtype = {
@@ -1378,8 +1198,8 @@ var Ice = Object.assign(Ice || {}, {
     },
     
     
-    /*
-     *
+    /**
+     * Genera una columna para grid
      */
     generaColumn: function (config) {
         Ice.log('Ice.generaColumn args:', arguments);
@@ -1391,18 +1211,22 @@ var Ice = Object.assign(Ice || {}, {
             }
             
             
-            // width / flex       
-            if(config.width){
-                if(Number(config.width) > 10){
+            // width // flex
+            if(!config.flex){
+                if(!config.width){
+                    column.flex = 1;
+                    column.minWidth = 80;
+                } else {
                     column.width = Number(config.width);
                 }
-                else{
-                    column.flex = Number(config.width);
-                    column.minWidth = 50;
-                }
             } else {
-                column.flex = 1;
-                column.minWidth = 50;
+                if(!config.width){
+                    column.flex = Number(config.flex);
+                    column.minWidth = 80;
+                } else {
+                    column.minWidth = Number(config.width);
+                    column.flex =Number( config.flex);
+                }
             }
             
             if(config.swoculto === 'S'){
@@ -1418,65 +1242,47 @@ var Ice = Object.assign(Ice || {}, {
             
             if (/^\d+$/.test(config.name_cdatribu)) {
                 column.dataIndex = 'otvalor' + (('x000' + config.name_cdatribu).slice(Number(config.name_cdatribu) > 100 ? -3 : -2));
-
             } else {
                 column.dataIndex = config.name_cdatribu;
-
-
             }
             
             
             // text
             if (config.label) {
                 column.text = config.label
-
             }        
         } catch (e) {
             Ice.generaExcepcion(e, paso);
-
         }
         return column;
-
-
-
-
     },
     
     
-    /*
-     *
+    /**
+     * Genera un boton
      */
     generaButton: function (config) {
         Ice.log('Ice.generaButton args:', arguments);
         alert('Ice.generaButton TODO');
-
-
-
-
     },
     
     
-    /*
-     *
+    /**
+     * Genera un listener
      */
     generaListener: function (config) {
         Ice.log('Ice.generaListener args:', arguments);
         alert('Ice.generaListener TODO');
-
-
-
-
     },
     
     
-    /*
-     *
+    /**
+     * Genera un field para model.fields o store.fields
      */
     generaField: function (config) {
         //Ice.log('Ice.generaField args:', arguments);
         var paso = 'Construyendo field',
             field = {};
-
         try {
             if (!config) {
                 throw 'No se recibi\u00f3 configuraci\u00f3n de field';
@@ -1491,13 +1297,12 @@ var Ice = Object.assign(Ice || {}, {
                     F: 'date',
                     T: 'string',
                     S: 'string',
-                    FF: 'filefieldice',
+                    FF: 'string',
                     CDPERSONPICKER: 'string',
                     PASSWORD: 'string'
                 }[config.tipocampo];
             if (!field.type) {
                 throw 'Tipocampo incorrecto para field';
-
             }
             
             if (config.catalogo) {
@@ -1514,33 +1319,27 @@ var Ice = Object.assign(Ice || {}, {
             // name
             if (!config.name_cdatribu) {
                 throw 'Falta name_cdatribu para field';
-
             }
             
             if (/^\d+$/.test(config.name_cdatribu)) {
                 field.name = 'otvalor' + (('x000' + config.name_cdatribu).slice(Number(config.name_cdatribu) > 100 ? -3 : -2));
-
             } else {
                 field.name = config.name_cdatribu;
-
             }
         } catch (e){
             Ice.generaExcepcion(e, paso);
-
         }
-        
         return field;
     },
     
     
-    /*
-     *
+    /**
+     * Genera un objeto de validacion {name: 'fieldname', arreglo: [validaciones...]}
      */
     generaValidator: function (config) {
         //Ice.log('Ice.generaValidator args:', arguments);
         var paso = 'Construyendo validator',
             validator;
-
         try {
             if (!config || !config.name_cdatribu) {
                 throw 'Falta name para validator';
@@ -1643,7 +1442,6 @@ var Ice = Object.assign(Ice || {}, {
     
     /**
      * logout
-
      */
     logout: function () {
         Ice.log('Ice.logout');
@@ -1655,83 +1453,73 @@ var Ice = Object.assign(Ice || {}, {
                 url: Ice.url.core.logout,
                 success: function (action) {
                     var paso2 = 'Redireccionando...';
-
                     try {
                         if (Ext.manifest.toolkit === 'classic') {
                             Ice.query('#mainView').getController().onToggleUserMenuSize();
-
                         }
                         Ice.query('#mainView').getController().redirectTo('mesacontrol.action', true);
-
                     } catch (e) {
                         Ice.manejaExcepcion(e, paso2);
-
-
-
                     }
                 }
             });
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
-
-
         }
     },
     
+    /**
+     * Suspende todos los eventos de los items de una vista (contenedor, panel, form, grid, etc.)
+     */
     suspendEvents: function (view) {
         Ice.log('Ice.suspendEvents view:', view);
         var paso = 'Suspendiendo eventos';
-
         try {
             if (!view) {
                 throw 'Falta vista para suspender eventos';
-
             }
             var comps = Ice.query('[suspendEvents]', view);
             for (var i = 0; i < comps.length; i++) {
                 var comp = comps[i];
                 if (comp.suspendEvents && typeof comp.suspendEvents === 'function') {
                     comp.suspendEvents();
-
-
                 }
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
-
-
         }
     },
     
+    /**
+     * Reanuda todos los eventos de los items de una vista (contenedor, panel, form, grid, etc.)
+     */
     resumeEvents: function (view) {
         Ice.log('Ice.resumeEvents view:', view);
         var paso = 'Reanudando eventos';
-
         try {
             if (!view) {
                 throw 'Falta vista para reaundar eventos';
-
             }
             var comps = Ice.query('[resumeEvents]', view);
             for (var i = 0; i < comps.length; i++) {
                 var comp = comps[i];
                 if (comp.resumeEvents && typeof comp.resumeEvents === 'function') {
                     comp.resumeEvents();
-
-
                 }
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
-
-
         }
     },
     
-    
+    /**
+     * Muestra todos los elementos de una vista que tengan la propiedad 'oculto' u
+     * Oculta todos los elementos de una vista que tengan la propiedad 'oculto'.
+     * Lo hace en forma toggle (si estan ocultos los muestra, si estan visibles los oculta)
+     */
     toggleOcultos: function (view) {
         Ice.log('Ice.toggleOcultos view:', view);
-        var paso = 'Mostrando/ocultando atributos',
+        var paso = 'Mostrando/ocultando componentes',
             estadoOcultos;
         try {
             if (view.estadoOcultos === 'show') { // ocultar
@@ -1751,7 +1539,9 @@ var Ice = Object.assign(Ice || {}, {
         }
     },
     
-    
+    /**
+     * Recibe un objeto y a todos sus atributos les pone el prefijo 'params.'
+     */
     convertirAParams: function (values) {
         Ice.log('convertirAParams values:', values);
         var paso = 'Transformando datos',
@@ -1768,15 +1558,125 @@ var Ice = Object.assign(Ice || {}, {
         return params;
     },
     
-    cargarFormulario: function (form, datos) {
-        Ice.log('Ice.cargarFormulario form:', form, 'datos:', datos);
-        var paso = 'Estableciendo valores de formulario';
+    /**
+     * Recupera los errores de un formulario, el formulario debe tener getModelFields y getModelValidators.
+     * Regresa un objeto de errores o null.
+     * {
+     *     cdunieco: 'Favor de introducir la sucursal',
+     *     nmpoliza: 'La cotizaci\u00f3n es obligatoria',
+     *     edad: 'Debe ser mayor de edad'
+     * }
+     */
+    obtenerErrores: function (form) {
+        Ice.log('Ice.obtenerErrores form:', form);
+        var paso = 'Recuperando validaci\u00f3n de formulario',
+            errores;
+        try {
+            if (!form || !form.getModelFields || !form.getModelValidators) {
+                throw 'No se puede validar el formulario';
+            }
+
+            var refs = form.getReferences(),
+                valores = form.getValues() || {},
+                fields = form.getModelFields() || [],
+                validators = form.getModelValidators() || {},
+                modelName = Ext.id(),
+                validatorsAplican = {};
+
+            Ice.log('Ice.obtenerErrores refs:', refs, 'valores:', valores, 'fields:', fields,
+                'validators:', validators);
+            
+            if (!refs) {
+                throw 'No hay referencias para validar errores';
+            }
+            
+            // solo aplican validators para campos que no esten ocultos
+            for (var att in refs) {
+                var ref = refs[att];
+                if (ref.isHidden() !== true && ref.getName && validators[ref.getName()]) {
+                    validatorsAplican[ref.getName()] = validators[ref.getName()];
+                }
+            }
+
+            Ice.log('Ice.obtenerErrores validatorsAplican: ', validatorsAplican);
+            
+            Ext.define(modelName, {
+                extend: 'Ext.data.Model',
+                fields: fields,
+                validators: validatorsAplican
+            });
+
+            var validaciones = Ext.create(modelName, valores).getValidation().getData();
+            
+            Ice.log('Ice.obtenerErrores validaciones:', validaciones);
+            
+            for (var att in validaciones) {
+                if (validaciones[att] !== true) {
+                    errores = errores || {};
+                    errores[att] = validaciones[att];
+                }
+            }
+            
+            Ice.log('Ice.obtenerErrores errores:', errores);
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+        return errores;
+    },
+    
+    /**
+     * Valida los campos de un formulario, el formulario debe tener getModelFields y getModelValidators.
+     * Lanza excepcion si hay datos invalidos (en classic marca los campos en rojo, en modern la excepcion
+     * contiene la descripcion de errores)
+     */
+    validarFormulario: function (form) {
+        Ice.log('Ice.validarFormulario form:', form);
+        var paso = 'Validando formulario';
+        try {
+            if (!form) {
+                throw 'No se puede validar el formulario';
+            }
+
+            var refs = form.getReferences(),
+                errores = Ice.obtenerErrores(form);
+            if (errores) {
+                if (Ext.manifest.toolkit === 'classic') {
+                    for (var name in errores) {
+                        refs[name].setActiveError(errores[name]);
+                    }
+                    throw 'Favor de validar los datos';
+                } else {
+                    var errorString = '';
+                    for (var name in errores) {
+                        var ref = refs[name];
+                        errorString = errorString + ref.getLabel() + ': ' + errores[name] + '<br/>';
+                    }
+                    throw errorString;
+                }
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+
+    /**
+     * Carga un formulario. Recibe el form, los datos y opciones. Carga los campos que existan y
+     * dispara la herencia de anidados.
+     * opciones: {
+     *     sinReset (boolean)
+     * }
+     */
+    cargarFormulario: function (form, datos, opciones) {
+        Ice.log('Ice.cargarFormulario form:', form, 'datos:', datos, 'opciones:', opciones);
+        var paso = 'Asignando valores de formulario';
         try {
             if (!form) {
                 throw 'Falta el formulario';
             }
             Ice.suspendEvents(form);
-            form.reset();
+            if (!(opciones && opciones.sinReset === true)) {
+                form.reset();
+            }
             if (datos) {
                 var refs = form.getReferences() || {};
                 for (var att in datos) {
@@ -1796,78 +1696,6 @@ var Ice = Object.assign(Ice || {}, {
                 }
             }
             Ice.resumeEvents(form);
-        } catch (e) {
-            Ice.generaExcepcion(e, paso);
-        }
-    },
-    
-    
-    /**
-     * Este metodo valida los campos de un formulario, usando un Model.
-     * El formulario debe tener en sus propiedades (config) modelFields.
-     * El formulario debe tener en sus propiedades (config) modelValidators.
-     * @param form
-     * @return no regresa nada, pero arroja excepcion si no es valido
-     */
-    validaFormulario: function (form) {
-        Ice.log('Ice.validaFormulario form:', form);
-        var paso = 'Validando formulario';
-        try {
-            if (!form || !form.getModelFields || !form.getModelValidators) {
-                throw 'No se puede validar el formulario';
-            }
-            var refs = form.getReferences(),
-                valores = form.getValues() || {},
-                fields = form.getModelFields() || [],
-                validators = form.getModelValidators() || {},
-                modelName = Ext.id(),
-                validatorsAplican = {};
-            
-            Ice.log('Ice.validaFormulario refs:', refs, 'valores:', valores, 'fields:', fields, 'validators:', validators);
-            
-            // solo aplican validators para campos que no esten ocultos
-            for (var att in refs) {
-                ref = refs[att];
-                if (ref.isHidden() !== true && validators[ref.getName()]) {
-                    validatorsAplican[ref.getName()] = validators[ref.getName()];
-                }
-            }
-            
-            Ext.define(modelName, {
-                extend: 'Ext.data.Model',
-                fields: fields,
-                validators: validatorsAplican
-            });
-            var validaciones = Ext.create(modelName, valores).getValidation().getData(),
-                errores = {},
-                valido = true;
-            
-            Ice.log('Ice.validaFormulario validaciones:', validaciones);
-            
-            for (var att in validaciones) {
-                if (validaciones[att] !== true) {
-                    valido = false;
-                    errores[att] = validaciones[att];
-                }
-            }
-            
-            Ice.log('Ice.validaFormulario errores:', errores);
-            
-            if (valido !== true) {
-                if (Ext.manifest.toolkit === 'classic') {
-                    for (var name in errores) {
-                        refs[name].setActiveError(errores[name]);
-                    }
-                    throw 'Favor de validar los datos';
-                } else {
-                    var errorString = '';
-                    for (var name in errores) {
-                        var ref = refs[name];
-                        errorString = errorString + ref.getLabel() + ': ' + errores[name] + '<br/>';
-                    }
-                    throw errorString;
-                }
-            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -1936,5 +1764,24 @@ var Ice = Object.assign(Ice || {}, {
      */
     index: function () {
         Ice.query('#mainView').getController().redirectTo('mesacontrol.action');
+    },
+    
+    utils: {
+        /**
+         * Funcion que recibe n objetos y te regresa uno solo mezclado (Object.assign da error en explorer)
+         * (se usa de manera anonima al inicio de este archivo)
+         * https://stackoverflow.com/questions/30498318/object-assign-equivalent-function-in-javascript
+         */
+        mergeObjects: function () {
+            var resObj = {};
+            for(var i = 0; i < arguments.length; i++) {
+                var obj = arguments[i],
+                    keys = Object.keys(obj);
+                for (var j = 0; j < keys.length; j++) {
+                    resObj[keys[j]] = obj[keys[j]];
+                }
+            }
+            return resObj;
+        }
     }
 });

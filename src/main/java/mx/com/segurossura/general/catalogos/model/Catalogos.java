@@ -18,7 +18,8 @@ public enum Catalogos {
     TMANTENI(""),
     AGRUPADORES_POLIZA(""),
     SUCURSALES_BANCARIAS(""),
-    GESTORES_COBRANZA("");
+    GESTORES_COBRANZA(""),
+    ESTATUS_TRAMITE("");
 
     
     private String cdtabla;

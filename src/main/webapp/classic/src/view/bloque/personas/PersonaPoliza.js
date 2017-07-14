@@ -19,13 +19,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
         accion: null,
         botones: []
 	},
-	
-	layout	   : 'responsivecolumn',
-	bodyPadding: '10px 0px 0px 10px',
-    defaults: {
-        margin: '0px 10px 10px 0px',
-        cls: 'big-50 small-100'
-    },
+	scrollable: true,
 	constructor: function (config) {
         Ice.log('Ice.view.bloque.PersonaPoliza.constructor config:', config);
         var me = this,
@@ -67,37 +61,33 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
             var modelName = Ext.id();
             
         	var itemsForm = comps.BLOQUE_PERSONAS.FORMULARIO.items;
-        	                
-            var gridDomicilios = {
-    	        xtype: 'domicilios',
-    	        reference: 'gridDomicilios',
-    	        width: '100%',
-    	        selector: true
-        	};
         	
         	 Ext.apply(me, {
         	     items: [
         	         {
         	           xtype: 'cdpersoncdrol',
-        	           reference: 'form',
-        	           cdramo: me.cdramo,
-        	           layout: 'responsivecolumn',
-        	           width: '100%',
-                       bodyPadding: '10px 0px 0px 10px',
-                       defaults: {
-                           margin: '0px 10px 10px 0px',
-                           cls: 'big-50 small-100'
-                       }
-        	       },gridDomicilios,{
+                       reference: 'form',
+                       height: 150,
+                       cdramo: me.cdramo
+        	       },{
+                       xtype: 'domicilios',
+                       reference: 'gridDomicilios',
+                       selector: true,
+                       scrollable: true,
+                       width: 700
+                   },{
         	           buttons: [
                            {
                                xtype: 'button',
                                reference: 'btnGuardar',
                                text: 'Guardar',
                                handler: 'onGuardar'
+                           },{
+                               xtype: 'button',
+                               text: 'Cancelar',
+                               handler: 'onCancelar'
                            }
-                       ],
-                       width: '100%'
+                       ]
         	       }
                  ]
              });

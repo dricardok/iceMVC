@@ -3,12 +3,9 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
     xtype: 'personapolizanavigation',
     
     controller: 'personapolizanavigation',
-    layout: 'card',
     title: 'Personas poliza',
-    height: '100%',
-    bodyStyle: 'padding:15px',
     scrollable: true,
-    
+    //layout: 'vbox',
  // validacion de parametros de entrada
     constructor: function (config) {
         Ice.log('Ice.view.bloque.personas.ListaPersonas.constructor config:', config);
@@ -27,27 +24,60 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
                     throw 'Falta llave de p\u00f3liza';
                 }
                 
+                if (config.estado == 'w'){
+                    config.estado === 'W';
+                }
+
                 config.modulo = config.modulo || 'COTIZACION';
                 
                 config.items = [
                     {
-                        xtype: 'situacionpersonas',
-                        id: 'card-0',
-                        reference: 'situacionpersonas',
+                        xtype: 'bloquelistasituaciones',
+                        itemId: 'gridSituaciones',
+                        reference: 'gridSituaciones',
                         cdunieco: config.cdunieco,
                         cdramo: config.cdramo,
                         estado: config.estado,
                         nmpoliza: config.nmpoliza,
                         nmsuplem: config.nmsuplem,
                         cdtipsit: config.cdtipsit,
-                        buttonPersonas: [
+                        situacionCero: true,
+                        actionColumns: [
                             {
-                                text: 'Agregar',
-                                iconCls: 'x-fa fa-plus-circle',
-                                scope: me,
-                                handler: function(btn){
-                                    Ice.log('config ',btn.up('panel'));
-                                    this.getController().agregarPersona(btn.up('panel'));
+                                xtype: 'button',
+                                ui: 'action',
+                                iconCls: 'x-fa fa-edit',
+                                handler: function(grid, rowIndex, colIndex) {
+                                    me.getController().onActualizar(grid, rowIndex, colIndex);
+                                }
+                            }
+                        ]
+                    },{
+                        xtype: 'listapersonas',
+                        itemId: 'gridPersonas',
+                        reference: 'gridPersonas',
+                        title: 'Personas por situacion',
+                        cdunieco: config.cdunieco,
+                        cdramo: config.cdramo,
+                        estado: config.estado,
+                        nmpoliza: config.nmpoliza,
+                        nmsuplem: config.nmsuplem,
+                        cdtipsit: config.cdtipsit,
+                        hidden: true,
+                        actionColumns: [
+                            {
+                                type: 'button',
+                                ui: 'action',
+                                iconCls: 'x-fa fa-edit',
+                                handler: function(grid, rowIndex, colIndex) {
+                                    me.getController().onActualizarPersona(grid, rowIndex, colIndex);
+                                }
+                            },{
+                                type: 'button',
+                                ui: 'action',
+                                iconCls: 'x-fa fa-minus-circle',
+                                handler: function(grid, rowIndex, colIndex){
+                                    me.getController().onBorrarPersona(grid, rowIndex, colIndex);
                                 }
                             }
                         ]

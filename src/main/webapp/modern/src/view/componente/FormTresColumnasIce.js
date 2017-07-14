@@ -1,0 +1,25 @@
+Ext.define('Ice.view.componente.FormTresColumnasIce', {
+    extend: 'Ice.view.componente.FormIce',
+    xtype: 'formtrescolumnasice',
+	
+    // config ext
+    layout: 'default', // para usar responsivo
+    bodyPadding: '20 0 0 20',
+
+    constructor: function (config) {
+        Ice.log('Ice.view.componente.FormTresColumnasIce.constructor config:', config);
+        var me = this,
+            paso = 'Construyendo formulario';
+        try {
+            config.items = config.items || [];
+            for (var i = 0; i < config.items.length; i++) {
+                config.items[i].style = 'float: left; margin: 0px 20px 20px 0px; ' + (config.items[i].style || '');
+                config.items[i].userCls = ['big-33', 'small-100']
+                    .concat(config.items[i].userCls || []);
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+        me.callParent(arguments);
+    }
+});

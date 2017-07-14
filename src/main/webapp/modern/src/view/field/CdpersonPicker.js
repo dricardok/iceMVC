@@ -52,20 +52,6 @@ Ext.define('Ice.view.field.CdpersonPicker', {
                     reference: 'cdperson'
                 },{
                     xtype: 'textfieldice',
-                    hidden: true,
-                    label: 'Rol',
-                    reference: 'cdrol',
-                    name: 'cdrol',
-                    readOnly: true
-                },{
-                    xtype: 'textfieldice',
-                    hidden: me.mostrarRol === 'true' ? false : true,
-                    label: 'Rol',
-                    reference: 'dsrol',
-                    name: 'dsrol',
-                    readOnly: true
-                },{
-                    xtype: 'textfieldice',
                     label: config.label || 'Persona',
                     labelAlign: config.labelAlign || 'top',
                     name: 'dsnombre',

@@ -1,6 +1,6 @@
 Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 	
-	extend		:	"Ice.view.componente.Ventana",
+	extend		:	"Ice.view.componente.VentanaIce",
 	controller	:	"agregardomiciliowindow",
 	xtype		:	'agregardomiciliowindow',
 	config		:	{
@@ -55,7 +55,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 			
 			me.items=[
 				{
-					xtype		:	"formulario",
+					xtype		:	"formice",
 					reference	:	"formulario",
 					scrollable	:	true,
 					layout		:	{

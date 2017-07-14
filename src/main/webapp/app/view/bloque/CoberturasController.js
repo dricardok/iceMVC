@@ -50,7 +50,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             	//Ice.log("store- :",store)
 			var win=Ext.create('Ext.window.Window', {
 			    title: 'Añadir cobertura',
-			    height: 550,
+			    height: 250,
 			    width: 450,
 			    layout: 'fit',
 			    scrollable:true,
@@ -295,20 +295,22 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             	it.tabla="MPOLICAP"
             })
             
-            form.setTitle(record.get('cdgarant')+" - "+record.get('dsgarant'))
+            form.setTitle("Cobertura: "+record.get('cdgarant')+" - "+record.get('dsgarant') +" Póliza: "+view.getCdunieco() +" - "
+					 +view.getCdramo()+" - "+ view.getEstado()+ " - "	
+						 +view.getNmpoliza())
             form.removeAll();
             
             form.add(mpolicap.BLOQUE_COBERTURAS.MPOLICAP.items);
             form.add(comps.TATRIGAR.TATRIGAR.items);
             
-            form.modelValidators=Object.assign({},comps.TATRIGAR.TATRIGAR.validators,mpolicap.BLOQUE_COBERTURAS.MPOLICAP.validators)
-            form.modelFields=mpolicap.BLOQUE_COBERTURAS.MPOLICAP.fields.concat(comps.TATRIGAR.TATRIGAR.fields);
+            form.modelValidators = Ice.utils.mergeObjects({},comps.TATRIGAR.TATRIGAR.validators,mpolicap.BLOQUE_COBERTURAS.MPOLICAP.validators)
+            form.modelFields = mpolicap.BLOQUE_COBERTURAS.MPOLICAP.fields.concat(comps.TATRIGAR.TATRIGAR.fields);
             
             Ice.log("-------->",form.modelValidators)
             this.cargarValores(form);   
     		
     	}catch(e){
-    		Ice.generaExcepcion(e, paso);
+    		Ice.manejaExcepcion(e, paso);
     	}
     },
     
@@ -532,6 +534,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	},
 	
   editarCoberturaMovil:function(grid,idx,tar,sel) {
+	  var paso="";
    	try{
    		var view = this.getView();
    		view.down("#btnGuardarCobertura").setHidden(false);  
@@ -539,7 +542,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
  		//var sel =Ext.ComponentQuery.query("#gridCoberturas")[0].getSelection();
  			view.setCdgarant(sel.get("cdgarant"));
  			view.setCdcapita(sel.get("cdcapita"));
- 			var form=me.down('[xtype=formpanel]');
+ 			var form=me.down('[xtype=formtrescolumnasice]');
       		form.removeAll();
     			
     		 var comps = Ice.generaComponentes({
@@ -575,13 +578,9 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             	it.tabla="MPOLICAP"
             })
             
-            form.modelValidators=Object.assign({},comps.TATRIGAR.TATRIGAR.validators,mpolicap.BLOQUE_COBERTURAS.MPOLICAP.validators)
-            form.modelFields=mpolicap.BLOQUE_COBERTURAS.MPOLICAP.fields.concat(comps.TATRIGAR.TATRIGAR.fields);
-            
-            Ice.log("-------->",form.modelValidators)
-            
-            form.setTitle(sel.get("cdgarant")+" - "+sel.get('dsgarant'))
-            form.removeAll();
+            form.modelValidators = Ice.utils.mergeObjects({},comps.TATRIGAR.TATRIGAR.validators,mpolicap.BLOQUE_COBERTURAS.MPOLICAP.validators)
+            form.modelFields = mpolicap.BLOQUE_COBERTURAS.MPOLICAP.fields.concat(comps.TATRIGAR.TATRIGAR.fields);
+         
             form.add(mpolicap.BLOQUE_COBERTURAS.MPOLICAP.items);
             form.add(comps.TATRIGAR.TATRIGAR.items);
             this.cargarValores(form);
@@ -870,15 +869,18 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 				var view=this.getView();
 				var me = grid.up('bloquecoberturas')
 				var paso = 'limpiando grids'
-				var gridCoberturas = me
+					Ice.log("mmm..",me);
+				var gridCoberturas = view
 						.down('#gridCoberturas');
-				gridCoberturas.store
+				Ice.log("mmm..",gridCoberturas);
+				global=gridCoberturas;
+				gridCoberturas.getStore()
 						.removeAll();
 				gridCoberturas.setHidden(false);
 				
 				me
 						.down(
-								'[xtype=form]')
+								'[xtype=formtrescolumnasice]')
 						.removeAll();
 				paso = 'consultando coberturas'
 				var record = grid
@@ -887,7 +889,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 								rowIndex);
 				 paso = "Evento selecciona cobertura "
 				
-				gridCoberturas.store.proxy.extraParams = {
+				gridCoberturas.getStore().proxy.extraParams = {
 					'params.pv_cdunieco_i' : view.getCdunieco(),
 					'params.pv_cdramo_i' : view.getCdramo(),
 					'params.pv_estado_i' : view.getEstado(),
@@ -895,6 +897,9 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 					'params.pv_nmsuplem_i' : view.getNmsuplem(),
 					'params.pv_nmsituac_i' : record.get('nmsituac')
 				}
+				 gridCoberturas.setTitle("Coberturas de la situación:  " +record.get('nmsituac')+" Póliza: "+view.getCdunieco() +" - "
+						 												 +view.getCdramo()+" - "+ view.getEstado()+ " - "	
+						 												 +view.getNmpoliza());
 				paso = "estableciendo nmsituac";
 				me.config.nmsituac = record.get('nmsituac');
 				me.setNmsituac(record.get('nmsituac'));

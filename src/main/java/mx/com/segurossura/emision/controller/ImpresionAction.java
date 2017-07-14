@@ -1,5 +1,6 @@
 package mx.com.segurossura.emision.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +18,7 @@ import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 
 import mx.com.segurossura.emision.service.ImpresionManager;
+import mx.com.royalsun.alea.commons.bean.Documento;
 
 @Controller
 @Scope("prototype")
@@ -24,12 +26,14 @@ import mx.com.segurossura.emision.service.ImpresionManager;
 @Namespace("/emision")
 public class ImpresionAction extends PrincipalCoreAction {
 
-	private static final Logger logger = LoggerFactory.getLogger(ImpresionAction.class);
+    private static final long serialVersionUID = -6494398903397776422L;
+
+    private static final Logger logger = LoggerFactory.getLogger(ImpresionAction.class);
 	
 	private boolean success;
 	private String message;
 	private Map<String, String> params;
-	
+	private List<Documento> lista;
 	@Autowired
 	private ImpresionManager impresionManager;
 	
@@ -61,9 +65,7 @@ public class ImpresionAction extends PrincipalCoreAction {
 			if (StringUtils.isBlank(nmsuplem)) {
 				nmsuplem = "0";
 			}
-
-			impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
-
+			lista = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
 			success = true;
 
 		}catch(Exception ex){
@@ -101,4 +103,12 @@ public class ImpresionAction extends PrincipalCoreAction {
 	public void setParams(Map<String, String> params) {
 		this.params = params;
 	}
+
+    public void setLista(List<Documento> lista) {
+        this.lista = lista;
+    }
+    
+    public List<Documento> getLista(){
+        return lista;
+    }
 }

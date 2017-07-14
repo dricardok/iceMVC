@@ -128,13 +128,23 @@
 			 																} 
 	 																	]
 	 																}
- 																]
+ 																],
+															listeners:{
+									                        	cargarstore:function(store,datos,grid){
+									                        	//Ice.log('Agregar ',this);
+									                        		if(store.count()>0)
+									                        		me.getController().mostrarCoberturas(
+									                        				grid,0,0
+									                        				)
+									                        				
+									                        	}
+									                        }
  														},
  														{
  															xtype : 'gridpanel',
  															itemId : 'gridCoberturas',
  															hidden: true,
- 															title : 'Coberturas',
+ 															title : 'Coberturas de la situación '+me.getNmsituac() ,
  															// width : "700px",
  															tbar : [
 	 																	{
@@ -177,13 +187,9 @@
  															store : store
  														},
  														{
- 															xtype : 'form',
+ 															xtype : 'formtrescolumnasice',
  															reference: 'form',
- 															layout : {
- 																type : 'column'
- 															},
- 															defaults : {
- 															},
+ 															
  															buttons : [ {
  																text : 'Guardar',
  																hidden: true,
