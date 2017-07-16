@@ -3,10 +3,20 @@
  */
 
 .x-formpanel-inner {
-    background-color: $formpanel-body-background-color;
+    background-color: $blanco-s;
     padding: $formpanel-body-padding;
 
     .#{$prefix}big & {
         padding: $formpanel-body-padding-big;
     }
 }
+
+/**
+ * clase para forzar  background-color de ventanas
+ */
+
+.x-inner > .x-msgbox-inner > .x-pack-center > .x-layout-vbox > .x-vertical > .x-align-stretch > .x-layout-box > .x-panel-inner > .x-container-inner > .x-component-inner{
+    background-color:#fff !important;
+}
+
+

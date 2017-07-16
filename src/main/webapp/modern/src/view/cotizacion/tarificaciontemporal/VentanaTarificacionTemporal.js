@@ -71,7 +71,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
                         'cdtipcon',
                         'cdunieco',
                         'cdperpag',
-                        { name: 'primer_recibo', type: 'float' }
+                        { name: 'primer_recibo', type: 'float' },
+                        'dsgarant',
+                        'dscontar'
                     ],
                     proxy: {
                         type: 'ajax',

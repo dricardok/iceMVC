@@ -413,3 +413,7 @@
         $horizontal-spacing: $toolbar-footer-horizontal-spacing
     );
 }
+
+.x-toolbar-footer > .sinfondo {
+        background-color: transparent;
+}

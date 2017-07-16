@@ -17,6 +17,8 @@ $blanco-s:#ffffff;
 
 $gris-s:#888686;
 
+$gris-ftr:#ececec;
+
 $amarillo-s:#e3e829;
 
  /*-----------Tipografía Corporativa DIN Regular-Medium-------*/
@@ -93,9 +95,7 @@ $button-default-background-color-focus-pressed:$azulo-rgba;
  
  $azulbd:#DEEBF4;
   
-  /*Menu
- $ind_selected:$azulc-s;
- $item-expanded-background-color:$azulo2-s !important; */
+  
  
  /*Panel*/
 $sombra-pnl: 0 2px 5px 0 rgba(0,0,0,0.26);
@@ -113,8 +113,7 @@ $panel-header-background-color: dynamic($btn_transparent);
  $fuente-df:'Arial';
 
 
- /*Alertas
-$ui-header-background-color:$azulo-s !important;*/
+
 
  /*Tabs*/
  $tab-font-weight:$font-bold_s;

@@ -110,7 +110,7 @@
 
         &.#{$prefix}treelist-item-tool {
             color: $tool-selected-color;
-            background-color: $tool-selected-background-color;
+            background-color: $azulo3-s;
 
             @if $tool-indicator-selected-width != null {
                 &:after {
@@ -131,7 +131,7 @@
         }
 
         > .#{$prefix}treelist-row {
-            background-color: $row-selected-background-color;
+            background-color: $azulo3-s;
         }
 
         > .#{$prefix}treelist-row-over {
@@ -326,7 +326,7 @@
     }
 
     .#{$prefix}treelist-item-expanded {
-        background-color:$item-expanded-background-color;
+        background-color:$azulo2-s;
 
         & .#{$prefix}treelist-item {
             background-color: $item-expanded-child-background-color;
@@ -480,7 +480,7 @@
     // and it will reduce down to potentially nothing as appropriate.
     //
     .#{$prefix}treelist-#{$ui}{
-        background-color:$background-color;
+        background-color:$azulc2-s;
         // Some browsers (FF, IE) don't support reading background-position-x
         background-position: $item-icon-width 0%;
         @if $enable-big {
@@ -497,7 +497,7 @@
             $padding-left: if($padding == null, null, left($padding)),
             $padding-right: if($padding == null, null, right($padding)),
 
-            $toolstrip-background-color: $toolstrip-background-color,
+            $toolstrip-background-color: $azulc2-s,
 
             $tool-float-indicator-color: $tool-float-indicator-color,
             $tool-float-indicator-width: $tool-float-indicator-width,

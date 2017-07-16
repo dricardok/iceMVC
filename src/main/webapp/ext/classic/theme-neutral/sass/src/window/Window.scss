@@ -263,7 +263,7 @@
             border-style: $ui-body-border-style;
         }
 
-        @if not is-null($ui-body-background-color) { background: $ui-body-background-color; }
+        @if not is-null($blanco-s) { background: $blanco-s; }
         @if not is-null($ui-body-color) { color: $ui-body-color; }
         @if not is-null($ui-body-font-size) {        font-size: $ui-body-font-size; }
         @if not is-null($ui-body-font-weight) {      font-weight: $ui-body-font-weight; }

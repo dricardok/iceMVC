@@ -1,5 +1,5 @@
 .#{$prefix}mask {
-    @include background-opacity($loadmask-background-color, $loadmask-opacity);
+    @include background-opacity($blanco-s, $loadmask-opacity);
     @if not is-null($loadmask-cursor) {
         cursor: $loadmask-cursor;
     }
@@ -40,7 +40,7 @@
     @if not is-null($loadmask-msg-background-gradient) {
         @include background-gradient($loadmask-msg-background-color, $loadmask-msg-background-gradient);
     } @else {
-        background: $loadmask-msg-background-color;
+        background: $blanco-s;
     }
 }
 
@@ -58,7 +58,7 @@
 
 .#{$prefix}mask-msg-text {
     padding: $loadmask-msg-text-padding;
-    //if an icon is defined show it
+    //if an icon is defined show itq
     @if not is-null($loadmask-msg-inner-icon) {
         background-image: theme-background-image($loadmask-msg-inner-icon, 'gif');
         background-repeat: no-repeat;

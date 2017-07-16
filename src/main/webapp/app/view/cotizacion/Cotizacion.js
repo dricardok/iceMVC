@@ -15,27 +15,31 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
         }
     }],
     buttons: [
+         {
+            text: 'Anterior',
+            reference: 'anteriorbutton',
+            iconCls: 'x-fa fa-backward',
+            handler: 'onAnteriorclic'
+        }, 
+      
         {
             text: 'Cargar',
             reference: 'cargarbutton',
             iconCls: 'x-fa fa-cloud-download',
             handler: 'onCargarClic'
-        }, {
-            text: 'Anterior',
-            reference: 'anteriorbutton',
-            iconCls: 'x-fa fa-backward',
-            handler: 'onAnteriorclic'
-        }, {
+        },{
             text: 'Cotizar',
             reference: 'cotizarbutton',
             iconCls: 'x-fa fa-dollar',
             handler: 'onCotizarClic'
-        }, {
+        },
+        {
             text: 'Siguiente',
             reference: 'siguientebutton',
             iconCls: 'x-fa fa-forward',
             handler: 'onSiguienteClic'
         }
+        
     ],
 
     // config no ext

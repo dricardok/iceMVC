@@ -81,7 +81,7 @@ Ext.define('Ice.view.bloque.ListaSituaciones', {
 			Ice.log('Ice.view.bloque.ListaSituaciones.initComponent comps:', comps);
 
 			Ext.apply(me, {
-				title: 'Situaciones de p\u00f3liza '+me.cdunieco+'-'+me.cdramo+'-'+me.estado+'-'+me.nmpoliza,
+				title: 'Situaciones de P\u00f3liza '+me.cdunieco+'-'+me.cdramo+'-'+me.estado+'-'+me.nmpoliza,
 				columns: comps.BLOQUE_LISTA_SITUACIONES.GRID.columns.concat(me.config.columns || []),//.concat(me.config.actionColumns),
 				store: {
 					fields: comps.BLOQUE_LISTA_SITUACIONES.GRID.fields,

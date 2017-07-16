@@ -1,4 +1,21 @@
 $material-colors: dynamic((
+     'azul-s': (
+        '50': #0033a0,
+        
+    ),
+    
+     'azulc-s': (
+        '50': #00B5CB,
+        
+    ), 'azulbd': (
+        '50': #DEEBF4,
+        
+    ),
+     'blanco-s': (
+        '50': #fff,
+        
+    ),
+    
     'red': (
         '50': #ffebee,
         '100': #ffcdd2,
@@ -31,6 +48,9 @@ $material-colors: dynamic((
         'a400': #f50057,
         'a700': #c51162
     ),
+    
+      
+    
     'purple': (
         '50': #f3e5f5,
         '100': #e1bee7,
@@ -295,6 +315,8 @@ $material-colors: dynamic((
 ));
 
 $material-foreground-colors: dynamic((
+    'azul-s':fff,
+    'azulc-s':fff,
     'red': #fff,
     'pink': #fff,
     'purple': #fff,
