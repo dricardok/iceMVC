@@ -1,6 +1,6 @@
-Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
+Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationOld',{
     extend: 'Ext.Panel',
-    xtype: 'personapolizanavigation',
+    xtype: 'personapolizanavigationold',
     
     controller: 'personapolizanavigation',
     title: 'Personas poliza',
