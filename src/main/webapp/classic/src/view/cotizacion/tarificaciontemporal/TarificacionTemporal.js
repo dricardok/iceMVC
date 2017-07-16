@@ -4,7 +4,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 	
 	title: 'Elige tu Plan',
 	scrollable: false,
-	
+
+	layout: 'fit',
+
 	config: {
 		cdunieco: null,
 		cdramo: null,

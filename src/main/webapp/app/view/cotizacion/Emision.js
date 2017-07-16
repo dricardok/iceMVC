@@ -1,9 +1,9 @@
-Ext.define('Ice.view.cotizacion.Cotizacion', {
+Ext.define('Ice.view.cotizacion.Emision', {
     extend: 'Ice.view.componente.PanelIce',
-    xtype: 'cotizacion',
-    
-    controller: 'cotizacion',
+    xtype: 'emision',
 
+    controller: 'emision',
+    
     // config ext
     layout: 'fit',
     header: false,
@@ -26,9 +26,9 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             iconCls: 'x-fa fa-backward',
             handler: 'onAnteriorclic'
         }, {
-            text: 'Cotizar',
+            text: 'Emitir',
             reference: 'cotizarbutton',
-            iconCls: 'x-fa fa-dollar',
+            iconCls: 'x-fa fa-key',
             handler: 'onCotizarClic'
         }, {
             text: 'Siguiente',
@@ -37,7 +37,7 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             handler: 'onSiguienteClic'
         }
     ],
-
+    
     // config no ext
     config: {
         // uso o funcionamiento
@@ -64,25 +64,28 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
         // comportamiento
         guardadoAutomaticoSuspendido: false
     },
-    
+
     constructor: function (config) {
-        Ice.log('Ice.view.cotizacion.Cotizacion.constructor config:', config);
+        Ice.log('Ice.view.cotizacion.Emision.constructor config:', config);
         var me = this,
-            paso = 'Construyendo pantalla de cotizaci\u00f3n';
+            paso = 'Validando componente de cotizaci\u00f3n';
         try {
-            if (!config.cdramo || !config.cdtipsit) {
-                throw 'Falta cdramo o cdtipsit para componente de cotizaci\u00f3n';
+            if (!config || !config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza || !config.cdtipsit) {
+                throw 'Faltan datos para construir pantalla de emisi\u00f3n';
             }
             
-            config.modulo = config.modulo || 'COTIZACION';
-            config.flujo = config.flujo || {};
+            config.nmsuplem    = config.nmsuplem || 0;
+            config.status      = config.status || 'V';
+            config.modulo      = config.modulo || 'EMISION';
+            config.flujo       = config.flujo || {};
+            config.auxkey      = config.auxkey || '';
             
             if (config.estado === 'w') {
                 config.estado = 'W';
             }
 
             var bloques = Ice.generaComponentes({
-                pantalla: 'COTIZACION',
+                pantalla: 'EMISION',
                 seccion: 'BLOQUES',
                 modulo: config.modulo || '',
                 estatus: (config.flujo && config.flujo.estatus) || '',
@@ -93,7 +96,11 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
                 items: true
             });
             
-            config.bloques = bloques.COTIZACION.BLOQUES.items;
+            config.bloques = bloques.EMISION.BLOQUES.items;
+            config.bloques = [{
+                label: 'mis agentes',
+                name: 'bloqueagentes'
+            }];
             if ((config.bloques || []).length === 0) {
                 throw 'No hay bloques configurados';
             }

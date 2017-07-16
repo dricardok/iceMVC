@@ -4,10 +4,10 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 	
 	controller: 'tarificaciontemporal',
 	
-	height: '100%',
+	//height: '100%',
 	tpl: [
         '<tpl for=".">',
-             '<div class="btn_rol_suscriptor thumb" style="width:200px; float:left;">',
+             '<div class="btn_rol_suscriptor thumb" style="width:200px; float:left; margin: 0px 40px 40px 0px;">',
                 '<table style="width:100%">',
                     '<tr>',
                         '<td style="text-align:center;width:100% ">{total}</td>',
@@ -33,6 +33,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
     listeners: {
     	itemclick: 'onItemClic'
     },
+
+	padding: '40 0 0 40',
     
     config: {
     	cdunieco: null,

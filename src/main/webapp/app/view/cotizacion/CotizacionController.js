@@ -160,7 +160,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     : 'hide']();
             }
             if (refs.cotizarbutton) {
-                refs.cotizarbutton[refs['ref' + (view.getBloques().length - 1)]
+                refs.cotizarbutton[refs['ref' + (view.getBloques().length - 1)] || view.getNuevaCotizacion() !== true
                     ? 'show'
                     : 'hide']();
             }
@@ -215,6 +215,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 throw 'Faltan datos para cargar cotizaci\u00f3n';
             }
             
+            view.setNuevaCotizacion(false);
             var comps = [];
             
             for (var i = 0; i < view.getBloques().length; i++) {
@@ -243,7 +244,8 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             
             refs.tabpanel.add(comps);
             refs.tabpanel.setActiveTab(comps[0]);
-            me.mostrarPrimas();
+            comps[0].getController().cargar();
+            me.mostrarTarifasPlan();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -354,7 +356,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
         		
         		buttons : [{
         			text: 'Editar',
-        			iconCls: 'x-fa fa-check',
+        			iconCls: 'x-fa fa-pencil',
         			handler: function(me){
         				Ice.pop();
         			}

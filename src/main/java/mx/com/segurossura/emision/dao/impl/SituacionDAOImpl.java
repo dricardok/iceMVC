@@ -111,14 +111,14 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
             }
             tvalosit.put(key, otvalores.get(key));
         }
-        logger.debug(Utils.log("\n otvalor1", " ", tvalosit.getOtvalor01()));
-        logger.debug(Utils.log("\n otvalor2", " ", tvalosit.getOtvalor02()));
-        logger.debug(Utils.log("\n otvalor3", " ", tvalosit.getOtvalor03()));
-        logger.debug(Utils.log("\n otvalor4", " ", tvalosit.getOtvalor04()));
-        logger.debug(Utils.log("\n otvalor5", " ", tvalosit.getOtvalor05()));
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("pv_status_registro_i", accion);
         params.put("pv_tvalo_record_i", new SqlStructValue<TvalositVO>(tvalosit));
+        
+        // jtezva 16 julio 2017, PL TEMPORAL porque fallaba el original
+        params.put("pv_dummy_temp_i", null);
+        
+        logger.debug(Utils.log("\n****** TVALOSIT enviado al PL: ", tvalosit));
         ejecutaSP(new MovimientoTvalositSP(getDataSource()), params);
     }
 
@@ -128,6 +128,7 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
             this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor());// unwrapping the connection
             declareParameter(new SqlParameter("pv_status_registro_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_tvalo_record_i", Types.STRUCT, "TVALOSIT_OBJECT"));
+            // declareParameter(new SqlParameter("pv_dummy_temp_i", Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
             compile();

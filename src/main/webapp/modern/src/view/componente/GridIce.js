@@ -29,7 +29,12 @@ Ext.define('Ice.view.componente.GridIce', {
 			            ignoreExport: true,
 			            cell: {
 			                xtype: 'widgetcell',
-			                widget: actionColumn
+			                widget: {
+								xtype: 'button',
+								ui: 'action',
+								iconCls: actionColumn.iconCls,
+								handler: actionColumn.handler
+							}
 			            }
 			        });
 				});

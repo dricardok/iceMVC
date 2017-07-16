@@ -254,14 +254,8 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             }
             
             refs.tabpanel.add(comps);
-            
-            if (Ext.manifest.toolkit === 'classic') {
-                refs.tabpanel.setActiveTab(comps[0]);
-            } else {
-                refs.tabpanel.setActiveItem(comps[0]);
-            }
-            
-           // me.mostrarPrimas();
+            refs.tabpanel.setActiveTab(comps[0]);
+            comps[0].getController().cargar();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }

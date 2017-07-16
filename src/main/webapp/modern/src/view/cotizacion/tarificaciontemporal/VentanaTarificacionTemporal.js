@@ -30,17 +30,6 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
     			throw 'Faltan par\u00e1metros para construir ventana de tarifa';
     		}
     		
-    		// bbar
-            config.botones = config.botones || [];
-            if (config.botones.length > 0) {
-                config.items = config.items || [];
-                config.items.push({
-                    xtype: 'toolbar',
-                    docked: 'bottom',
-                    items: config.botones
-                });
-            }
-    		
           //grid
             config.items = config.items || [];
             config.items.push({

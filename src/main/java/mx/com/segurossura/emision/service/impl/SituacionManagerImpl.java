@@ -150,7 +150,23 @@ public class SituacionManagerImpl implements SituacionManager{
             
             paso = "Recuperando valores variables";
             List<Map<String, String>> tvalositList = situacionDAO.obtieneTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac,
-                    datos.get("cdtipsit"), nmsuplem);            
+                    datos.get("cdtipsit"), nmsuplem);
+            
+            // si fallan en insertar los valores por def
+            if (tvalositList == null || tvalositList.size() == 0) {
+                paso = "Insertando valores variables de situaci\u00f3n";
+                Map<String, String> tvalosit = ValoresMinimosUtils.obtenerValores(Bloque.ATRIBUTOS_SITUACIONES);
+                if ("x".equalsIgnoreCase(tvalosit.get("cdtipsit"))) {
+                    tvalosit.put("cdtipsit", mpolisit.get("cdtipsit"));
+                }
+                situacionDAO.movimientoTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac,
+                        tvalosit.get("cdtipsit"), status, nmsuplem,
+                        tvalosit,
+                        "I");
+                tvalositList = situacionDAO.obtieneTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac,
+                        datos.get("cdtipsit"), nmsuplem);
+            }
+            
             if (tvalositList != null && tvalositList.size() > 0) {
                 for (Entry<String, String> en : tvalositList.get(0).entrySet()) {
                     valores.put(Utils.join("b5b_", en.getKey()), en.getValue());
