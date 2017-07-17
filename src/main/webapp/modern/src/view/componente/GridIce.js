@@ -20,25 +20,32 @@ Ext.define('Ice.view.componente.GridIce', {
     	var me = this,
     		paso = 'Construyendo grid';
     	try {
-			// se agregan los action column
+			// se dividen y agregan los actionColumns
 			if ((config.actionColumns || []).length > 0) {
-				var widgetColumns = [];
-				config.actionColumns.forEach(function (actionColumn) {
-					widgetColumns.push({
-			            width: '60',
-			            ignoreExport: true,
-			            cell: {
-			                xtype: 'widgetcell',
-			                widget: {
-								xtype: 'button',
-								ui: 'action',
-								iconCls: actionColumn.iconCls,
-								handler: actionColumn.handler
+				var cols = [];
+				for (var i = 0; i < config.actionColumns.length; i++) {
+					var colItems = config.actionColumns[i];
+					if (colItems.items && typeof colItems.items.length === 'number') {
+						colItems = colItems.items;
+					} else {
+						colItems = [colItems];
+					}
+					for (var j = 0; j < colItems.length; j++) {
+						var col = colItems[j];
+						col.xtype = 'button';
+						col.ui = 'action';
+						col.width = null;
+						delete col.width;
+						cols.push({
+							width: 60,
+							cell: {
+								xtype: 'widgetcell',
+								widget: col
 							}
-			            }
-			        });
-				});
-				config.columns = (config.columns || []).concat(widgetColumns);
+						});
+					}
+				}
+				config.columns = (config.columns || []).concat(cols);
 			}
 
 			// botones

@@ -109,7 +109,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
                         text: 'Agregar',
                         iconCls: 'x-fa fa-plus-circle',
                         handler: function (btn) {
-                            me.getController().agregarPersona(me);
+                            btn.up('personapolizanavigation').getController().agregarPersona();
                         }
                     }]
                 }

@@ -1,10 +1,13 @@
 Ext.define('Ice.view.field.CdpersonPicker', {
-    extend: 'Ext.Container',
+    extend: 'Ice.view.componente.ContainerIce',
     xtype: 'cdpersonpicker',
     
     controller: 'cdpersonpickercontroller',
-    layout: 'vbox',
-    scrollable: true,
+
+    // config ext
+    layout: 'hbox',
+
+    // config no ext
     config  :       {
         cdunieco: null,
         cdramo: null,
@@ -15,61 +18,61 @@ Ext.define('Ice.view.field.CdpersonPicker', {
         cdrol: null,
         mostrarRol: 'false'
     },
-    getValue: function () {
-        return this.getController().onGetValue();
-    },
-    getName: function () {
-        return this.getController().onGetName();        
-    },
-    setValue: function (cdperson) {
-        this.getController().onSetValue(cdperson);
-    },
-    setActiveError: function (param) {
-        this.getController().onSetActiveError(param);
-    },
+    
     constructor: function (config) {
-        Ice.log('Ice.view.bloque.CdpersonPicker.constructor config:');
+        Ice.log('Ice.view.bloque.CdpersonPicker.constructor config:', config);
         var me = this,
+            labelLength = 0,
             paso = 'Validando construcci\u00f3n de busqueda de persona';
-        try{
-            Ice.log('Ice.view.bloque.CdpersonPicker.initialize me:', me);
-            config.buttons = [
-                {
-                    xtype: 'button',
-                    iconCls: 'x-fa fa-search',
-                    scope: me,
-                    handler: function(){
-                        this.getController().onBuscar();
-                    }
-                }
-            ];
-            
-            config.items= [
+        try {
+            if(config.label && config.label.length) {
+                labelLength = configIce.label.length;
+            }
+            config.items = [
                 {
                     xtype: 'numberfieldice',
                     hidden: true,
                     name: 'cdperson',
                     reference: 'cdperson'
-                },{
+                }, {
                     xtype: 'textfieldice',
                     label: config.label || 'Persona',
                     labelAlign: config.labelAlign || 'top',
                     name: 'dsnombre',
                     reference: 'dsnombre',
                     readOnly: true
-                },{
+                }, {
                     xtype: 'button',
                     iconCls: 'x-fa fa-search',
                     scope: me,
-                    handler: function(){
+                    handler: function () {
                         this.getController().onBuscar();
                     }
                 }
-            ];
-        } catch (e){
+            ].concat(config.items || []);
+
+            if (labelLength > 0) {
+                config.items[1].labelWidth = labelLength;
+            }
+        } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
-        
         me.callParent(arguments);
-    }    
+    },
+
+    getValue: function () {
+        return this.getController().onGetValue();
+    },
+
+    getName: function () {
+        return this.getController().onGetName();        
+    },
+
+    setValue: function (cdperson) {
+        this.getController().onSetValue(cdperson);
+    },
+
+    setActiveError: function (param) {
+        this.getController().onSetActiveError(param);
+    }
 });

@@ -1215,14 +1215,14 @@ var Ice = (
             if(!config.flex){
                 if(!config.width){
                     column.flex = 1;
-                    column.minWidth = 80;
+                    column.minWidth = 100;
                 } else {
                     column.width = Number(config.width);
                 }
             } else {
                 if(!config.width){
                     column.flex = Number(config.flex);
-                    column.minWidth = 80;
+                    column.minWidth = 100;
                 } else {
                     column.minWidth = Number(config.width);
                     column.flex =Number( config.flex);

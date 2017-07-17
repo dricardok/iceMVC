@@ -1,6 +1,6 @@
-Ext.define('Ice.view.bloque.personas.PersonaPoliza', {	
+Ext.define('Ice.view.bloque.personas.PersonaPolizaOld', {	
 		extend : 'Ext.Panel',
-		xtype : 'personapoliza',
+		xtype : 'personapolizaold',
 		controller : 'personapoliza',
         
         layout: 'vbox',

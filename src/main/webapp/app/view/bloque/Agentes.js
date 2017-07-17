@@ -139,7 +139,6 @@ Ext.define('Ice.view.bloque.Agentes', {
 					actionColumns: [
 						{
 							xtype: 'actioncolumn',
-							width: 30,
 							tooltip: 'Editar porcentaje',
 							iconCls: 'x-fa fa-edit',
 							handler : function (grid, row, col) {
@@ -147,7 +146,6 @@ Ext.define('Ice.view.bloque.Agentes', {
 							}
 						}, {
 							xtype: 'actioncolumn',
-							width: 30,
 							tooltip: 'Eliminar',
 							iconCls: 'x-fa fa-minus-circle',
 							handler: function (grid, row, col) {
