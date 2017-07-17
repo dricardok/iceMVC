@@ -97,10 +97,16 @@ Ext.define('Ice.view.cotizacion.Emision', {
             });
             
             config.bloques = bloques.EMISION.BLOQUES.items;
-            config.bloques = [{
-                label: 'mis agentes',
-                name: 'bloqueagentes'
-            }];
+            // config.bloques = [
+                // {
+                //     label: 'mis agentes',
+                //     name: 'bloqueagentes'
+                // },
+                // {
+                //     label: 'mis personas',
+                //     name: 'personapolizanavigation'
+                // }
+            // ];
             if ((config.bloques || []).length === 0) {
                 throw 'No hay bloques configurados';
             }
