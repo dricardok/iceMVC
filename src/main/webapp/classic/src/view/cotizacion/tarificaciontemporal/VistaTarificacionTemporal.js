@@ -1,8 +1,11 @@
 Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal', {
-	extend: 'Ext.view.View',
+	extend: 'Ice.view.componente.DataViewIce',
 	xtype: 'vistatarificaciontemporal',
 	
 	controller: 'tarificaciontemporal',
+
+	// config ext
+	scrollable: false,
 	cls: 'titulo_plan',
 	height: '100%',
 	tpl: [
@@ -36,6 +39,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 
 	padding: '40 0 0 40',
     
+	// config no ext
     config: {
     	cdunieco: null,
 		cdramo: null,
@@ -49,15 +53,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 		Ice.log('Ice.view.bloque.emsion.vistaprevia.DataViewVistaPrevia.constructor config', config);
 		var me = this,
 			paso = 'Construyendo dataview de vista previa';
-		
-		try{
-			
-			/*config.cdunieco = 1;
-			config.cdramo = 201;
-			config.estado = 'W';
-			config.nmpoliza = 613805;*/
-			
-			if(!config
+		try {
+			if (!config
 				|| !config.cdunieco
 				|| !config.cdramo
 				|| !config.estado
@@ -90,7 +87,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 					}
 				}
 			};
-		}catch(e){
+		} catch (e) {
 			Ice.generaExcepcion(e, paso);
 		}
 		me.callParent(arguments);

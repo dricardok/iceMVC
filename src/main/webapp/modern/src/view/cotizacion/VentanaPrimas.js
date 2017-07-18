@@ -2,9 +2,11 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
     extend: 'Ice.view.componente.VentanaIce',
     xtype: 'ventanaprimas',
     
+    // config ext
     title: 'Tarifa',
     layout: 'fit',
     
+    // config no ext
     config: {
         cdunieco: null,
         cdramo: null,
@@ -25,6 +27,7 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
             config.items = config.items || [];
             config.items.push({
                 xtype: 'gridice',
+                height: '100%',
                 columns: [
                     {
                         text: 'Cobertura',

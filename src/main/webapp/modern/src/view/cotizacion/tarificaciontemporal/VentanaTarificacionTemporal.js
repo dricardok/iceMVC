@@ -1,14 +1,12 @@
 Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal', {
 	extend: 'Ice.view.componente.VentanaIce',
 	xtype: 'ventanatarifastemporales',
-	
-	requires: [
-		'Ext.Toolbar'
-	],
-	
+
+    // config ext
 	title: 'Tarifa',
     layout: 'fit',
     
+    // config no ext
     config: {
     	cdunieco: null,
 		cdramo: null,
@@ -20,19 +18,16 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
     	cdperpag: null
     },
     
-    constructor: function(config) {
+    constructor: function (config) {
     	Ice.log('Ext.view.cotizacion.tarficaciontemporal.VentanaTarificacionTemporal config:', config);
-    
     	var me = this,
     		paso = 'Construyendo ventana de tarifa temporal';    	
     	try {
-    		if(!config || !config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza || !config.cdperpag ) {
+    		if (!config || !config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza || !config.cdperpag ) {
     			throw 'Faltan par\u00e1metros para construir ventana de tarifa';
     		}
-    		
-          //grid
-            config.items = config.items || [];
-            config.items.push({
+
+            config.items = [{
                 xtype: 'grid',
                 columns: [
                     {
@@ -91,20 +86,10 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
                         }
                     }
                 }
-            });
-    		
-    	}catch(e){
+            }].concat(config.items || []);
+    	} catch (e) {
     		Ice.generaExcepcion(e, paso);
     	}
     	me.callParent(arguments);
-    },
-    
-    mostrar: function () {
-        Ice.query('#mainView').getReferences().mainCard.push(this);
-    },
-    
-    
-    cerrar: function () {
-        Ice.query('#mainView').getReferences().mainCard.pop();
-    }    
+    }
 });
