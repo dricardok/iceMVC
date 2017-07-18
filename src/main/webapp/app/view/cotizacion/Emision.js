@@ -7,38 +7,7 @@ Ext.define('Ice.view.cotizacion.Emision', {
     // config ext
     layout: 'fit',
     header: false,
-    items: [{
-        xtype: 'tabpanelice',
-        reference: 'tabpanel',
-        listeners: {
-            tabchange: 'onTabchangeEvent'
-        }
-    }],
-    buttons: [
-        {
-            text: 'Cargar',
-            reference: 'cargarbutton',
-            iconCls: 'x-fa fa-cloud-download',
-            handler: 'onCargarClic'
-        }, {
-            text: 'Anterior',
-            reference: 'anteriorbutton',
-            iconCls: 'x-fa fa-backward',
-            handler: 'onAnteriorclic'
-        }, {
-            text: 'Emitir',
-            reference: 'cotizarbutton',
-            iconCls: 'x-fa fa-key',
-            handler: 'onCotizarClic'
-        }, {
-            text: 'Siguiente',
-            reference: 'siguientebutton',
-            iconCls: 'x-fa fa-forward',
-            handler: 'onSiguienteClic'
-        }
-    ],
-    
-    // config no ext
+        // config no ext
     config: {
         // uso o funcionamiento
         modulo: null,
@@ -64,6 +33,42 @@ Ext.define('Ice.view.cotizacion.Emision', {
         // comportamiento
         guardadoAutomaticoSuspendido: false
     },
+    items: [{
+        xtype: 'tabpanelice',
+        reference: 'tabpanel',
+        listeners: {
+            tabchange: 'onTabchangeEvent'
+        }
+    }],
+    buttons: [
+        {
+            text: 'Cargar',
+            reference: 'cargarbutton',
+            iconCls: 'x-fa fa-cloud-download',
+            handler: 'onCargarClic'
+        }, {
+            text: 'Anterior',
+            reference: 'anteriorbutton',
+            iconCls: 'x-fa fa-backward',
+            handler: 'onAnteriorclic'
+        }, {
+            text: 'Emitir',
+            reference: 'cotizarbutton',
+            iconCls: 'x-fa fa-key',
+            handler: 'onCotizarClic'
+        },{
+            text: 'Siguiente',
+            reference: 'siguientebutton',
+            iconCls: 'x-fa fa-forward',
+            handler: 'onSiguienteClic'
+        },{
+            text: 'Documentos',
+            reference: 'documentos',
+            hidden: Ext.manifest.toolkit === 'classic' ? true:false,
+            iconCls: 'x-fa fa-files-o',
+            handler: 'abrirVentanaDocs'
+        }
+    ],
 
     constructor: function (config) {
         Ice.log('Ice.view.cotizacion.Emision.constructor config:', config);
@@ -96,6 +101,10 @@ Ext.define('Ice.view.cotizacion.Emision', {
                 items: true
             });
             
+            if(Ext.manifest.toolkit === 'classic'){
+                config.b
+            } else{}
+
             config.bloques = bloques.EMISION.BLOQUES.items;
             if ((config.bloques || []).length === 0) {
                 throw 'No hay bloques configurados';
