@@ -15,12 +15,13 @@ Ext.define('Ice.view.cotizacion.Emision', {
         }
     }],
     buttons: [
+        // {
+        //     text: 'Cargar',
+        //     reference: 'cargarbutton',
+        //     iconCls: 'x-fa fa-cloud-download',
+        //     handler: 'onCargarClic'
+        // },
         {
-            text: 'Cargar',
-            reference: 'cargarbutton',
-            iconCls: 'x-fa fa-cloud-download',
-            handler: 'onCargarClic'
-        }, {
             text: 'Anterior',
             reference: 'anteriorbutton',
             iconCls: 'x-fa fa-backward',

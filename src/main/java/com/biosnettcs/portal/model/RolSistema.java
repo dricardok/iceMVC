@@ -2,7 +2,7 @@ package com.biosnettcs.portal.model;
 
 public enum RolSistema {
 	
-    AGENTE("EJECUTIVOCUENTA"),
+    AGENTE("AGENTE"),
 //	CALLCENTER("CALLCENTER"),
 //	COORDINADOR_SINIESTROS("COORDINASINI"),
 //	COORDINADOR_MEDICO("COORDINAMED"),

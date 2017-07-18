@@ -290,4 +290,6 @@ public interface EmisionDAO {
      * @throws Exception
      */
     public List<Map<String, String>> obtenerCoaseguroAceptado(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+    
+    public List<Map<String, String>> recuperarCotizadoresDisponibles (String cdusuari) throws Exception;
 }
