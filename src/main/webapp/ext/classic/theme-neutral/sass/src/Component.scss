@@ -109,7 +109,6 @@
     background-color: #00b5cb;
     color: #fff;
     font-size: 35px !important;
-    /* min-height: 99px; */
     line-height: 27px ;
     text-align: center;
         .rec_subsecuente{
@@ -150,8 +149,11 @@
 
 
 .thumb{    
-    border: 2px solid transparent !important;
-    &:active {border: 2px solid transparent !important;}
+   
+    &:focus {outline: 2px solid transparent !important;
+             background-color:#0033a0;}
+    &:visited {outline: 2px solid transparent !important;
+             }         
 }
 
 .plan_pago{
@@ -182,7 +184,10 @@
           }
           
    .plan_pago{
-      padding: 5% 1%;
+      padding: 8% 1%;
      }
+    .titulo_plan {
+      padding-top: 8% !important;  
+    } 
           
    }

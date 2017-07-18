@@ -8,10 +8,10 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 	tpl: [
         '<tpl for=".">',
              //'<div class="btn_rol_suscriptor thumb" style="width:200px; float:left;">',
-        	    '<div class="plan_pago">',
+        	    '<div class="plan_pago thumb">',
                 '<table class="plan_pago_base shadow_card" style="width:250px; min-height:300px;">',
                     '<tr>',
-                        '<td class="plan_pago_monto">{total}<p class="moneda">Pesos</p><p class="rec_subsecuente">Recibo Subsecuente</p></td>',
+                        '<td class="plan_pago_monto thumb">{total}<p class="moneda">Pesos</p><p class="rec_subsecuente">Recibo Subsecuente</p></td>',
                     '</tr>',
                     '<tr style="background-color:#fff;">',
                         '<td style="text-align:center;">',
@@ -28,7 +28,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
     ],
     
     multiSelect: false,
-     itemSelector: 'div.thumb',
+     itemSelector: 'td.thumb',
     
     listeners: {
     	itemclick: 'onItemClic'
