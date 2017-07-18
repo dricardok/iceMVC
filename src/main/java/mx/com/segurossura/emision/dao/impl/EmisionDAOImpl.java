@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1582,6 +1581,36 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
                     "tipodocu",
                     "ndoclider",
                     "status"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  ,  Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public List<Map<String, String>> recuperarCotizadoresDisponibles (String cdusuari) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdusuari_i", cdusuari);
+        Map<String, Object> procRes = ejecutaSP(new RecuperarCotizadoresDisponiblesSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        logger.debug(Utils.log("\n****** recuperarCotizadoresDisponibles lista = ", lista));
+        return lista;
+    }
+    
+    protected class RecuperarCotizadoresDisponiblesSP extends StoredProcedure {
+        protected RecuperarCotizadoresDisponiblesSP (DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_GET_COTIZADORES_DISP");
+            declareParameter(new SqlParameter("pv_cdusuari_i"  , Types.VARCHAR));
+            String[] cols = new String[] { 
+                    "cdramo",
+                    "dsramo",
+                    "cdtipsit",
+                    "dstipsit"
             };
             declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));

@@ -93,9 +93,9 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 var name = view.getCamposDisparanValoresDefectoVariables()[i];
                 if (refs[name]) {
                     if (Ext.manifest.toolkit === 'classic') {
-                        refs[name].setFieldStyle('border-right: 1px solid blue;');
+                        // refs[name].setFieldStyle('border-right: 1px solid blue;');
                     } else {
-                        refs[name].setStyle('border-right: 1px solid blue;');
+                        // refs[name].setStyle('border-right: 1px solid blue;');
                     }
                     
                     

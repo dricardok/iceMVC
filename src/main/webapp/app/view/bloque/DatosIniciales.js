@@ -52,7 +52,22 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
                     listeners: {
                         llaveGenerada: 'llaveGenerada'
                     }
-                }, {
+                },{
+                    xtype: 'panelcoaseguro',
+                    reference: 'panelcoaseguro',
+                    title: 'Datos coaseguro',
+                    hidden : true,
+
+                    modulo: config.modulo,
+                    flujo: config.flujo,
+                    cdtipsit: config.cdtipsit,
+                    auxkey: config.auxkey,
+
+                    cdramo: config.cdramo,
+                    estado: config.estado,
+                    nmsuplem: config.nmsuplem,
+                    status: config.status
+                },{
                     xtype: 'formauxiliar',
                     reference: 'formdatosauxiliares',
 

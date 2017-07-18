@@ -8,11 +8,9 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguro', {
 
     platformConfig: {
             desktop: {
-                    minHeight: 900,
-                    scrollable: true
+                    scrollable: false
             },
             '!desktop': {
-                    height: 600,
                     scrollable: true
             }
     },
@@ -46,9 +44,9 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguro', {
                 throw 'Falta cdramo o cdtipsit para componente de cotizaci\u00f3n';
             }
             
-            if(!config.cdunieco || !config.estado || !config.nmpoliza || !config.nmsuplem){
+            /*if(!config.cdunieco || !config.estado || !config.nmpoliza || !config.nmsuplem){
                 throw 'Falta llave de poliza';
-            }
+            }*/
 
             config.modulo = config.modulo || 'COTIZACION';
             config.flujo = config.flujo || {};
@@ -57,14 +55,14 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguro', {
                 config.estado = 'W';
             }
 
-            if(!config.cdtipcoa){
+            /*if(!config.cdtipcoa){
                 throw 'Falta tipo de coaseguro';
             } else {
                 if(config.cdtipcoa === 'N'){
                     throw 'Tipo de coaseguro incorrecto';
                 }
                 config.cdtipcoa = config.cdtipcoa.toUpperCase();
-            }
+            }*/
 
             var form = Ice.generaComponentes({
                 pantalla: 'BLOQUE_DATOS_GENERALES',

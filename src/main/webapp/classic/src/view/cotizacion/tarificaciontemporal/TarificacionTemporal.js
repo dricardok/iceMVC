@@ -2,6 +2,10 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 	extend: 'Ice.view.componente.PanelIce',
 	xtype: 'tarificaciontemporal',
 
+	requires: [
+		'Ext.toolbar.TextItem'
+	],
+
 	// config ext
 	scrollable: false,
 	layout: 'fit',
@@ -34,7 +38,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
                     cls: 'titulo_plan'
                 }, {
 					xtype: 'vistatarificaciontemporal',
-					style: 'background:#DEEBF4; padding: 0 0 0 3%; min-height: 800px;',
+					style: 'background:#DEEBF4; padding: 1% 0 0 3%; min-height: 800px;',
 					reference: 'vistatarificaciontemporal',
 					
 					cdunieco: config.cdunieco,

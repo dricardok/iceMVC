@@ -124,7 +124,10 @@ public enum RecuperacionSimple {
     RECUPERAR_DETALLES_TRAMITE                              ("L"),
     VALIDA_RENOVACION_COLECTIVO                             ("L"),
     RENOVAR_X_FECHAS_COLECTIVOS                             ("L"),
-    RECUPERAR_RANGO_DESCUENTO_RECARGO                       ("M");
+    RECUPERAR_RANGO_DESCUENTO_RECARGO                       ("M"),
+    
+    // Sura
+    OBTENER_COTIZADORES_DISPONIBLES ("L");
      
     private String tipo;
 

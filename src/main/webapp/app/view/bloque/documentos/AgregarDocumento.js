@@ -4,17 +4,13 @@
 Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {   
         extend: 'Ice.view.componente.FormDosColumnasIce',
         xtype: 'agregardocumento',
+        /*requires: ['Ext.form.field.*'],*/
         
-        // scrollable: true,
-        // bodyPadding: '0 0 0 80',
-//        defaults: {
-//            cls: 'big-50 small-100'
-//        },
 // contruccion usando metodos ext y parametros de entrada
-        initialize: function () {
-            Ice.log('Ice.view.bloque.documentos.AgregarDocumento.initComponent');
+        constructor: function (config) {
+            Ice.log('Ice.view.bloque.documentos.AgregarDocumento.constructor');
             var me = this,
-            paso = 'Construyendo bloque situaciones de riesgo';
+                paso = 'Construyendo ventana agregar documento';
             try {
                 var comps = Ice.generaComponentes({
                     pantalla: 'DOCUMENTOS',
@@ -25,10 +21,11 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
                 });
                 
                 Ice.log('Ice.view.bloque.documentos.AgregarDocumento.initComponent comps:', comps);
-                me.items = comps.DOCUMENTOS.FORMULARIO.items;
-                me.modelFields = comps.DOCUMENTOS.FORMULARIO.fields,
-                me.modelValidators = comps.DOCUMENTOS.FORMULARIO.validators,
-                me.buttons = [
+                                
+                config.items = comps.DOCUMENTOS.FORMULARIO.items;
+                config.modelFields = comps.DOCUMENTOS.FORMULARIO.fields;
+                config.modelValidators = comps.DOCUMENTOS.FORMULARIO.validators;
+                config.buttons = [
                     {
                         text: 'Guardar'
                     },{
@@ -43,14 +40,6 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
                 Ice.generaExcepcion(e, paso);
             }
             // construir componente
-            me.callParent(arguments);            
-            
-            // comportamiento
-            // paso = '';
-//          try {
-//              me.getController().custom();
-//          } catch (e) {
-//              Ice.generaExcepcion(e, paso);
-//          }
+            me.callParent(arguments);
         }
 });

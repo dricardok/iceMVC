@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
+import com.biosnettcs.portal.model.RolSistema;
 import com.biosnettcs.portal.model.UsuarioVO;
 
+import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.general.consultas.dao.ConsultasDAO;
 import mx.com.segurossura.general.consultas.model.RecuperacionSimple;
 import mx.com.segurossura.general.consultas.service.RecuperacionSimpleManager;
@@ -51,6 +53,9 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
 	
 	@Autowired
 	private DespachadorDAO despachadorDAO;
+	
+	@Autowired
+	private EmisionDAO emisionDAO;
 	
 	/*
 	@Deprecated
@@ -1207,6 +1212,12 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
 			else if (consulta.equals(RecuperacionSimple.RECUPERAR_TVARMAIL)) {
 			    paso = "Recuperando permisos de proceso por rol";
 			    lista = flujoMesaControlDAO.recuperaTvarmailSP();
+			} else if (consulta.equals(RecuperacionSimple.OBTENER_COTIZADORES_DISPONIBLES)) {
+			    String miCdusuariCotizadoresDisp = null;
+			    if (RolSistema.AGENTE.getCdsisrol().equals(cdsisrol)) {
+			        miCdusuariCotizadoresDisp = cdusuari;
+			    }
+			    lista = emisionDAO.recuperarCotizadoresDisponibles(miCdusuariCotizadoresDisp);
 			/*
 			}
 			else if (consulta.equals(RecuperacionSimple.RECUPERAR_MPOLIZAS_POR_PARAMETROS_VARIABLES)) {

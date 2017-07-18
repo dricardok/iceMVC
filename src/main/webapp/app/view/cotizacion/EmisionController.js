@@ -16,6 +16,9 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             Ext.defer(function () {
                 var paso2;
                 try {
+                    if(Ext.manifest.toolkit === 'classic'){
+                        me.abrirVentanaDocs();
+                    }
                     if (view.getCdunieco() && view.getCdramo() && view.getEstado() && view.getNmpoliza()
                         && !Ext.isEmpty(view.getNmsuplem())) {
                         me.cargar();
@@ -402,6 +405,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
         }
     },
 
+<<<<<<< HEAD
 
     validaTipoPago: function (params) {
     	Ice.log('Ice.view.cotizacion.EmisionController.validaTipoPago');
@@ -411,12 +415,22 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
     	
     	try{
     		var reqParams = Ice.convertirAParams({
+=======
+    abrirVentanaDocs: function(){
+        Ice.log('controller.emision emitir');
+        var me = this,
+            view = me.getView(),
+            paso = 'Confirmando p\u00f3liza';
+        try {
+            var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos',{
+>>>>>>> origin/dev
                 cdunieco: view.getCdunieco(),
                 cdramo: view.getCdramo(),
                 estado: view.getEstado(),
                 nmpoliza: view.getNmpoliza(),
                 nmsuplem: view.getNmsuplem()
             });
+<<<<<<< HEAD
     		
     		Ice.request({
     			mascara: paso,
@@ -453,5 +467,11 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
     	}catch(e){
     		Ice.manejaExcepcion(e, paso);
     	}
+=======
+            ventanaDocs.mostrar();
+        } catch (e){
+            Ice.manejaExcepcion(e);
+        }
+>>>>>>> origin/dev
     }
 });

@@ -37,14 +37,14 @@
 	border-bottom-width:0px;
 	border-left-color:#00B5CB;
 	display:block;
-	width:25%;
+	width:28%;
 	margin: 20px auto;
 	padding: 10px;
 	background-color: rgba(0, 51, 160, .75);
 	color:#FFF; 
 	font-size:16px;
 	min-height:65px; 
-	line-height: 38px;
+	line-height: 45px;
 	-webkit-transition: all .25s ease-in-out;
 		&:hover{
 		 -webkit-transform: scale(1.1);
@@ -158,7 +158,7 @@
 
 .plan_pago{
     display:inline-block;
-    padding: 5% 2%;    
+    padding: 2% 2%;    
 }
 
 
@@ -176,7 +176,7 @@
 
 //Media Query Botones Selección de rol Classic
 
-@media only screen and (min-width: 1280px) {
+@media only screen and (min-height: 1024px) {
   .btn_rol_suscriptor  {
           width:28%;
           height: auto !important; 

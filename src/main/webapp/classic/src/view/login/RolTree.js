@@ -21,7 +21,7 @@ Ext.define('Ice.view.login.RolTree', {
         '<tpl for=".">',
             '<div class="btn_rol_suscriptor thumb-wrap">',            
               '<table style="width:100%;" border="0">',
-                '<tr><td></td><td class="txt_btn_rol" style="text-align:left; padding-left:35px; width:100% ">{dssisrol}</td><td class="chev_rol"></td></tr>',
+                '<tr><td></td><td class="txt_btn_rol" style="text-align:left; padding:0 0 0 35px; width:100% ">{dssisrol}</td><td class="chev_rol"></td></tr>',
               '</table>',
             '</div>',
         '</tpl>'
