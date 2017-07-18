@@ -131,4 +131,12 @@ public interface CatalogosDAO {
     
     
     public List<Map<String, String>> obtenerEstatusTramite() throws Exception;
+    
+    /**
+     * Obtiene catalogo de compañias
+     * 
+     * @return
+     * @throws Exception
+     */
+    public List<Map<String, String>> obtenerCompañias() throws Exception;
 }

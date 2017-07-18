@@ -77,7 +77,7 @@ var Ice = (
             tarificarPlanes: 'emision/generarTarificacionPlanes.action',
             tarificarPlan: 'emision/generarTarificacionPlan.action',
         	obtenerTarifaPlanes: 'emision/obtenerTarifaMultipleTemp.action',
-        	obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action'
+            obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action'
          },
          
         bloque: {
@@ -86,7 +86,13 @@ var Ice = (
                 cargar: 'emision/datosGenerales/cargar.action',
                 guardar: 'emision/datosGenerales/guardar.action',
                 valoresDefectoFijos: 'emision/datosGenerales/valoresDefectoFijos.action',
-                valoresDefectoVariables: 'emision/datosGenerales/valoresDefectoVariables.action'
+                valoresDefectoVariables: 'emision/datosGenerales/valoresDefectoVariables.action',
+                obtenerCoaseguroCedido: 'emision/datosGenerales/obtenerCoaseguroCedido.action',
+                obtenerCoaseguroAceptado: 'emision/datosGenerales/obtenerCoaseguroAceptado.action',
+                obtenerModeloCoaseguro: 'emision/datosGenerales/obtenerModeloCoaseguro.action',
+                movimientoCoaseguroCedido: 'emision/datosGenerales/movimientoCoaseguroCedido.action',
+                movimientoMsupcoa: 'emision/datosGenerales/movimientoMsupcoa.action',
+                movimientoMpolicoa: 'emision/datosGenerales/movimientoMpolicoa.action'
             },
             listaSituaciones: {
                 cargar: 'emision/obteneListaSituaciones.action'//'jsonLocal/bloqueDatosSituacionCargar.json'

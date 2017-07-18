@@ -19,7 +19,8 @@ public enum Catalogos {
     AGRUPADORES_POLIZA(""),
     SUCURSALES_BANCARIAS(""),
     GESTORES_COBRANZA(""),
-    ESTATUS_TRAMITE("");
+    ESTATUS_TRAMITE(""),
+    COMPANIAS("");
 
     
     private String cdtabla;

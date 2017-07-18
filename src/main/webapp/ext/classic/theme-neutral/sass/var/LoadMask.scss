@@ -56,7 +56,7 @@ $loadmask-border-width-focus: dynamic(1px);
  * @var {number/list}
  * The padding to apply to the LoadMask's message element
  */
-$loadmask-msg-padding: dynamic(2px);
+$loadmask-msg-padding: dynamic(10px);
 
 /**
  * @var {string}
