@@ -3118,14 +3118,14 @@ the height of a multi-line element */
     border-bottom-width: 0px;
     border-left-color: #00b5cb;
     display: block;
-    width: 25%;
+    width: 28%;
     margin: 20px auto;
     padding: 10px;
     background-color: rgba(0, 51, 160, 0.75);
     color: #fff;
     font-size: 16px;
     min-height: 65px;
-    line-height: 38px;
+    line-height: 45px;
     -webkit-transition: all 0.25s ease-in-out;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:49 */
@@ -3232,7 +3232,7 @@ the height of a multi-line element */
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:159 */
 .plan_pago {
     display: inline-block;
-    padding: 5% 2%;
+    padding: 2% 2%;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:165 */
 .titulo_plan {
@@ -3247,7 +3247,7 @@ the height of a multi-line element */
     background-color: #deebf4;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:179 */
-@media only screen and (min-width: 1280px) {
+@media only screen and (min-height: 1024px) {
     /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:180 */
     .btn_rol_suscriptor {
         width: 28%;
@@ -7450,7 +7450,7 @@ body > .x-mask {
     border-color: #d0d0d0;
     border-width: 1px;
     background-image: none;
-    background-color: #fff;
+    background-color: #0033a0;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/toolbar/Toolbar.scss:236 */
 .x-toolbar-default.x-rtl {
@@ -7459,7 +7459,7 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/toolbar/Toolbar.scss:248 */
 .x-toolbar-default .x-tool-img {
     color: #919191;
-    background-color: #fff;
+    background-color: #0033a0;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/toolbar/Toolbar.scss:263 */
 .x-toolbar-default .x-toolbar-item {
@@ -7618,7 +7618,7 @@ body > .x-mask {
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/toolbar/Toolbar.scss:376 */
 .x-ie8 .x-box-scroller-toolbar-default {
-    background-color: #fff;
+    background-color: #0033a0;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/toolbar/Toolbar.scss:382 */
 .x-toolbar-more-icon {
@@ -9547,8 +9547,9 @@ body > .x-mask {
     border-width: 2px;
     border-style: solid;
     padding-bottom: 13px;
+    padding-left: 0px !important;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:967 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:968 */
 .x-action-col-icon {
     margin: 0 5px;
 }

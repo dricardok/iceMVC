@@ -894,6 +894,7 @@ $include-ice-view-bloque-personas-domicilios-buscarcpwindowcontroller: dynamic(t
 $include-ice-view-bloques-mpolizascontroller: dynamic(true);;
 $include-ice-view-cadena-cadena: dynamic(true);;
 $include-ice-view-componente-containerice: dynamic(true);;
+$include-ice-view-componente-dataviewice: dynamic(true);;
 $include-ice-view-componente-formdoscolumnasice: dynamic(true);;
 $include-ice-view-componente-formice: dynamic(true);;
 $include-ice-view-componente-formtrescolumnasice: dynamic(true);;
@@ -902,6 +903,8 @@ $include-ice-view-componente-panelice: dynamic(true);;
 $include-ice-view-componente-panelpaddingice: dynamic(true);;
 $include-ice-view-componente-tabpanelice: dynamic(true);;
 $include-ice-view-componente-ventanaice: dynamic(true);;
+$include-ice-view-cotizacion-accesocotizacion: dynamic(true);;
+$include-ice-view-cotizacion-accesocotizacioncontroller: dynamic(true);;
 $include-ice-view-cotizacion-cotizacion: dynamic(true);;
 $include-ice-view-cotizacion-cotizacioncontroller: dynamic(true);;
 $include-ice-view-cotizacion-emision: dynamic(true);;

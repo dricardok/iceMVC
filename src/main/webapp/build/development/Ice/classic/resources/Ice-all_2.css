@@ -3107,7 +3107,7 @@
 .x-btn-plain-toolbar-small-disabled .x-btn-icon-el,
 .x-btn-plain-toolbar-medium-disabled .x-btn-icon-el,
 .x-btn-plain-toolbar-large-disabled .x-btn-icon-el {
-    background-color: #fff;
+    background-color: #0033a0;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neptune/sass/src/button/Button.scss:223 */
 .x-ie8 .x-btn-plain-toolbar-small-disabled .x-btn-icon-el,

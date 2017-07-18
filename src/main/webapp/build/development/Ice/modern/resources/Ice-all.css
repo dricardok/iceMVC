@@ -7172,7 +7172,7 @@ html.x-big {
 .x-toolbar {
     background-color: #fff;
     background-image: none;
-    border-color: #767676;
+    border-color: #000;
     font: 500 1.33334rem/1.25em Roboto, sans-serif;
     color: #111;
     color: var(--color);
@@ -8971,6 +8971,7 @@ html.x-big {
     background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
+    border-color: #0033a0;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/tab/Tab.scss:621 */
 .x-tab .x-button-icon {
@@ -9058,6 +9059,10 @@ html.x-big {
     font-size: 0.92308rem;
     line-height: 1.84616em;
     padding: 0.33334em;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/src/tab/Tab.scss:71 */
+.back_titulo {
+    bakground-color: #0033a0 !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Toolbar.scss:321 */
 .x-tabbar {
@@ -12899,14 +12904,14 @@ body {
     border-bottom-width: 0px;
     border-left-color: #00b5cb;
     display: block;
-    width: 80%;
+    width: 85%;
     margin: 20px auto;
     padding: 10px;
     background-color: rgba(0, 51, 160, 0.75);
     color: #fff;
     font-size: 16px;
     min-height: 60px;
-    line-height: 45px;
+    line-height: 38px;
     -webkit-transition: all 0.25s ease-in-out;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:147 */
@@ -12945,6 +12950,107 @@ body {
     padding-right: 0.5em;
     left: 0;
     line-height: 25px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:187 */
+.plan_pago_base {
+    background-color: #fff;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:192 */
+.plan_pago_monto {
+    border-style: solid;
+    border-left-width: 12px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-color: #0033a0;
+    padding: 12px 0px;
+    background-color: #00b5cb;
+    color: #fff;
+    font-size: 25px !important;
+    line-height: 24px;
+    text-align: center;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:205 */
+.plan_pago_monto .rec_subsecuente {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 16px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:210 */
+.plan_pago_monto .moneda {
+    font-size: 12px;
+    line-height: 15px;
+    font-weight: 300;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:217 */
+.periocidad {
+    font-size: 18px;
+    line-height: 21px;
+    font-weight: 600;
+    color: #707372;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:226 */
+.titulo_plan {
+    font-size: 60px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:231 */
+.monto_02 {
+    font-size: 20px;
+    font-weight: 600;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:237 */
+.shadow_card {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:244 */
+.thumb:focus {
+    outline: 2px solid transparent !important;
+    background-color: #0033a0;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:246 */
+.thumb:visited {
+    outline: 2px solid transparent !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:250 */
+.plan_pago {
+    display: block;
+    padding: 2% 2%;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:256 */
+.titulo_plan {
+    font-weight: 600 !important;
+    text-decoration: inherit;
+    color: #707372 !important;
+    width: 100% !important;
+    font-size: 20px !important;
+    padding-top: 5% !important;
+    line-height: 33px !important;
+    text-align: center;
+    background-color: #deebf4;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:268 */
+.back_plan {
+    background: #deebf4;
+    padding: 5% 0 0 12%;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:277 */
+@media only screen and (min-width: 768px) {
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:278 */
+    .btn_rol_suscriptor {
+        width: 65%;
+    }
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:282 */
+    .plan_pago {
+        display: inine-block;
+    }
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:285 */
+    .back_plan {
+        padding: 5% 0 0 20%;
+    }
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:288 */
+    .shadow_card {
+        min-height: 180px;
+    }
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/list/TreeItem.scss:1 */
 .x-gridcell.x-treelist-item {
@@ -14500,6 +14606,13 @@ a {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:430 */
 @media only screen and (max-width: 360px) {
     /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:433 */
+    .sura-logo:before {
+        top: 0px !important;
+    }
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:439 */
+@media only screen and (max-width: 768px) {
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:442 */
     .sura-logo:before {
         top: 0px !important;
     }
