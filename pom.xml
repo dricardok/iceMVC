@@ -330,24 +330,11 @@
              <warSourceExcludes>
                 .sencha/,
                 .settings/,
-                app/,
-                build/,
-                classic/overrides/,
-                classic/sass/,
-                classic/src/,
                 ext/,
-                jsonLocal/,
-                modern/sass/,
-                modern/src/,
-                packages/,
-                sass/,
-                src/,
                 WebContent/,
                 .classpath,
                 .gitignore,
-                .project,
-                build.xml,
-                workspace.json
+                .project
              </warSourceExcludes>
              <!-- 2.- Copiamos los archivos productivos al nivel de la carpeta de recursos web: -->
              <webResources>
