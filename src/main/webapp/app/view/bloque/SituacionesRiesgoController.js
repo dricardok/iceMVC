@@ -313,7 +313,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                         var paso2 = 'Seteando valores por defecto';
                         try {
                             view.setDatosVariablesNuevos(false);
-                            view.procesandoValoresDefecto = false;
+                            view.setProcesandoValoresDefecto(false);
                             if (!action.situacion) {
                                 return;
                             }
@@ -330,12 +330,12 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                             }
                             Ice.resumeEvents(view);*/
                         } catch (e) {
-                            view.procesandoValoresDefecto = false;
+                        	view.setProcesandoValoresDefecto(false);
                             Ice.manejaExcepcion(e, paso2);
                         }
                     },
                     failure: function () {
-                        view.procesandoValoresDefecto = false;
+                    	view.setProcesandoValoresDefecto(false);
                     }
                 });
             } else {
@@ -352,8 +352,8 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             view = me.getView(),
             refs = view.getReferences(),
             paso = 'Antes de guardar valores situacion';
-        view.procesandoValoresDefecto = false;
-        view.setDatosFijosNuevos = false;
+        view.setProcesandoValoresDefecto(false);
+        //view.setDatosFijosNuevos = false;
         try {
             paso = 'Guardando datos de situacion';
             var form = refs.form,
@@ -413,7 +413,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                         }
                     },
                     failure: function () {
-                        view.procesandoValoresDefecto = false;
+                        view.setProcesandoValoresDefecto(false);
                     }
                 });
             } else {
@@ -434,7 +434,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             paso = 'Antes de validar valores situacion';
         Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardar view', view);
         view.setProcesandoValoresDefecto(false);
-        view.setDatosFijosNuevos(false);
+        //view.setDatosFijosNuevos(false);
         try {
             var form = refs.form;
             if (form.isHidden() !== true) {
