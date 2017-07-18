@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -381,4 +382,69 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
         return validaciones;
     }
 
+    @Override
+    public List<Map<String, String>> obtenerCoaseguroCedido(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception{
+        String paso = "Obteniendo coaseguro cedido";
+        List<Map<String, String>> lista = new ArrayList<Map<String, String>>();
+        try{
+            lista = emisionDAO.obtenerPorcPartCoa(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+        } catch (Exception e) {
+            Utils.generaExcepcion(e, paso);
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Map<String, String>> obtenerModeloCoaseguro(String cdmodelo) throws Exception{
+        String paso = "Obteniendo modelo coaseguro";
+        List<Map<String, String>> lista = new ArrayList<Map<String, String>>();
+        try{
+            lista = emisionDAO.obtenerModeloCoaseguro(cdmodelo);
+        } catch (Exception e) {
+            Utils.generaExcepcion(e, paso);
+        }
+        return lista;
+    }
+    
+    @Override
+    public void movimientoMpolicoa(String cdunieco, String cdramo, String estado, String nmpoliza, 
+            String nmsuplem_bloque, String nmsuplem_session, String cdtipcoa, String status, 
+            String cdmodelo, String swpagcom, List<Map<String, String>> cias, String accion) throws Exception{
+        String paso = "Movimiento coaseguro cedido";
+        try {
+            for(Map<String, String> cia: cias){
+                String cdcia = cia.get("cdcia");
+                String porcpart = cia.get("porcpart");
+                String swabrido = cia.get("swabrido");
+                emisionDAO.movimientoMpolicoa(cdunieco, cdramo, estado, nmpoliza, nmsuplem_bloque, nmsuplem_session, 
+                        cdcia, cdtipcoa, status, swabrido, porcpart, cdmodelo, swpagcom, accion);                
+            }
+        } catch (Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
+    }
+    
+    @Override
+    public void movimientoMsupcoa(String cdcialider, String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmpolizal, String nmsuplem_bloque, String nmsuplem_session, String tipodocu, String ndoclider, 
+            String status, String accion) throws Exception{
+        String paso = "Movimiento msupcoa";
+        try{
+            emisionDAO.movimientoMsupcoa(cdcialider, cdunieco, cdramo, estado, nmpoliza, nmpolizal, nmsuplem_bloque, nmsuplem_session, tipodocu, ndoclider, status, accion);
+        } catch(Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
+    }
+    
+    @Override
+    public List<Map<String, String>> obtenerCoaseguroAceptado(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception{
+        String paso = "Obteniendo coaseguro aceptado";
+        List<Map<String, String>> lista = new ArrayList<Map<String, String>>();
+        try{
+            lista = emisionDAO.obtenerCoaseguroAceptado(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+        } catch (Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }
+        return lista;
+    }
 }

@@ -203,7 +203,97 @@ public interface EmisionDAO {
             String otvalor09, String otvalor10, String otvalor11, String otvalor12, String otvalor13, String otvalor14,
             String otvalor15, String accion) throws Exception;
     
+<<<<<<< HEAD
     
     public List<Map<String, String>> obtenerDatosPago(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
     
+=======
+    /**
+     * Obtiene porcentaje de participacion por poliza
+     * 
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsuplem
+     * @return
+     * @throws Exception
+     */
+    public List<Map<String, String>> obtenerPorcPartCoa (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+    
+    /**
+     * Obtiene datos de coaseguro por modelo
+     * 
+     * @param cdmodelo
+     * @return
+     * @throws Exception
+     */
+    public List<Map<String, String>> obtenerModeloCoaseguro(String cdmodelo) throws Exception;
+    
+    /**
+     * Movimiento de tabla de coaseguro cedido y cedido parcial
+     * 
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsuplem_bloque
+     * @param nmsuplem_session
+     * @param cdcia
+     * @param cdtipcoa
+     * @param status
+     * @param swabrido
+     * @param porcpart
+     * @param cdmodelo
+     * @param swpagcom
+     * @param accion
+     * @throws Exception
+     */
+    public void movimientoMpolicoa(String cdunieco, String cdramo, String estado, String nmpoliza, 
+            String nmsuplem_bloque, String nmsuplem_session, String cdcia, String cdtipcoa, 
+            String status, String swabrido, String porcpart, String cdmodelo, String swpagcom, 
+            String accion) throws Exception;
+    
+    /**
+     * Movimiento de tabla de coaseguro aceptado
+     * 
+     * @param cdcialider
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmpolizal
+     * @param nmsuplem_bloque
+     * @param nmsuplem_session
+     * @param tipodocu
+     * @param ndoclider
+     * @param status
+     * @param accion
+     * @throws Exception
+     */
+    public void movimientoMsupcoa(String cdcialider, String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmpolizal, String nmsuplem_bloque, String nmsuplem_session, String tipodocu, String ndoclider, 
+            String status, String accion) throws Exception;
+    
+    /**
+     * Obtiene codigo de compañia de SURa
+     * 
+     * @return
+     * @throws Exception
+     */
+    public String obtieneCdciaSURA() throws Exception;
+    
+    /**
+     * Obtiene datos de coaseguro aceptado
+     * 
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsuplem
+     * @return
+     * @throws Exception
+     */
+    public List<Map<String, String>> obtenerCoaseguroAceptado(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+>>>>>>> origin/dev
 }

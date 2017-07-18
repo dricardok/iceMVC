@@ -100,7 +100,9 @@ public interface EmisionManager {
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception;
     
     
-    public String realizarPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String codseg, String usuario) throws Exception;
+    public String realizarPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, 
+    		String nmsuplem, String cdbanco, String dsbanco, String nmtarjeta, 
+    		String codseg, String fevencm, String fevenca, String nombre, String email, String usuario) throws Exception;
     
     
     public List<Map<String, String>> obtenerTarifaMultipleTemp(String cdunieco, String  cdramo, String estado, String  nmpoliza) throws Exception;

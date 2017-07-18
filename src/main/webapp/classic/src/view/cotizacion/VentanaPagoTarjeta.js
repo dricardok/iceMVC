@@ -1,6 +1,8 @@
 Ext.define('Ice.view.cotizacion.VentanaPagoTarjeta', {
 	extend: 'Ice.view.componente.VentanaIce',
-	xtype: 'ventanadatostarjeta',
+	xtype: 'ventanapagotarjeta',
+	
+	controller: 'pagotarjeta',
 	
 	modal: true,
 	title: 'Datos Tarjeta',
@@ -34,12 +36,14 @@ Ext.define('Ice.view.cotizacion.VentanaPagoTarjeta', {
             	pantalla: 'PAGO_TARJETA',
             	seccion: 'FORMULARIO',
             	modulo: me.modulo || '',
-            	items: true            	
+            	items: true,
+            	fields: true,
+                validators: true
             });
             
             Ext.apply(me, {
             	items: {
-            		xtype: 'form',
+            		xtype: 'formice',
             		reference: 'formpagotarjeta',
             		layout: 'anchor',
             		widht: '100%',
@@ -51,8 +55,19 @@ Ext.define('Ice.view.cotizacion.VentanaPagoTarjeta', {
                         margin: '0px 10px 10px 0px'	
                         
                     },
-            		items: comps.PAGO_TARJETA.FORMULARIO.items
-            	}
+            		items: comps.PAGO_TARJETA.FORMULARIO.items,
+            		modelValidators:comps.PAGO_TARJETA.FORMULARIO.validators,
+        			modelFields	:	comps.PAGO_TARJETA.FORMULARIO.fields
+            	},
+            	buttons: [
+            		{
+            			text: 'Cancelar',
+            			handler: 'cerrar'
+            		}, {
+        				text: 'Pagar',
+        				handler: 'pagar'
+        			}
+            	]
             });
             
 		}catch(e) {

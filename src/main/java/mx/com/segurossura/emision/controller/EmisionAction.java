@@ -322,14 +322,20 @@ public class EmisionAction extends PrincipalCoreAction {
 			Utils.validate(params, "No se recibieron datos");
 			
 			
-			String pv_cdunieco_i= params.get("pv_cdunieco_i");
-			String pv_cdramo_i= params.get("pv_cdramo_i");
-			String pv_estado_i= params.get("pv_estado_i");
-			String pv_nmpoliza_i= params.get("pv_nmpoliza_i");
-			String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
+			String cdunieco= params.get("cdunieco");
+			String cdramo= params.get("cdramo");
+			String estado= params.get("estado");
+			String nmpoliza= params.get("nmpoliza");
+			String nmsuplem= params.get("nmsuplem");
+			
+			Utils.validate(cdunieco,"Falta cdunieco",
+					cdramo, "Falta cdramo",
+					estado, "Falta estado",
+					nmpoliza, "Falta nmpoliza",
+					nmsuplem, "nmsuplem");
             
             
-			params = emisionManager.obtenerTvalopol(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i);
+			params = emisionManager.obtenerTvalopol(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
 			
 			success=true;
 			
@@ -769,16 +775,32 @@ public class EmisionAction extends PrincipalCoreAction {
     	           estado    = params.get("estado"),
     	           nmpoliza  = params.get("nmpoliza"),
     	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
-    	           codseg  = params.get("codseg"),
+    	           cdbanco   = params.get("cdbanco"),
+    	           dsbanco   = params.get("dsbanco"),
+    	           nmtarjeta = params.get("nmtarjeta"),
+    	           codseg    = params.get("codseg"),
+    	           fevencm    = params.get("fevencm"),
+    	           fevenca    = params.get("fevenca"),
+    	           nombre	 = params.get("nombre"),
+    	           email 	 = params.get("email"),
     	           usuario = user.getCdusuari();
     	    
     	    Utils.validate(cdunieco, "Falta cdunieco",
     	                   cdramo,   "Falta cdramo",
     	                   estado,   "Falta estado",
     	                   nmpoliza, "Falta nmpoliza",
-    	                   codseg, "Falta codigo de seguridad");
+    	                   cdbanco,  "Falta cdbanco",
+    	                   dsbanco,	 "Falta dsbanco",
+    	                   nmtarjeta,"Falta nmtarjeta",
+    	                   codseg,	 "Fata codseg",
+    	                   fevencm,   "Falta fevencm,",
+    	                   fevenca,	 "Falta fevenca",
+    	                   nombre,   "Falta nombre",
+    	                   email, 	 "Falta email");
     	    
-    	    String nmpolizaEmitida = emisionManager.realizarPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, codseg, usuario);
+    	    String nmpolizaEmitida = emisionManager.realizarPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, 
+    	    															cdbanco, dsbanco, nmtarjeta, codseg, fevencm, 
+    	    															fevenca, nombre, email, usuario);
     	    
     	    
     		success = true;

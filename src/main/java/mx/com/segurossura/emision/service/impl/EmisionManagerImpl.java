@@ -550,8 +550,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	
 	
 	@Override
-	public String realizarPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
-			String codseg, String usuario) throws Exception {
+	public String realizarPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, 
+    		String nmsuplem, String cdbanco, String dsbanco, String nmtarjeta, 
+    		String codseg, String fevencm, String fevenca, String nombre, String email, String usuario) throws Exception {
 		
 		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "\n@@@@@@ realizarPago"));
 		
@@ -566,60 +567,54 @@ public class EmisionManagerImpl implements EmisionManager {
 		try{
 			paso = "Consultando datos para el ralizar el pago con tarjeta";
 			
-			datosPago = emisionDAO.obtenerDatosPago(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0);
-			
+			datosPago = emisionDAO.obtenerDatosPago(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0);			
 			
 			paso = "Validando datos para realizar el pago";
 			
 			// datos del banco
-			String claveBanco = datosPago.get(""),
-				   descBanco = datosPago.get(""),				   
+			String claveBanco = cdbanco,
+				   descBanco = dsbanco,				   
 				   // datos de la tarjeta
-				   numeroTarjeta = datosPago.get(""),
-				   codigoSeguridad = datosPago.get(""),
-				   tipo = datosPago.get(""),
-				   descTipo = datosPago.get(""),
-				   codigo = datosPago.get(""),
-				   fechaVencimiento = datosPago.get(""),
-				   tarjetahabiente = datosPago.get(""),			   
+				   numeroTarjeta = nmtarjeta,
+				   codigoSeguridad = codseg,
+				   tipo = "C",
+				   descTipo = "CREDITO",
+				   codigo = codseg,
+				   fechaVencimiento = fevencm+"/"+fevenca,
+				   tarjetahabiente = nombre,			   
 				   // Datos de la solicitud				  
-				   nmrecibo = datosPago.get(""),
-				   importe = datosPago.get(""),
-				   moneda = datosPago.get(""),
-				   email = datosPago.get("");
+				   nmrecibo = datosPago.get("nmrecibo"),
+				   importe = datosPago.get("ptimport"),
+				   moneda = datosPago.get("cdmoneda");		
 			
 			
-			
-			paso = "Generando objetos de RequestWS";
-			
+			paso = "Generando objetos de RequestWS";			
 		
             banco = new Banco();
-            banco.setClaveBanco("052");
-            banco.setDescBanco("IXE");
+            banco.setClaveBanco(claveBanco);
+            banco.setDescBanco(descBanco);
             banco.setLstGestores(null);
 
-            tarjeta = new Tarjeta("4259818000071113");
+            tarjeta = new Tarjeta(numeroTarjeta);
             tarjeta.setCodigoSeguridad(codseg);
             tarjeta.setTipo("C");
             tarjeta.setDescTipo("CREDITO");
-            tarjeta.setCodigo("425981");
-            tarjeta.setFechaVencimiento("12/15");
-            tarjeta.setTarjetahabiente("Elias Mendoza Orozco");
+            tarjeta.setCodigo(numeroTarjeta.substring(0, 4));
+            tarjeta.setFechaVencimiento(fechaVencimiento);
+            tarjeta.setTarjetahabiente(nombre);
             tarjeta.setBanco(banco);
 
             request = new RequestWs();
-            request.setCdunieco(72);
-            request.setCdramo(601);
-            request.setNmpoliza(12088);
-            request.setNmrecibo(1004458);
-            request.setImporte(18.32);
-            request.setMoneda("MXP");
+            request.setCdunieco(Integer.parseInt(cdunieco));
+            request.setCdramo(Integer.parseInt(cdramo));
+            request.setNmpoliza(Integer.parseInt(nmpoliza));
+            request.setNmrecibo(Integer.parseInt(nmrecibo));
+            request.setImporte(Double.parseDouble(importe));
+            request.setMoneda(moneda);
 
-            request.setEmail("elias.mendoza@mx.rsagroup.com");
+            request.setEmail(email);
             request.setUsuario(usuario);
-
-            request.setTarjeta(tarjeta);
-            
+            request.setTarjeta(tarjeta);            
             
             TransactionResponse transaccionResponse = pagoManager.realizaPago(request);
 			

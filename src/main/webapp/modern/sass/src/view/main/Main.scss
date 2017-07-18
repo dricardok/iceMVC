@@ -424,5 +424,17 @@ $logo-image-height: 25px;
 */
 
 
+//Media Query logo Sura head 1 Modern
+
+
+@media only screen and (max-width: 360px) {
+  .sura-logo {
+      
+      &:before {
+        top: 0px !important;  
+      }     
+  }
+}
+
 
  
