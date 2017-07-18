@@ -29,7 +29,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 			}
 	        
 			config.items = [
-
+				{
 	        		xtype: 'vistatarificaciontemporal',
 	        		cls:'back_plan',
 	    			reference: 'vistatarificaciontemporal',
