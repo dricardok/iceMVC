@@ -462,6 +462,7 @@ public class SituacionManagerImpl implements SituacionManager{
             paso = "Recuperando valores de situaci\u00f3n";
             Map<String, String> tvalosit = situacionDAO.obtieneTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac,
                     datos.get("cdtipsit"), nmsuplem).get(0);
+            tvalosit.putAll(tvalosit);
             
             paso = "Actualizando valores de situaci\u00f3n";
             situacionDAO.movimientoTvalosit(
@@ -469,7 +470,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     cdunieco, cdramo, estado, nmpoliza, nmsituac, datos.get("cdtipsit"), status, nmsuplem,
                     
                     // datos
-                    datos,
+                    tvalosit,
                     
                     // accion
                     "M");
