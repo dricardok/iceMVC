@@ -2,6 +2,10 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 	extend: 'Ice.view.componente.PanelIce',
 	xtype: 'tarificaciontemporal',
 
+	requires: [
+		'Ext.toolbar.TextItem'
+	],
+
 	// config ext
 	scrollable: false,
 	layout: 'fit',
