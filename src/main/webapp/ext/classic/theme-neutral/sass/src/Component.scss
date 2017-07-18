@@ -92,8 +92,8 @@
 .plan_pago_base{
     -webkit-transition: all .25s ease-in-out;
       background-color:#fff;
-        &:hover{
-         -webkit-transform: scale(1.1);
+              &:hover{
+         -webkit-transform: scale(1.4);
           }
 }
 
@@ -105,15 +105,84 @@
     border-right-width: 0px;
     border-bottom-width: 0px;
     border-left-color: #0033a0;
-    padding: 10px;
+    padding: 20px 10px 0px;
     background-color: #00b5cb;
     color: #fff;
-    font-size: 27px;
+    font-size: 35px !important;
     /* min-height: 99px; */
-    line-height: 65px;
-    text-align: center;            
+    line-height: 27px ;
+    text-align: center;
+        .rec_subsecuente{
+         font-size: 14px; 
+         font-weight: 300;
+         line-height: 0px;   
+        }
+        .moneda{
+            font-size: 12px;
+            line-height: 12px;        
+            font-weight: 300;}
+                    
+}
+
+.periocidad{
+              font-size: 22px;
+              //line-height: 12px; 
+              font-weight: 600;
+              color:$font-grey;
+              
+                            
+            }  
+        
+.titulo_plan{
+                  font-size: 60px;
+              }
+        
+        
+.monto_02{
+    font-size: 20px;
+    font-weight: 600;
+  }      
+
+
+.shadow_card{
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
 
 
+.thumb{    
+    border: 2px solid transparent !important;
+    &:active {border: 2px solid transparent !important;}
+}
+
+.plan_pago{
+    display:inline-block;
+    padding: 5% 2%;    
+}
 
 
+.titulo_plan{
+        font-weight: 600 !important;
+        text-decoration: inherit;
+        color: $font-grey !important;
+        width:100% !important;
+        font-size: 20px !important;
+        padding-top: 5% !important;       
+        line-height: 33px !important;
+        text-align:center;
+        background-color: $azulbd;
+}
+
+//Media Query Botones Selección de rol Classic
+
+@media only screen and (min-width: 1280px) {
+  .btn_rol_suscriptor  {
+          width:28%;
+          height: auto !important; 
+          padding-top: 12px;
+          }
+          
+   .plan_pago{
+      padding: 5% 1%;
+     }
+          
+   }
