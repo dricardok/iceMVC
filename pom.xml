@@ -346,10 +346,6 @@
                 .classpath,
                 .gitignore,
                 .project,
-                app.js,
-                app.json,
-                bootstrap.css,
-                bootstrap.js,
                 build.xml,
                 workspace.json
              </warSourceExcludes>
@@ -357,7 +353,7 @@
              <webResources>
                <resource>
                  <!-- source directory relative to pom.xml: -->
-                 <directory>src/main/webapp/build/development/Ice</directory>
+                 <directory>src/main/webapp/build/production/Ice</directory>
                  <!-- target directory relative to root -->
                  <targetPath>/</targetPath> 
                </resource>
@@ -366,4 +362,4 @@
          </plugin>
         </plugins>
     </build>
-</project>
+</project>>
