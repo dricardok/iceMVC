@@ -1,44 +1,57 @@
 Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
-	
 	extend		:	"Ice.view.componente.VentanaIce",
-	controller	:	"buscaragentewindow",
-	//width		:	"60%",
-	height		:	400,
-	
-	
 	xtype		:	"buscaragentewindow",
+
+	controller	:	"buscaragentewindow",
+
+	// config ext
+	title: 'Buscar agente',
+	scrollable: true,
+	modal: true,
+	bodyPadding: '20 0 0 20',
+	defaults: {
+		style: 'margin: 0px 20px 20px 0px;'
+	},
+	platformConfig: {
+		desktop: {
+			width: '90%',
+			height: '90%'
+		}
+	},
 	
+	// config no ext
 	config		:	{
 		cdagente	:	null
 	},
 	
 	constructor : 	function(config){
 		
-		var paso="",
-			me=this;
+		var me = this,
+		    paso="Construyendo buscador de agentes";
 		try{
 			
 			var items = [
 				{
-					xtype	:	"formice",
+					xtype	:	"formdoscolumnasice",
 					items	:	[
 						{
 							xtype		:	"textfieldice",
-							label		:	"Código de agente"
-						}
-					],
-					buttons	:	[
-						{
+							label		:	"Código de agente",
+							platformConfig: {
+								desktop: {
+									labelAlign: 'left'
+								}
+							}
+						}, {
+							xtype: 'button',
 							text	:	"Buscar",
+							iconCls: 'x-fa fa-search',
 							handler	:	"onBuscar"
 						}
 					]
 				},
 				{
 					xtype		:	"gridice",
-					scrollable	:	true,
-					width		:	'100%',
-        			height		: 	300,
 					columns		:	[
 						{
 							text		:	'Cod. Age.',
@@ -63,22 +76,25 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 								messageProperty : 'message'
 							}
 						}
-					},
-					buttons		:	[
-						{
-							text	:	"Elegir",
-							handler	:	"onElegir"
-						},{
-							text	:	"Cancelar",
-							handler	:	function(){
-								me.cerrar();
-							}
-						}
-					]
+					}
 				}
 			];
 			
-			config.items=items;
+			config.items=items.concat(config.items || []);
+
+			config.buttons = [
+				{
+					text	:	"Elegir",
+					iconCls: 'x-fa fa-check',
+					handler	:	"onElegir"
+				},{
+					text	:	"Cancelar",
+					iconCls: 'x-fa fa-close',
+					handler	:	function(){
+						me.cerrar();
+					}
+				}
+			].concat(config.buttons || []);
 		}catch(e){
 			Ice.generaExcepcion(e,paso);
 		}

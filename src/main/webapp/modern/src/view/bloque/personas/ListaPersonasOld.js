@@ -1,9 +1,9 @@
 /**
  * Created by DEORTIZT on 5/22/2017.
  */
-Ext.define('Ice.view.bloque.personas.ListaPersonas', {
+Ext.define('Ice.view.bloque.personas.ListaPersonasOld', {
 	    extend: 'Ice.view.componente.GridIce',
-	    xtype: 'listapersonas',
+	    xtype: 'listapersonasold',
 	    
 	    controller: 'listapersonas',
 		viewModel: 'listapersonas',

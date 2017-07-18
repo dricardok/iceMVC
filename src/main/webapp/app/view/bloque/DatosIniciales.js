@@ -4,7 +4,11 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
 
     // config ext
     controller: 'datosiniciales',
-    scrollable: true,
+    platformConfig: {
+        '!desktop': {
+            scrollable: true
+        }
+    },
 
     // config no ext
     config: {

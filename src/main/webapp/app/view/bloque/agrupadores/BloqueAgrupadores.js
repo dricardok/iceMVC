@@ -1,17 +1,18 @@
 Ext.define('Ice.view.bloque.agrupadores.BloqueAgrupadores', {
-    extend: 'Ext.Panel',
+    extend: 'Ice.view.componente.PanelPaddingIce',
     xtype: 'bloqueagrupadores',
-    
-    requires: [],
     
     controller: 'bloqueagrupadores',
     
-    // configuracion ext
+    // config ext
     title: 'Agrupadores',
-    layout: 'vbox',
-    scrollable: true,
+    platformConfig: {
+        '!desktop': {
+            scrollable: true
+        }
+    },
     
-    // configuracion no ext
+    // config no ext
     config: {
         cdunieco: null,
         cdramo: null,
@@ -31,12 +32,6 @@ Ext.define('Ice.view.bloque.agrupadores.BloqueAgrupadores', {
         var me = this,
             paso = 'Construyendo bloque de agrupadores';
         try {
-            /*config.cdunieco = 1;
-            config.cdramo   = 501;
-            config.estado   = 'W';
-            config.nmpoliza = 17422;
-            config.cdtipsit = 51;*/
-            
             if (!config
                 || !config.cdunieco
                 || !config.cdramo
@@ -73,6 +68,8 @@ Ext.define('Ice.view.bloque.agrupadores.BloqueAgrupadores', {
                 }, {
                     xtype: 'gridagrupadores',
                     reference:'gridagrupadores',
+                    title: 'Agrupadores',
+
                     cdunieco: config.cdunieco,
                     cdramo: config.cdramo,
                     estado: config.estado,
@@ -90,7 +87,7 @@ Ext.define('Ice.view.bloque.agrupadores.BloqueAgrupadores', {
                         agrupadorModificado: 'onAgrupadorModificado'
                     }
                 }
-            ];
+            ].concat(config.items || []);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

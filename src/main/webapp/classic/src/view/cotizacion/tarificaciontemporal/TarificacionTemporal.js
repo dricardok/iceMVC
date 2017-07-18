@@ -4,7 +4,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 	
 	
 	scrollable: false,
-	
+
+	layout: 'fit',
+
 	config: {
 		cdunieco: null,
 		cdramo: null,

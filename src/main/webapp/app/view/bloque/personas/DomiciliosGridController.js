@@ -1,18 +1,6 @@
 Ext.define('Ice.view.bloque.personas.DomiciliosGridController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.domicilios',
-    
-    custom: function () {
-        Ice.log('Ice.view.bloque.CoberturasController.custom');
-        var me = this,
-        view = me.getView(),
-        paso = 'Configurando comportamiento de bloque lista de situaciones';
-        try {        	
-        	
-        } catch (e) {
-            Ice.generaExcepcion(e, paso);
-        }
-    },
+    alias: 'controller.domicilios'
     
 //    agregarDomicilio		:	function(accion){
 //    	var paso="",

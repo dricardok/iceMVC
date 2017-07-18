@@ -35,12 +35,6 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
             config.height = config.height || Ext.getBody().getHeight() - 100;
             config.width = config.width || Ext.getBody().getWidth() - 100;
             
-            // bbar
-            config.botones = config.botones || [];
-            if (config.botones.length > 0) {
-            	config.bbar = config.botones;
-            }
-            
             // grid
             config.items = config.items || [];
             config.items.push({
