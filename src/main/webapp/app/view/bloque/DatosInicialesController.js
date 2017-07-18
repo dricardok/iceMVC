@@ -62,23 +62,40 @@ Ext.define('Ext.view.bloque.DatosInicialesController', {
         Ice.log('Ext.view.bloque.DatosInicialesController.guardar params:', params);
         var me = this,
             refs = me.getReferences(),
-            paso = 'Guardando datos iniciales';
+            paso = 'Guardando datos generales';
         try {
             refs.formdatosgenerales.getController().guardar({
                 success: function () {
+                    var paso2 = 'Guardando datos auxiliares';
                     try {
                         refs.formdatosauxiliares.getController().guardar({
                             success: (params && params.success) || null,
                             failure: (params && params.failure) || null
                         });
                     } catch (e) {
-                        Ice.manejaExcepcion(e, paso);
+                        Ice.manejaExcepcion(e, paso2);
+                        if (params && params.failure) {
+                            var paso4 = 'Ejecutando failure posterior a datos iniciales';
+                            try {
+                                params.failure();
+                            } catch (e) {
+                                Ice.manejaExcepcion(e, paso4);
+                            }
+                        }
                     }
                 },
                 failure: (params && params.failure) || null
             });
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
+            if (params && params.failure) {
+                var paso3 = 'Ejecutando failure posterior a datos iniciales';
+                try {
+                    params.failure();
+                } catch (e) {
+                    Ice.manejaExcepcion(e, paso3);
+                }
+            }
         }
     }
 });

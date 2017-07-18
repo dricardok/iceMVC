@@ -22,14 +22,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 				cdperpag: rec.data.cdperpag,
 				cdtipsit: view.getCdtipsit(),
 				
-				botones: [
+				buttons: [
 					{
-						text: 'Cerrar',
-						iconCls: 'x-tool-close',
-						handler: function (me) {
-							me.up('ventanatarifastemporales').cerrar();
-						}
-					}, {
 						text: 'Confirmar',
 	                    iconCls: 'x-fa fa-dollar',
 						handler: function (me) {
@@ -64,6 +58,12 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 							}catch(e){
 								Ice.manejaExcepcion(e, paso);
 							}
+						}
+					}, {
+						text: 'Cerrar',
+						iconCls: 'x-tool-close',
+						handler: function (me) {
+							me.up('ventanatarifastemporales').cerrar();
 						}
 					}
 				]

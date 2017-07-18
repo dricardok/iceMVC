@@ -326,6 +326,9 @@
 );
 
 
+///////////////////////@ includes propios del tema ice-Sura
+
+
 @include extjs-button-small-ui(
     $ui: 'Primario-sm',
     $color: #0033a0,
@@ -363,6 +366,26 @@
 );
 
 
+@include extjs-button-small-ui(
+    $ui: 'Nav-sm',
+    $color: $font-grey,
+    $glyph-color: $font-grey,
+    $background-color: $btn_transparent,
+    $border-color: $btn_transparent,
+    $border-width: 0
+);
+@include extjs-button-large-ui(
+    $ui: 'Nav-lg',
+    $line-height: 34px,
+    $color: $font-grey,
+    $glyph-color: $font-grey,
+    $background-color:$btn_transparent,
+    $border-color:$btn_transparent,
+    $border-width: 0
+);
+
+
+
 //PANEL//
 
     @include extjs-panel-ui(
@@ -374,7 +397,7 @@
     );
   
 
-  
+
     
 //WINDOW//
 

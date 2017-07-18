@@ -4,15 +4,15 @@
   background-color: $background-color;
 
   .#{$prefix}panel-header {
-    background-color: $background-color;
-    color: $color;
+    background-color: $azulo-s;
+    color: $blanco-s;
     box-shadow: none;
   }
 
   .#{$prefix}toolbar-docked-bottom {
 
     .#{$prefix}button {
-      color: $base-color;
+      color:$azulo-s ;
     }
   }
 }

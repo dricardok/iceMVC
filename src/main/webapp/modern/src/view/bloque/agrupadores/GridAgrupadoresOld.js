@@ -1,40 +1,19 @@
-Ext.define('Ice.view.bloque.agrupadores.GridAgrupadores', {
-    extend: 'Ext.grid.Panel',
-    xtype: 'gridagrupadores',
+Ext.define('Ice.view.bloque.agrupadores.GridAgrupadoresOld', {
+    extend: 'Ext.grid.Grid',
+    xtype: 'gridagrupadoresold',
     
-    requires: [],
+    requires: [
+        'Ext.Toolbar'
+    ],
     
     controller: 'gridagrupadores',
     
     // configuracion ext
-    minHeight: 150,
-    maxHeight: 400,
-    
-    tbar: [
-        {
-            text: 'Agregar agrupador',
-            handler: 'onAgregarAgrupadorClic'
-        }, {
-            text: 'Agregar subagrupador',
-            handler: 'onAgregarSubagrupadorClic',
-            disabled: true,
-            reference: 'agregarbutton'
-        }, {
-            text: 'Editar subagrupador',
-            handler: 'onEditarClic',
-            disabled: true,
-            reference: 'editarbutton'
-        }, {
-            text: 'Eliminar subagrupador',
-            handler: 'onEliminarClic',
-            disabled: true,
-            reference: 'eliminarbutton'
-        }
-    ],
+    height: 400,
     
     listeners: {
-        itemclick: 'onItemClic'//,
-        //beforerender:	'onVistaAgente'
+        itemtap: 'onItemTap',
+       // beforeshow:	'onVistaAgente'
     },
     
     // configuracion no ext
@@ -109,6 +88,32 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadores', {
                         rootProperty: 'list'
                     }
                 }
+            };
+            
+            config.items = {
+                xtype: 'toolbar',
+                docked: 'top',
+                items: [
+                    {
+                        text: '+ Agrupador',
+                        handler: 'onAgregarAgrupadorClic'
+                    }, {
+                        text: '+ Subagrupador',
+                        handler: 'onAgregarSubagrupadorClic',
+                        disabled: true,
+                        reference: 'agregarbutton'
+                    }, {
+                        text: 'Editar',
+                        handler: 'onEditarClic',
+                        disabled: true,
+                        reference: 'editarbutton'
+                    }, {
+                        text: 'Eliminar',
+                        handler: 'onEliminarClic',
+                        disabled: true,
+                        reference: 'eliminarbutton'
+                    }
+                ]
             };
         } catch (e) {
             Ice.generaExcepcion(e, paso);

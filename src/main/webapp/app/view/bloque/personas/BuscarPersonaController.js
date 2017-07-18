@@ -19,7 +19,7 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
                 } catch (e) {
                     Ice.manejaExcepcion(e, paso2);
                 }
-            }, 200);
+            }, 600);
         } catch (e){
             Ice.generaExcepcion(e, paso);
         }
@@ -33,39 +33,39 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
             refs = view.getReferences(),
         paso = 'Configurando comportamiento de bloque lista de situaciones';
         try{
-            var form = refs.form;
+            // var form = refs.form;
             Ice.log('Ice.view.bloque.BuscarPersonaController.custom form',refs);
-            refs.dsatribu.on({
+            refs.formBusquedaPersonas.getReferences().dsatribu.on({
                 blur: function(){
-                    if(refs.dsatribu){
+                    if(refs.formBusquedaPersonas.getReferences().dsatribu){
                         Ice.log('dsatribu',refs.dsatribu);
-                        if(refs.dsatribu.value === 'POLIZA'){
-                            refs.otvalor.hide();
-                            refs.cdunieco.show();
-                            refs.cdramo.show();
-                            refs.nmpoliza.show();
+                        if(refs.formBusquedaPersonas.getReferences().dsatribu.getValue() === 'POLIZA'){
+                            refs.formBusquedaPersonas.getReferences().otvalor.hide();
+                            refs.formBusquedaPersonas.getReferences().cdunieco.show();
+                            refs.formBusquedaPersonas.getReferences().cdramo.show();
+                            refs.formBusquedaPersonas.getReferences().nmpoliza.show();
                             if(view.getCdunieco()){
-                                Ice.log('refs.cdunieco',refs.cdunieco);
-                                refs.cdunieco.setValue(view.getCdunieco());
+                                Ice.log('refs.cdunieco',refs.formBusquedaPersonas.getReferences().cdunieco);
+                                refs.formBusquedaPersonas.getReferences().cdunieco.setValue(view.getCdunieco());
 //                                refs.cdunieco.setReadOnly(true);
                             }
                             
                             if(view.getCdramo()){
-                                Ice.log('refs.cdramo',refs.cdramo);
-                                refs.cdramo.setValue(view.getCdramo());
+                                Ice.log('refs.cdramo',refs.formBusquedaPersonas.getReferences().cdramo);
+                                refs.formBusquedaPersonas.getReferences().cdramo.setValue(view.getCdramo());
 //                                refs.cdramo.setReadOnly(true);
                             }
                             
                             if(view.getNmpoliza()){
-                                Ice.log('refs.nmpoliza',refs.nmpoliza);
-                                refs.nmpoliza.setValue(view.getNmpoliza());
+                                Ice.log('refs.nmpoliza',refs.formBusquedaPersonas.getReferences().nmpoliza);
+                                refs.formBusquedaPersonas.getReferences().nmpoliza.setValue(view.getNmpoliza());
 //                                refs.nmpoliza.setReadOnly(true);                            
                             }                            
                         } else {
-                            refs.otvalor.show();
-                            refs.cdunieco.hide();
-                            refs.cdramo.hide();
-                            refs.nmpoliza.hide();
+                            refs.formBusquedaPersonas.getReferences().otvalor.show();
+                            refs.formBusquedaPersonas.getReferences().cdunieco.hide();
+                            refs.formBusquedaPersonas.getReferences().cdramo.hide();
+                            refs.formBusquedaPersonas.getReferences().nmpoliza.hide();
                         }
                     }
                 }
@@ -97,37 +97,40 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
         try{
             Ice.log('Mainview.refs',refs);
             Ice.log('gridPersonas selection',refs.gridPersonas.getSelection());
-            if(refs.gridPersonas.getSelection()){
-                var selection = refs.gridPersonas.getSelection(),
-                    data;
-                Ice.log('selection',selection);
-                if(selection){
-                    if(Ext.manifest.toolkit === 'classic'){
-                        if(selection[0].getData()){
-                            data = selection[0].data;
-                        } else {
-                            Ice.mensajeWarning('Seleccione un registro');
-                        }
-                    } else {
-                        if(selection.getData()){
-                            data = selection.getData();
-                        } else {
-                            Ice.mensajeWarning('Seleccione un registro');
-                        }
-                    }
-                    
-                    if(data){
-                        Ice.log('data ',data);
-                        view.fireEvent('obtenerCdperson', view, data.cdperson);
-                        Ice.pop();
-                    }
-                    
+
+            if (!refs.gridPersonas.getSelection()) {
+                throw 'Favor de seleccionar una persona';
+            }
+
+            if (Ext.manifest.toolkit === 'classic' && refs.gridPersonas.getSelection().length === 0) {
+                throw 'Favor de seleccionar una persona';
+            }
+
+            var selection = refs.gridPersonas.getSelection(),
+                data;
+
+            Ice.log('selection',selection);
+            if(Ext.manifest.toolkit === 'classic'){
+                if(selection[0].getData()){
+                    data = selection[0].data;
                 } else {
-                    Ice.mensajeWarning('No existen resultados');
+                    Ice.mensajeWarning('Seleccione un registro');
+                }
+            } else {
+                if(selection.getData()){
+                    data = selection.getData();
+                } else {
+                    Ice.mensajeWarning('Seleccione un registro');
                 }
             }
+            
+            if(data){
+                Ice.log('data ',data);
+                view.fireEvent('obtenerCdperson', view, data.cdperson);
+                Ice.pop();
+            }
         } catch (e) {
-            Ice.generaExcepcion(e, paso);
+            Ice.manejaExcepcion(e, paso);
         }
         Ice.log('Ice.view.bloque.BuscarPersonaController.guardar');
     },
@@ -141,21 +144,21 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
         try{
             if(this.validaBusqueda(refs) == true){
                 Ice.log('refs validado',refs);
-                Ice.log('refs cdunieco',refs.cdunieco.getValue());
-                Ice.log('refs cdramo',refs.cdramo.getValue());
-                Ice.log('refs nmpoliza',refs.nmpoliza.getValue());
-                Ice.log('refs otvalor',refs.otvalor.getValue());
+                Ice.log('refs cdunieco',refs.formBusquedaPersonas.getReferences().cdunieco.getValue());
+                Ice.log('refs cdramo',refs.formBusquedaPersonas.getReferences().cdramo.getValue());
+                Ice.log('refs nmpoliza',refs.formBusquedaPersonas.getReferences().nmpoliza.getValue());
+                Ice.log('refs otvalor',refs.formBusquedaPersonas.getReferences().otvalor.getValue());
                 var store = refs.gridPersonas.getStore();
                 store.removeAll();
                 var mask = Ice.mask('Cargando informacion de usuarios');
                 store.load({
                     params: {
-                        'params.cdunieco': refs.cdunieco.getValue(),
-                        'params.cdramo': refs.cdramo.getValue(),
+                        'params.cdunieco': refs.formBusquedaPersonas.getReferences().cdunieco.getValue(),
+                        'params.cdramo': refs.formBusquedaPersonas.getReferences().cdramo.getValue(),
                         'params.estado': 'W',
-                        'params.nmpoliza': refs.nmpoliza.getValue(),
-                        'params.cdatribu': refs.dsatribu.getValue(),
-                        'params.otvalor': refs.otvalor.getValue()
+                        'params.nmpoliza': refs.formBusquedaPersonas.getReferences().nmpoliza.getValue(),
+                        'params.cdatribu': refs.formBusquedaPersonas.getReferences().dsatribu.getValue(),
+                        'params.otvalor': refs.formBusquedaPersonas.getReferences().otvalor.getValue()
                     },
                     callback: function() {
                         mask.close();
@@ -198,14 +201,16 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
     validaBusqueda: function(refs){
         Ice.log('Ice.view.bloque.BuscarPersonaController.validaBusqueda',refs);
         var valid = true;
-        if(refs.dsatribu){
-            if(refs.dsatribu.value === 'POLIZA'){
-                if(!refs.cdunieco.value || !refs.cdramo.value || !refs.nmpoliza.value){
+        if(refs.formBusquedaPersonas.getReferences().dsatribu){
+            if(refs.formBusquedaPersonas.getReferences().dsatribu.getValue() === 'POLIZA'){
+                if(!refs.formBusquedaPersonas.getReferences().cdunieco.getValue()
+                    || !refs.formBusquedaPersonas.getReferences().cdramo.getValue()
+                    || !refs.formBusquedaPersonas.getReferences().nmpoliza.getValue()){
                     valid = false;
                     Ice.mensajeWarning('Seleccione un oficina, producto y poliza');
                 }
             } else {
-                if(!refs.otvalor.getValue()){
+                if(!refs.formBusquedaPersonas.getReferences().otvalor.getValue()){
                     valid = false;
                     Ice.mensajeWarning('Seleccione valor');
                 }
@@ -217,24 +222,24 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
         
         Ice.log('Ice.view.bloque.BuscarPersonaController.validaBusqueda');
         return valid;
-    },
-    
-    navigate: function(panel, direction, nuevoPanel){
-        Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.navigate ',panel,' ',direction);
-        var me = this,
-            view = me.getView(),
-            paso = 'Configurando navegacion de personas';
-        try{
-            var layout = panel.getLayout();
-            Ice.log('Layout',layout);
-            if(nuevoPanel){
-                panel.add(nuevoPanel);                
-            }
-            layout[direction]();
-            Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
-            Ext.getCmp('move-next').setDisabled(!layout.getNext());            
-        } catch (e) {
-            Ice.generaExcepcion(e, paso);
-        }
     }
+    
+    // navigate: function(panel, direction, nuevoPanel){
+    //     Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.navigate ',panel,' ',direction);
+    //     var me = this,
+    //         view = me.getView(),
+    //         paso = 'Configurando navegacion de personas';
+    //     try{
+    //         var layout = panel.getLayout();
+    //         Ice.log('Layout',layout);
+    //         if(nuevoPanel){
+    //             panel.add(nuevoPanel);                
+    //         }
+    //         layout[direction]();
+    //         Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
+    //         Ext.getCmp('move-next').setDisabled(!layout.getNext());            
+    //     } catch (e) {
+    //         Ice.generaExcepcion(e, paso);
+    //     }
+    // }
 });

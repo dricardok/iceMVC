@@ -11,13 +11,26 @@ Ext.define('Ice.view.componente.FormTresColumnasIce', {
         var me = this,
             paso = 'Construyendo formulario';
         try {
-            config.items = config.items || [];
-            for (var i = 0; i < config.items.length; i++) {
-                config.items[i].style = 'float: left; margin: 0px 20px 20px 0px; ' + (config.items[i].style || '');
-                config.items[i].userCls = ['big-33', 'small-100']
-                    .concat(config.items[i].userCls || []);
+            if ((config.items || []).length > 0) {
+                Ice.agregarClases(config.items, ['big-33', 'small-100']);
+                Ice.agregarEstilo(config.items, 'float: left; margin: 0px 20px 20px 0px;');
             }
         } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+        me.callParent(arguments);
+    },
+
+    add: function () {
+        Ice.log('Ice.view.componente.FormTresColumnasIce.add args:', arguments);
+        var me = this,
+            paso = 'Agregando componentes al formulario';
+        try {
+            if (arguments.length > 0) {
+                Ice.agregarClases(arguments, ['big-33', 'small-100']);
+                Ice.agregarEstilo(arguments, 'float: left; margin: 0px 20px 20px 0px;');
+            }
+        }  catch (e) {
             Ice.generaExcepcion(e, paso);
         }
         me.callParent(arguments);

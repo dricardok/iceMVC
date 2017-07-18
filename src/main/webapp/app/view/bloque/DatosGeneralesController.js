@@ -13,11 +13,9 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
         try {
             me.callParent(arguments);
             
-            // esperamos a que se cree el viewmodel antes de invocar custom
             Ext.defer(function () {
-                var paso2;
+                var paso2 = 'Definiendo comportamiento de bloque de datos generales';
                 try {
-                    paso2 = 'Definiendo comportamiento de bloque de datos generales';
                     me.custom();
                     
                     if (view.getCdunieco() && view.getCdramo() && view.getEstado() && view.getNmpoliza()
@@ -28,7 +26,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 } catch (e) {
                     Ice.manejaExcepcion(e, paso2);
                 }
-            }, 200);
+            }, 600);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -66,11 +64,11 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             for (var i = 0; i < view.getCamposDisparanValoresDefectoFijos().length; i++) {
                 var name = view.getCamposDisparanValoresDefectoFijos()[i];
                 if (refs[name]) {
-                    if (Ext.manifest.toolkit === 'classic') {
-                        refs[name].setFieldStyle('border-left: 1px solid yellow;');
-                    } else {
-                        refs[name].setStyle('border-left: 1px solid yellow;');
-                    }
+                    // if (Ext.manifest.toolkit === 'classic') {
+                    //     refs[name].setFieldStyle('border-left: 1px solid yellow;');
+                    // } else {
+                    //     refs[name].setStyle('border-left: 1px solid yellow;');
+                    // }
                     
                     
                     if (Ext.manifest.toolkit !== 'classic' && refs[name].isXType('selectfield')) { // para los select
@@ -443,7 +441,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                             var error = false;
                             for (var i = 0; i < action.list.length; i++) {
                                 if (action.list[i].tipo.toLowerCase() === 'error') {
-                                    //error = true; // para que no avance si hay validaciones tipo "error"
+                                    error = true; // para que no avance si hay validaciones tipo "error"
                                     break;
                                 }
                             }

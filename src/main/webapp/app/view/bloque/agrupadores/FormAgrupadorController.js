@@ -23,15 +23,15 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupadorController', {
                 mascara: paso,
                 url: Ice.url.bloque.agrupadores.obtenerAgrupador,
                 params: Ice.convertirAParams({
-                        cdunieco: view.getCdunieco(),
-                        cdramo: view.getCdramo(),
-                        estado: view.getEstado(),
-                        nmpoliza: view.getNmpoliza(),
-                        cdagrupa: view.getCdagrupa(),
-                        nmsuplem: view.getNmsuplem(),
-                        status: view.getStatus(),
-                        nmsuplemEnd: view.getNmsuplemEnd()
-                    }),
+                    cdunieco: view.getCdunieco(),
+                    cdramo: view.getCdramo(),
+                    estado: view.getEstado(),
+                    nmpoliza: view.getNmpoliza(),
+                    cdagrupa: view.getCdagrupa(),
+                    nmsuplem: view.getNmsuplem(),
+                    status: view.getStatus(),
+                    nmsuplemEnd: view.getNmsuplemEnd()
+                }),
                 success: function (action) {
                     if (action.params) {
                         Ice.cargarFormulario(view, action.params);

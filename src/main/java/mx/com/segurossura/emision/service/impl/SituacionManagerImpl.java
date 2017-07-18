@@ -56,84 +56,126 @@ public class SituacionManagerImpl implements SituacionManager{
 	@Override
 	public Map<String, String> valoresDefectoFijos (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception{
 	    logger.debug(Utils.join(
-                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
-                "\n@@@@@@ valoresDefectoFijos"                
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ valoresDefectoFijos @@@@@@"                
                ));
-	    Map<String, String> valores = new LinkedHashMap<String, String>();
+	    Map<String, String> valores = null;
         String paso="";
         try{
             paso = "Antes de obtener nuevo numero de situacion";
             String nmsituac = situacionDAO.obtieneNmsituac(cdunieco, cdramo, estado, nmpoliza);
+            
             paso = "Antes de obtener valores por defecto de situacion de riesgo";
-            valores = emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.SITUACIONES.getCdbloque(), "NULO");
-            if(valores.isEmpty()){
-                valores.put("cdunieco", cdunieco);
-                valores.put("cdramo", cdramo);
-                valores.put("estado", estado);
-                valores.put("nmpoliza", nmpoliza);
-                valores.put("nmsituac", nmsituac);
-                valores.put("nmsuplem", nmsuplem);
-                valores.put("status", "V");
+            Map<String, String> valoresDefecto = emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac,
+                    nmsuplem, Bloque.SITUACIONES.getCdbloque(), "NULO");
+            
+            if (!valoresDefecto.containsKey("fefecsit")) {
+                valoresDefecto.put("fefecsit", emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem)
+                        .get(0).get("feefecto"));
             }
-            if(valores.get("cdagrupa") == null || valores.get("cdagrupa").isEmpty()){
-                valores.put("cdagrupa", "1");
-            }
-            if(valores.get("cdestado") == null || valores.get("cdestado").isEmpty()){
-                valores.put("cdestado", "0");
-            }
-            if(valores.get("fefecsit") == null || valores.get("fefecsit").isEmpty()){
-            	
-            	final Map<String, String> a=valores;
-            	emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem)
-            	.stream()
-            	.findFirst()
-            	.ifPresent(
-            			(m)->
-            				a.put("fefecsit", m.get("feefecto"))
-            				);
-            }
+            
+            Map<String, String> mpolisit = ValoresMinimosUtils.obtenerValores(Bloque.SITUACIONES, valoresDefecto);
+            
+            paso = "Insertando situaci\u00f3n";
+            situacionDAO.movimientoMpolisit(
+                    // llave
+                    cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmsuplem, "V",
+                    
+                    // datos
+                    mpolisit.get("cdtipsit"),
+                    mpolisit.get("swreduci"),
+                    mpolisit.get("cdagrupa"),
+                    mpolisit.get("cdestado"),
+                    Utils.parse(mpolisit.get("fefecsit")),
+                    Utils.parse(mpolisit.get("fecharef")),
+                    mpolisit.get("indparbe"),
+                    Utils.parse(mpolisit.get("feinipbs")),
+                    mpolisit.get("porparbe"),
+                    mpolisit.get("intfinan"),
+                    mpolisit.get("cdmotanu"),
+                    Utils.parse(mpolisit.get("feinisus")),
+                    Utils.parse(mpolisit.get("fefinsus")),
+                    
+                    // accion
+                    "I");
+            
+            paso = "Recuperando sitauci\u00f3n";
+            valores = situacionDAO.obtieneMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem).get(0);
         } catch (Exception ex){
             Utils.generaExcepcion(ex, paso);
         }
         logger.debug(Utils.join(
-                "\n@@@@@@ valoresDefectoFijos",
-                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+                "\n@@@@@@ valoresDefectoFijos @@@@@@",
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
                ));
         return valores;
 	}
 	
 	@Override
     public Map<String, String> valoresDefectoVariables (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, 
-            String nmsuplem, String status, String cdtipsit, String swreduci, String cdagrupa, String cdestado, String fefecsit, 
-            String fecharef, String indparbe, String feinipbs, String porparbe, String intfinan, String cdmotanu, String feinisus, 
-            String fefinsus) throws Exception{
-        logger.debug(Utils.join(
-                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
-                "\n@@@@@@ valoresDefectoVariables"                
-               ));
+            String nmsuplem, String status, Map<String, String> datos) throws Exception{
+        logger.debug("@@@@@@ valoresDefectoVariables");
         Map<String, String> valores = new LinkedHashMap<String, String>();
-        String paso="";
-        try{
-            paso = "Antes de guardar datos fijos de situacion";
-            situacionDAO.movimientoMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmsuplem, status, cdtipsit, swreduci, cdagrupa, cdestado, Utils.parse(fefecsit), Utils.parse(fecharef), indparbe, Utils.parse(feinipbs), porparbe, intfinan, cdmotanu, Utils.parse(feinisus), Utils.parse(fefinsus), "I");
-            paso = "Antes de guardar valores por defecto";
+        String paso = null;
+        try {
+            paso = "Recuperando situaci\u00f3n";
+            Map<String, String> mpolisit = situacionDAO.obtieneMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem).get(0);
+            mpolisit.putAll(datos);
+            
+            paso = "Actualizando situaci\u00f3n";
+            situacionDAO.movimientoMpolisit(
+                    // llave
+                    cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmsuplem, status,
+                    
+                    // datos
+                    mpolisit.get("cdtipsit"),
+                    mpolisit.get("swreduci"),
+                    mpolisit.get("cdagrupa"),
+                    mpolisit.get("cdestado"),
+                    Utils.parse(mpolisit.get("fefecsit")),
+                    Utils.parse(mpolisit.get("fecharef")),
+                    mpolisit.get("indparbe"),
+                    Utils.parse(mpolisit.get("feinipbs")),
+                    mpolisit.get("porparbe"),
+                    mpolisit.get("intfinan"),
+                    mpolisit.get("cdmotanu"),
+                    Utils.parse(mpolisit.get("feinisus")),
+                    Utils.parse(mpolisit.get("fefinsus")),
+                    
+                    // accion
+                    "U");
+            
+            paso = "Ejecutando valores por defecto de situacion";
             emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), "NULO");
+            
             paso = "Recuperando valores variables";
-            List<Map<String, String>> tvalositList = new ArrayList<>(); 
-            tvalositList = situacionDAO.obtieneTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdtipsit, nmsuplem);            
-            if(tvalositList != null && tvalositList.size() > 0){
-                Map<String, String> tvalosit = tvalositList.get(0);
-                for (Entry<String, String> en : tvalosit.entrySet()) {
+            List<Map<String, String>> tvalositList = situacionDAO.obtieneTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac,
+                    datos.get("cdtipsit"), nmsuplem);
+            
+            // si fallan en insertar los valores por def
+            if (tvalositList == null || tvalositList.size() == 0) {
+                paso = "Insertando valores variables de situaci\u00f3n";
+                Map<String, String> tvalosit = ValoresMinimosUtils.obtenerValores(Bloque.ATRIBUTOS_SITUACIONES);
+                if ("x".equalsIgnoreCase(tvalosit.get("cdtipsit"))) {
+                    tvalosit.put("cdtipsit", mpolisit.get("cdtipsit"));
+                }
+                situacionDAO.movimientoTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac,
+                        tvalosit.get("cdtipsit"), status, nmsuplem,
+                        tvalosit,
+                        "I");
+                tvalositList = situacionDAO.obtieneTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac,
+                        datos.get("cdtipsit"), nmsuplem);
+            }
+            
+            if (tvalositList != null && tvalositList.size() > 0) {
+                for (Entry<String, String> en : tvalositList.get(0).entrySet()) {
                     valores.put(Utils.join("b5b_", en.getKey()), en.getValue());
                 }
             }
         } catch (Exception ex){
             Utils.generaExcepcion(ex, paso);
         }
-        logger.debug(Utils.join(
-                "\n@@@@@@ valoresDefectoVariables",
-                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-               ));
+        logger.debug("@@@@@@ valoresDefectoVariables");
         return valores;
     }
 	
@@ -374,29 +416,73 @@ public class SituacionManagerImpl implements SituacionManager{
 	}
 	
 	@Override
-	public List<Map<String, String>> actualizaSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, 
-            String nmsuplem, String status, String cdtipsit, String swreduci, String cdagrupa, String cdestado, String fefecsit, 
-            String fecharef, String indparbe, String feinipbs, String porparbe, String intfinan, String cdmotanu, String feinisus, 
-            String fefinsus, Map<String, String> valores) throws Exception{
+	public List<Map<String, String>> actualizaSituacion (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
+            String nmsuplem, String status, Map<String, String> datos) throws Exception {
 	    logger.debug(Utils.join(
-                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
-                "\n@@@@@@ actualizaSituacion",
-                "\n@@@@@@ cdunieco",cdunieco,
-                "\n@@@@@@ cdramo",cdramo,
-                "\n@@@@@@ estado",estado,
-                "\n@@@@@@ nmpoliza",nmpoliza,
-                "\n@@@@@@ nmsuplem",nmsuplem
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ actualizaSituacion @@@@@@",
+                "\n@@@@@@ cdunieco = " , cdunieco,
+                "\n@@@@@@ cdramo   = " , cdramo,
+                "\n@@@@@@ estado   = " , estado,
+                "\n@@@@@@ nmpoliza = " , nmpoliza,
+                "\n@@@@@@ nmsituac = " , nmsituac,
+                "\n@@@@@@ nmsuplem = " , nmsuplem
                ));
-	    List<Map<String, String>> coberturas = new ArrayList<>();
+	    List<Map<String, String>> coberturas = null;
 	    List<Map<String, String>> validaciones = new ArrayList<>();
-        String paso = "";
-        try{
-            situacionDAO.movimientoMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmsuplem, status, cdtipsit, swreduci, cdagrupa, cdestado, Utils.parse(fefecsit), Utils.parse(fecharef), indparbe, Utils.parse(feinipbs), porparbe, intfinan, cdmotanu, Utils.parse(feinisus), Utils.parse(fefinsus), "U");
-            situacionDAO.movimientoTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdtipsit, status, nmsuplem, valores, "M");
-            coberturas = emisionDAO.obtieneMpoligarTabla(cdunieco, cdramo, cdestado, nmpoliza, nmsituac, null, nmsuplem);
-            if(coberturas.size() == 0 || coberturas.isEmpty()){
-                emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.BLOQUE_DUMMY_B18_B19_B19B.getCdbloque(), "NULO");
+        String paso = null;
+        try {
+            paso = "Recuperando situaci\u00f3n";
+            Map<String, String> mpolisit = situacionDAO.obtieneMpolisit(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem).get(0);
+            mpolisit.putAll(datos);
+            
+            paso = "Actualizando situaci\u00f3n";
+            situacionDAO.movimientoMpolisit(
+                    // llave
+                    cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmsuplem, status,
+                    
+                    // datos
+                    mpolisit.get("cdtipsit"),
+                    mpolisit.get("swreduci"),
+                    mpolisit.get("cdagrupa"),
+                    mpolisit.get("cdestado"),
+                    Utils.parse(mpolisit.get("fefecsit")),
+                    Utils.parse(mpolisit.get("fecharef")),
+                    mpolisit.get("indparbe"),
+                    Utils.parse(mpolisit.get("feinipbs")),
+                    mpolisit.get("porparbe"),
+                    mpolisit.get("intfinan"),
+                    mpolisit.get("cdmotanu"),
+                    Utils.parse(mpolisit.get("feinisus")),
+                    Utils.parse(mpolisit.get("fefinsus")),
+                    
+                    // accion
+                    "U");
+            
+            paso = "Recuperando valores de situaci\u00f3n";
+            Map<String, String> tvalosit = situacionDAO.obtieneTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac,
+                    datos.get("cdtipsit"), nmsuplem).get(0);
+            tvalosit.putAll(datos);
+            
+            paso = "Actualizando valores de situaci\u00f3n";
+            situacionDAO.movimientoTvalosit(
+                    // llave
+                    cdunieco, cdramo, estado, nmpoliza, nmsituac, datos.get("cdtipsit"), status, nmsuplem,
+                    
+                    // datos
+                    tvalosit,
+                    
+                    // accion
+                    "M");
+            
+            paso = "Recuperando coberturas";
+            coberturas = emisionDAO.obtieneMpoligarTabla(cdunieco, cdramo, estado, nmpoliza, nmsituac, null, nmsuplem);
+            
+            if (coberturas == null || coberturas.size() == 0) {
+                emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem,
+                        Bloque.BLOQUE_DUMMY_B18_B19_B19B.getCdbloque(), "NULO");
             }
+            
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
                     cdunieco,
                     cdramo,
@@ -407,6 +493,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     null,
                     Bloque.SITUACIONES.getCdbloque()
                     ));
+            
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
                     cdunieco,
                     cdramo,
@@ -421,8 +508,8 @@ public class SituacionManagerImpl implements SituacionManager{
             Utils.generaExcepcion(ex, paso);
         }
         logger.debug(Utils.join(
-                "\n@@@@@@ actualizaSituacion"
-               ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+                "\n@@@@@@ actualizaSituacion @@@@@@"
+               ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
                ));
         return validaciones;
 	}

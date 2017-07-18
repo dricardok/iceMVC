@@ -10,14 +10,14 @@ Ext.define('Ice.view.componente.FormIce', {
 	// config ext
 	height: Ice.constantes.componente.form.altura.modern,
     scrollable: true,
-	userCls: ['ice-container', 'ice-container-modern', 'ice-panel', 'ice-panel-modern', 'ice-form', 'ice-form-modern'],
 	referenceHolder: true, // para que se pueda hacer getReferences()
 
 	// config no ext
 	config: {
         // para validar datos con un modelo
         modelFields: [],
-        modelValidators: []
+        modelValidators: [],
+		buttons: []
     },
 
     constructor: function (config) {
@@ -25,11 +25,13 @@ Ext.define('Ice.view.componente.FormIce', {
         var me = this,
             paso = 'Construyendo formulario';
         try {
-			config.items = config.items || [];
-            for (var i = 0; i < config.items.length; i++) {
-                config.items[i].userCls = ['ice-form-item', 'ice-form-item-modern']
-                    .concat(config.items[i].userCls || []);
-            }
+			Ice.agregarClases(config, ['ice-container', 'ice-container-modern',
+			    'ice-panel', 'ice-panel-modern', 'ice-form', 'ice-form-modern']);
+			
+			if ((config.items || []).length > 0) {
+				Ice.agregarClases(config.items, ['ice-form-item', 'ice-form-item-modern']);
+			}
+
 	    	config.items = [{
 				xtype: 'toolbar',
 				docked: 'top',
@@ -46,23 +48,49 @@ Ext.define('Ice.view.componente.FormIce', {
 						}
 					}
 				].concat(config.tbar || [])
-			}].concat(config.items);
+			}].concat(config.items || []);
 
 			// cuando solo tenemos las opciones tbar default y somos agente, mejor las quitamos
 			if (config.items[0].items.length === 2 && Ice.sesion.cdsisrol == Ice.constantes.roles.AGENTE) {
 				config.items[0].hidden = true;
 			}
-			
-			if ((config.buttons || []).length > 0) {
-			    config.items.push({
-		            xtype: 'toolbar',
-		            docked: 'bottom',
-		            items: config.buttons
-		        });
-			}
     	} catch (e) {
     		Ice.generaExcepcion(e, paso);
     	}
     	me.callParent(arguments);
-    }
+    },
+
+	initialize: function () {
+		Ice.log('Ice.view.componente.FormIce.initialize');
+		var me = this,
+		    paso = 'Construyendo formulario';
+		try {
+			me.callParent(arguments);
+
+			// botones
+            if ((me.getButtons() || []).length > 0) {
+                me.add({
+                    xtype: 'toolbar',
+                    docked: 'bottom',
+                    items: ['->'].concat(me.getButtons())
+                });
+            }
+		} catch (e) {
+			Ice.generaExcepcion(e, paso);
+		}
+	},
+
+	add: function () {
+		Ice.log('Ice.view.componente.FormIce.add args:', arguments);
+		var me = this,
+		    paso = 'Agregando componentes al formulario';
+		try {
+			if (arguments.length > 0) {
+				Ice.agregarClases(arguments, ['ice-form-item', 'ice-form-item-modern']);
+			}
+		} catch (e) {
+			Ice.generaExcepcion(e, paso);
+		}
+		me.callParent(arguments);
+	}
 });

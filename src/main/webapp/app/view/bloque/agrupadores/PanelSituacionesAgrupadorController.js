@@ -2,10 +2,6 @@ Ext.define('Ext.view.bloque.agrupadores.PanelSituacionesAgrupadorController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.panelsituacionesagrupador',
     
-    onItemTap: function (gridSituacionesAgrupador, index, target, record) {
-        this.onItemClic(gridSituacionesAgrupador, record);
-    },
-    
     onItemClic: function (gridSituacionesAgrupador, record) {
         Ice.log('controller.panelsituacionesagrupador.onItemClic args:', arguments);
         var me = this,

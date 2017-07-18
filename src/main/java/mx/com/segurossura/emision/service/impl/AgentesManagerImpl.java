@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Utils;
-import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.emision.dao.AgentesDAO;
 import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.service.AgentesManager;
+import mx.com.segurossura.general.catalogos.model.Bloque;
 
 
 @Service
@@ -26,31 +25,20 @@ public class AgentesManagerImpl implements AgentesManager {
 
 	@Autowired
 	private EmisionDAO emisionDAO;
+	
 	@Autowired
 	private AgentesDAO agentesDAO;
 	 
 	@Override
 	public Map<String, String> cargar(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem)
 			throws Exception {
-		
 		Map<String, String> datos = new LinkedHashMap<String, String>();
-        String paso = null;
-		
-        try{
-		
-        	paso = "Recuperando p\u00f3liza";
-	        Map<String, String> mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0);
-	        if (mpolizas == null) {
-	            throw new ApplicationException("No se encuentra la p\u00f3liza");
-	        }
-	        for (Entry<String, String> en : mpolizas.entrySet()) {
-                datos.put(en.getKey(), en.getValue());
-            }        
-	        
-        }catch(Exception e){
+        String paso = "Recuperando p\u00f3liza";
+        try {
+            datos = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0);
+        } catch (Exception e) {
         	 Utils.generaExcepcion(e, paso);
         }
-		
 		return datos;
 	}
 	
@@ -77,67 +65,54 @@ public class AgentesManagerImpl implements AgentesManager {
 	@Override
 	public List<Map<String, String>> guardarAgentes(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String nmcuadro, String porredau, List<Map<String, String>> agentes) throws Exception {
-		
 		String paso = null;
-		Map<String, String> datos = new LinkedHashMap<String, String>();
-		
-		try{
-			
-			paso = "Recuperando p\u00f3liza";
+		List<Map<String, String>> validaciones = null;
+		try {
+		    paso = "Recuperando p\u00f3liza";
 	        Map<String, String> mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0);
-	        if (mpolizas == null) {
-	            throw new ApplicationException("No se encuentra la p\u00f3liza");
-	        }
-	        for (Entry<String, String> en : mpolizas.entrySet()) {
-                datos.put(en.getKey(), en.getValue());
-            }
 	        
 	        paso = "Guardando p\u00f3liza";
-	        
 	        emisionDAO.movimientoMpolizas(cdunieco, 
 	        							  cdramo, 
 	        							  estado, 
 	        							  nmpoliza, 
 	        							  nmsuplem, 
 	        							  nmsuplem, 
-	        							  datos.get("status"), 
-	        							  datos.get("swestado"), 
-      									  datos.get("nmsolici"),
-      									  Utils.parse(datos.get("feautori")),
-										  datos.get("cdmotanu"),
-										  Utils.parse(datos.get("feanulac")),
-										  datos.get("swautori"),
-										  datos.get("cdmoneda"),
-										  Utils.parse(datos.get("feinisus")),
-										  Utils.parse(datos.get("fefinsus")),
-										  datos.get("ottempot"),
-										  Utils.parse(datos.get("feefecto")),
-										  datos.get("hhefecto"),
-										  Utils.parse(datos.get("feproren")),
-										  Utils.parse(datos.get("fevencim")),
-										  datos.get("nmrenova"),
-										  Utils.parse(datos.get("ferecibo")),
-										  Utils.parse(datos.get("feultsin")),
-										  datos.get("nmnumsin"),
-										  datos.get("cdtipcoa"),
-										  datos.get("swtarifi"),
-										  datos.get("swabrido"),
-										  Utils.parse(datos.get("feemisio")),
-										  datos.get("cdperpag"),
-										  datos.get("nmpoliex"),
+	        							  mpolizas.get("status"), 
+	        							  mpolizas.get("swestado"), 
+      									  mpolizas.get("nmsolici"),
+      									  Utils.parse(mpolizas.get("feautori")),
+										  mpolizas.get("cdmotanu"),
+										  Utils.parse(mpolizas.get("feanulac")),
+										  mpolizas.get("swautori"),
+										  mpolizas.get("cdmoneda"),
+										  Utils.parse(mpolizas.get("feinisus")),
+										  Utils.parse(mpolizas.get("fefinsus")),
+										  mpolizas.get("ottempot"),
+										  Utils.parse(mpolizas.get("feefecto")),
+										  mpolizas.get("hhefecto"),
+										  Utils.parse(mpolizas.get("feproren")),
+										  Utils.parse(mpolizas.get("fevencim")),
+										  mpolizas.get("nmrenova"),
+										  Utils.parse(mpolizas.get("ferecibo")),
+										  Utils.parse(mpolizas.get("feultsin")),
+										  mpolizas.get("nmnumsin"),
+										  mpolizas.get("cdtipcoa"),
+										  mpolizas.get("swtarifi"),
+										  mpolizas.get("swabrido"),
+										  Utils.parse(mpolizas.get("feemisio")),
+										  mpolizas.get("cdperpag"),
+										  mpolizas.get("nmpoliex"),
 	        							  nmcuadro,
 	        							  porredau,
-	        							  datos.get("swconsol"),
-	        							  datos.get("nmpolcoi"),
-	        							  datos.get("adparben"),
-	        							  datos.get("nmcercoi"),
-	        							  datos.get("cdtipren"),
+	        							  mpolizas.get("swconsol"),
+	        							  mpolizas.get("nmpolcoi"),
+	        							  mpolizas.get("adparben"),
+	        							  mpolizas.get("nmcercoi"),
+	        							  mpolizas.get("cdtipren"),
 	        							  "U");
 	        
-	        
-	        
-	        paso = "Guardando agentes";
-	        
+	        paso = "Borrando agentes";
 	        agentesDAO.movimientoMpoliage(cdunieco, 
 					  cdramo, 
 					  estado, 
@@ -149,24 +124,19 @@ public class AgentesManagerImpl implements AgentesManager {
 					  null,
 					  "D");
 	        
-	        for(int current=0; current<agentes.size(); current++){
-	        	Map<String, String> tmp = (Map<String, String>) agentes.get(current);
-	        	agentesDAO.movimientoMpoliage(cdunieco, 
-	        								  cdramo, 
-	        								  estado, 
-	        								  nmpoliza, 
-	        								  tmp.get("cdagente"), 
-	        								  nmsuplem, 
-	        								  nmsuplem, 
-	        								  tmp.get("cdtipoag"),
-	        								  tmp.get("porredau"),
-	        								  "I");
-	        }
+	        for (int current = 0; current < agentes.size(); current++) {
+	            Map<String, String> tmp = (Map<String, String>) agentes.get(current);
+	        	agentesDAO.movimientoMpoliage(cdunieco, cdramo, estado, nmpoliza, tmp.get("cdagente"), nmsuplem,
+	        	        nmsuplem, tmp.get("cdtipoag"), tmp.get("porredau"), "I");
+        	}
 	        
-		}catch(Exception e){
+	        paso = "Validando bloque de agentes";
+	        validaciones = emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, "0", nmsuplem, null,
+	                Bloque.AGENTES.getCdbloque());
+		} catch (Exception e) {
 			Utils.generaExcepcion(e, paso);
 		}
-		return null;
+		return validaciones;
 	}
 
 	@Override

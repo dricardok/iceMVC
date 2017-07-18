@@ -164,49 +164,39 @@ public class SituacionAction extends PrincipalCoreAction {
 	                }
 	        )
 	public String valoresDefectoVariables(){
-	    logger.debug(Utils.log("###### valoresDefectoVariables", 
-	                           "###### params ", params));
+	    logger.debug(Utils.log("\n#####################################",
+	                           "\n###### valoresDefectoVariables ######", 
+	                           "\n###### params = ", params));
 	    try {
-	        Utils.validate(params, "No se recibieron parametros");
-	        String cdunieco = params.get("cdunieco");
-	        String cdramo = params.get("cdramo");
-	        String estado = params.get("estado");
-	        String nmpoliza = params.get("nmpoliza");
-	        String nmsituac = params.get("nmsituac");
-	        String nmsuplem = params.get("nmsuplem");
-	        String cdtipsit = params.get("cdtipsit");
-            String status   = params.get("status");
-            String swreduci = params.get("swreduci");
-            String cdagrupa = params.get("cdagrupa");
-            String cdestado = params.get("cdestado");
-            String fefecsit = params.get("fefecsit");
-            String fecharef = params.get("fecharef");
-            String indparbe = params.get("indparbe");
-            String feinipbs = params.get("feinipbs");
-            String porparbe = params.get("porparbe");
-            String intfinan = params.get("intfinan");
-            String cdmotanu = params.get("cdmotanu");
-            String feinisus = params.get("feinisus");
-            String fefinsus = params.get("fefinsus");
-	        Utils.validate(cdunieco, "No se recibio oficina");
-	        Utils.validate(cdramo, "No se recibio producto");
-	        Utils.validate(estado, "No se recibio el estado de la póliza");
-	        Utils.validate(nmpoliza, "No se recibio el numero de póliza");
-	        Utils.validate(nmsituac, "No se recibio la situacion de riesgo");
-	        Utils.validate(nmsuplem, "No se recibio el suplemento");
-	        Utils.validate(fefecsit, "No se recibio fecha de efecto de situacion");
-	        Utils.validate(cdtipsit, "No se recibio tipo de situacion");
-	        Utils.validate(cdestado, "No se recibio el codigo de estado");
-	        Utils.validate(cdagrupa, "No se recibo el numero de agrupador");
-	        situacion = situacionManager.valoresDefectoVariables(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, status, cdtipsit, swreduci, cdagrupa, cdestado, fefecsit, fecharef, indparbe, feinipbs, porparbe, intfinan, cdmotanu, feinisus, fefinsus);
+	        Utils.validate(params, "No se recibieron par\u00e1metros");
+	        
+	        String cdunieco = params.get("cdunieco"),
+	               cdramo   = params.get("cdramo"),
+	               estado   = params.get("estado"),
+	               nmpoliza = params.get("nmpoliza"),
+	               nmsituac = params.get("nmsituac"),
+	               nmsuplem = params.get("nmsuplem"),
+	               status   = Utils.NVL(params.get("status"), "V");
+	        
+	        Utils.validate(cdunieco , "No se recibi\u00f3 oficina",
+	                       cdramo   , "No se recibi\u00f3 producto",
+	                       estado   , "No se recibi\u00f3 el estado de la p\u00f3liza",
+	                       nmpoliza , "No se recibi\u00f3 la p\u00f3liza",
+	                       nmsituac , "No se recibi\u00f3 la situaci\u00f3n de riesgo",
+	                       nmsuplem , "No se recibi\u00f3 el suplemento",
+	                       status   , "Falta status");
+	        
+	        situacion = situacionManager.valoresDefectoVariables(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, status,
+	                params);
+	        
 	        success = true;
 	    } catch (Exception ex) {
 	        message = Utils.manejaExcepcion(ex);
 	    }
 	    logger.debug(StringUtils.join(
-	            "\n###### situacion ", situacion,
+	            "\n###### situacion = ", situacion,
 	            "\n###### valoresDefectoVariables ######",
-	            "\n################################"                
+	            "\n#####################################"
 	            ));
 	    return SUCCESS;
 	}
@@ -374,42 +364,32 @@ public class SituacionAction extends PrincipalCoreAction {
 	                        params = { "enableSMD", "true", "ignoreSMDMethodInterfaces", "false" }
 	                )}
 	)
-    public String actualizaSituacion(){
-        logger.debug(StringUtils.join(
-                 "\n###################",
-                 "\n###### actualizaSituacion ######",
-                 "\n###### params ",params,
-                 "\n###### situacion ",situacion
-                ));     
-        try{
-            Utils.validate(params, "No se recibieron parametros");
-            String cdunieco = (String) params.get("cdunieco");
-            String cdramo = (String) params.get("cdramo");
-            String estado = (String) params.get("estado");
-            String nmpoliza = (String) params.get("nmpoliza");
-            String nmsituac = (String) params.get("nmsituac");
-            String nmsuplem = (String) params.get("nmsuplem");
-            String cdtipsit = (String) params.get("cdtipsit");
-            String status   = (String) params.get("status");
-            String swreduci = (String) params.get("swreduci");
-            String cdagrupa = (String) params.get("cdagrupa");
-            String cdestado = (String) params.get("cdestado");
-            String fefecsit = (String) params.get("fefecsit");
-            String fecharef = (String) params.get("fecharef");
-            String indparbe = (String) params.get("indparbe");
-            String feinipbs = (String) params.get("feinipbs");
-            String porparbe = (String) params.get("porparbe");
-            String intfinan = (String) params.get("intfinan");
-            String cdmotanu = (String) params.get("cdmotanu");
-            String feinisus = (String) params.get("feinisus");
-            String fefinsus = (String) params.get("fefinsus");
-            Utils.validate(cdunieco, "No se recibio oficina");
-            Utils.validate(cdramo, "No se recibio producto");
-            Utils.validate(estado, "No se recibio el estado de la póliza");
-            Utils.validate(nmpoliza, "No se recibio el numero de póliza");
-//            Utils.validate(nmsituac, "No se recibio la situacion de riesgo");
-            Utils.validate(nmsuplem, "No se recibio el suplemento");
-            validaciones = situacionManager.actualizaSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, status, cdtipsit, swreduci, cdagrupa, cdestado, fefecsit, fecharef, indparbe, feinipbs, porparbe, intfinan, cdmotanu, feinisus, fefinsus, situacion);           
+    public String actualizaSituacion () {
+        logger.debug(StringUtils.join("\n################################",
+                                      "\n###### actualizaSituacion ######",
+                                      "\n###### params = "    , params,
+                                      "\n###### situacion = " , situacion));
+        try {
+            Utils.validate(params, "No se recibieron par\u00e1metros");
+            
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsituac = params.get("nmsituac"),
+                   nmsuplem = params.get("nmsuplem"),
+                   status   = Utils.NVL(params.get("status"), "V");
+            
+            Utils.validate(cdunieco , "No se recibi\u00f3 oficina",
+                           cdramo   , "No se recibi\u00f3 producto",
+                           estado   , "No se recibi\u00f3 el estado de la p\u00f3liza",
+                           nmpoliza , "No se recibi\u00f3 la p\u00f3liza",
+                           nmsuplem , "No se recibi\u00f3 el suplemento",
+                           status   , "Falta status");
+            
+            validaciones = situacionManager.actualizaSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, status,
+                    params);           
+            
             success = true;
         } catch(Exception ex) {
             success=false;

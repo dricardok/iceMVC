@@ -2,9 +2,11 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 	extend: 'Ice.view.componente.PanelIce',
 	xtype: 'tarificaciontemporal',
 	
-	title: 'Elige tu Plan',
-	scrollable: false,
 	
+	scrollable: false,
+
+	layout: 'fit',
+
 	config: {
 		cdunieco: null,
 		cdramo: null,

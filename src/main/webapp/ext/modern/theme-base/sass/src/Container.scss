@@ -7,6 +7,7 @@
 
     > .x-dock-body {
         overflow: hidden;
+        background-color:#fff;
     }
 
     &.x-sized, &.x-sized > .x-dock-body > *,
@@ -33,6 +34,7 @@
             @include st-box-orient(vertical);
             min-height: 0;
             min-width: 0;
+            backgorund-color:#FFF !important;
 
             > * {
                 @include st-box-flex(1);
