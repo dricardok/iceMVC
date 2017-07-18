@@ -615,7 +615,7 @@ $tab-active-box-shadow: dynamic(null);
             color: $active-color;
             @include background-gradient($active-background-color, $active-background-gradient);
             border-color: $active-border-color;
-            box-shadow: $active-box-shadow;
+            box-shadow:;
         }
 
         .x-button-icon {
