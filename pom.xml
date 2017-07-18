@@ -348,8 +348,6 @@
                 .project,
                 app.js,
                 app.json,
-                bootstrap.css,
-                bootstrap.js,
                 build.xml,
                 workspace.json
              </warSourceExcludes>
