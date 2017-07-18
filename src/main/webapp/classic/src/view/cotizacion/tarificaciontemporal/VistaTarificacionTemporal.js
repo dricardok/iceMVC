@@ -3,6 +3,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 	xtype: 'vistatarificaciontemporal',
 	
 	controller: 'tarificaciontemporal',
+
+	// config ext
+	scrollable: false,
 	cls: 'titulo_plan',
 	height: '100%',
 	tpl: [

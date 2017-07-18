@@ -7,7 +7,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 	// config ext
 	// height: '100%',
 	padding: '20 0 0 20',
-	
+	scrollable: false,
     center: true,
     
     multiSelect: false,
