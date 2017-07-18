@@ -6,6 +6,11 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
 
     // config ext
     title: 'Cotizadores',
+    platformConfig: {
+        '!desktop': {
+            scrollable: true
+        }
+    },
 
     constructor: function (config) {
         Ice.log();
@@ -17,8 +22,17 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
                 reference: 'dataview',
                 tpl: new Ext.XTemplate(
                     '<tpl for=".">',
-                        '<div class="thumb">',
-                            'Datos: {cdramo}, {dsramo}, {cdtipsit}, {dstipsit}',
+                        '<div class="plan_pago thumb">',
+                            '<table class="plan_pago_base shadow_card" style="width:150px; min-height:150px;">',
+                                '<tr>',
+                                    '<td class="plan_pago_monto thumb">{dsramo}</td>',
+                                '</tr>',
+                                '<tr style="background-color:#fff;">',
+                                    '<td style="text-align:center;">',
+                                        '<p class="periocidad">{dstipsit}</p>',
+                                    '</td>',
+                                '</tr>',
+                            '</table>',
                         '</div>',
                     '</tpl>'
                 ),
