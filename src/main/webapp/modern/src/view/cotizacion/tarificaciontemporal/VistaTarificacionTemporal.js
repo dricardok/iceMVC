@@ -1,10 +1,11 @@
 Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal', {
-	extend: 'Ext.dataview.DataView',
+	extend: 'Ice.view.componente.DataViewIce',
 	xtype: 'vistatarificaciontemporal',
 	
 	controller: 'tarificaciontemporal',
 	
-	//height: '100%',
+	// config ext
+	// height: '100%',
 	padding: '20 0 0 20',
 	
     center: true,
@@ -38,7 +39,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
     	select: 'onItemClic'
     },
     
-    config: {
+    // config no ext
+	config: {
     	cdunieco: null,
 		cdramo: null,
 		estado: null,
@@ -50,22 +52,15 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 	 // validacion y modificacion de config
     constructor: function (config) {
     	Ice.log('Ice.view.tarificaciontemporal.VistaTarificacionTemporal.constructor');
-    	
     	var me = this,
          	paso = 'Contruyendo selector de planes';
-    	try{
-    		/*
-    		config.cdunieco = 1;
-			config.cdramo = 201;
-			config.estado = 'W';
-			config.nmpoliza = 613805;
-			*/
-			if(!config
+    	try {
+    		if (!config
 					|| !config.cdunieco
 					|| !config.cdramo
 					|| !config.estado
 					|| !config.nmpoliza) {
-					throw 'Faltan datos para construir dataview de vista previa';
+				throw 'Faltan datos para construir dataview de vista previa';
 			}
 			
 			config.store = {
@@ -93,19 +88,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 					}
 				}
 			}
-    		
-    		
-    	}catch(e) {
+    	} catch (e) {
     		Ice.generaExcepcion(e, paso);
     	}
-    	
         this.callParent(arguments);
-    },
-    
-    initialize: function (config) {
-    	Ice.log('Ice.view.tarificaciontemporal.VistaTarificacionTemporal.initialize');
-    	var me = this;
-        me.callParent(arguments); 
     }
-    
 });
