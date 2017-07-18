@@ -135,14 +135,14 @@ html, body {
 	border-bottom-width:0px;
 	border-left-color:#00B5CB;
 	display:block;
-	width: 80%;
+	width: 85%;
 	margin: 20px auto;
 	padding: 10px;
 	background-color: rgba(0, 51, 160, .75);
 	color:#FFF; 
 	font-size:16px;
 	min-height: 60px; 
-	line-height: 45px;
+	line-height: 38px;
 	-webkit-transition: all .25s ease-in-out;
 		&:hover{
 		 -webkit-transform: scale(1.1);
@@ -184,10 +184,112 @@ html, body {
     line-height: 25px; 
 }
 
+.plan_pago_base{    
+      background-color:#fff;
+}
+
+
+.plan_pago_monto{
+    border-style: solid;
+    border-left-width: 12px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-color: #0033a0;
+    padding: 12px 0px;
+    background-color: #00b5cb;
+    color: #fff;
+    font-size: 25px !important;
+    line-height: 24px ;
+    text-align: center;
+        .rec_subsecuente{
+         font-size: 14px; 
+         font-weight: 300;
+         line-height: 16px;   
+        }
+        .moneda{
+            font-size: 12px;
+            line-height: 15px;                 
+            font-weight: 300;}
+                    
+}
+
+.periocidad{
+              font-size: 18px;
+              line-height: 21px; 
+              font-weight: 600;
+              color:$font-grey;
+              
+                            
+            }  
+        
+.titulo_plan{
+                font-size: 60px;
+              }
+        
+        
+.monto_02{
+    font-size: 20px;
+    font-weight: 600;
+  }      
+
+
+.shadow_card{
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+
+.thumb{    
+   
+    &:focus {outline: 2px solid transparent !important;
+             background-color:#0033a0;}
+    &:visited {outline: 2px solid transparent !important;
+             }         
+}
+
+.plan_pago{
+    display:block;
+    padding: 2% 2%;    
+}
+
+
+.titulo_plan{
+        font-weight: 600 !important;
+        text-decoration: inherit;
+        color: $font-grey !important;
+        width:100% !important;
+        font-size: 20px !important;
+        padding-top: 5% !important;       
+        line-height: 33px !important;
+        text-align:center;
+        background-color: $azulbd;
+}
+
+.back_plan{
+    background:#DEEBF4; padding: 5% 0 0 12%;
+}
 
 
 
 
+//Media Query Botones Selección de rol Classic
+
+@media only screen and (min-width: 768px) {
+  .btn_rol_suscriptor  {
+          width:65%;
+                    }
+                
+  .plan_pago{
+      display:inine-block;
+  }
+    .back_plan{
+         padding: 5% 0 0 20%;
+    }
+    .shadow_card{
+        min-height: 180px;
+    }
+
+}
 
 
 
