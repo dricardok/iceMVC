@@ -1,6 +1,6 @@
-Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
+Ext.define('Ice.view.bloque.agrupadores.FormAgrupadorOld', {
     extend: 'Ext.form.Panel',
-    xtype: 'formagrupador',
+    xtype: 'formagrupadorold',
     
     requires: [
         'Ext.Toolbar'

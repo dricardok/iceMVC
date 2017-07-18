@@ -13,11 +13,9 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
         try {
             me.callParent(arguments);
             
-            // esperamos a que se cree el viewmodel antes de invocar custom
             Ext.defer(function () {
-                var paso2;
+                var paso2 = 'Definiendo comportamiento de bloque de datos generales';
                 try {
-                    paso2 = 'Definiendo comportamiento de bloque de datos generales';
                     me.custom();
                     
                     if (view.getCdunieco() && view.getCdramo() && view.getEstado() && view.getNmpoliza()

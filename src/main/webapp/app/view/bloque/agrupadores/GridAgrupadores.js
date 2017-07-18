@@ -1,22 +1,12 @@
 Ext.define('Ice.view.bloque.agrupadores.GridAgrupadores', {
-    extend: 'Ext.grid.Grid',
+    extend: 'Ice.view.componente.GridIce',
     xtype: 'gridagrupadores',
-    
-    requires: [
-        'Ext.Toolbar'
-    ],
     
     controller: 'gridagrupadores',
     
-    // configuracion ext
-    height: 400,
+    // config ext
     
-    listeners: {
-        itemtap: 'onItemTap',
-       // beforeshow:	'onVistaAgente'
-    },
-    
-    // configuracion no ext
+    // config no ext
     config: {
         cdunieco: null,
         cdramo: null,
@@ -36,11 +26,6 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadores', {
         var me = this,
             paso = 'Construyendo grid de agrupadores';
         try {
-            /*config.cdunieco = 1;
-            config.cdramo   = 501;
-            config.estado   = 'W';
-            config.nmpoliza = 17422;*/
-            
             if (!config
                 || !config.cdunieco
                 || !config.cdramo
@@ -89,35 +74,75 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadores', {
                     }
                 }
             };
-            
-            config.items = {
-                xtype: 'toolbar',
-                docked: 'top',
-                items: [
-                    {
-                        text: '+ Agrupador',
-                        handler: 'onAgregarAgrupadorClic'
-                    }, {
-                        text: '+ Subagrupador',
-                        handler: 'onAgregarSubagrupadorClic',
-                        disabled: true,
-                        reference: 'agregarbutton'
-                    }, {
-                        text: 'Editar',
-                        handler: 'onEditarClic',
-                        disabled: true,
-                        reference: 'editarbutton'
-                    }, {
-                        text: 'Eliminar',
-                        handler: 'onEliminarClic',
-                        disabled: true,
-                        reference: 'eliminarbutton'
-                    }
-                ]
-            };
+
+            config.buttons = [
+                {
+                    text: 'Agrupador',
+                    iconCls: 'x-fa fa-plus',
+                    handler: 'onAgregarAgrupadorClic'
+                }, {
+                    text: 'Subagrupador',
+                    iconCls: 'x-fa fa-plus',
+                    handler: 'onAgregarSubagrupadorClic',
+                    hidden: true,
+                    reference: 'agregarbutton'
+                }, {
+                    text: 'Subagrupador',
+                    iconCls: 'x-fa fa-pencil',
+                    handler: 'onEditarClic',
+                    hidden: true,
+                    reference: 'editarbutton'
+                }, {
+                    text: 'Subagrupador',
+                    iconCls: 'x-fa fa-minus',
+                    handler: 'onEliminarClic',
+                    hidden: true,
+                    reference: 'eliminarbutton'
+                }
+            ].concat(config.buttons || []);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
         me.callParent(arguments);
+    },
+
+    // para classic
+    initComponent: function () {
+        Ice.log('Ice.view.bloque.agrupadores.GridAgrupadores.initComponent');
+        var me = this,
+            paso = 'Configurando comportamiento de grid de agrupadores';
+        try {
+            ////// antes de callParent //////
+
+            ////// antes de callParent //////
+            me.callParent(arguments);
+            ////// despues de callParent //////
+            me.on({
+                itemclick: me.getController().onItemClic
+            });
+            ////// despues de callParent //////
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+
+    // para modern
+    initialize: function () {
+        Ice.log('Ice.view.bloque.agrupadores.GridAgrupadores.initialize');
+        var me = this,
+            paso = 'Configurando comportamiento de grid de agrupadores';
+        try {
+            ////// antes de callParent //////
+
+            ////// antes de callParent //////
+            me.callParent(arguments);
+            ////// despues de callParent //////
+            me.on({
+                itemclick: me.getController().onItemClic
+            });
+            ////// despues de callParent //////
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
     }
 });

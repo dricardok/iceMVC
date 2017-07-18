@@ -313,7 +313,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                         var paso2 = 'Seteando valores por defecto';
                         try {
                             view.setDatosVariablesNuevos(false);
-                            view.procesandoValoresDefecto = false;
+                            view.setProcesandoValoresDefecto(false);
                             if (!action.situacion) {
                                 return;
                             }
@@ -330,12 +330,12 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                             }
                             Ice.resumeEvents(view);*/
                         } catch (e) {
-                            view.procesandoValoresDefecto = false;
+                        	view.setProcesandoValoresDefecto(false);
                             Ice.manejaExcepcion(e, paso2);
                         }
                     },
                     failure: function () {
-                        view.procesandoValoresDefecto = false;
+                    	view.setProcesandoValoresDefecto(false);
                     }
                 });
             } else {
@@ -352,8 +352,8 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             view = me.getView(),
             refs = view.getReferences(),
             paso = 'Antes de guardar valores situacion';
-        view.procesandoValoresDefecto = false;
-        view.setDatosFijosNuevos = false;
+        view.setProcesandoValoresDefecto(false);
+        //view.setDatosFijosNuevos = false;
         try {
             paso = 'Guardando datos de situacion';
             var form = refs.form,
@@ -413,7 +413,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                         }
                     },
                     failure: function () {
-                        view.procesandoValoresDefecto = false;
+                        view.setProcesandoValoresDefecto(false);
                     }
                 });
             } else {
@@ -425,95 +425,95 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
         }
         Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardarBloque ok');
     },
+
+    guardar: function (params) {
+        Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardar');
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            paso = 'Antes de validar valores situacion';
+        Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardar view', view);
+        view.setProcesandoValoresDefecto(false);
+        //view.setDatosFijosNuevos(false);
+        try {
+            var form = refs.form;
+            if (form.isHidden() !== true) {
+                Ice.validarFormulario(form);
+            }
+            Ice.request({
+                mascara: 'Antes de lanzar validaciones de bloque de situacion',
+                url: Ice.url.bloque.situacionesRiesgo.validaciones,
+                params: {
+                    'params.cdunieco' : view.getCdunieco(),
+                    'params.cdramo' : view.getCdramo(),
+                    'params.estado' : view.getEstado(),
+                    'params.nmpoliza' : view.getNmpoliza(),
+                    'params.nmsuplem' : view.getNmsuplem()
+                },
+                success: function (action) {
+                    var paso2 = 'Lanzando validaciones de bloque de situacion';
+                    try {
+                        if (action.validaciones && action.validaciones.length > 0) {
+                            Ext.create('Ice.view.bloque.VentanaValidaciones', {
+                                lista: action.validaciones
+                            }).mostrar();
+
+                            var error = false;
+                            for (var i = 0; i < action.validaciones.length; i++) {
+                                if (action.validaciones[i].tipo.toLowerCase() === 'error') {
+                                    error = true; // para que no avance si hay validaciones tipo "error"
+                                    break;
+                                }
+                            }
+                            if (error === true) {
+                                throw 'Favor de revisar las validaciones';
+                            }
+                        }
+                        
+                        if (params && params.success) {
+                            paso2 = 'Ejecutando proceso posterior a situaciones';
+                            params.success();
+                        }
+                    } catch (e) {
+                        Ice.manejaExcepcion(e, paso2);
+                        if (params && params.failure) {
+                            var paso4 = 'Ejecutando failure posterior a situaciones';
+                            try {
+                                params.failure();
+                            } catch (e) {
+                                Ice.manejaExcepcion(e, paso4);
+                            }
+                        }
+                    }
+                },
+                failure: (params && params.failure) || null
+            });
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+            if (params && params.failure) {
+                var paso3 = 'Ejecutando failure posterior a situaciones';
+                try {
+                    params.failure();
+                } catch (e) {
+                    Ice.manejaExcepcion(e, paso3);
+                }
+            }
+        }   
+        Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardar ok');
+    },
   
-  guardar: function (params){
-      Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardar');
-      var me = this,          
-          view = me.getView(),
-          refs = view.getReferences(),
-          paso = 'Antes de validar valores situacion';
-      Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardar view', view);
-      view.procesandoValoresDefecto = false;
-      view.setDatosFijosNuevos = false;
-      try{
-          var form = refs.form;
-          if (form.isHidden() !== true) {
-              Ice.validarFormulario(form);
-          }
-          situacion = {};
-          Ice.request({
-              mascara: 'Antes de lanzar validaciones de bloque de situacion',
-              url: Ice.url.bloque.situacionesRiesgo.validaciones,
-              params: {                  
-                  'params.cdunieco' : view.getCdunieco(),
-                  'params.cdramo' : view.getCdramo(),
-                  'params.estado' : view.getEstado(),
-                  'params.nmpoliza' : view.getNmpoliza(),
-                  'params.nmsuplem' : view.getNmsuplem()
-              },
-              success: function (action) {
-                  var paso2 = 'Lanzando validaciones de bloque de situacion';
-                  try {
-                      if (action.validaciones && action.validaciones.length > 0) {
-                          Ext.create('Ice.view.bloque.VentanaValidaciones', {
-                              lista: action.validaciones
-                          }).mostrar();
-                          
-                          var error = false;
-                          for (var i = 0; i < action.validaciones.length; i++) {
-                              if (action.validaciones[i].tipo.toLowerCase() === 'error') {
-                                  error = true; // para que no avance si hay validaciones tipo "error"
-                                  break;
-                              }
-                          }
-                          if (error === true) {
-                              throw 'Favor de revisar las validaciones';
-                          }
-                      
-                      }
-                      
-                      if (params && params.success) {
-                          paso2 = 'Ejecutando proceso posterior al guardado de datos generales';
-                          params.success();
-                      } else {
-                          Ice.manejaExcepcion(e, paso2);
-                          if (params && params.failure) {
-                              var paso2 = 'Invocando callback failure al guardar datos situación';
-                              try {
-                                  params.failure();
-                              } catch (e) {
-                                  Ice.manejaExcepcion(e, paso2);
-                              }
-                          }
-                      }
-                      
-                  } catch (e) {
-                      Ice.resumeEvents(view);
-                  }
-              },
-              failure: (params && params.failure) || null
-          });
-          Ice.log('situacion',situacion);
-//          store.reload();
-      } catch (e) {
-    	  console.error(e);
-          Ice.manejaExcepcion(e, paso);
-          
-      }   
-      Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardar ok');
-  },
-  
-  cargar: function(){
-      Ice.log('Ice.view.bloque.CoberturasController.cargarValoresDefectoVariables');
-      var me = this,
-          view = me.getView(),
-          refs = view.getReferences();
-      try{
-          refs.grid.getController().cargar();
-      } catch(e) {
-          Ice.generaExcepcion(e, paso);
-      }
-  },
+    cargar: function() {
+        Ice.log('Ice.view.bloque.CoberturasController.cargarValoresDefectoVariables');
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            paso = 'Cargando situaciones';
+        try {
+            refs.grid.getController().cargar();
+        } catch(e) {
+            Ice.generaExcepcion(e, paso);
+        }
+    },
   
   cancelar: function(){
       Ice.log('Ice.view.bloque.CoberturasController.cancelar');

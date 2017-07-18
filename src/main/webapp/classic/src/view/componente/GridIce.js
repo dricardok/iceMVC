@@ -12,8 +12,25 @@ Ext.define('Ice.view.componente.GridIce', {
     	var me = this,
 		    paso = 'Construyendo grid';
 		try {
-			// se agregan los action columns al final
-			config.columns = (config.columns || []).concat(config.actionColumns || []);
+			// se dividen y agregan los actionColumns
+			if ((config.actionColumns || []).length > 0) {
+				var cols = [];
+				for (var i = 0; i < config.actionColumns.length; i++) {
+					var colItems = config.actionColumns[i];
+					if (colItems.items && typeof colItems.items.length === 'number') {
+						colItems = colItems.items;
+					} else {
+						colItems = [colItems];
+					}
+					for (var j = 0; j < colItems.length; j++) {
+						var col = colItems[j];
+						col.xtype = 'actioncolumn';
+						col.width = 30;
+						cols.push(col);
+					}
+				}
+				config.columns = (config.columns || []).concat(cols);
+			}
 
 			// se suben los botones
 			if ((config.buttons || []).length > 0) {

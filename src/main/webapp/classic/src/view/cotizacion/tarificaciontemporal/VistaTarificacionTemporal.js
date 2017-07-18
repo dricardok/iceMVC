@@ -33,6 +33,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
     listeners: {
     	itemclick: 'onItemClic'
     },
+
+	padding: '40 0 0 40',
     
     config: {
     	cdunieco: null,

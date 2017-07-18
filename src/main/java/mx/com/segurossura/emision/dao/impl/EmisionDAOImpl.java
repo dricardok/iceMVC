@@ -803,7 +803,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsituac_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
-            //declareParameter(new SqlParameter("pv_cdperson_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdperson_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdbloque_i" , Types.VARCHAR));
             String[] cols=new String[]{ "tipo", "otvalor" };
             declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));

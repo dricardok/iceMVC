@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
-import com.opensymphony.xwork2.ActionContext;
 
 import mx.com.segurossura.emision.service.AgentesManager;
 
@@ -130,13 +129,10 @@ public class AgentesAction extends PrincipalCoreAction {
 	                )}
 	)
     public String guardarAgentes () {
-		
         logger.debug(Utils.log("### cargar params: ", params));
         logger.debug(Utils.log("### cargar listaAgentes: ", agentes));
-        
         try {
-        
-        	session = ActionContext.getContext().getSession();
+        	// this.session = ActionContext.getContext().getSession();
             Utils.validate(params, "No se recibieron datos para cargar cotizaci\u00f3n");
             String cdunieco = params.get("cdunieco"),
                    cdramo = params.get("cdramo"),
@@ -155,18 +151,11 @@ public class AgentesAction extends PrincipalCoreAction {
             if (StringUtils.isBlank(nmsuplem)) {
                 nmsuplem = "0";
             }
-            
-            
-            
-            
             list = agentesManager.guardarAgentes(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmcuadro, porredau, agentes);
-            
             success = true;
-            
         } catch (Exception ex) {
             message = Utils.manejaExcepcion(ex);
         }
-        
         return SUCCESS;
     }
 	

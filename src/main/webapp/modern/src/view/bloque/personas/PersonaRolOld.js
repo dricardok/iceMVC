@@ -1,9 +1,9 @@
 /**
  * 
  */
-Ext.define('Ice.view.bloque.personas.PersonaRol', {
+Ext.define('Ice.view.bloque.personas.PersonaRolOld', {
     extend: 'Ice.view.componente.PanelIce',
-    xtype: 'cdpersoncdrol',
+    xtype: 'cdpersoncdrolold',
     
     config: {
         cdramo: null,

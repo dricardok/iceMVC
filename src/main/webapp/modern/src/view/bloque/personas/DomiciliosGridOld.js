@@ -1,7 +1,7 @@
-Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
+Ext.define('Ice.view.bloque.personas.DomiciliosGridOld', {
     
         extend  :       'Ext.grid.Grid',
-        xtype   :       'domicilios',
+        xtype   :       'domiciliosold',
         title   :       'Domicilios',
         config  :       {
             cdperson        :   null,

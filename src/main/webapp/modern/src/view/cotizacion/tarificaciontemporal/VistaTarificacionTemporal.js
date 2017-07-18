@@ -4,7 +4,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 	
 	controller: 'tarificaciontemporal',
 	
-	height: '100%',
+	//height: '100%',
+	padding: '20 0 0 20',
 	
     center: true,
     
@@ -14,7 +15,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 	
     itemTpl: new Ext.XTemplate(
     		'<tpl for=".">',
-            '<div class="btn_rol_suscriptor thumb" style="width:200px;">',
+            '<div class="btn_rol_suscriptor thumb" style="width:200px; float: left; margin: 0px 20px 20px 0px;">',
                '<table style="width:100%">',
                    '<tr>',
                        '<td style="text-align:center;width:100% ">{total}</td>',
