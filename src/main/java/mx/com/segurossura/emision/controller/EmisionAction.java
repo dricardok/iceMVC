@@ -1,6 +1,7 @@
 
 package mx.com.segurossura.emision.controller;
 
+import java.lang.management.ManagementFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,8 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.biosnettcs.core.Constantes;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
+import com.biosnettcs.portal.model.UsuarioVO;
+import com.opensymphony.xwork2.ActionContext;
 
 import mx.com.segurossura.emision.service.EmisionManager;
 
@@ -708,7 +712,8 @@ public class EmisionAction extends PrincipalCoreAction {
             }
         )   
     public String confirmarPoliza() {
-    	logger.debug(Utils.log("###### confirmarPoliza params = ", params));
+    	logger.debug(Utils.log("###### confirmarPoliza params = ", params));    	
+    	
     	try {
     	    Utils.validate(params, "No se recibieron datos");
     	    String cdunieco  = params.get("cdunieco"),
@@ -734,6 +739,55 @@ public class EmisionAction extends PrincipalCoreAction {
     	}
     	return SUCCESS;
     }
+    
+    @Action(        
+            value = "realizarPago", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )   
+    public String realizarPago() {
+    	logger.debug(Utils.log("###### confirmarPoliza params = ", params));
+    	@SuppressWarnings("rawtypes")
+		Map session = ActionContext.getContext().getSession();
+		
+		UsuarioVO user = (UsuarioVO) session.get(Constantes.USER);
+		// Si el usuario completo existe en sesion:
+        if (user != null && user.getRolActivo() != null && StringUtils.isNotBlank(user.getRolActivo().getCdsisrol())) {
+			
+            String pid = ManagementFactory.getRuntimeMXBean().getName();
+            logger.info("Usuario en sesion: {} - {} \nRol Activo: {} - {}\npid: {}", 
+                    user.getCdusuari(), user.getDsusuari(), 
+                    user.getRolActivo().getCdsisrol(), user.getRolActivo().getDssisrol(), pid);
+        }
+    	
+    	try {
+    	    Utils.validate(params, "No se recibieron datos");
+    	    
+    	    String cdunieco  = params.get("cdunieco"),
+    	           cdramo    = params.get("cdramo"),
+    	           estado    = params.get("estado"),
+    	           nmpoliza  = params.get("nmpoliza"),
+    	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
+    	           codseg  = params.get("codseg"),
+    	           usuario = user.getCdusuari();
+    	    
+    	    Utils.validate(cdunieco, "Falta cdunieco",
+    	                   cdramo,   "Falta cdramo",
+    	                   estado,   "Falta estado",
+    	                   nmpoliza, "Falta nmpoliza",
+    	                   codseg, "Falta codigo de seguridad");
+    	    
+    	    String nmpolizaEmitida = emisionManager.realizarPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, codseg, usuario);
+    	    
+    	    
+    		success = true;
+    	} catch (Exception ex) {
+    	    message = Utils.manejaExcepcion(ex);
+    	}
+    	return SUCCESS;
+    }
+    
     
     @Action(        
             value = "obtenerTarifaMultipleTemp", 

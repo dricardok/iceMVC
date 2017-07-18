@@ -202,4 +202,8 @@ public interface EmisionDAO {
             String otvalor03, String otvalor04, String otvalor05, String otvalor06, String otvalor07, String otvalor08,
             String otvalor09, String otvalor10, String otvalor11, String otvalor12, String otvalor13, String otvalor14,
             String otvalor15, String accion) throws Exception;
+    
+    
+    public List<Map<String, String>> obtenerDatosPago(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+    
 }
