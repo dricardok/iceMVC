@@ -2,7 +2,7 @@ $dashboard-item-spacing: 20px;
 
 .dashboard > * > .x-inner,
 .dashboard > * > * > .x-inner {
-    padding: 0 0 ;
+    padding: 0 0 0 20px !important;
 }
 
 .dashboard-item {

@@ -4,7 +4,11 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
 
     // config ext
     controller: 'datosiniciales',
-    scrollable: true,
+    platformConfig: {
+        '!desktop': {
+            scrollable: true
+        }
+    },
 
     // config no ext
     config: {
@@ -44,7 +48,7 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
                     xtype: 'bloquedatosgenerales',
                     reference: 'formdatosgenerales',
                     
-                    title: 'Datos de p\u00f3liza',
+                    title: 'Datos de P\u00f3liza',
                     listeners: {
                         llaveGenerada: 'llaveGenerada'
                     }
@@ -52,7 +56,7 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
                     xtype: 'formauxiliar',
                     reference: 'formdatosauxiliares',
 
-                    title: 'Datos adicionales',
+                    title: 'Datos Adicionales',
 
                     bloque: 'B1',
                     cdtipsit: '*'

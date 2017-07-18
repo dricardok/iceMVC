@@ -15,27 +15,31 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
         }
     }],
     buttons: [
+         {
+            text: 'Anterior',
+            reference: 'anteriorbutton',
+            iconCls: 'x-fa fa-backward',
+            handler: 'onAnteriorclic'
+        }, 
+      
         {
             text: 'Cargar',
             reference: 'cargarbutton',
             iconCls: 'x-fa fa-cloud-download',
             handler: 'onCargarClic'
-        }, {
-            text: 'Anterior',
-            reference: 'anteriorbutton',
-            iconCls: 'x-fa fa-backward',
-            handler: 'onAnteriorclic'
-        }, {
+        },{
             text: 'Cotizar',
             reference: 'cotizarbutton',
             iconCls: 'x-fa fa-dollar',
             handler: 'onCotizarClic'
-        }, {
+        },
+        {
             text: 'Siguiente',
             reference: 'siguientebutton',
             iconCls: 'x-fa fa-forward',
             handler: 'onSiguienteClic'
         }
+        
     ],
 
     // config no ext
@@ -80,12 +84,6 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             if (config.estado === 'w') {
                 config.estado = 'W';
             }
-            
-            // parche para prueba de carga
-            // config.cdunieco = 1;
-            // config.estado = 'W';
-            // config.nmpoliza = 17196;
-            // config.nmsuplem = 0;
 
             var bloques = Ice.generaComponentes({
                 pantalla: 'COTIZACION',
@@ -100,18 +98,6 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             });
             
             config.bloques = bloques.COTIZACION.BLOQUES.items;
-            config.bloques = [
-                {
-                    name: 'datosiniciales',
-                    label: 'Datos generales'
-                }, {
-                    name: 'bloquesituacionesriesgo',
-                    label: 'Riesgo'
-                }, {
-                    name: 'bloquecoberturas',
-                    label: 'Coberturas'
-                }
-            ];
             if ((config.bloques || []).length === 0) {
                 throw 'No hay bloques configurados';
             }

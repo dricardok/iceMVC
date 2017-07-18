@@ -59,7 +59,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 	},
 	    
 	// configuracio ext
-	title: 'Situaciones de riesgo',
+	title: 'Situaciones de Riesgo',
 	
 	// para el scroll
 	
@@ -148,7 +148,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 					},{
 						xtype: 'formdoscolumnasice',
 						reference: 'form',
-						title: 'Editar situacion de riesgo',
+						title: 'Editar Situación de Riesgo',
 						items: comps.BLOQUE_LISTA_SITUACIONES.LISTA.items.concat(compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.items),
 						modelo: modelName,
 						// maxHeight: Ice.constantes.componente.contenedor.altura,

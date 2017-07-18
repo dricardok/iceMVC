@@ -10,7 +10,32 @@ Ext.define('Ice.view.componente.FormTresColumnasIce', {
     // config ext
     layout: 'responsivecolumn',
     bodyPadding: '0 0 0 80',
-    defaults: {
-        cls: ['big-33', 'small-100', 'ice-form-item', 'ice-form-item-classic']
+
+    constructor: function (config) {
+        Ice.log('Ice.view.componente.FormTresColumnasIce.constructor config:', config);
+        var me = this,
+            paso = 'Construyendo formulario';
+        try {
+            if ((config.items || []).length > 0) {
+                Ice.agregarClases(config.items, ['big-33', 'small-100']);
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+        me.callParent(arguments);
+    },
+
+    add: function () {
+        Ice.log('Ice.view.componente.FormTresColumnasIce.add args:', arguments);
+        var me = this,
+            paso = 'Agregando componentes al formulario';
+        try {
+            if (arguments.length > 0) {
+                Ice.agregarClases(arguments, ['big-33', 'small-100']);
+            }
+        }  catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+        me.callParent(arguments);
     }
 });

@@ -1,9 +1,11 @@
 Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
-	extend: 'Ice.view.componente.PanelIce',
+	extend: 'Ice.view.componente.VentanaIce',
 	xtype: 'tarificaciontemporal',
 	
 	title: 'Elige tu Plan',
 	
+	layout: 'fit',
+
 	config: {
 		cdunieco: null,
 		cdramo: null,
@@ -37,13 +39,19 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 			}
 	        
 			config.items = [
+				{
+                    xtype: 'tbtext',
+                    text: 'Elige tu Plan',
+                    cls: 'titulo_plan'
+                },
 	        	{
 	        		xtype: 'vistatarificaciontemporal',
+	        		style: 'background:#DEEBF4; padding: 0 0 0 3%; min-height: 800px;',
 	    			reference: 'vistatarificaciontemporal',
 	    				
 	    			cdunieco: config.cdunieco,
-					cdramo: config.cdramo,
-					estado: config.estado,
+					cdramo:   config.cdramo,
+					estado:   config.estado.toUpperCase(),
 					nmpoliza: config.nmpoliza,
 					nmsuplem: config.nmsuplem,
 					nmsituac: config.nmsituac,

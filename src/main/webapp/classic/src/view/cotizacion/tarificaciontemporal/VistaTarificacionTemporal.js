@@ -3,21 +3,22 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 	xtype: 'vistatarificaciontemporal',
 	
 	controller: 'tarificaciontemporal',
-	
+	cls: 'titulo_plan',
 	height: '100%',
 	tpl: [
         '<tpl for=".">',
-             '<div class="btn_rol_suscriptor thumb" style="width:200px; float:left;">',
-                '<table style="width:100%">',
+             //'<div class="btn_rol_suscriptor thumb" style="width:200px; float:left;">',
+        	    '<div class="plan_pago thumb">',
+                '<table class="plan_pago_base shadow_card" style="width:250px; min-height:300px;">',
                     '<tr>',
-                        '<td style="text-align:center;width:100% ">{total}</td>',
+                        '<td class="plan_pago_monto thumb">{total}<p class="moneda">Pesos</p><p class="rec_subsecuente">Recibo Subsecuente</p></td>',
                     '</tr>',
-                    '<tr>',
-                        '<td style="text-align:center;width:100% ">',
-                        '<tpl if="cdperpag==1"><p>Mensual</p><p>Primer Recibo</p><p>{primer_recibo}</p>',
-                        '<tpl elseif="cdperpag==3"><p>Trimestral</p><p>Primer Recibo</p><p>{primer_recibo}</p',
-                        '<tpl elseif="cdperpag==6"><p>Semestral</p><p>Primer Recibo</p><p>{primer_recibo}<p></p>',
-                        '<tpl elseif="cdperpag==12"><p>Anual</p><p>Unico Recibo</p>',
+                    '<tr style="background-color:#fff;">',
+                        '<td style="text-align:center;">',
+                        '<tpl if="cdperpag==1"><p class="periocidad">Mensual</p><p>Primer Recibo</p><p class="monto_02">{primer_recibo}</p>',
+                        '<tpl elseif="cdperpag==3"><p class="periocidad">Trimestral</p><p>Primer Recibo</p><p class="monto_02">{primer_recibo}</p',
+                        '<tpl elseif="cdperpag==6"><p class="periocidad">Semestral</p><p>Primer Recibo</p><p class="monto_02">{primer_recibo}<p></p>',
+                        '<tpl elseif="cdperpag==12"><p class="periocidad">Anual</p><p>Unico Recibo</p>',
                         '</tpl>',
                         '</td>',
                     '</tr>',
@@ -27,12 +28,13 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
     ],
     
     multiSelect: false,
-    style: 'background:#DEEAF4',
-    itemSelector: 'div.thumb',
+     itemSelector: 'td.thumb',
     
     listeners: {
     	itemclick: 'onItemClic'
     },
+
+	padding: '40 0 0 40',
     
     config: {
     	cdunieco: null,
@@ -49,8 +51,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 			paso = 'Construyendo dataview de vista previa';
 		
 		try{
-			/*
-			config.cdunieco = 1;
+			
+			/*config.cdunieco = 1;
 			config.cdramo = 201;
 			config.estado = 'W';
 			config.nmpoliza = 613805;*/

@@ -1,6 +1,6 @@
-Ext.define('Ice.view.bloque.agrupadores.BloqueAgrupadores', {
-    extend: 'Ext.panel.Panel',
-    xtype: 'bloqueagrupadores',
+Ext.define('Ice.view.bloque.agrupadores.BloqueAgrupadoresOld', {
+    extend: 'Ext.Panel',
+    xtype: 'bloqueagrupadoresold',
     
     requires: [],
     
@@ -8,7 +8,8 @@ Ext.define('Ice.view.bloque.agrupadores.BloqueAgrupadores', {
     
     // configuracion ext
     title: 'Agrupadores',
-    //layout: 'vbox',
+    layout: 'vbox',
+    scrollable: true,
     
     // configuracion no ext
     config: {

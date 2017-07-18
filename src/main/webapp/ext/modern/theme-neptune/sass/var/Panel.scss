@@ -613,7 +613,7 @@ $panel-anchor-width: dynamic($panel-anchor-height * 2.33);
 
     .x-panel-inner#{$ui-suffix} {
         padding: $body-padding;
-        background-color: $body-background-color;
+        background-color:  $azulbd;
         color: $body-color;
         @include border($body-border-width, $body-border-style, $body-border-color);
         @include font($body-font-weight, $body-font-size, $body-line-height, $body-font-family);
@@ -633,12 +633,12 @@ $panel-anchor-width: dynamic($panel-anchor-height * 2.33);
     }
 
     .x-panel-header#{$ui-suffix} {
-        @include background-gradient($header-background-color, $header-background-gradient);
+        @include background-gradient($azulo-s, $header-background-gradient);
 
-        color: $header-color;
+        color: $blanco-s;
         padding: $header-padding;
         @include font($header-font-weight, $header-font-size, $header-line-height, $header-font-family);
-        @include border($header-border-width, $header-border-style, $header-border-color);
+        @include border($header-border-width, $header-border-style, $azulo-s);
         box-shadow: $header-shadow;
         z-index: $header-z-index;
         @if $header-shadow != null {
@@ -774,3 +774,5 @@ $panel-anchor-width: dynamic($panel-anchor-height * 2.33);
         $anchor-height: $panel-anchor-height
     );
 }
+
+

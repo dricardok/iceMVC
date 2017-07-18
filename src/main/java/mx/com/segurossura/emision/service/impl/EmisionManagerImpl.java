@@ -15,11 +15,15 @@ import org.springframework.stereotype.Service;
 import com.biosnettcs.core.Constantes;
 import com.biosnettcs.core.Utils;
 
+import mx.com.royalsun.alea.commons.bean.Banco;
 import mx.com.royalsun.alea.commons.bean.Documento;
+import mx.com.royalsun.alea.commons.bean.RequestWs;
+import mx.com.royalsun.alea.commons.bean.Tarjeta;
 import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.dao.SituacionDAO;
 import mx.com.segurossura.emision.service.EmisionManager;
 import mx.com.segurossura.emision.service.ImpresionManager;
+import mx.com.segurossura.emision.service.PagoManager;
 import mx.com.segurossura.general.catalogos.model.Bloque;
 import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
 import mx.com.segurossura.general.producto.model.EstadoPoliza;
@@ -40,6 +44,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	
 	@Autowired
 	private DocumentosDAO documentosDAO;
+	
+	@Autowired
+	private PagoManager pagoManager;
 
 	@Override
 	public void movimientoTvalogar(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
@@ -230,22 +237,19 @@ public class EmisionManagerImpl implements EmisionManager {
 	@Override
 	public List<Map<String, String>> ejecutarValidaciones(String cdunieco, String cdramo, String estado,
 			String nmpoliza, String nmsituac, String nmsuplem, List<String> cdbloque) throws Exception {
-
-		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "\n@@@@@@ borraEstructuraSituacion"));
-		String paso = "";
+		logger.debug("\n@@@@@@ ejecutarValidaciones @@@@@@");
+		String paso = "Ejecutando validaciones";
+		List<Map<String, String>> validaciones = new ArrayList<Map<String, String>>();
 		try {
-
-			List<Map<String, String>> lista = new ArrayList<>();
 			for (String bloque : cdbloque) {
-				lista.addAll(emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, null,
+			    validaciones.addAll(emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, null,
 						bloque));
 			}
-
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}
-		logger.debug(Utils.join("\n@@@@@@ borraEstructuraSituacion", "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
-		return null;
+		logger.debug(Utils.join("\n@@@@@@ ejecutarValidaciones validaciones = ", validaciones));
+		return validaciones;
 	}
 
 	@Override
@@ -443,7 +447,8 @@ public class EmisionManagerImpl implements EmisionManager {
 	@Override
 	public List<Map<String, String>> obtenerDatosTarificacion(String cdunieco, String cdramo, String estado,
 			String nmpoliza) throws Exception {
-		return emisionDAO.obtenerDatosTarificacion(cdunieco, cdramo, estado, nmpoliza);
+		//return emisionDAO.obtenerDatosTarificacion(cdunieco, cdramo, estado, nmpoliza);
+		return  emisionDAO.obtenerDetalleTarificacion(cdunieco, cdramo, estado, nmpoliza);
 	}
 
 	@Override
@@ -473,9 +478,43 @@ public class EmisionManagerImpl implements EmisionManager {
 	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception {
 		String paso = null, nmpolizaEmitida = null;
+		Banco banco = null;
+		Tarjeta tarjeta = null;
+		RequestWs request = null;
+		
+		/* Generar beans para el RequestWs del servicio de Pago		
+		Banco banco = new Banco();
+        banco.setClaveBanco("052");
+        banco.setDescBanco("IXE");
+        banco.setLstGestores(null);
+
+        Tarjeta tarjeta = new Tarjeta("4259818000071113");
+        tarjeta.setCodigoSeguridad("123");
+        tarjeta.setTipo("C");
+        tarjeta.setDescTipo("CREDITO");
+        tarjeta.setCodigo("425981");
+        tarjeta.setFechaVencimiento("12/15");
+        tarjeta.setTarjetahabiente("Elias Mendoza Orozco");
+        tarjeta.setBanco(banco);
+
+        RequestWs request = new RequestWs();
+        request.setCdunieco(72);
+        request.setCdramo(601);
+        request.setNmpoliza(12088);
+        request.setNmrecibo(1004458);
+        request.setImporte(18.32);
+        request.setMoneda("MXP");
+
+        request.setEmail("elias.mendoza@mx.rsagroup.com");
+        request.setUsuario("OPS$FEADM");
+
+        request.setTarjeta(tarjeta);
+		*/
+		
 		try {
 		    paso = "Cobrar primer recibo (pago con tarjeta)";
 		    // TODO: Invocar primer servicio de cobro
+		    pagoManager.realizaPago(request);
 		    
 			paso = "Confirmando p\u00f3liza";
 			nmpolizaEmitida = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
@@ -511,6 +550,13 @@ public class EmisionManagerImpl implements EmisionManager {
                         new Date(), documento.getId(), documento.getNombre(), tipmov, 
                         Constantes.SI, cdtiptra, codidocu, new Date(), cdorddoc, cdmoddoc, 
                         nmcertif, nmsituac, documento.getUrl(), Constantes.INSERT_MODE);
+                
+                
+                // TODO: Consumir la liga de cada documento y guardarlo en el sistema de archivos del servidor
+                //connectionTimeout, readTimeout = 10 seconds
+                //FileUtils.copyURLToFile(new URL(fromFile), new File(toFile), 10000, 10000);
+                
+                
             }
 			
 		} catch (Exception ex) {

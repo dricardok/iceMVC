@@ -1,8 +1,3 @@
-/*
- * Objeto principal en la aplicacion ice
- * Delia prueba
- */
-
 // var Ice = Object.assign(Ice || {}, { // (Object.assign da error en explorer)
 var Ice = (
         // funcion anonima para mezclar (reemplaza a Object.assign)
@@ -18,7 +13,6 @@ var Ice = (
             return resObj;
         }
     )(Ice || {}, {
-
 
     logActivo: true,
 
@@ -83,16 +77,22 @@ var Ice = (
             tarificarPlanes: 'emision/generarTarificacionPlanes.action',
             tarificarPlan: 'emision/generarTarificacionPlan.action',
         	obtenerTarifaPlanes: 'emision/obtenerTarifaMultipleTemp.action',
-        	obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action'
+            obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action'
          },
          
-         bloque: {
+        bloque: {
         	 
             datosGenerales: {
                 cargar: 'emision/datosGenerales/cargar.action',
                 guardar: 'emision/datosGenerales/guardar.action',
                 valoresDefectoFijos: 'emision/datosGenerales/valoresDefectoFijos.action',
-                valoresDefectoVariables: 'emision/datosGenerales/valoresDefectoVariables.action'
+                valoresDefectoVariables: 'emision/datosGenerales/valoresDefectoVariables.action',
+                obtenerCoaseguroCedido: 'emision/datosGenerales/obtenerCoaseguroCedido.action',
+                obtenerCoaseguroAceptado: 'emision/datosGenerales/obtenerCoaseguroAceptado.action',
+                obtenerModeloCoaseguro: 'emision/datosGenerales/obtenerModeloCoaseguro.action',
+                movimientoCoaseguroCedido: 'emision/datosGenerales/movimientoCoaseguroCedido.action',
+                movimientoMsupcoa: 'emision/datosGenerales/movimientoMsupcoa.action',
+                movimientoMpolicoa: 'emision/datosGenerales/movimientoMpolicoa.action'
             },
             listaSituaciones: {
                 cargar: 'emision/obteneListaSituaciones.action'//'jsonLocal/bloqueDatosSituacionCargar.json'
@@ -1210,19 +1210,26 @@ var Ice = (
                 throw 'No se recibi\u00f3 configuraci\u00f3n de column';
             }
             
-            
             // width // flex
+            if (config.width && Number(config.width) < 10) { // config.width < 10 es flex, se pasa a flex y se borra
+                if (!config.flex) {
+                    config.flex = config.width;
+                }
+                config.width = null;
+                delete config.width;
+            }
+
             if(!config.flex){
                 if(!config.width){
                     column.flex = 1;
-                    column.minWidth = 80;
+                    column.minWidth = 100;
                 } else {
                     column.width = Number(config.width);
                 }
             } else {
                 if(!config.width){
                     column.flex = Number(config.flex);
-                    column.minWidth = 80;
+                    column.minWidth = 100;
                 } else {
                     column.minWidth = Number(config.width);
                     column.flex =Number( config.flex);
@@ -1641,9 +1648,11 @@ var Ice = (
                 errores = Ice.obtenerErrores(form);
             if (errores) {
                 if (Ext.manifest.toolkit === 'classic') {
+                    Ext.suspendLayouts();
                     for (var name in errores) {
                         refs[name].setActiveError(errores[name]);
                     }
+                    Ext.resumeLayouts();
                     throw 'Favor de validar los datos';
                 } else {
                     var errorString = '';
@@ -1692,6 +1701,11 @@ var Ice = (
                         } else {
                             ref.setValue(datos[att]);
                         }
+                    }
+                }
+                for (var refKey in refs) {
+                    if (refs[refKey].heredar) {
+                        refs[refKey].heredar();
                     }
                 }
             }
@@ -1782,6 +1796,136 @@ var Ice = (
                 }
             }
             return resObj;
+        }
+    },
+
+    agregarClases: function (items, clases) {
+        Ice.log('Ice.agregarClase items:', items, 'clases:', clases);
+        var paso = 'Agregando clases';
+        try {
+            // convertir items a arreglo
+            items = items || [];
+            if (typeof items.length !== 'number') { // es objeto
+                items = [items];
+            }
+            if (items.length === 0) {
+                throw 'No hay items para agregar clases';
+            }
+
+            // convertir clases a arreglo
+            clases = clases || [];
+            if (typeof clases === 'string') {
+                clases = [clases]
+            }
+            if (clases.length === 0) {
+                throw 'No hay clases para agregar';
+            }
+
+            var agregar = function (item, clases) {
+                if (item.isXType) { // es componente ext
+                    if (Ext.manifest.toolkit === 'classic') {
+                        item.addCls(clases);
+                    } else {
+                        if (item.isXType('toolbar') !== true) { // no aplica a toolbars
+                            var userCls = item.getUserCls() || [];
+                            if (typeof userCls === 'string') {
+                                userCls = [userCls];
+                            }
+                            item.setUserCls(userCls.concat(clases));
+                        }
+                    }
+                } else { // es objeto de configuracion
+                    if (Ext.manifest.toolkit === 'classic') {
+                        var cls = item.cls || [];
+                        if (typeof cls === 'string') {
+                            cls = [cls];
+                        }
+                        item.cls = cls.concat(clases);
+                    } else {
+                        if (item.xtype !== 'toolbar') { // no aplica a toolbars
+                            var userCls = item.userCls || [];
+                            if (typeof userCls === 'string') {
+                                userCls = [userCls];
+                            }
+                            item.userCls = userCls.concat(clases);
+                        }
+                    }
+                }
+            };
+
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i];
+                if (item) {
+                    if (typeof item.length === 'number') { // es arreglo
+                        for (var j = 0; j < item.length; j++) {
+                            agregar(item[j], clases);
+                        }
+                    } else { // es objeto
+                        agregar(item, clases);
+                    }
+                }
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+
+    agregarEstilo: function (items, estilo) {
+        Ice.log('Ice.agregarEstilo items:', items, 'estilo:', estilo);
+        var paso = 'Agregando estilo';
+        try {
+            // convertir items a arreglo
+            items = items || [];
+            if (typeof items.length !== 'number') { // es objeto
+                items = [items];
+            }
+            if (items.length === 0) {
+                throw 'No hay items para agregar estilo';
+            }
+
+            if (!estilo || typeof estilo !== 'string') {
+                throw 'No hay estilo para agregar';
+            }
+
+            var agregar = function (item, estilo) {
+                if (item.isXType) { // es componente ext
+                    if (Ext.manifest.toolkit === 'classic') {
+                        // if (item.setFieldStyle) { // para form items
+                        //     item.setFieldStyle(estilo + ' ' + (item.fieldStyle || ''))
+                        // } else {
+                            item.setStyle(estilo + ' ' + (item.style || ''));
+                        // }
+                    } else {
+                        if (item.isXType('toolbar') !== true) { // no aplica a toolbars
+                            item.setStyle(estilo + ' ' + (item.getStyle() || ''));
+                        }
+                    }
+                } else { // es objeto de configuracion
+                    if (Ext.manifest.toolkit === 'classic') {
+                        // item.fieldStyle = estilo + ' ' + (item.fieldStyle || '');
+                        item.style = estilo + ' ' + (item.style || '');
+                    } else {
+                        if (item.xtype !== 'toolbar') { // no aplica a toolbars
+                            item.style = estilo + ' ' + (item.style || '');
+                        }
+                    }
+                }
+            };
+
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i];
+                if (item) {
+                    if (typeof item.length === 'number') { // es arreglo
+                        for (var j = 0; j < item.length; j++) {
+                            agregar(item[j], estilo);
+                        }
+                    } else { // es objeto
+                        agregar(item, estilo);
+                    }
+                }
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
         }
     }
 });

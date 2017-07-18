@@ -955,79 +955,12 @@
     );
 }
 
-//PANEL//
 
-    @include extjs-panel-ui(
-        $ui: 'ice-mesacontrol-framed',    
-        $ui-header-background-color: $azulo-s,    
-        $ui-border-color: $azulo-s,
-        $ui-header-font-weight: $bold-400,   
-        $ui-header-color: #FFF
-    );
-  
-
-  
-    
-//WINDOW//
-
-    @include extjs-window-ui( 
-        $ui: 'ice-window-framed',    
-        $ui-header-background-color: $azulo-s,    
-        $ui-border-color: $azulo-s,
-        $ui-header-font-weight: $bold-400, 
-        $ui-header-color: #FFF
-    );
 
  
 
 
 
-
-
- /*----------------Estilos Sura 2017*---------------------/
-    /*Clases icon Chevron del Panel e  input
-
-.x-tool-collapse-top:before {
-    content: "\f106";
-}
-.x-tool-expand-bottom:before{
-    content: "\f107";
-}
-
-.x-form-spinner-default{
-height: 11px !important;
-}
-
-
-.x-form-spinner-up-default:before{
-    content: "\f106" !important;
-    font-family:FontAwesome !important;
-    height: 11px !important;
-}
-
-.x-form-spinner-down-default:before{
-content: "\f107" !important;
-font-family:FontAwesome !important;
-height: 13px !important;
-}
-
-.x-column-header-over .x-column-header-trigger:before, .x-column-header-open .x-column-header-trigger:before{
-content: "\f107" !important;
-}
-        
- .x-treelist-item-expander:after{
-  content: "\f105" !important;
- }
-    
- 
- .x-treelist-item-expanded > * > * > .x-treelist-item-expander:after{
- content: "\f107" !important;
- }
- 
- .x-scroller > .x-inner:before, .x-scroller > .x-inner:after {
-content:"" !important;
-}
-*/
 
 
 

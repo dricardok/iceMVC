@@ -7,23 +7,42 @@ Ext.define('Ice.view.componente.ContainerIce', {
     ],
 
     // config ext
-    userCls: ['ice-container', 'ice-container-modern'],
+    referenceHolder: true, // para que se pueda hacer getReferences()
+
+    // config no ext
+    config: {
+        buttons: []
+    },
 
     constructor: function (config) {
         Ice.log('Ice.view.componente.ContainerIce.constructor config:', config);
         var me = this,
             paso = 'Construyendo contenedor';
         try {
-            if ((config.buttons || []).length > 0) {
-                config.items = [{
-                    xtype: 'toolbar',
-                    docked: 'bottom',
-                    items: config.buttons
-                }].concat(config.items || []);
-            }
+            Ice.agregarClases(config, ['ice-container', 'ice-container-modern']);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
         me.callParent(arguments);
+    },
+
+    initialize: function () {
+        Ice.log('Ice.view.componente.ContainerIce.initialize');
+        var me = this,
+            paso = 'Construyendo contenedor';
+        try {
+            me.callParent(arguments);
+
+            // botones
+            if ((me.getButtons() || []).length > 0) {
+                me.add({
+                    xtype: 'toolbar',
+                    docked: 'bottom',
+                    items: me.getButtons()
+                });
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
     }
 });

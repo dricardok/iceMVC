@@ -43,5 +43,10 @@ Ext.define('Ice.view.componente.TabPanelIce', {
     // convertir setActiveItem en setActiveTab
     setActiveTab: function (item) {
         this.setActiveItem(item);
+    },
+
+    // convertir getActiveItem en getActiveTab
+    getActiveTab: function () {
+        return this.getActiveItem();
     }
 });
