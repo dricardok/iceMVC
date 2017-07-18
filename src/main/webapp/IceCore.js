@@ -77,13 +77,9 @@ var Ice = (
             tarificarPlanes: 'emision/generarTarificacionPlanes.action',
             tarificarPlan: 'emision/generarTarificacionPlan.action',
         	obtenerTarifaPlanes: 'emision/obtenerTarifaMultipleTemp.action',
-<<<<<<< HEAD
         	obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action',
         	obtieneTvalopol: 'emision/obtieneTvalopol.action',
         	realizarPago: 'emision/realizarPago.action'
-=======
-            obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action'
->>>>>>> origin/dev
          },
          
         bloque: {

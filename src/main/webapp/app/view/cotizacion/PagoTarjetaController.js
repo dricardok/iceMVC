@@ -10,42 +10,40 @@ Ext.define('Ice.view.cotizacion.PagoTarjetaController', {
 	pagar: function () {
 		var me = this,
 			view = me.getView(),
-	    	paso = "Realizando Pago";		
+			ref  = me.getReferences().formpagotarjeta,
+	    	paso = "Realizando Pago";
+		
 		try{
-			Ice.validarFormulario(view);
+			combobanco = Ice.query('[name=cdbanco]', ref);			
+			//Ice.validarFormulario(view);					
 			
-			var valores = view.getValues();
+			Ice.request({
+	            mascara: paso,
+	            url: Ice.url.emision.realizarPago,
+	            params: Ice.convertirAParams({
+	                cdunieco: view.getCdunieco(),
+	                cdramo: view.getCdramo(),
+	                estado: view.getEstado(),
+	                nmpoliza: view.getNmpoliza(),
+	                nmsuplem: view.getNmsuplem(),
+	                cdbanco: ref.getValues().cdbanco,
+	                dsbanco: combobanco.getRawValue(),
+	                nmtarjeta: ref.getValues().nmtarjeta,
+	                codseg: ref.getValues().codseg,
+	                fevencm: ref.getValues().fevencm,
+	                fevenca: ref.getValues().fevenca,
+	                nombre: ref.getValues().nombre,
+	                email: ref.getValues().email	                
+	            }),
+	            success: function (action) {
+	            	
+	                Ext.Msg.alert('Aqui se manda a emitir');
+	                
+	            }
+	        });			
 			
-		}catch(e){
+		} catch(e) {
 			Ice.manejaExcepcion(e, paso);
 		}
-		
-	
-		/*
-		Ice.request({
-            mascara: paso,
-            url: Ice.url.emision.realizarPago,
-            params: Ice.convertirAParams({
-                cdunieco: view.getCdunieco(),
-                cdramo: view.getCdramo(),
-                estado: view.getEstado(),
-                nmpoliza: view.getNmpoliza(),
-                nmsuplem: view.getNmsuplem(),
-                /*cdbanco: ref.
-                dsbanco:
-                nmtarjeta:
-                codseg:
-                fevencm:
-                fecvena:
-                nombre:
-                email:
-                
-            }),
-            success: function (action) {
-                if (action.params) {
-                    Ice.cargarFormulario(view, action.params);
-                }
-            }
-        });*/
 	}
 });

@@ -1342,7 +1342,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		return listaDatos;
 	}
     
-<<<<<<< HEAD
+
 	protected class GetDatosPago extends StoredProcedure {
         protected GetDatosPago (DataSource dataSource) {
             super(dataSource, "PKG_DATA_ALEA.p_get_datospago");           
@@ -1357,7 +1357,10 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
 			compile();
-=======
+        }
+    }
+
+	
     @Override
     public List<Map<String, String>> obtenerPorcPartCoa (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
@@ -1584,7 +1587,6 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  ,  Types.VARCHAR));
             compile();
->>>>>>> origin/dev
         }
     }
 }

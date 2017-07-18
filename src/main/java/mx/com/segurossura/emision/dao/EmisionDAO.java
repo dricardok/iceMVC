@@ -203,11 +203,9 @@ public interface EmisionDAO {
             String otvalor09, String otvalor10, String otvalor11, String otvalor12, String otvalor13, String otvalor14,
             String otvalor15, String accion) throws Exception;
     
-<<<<<<< HEAD
-    
+   
     public List<Map<String, String>> obtenerDatosPago(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
     
-=======
     /**
      * Obtiene porcentaje de participacion por poliza
      * 
@@ -295,5 +293,5 @@ public interface EmisionDAO {
      * @throws Exception
      */
     public List<Map<String, String>> obtenerCoaseguroAceptado(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
->>>>>>> origin/dev
+
 }
