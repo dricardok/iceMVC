@@ -325,28 +325,6 @@
                </goals>
              </execution>
            </executions>
-           <configuration>
-             <!-- 1.- Excluimos carpetas no necesarias para el war, son solo para el ambiente de desarrollo: -->
-             <warSourceExcludes>
-                .sencha/,
-                .settings/,
-                ext/,
-                build/,
-                WebContent/,
-                .classpath,
-                .gitignore,
-                .project
-             </warSourceExcludes>
-             <!-- 2.- Copiamos los archivos productivos al nivel de la carpeta de recursos web: -->
-             <webResources>
-               <resource>
-                 <!-- source directory relative to pom.xml: -->
-                 <directory>src/main/webapp/build/development/Ice</directory>
-                 <!-- target directory relative to root -->
-                 <targetPath>/</targetPath> 
-               </resource>
-             </webResources>
-           </configuration>
          </plugin>
         </plugins>
     </build>

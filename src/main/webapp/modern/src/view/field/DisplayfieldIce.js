@@ -12,7 +12,7 @@ Ext.define('Ice.view.field.DisplayfieldIce', {
         return this;
     },
     
-    constuctor	:	function(config){
+    constructor : function(config) {
     	if (config.label) {
             config.fieldLabel = config.label;
         }

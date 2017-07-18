@@ -3358,12 +3358,6 @@ body > .x-mask {
     border: 0 solid #00aec7;
     pointer-events: none;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-progress-bar-default:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/ProgressBar.scss:160 */
 .x-progressbar-default-cell > .x-grid-cell-inner,
 .x-progress-default-cell > .x-grid-cell-inner,
@@ -3479,12 +3473,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-btn-default-small-mc {
     padding: 7px 7px 7px 7px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-default-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:1px 1px 1px 1px, corners:url(images/btn/btn-default-small-corners.gif), sides:url(images/btn/btn-default-small-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:445 */
 .x-btn-default-small {
@@ -3916,42 +3904,6 @@ body > .x-mask {
     border-width: 1px;
     border-color: rgba(209, 215, 230, 0.9500000000000001);
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-default-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-small-focus-corners.gif), sides:url(images/btn/btn-default-small-focus-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-over.x-btn-default-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-small-over-corners.gif), sides:url(images/btn/btn-default-small-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-over.x-btn-default-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-small-focus-over-corners.gif), sides:url(images/btn/btn-default-small-focus-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-pressed.x-btn-default-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-small-pressed-corners.gif), sides:url(images/btn/btn-default-small-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-pressed.x-btn-default-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-small-focus-pressed-corners.gif), sides:url(images/btn/btn-default-small-focus-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-disabled.x-btn-default-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-small-disabled-corners.gif), sides:url(images/btn/btn-default-small-disabled-sides.gif)" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1257 */
 .x-button-default-small-cell > .x-grid-cell-inner {
     padding-top: 0px;
@@ -4063,12 +4015,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-btn-default-medium-mc {
     padding: 8px 8px 8px 8px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-default-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:1px 1px 1px 1px, corners:url(images/btn/btn-default-medium-corners.gif), sides:url(images/btn/btn-default-medium-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:445 */
 .x-btn-default-medium {
@@ -4500,42 +4446,6 @@ body > .x-mask {
     border-width: 1px;
     border-color: rgba(209, 215, 230, 0.9500000000000001);
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-default-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-medium-focus-corners.gif), sides:url(images/btn/btn-default-medium-focus-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-over.x-btn-default-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-medium-over-corners.gif), sides:url(images/btn/btn-default-medium-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-over.x-btn-default-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-medium-focus-over-corners.gif), sides:url(images/btn/btn-default-medium-focus-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-pressed.x-btn-default-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-medium-pressed-corners.gif), sides:url(images/btn/btn-default-medium-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-pressed.x-btn-default-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-medium-focus-pressed-corners.gif), sides:url(images/btn/btn-default-medium-focus-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-disabled.x-btn-default-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-medium-disabled-corners.gif), sides:url(images/btn/btn-default-medium-disabled-sides.gif)" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1257 */
 .x-button-default-medium-cell > .x-grid-cell-inner {
     padding-top: 0;
@@ -4647,12 +4557,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-btn-default-large-mc {
     padding: 9px 9px 9px 9px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-default-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:1px 1px 1px 1px, corners:url(images/btn/btn-default-large-corners.gif), sides:url(images/btn/btn-default-large-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:445 */
 .x-btn-default-large {
@@ -5084,42 +4988,6 @@ body > .x-mask {
     border-width: 1px;
     border-color: rgba(209, 215, 230, 0.9500000000000001);
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-default-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-large-focus-corners.gif), sides:url(images/btn/btn-default-large-focus-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-over.x-btn-default-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-large-over-corners.gif), sides:url(images/btn/btn-default-large-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-over.x-btn-default-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-large-focus-over-corners.gif), sides:url(images/btn/btn-default-large-focus-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-pressed.x-btn-default-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-large-pressed-corners.gif), sides:url(images/btn/btn-default-large-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-pressed.x-btn-default-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-large-focus-pressed-corners.gif), sides:url(images/btn/btn-default-large-focus-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-disabled.x-btn-default-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-large-disabled-corners.gif), sides:url(images/btn/btn-default-large-disabled-sides.gif)" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1257 */
 .x-button-default-large-cell > .x-grid-cell-inner {
     padding-top: 0;
@@ -5231,12 +5099,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-btn-default-toolbar-small-mc {
     padding: 7px 7px 7px 7px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-default-toolbar-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:1px 1px 1px 1px, corners:url(images/btn/btn-default-toolbar-small-corners.gif), sides:url(images/btn/btn-default-toolbar-small-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:445 */
 .x-btn-default-toolbar-small {
@@ -5666,42 +5528,6 @@ body > .x-mask {
     border-width: 1px;
     border-color: #00aec7;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-default-toolbar-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-small-focus-corners.gif), sides:url(images/btn/btn-default-toolbar-small-focus-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-over.x-btn-default-toolbar-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-small-over-corners.gif), sides:url(images/btn/btn-default-toolbar-small-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-over.x-btn-default-toolbar-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-small-focus-over-corners.gif), sides:url(images/btn/btn-default-toolbar-small-focus-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-pressed.x-btn-default-toolbar-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-small-pressed-corners.gif), sides:url(images/btn/btn-default-toolbar-small-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-pressed.x-btn-default-toolbar-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-small-focus-pressed-corners.gif), sides:url(images/btn/btn-default-toolbar-small-focus-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-disabled.x-btn-default-toolbar-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-small-disabled-corners.gif), sides:url(images/btn/btn-default-toolbar-small-disabled-sides.gif)" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1257 */
 .x-button-default-toolbar-small-cell > .x-grid-cell-inner {
     padding-top: 0px;
@@ -5813,12 +5639,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-btn-default-toolbar-medium-mc {
     padding: 8px 8px 8px 8px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-default-toolbar-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:1px 1px 1px 1px, corners:url(images/btn/btn-default-toolbar-medium-corners.gif), sides:url(images/btn/btn-default-toolbar-medium-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:445 */
 .x-btn-default-toolbar-medium {
@@ -6248,42 +6068,6 @@ body > .x-mask {
     border-width: 1px;
     border-color: #00aec7;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-default-toolbar-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-medium-focus-corners.gif), sides:url(images/btn/btn-default-toolbar-medium-focus-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-over.x-btn-default-toolbar-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-medium-over-corners.gif), sides:url(images/btn/btn-default-toolbar-medium-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-over.x-btn-default-toolbar-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-medium-focus-over-corners.gif), sides:url(images/btn/btn-default-toolbar-medium-focus-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-pressed.x-btn-default-toolbar-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-medium-pressed-corners.gif), sides:url(images/btn/btn-default-toolbar-medium-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-pressed.x-btn-default-toolbar-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-medium-focus-pressed-corners.gif), sides:url(images/btn/btn-default-toolbar-medium-focus-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-disabled.x-btn-default-toolbar-medium:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-medium-disabled-corners.gif), sides:url(images/btn/btn-default-toolbar-medium-disabled-sides.gif)" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1257 */
 .x-button-default-toolbar-medium-cell > .x-grid-cell-inner {
     padding-top: 0;
@@ -6395,12 +6179,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-btn-default-toolbar-large-mc {
     padding: 9px 9px 9px 9px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-default-toolbar-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:1px 1px 1px 1px, corners:url(images/btn/btn-default-toolbar-large-corners.gif), sides:url(images/btn/btn-default-toolbar-large-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:445 */
 .x-btn-default-toolbar-large {
@@ -6829,42 +6607,6 @@ body > .x-mask {
 .x-nbr .x-segmented-button-item.x-btn-focus.x-btn-pressed.x-btn-default-toolbar-large:after {
     border-width: 1px;
     border-color: #00aec7;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-default-toolbar-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-large-focus-corners.gif), sides:url(images/btn/btn-default-toolbar-large-focus-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-over.x-btn-default-toolbar-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-large-over-corners.gif), sides:url(images/btn/btn-default-toolbar-large-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-over.x-btn-default-toolbar-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-large-focus-over-corners.gif), sides:url(images/btn/btn-default-toolbar-large-focus-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-pressed.x-btn-default-toolbar-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-large-pressed-corners.gif), sides:url(images/btn/btn-default-toolbar-large-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-pressed.x-btn-default-toolbar-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-large-focus-pressed-corners.gif), sides:url(images/btn/btn-default-toolbar-large-focus-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-disabled.x-btn-default-toolbar-large:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:2px 2px 2px 2px, corners:url(images/btn/btn-default-toolbar-large-disabled-corners.gif), sides:url(images/btn/btn-default-toolbar-large-disabled-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1257 */
 .x-button-default-toolbar-large-cell > .x-grid-cell-inner {
@@ -7629,12 +7371,6 @@ body > .x-mask {
 .x-toolbar-more-icon:before {
     content: "\f0c9";
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-toolbar-default:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/toolbar/Toolbar.scss:232 */
 .x-toolbar-footer {
     padding: 6px 0 6px 6px;
@@ -7790,12 +7526,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/etc/mixins/font-icon.scss:126 */
 .x-toolbar-more-icon:before {
     content: "\f0c9";
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-toolbar-footer:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/toolbar/Toolbar.scss:417 */
 .x-toolbar-footer > .sinfondo {
@@ -8042,30 +7772,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:758 */
 .x-panel .x-panel-header-default-collapsed-border-left {
     border-right-width: 1px !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-header-default-top:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-header-default-bottom:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:top" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-header-default-left:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:right" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-header-default-right:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:left" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:794 */
 .x-panel-header-default-horizontal .x-tool-after-title {
@@ -8503,12 +8209,6 @@ body > .x-mask {
 .x-panel-default-framed-mc {
     padding: 0px 0px 0px 0px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-default-framed:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/panel/panel-default-framed-corners.gif), sides:url(images/panel/panel-default-framed-sides.gif)" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-panel-header-default-framed-top {
     -moz-border-radius-topleft: 0;
@@ -8602,12 +8302,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-panel-header-default-framed-top-mc {
     padding: 10px 14px 10px 14px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-header-default-framed-top:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 0 2px" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-panel-header-default-framed-right {
@@ -8708,12 +8402,6 @@ body > .x-mask {
 .x-panel-header-default-framed-right-mc {
     padding: 14px 10px 14px 10px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-header-default-framed-right:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 0" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-panel-header-default-framed-bottom {
     -moz-border-radius-topleft: 0;
@@ -8807,12 +8495,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-panel-header-default-framed-bottom-mc {
     padding: 10px 14px 10px 14px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-header-default-framed-bottom:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:0 2px 2px 2px" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-panel-header-default-framed-left {
@@ -8913,12 +8595,6 @@ body > .x-mask {
 .x-panel-header-default-framed-left-mc {
     padding: 14px 10px 14px 10px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-header-default-framed-left:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 0 2px 2px" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-panel-header-default-framed-collapsed-top {
     -moz-border-radius-topleft: 0;
@@ -9012,12 +8688,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-panel-header-default-framed-collapsed-top-mc {
     padding: 10px 14px 10px 14px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-header-default-framed-collapsed-top:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-panel-header-default-framed-collapsed-right {
@@ -9118,12 +8788,6 @@ body > .x-mask {
 .x-panel-header-default-framed-collapsed-right-mc {
     padding: 14px 10px 14px 10px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-header-default-framed-collapsed-right:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-panel-header-default-framed-collapsed-bottom {
     -moz-border-radius-topleft: 0;
@@ -9217,12 +8881,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-panel-header-default-framed-collapsed-bottom-mc {
     padding: 10px 14px 10px 14px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-header-default-framed-collapsed-bottom:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-panel-header-default-framed-collapsed-left {
@@ -9322,12 +8980,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-panel-header-default-framed-collapsed-left-mc {
     padding: 14px 10px 14px 10px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-panel-header-default-framed-collapsed-left:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:644 */
 .x-panel .x-panel-header-default-framed-top {
@@ -9691,12 +9343,6 @@ body > .x-mask {
 .x-btn-group-default-framed-mc {
     padding: 0px 0px 0px 0px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-group-default-framed:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/btn-group/btn-group-default-framed-corners.gif), sides:url(images/btn-group/btn-group-default-framed-sides.gif)" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-btn-group-default-framed-notitle {
     -webkit-border-radius: 2px;
@@ -9799,12 +9445,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-btn-group-default-framed-notitle-mc {
     padding: 0px 0px 0px 0px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-group-default-framed-notitle:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/btn-group/btn-group-default-framed-notitle-corners.gif), sides:url(images/btn-group/btn-group-default-framed-notitle-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/container/ButtonGroup.scss:101 */
 .x-btn-group-default-framed {
@@ -9993,12 +9633,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-window-default-mc {
     padding: 0px 0px 0px 0px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-window-default:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/window/window-default-corners.gif), sides:url(images/window/window-default-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/window/Window.scss:259 */
 .x-window-body-default {
@@ -10217,12 +9851,6 @@ body > .x-mask {
 .x-window-header-default-top-mc {
     padding: 10px 14px 10px 14px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-window-header-default-top:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/window-header/window-header-default-top-corners.gif), sides:url(images/window-header/window-header-default-top-sides.gif)" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-window-header-default-right {
     -moz-border-radius-topleft: 0;
@@ -10343,12 +9971,6 @@ body > .x-mask {
 .x-window-header-default-right-mc {
     padding: 14px 10px 14px 10px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-window-header-default-right:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/window-header/window-header-default-right-corners.gif), corners-rtl:url(images/window-header/window-header-default-right-corners-rtl.gif), sides:url(images/window-header/window-header-default-right-sides.gif)" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-window-header-default-bottom {
     -moz-border-radius-topleft: 0;
@@ -10459,12 +10081,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-window-header-default-bottom-mc {
     padding: 10px 14px 10px 14px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-window-header-default-bottom:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/window-header/window-header-default-bottom-corners.gif), sides:url(images/window-header/window-header-default-bottom-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-window-header-default-left {
@@ -10586,12 +10202,6 @@ body > .x-mask {
 .x-window-header-default-left-mc {
     padding: 14px 10px 14px 10px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-window-header-default-left:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/window-header/window-header-default-left-corners.gif), corners-rtl:url(images/window-header/window-header-default-left-corners-rtl.gif), sides:url(images/window-header/window-header-default-left-sides.gif)" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-window-header-default-collapsed-top {
     -moz-border-radius-topleft: 0;
@@ -10702,12 +10312,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-window-header-default-collapsed-top-mc {
     padding: 10px 14px 10px 14px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-window-header-default-collapsed-top:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/window-header/window-header-default-collapsed-top-corners.gif), sides:url(images/window-header/window-header-default-collapsed-top-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-window-header-default-collapsed-right {
@@ -10829,12 +10433,6 @@ body > .x-mask {
 .x-window-header-default-collapsed-right-mc {
     padding: 14px 10px 14px 10px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-window-header-default-collapsed-right:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/window-header/window-header-default-collapsed-right-corners.gif), corners-rtl:url(images/window-header/window-header-default-collapsed-right-corners-rtl.gif), sides:url(images/window-header/window-header-default-collapsed-right-sides.gif)" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-window-header-default-collapsed-bottom {
     -moz-border-radius-topleft: 0;
@@ -10945,12 +10543,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-window-header-default-collapsed-bottom-mc {
     padding: 10px 14px 10px 14px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-window-header-default-collapsed-bottom:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/window-header/window-header-default-collapsed-bottom-corners.gif), sides:url(images/window-header/window-header-default-collapsed-bottom-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-window-header-default-collapsed-left {
@@ -11071,12 +10663,6 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-window-header-default-collapsed-left-mc {
     padding: 14px 10px 14px 10px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-window-header-default-collapsed-left:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/window-header/window-header-default-collapsed-left-corners.gif), corners-rtl:url(images/window-header/window-header-default-collapsed-left-corners-rtl.gif), sides:url(images/window-header/window-header-default-collapsed-left-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/window/Window.scss:549 */
 .x-window-header-default .x-window-header-icon {
@@ -12168,18 +11754,6 @@ a.x-monthpicker-yearnav-button:hover {
 .x-monthpicker-small .x-monthpicker-yearnav-button {
     margin-top: 12px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-datepicker-header:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-datepicker-footer:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/form/field/Date.scss:2 */
 .x-form-field-date .x-form-date-trigger {
     font-size: 16px;
@@ -12326,12 +11900,6 @@ a.x-monthpicker-yearnav-button:hover {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-tip-default-mc {
     padding: 0px 0px 0px 0px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-tip-default:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/tip/tip-default-corners.gif), sides:url(images/tip/tip-default-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/var/tip/Tip.scss:313 */
 .x-tip-default {
@@ -12512,12 +12080,6 @@ a.x-monthpicker-yearnav-button:hover {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-tip-form-invalid-mc {
     padding: 0px 0px 0px 0px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-tip-form-invalid:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:2px 2px 2px 2px, corners:url(images/tip/tip-form-invalid-corners.gif), sides:url(images/tip/tip-form-invalid-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/var/tip/Tip.scss:313 */
 .x-tip-form-invalid {
@@ -13298,18 +12860,6 @@ a.x-color-picker-item:hover {
 .x-no-header-borders .x-column-header .x-column-header-inner {
     padding-top: 7px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-column-header:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-column-header-over:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/grid/column/Action.scss:1 */
 .x-grid-cell-inner-action-col {
     padding: 7px 4px 7px 4px;
@@ -13481,12 +13031,6 @@ a.x-color-picker-item:hover {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-btn-grid-cell-small-mc {
     padding: 7px 7px 7px 7px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-grid-cell-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:1px 1px 1px 1px, corners:url(images/btn/btn-grid-cell-small-corners.gif), sides:url(images/btn/btn-grid-cell-small-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:445 */
 .x-btn-grid-cell-small {
@@ -13895,42 +13439,6 @@ a.x-color-picker-item:hover {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1194 */
 .x-nbr .x-segmented-button-item-vertical.x-btn-grid-cell-small.x-segmented-button-last:after {
     bottom: 1px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-grid-cell-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:1px 1px 1px 1px, corners:url(images/btn/btn-grid-cell-small-focus-corners.gif), sides:url(images/btn/btn-grid-cell-small-focus-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-over.x-btn-grid-cell-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:1px 1px 1px 1px, corners:url(images/btn/btn-grid-cell-small-over-corners.gif), sides:url(images/btn/btn-grid-cell-small-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-over.x-btn-grid-cell-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:1px 1px 1px 1px, corners:url(images/btn/btn-grid-cell-small-focus-over-corners.gif), sides:url(images/btn/btn-grid-cell-small-focus-over-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-pressed.x-btn-grid-cell-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:1px 1px 1px 1px, corners:url(images/btn/btn-grid-cell-small-pressed-corners.gif), sides:url(images/btn/btn-grid-cell-small-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-focus.x-btn-pressed.x-btn-grid-cell-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:1px 1px 1px 1px, corners:url(images/btn/btn-grid-cell-small-focus-pressed-corners.gif), sides:url(images/btn/btn-grid-cell-small-focus-pressed-sides.gif)" !important;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-btn-disabled.x-btn-grid-cell-small:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, stretch:bottom, frame:1px 1px 1px 1px, corners:url(images/btn/btn-grid-cell-small-disabled-corners.gif), sides:url(images/btn/btn-grid-cell-small-disabled-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1257 */
 .x-button-grid-cell-small-cell > .x-grid-cell-inner {
@@ -15058,12 +14566,6 @@ a.x-color-picker-item:hover {
 .x-grid-row-editor-buttons-default-bottom-mc {
     padding: 5px 1px 1px 1px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-grid-row-editor-buttons-default-bottom:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:0 5px 5px 5px, corners:url(images/grid-row-editor-buttons/grid-row-editor-buttons-default-bottom-corners.gif), sides:url(images/grid-row-editor-buttons/grid-row-editor-buttons-default-bottom-sides.gif)" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-grid-row-editor-buttons-default-top {
     -moz-border-radius-topleft: 5px;
@@ -15174,12 +14676,6 @@ a.x-color-picker-item:hover {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-grid-row-editor-buttons-default-top-mc {
     padding: 1px 1px 5px 1px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-grid-row-editor-buttons-default-top:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:5px 5px 0 5px, corners:url(images/grid-row-editor-buttons/grid-row-editor-buttons-default-top-corners.gif), sides:url(images/grid-row-editor-buttons/grid-row-editor-buttons-default-top-sides.gif)" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/grid/plugin/RowEditing.scss:108 */
 .x-grid-row-editor-buttons {
@@ -15821,12 +15317,6 @@ div.x-border-layout-ct {
 .x-tab-default-top-mc {
     padding: 8px 10px 8px 10px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-tab-default-top:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:0 0 0 0" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-tab-default-bottom {
     -moz-border-radius-topleft: 0;
@@ -15920,12 +15410,6 @@ div.x-border-layout-ct {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-tab-default-bottom-mc {
     padding: 8px 10px 8px 10px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-tab-default-bottom:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:0 0 0 0" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-tab-default-left {
@@ -16021,12 +15505,6 @@ div.x-border-layout-ct {
 .x-tab-default-left-mc {
     padding: 8px 10px 8px 10px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-tab-default-left:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:0 0 0 0" !important;
-}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:187 */
 .x-tab-default-right {
     -moz-border-radius-topleft: 0;
@@ -16120,12 +15598,6 @@ div.x-border-layout-ct {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:464 */
 .x-tab-default-right-mc {
     padding: 8px 10px 8px 10px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/slicer.scss:83 */
-.x-cmd-slicer.x-tab-default-right:before {
-    /*<if slicer>*/
-    display: none;
-    content: "x-slicer:, frame:0 0 0 0" !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:1603 */
 .x-tab-default {
@@ -16391,4 +15863,225 @@ div.x-border-layout-ct {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2395 */
 .x-ie8 .x-tab-over.x-tab-default.x-tab-rotate-right {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2421 */
+.x-tab-bar-plain .x-tab-over.x-tab-default .x-tab-inner-default {
+    color: #606060;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2452 */
+.x-tab-bar-plain .x-tab-over.x-tab-default .x-tab-icon-el {
+    color: #606060;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2472 */
+.x-tab-focus.x-tab-over.x-tab-default {
+    border-color: #000;
+    background-image: none;
+    background-color: rgba(0, 0, 0, 0.08);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/background-opacity.scss:19 */
+.x-ie8 .x-tab-focus.x-tab-over.x-tab-default {
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#14000000, endColorstr=#14000000)";
+    zoom: 1;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2501 */
+.x-ie8 .x-tab-focus.x-tab-over.x-tab-default.x-tab-rotate-left {
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2507 */
+.x-ie8 .x-tab-focus.x-tab-over.x-tab-default.x-tab-rotate-right {
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2533 */
+.x-tab-bar-plain .x-tab-focus.x-tab-over.x-tab-default .x-tab-inner-default {
+    color: #606060;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2564 */
+.x-tab-bar-plain .x-tab-focus.x-tab-over.x-tab-default .x-tab-icon-el {
+    color: #606060;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2587 */
+.x-tab.x-tab-active.x-tab-default {
+    border-color: #fff;
+    background-color: #fff;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2643 */
+.x-tab.x-tab-active.x-tab-default .x-tab-inner-default {
+    color: #008b9f;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2648 */
+.x-tab-bar-plain .x-tab.x-tab-active.x-tab-default .x-tab-inner-default {
+    color: #404040;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2663 */
+.x-tab.x-tab-active.x-tab-default .x-tab-icon-el {
+    color: #008b9f;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2671 */
+.x-ie8 .x-tab.x-tab-active.x-tab-default .x-tab-icon-el {
+    color: #4daebc;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2677 */
+.x-tab-bar-plain .x-tab.x-tab-active.x-tab-default .x-tab-icon-el {
+    color: #404040;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2698 */
+.x-tab-focus.x-tab-active.x-tab-default {
+    border-color: #fff;
+    background-color: #fff;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2759 */
+.x-tab-bar-plain .x-tab-focus.x-tab-active.x-tab-default .x-tab-inner-default {
+    color: #404040;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2790 */
+.x-tab-bar-plain .x-tab-focus.x-tab-active.x-tab-default .x-tab-icon-el {
+    color: #404040;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2814 */
+.x-tab.x-tab-disabled.x-tab-default {
+    border-color: transparent;
+    background-color: transparent;
+    cursor: default;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2874 */
+.x-tab.x-tab-disabled.x-tab-default .x-tab-inner-default {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+    opacity: 0.3;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2879 */
+.x-tab-bar-plain .x-tab.x-tab-disabled.x-tab-default .x-tab-inner-default {
+    color: #606060;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2898 */
+.x-tab.x-tab-disabled.x-tab-default .x-tab-icon-el-default {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    opacity: 0.5;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2903 */
+.x-tab.x-tab-disabled.x-tab-default .x-tab-icon-el {
+    color: #f0f0f0;
+    opacity: 0.3;
+    filter: none;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2924 */
+.x-tab-bar-plain .x-tab.x-tab-disabled.x-tab-default .x-tab-icon-el {
+    color: #606060;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2944 */
+.x-nbr .x-tab-default {
+    background-image: none;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2963 */
+.x-tab-over .x-tab-default-top-tl,
+.x-tab-over .x-tab-default-top-bl,
+.x-tab-over .x-tab-default-top-tr,
+.x-tab-over .x-tab-default-top-br,
+.x-tab-over .x-tab-default-top-tc,
+.x-tab-over .x-tab-default-top-bc {
+    background-image: url(images/tab/tab-default-top-over-corners.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2972 */
+.x-tab-over .x-tab-default-top-ml,
+.x-tab-over .x-tab-default-top-mr {
+    background-image: url(images/tab/tab-default-top-over-sides.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2977 */
+.x-tab-over .x-tab-default-top-mc {
+    background-repeat: repeat-x;
+    background-image: url(images/tab/tab-default-top-over-fbg.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2963 */
+.x-tab-focus .x-tab-default-top-tl,
+.x-tab-focus .x-tab-default-top-bl,
+.x-tab-focus .x-tab-default-top-tr,
+.x-tab-focus .x-tab-default-top-br,
+.x-tab-focus .x-tab-default-top-tc,
+.x-tab-focus .x-tab-default-top-bc {
+    background-image: url(images/tab/tab-default-top-focus-corners.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2972 */
+.x-tab-focus .x-tab-default-top-ml,
+.x-tab-focus .x-tab-default-top-mr {
+    background-image: url(images/tab/tab-default-top-focus-sides.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2977 */
+.x-tab-focus .x-tab-default-top-mc {
+    background-repeat: repeat-x;
+    background-image: url(images/tab/tab-default-top-focus-fbg.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2963 */
+.x-tab-focus.x-tab-over .x-tab-default-top-tl,
+.x-tab-focus.x-tab-over .x-tab-default-top-bl,
+.x-tab-focus.x-tab-over .x-tab-default-top-tr,
+.x-tab-focus.x-tab-over .x-tab-default-top-br,
+.x-tab-focus.x-tab-over .x-tab-default-top-tc,
+.x-tab-focus.x-tab-over .x-tab-default-top-bc {
+    background-image: url(images/tab/tab-default-top-focus-over-corners.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2972 */
+.x-tab-focus.x-tab-over .x-tab-default-top-ml,
+.x-tab-focus.x-tab-over .x-tab-default-top-mr {
+    background-image: url(images/tab/tab-default-top-focus-over-sides.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2977 */
+.x-tab-focus.x-tab-over .x-tab-default-top-mc {
+    background-repeat: repeat-x;
+    background-image: url(images/tab/tab-default-top-focus-over-fbg.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2963 */
+.x-tab.x-tab-active .x-tab-default-top-tl,
+.x-tab.x-tab-active .x-tab-default-top-bl,
+.x-tab.x-tab-active .x-tab-default-top-tr,
+.x-tab.x-tab-active .x-tab-default-top-br,
+.x-tab.x-tab-active .x-tab-default-top-tc,
+.x-tab.x-tab-active .x-tab-default-top-bc {
+    background-image: url(images/tab/tab-default-top-active-corners.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2972 */
+.x-tab.x-tab-active .x-tab-default-top-ml,
+.x-tab.x-tab-active .x-tab-default-top-mr {
+    background-image: url(images/tab/tab-default-top-active-sides.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2977 */
+.x-tab.x-tab-active .x-tab-default-top-mc {
+    background-repeat: repeat-x;
+    background-image: url(images/tab/tab-default-top-active-fbg.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2963 */
+.x-tab-focus.x-tab-active .x-tab-default-top-tl,
+.x-tab-focus.x-tab-active .x-tab-default-top-bl,
+.x-tab-focus.x-tab-active .x-tab-default-top-tr,
+.x-tab-focus.x-tab-active .x-tab-default-top-br,
+.x-tab-focus.x-tab-active .x-tab-default-top-tc,
+.x-tab-focus.x-tab-active .x-tab-default-top-bc {
+    background-image: url(images/tab/tab-default-top-focus-active-corners.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2972 */
+.x-tab-focus.x-tab-active .x-tab-default-top-ml,
+.x-tab-focus.x-tab-active .x-tab-default-top-mr {
+    background-image: url(images/tab/tab-default-top-focus-active-sides.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2977 */
+.x-tab-focus.x-tab-active .x-tab-default-top-mc {
+    background-repeat: repeat-x;
+    background-image: url(images/tab/tab-default-top-focus-active-fbg.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2963 */
+.x-tab.x-tab-disabled .x-tab-default-top-tl,
+.x-tab.x-tab-disabled .x-tab-default-top-bl,
+.x-tab.x-tab-disabled .x-tab-default-top-tr,
+.x-tab.x-tab-disabled .x-tab-default-top-br,
+.x-tab.x-tab-disabled .x-tab-default-top-tc,
+.x-tab.x-tab-disabled .x-tab-default-top-bc {
+    background-image: url(images/tab/tab-default-top-disabled-corners.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2972 */
+.x-tab.x-tab-disabled .x-tab-default-top-ml,
+.x-tab.x-tab-disabled .x-tab-default-top-mr {
+    background-image: url(images/tab/tab-default-top-disabled-sides.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2977 */
+.x-tab.x-tab-disabled .x-tab-default-top-mc {
+    background-repeat: repeat-x;
+    background-image: url(images/tab/tab-default-top-disabled-fbg.gif);
 }

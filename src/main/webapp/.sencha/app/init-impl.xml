@@ -19,11 +19,13 @@
         <script language="javascript">
             <![CDATA[
             var f = new java.io.File(project.getProperty("basedir"));
-            var sub = ".sencha/workspace/sencha.cfg";
+            var sub = ".sencha/workspace/sencha.cfg"
+            var sub2 = "workspace.json";
 
             for (var p = f; p; p = p.getParentFile()) {
                 var t = new java.io.File(p, sub);
-                if (t.exists()) {
+                var t2 = new java.io.File(p, sub2);
+                if (t.exists() || t2.exists()) {
                     // we found the workspace folder!
 
                     t = new java.io.File(p, "local.properties");
@@ -78,9 +80,9 @@
             <file path="${app.config.dir}/${build.environment}.properties" required="false"/>
             <file path="${app.config.dir}/build.properties" required="false"/>
             <!-- Pick up the defaults by framework/environment followed by general: -->
-            <file path="${app.config.dir}/${framework.name}.properties" required="true"/>
-            <file path="${app.config.dir}/${app.packager}.defaults.properties" required="false"/>
-            <file path="${app.config.dir}/${build.environment}.defaults.properties" required="true"/>
+            <file path="${framework.config.dir}/templates/App/.sencha/app/${framework.name}.properties" required="true"/>
+            <file path="${framework.config.dir}/templates/App/.sencha/app/${app.packager}.defaults.properties" required="false"/>
+            <file path="${framework.config.dir}/templates/App/.sencha/app/${build.environment}.defaults.properties" required="true"/>
             <file path="${app.config.dir}/defaults.properties" required="true"/>
         </x-load-properties>
 
@@ -393,6 +395,9 @@
                 ${build.operations}
                 and
                 ${exclude.boot}
+                include
+                    -usedPackageDeps
+                and
                 save
                     page
             ]]>
@@ -412,6 +417,9 @@
                 ${build.operations}
                 and
                 ${exclude.boot}
+                include
+                    -usedPackageDeps
+                and
                 save
                     page
             ]]>
