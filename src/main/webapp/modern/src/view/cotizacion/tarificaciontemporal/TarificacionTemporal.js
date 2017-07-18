@@ -28,7 +28,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 				throw 'Faltan datos para construir bloque de vista previa';
 			}
 	        
-			config.items = [
+			config.items = [ {
 
 	        		xtype: 'vistatarificaciontemporal',
 	        		cls:'back_plan',
