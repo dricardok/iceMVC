@@ -173,7 +173,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             if (view.getGuardadoAutomaticoSuspendido() !== true && oldCard) {
                 paso = 'Guardando datos';
                 var callbackSuccess = function () {
-                    var pasoCargar = 'Cargando atributos de bloque';
+                    var pasoCargar = 'Cargando bloque';
                     try{
                         newCard.getController().cargar();
                     } catch (e){
@@ -198,6 +198,9 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     success: callbackSuccess,
                     failure: callbackFailure
                 });
+            } else {
+                paso = 'Cargando bloque';
+                newCard.getController().cargar();
             }
         } catch (e) {
             Ice.manejaExcepcion(e, paso);

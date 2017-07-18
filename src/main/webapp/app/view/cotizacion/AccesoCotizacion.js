@@ -1,5 +1,5 @@
 Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
-    extend: 'Ice.view.componente.PanelPaddingIce',
+    extend: 'Ice.view.componente.PanelIce',
     xtype: 'accesocotizacion',
 
     controller: 'accesocotizacion',
@@ -17,6 +17,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
         var me = this,
             paso = 'Construyendo acceso a cotizadores';
         try {
+            Ice.generaComponentes(); // para interceptor
             config.items = [{
                 xtype: 'dataviewice',
                 reference: 'dataview',
