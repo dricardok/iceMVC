@@ -306,7 +306,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			// Paso 2 Recuperar lista de formas de pago
 			formasPago = emisionDAO.obtenerFormasPago(cdunieco, cdramo, estado, nmpoliza, "0");
 			
-			// Paso 3 Respandar MPOLIZAS
+			// Paso 3 Respaldar MPOLIZAS
 			mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, "0");
 						
 			if(mpolizas!=null && !mpolizas.isEmpty()) {
@@ -483,12 +483,10 @@ public class EmisionManagerImpl implements EmisionManager {
 	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception {
 		String paso = null, nmpolizaEmitida = null;
-		
-		Banco banco = null;
-		Tarjeta tarjeta = null;
+		Map<String, String> datosPago  = null;		
 		RequestWs request = null;
-		Map<String, String> mpoliza = null;
 		String documentoURL = "https://qa-servicios.segurossura.com.mx/blackBoxMvc/printer/TEXTLIB2_RTCL/1/501/1/M/0";
+		String docURL = "";
 		String extension = ".pdf";
 		String documentsLocation = "C:\\documents\\";
 	
@@ -499,16 +497,21 @@ public class EmisionManagerImpl implements EmisionManager {
 			nmpoliza = nmpolizaEmitida;
 			logger.info("Poliza emitida: {}", nmpoliza);		
 			
-			/*
-		    mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
-		    if(mpolizas != null && mpolizas.size() > 0 ){
-		    	mpoliza = mpolizas.get(0); 	
-		    	
-		    	
-		    }*/
 			
-			paso = new StringBuilder("Aplicando recibo en ALEA de la p\u00f3liza ").append(nmpoliza).toString();
-			pagoManager.aplicaPago(request);
+			datosPago = emisionDAO.obtenerDatosPago(cdunieco, cdramo, estado, nmpolizaEmitida, nmsuplem).get(0);
+			
+			
+			request = new RequestWs();
+			request.setCdunieco(Integer.parseInt(cdunieco));
+			request.setCdramo(Integer.parseInt(cdramo));
+			request.setNmpoliza(Integer.parseInt(nmpoliza));
+			request.setNmrecibo(Integer.parseInt(datosPago.get("nmrecibo")));		
+			paso = new StringBuilder("Aplicando recibo en ALEA de la p\u00f3liza ").append(nmpoliza).toString();			
+			try{
+				pagoManager.aplicaPago(request);
+			}catch(Exception e){
+				logger.error(e.getMessage(), e);
+			}
 			
 			paso = new StringBuilder("Obteniendo documentos de la p\u00f3liza ").append(nmpoliza).toString();
 			
@@ -520,20 +523,29 @@ public class EmisionManagerImpl implements EmisionManager {
 			// Se guardan la lista de documentos:
 			for (Documento documento : documentos) {
 			    
-				logger.info(documento.getNombre());
-				logger.info(documento.getUrl());			
+                String nmsolici = null; //TODO: agregar
+                String ntramite = "0";  //TODO: agregar
+                String tipmov   = null; //TODO: agregar
+                String cdtiptra = null; //TODO: agregar
+                String codidocu = null; //TODO: agregar
+                String cdorddoc = null; //TODO: agregar
+                String cdmoddoc = null; //TODO: agregar
+                String nmcertif = null; //TODO: agregar
+                String nmsituac = null; //TODO: agregar
                 
-                /*
+                
                 documentosDAO.realizarMovimientoDocsPoliza(
                         cdunieco, cdramo, estado, nmpoliza, nmsolici, nmsuplem, ntramite, 
                         new Date(), documento.getId(), documento.getNombre(), tipmov, 
                         Constantes.SI, cdtiptra, codidocu, new Date(), cdorddoc, cdmoddoc, 
                         nmcertif, nmsituac, documento.getUrl(), Constantes.INSERT_MODE);
-                */
                 
-                // TODO: Consumir la liga de cada documento y guardarlo en el sistema de archivos del servidor
+                
 				try
-				{
+				{	
+					//FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(documentsLocation+documento.getNombre()+extension), 10000, 10000); 
+					
+					/* Esta fija la URL pro que las URLS del servicio mandan error 404  */
 					FileUtils.copyURLToFile(new URL(documentoURL), new File(documentsLocation+documento.getNombre()+extension), 10000, 10000);
 					
 				}catch(Exception e){

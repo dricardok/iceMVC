@@ -735,7 +735,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   estado,   "Falta estado",
     	                   nmpoliza, "Falta nmpoliza");
     	    
-    	    String nmpolizaEmitida = emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem,newestad, newpoliza, pnmrecibo);
+    	    String nmpolizaEmitida = emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo);
     	    
     	    params = new HashMap<String, String>();
             params.put("nmpoliza", nmpolizaEmitida);

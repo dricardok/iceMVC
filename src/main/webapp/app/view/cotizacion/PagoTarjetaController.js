@@ -15,6 +15,7 @@ Ext.define('Ice.view.cotizacion.PagoTarjetaController', {
 		
 		try{
 			combobanco = Ice.query('[name=cdbanco]', ref);			
+			
 			//Ice.validarFormulario(view);					
 			
 			Ice.request({
@@ -37,7 +38,7 @@ Ext.define('Ice.view.cotizacion.PagoTarjetaController', {
 	            }),
 	            success: function (action) {
 	            	
-	                Ext.Msg.alert('Aqui se manda a emitir');
+	                
 	                
 	            }
 	        });			

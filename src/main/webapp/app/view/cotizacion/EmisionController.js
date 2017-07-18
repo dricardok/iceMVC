@@ -354,7 +354,10 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                         iconCls: 'x-fa fa-key',
                         handler: function (bot) {
                             bot.up('ventanaprimas').cerrar();
-                            me.emitir();
+                            
+                            // me.emitir();
+                            
+                            me.validaTipoPago();
                         }
                     }, {
                         text: 'Modificar',
@@ -397,5 +400,58 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
+    },
+
+
+    validaTipoPago: function (params) {
+    	Ice.log('Ice.view.cotizacion.EmisionController.validaTipoPago');
+    	var me = this,
+    		view = me.getView(),
+    		paso = 'Validando forma de pago';
+    	
+    	try{
+    		var reqParams = Ice.convertirAParams({
+                cdunieco: view.getCdunieco(),
+                cdramo: view.getCdramo(),
+                estado: view.getEstado(),
+                nmpoliza: view.getNmpoliza(),
+                nmsuplem: view.getNmsuplem()
+            });
+    		
+    		Ice.request({
+    			mascara: paso,
+    			url: Ice.url.emision.obtieneTvalopol,
+    			params: reqParams,
+    			failure: (params && params.failure) || null,
+    			success: function (action) {
+    				var paso2 = 'Revisando forma de pago';
+    				try{
+    					
+    					if (action.params && action.params.otvalor03) {
+    						
+    						if(action.params.otvalor03 == 'N'){
+    							
+    							me.emitir();
+    						}
+    						else {
+    							
+    							Ext.create('Ice.view.cotizacion.VentanaPagoTarjeta', {
+    								cdunieco: view.getCdunieco(),
+    				                cdramo: view.getCdramo(),
+    				                estado: view.getEstado(),
+    				                nmpoliza: view.getNmpoliza(),
+    				                nmsuplem: view.getNmsuplem()
+    							}).mostrar();
+    						}
+    					}
+    				}catch(e) {
+    					 Ice.manejaExcepcion(e, paso2);
+    				}    				
+    			}
+    		});
+    		
+    	}catch(e){
+    		Ice.manejaExcepcion(e, paso);
+    	}
     }
 });
