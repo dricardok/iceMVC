@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1283,6 +1284,235 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_otvalor14_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_otvalor15_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_accion_i"    , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  ,  Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public List<Map<String, String>> obtenerPorcPartCoa (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i" , cdunieco);
+        params.put("pv_cdramo_i"   , cdramo);
+        params.put("pv_estado_i"   , estado);
+        params.put("pv_nmpoliza_i" , nmpoliza);
+        params.put("pv_nmsuplem_i" , nmsuplem);
+        List<Map<String, String>> lista = (List<Map<String, String>>) (ejecutaSP(new ObtenerPorcPartCoa(getDataSource()), params)).get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        logger.debug(Utils.log("****** ObtenerPorcPartCoa lista = ", lista));
+        return lista;
+    }
+    
+    protected class ObtenerPorcPartCoa extends StoredProcedure {
+        protected ObtenerPorcPartCoa (DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_GET_PORCPARTCOA");
+            declareParameter(new SqlParameter("pv_cdunieco_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"    , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"    , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
+            String[] cols = new String[] { 
+                    "cdunieco",
+                    "cdramo",
+                    "estado",
+                    "nmpoliza",
+                    "nmsuplem", 
+                    "cdcia",
+                    "cdtipcoa",
+                    "status",
+                    "swabrido",
+                    "porcpart", 
+                    "cdmodelo",
+                    "swpagcom",
+                    "dscia"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  ,  Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public List<Map<String, String>> obtenerModeloCoaseguro(String cdmodelo) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdmodelo_i" , cdmodelo);
+        List<Map<String, String>> lista = (List<Map<String, String>>) (ejecutaSP(new ObtenerModeloCoaseguro(getDataSource()), params)).get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        logger.debug(Utils.log("****** obtenerModeloCoaseguro lista = ", lista));
+        return lista;
+    }
+    
+    protected class ObtenerModeloCoaseguro extends StoredProcedure {
+        protected ObtenerModeloCoaseguro(DataSource dataSource) {
+            super(dataSource, "P_GET_TMODECOA");
+            declareParameter(new SqlParameter("pv_cdmodelo_i"  , Types.VARCHAR));
+            String[] cols = new String[] { 
+                    "cdcia",
+                    "dscia",
+                    "porcpart",
+                    "swabrido"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  ,  Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public void movimientoMpolicoa(String cdunieco, String cdramo, String estado, String nmpoliza, 
+            String nmsuplem_bloque, String nmsuplem_session, String cdcia, String cdtipcoa, 
+            String status,String swabrido, String porcpart, String cdmodelo, String swpagcom,
+            String accion) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplembloque_i", nmsuplem_bloque);
+        params.put("pv_nmsuplemsesion_i", nmsuplem_session);
+        params.put("pv_cdcia_i", cdcia);
+        params.put("pv_cdtipcoa_i", cdtipcoa);
+        params.put("pv_status_i", status);
+        params.put("pv_swabrido_i", swabrido);
+        params.put("pv_porpart_i", porcpart);
+        params.put("pv_cdmodelo_i", cdmodelo);
+        params.put("pv_swpagcom_i", swpagcom);
+        params.put("pv_accion_i", accion);
+        ejecutaSP(new MovimientoMpolicoaSP(getDataSource()), params);
+    }
+ 
+    protected class MovimientoMpolicoaSP extends StoredProcedure {
+        protected MovimientoMpolicoaSP (DataSource dataSource) {
+            super(dataSource,"P_MOV_MPOLICOA");
+            declareParameter(new SqlParameter("pv_cdunieco_i",          Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i",            Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i",            Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i",          Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplembloque_i",    Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplemsesion_i",    Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdcia_i",             Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdtipcoa_i",          Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_status_i",            Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_swabrido_i",          Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_porpart_i",           Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdmodelo_i",          Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_swpagcom_i",          Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_accion_i",            Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_rowid_o",          Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o",         Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o",          Types.VARCHAR));
+            compile();
+        }
+    }
+
+    @Override
+    public void movimientoMsupcoa(String cdcialider, String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmpolizal, String nmsuplem_bloque, String nmsuplem_session, String tipodocu, String ndoclider, 
+            String status, String accion) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdcialider_i", cdcialider);
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmpolizal_i", nmpoliza);
+        params.put("pv_nmsuplembloque_i", nmsuplem_bloque);
+        params.put("pv_nmsuplemsesion_i", nmsuplem_session);
+        params.put("pv_tipodocu_i", tipodocu);
+        params.put("pv_ndoclider_i", ndoclider);
+        params.put("pv_status_i", status);        
+        params.put("pv_accion_i", accion);
+        ejecutaSP(new MovimientoMsupcoaSP(getDataSource()), params);
+    }
+    
+    protected class MovimientoMsupcoaSP extends StoredProcedure {
+        protected MovimientoMsupcoaSP (DataSource dataSource) {
+            super(dataSource,"P_MOV_MSUPCOA");
+            declareParameter(new SqlParameter("pv_cdcialider_i",        Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdunieco_i",          Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i",            Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i",            Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i",          Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpolizal_i",          Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplembloque_i",    Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplemsesion_i",    Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_tipodocu_i",          Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_ndoclider_i",         Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_status_i",            Types.VARCHAR));            
+            declareParameter(new SqlParameter("pv_accion_i",            Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_rowid_o",          Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o",         Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o",          Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public String obtieneCdciaSURA() throws Exception{
+        Map<String, Object> resultado = ejecutaSP(new ObtieneCdciaSURASP(getDataSource()), new LinkedHashMap<String, String>());
+        String cdcia = (String) resultado.get("pv_cdcia_o");
+        if(cdcia == null|| cdcia.length() == 0) {
+            throw new ApplicationException("Sin resultados");
+        }
+        logger.debug(Utils.log("****** obtenerCdciaSURA = ", cdcia));
+        return cdcia;
+    }
+    
+    protected class ObtieneCdciaSURASP extends StoredProcedure {
+        protected ObtieneCdciaSURASP(DataSource dataSource) {
+            super(dataSource,"P_GET_CDCIA_SURA");
+            declareParameter(new SqlOutParameter("pv_cdcia_o",  Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o",  Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public List<Map<String, String>> obtenerCoaseguroAceptado(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i" , cdunieco);
+        params.put("pv_cdramo_i"   , cdramo);
+        params.put("pv_estado_i"   , estado);
+        params.put("pv_nmpoliza_i" , nmpoliza);
+        params.put("pv_nmsuplem_i" , nmsuplem);
+        List<Map<String, String>> lista = (List<Map<String, String>>) (ejecutaSP(new ObtenerCoaseguroAceptadoDAO(getDataSource()), params)).get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        logger.debug(Utils.log("****** obtenerCoaseguroAceptado lista = ", lista));
+        return lista;
+    }
+    
+    protected class ObtenerCoaseguroAceptadoDAO extends StoredProcedure {
+        protected ObtenerCoaseguroAceptadoDAO (DataSource dataSource) {
+            super(dataSource, "P_GET_MSUPCOA");
+            declareParameter(new SqlParameter("pv_cdunieco_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"    , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"    , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
+            String[] cols = new String[] { 
+                    "cdcialider",
+                    "cdunieco",
+                    "cdramo",
+                    "estado",
+                    "nmpoliza",
+                    "nmpolizal",
+                    "nmsuplem", 
+                    "tipodocu",
+                    "ndoclider",
+                    "status"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  ,  Types.VARCHAR));
             compile();

@@ -11,11 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.biosnettcs.core.Constantes;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.core.model.BaseVO;
 
 import mx.com.segurossura.emision.dao.AgrupadoresDAO;
+import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.general.catalogos.dao.CatalogosDAO;
 import mx.com.segurossura.general.catalogos.model.Catalogos;
 import mx.com.segurossura.general.catalogos.service.CatalogosManager;
@@ -30,6 +32,9 @@ public class CatalogosManagerImpl implements CatalogosManager {
     
     @Autowired
     private AgrupadoresDAO agrupadoresDAO;
+    
+    @Autowired
+    private EmisionDAO emisionDAO;
     
     @Override
     public List<BaseVO> obtenerCatalogo (String catalogo, Map<String, String> params, String cdusuari, String cdsisrol) throws Exception {
@@ -271,7 +276,32 @@ public class CatalogosManagerImpl implements CatalogosManager {
                            lista.add(new BaseVO(registro.get("estatus"), registro.get("dsestadomc")));
                        }
                    }
-                   break;                
+                   break;
+               case COMPANIAS:
+                   paso = "Recuperando cat\u00e1logo de compa\u00f1ias";
+                   lista = new ArrayList<>();
+                   List<Map<String, String>> companias = catalogosDAO.obtenerCompañias();
+                   if (companias != null) {
+                       String swsura = Constantes.SI,
+                              cdcia = "";
+                       if(params != null){
+                           swsura = params.get("swsura");
+                           cdcia = emisionDAO.obtieneCdciaSURA();
+                       }
+                       for (Map<String, String> registro: companias) {
+                           BaseVO baseVO = new BaseVO();
+                           baseVO.setKey(registro.get("cdcia"));
+                           baseVO.setValue(registro.get("dscia"));
+                           if(cdcia.equals(registro.get("cdcia"))){
+                               if(swsura.equals(Constantes.SI)){
+                                   lista.add(baseVO);
+                               }
+                           } else {
+                               lista.add(baseVO);
+                           }
+                       }
+                   }
+                   break;
                 default:
                     throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));
                 }

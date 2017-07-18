@@ -486,4 +486,29 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
 			compile();
 		}
 	}
+	
+	@Override
+    public List<Map<String, String>> obtenerCompañias() throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        Map<String, Object> procRes = ejecutaSP(new ObtenerCompañias(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerCompañias extends StoredProcedure {
+        protected ObtenerCompañias(DataSource dataSource){
+            super(dataSource, "PKG_LOV_ALEA.P_GET_MCIAS");
+            String[] cols = new String[] {
+                    "cdcia",
+                    "dscia"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
 }

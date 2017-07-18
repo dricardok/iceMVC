@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Controller;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 import com.biosnettcs.portal.model.UsuarioVO;
-
+import com.opensymphony.xwork2.ActionContext;
 import mx.com.segurossura.emision.service.DatosGeneralesManager;
 
 @Controller
@@ -203,6 +204,185 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
         return SUCCESS;
     }
 
+    @Action(
+            value = "datosGenerales/obtenerCoaseguroCedido", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String obtenerCoaseguroCedido () {
+        logger.debug(Utils.log("###### obtenerCoaseguroCedido params: ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem");
+            
+            Utils.validate(cdunieco, "Falta cdunieco",
+                           cdramo,   "Falta cdramo",
+                           estado,   "Falta estado",
+                           nmpoliza, "Falta poliza",
+                           nmsuplem, "Falta nmsuplem");
+            list = datosGeneralesManager.obtenerCoaseguroCedido(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+            if(list.size() > 0){
+                params.put("cdmodelo", list.get(0).get("cdmodelo"));
+                params.put("swpagcom", list.get(0).get("swpagcom"));
+                params.put("swpagcom", list.get(0).get("status"));
+            }
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
+    @Action(
+            value = "datosGenerales/obtenerCoaseguroAceptado", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String obtenerCoaseguroAceptado() {
+        logger.debug(Utils.log("###### obtenerCoaseguroCedido params: ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem");
+            
+            Utils.validate(cdunieco, "Falta cdunieco",
+                           cdramo,   "Falta cdramo",
+                           estado,   "Falta estado",
+                           nmpoliza, "falta poliza",
+                           nmsuplem, "Falta nmsuplem");
+            list = datosGeneralesManager.obtenerCoaseguroAceptado(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+            if(list.size() > 0){
+                for(Map<String, String> map: list){
+                    for(String key: map.keySet()){
+                        params.put(key, map.get(key));
+                    }
+                }
+            }
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
+    @Action(
+            value = "datosGenerales/obtenerModeloCoaseguro", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String obtenerModeloCoaseguro () {
+        logger.debug(Utils.log("###### obtenerModeloCoaseguro params: ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdmodelo = params.get("cdmodelo");            
+            Utils.validate(cdmodelo, "Falta modelo de coaseguro");
+            list = datosGeneralesManager.obtenerModeloCoaseguro(cdmodelo);
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
+    @Action(
+            value = "datosGenerales/movimientoCoaseguroCedido", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }, 
+            interceptorRefs = {
+                    @InterceptorRef(value = "json", 
+                            params = {"enableSMD", "true", "ignoreSMDMethodInterfaces", "false" }
+                    )
+            }
+        )
+    public String movimientoCoaseguroCedido() {
+        logger.debug(Utils.log("###### movimientoCoaseguroCedido params: ", params,"list:", list));
+        try {
+            this.session = ActionContext.getContext().getSession(); //porque se uso SMD y eso pierde la sesion
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay parametros");
+            Utils.validate(list, "No hay datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem"),
+                   cdtipcoa = params.get("cdtipcoa"),
+                   swabrido = params.get("swabrido"),
+                   cdmodelo = params.get("cdmodelo"),
+                   swpagcom = params.get("swpagcom"),
+                   status = params.get("status"),
+                   accion = params.get("accion");
+             Utils.validate(cdunieco, "No se recibio sucursal",
+                            cdramo,   "No se recibio producto",
+                            estado,   "No se recibio estado de la poliza",
+                            nmpoliza, "No se recibio numero de poliza",
+                            nmsuplem, "No se recibio suplemento de poliza",
+                            cdtipcoa, "No se recibio tipo de coaseguro",
+                            status,   "No se recibio el status");
+            datosGeneralesManager.movimientoMpolicoa(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem, cdtipcoa, status, cdmodelo, swpagcom, list, accion);
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
+    @Action(
+            value = "datosGenerales/movimientoMsupcoa", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String movimientoMsupcoa() {
+        logger.debug(Utils.log("###### movimientoMpolicoa params: ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdcialider = params.get("cdcialider"),
+                   cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmpolizal = params.get("nmpolizal"),
+                   nmsuplem = params.get("nmsuplem"),
+                   tipodocu = params.get("tipodocu"),
+                   ndoclider = params.get("ndoclider"),
+                   status = params.get("status"),
+                   accion = params.get("accion");
+             Utils.validate(cdcialider, "No se recibio compañia lider",
+                            cdunieco, "No se recibio sucursal",
+                            cdramo,   "No se recibio producto",
+                            estado,   "No se recibio estado de la poliza",
+                            nmpoliza, "No se recibio numero de poliza",
+                            nmpolizal, "No se recibio numero de poliza largo",
+                            nmsuplem, "No se recibio suplemento de poliza");
+            datosGeneralesManager.movimientoMsupcoa(cdcialider, cdunieco, cdramo, estado, nmpoliza, nmpolizal, nmsuplem, nmsuplem, tipodocu, ndoclider, status, accion);
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
     public boolean isSuccess() {
         return success;
     }
