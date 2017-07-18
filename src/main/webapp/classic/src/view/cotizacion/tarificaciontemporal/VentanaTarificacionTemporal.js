@@ -2,15 +2,12 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
     extend: 'Ice.view.componente.VentanaIce',
     xtype: 'ventanatarifastemporales',
     
-    requires: [
-    	'Ext.toolbar.Toolbar'
-    ],
-    
+    // config ext
     modal: true,
     title: 'Tarifa',
-    closeAction: 'destroy',
     layout: 'fit',
     
+    // config no ext
     config: {
     	cdunieco: null,
 		cdramo: null,
@@ -36,9 +33,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
             config.width = config.width || Ext.getBody().getWidth() - 100;
             
             // grid
-            config.items = config.items || [];
-            config.items.push({
-            	xtype: 'grid',
+            config.items = [{
+            	xtype: 'gridice',
             	columns: [
             		{
             			text: 'Cobertura',
@@ -54,6 +50,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
             			text: 'Prima',
             			dataIndex: 'total',
             			minWidth: 150,
+                        flex: 1,
             			renderer: Ext.util.Format.usMoney,
             			summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex) {
@@ -95,22 +92,10 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
                         }
                     }
                 }
-            });
-    		
+            }].concat(config.items || []);
     	} catch (e) {
     		Ice.generaExcepcion(e, paso);
     	}
-    	
     	me.callParent(arguments);
-    },
-    
-    
-    mostrar: function () {
-        this.show();
-    },
-    
-    cerrar: function () {
-        this.destroy();
     }
-    
 });

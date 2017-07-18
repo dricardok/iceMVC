@@ -2,10 +2,12 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 	extend: 'Ice.view.componente.VentanaIce',
 	xtype: 'tarificaciontemporal',
 	
+	// config ext
 	title: 'Elige tu Plan',
-	
+	scrollable: true,
 	layout: 'fit',
 
+	// config no ext
 	config: {
 		cdunieco: null,
 		cdramo: null,
@@ -20,33 +22,16 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 	constructor: function (config) {
 		Ice.log('Ice.view.bloque.emsion.vistaprevia.BloqueVistaPrevia.constructor config', config);
 		var me = this,
-		paso = 'Construyendo bloque de tarificacion temporal';
-		
-		try{
-			/*
-			config.cdunieco = 1;
-			config.cdramo = 201;
-			config.estado = 'W';
-			config.nmpoliza = 613805
-			*/
-			
-			if (!config
-	                || !config.cdunieco
-	                || !config.cdramo
-	                || !config.estado
-	                || !config.nmpoliza) {
-	                throw 'Faltan datos para construir bloque de vista previa';
+		    paso = 'Construyendo bloque de tarificacion temporal';
+		try {
+			if (!config || !config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza) {
+				throw 'Faltan datos para construir bloque de vista previa';
 			}
 	        
 			config.items = [
 				{
-                    xtype: 'tbtext',
-                    text: 'Elige tu Plan',
-                    cls: 'titulo_plan'
-                },
-	        	{
 	        		xtype: 'vistatarificaciontemporal',
-	        		style: 'background:#DEEBF4; padding: 0 0 0 3%; min-height: 800px;',
+	        		cls:'back_plan',
 	    			reference: 'vistatarificaciontemporal',
 	    				
 	    			cdunieco: config.cdunieco,
@@ -57,12 +42,10 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 					nmsituac: config.nmsituac,
 					cdtipsit: config.cdtipsit
 	    		}
-	        ]			
-			
-		} catch(e) {
+	        ];
+		} catch (e) {
 			Ice.generaExcepcion(e, paso);	
 		}
-		
 		me.callParent(arguments);
 	}
 });

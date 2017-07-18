@@ -16,6 +16,9 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             Ext.defer(function () {
                 var paso2;
                 try {
+                    if(Ext.manifest.toolkit === 'classic'){
+                        me.abrirVentanaDocs();
+                    }
                     if (view.getCdunieco() && view.getCdramo() && view.getEstado() && view.getNmpoliza()
                         && !Ext.isEmpty(view.getNmsuplem())) {
                         me.cargar();
@@ -348,20 +351,22 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 estado: view.getEstado(),
                 nmpoliza: view.getNmpoliza(),
                 
-                buttons: [{
-                    text: 'Modificar Datos de Emisión',
-                    iconCls: 'x-fa fa-check',
-                    handler: function (bot) {
-                        bot.up('ventanaprimas').cerrar();
+                buttons: [
+                    {
+                        text: 'Confirmar Emisión',
+                        iconCls: 'x-fa fa-key',
+                        handler: function (bot) {
+                            bot.up('ventanaprimas').cerrar();
+                            me.emitir();
+                        }
+                    }, {
+                        text: 'Modificar',
+                        iconCls: 'x-fa fa-pencil',
+                        handler: function (bot) {
+                            bot.up('ventanaprimas').cerrar();
+                        }
                     }
-                }, {
-                    text: 'Confirmar Emisión',
-                    iconCls: 'x-fa fa-key',
-                    handler: function (bot) {
-                        bot.up('ventanaprimas').cerrar();
-                        me.emitir();
-                    }
-                }]
+                ]
             }).mostrar();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
@@ -394,6 +399,25 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             });
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
+        }
+    },
+
+    abrirVentanaDocs: function(){
+        Ice.log('controller.emision emitir');
+        var me = this,
+            view = me.getView(),
+            paso = 'Confirmando p\u00f3liza';
+        try {
+            var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos',{
+                cdunieco: view.getCdunieco(),
+                cdramo: view.getCdramo(),
+                estado: view.getEstado(),
+                nmpoliza: view.getNmpoliza(),
+                nmsuplem: view.getNmsuplem()
+            });
+            ventanaDocs.mostrar();
+        } catch (e){
+            Ice.manejaExcepcion(e);
         }
     }
 });
