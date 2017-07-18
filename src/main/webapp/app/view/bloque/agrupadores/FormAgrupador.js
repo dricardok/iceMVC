@@ -1,37 +1,13 @@
 Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
-    extend: 'Ext.form.Panel',
+    extend: 'Ice.view.componente.FormDosColumnasIce',
     xtype: 'formagrupador',
-    
-    requires: [
-        'Ext.ux.layout.ResponsiveColumn'
-    ],
     
     controller: 'formagrupador',
     
-    // configuracion ext
-    
+    // config ext
     title: 'Subagrupador',
     
-    layout: 'responsivecolumn',
-    bodyPadding: '20 0 0 80',
-    defaults: {
-        cls: 'big-50 small-100'
-    },
-    
-    buttons: [
-        {
-            text: 'Guardar',
-            iconCls: 'x-fa fa-save',
-            handler: 'onGuardarClic'
-        }, {
-            text: 'Cancelar',
-            iconCls: 'x-fa fa-remove',
-            handler: 'onCancelarClic'
-        }
-    ],
-    
     // configuracion no ext
-    
     config: {
         cdunieco: null,
         cdramo: null,
@@ -59,12 +35,6 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
         var me = this,
             paso = 'Construyendo formulario de agrupador';
         try {
-            /*config.cdunieco = 1;
-            config.cdramo   = 501;
-            config.estado   = 'W';
-            config.nmpoliza = 17422;
-            config.cdagrupa = 1.01;*/
-            
             if (!config ||
                 !config.cdunieco ||
                 !config.cdramo ||
@@ -98,6 +68,18 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
             config.items = (comps.FORM_AGRUPADOR.FORM.items || []).concat(config.items || []);
             config.modelFields = comps.FORM_AGRUPADOR.FORM.fields || [];
             config.modelValidators = comps.FORM_AGRUPADOR.FORM.validators || [];
+
+            config.buttons = [
+                {
+                    text: 'Guardar',
+                    iconCls: 'x-fa fa-save',
+                    handler: 'onGuardarClic'
+                }, {
+                    text: 'Cancelar',
+                    iconCls: 'x-fa fa-remove',
+                    handler: 'onCancelarClic'
+                }
+            ].concat(config.buttons || []);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

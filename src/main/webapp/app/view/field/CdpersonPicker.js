@@ -26,7 +26,7 @@ Ext.define('Ice.view.field.CdpersonPicker', {
             paso = 'Validando construcci\u00f3n de busqueda de persona';
         try {
             if(config.label && config.label.length) {
-                labelLength = configIce.label.length;
+                labelLength = config.label.length;
             }
             config.items = [
                 {

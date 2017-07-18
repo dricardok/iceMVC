@@ -170,14 +170,19 @@ Ext.define('Ice.view.bloque.AgentesController', {
                         }
 						// Ice.mensajeCorrecto('Datos guardados');
 						refs.gridagentes.getStore().reload();
+
+						if (params && params.success) {
+							paso2 = 'Ejecutando proceso posterior a agentes';
+							params.success();
+						}
 					} catch (e) {
 						Ice.manejaExcepcion(e, paso2);
 						if (params && params.failure) {
-							var paso3 = 'Ejecutando failure despues de guardar agentes';
+							var paso4 = 'Ejecutando failure posterior a agentes';
 							try {
 								params.failure();
 							} catch (e) {
-								Ice.manejaExcepcion(e, paso3);
+								Ice.manejaExcepcion(e, paso4);
 							}
 						}
 					}
@@ -187,7 +192,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
 		} catch (e) {
 			Ice.manejaExcepcion(e, paso);
 			if (params && params.failure) {
-				var paso3 = 'Ejecutando failure despues de guardar agentes';
+				var paso3 = 'Ejecutando failure posterior a agentes';
 				try {
 					params.failure();
 				} catch (e) {

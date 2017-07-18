@@ -1,6 +1,6 @@
-Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
+Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupadorOld', {
     extend: 'Ext.Panel',
-    xtype: 'panelsituacionesagrupador',
+    xtype: 'panelsituacionesagrupadorold',
     
     controller: 'panelsituacionesagrupador',
     

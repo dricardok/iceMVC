@@ -6,7 +6,11 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigation',{
 
     // config ext
     title: 'Personas p\u00f3liza',
-    scrollable: true,
+    platformConfig: {
+        '!desktop': {
+            scrollable: true
+        }
+    },
 
     // config no ext
     config: {

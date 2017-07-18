@@ -1,8 +1,3 @@
-/*
- * Objeto principal en la aplicacion ice
- * Delia prueba
- */
-
 // var Ice = Object.assign(Ice || {}, { // (Object.assign da error en explorer)
 var Ice = (
         // funcion anonima para mezclar (reemplaza a Object.assign)
@@ -18,7 +13,6 @@ var Ice = (
             return resObj;
         }
     )(Ice || {}, {
-
 
     logActivo: true,
 
@@ -86,7 +80,7 @@ var Ice = (
         	obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action'
          },
          
-         bloque: {
+        bloque: {
         	 
             datosGenerales: {
                 cargar: 'emision/datosGenerales/cargar.action',
@@ -1210,8 +1204,15 @@ var Ice = (
                 throw 'No se recibi\u00f3 configuraci\u00f3n de column';
             }
             
-            
             // width // flex
+            if (config.width && Number(config.width) < 10) { // config.width < 10 es flex, se pasa a flex y se borra
+                if (!config.flex) {
+                    config.flex = config.width;
+                }
+                config.width = null;
+                delete config.width;
+            }
+
             if(!config.flex){
                 if(!config.width){
                     column.flex = 1;
@@ -1694,6 +1695,11 @@ var Ice = (
                         } else {
                             ref.setValue(datos[att]);
                         }
+                    }
+                }
+                for (var refKey in refs) {
+                    if (refs[refKey].heredar) {
+                        refs[refKey].heredar();
                     }
                 }
             }

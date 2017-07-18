@@ -227,9 +227,6 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     reference: 'ref' + i,
                     indice: i,
                     
-                    //scrollable: true,
-                    //height: view.getHeight() - (Ice.constantes.toolbarHeight[Ext.manifest.toolkit] * 2), // se restan las barras
-                    
                     cdunieco: view.getCdunieco(),
                     cdramo: view.getCdramo(),
                     estado: view.getEstado(),
@@ -316,21 +313,9 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 }
             };
             
-            var activeTab;
-            
-            if (Ext.manifest.toolkit === 'classic') {
-                activeTab = refs.tabpanel.getActiveTab();
-            } else {
-                activeTab = refs.tabpanel.getActiveItem();
-            }
-             
-            if (activeTab && activeTab.getController && activeTab.getController().guardar) {
-                activeTab.getController().guardar({
-                    success: callbackSuccess
-                });
-            } else {
-                callbackSuccess();
-            }
+            refs.tabpanel.getActiveTab().getController().guardar({
+                success: callbackSuccess
+            });
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }

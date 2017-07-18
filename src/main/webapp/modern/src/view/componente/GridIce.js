@@ -61,5 +61,30 @@ Ext.define('Ice.view.componente.GridIce', {
     		Ice.generaExcepcion(e,paso);
     	}
     	me.callParent(arguments);
-    }
+    },
+
+	initialize: function () {
+		Ice.log('Ice.view.componente.GridIce.initialize');
+		var me = this,
+		    paso = 'Transformando comportamiento de grid';
+		try {
+			////// antes de callParent //////
+
+
+			////// antes de callParent //////
+			me.callParent(arguments);
+			////// despues de callParent //////
+
+			// el evento itemtap dispara itemclick para normalizarlo con classic
+			me.on({
+				itemtap: function (me, index, target, record) {
+					me.fireEvent('itemclick', me, record);
+				}
+			});
+
+			////// despues de callParent //////
+		} catch (e) {
+			Ice.generaExcepcion(e, paso);
+		}
+	}
 });

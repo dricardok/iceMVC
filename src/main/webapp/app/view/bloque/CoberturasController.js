@@ -449,25 +449,32 @@ Ext.define('Ice.view.bloque.CoberturasController', {
     					}
 
 						if (params && params.success) {
+							paso2 = 'Ejecutando proceso posterior a coberturas';
     						params.success();
 					    }
 				    } catch (e) {
 				        Ice.manejaExcepcion(e, paso2);
-                        if (params && params.failure) {
-                            params.failure();
-                        }
+						if (params && params.failure) {
+							var paso4 = 'Ejecutando failure posterior a coberturas';
+							try {
+								params.failure();
+							} catch (e) {
+								Ice.manejaExcepcion(e, paso4);
+							}
+						}
 				    }
 				},
-				failure: function () {
-				    if (params && params.failure) {
-				        params.failure();
-				    }
-				}
+				failure: (params && params.failure) || null
 			});
 		} catch (e) {
 			Ice.manejaExcepcion(e, paso);
 			if (params && params.failure) {
-			    params.failure();
+				var paso3 = 'Ejecutando failure posterior a coberturas';
+				try {
+					params.failure();
+				} catch (e) {
+					Ice.manejaExcepcion(e, paso3);
+				}
 			}
 		}
 	},

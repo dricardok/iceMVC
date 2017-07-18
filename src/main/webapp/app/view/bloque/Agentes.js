@@ -6,7 +6,11 @@ Ext.define('Ice.view.bloque.Agentes', {
 
 	// config ext
 	title: 'Agentes',
-	scrollable: true,
+	platformConfig: {
+		'!desktop': {
+			scrollable: true
+		}
+	},
     
 	// config no ext
     config: {

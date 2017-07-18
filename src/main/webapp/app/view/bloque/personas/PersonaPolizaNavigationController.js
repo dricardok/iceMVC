@@ -30,6 +30,76 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
             Ice.generaExcepcion(e, paso);
         }
     },
+
+    guardar: function (params) {
+        Ice.log('Ice.view.bloque.personas.PersonaPolizaNavigationController.guardar');
+        var me = this,
+            view = me.getView(),
+            paso = 'Validando personas';
+        try {
+            var reqParams = Ice.convertirAParams({
+                cdunieco: view.getCdunieco(),
+                cdramo: view.getCdramo(),
+                estado: view.getEstado(),
+                nmpoliza: view.getNmpoliza(),
+                nmsituac: 0,
+                nmsuplem: view.getNmsuplem()
+            });
+            reqParams.bloques = ['B3', 'B3B', 'B3C', 'B4', 'B4B', 'B4C'];
+            Ice.request({
+                mascara: paso,
+                url: Ice.url.bloque.ejecutarValidacion,
+                params: reqParams,
+                failure: (params && params.failure) || null,
+                success: function (action) {
+                    var paso2 = 'Revisando validaciones';
+                    try {
+                        if (action.list && action.list.length > 0) {
+                            Ext.create('Ice.view.bloque.VentanaValidaciones', {
+                                lista: action.list
+                            }).mostrar();
+                            
+                            var error = false;
+                            for (var i = 0; i < action.list.length; i++) {
+                                if (action.list[i].tipo.toLowerCase() === 'error') {
+                                    error = true; // para que no avance si hay validaciones tipo "error"
+                                    break;
+                                }
+                            }
+                            if (error === true) {
+                                throw 'Favor de revisar las validaciones';
+                            }
+                        }
+                        
+                        if (params && params.success) {
+                            paso2 = 'Ejecutando proceso posterior a personas';
+                            params.success();
+                        }
+                    } catch (e) {
+                        Ice.manejaExcepcion(e, paso2);
+                        if (params && params.failure) {
+                            var paso4 = 'Ejecutando failure posterior a personas';
+                            try {
+                                params.failure();
+                            } catch (e) {
+                                Ice.manejaExcepcion(e, paso4);
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+			if (params && params.failure) {
+				var paso3 = 'Ejecutando failure posterior a personas';
+				try {
+					params.failure();
+				} catch (e) {
+					Ice.manejaExcepcion(e, paso3);
+				}
+			}
+        }
+    },
     
     actualizar: function(grid, rowIndex, colIndex){
         Ice.log('Ice.view.bloque.situacionPersonas.actualizar grid ',grid,' rowIndex ',rowIndex,' colIndex ',colIndex);

@@ -138,9 +138,9 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadoresController', {
                 params: Ice.convertirAParams(params),
                 success: function () {
                     view.getStore().reload();
-                    refs.agregarbutton.disable();
-                    refs.editarbutton.disable();
-                    refs.eliminarbutton.disable();
+                    refs.agregarbutton.hide();
+                    refs.editarbutton.hide();
+                    refs.eliminarbutton.hide();
                 }
             });
         } catch (e) {
@@ -148,19 +148,15 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadoresController', {
         }
     },
     
-    onItemTap: function () {
-        this.onItemClic();
-    },
-    
     onItemClic: function () {
         Ice.log('controller.gridagrupadores.onItemClic');
         var me = this,
+            refs = me.getReferences(),
             paso = 'Seleccionando registro';
         try {
-            var refs = me.getReferences();
-            refs.agregarbutton.enable();
-            refs.editarbutton.enable();
-            refs.eliminarbutton.enable();
+            refs.agregarbutton.show();
+            refs.editarbutton.show();
+            refs.eliminarbutton.show();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -189,18 +185,28 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadoresController', {
         var paso = 'Recargando agrupadores';
         try {
             Ice.pop();
-            if(Ice.sesion.cdsisrol==Ice.constantes.roles.AGENTE){
-            	Ice.query('[xtype=tabpanel]',Ice.query("[xtype=emision]")).setActiveItem(0); 
+            if (Ice.sesion.cdsisrol === Ice.constantes.roles.AGENTE) {
+                try {
+                    var emision = Ice.query('emision');
+                    if (emision && typeof emision.length === 'number') {
+                        emision = emision[emision.length - 1];
+                    }
+                    if (emision) {
+                        emision.getReferences().tabpanel.setActiveTab(emision.getReferences().ref0);
+                    }
+                } catch (e) {
+                    Ice.logWarn('error al brincar navegacion para agente', e);
+                }
             }
             var me = this.padreCtr,
                 view = me.getView(),
                 refs = me.getReferences();
-            if(Ice.sesion.cdsisrol!=Ice.constantes.roles.AGENTE){
-            	me.getView().getStore().reload();
+            if (Ice.sesion.cdsisrol !== Ice.constantes.roles.AGENTE) {
+            	view.getStore().reload();
             }
-            refs.agregarbutton.disable();
-            refs.editarbutton.disable();
-            refs.eliminarbutton.disable();
+            refs.agregarbutton.hide();
+            refs.editarbutton.hide();
+            refs.eliminarbutton.hide();
             view.fireEvent('agrupadorModificado', view);
             
         } catch (e) {
@@ -217,8 +223,18 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadoresController', {
         Ice.log(me);
         try {
             Ice.pop();
-            if(Ice.sesion.cdsisrol==Ice.constantes.roles.AGENTE){
-            	Ice.query('[xtype=tabpanel]',Ice.query("[xtype=emision]")).setActiveItem(0); 
+            if (Ice.sesion.cdsisrol === Ice.constantes.roles.AGENTE) {
+                try {
+                    var emision = Ice.query('emision');
+                    if (emision && typeof emision.length === 'number') {
+                        emision = emision[emision.length - 1];
+                    }
+                    if (emision) {
+                        emision.getReferences().tabpanel.setActiveTab(emision.getReferences().ref0);
+                    }
+                } catch (e) {
+                    Ice.logWarn('error al brincar navegacion para agente', e);
+                }
             }
         } catch (e) {
             Ice.manejaExcepcion(e, paso);

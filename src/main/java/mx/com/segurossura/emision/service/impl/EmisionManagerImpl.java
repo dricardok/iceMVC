@@ -237,22 +237,19 @@ public class EmisionManagerImpl implements EmisionManager {
 	@Override
 	public List<Map<String, String>> ejecutarValidaciones(String cdunieco, String cdramo, String estado,
 			String nmpoliza, String nmsituac, String nmsuplem, List<String> cdbloque) throws Exception {
-
-		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "\n@@@@@@ borraEstructuraSituacion"));
-		String paso = "";
+		logger.debug("\n@@@@@@ ejecutarValidaciones @@@@@@");
+		String paso = "Ejecutando validaciones";
+		List<Map<String, String>> validaciones = new ArrayList<Map<String, String>>();
 		try {
-
-			List<Map<String, String>> lista = new ArrayList<>();
 			for (String bloque : cdbloque) {
-				lista.addAll(emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, null,
+			    validaciones.addAll(emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, null,
 						bloque));
 			}
-
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}
-		logger.debug(Utils.join("\n@@@@@@ borraEstructuraSituacion", "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
-		return null;
+		logger.debug(Utils.join("\n@@@@@@ ejecutarValidaciones validaciones = ", validaciones));
+		return validaciones;
 	}
 
 	@Override
