@@ -340,7 +340,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
         		cdtipsit: view.getCdtipsit(),
         		
         		buttons : [{
-        			text: 'Editar',
+        			text: 'Modificar',
         			iconCls: 'x-fa fa-pencil',
         			handler: function(me){
         				Ice.pop();

@@ -348,20 +348,22 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 estado: view.getEstado(),
                 nmpoliza: view.getNmpoliza(),
                 
-                buttons: [{
-                    text: 'Modificar Datos de Emisión',
-                    iconCls: 'x-fa fa-check',
-                    handler: function (bot) {
-                        bot.up('ventanaprimas').cerrar();
+                buttons: [
+                    {
+                        text: 'Confirmar Emisión',
+                        iconCls: 'x-fa fa-key',
+                        handler: function (bot) {
+                            bot.up('ventanaprimas').cerrar();
+                            me.emitir();
+                        }
+                    }, {
+                        text: 'Modificar',
+                        iconCls: 'x-fa fa-pencil',
+                        handler: function (bot) {
+                            bot.up('ventanaprimas').cerrar();
+                        }
                     }
-                }, {
-                    text: 'Confirmar Emisión',
-                    iconCls: 'x-fa fa-key',
-                    handler: function (bot) {
-                        bot.up('ventanaprimas').cerrar();
-                        me.emitir();
-                    }
-                }]
+                ]
             }).mostrar();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);

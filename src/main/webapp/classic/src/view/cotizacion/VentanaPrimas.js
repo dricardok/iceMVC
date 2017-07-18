@@ -2,10 +2,12 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
     extend: 'Ice.view.componente.VentanaIce',
     xtype: 'ventanaprimas',
     
+    // config ext
     modal: true,
     title: 'Tarifa',
     layout: 'fit',
     
+    // config no ext
     config: {
         cdunieco: null,
         cdramo: null,
