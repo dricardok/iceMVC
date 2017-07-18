@@ -11,6 +11,7 @@ Ext.define('Ext.view.bloque.DatosInicialesController', {
             paso = 'Iniciando controlador de datos iniciales';
         Ext.defer(function () {
             try {
+                me.custom();
                 if (view.getCdunieco() && view.getCdramo() && view.getEstado() && view.getNmpoliza()) {
                     me.cargar();
                 }
@@ -18,6 +19,45 @@ Ext.define('Ext.view.bloque.DatosInicialesController', {
                 Ice.manejaExcepcion(e, paso);
             }
         }, 600);
+    },
+
+
+    custom: function () {
+        Ice.log('Ice.view.bloque.DatosInicialesController.custom');
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            paso = 'Configurando comportamiento bloque de datos iniciales';
+        Ice.log('view: ',view);            
+        try {
+            Ice.log('refs formadatosgenerales',refs.formdatosgenerales);
+            if(refs.formdatosgenerales){
+                if(refs.formdatosgenerales.getReferences()){
+                    var cdtipcoa = refs.formdatosgenerales.getReferences().cdtipcoa;
+                    if(cdtipcoa){
+                        cdtipcoa.on({
+                            change: function(me, value){
+                                Ice.log('cdtipcoa change');
+                                var paso2 = 'Cambiando valor';
+                                try{
+                                    if(value == 'N'){
+                                        refs.panelcoaseguro.hide();
+                                    } else {
+                                        refs.panelcoaseguro.show();
+                                    }
+                                } catch(e){
+                                    Ice.logWarn(paso, e);
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+            Ice.log('datosinicialescontroller cdtipcoa',cdtipcoa);
+        } catch (e) {
+        	alert(e);
+            Ice.generaExcepcion(e, paso);
+        }
     },
 
     // se recibe el evento llaveGenerada del form de datos generales y se escala
@@ -52,6 +92,17 @@ Ext.define('Ext.view.bloque.DatosInicialesController', {
             paso = 'Cargando datos iniciales';
         try {
             refs.formdatosgenerales.getController().cargar();
+            if(refs.formdatosgenerales){
+                var values = refs.formdatosgenerales.getValues();
+                if(values){
+                    if(values.cdtipcoa){
+                        refs.panelcoaseguro.cdunieco = values.cdunieco;
+                        refs.panelcoaseguro.nmpoliza = values.nmpoliza;
+                        refs.panelcoaseguro.cdtipcoa = values.cdtipcoa;
+                        refs.getController().cargar();
+                    }
+                }
+            }
             refs.formdatosauxiliares.getController().cargar();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
@@ -68,6 +119,14 @@ Ext.define('Ext.view.bloque.DatosInicialesController', {
                 success: function () {
                     var paso2 = 'Guardando datos auxiliares';
                     try {
+                        if(refs.formdatosgenerales){
+                            var values = refs.formdatosgenerales.getValues();
+                            if(values){
+                                if(values.cdtipcoa){
+                                    refs.getController().guardar();
+                                }
+                            }
+                        }
                         refs.formdatosauxiliares.getController().guardar({
                             success: (params && params.success) || null,
                             failure: (params && params.failure) || null

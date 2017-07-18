@@ -29,9 +29,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 			}
 	        
 			config.items = [
-				{
+
 	        		xtype: 'vistatarificaciontemporal',
-	        		style: 'background:#DEEBF4; padding: 0 0 0 3%; min-height: 800px;',
+	        		cls:'back_plan',
 	    			reference: 'vistatarificaciontemporal',
 	    				
 	    			cdunieco: config.cdunieco,
