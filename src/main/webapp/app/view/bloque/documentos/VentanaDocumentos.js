@@ -105,11 +105,12 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                 ].concat(config.buttons || []);
             }
             config.buttons = [
-                {
+                /*{
                     text: 'Agregar',
                     iconCls: 'x-fa fa-plus',
                     handler: 'onAgregarDocumento'
-                }, {
+                },*/
+                {
                     xtype: 'textfieldice',
                     labelAlign: 'left',
                     label: 'Buscar',
