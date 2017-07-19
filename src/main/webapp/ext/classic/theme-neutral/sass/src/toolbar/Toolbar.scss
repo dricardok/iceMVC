@@ -170,7 +170,7 @@
 @mixin extjs-toolbar-ui(
     $ui,
 
-    $background-color: $azulo-s,
+    $background-color: $blanco-s,
     $background-gradient: $toolbar-background-gradient,
 
     $vertical-spacing: $toolbar-vertical-spacing,
@@ -242,7 +242,7 @@
         border-color: $border-color;
         border-width: $border-width;
 
-        @include background-gradient($background-color, $background-gradient);
+        @include background-gradient($blanco-s, $background-gradient);
 
         @if $include-ext-panel-tool {
             .#{$prefix}tool-img {
@@ -255,7 +255,7 @@
                     // EXTJSIV-8846: partially transparent png images do not display correctly
                     // in winXP/IE8m when the image element has a transparent background.
                     // to fix this, we give the element the same background-color as the toolbar.
-                    background-color: $background-color;
+                    background-color: $blanco-s;
                 }
             }
         }

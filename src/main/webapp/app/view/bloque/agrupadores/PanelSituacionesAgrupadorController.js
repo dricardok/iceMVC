@@ -1,4 +1,4 @@
-Ext.define('Ext.view.bloque.agrupadores.PanelSituacionesAgrupadorController', {
+Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupadorController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.panelsituacionesagrupador',
     

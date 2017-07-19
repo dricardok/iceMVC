@@ -32,8 +32,9 @@ Ext.define('Ice.view.bloque.documentos.ListaDocumentos', {
                         throw 'No hay datos para lista de documentos';
                     }
                     
-                    if (!config.cdunieco || !config.cdramo || !config.estado ||!config.nmpoliza || !config.nmsuplem) {
-                        throw 'Falta llave de poliza para lista de documentos';
+                    if (!config.cdunieco || !config.cdramo || !config.estado ||!config.nmpoliza
+                        || Ext.isEmpty(config.nmsuplem)) {
+                        throw 'Falta llave de p\u00f3liza para lista de documentos';
                     }
                     
                     if(!config.itemsPerPage){
