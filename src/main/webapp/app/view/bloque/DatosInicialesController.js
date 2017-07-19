@@ -1,11 +1,11 @@
-Ext.define('Ext.view.bloque.DatosInicialesController', {
+Ext.define('Ice.view.bloque.DatosInicialesController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.datosiniciales',
 
     init: function () {
         this.callParent(arguments);
 
-        Ice.log('Ext.view.bloque.DatosInicialesController.init');
+        Ice.log('Ice.view.bloque.DatosInicialesController.init');
         var me = this,
             view = me.getView(),
             paso = 'Iniciando controlador de datos iniciales';
@@ -62,12 +62,18 @@ Ext.define('Ext.view.bloque.DatosInicialesController', {
 
     // se recibe el evento llaveGenerada del form de datos generales y se escala
     llaveGenerada: function (formDatosGenerales, cdunieco, cdramo, estado, nmpoliza, nmsuplem, status) {
-        Ice.log('Ext.view.bloque.DatosInicialesController.llaveGenerada args:', arguments);
+        Ice.log('Ice.view.bloque.DatosInicialesController.llaveGenerada args:', arguments);
         var me = this,
             view = me.getView(),
             refs = me.getReferences(),
             paso = 'Asignando llave de cotizaci\u00f3n a sub-bloques de datos iniciales';
         try {
+            view.setCdunieco(cdunieco);
+            view.setCdramo(cdramo);
+            view.setEstado(estado);
+            view.setNmpoliza(nmpoliza);
+            view.setNmsuplem(nmsuplem);
+
             if (refs.formdatosauxiliares) {
                 refs.formdatosauxiliares.setCdunieco(cdunieco);
                 refs.formdatosauxiliares.setCdramo(cdramo);
@@ -85,7 +91,7 @@ Ext.define('Ext.view.bloque.DatosInicialesController', {
     },
 
     cargar: function () {
-        Ice.log('Ext.view.bloque.DatosInicialesController.cargar');
+        Ice.log('Ice.view.bloque.DatosInicialesController.cargar');
         var me = this,
             view = me.getView(),
             refs = me.getReferences(),
@@ -110,7 +116,7 @@ Ext.define('Ext.view.bloque.DatosInicialesController', {
     },
 
     guardar: function (params) {
-        Ice.log('Ext.view.bloque.DatosInicialesController.guardar params:', params);
+        Ice.log('Ice.view.bloque.DatosInicialesController.guardar params:', params);
         var me = this,
             refs = me.getReferences(),
             paso = 'Guardando datos generales';

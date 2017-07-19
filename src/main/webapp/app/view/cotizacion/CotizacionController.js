@@ -42,7 +42,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 throw 'No existe el bloque';
             }
 
-            var agregarYEnfocarBloque = function () {
+            var agregarYEnfocarBloque = function (cargar) {
                 var paso2 = 'Construyendo siguiente bloque';
                 try {
                     if (!bloqueExistente) { // no existe, se crea
@@ -94,6 +94,11 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     view.setGuardadoAutomaticoSuspendido(true); // para que no valide el guardado
                     tabpanel.setActiveTab(bloqueExistente);
                     view.setGuardadoAutomaticoSuspendido(false);
+
+                    if (cargar === true) {
+                        alert('cargar posterior a irBloqueSiguiente');
+                        bloqueExistente.getController().cargar();
+                    }
                 } catch (e) {
                     Ice.manejaExcepcion(e, paso2);
                 }
@@ -102,7 +107,9 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             if (index > 0) { // si es el segundo bloque (1) o mayor, guardar primero
                 var bloqueActual = refs['ref' + (index - 1)];
                 bloqueActual.getController().guardar({
-                    success: agregarYEnfocarBloque
+                    success: function () {
+                        agregarYEnfocarBloque(true);
+                    }
                 });
             } else {
                 agregarYEnfocarBloque();
@@ -134,6 +141,8 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     view.setGuardadoAutomaticoSuspendido(true); // para que no valide el guardado
                     tabpanel.setActiveTab(bloqueExistente);
                     view.setGuardadoAutomaticoSuspendido(false);
+                    alert('cargar posterior a irBloqueAnterior');
+                    bloqueExistente.getController().cargar();
                 }
             });
         } catch (e) {
@@ -174,9 +183,10 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 paso = 'Guardando datos';
                 var callbackSuccess = function () {
                     var pasoCargar = 'Cargando bloque';
-                    try{
+                    try {
+                        alert('cargar nuevo card posterior a salvar anterior card');
                         newCard.getController().cargar();
-                    } catch (e){
+                    } catch (e) {
                         Ice.manejaExcepcion(e, pasoCargar);
                     }
                 };
@@ -198,9 +208,6 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     success: callbackSuccess,
                     failure: callbackFailure
                 });
-            } else {
-                paso = 'Cargando bloque';
-                newCard.getController().cargar();
             }
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
@@ -243,8 +250,14 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             }
             
             refs.tabpanel.add(comps);
+
+            view.setGuardadoAutomaticoSuspendido(true);
             refs.tabpanel.setActiveTab(comps[0]);
+            view.setGuardadoAutomaticoSuspendido(false);
+
+            alert('cargar despues de setActiveTab (0)');
             comps[0].getController().cargar();
+
             me.mostrarTarifasPlan();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
