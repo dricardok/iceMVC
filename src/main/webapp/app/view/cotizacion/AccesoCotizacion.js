@@ -6,6 +6,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
 
     // config ext
     title: 'Cotizadores',
+    layout: 'fit',
     platformConfig: {
         '!desktop': {
             scrollable: true
@@ -21,19 +22,33 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
             config.items = [{
                 xtype: 'dataviewice',
                 reference: 'dataview',
-                tpl: new Ext.XTemplate(
-                    '<tpl for=".">',
-                        '<div class="plan_pago thumb">',
-                            '<table class="plan_pago_base shadow_card" style="width:150px; min-height:150px;">',
-                                '<tr>',
-                                    '<td class="producto thumb">{dsramo}</td>',
-                                '</tr>',
-                                 '<tr style="background-color:#fff;">',
-                                 '</tr>',
-                            '</table>',
-                        '</div>',
-                    '</tpl>'
-                ),
+                style: 'background: #DEEBF4;',
+                platformConfig: {
+                    desktop: {
+                        tpl: new Ext.XTemplate(
+                            '<tpl for=".">',
+                                '<div class="plan_pago thumb">',
+                                    '<table class="plan_pago_base shadow_card" style="width:150px; min-height:150px;">',
+                                        '<tr>',
+                                            '<td class="producto thumb">{dsramo}</td>',
+                                        '</tr>',
+                                            '<tr style="background-color:#fff;">',
+                                            '</tr>',
+                                    '</table>',
+                                '</div>',
+                            '</tpl>'
+                        )
+                    },
+                    '!desktop': {
+                        itemTpl: new Ext.XTemplate( // TODO delia
+                            '<tpl for=".">',
+                                '<div class="thumb">',
+                                    'Datos: {cdramo} - {dsramo}, {cdtipsit} - {dstipsit}</div>',
+                                '</div>',
+                            '</tpl>'
+                        )
+                    }
+                },
                 itemSelector: 'div.thumb',
                 store: {
                     autoLoad: true,

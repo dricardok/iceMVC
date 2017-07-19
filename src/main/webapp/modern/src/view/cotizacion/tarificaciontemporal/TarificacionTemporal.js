@@ -31,7 +31,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 			config.items = [
 				{
 	        		xtype: 'vistatarificaciontemporal',
-	        		cls:'back_plan',
+	        		cls:'back_plan', // TODO delia el background se corta en tablet
 	    			reference: 'vistatarificaciontemporal',
 	    				
 	    			cdunieco: config.cdunieco,

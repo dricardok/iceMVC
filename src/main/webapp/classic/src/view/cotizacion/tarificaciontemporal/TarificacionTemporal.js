@@ -33,7 +33,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 			
 			config.items = [
 				{
-                    xtype: 'tbtext',
+                    xtype: 'tbtext', // TODO delia evitar este elemento
                     text: 'Elige tu Plan',
                     cls: 'titulo_plan'
                 }, {
