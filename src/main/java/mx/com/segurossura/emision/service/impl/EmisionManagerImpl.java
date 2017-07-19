@@ -487,6 +487,7 @@ public class EmisionManagerImpl implements EmisionManager {
 		RequestWs request = null;
 		String documentoURL = "https://qa-servicios.segurossura.com.mx/blackBoxMvc/printer/TEXTLIB2_RTCL/1/501/1/M/0";
 		String docURL = "";
+		String docLocation = "";
 		String extension = ".pdf";
 		String documentsLocation = "C:\\documents\\";
 		StringBuilder path = new StringBuilder();
