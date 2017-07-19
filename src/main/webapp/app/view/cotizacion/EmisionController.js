@@ -557,12 +557,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             view = me.getView(),
             paso = 'Confirmando p\u00f3liza';
         try {
-<<<<<<< HEAD
-            var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos',{
-
-=======
             var ventana = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos',{
->>>>>>> origin/dev
                 cdunieco: view.getCdunieco(),
                 cdramo: view.getCdramo(),
                 estado: view.getEstado(),

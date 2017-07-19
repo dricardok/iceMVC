@@ -14,11 +14,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
         	    '<div class="plan_pago">',
                 '<table class="plan_pago_base shadow_card" style="width:250px; min-height:300px;">',
                     '<tr>',
-<<<<<<< HEAD
-                        '<td class="plan_pago_monto thumb">${total}<p class="moneda">Pesos</p><p class="rec_subsecuente">Recibo Subsecuente</p></td>',
-=======
                         '<td class="plan_pago_monto">{total}<p class="moneda">Pesos</p><p class="rec_subsecuente">Recibo Subsecuente</p></td>',
->>>>>>> origin/dev
                     '</tr>',
                     '<tr style="background-color:#fff;">',
                         '<td style="text-align:center;">',
