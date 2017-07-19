@@ -296,5 +296,6 @@ public interface EmisionDAO {
 
     
     public List<Map<String, String>> recuperarCotizadoresDisponibles (String cdusuari) throws Exception;
-
+    
+    public List<Map<String, String>> obtenerMrecibo(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
 }

@@ -489,23 +489,27 @@ public class EmisionManagerImpl implements EmisionManager {
 		String docURL = "";
 		String extension = ".pdf";
 		String documentsLocation = "C:\\documents\\";
+		StringBuilder path = new StringBuilder();
+		List<Documento> documentos = null;
 	
 		try {
 		    paso = "Confirmando p\u00f3liza";
 			nmpolizaEmitida = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
 			estado = EstadoPoliza.MASTER.getClave();
 			nmpoliza = nmpolizaEmitida;
-			logger.info("Poliza emitida: {}", nmpoliza);		
+			logger.info("Poliza emitida: {}", nmpoliza);	
 			
 			
-			datosPago = emisionDAO.obtenerDatosPago(cdunieco, cdramo, estado, nmpolizaEmitida, nmsuplem).get(0);
+			// Obteniendo nmrecibo
+			datosPago = emisionDAO.obtenerMrecibo(cdunieco, cdramo, estado, nmpolizaEmitida, nmsuplem).get(0);
 			
 			
 			request = new RequestWs();
 			request.setCdunieco(Integer.parseInt(cdunieco));
 			request.setCdramo(Integer.parseInt(cdramo));
 			request.setNmpoliza(Integer.parseInt(nmpoliza));
-			request.setNmrecibo(Integer.parseInt(datosPago.get("nmrecibo")));		
+			request.setNmrecibo(Integer.parseInt(datosPago.get("nmrecibo")));
+			
 			paso = new StringBuilder("Aplicando recibo en ALEA de la p\u00f3liza ").append(nmpoliza).toString();			
 			try{
 				pagoManager.aplicaPago(request);
@@ -515,10 +519,18 @@ public class EmisionManagerImpl implements EmisionManager {
 			
 			paso = new StringBuilder("Obteniendo documentos de la p\u00f3liza ").append(nmpoliza).toString();
 			
+			try{
 			logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);
-			List<Documento> documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+			documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
 			logger.debug("Documentos de impresion: {}", documentos);
+			}catch(Exception e){
+				logger.error(e.getMessage(), e);
+			}
 			
+			
+			// Especificar el path para almacenar documentos
+			path.append(documentsLocation).append(File.separator).append(cdunieco).append(File.separator).append(cdramo).append(File.separator).append(nmpoliza).append(File.separator).append(nmsuplem).append(File.separator);
+	
 			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();
 			// Se guardan la lista de documentos:
 			for (Documento documento : documentos) {
@@ -533,23 +545,24 @@ public class EmisionManagerImpl implements EmisionManager {
                 String nmcertif = null; //TODO: agregar
                 String nmsituac = null; //TODO: agregar
                 
+                docURL = documento.getUrl();
+                
                 
                 documentosDAO.realizarMovimientoDocsPoliza(
                         cdunieco, cdramo, estado, nmpoliza, nmsolici, nmsuplem, ntramite, 
                         new Date(), documento.getId(), documento.getNombre(), tipmov, 
                         Constantes.SI, cdtiptra, codidocu, new Date(), cdorddoc, cdmoddoc, 
-                        nmcertif, nmsituac, documento.getUrl(), Constantes.INSERT_MODE);
-                
+                        nmcertif, nmsituac, documento.getUrl(), Constantes.INSERT_MODE);                
                 
 				try
 				{	
-					//FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(documentsLocation+documento.getNombre()+extension), 10000, 10000); 
+					FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(path+documento.getNombre()+extension), 10000, 10000); 
 					
 					/* Esta fija la URL pro que las URLS del servicio mandan error 404  */
-					FileUtils.copyURLToFile(new URL(documentoURL), new File(documentsLocation+documento.getNombre()+extension), 10000, 10000);
+					//FileUtils.copyURLToFile(new URL(documentoURL), new File(documentsLocation+documento.getNombre()+extension), 10000, 10000);
 					
 				}catch(Exception e){
-					
+					logger.error(e.getMessage(), e);
 					continue;
 				}
             }
@@ -595,7 +608,7 @@ public class EmisionManagerImpl implements EmisionManager {
 				   fechaVencimiento = fevencm+"/"+fevenca,
 				   tarjetahabiente = nombre,			   
 				   // Datos de la solicitud				  
-				   nmrecibo = datosPago.get("nmrecibo"),
+				   //nmrecibo = datosPago.get("nmrecibo"),
 				   importe = datosPago.get("ptimport"),
 				   moneda = datosPago.get("cdmoneda");		
 			
@@ -620,7 +633,7 @@ public class EmisionManagerImpl implements EmisionManager {
             request.setCdunieco(Integer.parseInt(cdunieco));
             request.setCdramo(Integer.parseInt(cdramo));
             request.setNmpoliza(Integer.parseInt(nmpoliza));
-            request.setNmrecibo(Integer.parseInt(nmrecibo));
+            //request.setNmrecibo(Integer.parseInt(nmrecibo));
             request.setImporte(Double.parseDouble(importe));
             request.setMoneda(moneda);
 
@@ -629,10 +642,24 @@ public class EmisionManagerImpl implements EmisionManager {
             request.setTarjeta(tarjeta);            
             
             TransactionResponse transaccionResponse = pagoManager.realizaPago(request);
-			
+		
             if(transaccionResponse.getAuthCode() == "") {
             	throw new Exception(transaccionResponse.getDcError());
             }
+            logger.info("Codigo de autorizacion: " + transaccionResponse.getAuthCode());
+            logger.info("Codigo de Error " + transaccionResponse.getCcErrCode());
+            logger.info("Mensage de respuesta " + transaccionResponse.getCcReturnMsg());
+            logger.info(transaccionResponse.getDcError());
+            logger.info(transaccionResponse.getParamError());
+            logger.info(transaccionResponse.getProcReturnCode());
+            logger.info(transaccionResponse.getProcReturnMsg());
+            logger.info(transaccionResponse.getProcReturnMsg());
+            logger.info(transaccionResponse.getResponseCode());
+            logger.info(transaccionResponse.getText());
+            logger.info(transaccionResponse.getTimeOut());
+            logger.info(transaccionResponse.getTotal());
+            
+            resultado = transaccionResponse.getAuthCode();
 						
 			
 		}catch(Exception ex) {

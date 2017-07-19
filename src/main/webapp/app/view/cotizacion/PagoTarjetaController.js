@@ -38,8 +38,16 @@ Ext.define('Ice.view.cotizacion.PagoTarjetaController', {
 	            }),
 	            success: function (action) {
 	            	
+	            	
+	            	Ext.Msg.alert('Transaccion ', action.params.codaut);
+	            	
+	                me.cerrar();
 	                
-	                
+	            },
+	            failure: function (action ) {
+	            	
+	            	me.cerrar();
+	            	Ext.Msg.alert('Transaccion rechazada', action.params.message);
 	            }
 	        });			
 			

@@ -798,9 +798,10 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   nombre,   "Falta nombre",
     	                   email, 	 "Falta email");
     	    
-    	    String nmpolizaEmitida = emisionManager.realizarPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, 
+    	    String codigoautorizacion = emisionManager.realizarPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, 
     	    															cdbanco, dsbanco, nmtarjeta, codseg, fevencm, 
     	    															fevenca, nombre, email, usuario);
+    	    params.put("codaut", codigoautorizacion);
     	    
     	    
     		success = true;

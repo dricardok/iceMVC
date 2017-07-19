@@ -2,10 +2,11 @@ Ext.define('Ice.view.cotizacion.VentanaPagoTarjeta', {
 	extend: 'Ice.view.componente.VentanaIce',
 	xtype: 'ventanapagotarjeta',
 	
-	controller: 'pagotarjeta',
+	//controller: 'pagotarjeta',
+	//controller: 'emision',
 	
 	modal: true,
-	title: 'Datos Tarjeta',
+	title: 'Pago con tarjeta',
 	layout: 'fit',
 	resizable: false,
 	
@@ -56,18 +57,20 @@ Ext.define('Ice.view.cotizacion.VentanaPagoTarjeta', {
                     },
             		items: comps.PAGO_TARJETA.FORMULARIO.items.concat([
             			{
-            				xtype: 'numberfield',
+            				xtype: 'textfield',
             				name: 'nmtarjeta',
             				fieldLabel: 'Numero de tarjeta',
+            				maskRe: /[\d\-]/,
             				allowBlank: false,
             				allowDecimals: false,
             	            allowNegative: false,
             	            maxLength: 16
             				
             			}, {
-            				xtype: 'numberfield',
+            				xtype: 'textfield',
             				name: 'codseg',
             				fieldLabel: 'Codigo seguridad',
+            				maskRe: /[\d\-]/,
             				allowBlank: false,
             				allowDecimals: false,
             	            allowNegative: false,
@@ -137,16 +140,7 @@ Ext.define('Ice.view.cotizacion.VentanaPagoTarjeta', {
             			}]),
             		modelValidators:comps.PAGO_TARJETA.FORMULARIO.validators,
         			modelFields	:	comps.PAGO_TARJETA.FORMULARIO.fields
-            	},
-            	buttons: [
-            		{
-            			text: 'Cancelar',
-            			handler: 'cerrar'
-            		}, {
-        				text: 'Pagar',
-        				handler: 'pagar'
-        			}
-            	]
+            	}
             });
             
 		}catch(e) {

@@ -2,7 +2,7 @@ Ext.define('Ice.view.cotizacion.VentanaPagoTarjeta', {
 	extend: 'Ice.view.componente.VentanaIce',
 	xtype: 'ventanapagotarjeta',
 	
-controller: 'pagotarjeta',
+	//controller: 'pagotarjeta',
 	
 	modal: true,
 	title: 'Datos Tarjeta',
@@ -137,16 +137,7 @@ controller: 'pagotarjeta',
             			}]),
             		modelValidators:comps.PAGO_TARJETA.FORMULARIO.validators,
         			modelFields	:	comps.PAGO_TARJETA.FORMULARIO.fields
-            	},
-            	buttons: [
-            		{
-            			text: 'Cancelar',
-            			handler: 'cerrar'
-            		}, {
-        				text: 'Pagar',
-        				handler: 'pagar'
-        			}
-            	]
+            	}
             });
             
 		}catch(e) {

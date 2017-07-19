@@ -1351,7 +1351,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
             String[] cols = new String[] { "cdunieco", "cdramo", "estado", "nmpoliza", "nmsuplem",
-            							   "nmrecibo", "ptimport", "cdmoneda", "descripl"};
+            							   "ptimport", "cdmoneda", "descripl"};
 			declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
@@ -1616,6 +1616,42 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  ,  Types.VARCHAR));
             compile();
+        }
+    }
+
+
+	@Override
+	public List<Map<String, String>> obtenerMrecibo(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsuplem) throws Exception {
+		Map<String, Object> params = new LinkedHashMap<String, Object>();       
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        logger.debug("-->"+params);
+		Map<String, Object> resultado = ejecutaSP(new GetMrecibo(getDataSource()), params);
+        List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
+		if(listaDatos==null||listaDatos.size()==0) {
+			throw new ApplicationException("Sin resultados");
+		}
+		return listaDatos;
+	}
+	
+	protected class GetMrecibo extends StoredProcedure {
+        protected GetMrecibo (DataSource dataSource) {
+            super(dataSource, "P_GET_MRECIBO");           
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
+            String[] cols = new String[] { "cdunieco", "cdramo", "estado", "nmpoliza", "nmsuplem",
+            							   "nmrecibo"};
+			declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
+			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+			compile();
         }
     }
 }
