@@ -35,7 +35,7 @@ Ext.define('Ice.view.componente.FormIce', {
                     iconCls: 'x-fa fa-eye',
                     //style: 'margin: 0 82px 0 0;',
                     tooltip: 'Mostrar/ocultar',
-                    hidden: Ice.sesion.cdsisrol === Ice.constantes.roles.AGENTE,
+                    hidden: Ice.sesion.cdsisrol === Ice.constantes.roles.AGENTE || config.sinToggle === true,
                     handler: function (me) {
                         Ice.toggleOcultos(me.up('form'));
                     }
@@ -43,7 +43,8 @@ Ext.define('Ice.view.componente.FormIce', {
             ].concat(config.tbar || []);
 
             // cuando solo tenemos las opciones tbar default y somos agente, mejor las quitamos
-            if (config.tbar.length === 2 && Ice.sesion.cdsisrol === Ice.constantes.roles.AGENTE) {
+            if (config.tbar.length === 2 && (Ice.sesion.cdsisrol === Ice.constantes.roles.AGENTE
+                || config.sinToggle === true)) {
                 config.tbar = null;
                 delete config.tbar;
             }

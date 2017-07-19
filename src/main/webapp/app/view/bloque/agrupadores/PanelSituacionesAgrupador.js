@@ -78,12 +78,13 @@ Ext.define('Ice.view.bloque.agrupadores.PanelSituacionesAgrupador', {
                     xtype: 'formice',
                     referenceHolder: false,
                     layout: 'hbox',
+                    sinToggle: true,
                     platformConfig: {
                         desktop: {
                             scrollable: false
                         },
                         '!desktop': {
-                            height: 120,
+                            height: 100,
                             scrollable: true
                         }
                     },

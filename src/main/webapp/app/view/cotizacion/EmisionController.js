@@ -54,7 +54,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 throw 'No existe el bloque';
             }
 
-            var agregarYEnfocarBloque = function () {
+            var agregarYEnfocarBloque = function (cargar) {
                 var paso2 = 'Construyendo siguiente bloque';
                 try {
                     if (!bloqueExistente) { // no existe, se crea
@@ -86,6 +86,11 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     view.setGuardadoAutomaticoSuspendido(true); // para que no valide el guardado
                     tabpanel.setActiveTab(bloqueExistente);
                     view.setGuardadoAutomaticoSuspendido(false);
+
+                    if (cargar === true) {
+                        // ('cargar posterior a irBloqueSiguiente');
+                        bloqueExistente.getController().cargar();
+                    }
                 } catch (e) {
                     Ice.manejaExcepcion(e, paso2);
                 }
@@ -94,7 +99,9 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             if (index > 0) { // si es el segundo bloque (1) o mayor, guardar primero
                 var bloqueActual = refs['ref' + (index - 1)];
                 bloqueActual.getController().guardar({
-                    success: agregarYEnfocarBloque
+                    success: function () {
+                        agregarYEnfocarBloque(true);
+                    }
                 });
             } else {
                 agregarYEnfocarBloque();
@@ -130,6 +137,8 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     view.setGuardadoAutomaticoSuspendido(true); // para que no valide el guardado
                     tabpanel.setActiveTab(bloqueExistente);
                     view.setGuardadoAutomaticoSuspendido(false);
+                    // ('cargar posterior a irBloqueAnterior');
+                    bloqueExistente.getController().cargar();
                 }
             });
         } catch (e) {
@@ -170,16 +179,17 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             if (view.getGuardadoAutomaticoSuspendido() !== true && oldCard) {
                 paso = 'Guardando datos';
                 var callbackSuccess = function () {
-                    var pasoCargar = 'Cargando atributos de bloque';
+                    var pasoCargar = 'Cargando bloque';
                     try {
+                        // ('cargar nuevo card posterior a salvar anterior card');
+                        newCard.getController().cargar();
+
                         // convertir bloque de agrupadores para agente
                         try {
                             newCard.getReferences().gridagrupadores.getController().onVistaAgente();
                         } catch (e) {
                             Ice.logWarn('warning al invocar onVistaAgente en gridagrupadores', e);
                         }
-
-                        newCard.getController().cargar();
                     } catch (e){
                         Ice.manejaExcepcion(e, pasoCargar);
                     }
@@ -250,7 +260,12 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             }
             
             refs.tabpanel.add(comps);
+
+            view.setGuardadoAutomaticoSuspendido(true);
             refs.tabpanel.setActiveTab(comps[0]);
+            view.setGuardadoAutomaticoSuspendido(false);
+
+            // ('cargar despues de setActiveTab (0)');
             comps[0].getController().cargar();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
@@ -542,15 +557,25 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             view = me.getView(),
             paso = 'Confirmando p\u00f3liza';
         try {
+<<<<<<< HEAD
             var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos',{
 
+=======
+            var ventana = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos',{
+>>>>>>> origin/dev
                 cdunieco: view.getCdunieco(),
                 cdramo: view.getCdramo(),
                 estado: view.getEstado(),
                 nmpoliza: view.getNmpoliza(),
                 nmsuplem: view.getNmsuplem()
             });
-            ventanaDocs.mostrar();
+            ventana.mostrar();
+            if (Ice.classic()) {
+                Ext.defer(function () {
+                    ventana.setCollapsed(true);
+                    ventana.showAt(Ext.getBody().getWidth() - (650 + 40), 40);
+                }, 600);
+            }
         } catch (e){
             Ice.manejaExcepcion(e);
         }

@@ -1929,5 +1929,13 @@ var Ice = (
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
+    },
+
+    classic: function () {
+        return Ext.manifest.toolkit === 'classic';
+    },
+
+    modern: function () {
+        return Ext.manifest.toolkit !== 'classic';
     }
 });
