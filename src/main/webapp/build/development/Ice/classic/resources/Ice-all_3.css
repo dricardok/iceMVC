@@ -1,3 +1,18 @@
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:403 */
+.x-btn-soft-red-small-bc {
+    height: 1px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:407 */
+.x-btn-soft-red-small-tl,
+.x-btn-soft-red-small-bl,
+.x-btn-soft-red-small-tr,
+.x-btn-soft-red-small-br,
+.x-btn-soft-red-small-tc,
+.x-btn-soft-red-small-bc,
+.x-btn-soft-red-small-ml,
+.x-btn-soft-red-small-mr {
+    background-image: url(images/btn/btn-soft-red-small-corners.gif);
+}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:453 */
 .x-btn-soft-red-small-ml,
 .x-btn-soft-red-small-mr {

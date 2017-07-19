@@ -1,4 +1,23 @@
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2963 */
+.x-tab.x-tab-disabled .x-tab-default-top-tl,
+.x-tab.x-tab-disabled .x-tab-default-top-bl,
+.x-tab.x-tab-disabled .x-tab-default-top-tr,
+.x-tab.x-tab-disabled .x-tab-default-top-br,
+.x-tab.x-tab-disabled .x-tab-default-top-tc,
+.x-tab.x-tab-disabled .x-tab-default-top-bc {
+    background-image: url(images/tab/tab-default-top-disabled-corners.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2972 */
+.x-tab.x-tab-disabled .x-tab-default-top-ml,
+.x-tab.x-tab-disabled .x-tab-default-top-mr {
+    background-image: url(images/tab/tab-default-top-disabled-sides.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2977 */
+.x-tab.x-tab-disabled .x-tab-default-top-mc {
+    background-repeat: repeat-x;
+    background-image: url(images/tab/tab-default-top-disabled-fbg.gif);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2963 */
 .x-tab-over .x-tab-default-right-tl,
 .x-tab-over .x-tab-default-right-bl,
 .x-tab-over .x-tab-default-right-tr,
@@ -14080,19 +14099,4 @@ body.x-ios.x-webview.x-portrait {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:400 */
 .x-btn-soft-red-small-tc {
     height: 1px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:403 */
-.x-btn-soft-red-small-bc {
-    height: 1px;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/frame.scss:407 */
-.x-btn-soft-red-small-tl,
-.x-btn-soft-red-small-bl,
-.x-btn-soft-red-small-tr,
-.x-btn-soft-red-small-br,
-.x-btn-soft-red-small-tc,
-.x-btn-soft-red-small-bc,
-.x-btn-soft-red-small-ml,
-.x-btn-soft-red-small-mr {
-    background-image: url(images/btn/btn-soft-red-small-corners.gif);
 }

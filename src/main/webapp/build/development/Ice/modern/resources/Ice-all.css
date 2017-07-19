@@ -7172,7 +7172,7 @@ html.x-big {
 .x-toolbar {
     background-color: #fff;
     background-image: none;
-    border-color: #000;
+    border-color: #767676;
     font: 500 1.33334rem/1.25em Roboto, sans-serif;
     color: #111;
     color: var(--color);
@@ -8971,7 +8971,6 @@ html.x-big {
     background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
-    border-color: #0033a0;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/tab/Tab.scss:621 */
 .x-tab .x-button-icon {
