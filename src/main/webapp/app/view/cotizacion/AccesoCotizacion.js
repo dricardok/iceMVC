@@ -7,7 +7,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
     // config ext
     title: 'Cotizadores',
     layout: 'fit',
-    scrollable: true,
+    scrollable: 'y',
 
     constructor: function (config) {
         Ice.log();
