@@ -174,6 +174,58 @@
         background-color: $azulbd;
 }
 
+//Clases para seleccion de producto
+
+.producto{
+    border-style: solid;
+    border-left-width: 12px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-color: #0033a0;
+    padding: 10px 10px 0px;
+    background-color: #00b5cb;
+    color: #fff;
+    font-size: 20px !important;
+    line-height: 20px ;
+    text-align: center !important;
+    min-width: 230px;
+                            
+}
+
+.slogan{
+              font-size: 18px;
+              //line-height: 12px; 
+              font-weight: 600;
+              color:$font-grey;      
+            } 
+        
+         
+.shadow_card{
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+
+.thumb{    
+   
+    &:focus {outline: 2px solid transparent !important;
+             background-color:#0033a0;}
+    &:visited {outline: 2px solid transparent !important;
+             }         
+}
+
+.plan_pago{
+    display:inline-block;
+    padding: 2% 2%;    
+}
+
+
+
+
+
+
+
+
 //Media Query Botones Selección de rol Classic
 
 @media only screen and (min-height: 1024px) {
