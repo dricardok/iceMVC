@@ -22,17 +22,19 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
             config.items = [{
                 xtype: 'dataviewice',
                 reference: 'dataview',
-                style: 'background: #DEEBF4;',
+                cls: 'back_productos',
+                style:'background: #DEEBF4;',
                 platformConfig: {
                     desktop: {
                         tpl: new Ext.XTemplate(
                             '<tpl for=".">',
-                                '<div class="plan_pago thumb">',
-                                    '<table class="plan_pago_base shadow_card" style="width:150px; min-height:150px;">',
+                                '<div class="producto_cot">',
+                                    '<table class="plan_pago_base shadow_card" style="max-width:250px; min-height:200px;">',
                                         '<tr>',
-                                            '<td class="producto thumb">{dsramo}</td>',
+                                            '<td class="producto">{dsramo}</td>',
                                         '</tr>',
                                             '<tr style="background-color:#fff;">',
+                                            '<td class="slogan">Cotizar</td>',
                                             '</tr>',
                                     '</table>',
                                 '</div>',
@@ -40,16 +42,19 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
                         )
                     },
                     '!desktop': {
-                        itemTpl: new Ext.XTemplate( // TODO delia
+                        itemTpl: new Ext.XTemplate( 
                             '<tpl for=".">',
-                                '<div class="thumb">',
-                                    'Datos: {cdramo} - {dsramo}, {cdtipsit} - {dstipsit}</div>',
+                            	'<div class="producto_cot">',
+                                	'<div class="plan_pago_base shadow_card2" style="max-width:250px; min-height:100px;">',
+                                		'<div class="producto">{dsramo}</div>',
+                                			'<div class="slogan">Cotizar</div>',
+                                	'</div>',
                                 '</div>',
                             '</tpl>'
                         )
                     }
                 },
-                itemSelector: 'div.thumb',
+                itemSelector: 'div.producto_cot',
                 store: {
                     autoLoad: true,
                     fields: ['cdramo', 'dsramo', 'cdtipsit', 'dstipsit'],

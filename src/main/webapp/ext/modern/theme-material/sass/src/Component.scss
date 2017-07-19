@@ -200,7 +200,7 @@ html, body {
     background-color: #00b5cb;
     color: #fff;
     font-size: 25px !important;
-    line-height: 24px ;
+    line-height: 37px ;
     text-align: center;
         .rec_subsecuente{
          font-size: 14px; 
@@ -216,7 +216,7 @@ html, body {
 
 .periocidad{
               font-size: 18px;
-              line-height: 21px; 
+              line-height: 30px; 
               font-weight: 600;
               color:$font-grey;
               
@@ -231,6 +231,7 @@ html, body {
 .monto_02{
     font-size: 20px;
     font-weight: 600;
+    line-height:2;
   }      
 
 
@@ -248,8 +249,8 @@ html, body {
 }
 
 .plan_pago{
-    display:block;
-    padding: 2% 2%;    
+    float:left;
+    padding: 4% 2%;    
 }
 
 
@@ -272,6 +273,63 @@ html, body {
 
 
 
+//Clases para seleccion de producto
+
+.producto{
+    border-style: solid;
+    border-left-width: 12px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-color: #0033a0;
+    padding: 10px;
+    background-color: #00b5cb;
+    color: #fff;
+    font-size: 18px !important;
+    text-align: center !important;
+    line-height: 30px;
+    min-height: 80px;
+    
+                            
+}
+
+.back_productos{
+    background: #DEEBF4; padding:2% 0% 0% 8%;
+}
+
+.slogan{
+              font-size: 18px;
+              line-height: 66px;              
+              color:$font-grey;
+              text-align:center;      
+            } 
+        
+         
+.shadow_card2{
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    min-height: 150px;
+}
+
+
+ .thumb{    
+   
+    &:focus {outline: 2px solid transparent !important;}
+    &:visited {outline: 2px solid transparent !important;}         
+}
+
+.producto_cot{
+    float:left;
+    padding: 2% 2%;    
+}
+
+
+
+
+
+
+
+
+
 //Media Query Botones Selección de rol Classic
 
 @media only screen and (min-width: 768px) {
@@ -279,10 +337,7 @@ html, body {
           width:65%;
                     }
                 
-  .plan_pago{
-      display:inine-block;
-  }
-    .back_plan{
+      .back_plan{
          padding: 5% 0 0 20%;
     }
     .shadow_card{
