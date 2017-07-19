@@ -12966,7 +12966,7 @@ body {
     background-color: #00b5cb;
     color: #fff;
     font-size: 25px !important;
-    line-height: 24px;
+    line-height: 37px;
     text-align: center;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:205 */
@@ -12984,7 +12984,7 @@ body {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:217 */
 .periocidad {
     font-size: 18px;
-    line-height: 21px;
+    line-height: 30px;
     font-weight: 600;
     color: #707372;
 }
@@ -12996,26 +12996,27 @@ body {
 .monto_02 {
     font-size: 20px;
     font-weight: 600;
+    line-height: 2;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:237 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:238 */
 .shadow_card {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:244 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:245 */
 .thumb:focus {
     outline: 2px solid transparent !important;
     background-color: #0033a0;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:246 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:247 */
 .thumb:visited {
     outline: 2px solid transparent !important;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:250 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:251 */
 .plan_pago {
-    display: block;
-    padding: 2% 2%;
+    float: left;
+    padding: 4% 2%;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:256 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:257 */
 .titulo_plan {
     font-weight: 600 !important;
     text-decoration: inherit;
@@ -13027,26 +13028,68 @@ body {
     text-align: center;
     background-color: #deebf4;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:268 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:269 */
 .back_plan {
     background: #deebf4;
     padding: 5% 0 0 12%;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:277 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:278 */
+.producto {
+    border-style: solid;
+    border-left-width: 12px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-color: #0033a0;
+    padding: 10px;
+    background-color: #00b5cb;
+    color: #fff;
+    font-size: 18px !important;
+    text-align: center !important;
+    line-height: 30px;
+    min-height: 80px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:296 */
+.back_productos {
+    background: #deebf4;
+    padding: 2% 0% 0% 8%;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:300 */
+.slogan {
+    font-size: 18px;
+    line-height: 66px;
+    color: #707372;
+    text-align: center;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:308 */
+.shadow_card2 {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    min-height: 150px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:316 */
+.thumb:focus {
+    outline: 2px solid transparent !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:317 */
+.thumb:visited {
+    outline: 2px solid transparent !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:320 */
+.producto_cot {
+    float: left;
+    padding: 2% 2%;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:335 */
 @media only screen and (min-width: 768px) {
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:278 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:336 */
     .btn_rol_suscriptor {
         width: 65%;
     }
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:282 */
-    .plan_pago {
-        display: inine-block;
-    }
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:285 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:340 */
     .back_plan {
         padding: 5% 0 0 20%;
     }
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:288 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:343 */
     .shadow_card {
         min-height: 180px;
     }
