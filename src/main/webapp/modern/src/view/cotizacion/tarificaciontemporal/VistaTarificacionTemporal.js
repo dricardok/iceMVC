@@ -17,8 +17,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
     multiSelect: false,
     style: '',
     itemSelector: 'td.thumb',
-	
-    itemTpl: new Ext.XTemplate( // TODO delia no es responsivo
+    layout: 'fit',
+    itemTpl: new Ext.XTemplate( 
     		'<tpl for=".">',
             '<div class="plan_pago thumb">',
                '<table class="plan_pago_base shadow_card" style="width:250px;"',
