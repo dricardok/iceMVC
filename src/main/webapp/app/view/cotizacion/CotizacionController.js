@@ -96,7 +96,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     view.setGuardadoAutomaticoSuspendido(false);
 
                     if (cargar === true) {
-                        alert('cargar posterior a irBloqueSiguiente');
+                        // ('cargar posterior a irBloqueSiguiente');
                         bloqueExistente.getController().cargar();
                     }
                 } catch (e) {
@@ -141,7 +141,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     view.setGuardadoAutomaticoSuspendido(true); // para que no valide el guardado
                     tabpanel.setActiveTab(bloqueExistente);
                     view.setGuardadoAutomaticoSuspendido(false);
-                    alert('cargar posterior a irBloqueAnterior');
+                    // ('cargar posterior a irBloqueAnterior');
                     bloqueExistente.getController().cargar();
                 }
             });
@@ -184,7 +184,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 var callbackSuccess = function () {
                     var pasoCargar = 'Cargando bloque';
                     try {
-                        alert('cargar nuevo card posterior a salvar anterior card');
+                        // ('cargar nuevo card posterior a salvar anterior card');
                         newCard.getController().cargar();
                     } catch (e) {
                         Ice.manejaExcepcion(e, pasoCargar);
@@ -255,7 +255,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             refs.tabpanel.setActiveTab(comps[0]);
             view.setGuardadoAutomaticoSuspendido(false);
 
-            alert('cargar despues de setActiveTab (0)');
+            // ('cargar despues de setActiveTab (0)');
             comps[0].getController().cargar();
 
             me.mostrarTarifasPlan();
@@ -318,7 +318,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                         success: function (action) {
                             var paso3 = 'Mostrando tarifa';
                             try {
-                                 me.mostrarTarifasPlan();                   	
+                                 me.mostrarTarifasPlan();
                             } catch (e) {
                                 Ice.manejaExcepcion(e, paso3);
                             }

@@ -88,7 +88,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     view.setGuardadoAutomaticoSuspendido(false);
 
                     if (cargar === true) {
-                        alert('cargar posterior a irBloqueSiguiente');
+                        // ('cargar posterior a irBloqueSiguiente');
                         bloqueExistente.getController().cargar();
                     }
                 } catch (e) {
@@ -137,7 +137,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     view.setGuardadoAutomaticoSuspendido(true); // para que no valide el guardado
                     tabpanel.setActiveTab(bloqueExistente);
                     view.setGuardadoAutomaticoSuspendido(false);
-                    alert('cargar posterior a irBloqueAnterior');
+                    // ('cargar posterior a irBloqueAnterior');
                     bloqueExistente.getController().cargar();
                 }
             });
@@ -181,7 +181,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 var callbackSuccess = function () {
                     var pasoCargar = 'Cargando bloque';
                     try {
-                        alert('cargar nuevo card posterior a salvar anterior card');
+                        // ('cargar nuevo card posterior a salvar anterior card');
                         newCard.getController().cargar();
 
                         // convertir bloque de agrupadores para agente
@@ -265,7 +265,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             refs.tabpanel.setActiveTab(comps[0]);
             view.setGuardadoAutomaticoSuspendido(false);
 
-            alert('cargar despues de setActiveTab (0)');
+            // ('cargar despues de setActiveTab (0)');
             comps[0].getController().cargar();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
