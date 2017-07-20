@@ -16,6 +16,7 @@ Ext.define('Ice.view.componente.VentanaIce', {
     
     mostrar: function () {
         Ice.push(this);
+        return this;
     },
     
     cerrar:	function(){

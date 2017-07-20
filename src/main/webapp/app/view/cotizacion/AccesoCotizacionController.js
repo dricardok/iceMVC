@@ -16,6 +16,10 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                     desktop: {
                         modal: true,
                         width: 600
+                    },
+                    '!desktop': {
+                        scrollable: true,
+                        layout: 'fit'
                     }
                 },
                 items: [{
@@ -23,9 +27,10 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                     referenceHolder: false,
                     items: [
                         {
-                            xtype: 'numberfieldice',
-                            label: 'Sucursal',
+                            xtype: 'comboice',
+                            label: 'Oficina',
                             name: 'cdunieco',
+                            catalogo: 'SUCURSALES'
                         }, {
                             xtype: 'numberfieldice',
                             label: 'Cotizaci\u00f3n',

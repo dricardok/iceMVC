@@ -1,24 +1,31 @@
 
 package mx.com.segurossura.emision.service.impl;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Constantes;
+import com.biosnettcs.core.HttpUtil;
 import com.biosnettcs.core.Utils;
 
 import mx.com.royalsun.alea.commons.bean.Banco;
 import mx.com.royalsun.alea.commons.bean.Documento;
 import mx.com.royalsun.alea.commons.bean.RequestWs;
 import mx.com.royalsun.alea.commons.bean.Tarjeta;
+import mx.com.royalsun.alea.commons.bean.TransactionResponse;
 import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.dao.SituacionDAO;
 import mx.com.segurossura.emision.service.EmisionManager;
@@ -47,6 +54,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	
 	@Autowired
 	private PagoManager pagoManager;
+	
+	@Value("${content.path}")
+	private String directorioBase;
 
 	@Override
 	public void movimientoTvalogar(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
@@ -301,7 +311,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			// Paso 2 Recuperar lista de formas de pago
 			formasPago = emisionDAO.obtenerFormasPago(cdunieco, cdramo, estado, nmpoliza, "0");
 			
-			// Paso 3 Respandar MPOLIZAS
+			// Paso 3 Respaldar MPOLIZAS
 			mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, "0");
 						
 			if(mpolizas!=null && !mpolizas.isEmpty()) {
@@ -477,94 +487,208 @@ public class EmisionManagerImpl implements EmisionManager {
 	@Override
 	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception {
+		
+		logger.debug("\n@@@@@@ confirmarPoliza @@@@@@");
+		
 		String paso = null, nmpolizaEmitida = null;
-		Banco banco = null;
-		Tarjeta tarjeta = null;
+		Map<String, String> datosMrecibo = null;		
 		RequestWs request = null;
-		
-		/* Generar beans para el RequestWs del servicio de Pago		
-		Banco banco = new Banco();
-        banco.setClaveBanco("052");
-        banco.setDescBanco("IXE");
-        banco.setLstGestores(null);
-
-        Tarjeta tarjeta = new Tarjeta("4259818000071113");
-        tarjeta.setCodigoSeguridad("123");
-        tarjeta.setTipo("C");
-        tarjeta.setDescTipo("CREDITO");
-        tarjeta.setCodigo("425981");
-        tarjeta.setFechaVencimiento("12/15");
-        tarjeta.setTarjetahabiente("Elias Mendoza Orozco");
-        tarjeta.setBanco(banco);
-
-        RequestWs request = new RequestWs();
-        request.setCdunieco(72);
-        request.setCdramo(601);
-        request.setNmpoliza(12088);
-        request.setNmrecibo(1004458);
-        request.setImporte(18.32);
-        request.setMoneda("MXP");
-
-        request.setEmail("elias.mendoza@mx.rsagroup.com");
-        request.setUsuario("OPS$FEADM");
-
-        request.setTarjeta(tarjeta);
-		*/
-		
+		String documentoRuta = "";
+		String extension = ".pdf";
+		StringBuilder path = new StringBuilder();
+		List<Documento> documentos = null;
+		boolean exito  = false;
 		try {
-		    paso = "Cobrar primer recibo (pago con tarjeta)";
-		    // TODO: Invocar primer servicio de cobro
-		    pagoManager.realizaPago(request);
-		    
-			paso = "Confirmando p\u00f3liza";
+		    paso = "Confirmando p\u00f3liza";
 			nmpolizaEmitida = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
 			estado = EstadoPoliza.MASTER.getClave();
 			nmpoliza = nmpolizaEmitida;
-			logger.info("Poliza emitida: {}", nmpoliza);
+			logger.info("Poliza emitida: {}", nmpoliza);	
 			
-			paso = new StringBuilder("Aplicando recibo en ALEA de la p\u00f3liza ").append(nmpoliza).toString();
-			//TODO: Invocar segundo servicio de cobro
+			
+			// Obteniendo nmrecibo para obtener el nmrecibo de la poliza emitida
+			datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpolizaEmitida, null).get(0);
+			
+			logger.info("ObtenerDatosConfirmacion ", datosMrecibo);
+			
+			// Construir Request para el servicio de aplicar pago
+			request = new RequestWs();
+			request.setCdunieco(Integer.parseInt(cdunieco));
+			request.setCdramo(Integer.parseInt(cdramo));
+			request.setNmpoliza(Integer.parseInt(nmpoliza));
+			request.setNmrecibo(Integer.parseInt(datosMrecibo.get("nmrecibo")));
+			
+			paso = new StringBuilder("Aplicando recibo en ALEA de la p\u00f3liza ").append(nmpoliza).toString();			
+			try{
+				pagoManager.aplicaPago(request);
+			}catch(Exception e){
+				logger.error(e.getMessage(), e);
+			}
 			
 			paso = new StringBuilder("Obteniendo documentos de la p\u00f3liza ").append(nmpoliza).toString();
 			
+			try{
 			logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);
-			List<Documento> documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+			documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
 			logger.debug("Documentos de impresion: {}", documentos);
+			}catch(Exception e){
+				logger.error(e.getMessage(), e);
+			}
 			
+			
+			// Especificar el path para almacenar documentos
+			path.append(directorioBase).append(File.separator).append(cdunieco).append(File.separator).append(cdramo).append(File.separator).append(nmpoliza).append(File.separator).append(nmsuplem).append(File.separator);
+	
 			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();
 			// Se guardan la lista de documentos:
 			for (Documento documento : documentos) {
 			    
                 String nmsolici = null; //TODO: agregar
-                String ntramite = "0";  //TODO: agregar
-                String tipmov   = null; //TODO: agregar
-                String cdtiptra = null; //TODO: agregar
+                String ntramite = "1";  //TODO: agregar
+                String cdtiptra = "1"; //TODO: agregar
                 String codidocu = null; //TODO: agregar
                 String cdorddoc = null; //TODO: agregar
                 String cdmoddoc = null; //TODO: agregar
                 String nmcertif = null; //TODO: agregar
                 String nmsituac = null; //TODO: agregar
+                String cdtipsub = datosMrecibo.get("cdtipsup");
                 
-                documentosDAO.realizarMovimientoDocsPoliza(
-                        cdunieco, cdramo, estado, nmpoliza, nmsolici, nmsuplem, ntramite, 
-                        new Date(), documento.getId(), documento.getNombre(), tipmov, 
-                        Constantes.SI, cdtiptra, codidocu, new Date(), cdorddoc, cdmoddoc, 
-                        nmcertif, nmsituac, documento.getUrl(), Constantes.INSERT_MODE);
-                
-                
-                // TODO: Consumir la liga de cada documento y guardarlo en el sistema de archivos del servidor
-                //connectionTimeout, readTimeout = 10 seconds
-                //FileUtils.copyURLToFile(new URL(fromFile), new File(toFile), 10000, 10000);
-                
-                
+              	try
+				{              		
+              		documentoRuta = path+documento.getNombre()+extension;
+              		
+              		//boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
+					exito = false;
+              		try {
+              			FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(documentoRuta), 10000, 10000);
+              			exito = true;
+              		}catch(Exception fe){
+              			logger.error(fe.getMessage(), fe);
+              		}
+              		
+              		documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpolizaEmitida, nmsolici, datosMrecibo.get("nmsuplem"), ntramite, new Date(),
+              				documento.getId(), documento.getNombre(), cdtipsub, exito ? Constantes.SI : Constantes.NO,
+              				cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, documento.getUrl(), path.toString(), documento.getTipo(), Constantes.INSERT_MODE);
+              		
+              		
+					
+				}catch(Exception e) {
+					logger.error(e.getMessage(), e);
+					continue;
+				}
             }
 			
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
+		} finally {
+			path.setLength(0);
+			path = null;
+			request = null;
 		}
+		logger.debug("\n@@@@@@ confirmarPoliza @@@@@@");
+		
 		return nmpolizaEmitida;
 	}
+	
+	
+	@Override
+	public String realizarPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, 
+    		String nmsuplem, String cdbanco, String dsbanco, String nmtarjeta, 
+    		String codseg, String fevencm, String fevenca, String nombre, String email, String usuario) throws Exception {
+		
+		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "\n@@@@@@ realizarPago"));
+		
+		String paso = "";		
+		String resultado = "";		
+		Map<String, String> datosPago = null;
+		
+		Banco banco = null;
+		Tarjeta tarjeta = null;
+		RequestWs request = null;
+		
+		try{
+			paso = "Consultando datos para el ralizar el pago con tarjeta";
+			
+			datosPago = emisionDAO.obtenerDatosPago(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0);			
+			
+			paso = "Validando datos para realizar el pago";
+			
+			// datos del banco
+			String claveBanco = cdbanco,
+				   descBanco = dsbanco,				   
+				   // datos de la tarjeta
+				   numeroTarjeta = nmtarjeta,
+				   codigoSeguridad = codseg,
+				   tipo = "C",
+				   descTipo = "CREDITO",
+				   codigo = codseg,
+				   fechaVencimiento = fevencm+"/"+fevenca,
+				   tarjetahabiente = nombre,			   
+				   // Datos de la solicitud				  
+				   //nmrecibo = datosPago.get("nmrecibo"),
+				   importe = datosPago.get("ptimport"),
+				   moneda = datosPago.get("cdmoneda");		
+			
+			
+			paso = "Generando objetos de RequestWS";			
+		
+            banco = new Banco();
+            banco.setClaveBanco(claveBanco);
+            banco.setDescBanco(descBanco);
+            banco.setLstGestores(null);
 
+            tarjeta = new Tarjeta(numeroTarjeta);
+            tarjeta.setCodigoSeguridad(codseg);
+            tarjeta.setTipo("C");
+            tarjeta.setDescTipo("CREDITO");
+            tarjeta.setCodigo(numeroTarjeta.substring(0, 4));
+            tarjeta.setFechaVencimiento(fechaVencimiento);
+            tarjeta.setTarjetahabiente(nombre);
+            tarjeta.setBanco(banco);
+
+            request = new RequestWs();
+            request.setCdunieco(Integer.parseInt(cdunieco));
+            request.setCdramo(Integer.parseInt(cdramo));
+            request.setNmpoliza(Integer.parseInt(nmpoliza));
+            //request.setNmrecibo(Integer.parseInt(nmrecibo));
+            request.setImporte(Double.parseDouble(importe));
+            request.setMoneda(moneda);
+
+            request.setEmail(email);
+            request.setUsuario(usuario);
+            request.setTarjeta(tarjeta);            
+            
+            TransactionResponse transaccionResponse = pagoManager.realizaPago(request);
+		
+            if(transaccionResponse.getAuthCode() == "") {
+            	throw new Exception(transaccionResponse.getDcError());
+            }
+            logger.info("Codigo de autorizacion: " + transaccionResponse.getAuthCode());
+            logger.info("Codigo de Error " + transaccionResponse.getCcErrCode());
+            logger.info("Mensage de respuesta " + transaccionResponse.getCcReturnMsg());
+            logger.info(transaccionResponse.getDcError());
+            logger.info(transaccionResponse.getParamError());
+            logger.info(transaccionResponse.getProcReturnCode());
+            logger.info(transaccionResponse.getProcReturnMsg());
+            logger.info(transaccionResponse.getProcReturnMsg());
+            logger.info(transaccionResponse.getResponseCode());
+            logger.info(transaccionResponse.getText());
+            logger.info(transaccionResponse.getTimeOut());
+            logger.info(transaccionResponse.getTotal());
+            
+            resultado = transaccionResponse.getAuthCode();
+						
+			
+		}catch(Exception ex) {
+			Utils.generaExcepcion(ex, paso);
+		}		
+		logger.debug(Utils.join("\n@@@@@@ obtenerTarifaMultipleTemp", "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
+		
+		return resultado;
+	}
+	
+	
+	
 	@Override
 	public List<Map<String, String>> obtenerTarifaMultipleTemp(String cdunieco, String cdramo, String estado,
 			String nmpoliza) throws Exception {
