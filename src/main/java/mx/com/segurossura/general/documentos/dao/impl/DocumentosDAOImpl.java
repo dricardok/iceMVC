@@ -25,7 +25,7 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
 
     @Override
     public List<Map<String, String>> obtenerDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, 
-            String ntramite, String cdsisrol, String dsdocume, long start, long limit) throws Exception {
+            String ntramite, String cdsisrol, String dsdocume, String cdtipdoc, long start, long limit) throws Exception {
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("pv_cdunieco_i", cdunieco);
         params.put("pv_cdramo_i", cdramo);
@@ -35,9 +35,10 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
         params.put("pv_ntramite_i", ntramite);
         params.put("pv_cdsisrol_i", cdsisrol);
         params.put("pv_dsdocume_i", dsdocume);
+        params.put("pv_cdtipdoc_i", cdtipdoc);
         params.put("pv_start_i", start);
         params.put("pv_limit_i", limit);
-        Map<String, Object> procResult = ejecutaSP(new ObtenerDocumentos(getDataSource()), params);
+        Map<String, Object> procResult = ejecutaSP(new ObtenerDocumentosDAO(getDataSource()), params);
         List<Map<String, String>> lista = (List<Map<String, String>>) procResult.get("pv_registro_o");
         if (lista == null) {
             lista = new ArrayList<Map<String, String>>();
@@ -47,8 +48,8 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
         return lista;
     }
 
-    protected class ObtenerDocumentos extends StoredProcedure {
-        protected ObtenerDocumentos(DataSource dataSource) {
+    protected class ObtenerDocumentosDAO extends StoredProcedure {
+        protected ObtenerDocumentosDAO(DataSource dataSource) {
             super(dataSource, "P_Get_documentos_f");
             declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
@@ -57,6 +58,7 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
             declareParameter(new SqlParameter("pv_ntramite_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdsisrol_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_dsdocume_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdtipdoc_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_start_i", Types.NUMERIC));
             declareParameter(new SqlParameter("pv_limit_i", Types.NUMERIC));
             declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
@@ -65,8 +67,8 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
                     "nmsolici",
                     "cddocume",
                     "dsdocume",
-                    "feinici",
-                    "tipmov",
+                    "fefecha",
+                    "cdtipsup",
                     "nmsuplem",
                     "nsuplogi",
                     "editable",
@@ -78,7 +80,8 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
                     "total",
                     "rnum",
                     "tramite_endoso",
-                    "url"
+                    "url",
+                    "ruta"
             };
             declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_num_rec_o", Types.NUMERIC));

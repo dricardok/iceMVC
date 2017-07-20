@@ -111,6 +111,9 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                     handler: 'onAgregarDocumento'
                 },*/
                 {
+                    iconCls: 'x-fa fa-file-word-o',
+                    handler: 'onCargarSlips'
+                },{
                     xtype: 'textfieldice',
                     labelAlign: 'left',
                     label: 'Buscar',
