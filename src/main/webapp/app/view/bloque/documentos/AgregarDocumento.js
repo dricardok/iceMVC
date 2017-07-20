@@ -2,10 +2,24 @@
  * Created by DEORTIZT on 03/07/2017.
  */
 Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {   
-        extend: 'Ice.view.componente.FormDosColumnasIce',
+        extend: 'Ice.view.componente.FormIce',
         xtype: 'agregardocumento',
         controller: 'agregardocumento',
         /*requires: ['Ext.form.field.*'],*/
+
+        platformConfig: {
+            desktop: {
+                scrollable: false,
+                width: 600,
+                defaults: {
+                    style: 'margin:10px;',
+                    anchor: '100%'
+                }
+            },
+            '!desktop': {
+                scrollable: true
+            }
+        },
         
         config: {
             ruta: null

@@ -279,6 +279,7 @@ public class DocumentosAction extends PrincipalCoreAction {
             try {
             	FileUtils.copyFile(file, new File(rutaCompletaArchivo));
             	logger.info("Se creo el archivo {}", rutaCompletaArchivo);
+            	success = true;
 			} catch (Exception e) {
 				logger.info("NO se creo el archivo {}", rutaCompletaArchivo);
 			}

@@ -20,32 +20,23 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumentoController', {
             view = me.getView(),
             refs = view.getReferences();
         try{
-            Ice.log('guardar me',view);
+            var mask = Ice.mask('Subiendo slip');
             view.submit(
                 {
                     url: Ice.url.bloque.documentos.subirArchivo,
-                    //standardSubmit: true,
                     params:{
                         'params.nombre': view.ruta
-                    }
+                    },
+                    success: function(){
+                        mask.close();
+                        view.up('ventanaice').cerrar();
+                    },
+                    failure: function(){
+                        Ice.mensajeWarning('Error al subir slip');
+                        mask.close();
+                    }                    
                 }
             );
-            /*Ice.request({
-                mascara: 'Subiendo archivo slip',
-                url: Ice.url.bloque.documentos.subirArchivo,
-                params: {
-                    'params.nombre': refs.cddocume.getName(),
-                    'params.ruta': view.ruta
-                },
-                success: function (json) {
-                    var paso2 = 'Subiendo slip';
-                    try {
-                        Ice.mensajeCorrecto('Archivo subido con exito');
-                    } catch (e) {
-                        Ice.manejaExcepcion(e, paso2);
-                    }
-                }
-            });*/
         } catch(e){
             Ice.generaExcepcion(e, paso);
         }
