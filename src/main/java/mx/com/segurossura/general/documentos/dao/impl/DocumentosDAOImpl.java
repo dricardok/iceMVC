@@ -40,7 +40,7 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
         params.put("pv_limit_i", limit);
         Map<String, Object> procResult = ejecutaSP(new ObtenerDocumentosDAO(getDataSource()), params);
         List<Map<String, String>> lista = (List<Map<String, String>>) procResult.get("pv_registro_o");
-        if (lista == null) {
+        if (lista == null && lista.size() > 0) {
             lista = new ArrayList<Map<String, String>>();
         } else {
             lista.get(0).put("total", procResult.get("pv_num_rec_o").toString());
