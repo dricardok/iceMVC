@@ -3249,22 +3249,22 @@ the height of a multi-line element */
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:181 */
 .producto {
     border-style: solid;
-    border-left-width: 12px;
+    border-left-width: 0px;
     border-top-width: 0px;
     border-right-width: 0px;
-    border-bottom-width: 0px;
-    border-left-color: #0033a0;
+    border-bottom-width: 12px;
+    border-bottom-color: #0033a0;
     padding: 10px 10px 0px;
     background-color: #00b5cb;
     color: #fff;
     font-size: 20px !important;
-    line-height: 20px;
+    line-height: 22px;
     text-align: center !important;
-    min-width: 230px;
+    height: 120px;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:198 */
 .back_productos {
-    padding: 0% 0% 0% 5%;
+    padding: 0% 0% 0% 2%;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:202 */
 .slogan {
@@ -3288,21 +3288,29 @@ the height of a multi-line element */
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:221 */
 .producto_cot {
     float: left;
-    padding: 2% 1%;
+    padding: 2% 2%;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:234 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:226 */
+.titulo_cotiz {
+    font-size: 24px !important;
+    color: #707372 !important;
+    text-align: center !important;
+    padding-top: 15px;
+    font-weight: 600;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:240 */
 @media only screen and (min-height: 1024px) {
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:235 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:241 */
     .btn_rol_suscriptor {
         width: 28%;
         height: auto !important;
         padding-top: 12px;
     }
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:241 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:247 */
     .plan_pago {
         padding: 8% 1%;
     }
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:244 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:250 */
     .titulo_plan {
         padding-top: 8% !important;
     }

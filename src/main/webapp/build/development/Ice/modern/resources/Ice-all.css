@@ -1378,6 +1378,10 @@ textarea {
     min-height: 0;
     min-width: 0;
 }
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-base/sass/src/Container.scss:83 */
+.x-dock > .x-dock-body > .back_plan {
+    background-color: green;
+}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-base/sass/src/Mask.scss:5 */
 .x-mask {
     /**
@@ -7088,7 +7092,8 @@ html.x-big {
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Toolbar.scss:321 */
 .x-titlebar {
-    background-color: #fff;
+    background-color: #00aec7;
+    background-color: var(--base-color);
     background-image: none;
     border-color: #000;
     font: 500 1.33334rem/1.25em Roboto, sans-serif;
@@ -7170,7 +7175,8 @@ html.x-big {
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Toolbar.scss:321 */
 .x-toolbar {
-    background-color: #fff;
+    background-color: #f5f5f5;
+    background-color: var(--alt-background-color);
     background-image: none;
     border-color: #767676;
     font: 500 1.33334rem/1.25em Roboto, sans-serif;
@@ -8419,8 +8425,6 @@ html.x-big {
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Toolbar.scss:321 */
 .x-pagingtoolbar {
-    background-color: #fff;
-    background-image: none;
     color: #111;
     color: var(--color);
 }
@@ -8971,6 +8975,7 @@ html.x-big {
     background-color: #00aec7;
     background-color: var(--base-color);
     background-image: none;
+    box-shadow: inset 0 -4px 0 0 #1f90a0;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/tab/Tab.scss:621 */
 .x-tab .x-button-icon {
@@ -9065,7 +9070,8 @@ html.x-big {
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-neptune/sass/var/Toolbar.scss:321 */
 .x-tabbar {
-    background-color: #fff;
+    background-color: #fafafa;
+    background-color: var(--background-color);
     background-image: none;
     border-color: #c3c3c3;
     border-color: var(--faded-color);
@@ -13036,23 +13042,23 @@ body {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:278 */
 .producto {
     border-style: solid;
-    border-left-width: 12px;
+    border-left-width: 0px;
     border-top-width: 0px;
     border-right-width: 0px;
-    border-bottom-width: 0px;
-    border-left-color: #0033a0;
-    padding: 10px;
+    border-bottom-width: 12px;
+    border-bottom-color: #0033a0;
+    padding: 18px 5px;
     background-color: #00b5cb;
     color: #fff;
-    font-size: 18px !important;
+    font-size: 20px !important;
+    line-height: 27px;
     text-align: center !important;
-    line-height: 30px;
-    min-height: 80px;
+    height: 100px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:296 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:295 */
 .back_productos {
     background: #deebf4;
-    padding: 2% 0% 0% 8%;
+    padding: 0% 0% 0% 15%;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:300 */
 .slogan {
@@ -13079,19 +13085,30 @@ body {
     float: left;
     padding: 2% 2%;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:335 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:327 */
+.titulo_cotiz {
+    font-size: 24px !important;
+    color: #707372 !important;
+    text-align: center !important;
+    padding-top: 15px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:341 */
 @media only screen and (min-width: 768px) {
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:336 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:342 */
     .btn_rol_suscriptor {
         width: 65%;
     }
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:340 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:346 */
     .back_plan {
         padding: 5% 0 0 20%;
     }
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:343 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:349 */
     .shadow_card {
         min-height: 180px;
+    }
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/Component.scss:353 */
+    .back_productos {
+        padding: 2% 0% 0% 15%;
     }
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/modern/theme-material/sass/src/list/TreeItem.scss:1 */
@@ -14438,110 +14455,110 @@ body.x-ios.x-webview.x-portrait {
 .x-treelist-navigation .x-treelist-item-hide-icon > * > * > .x-treelist-item-text {
     margin-left: 16px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:187 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:188 */
 a {
     color: #35baf6;
     text-decoration: none;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:192 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:193 */
 .main-container {
     background-color: #f6f6f6;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:196 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:197 */
 .main-nav-container,
 .user-nav-container,
 .main-container {
     height: calc(100vh - 65px - 100px);
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:202 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:203 */
 .phone .main-container {
     height: calc(100vh - 56px - 60px);
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:206 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:207 */
 .phone .main-nav-container {
     height: calc(100vh - 60px;);
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:210 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:211 */
 .phone .user-nav-container {
     height: calc(100vh - 60px;);
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:217 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:218 */
 .x-ios .main-container,
 .x-ios .main-nav-container {
     height: 100%;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:221 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:222 */
 .x-ios .user-nav-container {
     height: 100%;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:225 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:226 */
 .x-treelist-navigation:not(.x-treelist-floater) {
     min-height: calc(100vh - 65px - 100px);
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:228 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:229 */
 .phone .x-treelist-navigation:not(.x-treelist-floater) {
     /* jtezva se restan 70 del header del browser  */
     min-height: calc(100vh - 56px - 60px);
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:233 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:234 */
 .x-treelist-navigation {
     transition: width 0.3s;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:237 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:238 */
 .main-nav-container,
 .main-logo {
     position: relative;
     transition: width 0.3s;
     width: 260px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:243 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:244 */
 .user-nav-container,
 .main-logo {
     position: relative;
     transition: width 0.3s;
     width: 260px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:252 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:253 */
 .sura-logo {
     position: relative;
     transition: width 0.3s;
     width: 140px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:258 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:259 */
 .main-nav-collapsed {
     width: 64px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:262 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:263 */
 .user-nav-collapsed {
     width: 0px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:266 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:267 */
 .main-toolbar {
     z-index: 1;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:269 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:270 */
 .main-toolbar > .x-inner {
     padding: 0;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:274 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:275 */
 .main-logo,
 .sura-logo,
 .main-toolbar {
     height: 65px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:277 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:278 */
 .phone .main-logo,
 .phone .sura-logo,
 .phone .main-toolbar {
     height: 56px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:282 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:283 */
 .x-big .main-toolbar,
 .main-toolbar {
     border: none;
     padding: 0 38px 0 0;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:291 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:292 */
 .main-nav-floated {
     background-color: #00b5cb !important;
     transition: left 0.3s;
@@ -14550,7 +14567,7 @@ a {
     top: 0;
     z-index: 10;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:300 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:301 */
 .user-nav-floated {
     background-color: white;
     transition: right 0.3s;
@@ -14559,54 +14576,54 @@ a {
     top: 0;
     z-index: 10;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:309 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:310 */
 .main-nav-slid-out {
     left: -260px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:313 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:314 */
 .user-nav-slid-out {
     right: -260px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:321 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:322 */
 .small-image {
     width: 35px;
     height: 35px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:327 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:328 */
 .phone .main-toolbar {
     padding-right: 16px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:331 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:332 */
 .phone .main-user-name {
     display: none;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:335 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:336 */
 .phone .main-logo {
     line-height: 56px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:338 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:339 */
 .phone .main-logo:before {
     background-size: 75%;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:343 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:344 */
 .phone .sura-logo {
     line-height: 56px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:346 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:347 */
 .phone .sura-logo:before {
     left: 0px;
     /* top: ($main-phone-toolbar-height - $logosura-image-height) / 1.8;*/
     background-size: 75%;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:355 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:356 */
 .main-nav-mask > .x-mask-inner {
     display: none;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:358 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:359 */
 .user-nav-mask > .x-mask-inner {
     display: none;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:362 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:363 */
 .main-logo {
     height: 65px;
     line-height: 65px;
@@ -14615,7 +14632,7 @@ a {
     padding-left: 64px;
     position: relative;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:372 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:373 */
 .main-logo:before {
     content: " ";
     position: absolute;
@@ -14626,7 +14643,7 @@ a {
     height: 25px;
     background: transparent;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:384 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:385 */
 .sura-logo {
     height: 65px;
     line-height: 65px;
@@ -14634,7 +14651,7 @@ a {
     color: #fff;
     position: relative;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:394 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:395 */
 .sura-logo:before {
     content: " ";
     position: absolute;
@@ -14645,16 +14662,16 @@ a {
     height: 48px;
     background: transparent url(images/logo_sura_header.png) no-repeat center center;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:430 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:435 */
 @media only screen and (max-width: 360px) {
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:433 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:438 */
     .sura-logo:before {
         top: 0px !important;
     }
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:439 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:444 */
 @media only screen and (max-width: 768px) {
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:442 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/modern/sass/src/view/main/Main.scss:447 */
     .sura-logo:before {
         top: 0px !important;
     }

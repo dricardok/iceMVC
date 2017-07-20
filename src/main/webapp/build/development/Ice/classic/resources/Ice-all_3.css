@@ -11278,3 +11278,359 @@
     border-color: #0033a0 !important;
     border-width: 2px !important;
 }
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:276 */
+.x-panel-ice-catalogo-framed {
+    border-color: transparent;
+    padding: 0;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:279 */
+.x-panel-ice-catalogo-framed.x-masked {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:287 */
+.x-panel-header-ice-catalogo-framed {
+    font-size: 18px;
+    border: 1px solid transparent;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:312 */
+.x-panel-header-ice-catalogo-framed .x-tool-tool-el {
+    background-color: transparent;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:318 */
+.x-panel-header-ice-catalogo-framed-horizontal {
+    padding: 11px 15px 12px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:322 */
+.x-panel-header-ice-catalogo-framed-horizontal .x-panel-header-ice-catalogo-framed-tab-bar {
+    margin-top: -11px;
+    margin-bottom: -12px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:330 */
+.x-panel-header-ice-catalogo-framed-horizontal.x-header-noborder {
+    padding: 12px 16px 12px 16px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:334 */
+.x-panel-header-ice-catalogo-framed-horizontal.x-header-noborder .x-panel-header-ice-catalogo-framed-tab-bar {
+    margin-top: -12px;
+    margin-bottom: -12px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:342 */
+.x-panel-header-ice-catalogo-framed-vertical {
+    padding: 15px 11px 15px 12px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:346 */
+.x-panel-header-ice-catalogo-framed-vertical .x-panel-header-ice-catalogo-framed-tab-bar {
+    margin-right: -11px;
+    margin-left: -12px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:354 */
+.x-panel-header-ice-catalogo-framed-vertical.x-header-noborder {
+    padding: 16px 12px 16px 12px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:358 */
+.x-panel-header-ice-catalogo-framed-vertical.x-header-noborder .x-panel-header-ice-catalogo-framed-tab-bar {
+    margin-right: -12px;
+    margin-left: -12px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:367 */
+.x-rtl.x-panel-header-ice-catalogo-framed-vertical {
+    padding: 15px 12px 15px 11px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:371 */
+.x-rtl.x-panel-header-ice-catalogo-framed-vertical .x-panel-header-ice-catalogo-framed-tab-bar {
+    margin-left: -11px;
+    margin-right: -12px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:379 */
+.x-rtl.x-panel-header-ice-catalogo-framed-vertical.x-header-noborder {
+    padding: 16px 12px 16px 12px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:383 */
+.x-rtl.x-panel-header-ice-catalogo-framed-vertical.x-header-noborder .x-panel-header-ice-catalogo-framed-tab-bar {
+    margin-left: -12px;
+    margin-right: -12px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:392 */
+.x-panel-header-title-ice-catalogo-framed {
+    color: #707372;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    line-height: 20px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:405 */
+.x-panel-header-title-ice-catalogo-framed > .x-title-text-ice-catalogo-framed {
+    text-transform: none;
+    padding: 0;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:411 */
+.x-panel-header-title-ice-catalogo-framed > .x-title-text-ice-catalogo-framed:after {
+    font-family: ext-watermark;
+    font-size: 32.25px;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: rgba(112, 115, 114, 0.4);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:424 */
+.x-panel-header-title-ice-catalogo-framed > .x-title-text-ice-catalogo-framed.x-rtl:after {
+    right: auto;
+    left: 0;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:453 */
+.x-panel-header-title-ice-catalogo-framed > .x-title-icon-wrap-ice-catalogo-framed.x-title-icon-top {
+    height: 24px;
+    padding-bottom: 8px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:458 */
+.x-panel-header-title-ice-catalogo-framed > .x-title-icon-wrap-ice-catalogo-framed.x-title-icon-right {
+    width: 24px;
+    padding-left: 8px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:463 */
+.x-panel-header-title-ice-catalogo-framed > .x-title-icon-wrap-ice-catalogo-framed.x-title-icon-right.x-rtl {
+    padding-left: 0;
+    padding-right: 8px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:470 */
+.x-panel-header-title-ice-catalogo-framed > .x-title-icon-wrap-ice-catalogo-framed.x-title-icon-bottom {
+    height: 24px;
+    padding-top: 8px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:475 */
+.x-panel-header-title-ice-catalogo-framed > .x-title-icon-wrap-ice-catalogo-framed.x-title-icon-left {
+    width: 24px;
+    padding-right: 8px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:480 */
+.x-panel-header-title-ice-catalogo-framed > .x-title-icon-wrap-ice-catalogo-framed.x-title-icon-left.x-rtl {
+    padding-right: 0;
+    padding-left: 8px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:487 */
+.x-panel-header-title-ice-catalogo-framed > .x-title-icon-wrap-ice-catalogo-framed > .x-title-icon-ice-catalogo-framed {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    color: #707372;
+    background-position: center center;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:507 */
+.x-ie8 .x-panel-header-title-ice-catalogo-framed > .x-title-icon-wrap-ice-catalogo-framed > .x-title-icon-ice-catalogo-framed.x-title-glyph {
+    color: #707372;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:518 */
+.x-panel-body-ice-catalogo-framed {
+    background: #deebf4;
+    border-color: #d0d0d0;
+    color: #707372;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    border-width: 1px;
+    border-style: solid;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:682 */
+.x-panel-header-ice-catalogo-framed {
+    background-image: none;
+    background-color: transparent;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:687 */
+.x-panel-header-ice-catalogo-framed-vertical {
+    background-image: none;
+    background-color: transparent;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:693 */
+.x-rtl.x-panel-header-ice-catalogo-framed-vertical {
+    background-image: none;
+    background-color: transparent;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:746 */
+.x-panel .x-panel-header-ice-catalogo-framed-collapsed-border-top {
+    border-bottom-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:750 */
+.x-panel .x-panel-header-ice-catalogo-framed-collapsed-border-right {
+    border-left-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:754 */
+.x-panel .x-panel-header-ice-catalogo-framed-collapsed-border-bottom {
+    border-top-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:758 */
+.x-panel .x-panel-header-ice-catalogo-framed-collapsed-border-left {
+    border-right-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:794 */
+.x-panel-header-ice-catalogo-framed-horizontal .x-tool-after-title {
+    margin: 0 0 0 6px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:799 */
+.x-panel-header-ice-catalogo-framed-horizontal .x-rtl.x-tool-after-title {
+    margin: 0 6px 0 0;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:804 */
+.x-panel-header-ice-catalogo-framed-horizontal .x-tool-before-title {
+    margin: 0 6px 0 0;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:809 */
+.x-panel-header-ice-catalogo-framed-horizontal .x-rtl.x-tool-before-title {
+    margin: 0 0 0 6px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:816 */
+.x-panel-header-ice-catalogo-framed-vertical .x-tool-after-title {
+    margin: 6px 0 0 0;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:821 */
+.x-panel-header-ice-catalogo-framed-vertical .x-rtl.x-tool-after-title {
+    margin: 6px 0 0 0;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:826 */
+.x-panel-header-ice-catalogo-framed-vertical .x-tool-before-title {
+    margin: 0 0 6px 0;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:831 */
+.x-panel-header-ice-catalogo-framed-vertical .x-rtl.x-tool-before-title {
+    margin: 0 0 6px 0;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:838 */
+.x-panel-header-ice-catalogo-framed .x-tool-focus {
+    outline: 1px solid #fff;
+    outline-offset: 1px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/css-outline.scss:64 */
+.x-ie .x-panel-header-ice-catalogo-framed .x-tool-focus,
+.x-ie10p .x-panel-header-ice-catalogo-framed .x-tool-focus,
+.x-edge .x-panel-header-ice-catalogo-framed .x-tool-focus {
+    outline: none;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/css-outline.scss:40 */
+.x-ie .x-panel-header-ice-catalogo-framed .x-tool-focus:after,
+.x-ie10p .x-panel-header-ice-catalogo-framed .x-tool-focus:after,
+.x-edge .x-panel-header-ice-catalogo-framed .x-tool-focus:after {
+    position: absolute;
+    content: ' ';
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    border: 1px solid #fff;
+    pointer-events: none;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:850 */
+.x-rtl.x-panel-header-ice-catalogo-framed-collapsed-border-right {
+    border-right-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:853 */
+.x-rtl.x-panel-header-ice-catalogo-framed-collapsed-border-left {
+    border-left-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:867 */
+.x-panel-ice-catalogo-framed-resizable .x-panel-handle {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    opacity: 0;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:2 */
+.x-panel-ice-catalogo-framed-outer-border-l {
+    border-left-color: transparent !important;
+    border-left-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:6 */
+.x-panel-ice-catalogo-framed-outer-border-b {
+    border-bottom-color: transparent !important;
+    border-bottom-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:10 */
+.x-panel-ice-catalogo-framed-outer-border-bl {
+    border-bottom-color: transparent !important;
+    border-bottom-width: 1px !important;
+    border-left-color: transparent !important;
+    border-left-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:16 */
+.x-panel-ice-catalogo-framed-outer-border-r {
+    border-right-color: transparent !important;
+    border-right-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:20 */
+.x-panel-ice-catalogo-framed-outer-border-rl {
+    border-right-color: transparent !important;
+    border-right-width: 1px !important;
+    border-left-color: transparent !important;
+    border-left-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:26 */
+.x-panel-ice-catalogo-framed-outer-border-rb {
+    border-right-color: transparent !important;
+    border-right-width: 1px !important;
+    border-bottom-color: transparent !important;
+    border-bottom-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:32 */
+.x-panel-ice-catalogo-framed-outer-border-rbl {
+    border-right-color: transparent !important;
+    border-right-width: 1px !important;
+    border-bottom-color: transparent !important;
+    border-bottom-width: 1px !important;
+    border-left-color: transparent !important;
+    border-left-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:40 */
+.x-panel-ice-catalogo-framed-outer-border-t {
+    border-top-color: transparent !important;
+    border-top-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:44 */
+.x-panel-ice-catalogo-framed-outer-border-tl {
+    border-top-color: transparent !important;
+    border-top-width: 1px !important;
+    border-left-color: transparent !important;
+    border-left-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:50 */
+.x-panel-ice-catalogo-framed-outer-border-tb {
+    border-top-color: transparent !important;
+    border-top-width: 1px !important;
+    border-bottom-color: transparent !important;
+    border-bottom-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:56 */
+.x-panel-ice-catalogo-framed-outer-border-tbl {
+    border-top-color: transparent !important;
+    border-top-width: 1px !important;
+    border-bottom-color: transparent !important;
+    border-bottom-width: 1px !important;
+    border-left-color: transparent !important;
+    border-left-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:64 */
+.x-panel-ice-catalogo-framed-outer-border-tr {
+    border-top-color: transparent !important;
+    border-top-width: 1px !important;
+    border-right-color: transparent !important;
+    border-right-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:70 */
+.x-panel-ice-catalogo-framed-outer-border-trl {
+    border-top-color: transparent !important;
+    border-top-width: 1px !important;
+    border-right-color: transparent !important;
+    border-right-width: 1px !important;
+    border-left-color: transparent !important;
+    border-left-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:78 */
+.x-panel-ice-catalogo-framed-outer-border-trb {
+    border-top-color: transparent !important;
+    border-top-width: 1px !important;
+    border-right-color: transparent !important;
+    border-right-width: 1px !important;
+    border-bottom-color: transparent !important;
+    border-bottom-width: 1px !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-base/sass/etc/mixins/border-management.scss:86 */
+.x-panel-ice-catalogo-framed-outer-border-trbl {
+    border-color: transparent !important;
+    border-width: 1px !important;
+}
