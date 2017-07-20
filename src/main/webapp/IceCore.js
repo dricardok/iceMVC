@@ -1604,6 +1604,7 @@ var Ice = (
 
             var refs = form.getReferences(),
                 valores = form.getValues() || {},
+                valores2 = form.getValues() || {},
                 fields = form.getModelFields() || [],
                 validators = form.getModelValidators() || {},
                 modelName = Ext.id(),
@@ -1633,6 +1634,28 @@ var Ice = (
             });
 
             var validaciones = Ext.create(modelName, valores).getValidation().getData();
+
+            // los campos tipo float no validan correctamente si el campo es obligatorio porque lo transforma a 0
+            // en el modelo. Con este bloque verificamos que si el campo es validado, el getValues()[name] no sea empty
+            var fieldsTypeMap = {};
+            for (var i = 0; i < fields.length; i++) {
+                fieldsTypeMap[fields[i].name] = fields[i].type;
+            }
+
+            for (var name in validatorsAplican) {
+                // si es float/int y paso con true
+                if ((fieldsTypeMap[name] === 'float' || fieldsTypeMap[name] === 'int')
+                    && validaciones[name] === true) {
+                    var arrValidators = validatorsAplican[name];
+                    for (var i = 0; i < arrValidators.length; i++) {
+                        if (arrValidators[i].type === 'presence' && Ext.isEmpty(valores2[name])) {
+                            validaciones[name] = 'Este campo es obligatorio';
+                            break;
+                        }
+                    }
+                }
+            }
+            // fin de validacion de obligatorio para float
             
             Ice.log('Ice.obtenerErrores validaciones:', validaciones);
             
