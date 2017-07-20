@@ -2,10 +2,28 @@
  * Created by DEORTIZT on 03/07/2017.
  */
 Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {   
-        extend: 'Ice.view.componente.FormDosColumnasIce',
+        extend: 'Ice.view.componente.FormIce',
         xtype: 'agregardocumento',
+        controller: 'agregardocumento',
         /*requires: ['Ext.form.field.*'],*/
+
+        platformConfig: {
+            desktop: {
+                scrollable: false,
+                width: 600,
+                defaults: {
+                    style: 'margin:10px;',
+                    anchor: '100%'
+                }
+            },
+            '!desktop': {
+                scrollable: true
+            }
+        },
         
+        config: {
+            ruta: null
+        },
 // contruccion usando metodos ext y parametros de entrada
         constructor: function (config) {
             Ice.log('Ice.view.bloque.documentos.AgregarDocumento.constructor');
@@ -25,17 +43,24 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
                 config.items = comps.DOCUMENTOS.FORMULARIO.items;
                 config.modelFields = comps.DOCUMENTOS.FORMULARIO.fields;
                 config.modelValidators = comps.DOCUMENTOS.FORMULARIO.validators;
+                config.reference = 'form',
                 config.buttons = [
                     {
-                        text: 'Guardar'
+                        text: 'Guardar',
+                        iconCls: 'x-fa fa-save',
+                        handler: 'onGuardar'
                     },{
                         text: 'Cancelar',
+                        iconCls: 'x-fa fa-close',
                         handler: function(){
-                            this.up('window').close();
+                            if(Ice.classic()){
+                                this.up('window').close();
+                            } else {
+                                Ice.pop();
+                            }
                         }
                     }
                 ];
-                
             } catch(e){
                 Ice.generaExcepcion(e, paso);
             }

@@ -277,24 +277,24 @@ html, body {
 
 .producto{
     border-style: solid;
-    border-left-width: 12px;
+    border-left-width: 0px;
     border-top-width: 0px;
     border-right-width: 0px;
-    border-bottom-width: 0px;
-    border-left-color: #0033a0;
-    padding: 10px;
+    border-bottom-width: 12px;
+    border-bottom-color: #0033a0;
+    padding: 18px 5px;
     background-color: #00b5cb;
     color: #fff;
-    font-size: 18px !important;
+    font-size: 20px !important;
+    line-height: 27px;
     text-align: center !important;
-    line-height: 30px;
-    min-height: 80px;
-    
+    height: 100px;
                             
 }
 
 .back_productos{
-    background: #DEEBF4; padding:2% 0% 0% 8%;
+    background: #DEEBF4; 
+    padding:0% 0% 0% 15%;
 }
 
 .slogan{
@@ -319,11 +319,17 @@ html, body {
 
 .producto_cot{
     float:left;
-    padding: 2% 2%;    
+    padding:2% 2%;
+      
 }
 
 
-
+.titulo_cotiz{
+    font-size:24px !important;
+    color: $font-grey !important;
+    text-align:center !important;
+    padding-top:15px;      
+}
 
 
 
@@ -344,7 +350,12 @@ html, body {
         min-height: 180px;
     }
 
+.back_productos{
+     padding:2% 0% 0% 15%;
 }
+
+}
+
 
 
 

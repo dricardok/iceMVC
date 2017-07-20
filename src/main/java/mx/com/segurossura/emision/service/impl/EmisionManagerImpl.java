@@ -537,7 +537,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			
 			
 			// Especificar el path para almacenar documentos
-			path.append(directorioBase).append(File.separator).append(cdunieco).append(File.separator).append(cdramo).append(File.separator).append(nmpoliza).append(File.separator).append(nmsuplem).append(File.separator);
+			path.append(directorioBase).append(File.separator).append("ice").append(File.separator).append(cdunieco).append(File.separator).append(cdramo).append(File.separator).append(nmpoliza).append(File.separator).append(nmsuplem).append(File.separator);
 	
 			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();
 			// Se guardan la lista de documentos:
@@ -567,7 +567,7 @@ public class EmisionManagerImpl implements EmisionManager {
               		}
               		
               		documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpolizaEmitida, nmsolici, datosMrecibo.get("nmsuplem"), ntramite, new Date(),
-              				documento.getId(), documento.getNombre(), cdtipsub, exito ? Constantes.SI : Constantes.NO,
+              				documento.getId(), documentoRuta, cdtipsub, exito ? Constantes.SI : Constantes.NO,
               				cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, documento.getUrl(), path.toString(), documento.getTipo(), Constantes.INSERT_MODE);
               		
               		

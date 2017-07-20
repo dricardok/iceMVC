@@ -41,6 +41,8 @@ Ext.define('Ice.view.bloque.documentos.ListaDocumentos', {
                         config.itemsPerPage = 10;
                     }
                     
+                    config.estado = config.estado.toUpperCase();
+
                     var compsGrid = Ice.generaComponentes({
                         pantalla: 'DOCUMENTOS',
                         seccion: 'GRID',

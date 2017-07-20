@@ -319,7 +319,7 @@ $toolbar-min-height-big: dynamic(2.9334em);
     }
 
     .#{$prefix}#{$xtype}#{$ui-suffix} {
-        @include background-gradient($blanco-s, $background-gradient);
+        @include background-gradient($background-color, $background-gradient);
         @include border($border-width, $border-style, $border-color);
         @include font($font-weight, $font-size, $line-height, $font-family);
         color: $color;
