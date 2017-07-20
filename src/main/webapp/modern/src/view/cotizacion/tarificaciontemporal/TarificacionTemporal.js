@@ -1,6 +1,7 @@
 Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 	extend: 'Ice.view.componente.VentanaIce',
 	xtype: 'tarificaciontemporal',
+	ui:'ice-cat',
 	
 	// config ext
 	title: 'Elige tu Plan',
@@ -31,7 +32,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 			config.items = [
 				{
 	        		xtype: 'vistatarificaciontemporal',
-	        		cls:'back_plan',
+	        		
 	        		style: 'background:#DEEBF4; padding: 0 0 0 8%;',
 	    			reference: 'vistatarificaciontemporal',
 	    				

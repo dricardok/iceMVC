@@ -1,12 +1,17 @@
 Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
     extend: 'Ice.view.componente.PanelIce',
     xtype: 'accesocotizacion',
-
+    ui:'ice-catalogo',
+    
     controller: 'accesocotizacion',
 
+//    layout: 'fit',
     // config ext
-    title: 'Cotizadores',
-    layout: 'fit',
+    platformConfig: {
+    	'!desktop': {
+//    		title: 'Cotizadores'
+    	}
+    },
     scrollable: true,
 
     constructor: function (config) {
@@ -15,17 +20,27 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
             paso = 'Construyendo acceso a cotizadores';
         try {
             Ice.generaComponentes(); // para interceptor
-            config.items = [{
+            var items = [];
+            if (true || Ice.classic()) {
+            	items.push({
+                	xtype: 'container',
+                	ui:'ice-catalogo',
+                	// height: 100,
+                	html: '<div class="titulo_cotiz" style="text-align: center;"><span style="font-size:18px; color:#707372; padding:15px 0px !important;font-weight:600;">Cotizadores</span></div>'
+                });
+            }
+            items.push({
                 xtype: 'dataviewice',
+                //html:'<div class="">Cotizadores</div>',
                 reference: 'dataview',
                 cls: 'back_productos',
-                style:'background: #DEEBF4;',
+                
                 platformConfig: {
                     desktop: {
                         tpl: new Ext.XTemplate(
-                            '<tpl for=".">',
-                                '<div class="producto_cot">',
-                                    '<table class="plan_pago_base shadow_card" style="max-width:250px; min-height:200px;">',
+                          '<tpl for=".">',
+                                '<div class="producto_cot" style="margin: 0 auto">',
+                                    '<table class="plan_pago_base shadow_card" style="width:230px; height:180px;">',
                                         '<tr>',
                                             '<td class="producto">{dsramo}</td>',
                                         '</tr>',
@@ -33,15 +48,15 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
                                             '<td class="slogan">Cotizar</td>',
                                             '</tr>',
                                     '</table>',
-                                '</div>',
-                            '</tpl>'
+                                '</div>',                              
+                          '</tpl>'
                         )
                     },
                     '!desktop': {
                         itemTpl: new Ext.XTemplate( 
                             '<tpl for=".">',
-                            	'<div class="producto_cot">',
-                                	'<div class="plan_pago_base shadow_card2" style="max-width:250px; min-height:100px;">',
+                            	'<div class="producto_cot style="margin: 0 auto"">',
+                                	'<div class="plan_pago_base shadow_card2" style="width:230px; height:130px;">',
                                 		'<div class="producto">{dsramo}</div>',
                                 			'<div class="slogan">Cotizar</div>',
                                 	'</div>',
@@ -71,7 +86,8 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
                 listeners: {
                     itemclick: 'onItemClic'
                 }
-            }].concat(config.items || []);
+            });
+            config.items = items.concat(config.items || []);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

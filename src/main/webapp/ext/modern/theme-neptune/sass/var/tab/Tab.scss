@@ -50,7 +50,7 @@ $tab-border-color: dynamic($tab-background-color);
  * @var {color/list}
  * Tab border-color when active
  */
-$tab-active-border-color: dynamic($azulo-s);
+$tab-active-border-color: dynamic($tab-background-colo);
 
 /**
  * @var {number/list}
@@ -615,7 +615,7 @@ $tab-active-box-shadow: dynamic(null);
             color: $active-color;
             @include background-gradient($active-background-color, $active-background-gradient);
             border-color: $active-border-color;
-            box-shadow:;
+            box-shadow: $active-box-shadow;
         }
 
         .x-button-icon {

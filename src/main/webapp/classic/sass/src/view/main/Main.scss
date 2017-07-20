@@ -409,3 +409,16 @@
         $ui-header-color: #FFF
     );
 
+//CATALOGO DE PRODUCTOS A COTIZAR//
+
+    @include extjs-panel-ui(
+        $ui: 'ice-catalogo-framed',    
+        $ui-body-background-color: $azulbd,
+        $ui-body-font-size: $font-pnl,
+        $ui-body-color: $font-grey
+        
+    );
+    
+    
+    
+    
