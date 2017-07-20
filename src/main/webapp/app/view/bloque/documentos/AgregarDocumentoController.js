@@ -20,11 +20,21 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumentoController', {
             view = me.getView(),
             refs = view.getReferences();
         try{
-            Ice.request({
+            Ice.log('guardar me',view);
+            view.submit(
+                {
+                    url: Ice.url.bloque.documentos.subirArchivo,
+                    //standardSubmit: true,
+                    params:{
+                        'params.nombre': view.ruta
+                    }
+                }
+            );
+            /*Ice.request({
                 mascara: 'Subiendo archivo slip',
                 url: Ice.url.bloque.documentos.subirArchivo,
                 params: {
-                    'params.nombre': refs.cddocume.getValue(),
+                    'params.nombre': refs.cddocume.getName(),
                     'params.ruta': view.ruta
                 },
                 success: function (json) {
@@ -35,7 +45,7 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumentoController', {
                         Ice.manejaExcepcion(e, paso2);
                     }
                 }
-            });
+            });*/
         } catch(e){
             Ice.generaExcepcion(e, paso);
         }

@@ -33,9 +33,11 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
                 config.buttons = [
                     {
                         text: 'Guardar',
+                        iconCls: 'x-fa fa-save',
                         handler: 'onGuardar'
                     },{
                         text: 'Cancelar',
+                        iconCls: 'x-fa fa-close',
                         handler: function(){
                             if(Ice.classic()){
                                 this.up('window').close();
