@@ -52,9 +52,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                 config.itemsPerPage = 10;
             }
 
-            if(config.estado === 'w'){
-                config.estado = 'W';
-            }
+            config.estado = config.estado.toUpperCase();
                                 
             config.items = [
                 {
@@ -88,6 +86,22 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                                 handler: function(grid, rowIndex, colIndex){
                                     this.up('window').getController().onDescargarDocumento(grid, rowIndex, colIndex);
                                 }
+                            },{
+                                iconCls: 'x-fa fa-upload',
+                                tooltip: 'Subir slip',
+                                colType: 'slip',
+                                hidden: true,
+                                handler: function(grid, rowIndex, colIndex) {
+                                    this.up('window').getController().onActualizarDocumento(grid, rowIndex, colIndex);
+                                }
+                            },{
+                                iconCls: 'x-fa fa-download',
+                                tooltip: 'Descargar slip',
+                                colType: 'slip',
+                                hidden: true,
+                                handler: function(grid, rowIndex, colIndex){
+                                    this.up('window').getController().onDescargarDocumento(grid, rowIndex, colIndex);
+                                }
                             }
                         ]
                     }]
@@ -105,14 +119,18 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                 ].concat(config.buttons || []);
             }
             config.buttons = [
-                /*{
+                {
                     text: 'Agregar',
                     iconCls: 'x-fa fa-plus',
                     handler: 'onAgregarDocumento'
-                },*/
-                {
+                },{
                     iconCls: 'x-fa fa-file-word-o',
+                    text: 'Slips',
                     handler: 'onCargarSlips'
+                },{
+                    iconCls: 'x-fa fa-file-o',
+                    text: 'Documentos',
+                    handler: 'onRecargarDocumentos'
                 },{
                     xtype: 'textfieldice',
                     labelAlign: 'left',

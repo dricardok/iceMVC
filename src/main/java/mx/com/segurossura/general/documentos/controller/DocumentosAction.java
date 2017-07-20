@@ -166,7 +166,13 @@ public class DocumentosAction extends PrincipalCoreAction {
             String url = params.get("url");
             Utils.validate(url, "No se recibio la url");
             String nombre = params.get("cddocume");
+            String cdtipdoc = params.get("cdtipdoc");
             contentType = TipoArchivo.PDF.getContentType();
+            if(StringUtils.isNotBlank(cdtipdoc)){
+                if(cdtipdoc.toLowerCase().equals("slip")){
+                    contentType = TipoArchivo.RTF.getContentType();
+                }
+            }
             Archivo archivo = documentosManager.obtenerDocumento(url, contentType, nombre);
             fileInputStream = archivo.getFileInputStream();
             filename = archivo.getFilename();

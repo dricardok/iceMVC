@@ -16,6 +16,10 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
     onDescargarDocumento: function(grid, rowIndex, colIndex){
         this.descargarDocumento(grid, rowIndex, colIndex);
     },
+
+    onActualizarDocumento: function(grid, rowIndex, colIndex){
+        this.actualizarDocumento(grid, rowIndex, colIndex);
+    },
     
     onAgregarDocumento: function(){
         this.agregarDocumento();
@@ -105,7 +109,8 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                                 target: '_blank',
                                 params:{
                                     'params.url': data.url,
-                                    'params.cddocume': data.cddocume
+                                    'params.cddocume': data.cddocume,
+                                    'params.cdtipdoc': data.cdtipdoc
                                 }
                             }
                     );                    
@@ -129,14 +134,16 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
         }
     },
     
-    agregarDocumento: function(){
-        Ice.log('Ice.view.bloque.documentos.VentanaDocumentosController.agregarDocumento');
+    actualizarDocumento: function(grid, rowIndex, colIndex){
+        Ice.log('Ice.view.bloque.documentos.VentanaDocumentosController.actualizarDocumento grid',grid,'rowIndex',rowIndex,'colIndex',colIndex);
         var paso = 'Agregando documento',
             me = this,
             view = me.getView(),
             refs = view.getReferences();
         try{
-            var ventanaNuevo = Ext.create('Ice.view.componente.VentanaPanel',{
+            var data = me.getRowDataActionColumn(grid, rowIndex, colIndex);
+            Ice.log('data actualizarDocumento',data);
+            var ventanaNuevo = Ext.create('Ice.view.componente.VentanaIce',{
                 minWidth: 400,
                 minHeight: 300,
                 closeAction: 'destroy',
@@ -146,6 +153,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                 items: [
                     {
                         xtype: 'agregardocumento',
+                        ruta: data.ruta,
                         minWidth: 390,
                         minHeight: 290
                     }
@@ -204,6 +212,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
         try{
             refs.listadocumentos.getStore().getProxy().extraParams['params.cdtipdoc'] = 'SLIP';
             refs.listadocumentos.getStore().load();
+            this.mostrarActionColumnsSlip(refs.listadocumentos, true);
         } catch(e){
             Ice.generaExcepcion(e, paso);
         }
@@ -218,8 +227,70 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
         try{
             refs.listadocumentos.getStore().getProxy().extraParams['params.cdtipdoc'] = null;
             refs.listadocumentos.getStore().load();
+            this.mostrarActionColumnsSlip(refs.listadocumentos, false);
         } catch(e){
             Ice.generaExcepcion(e, paso);
         }
+    },
+
+    mostrarActionColumnsSlip: function(grid, swmostrar){
+        Ice.log('Ice.view.bloque.documentos.VentanaDocumentosController.mostrarActionColumnsSlip grid',grid,'swshow',swmostrar);
+        var paso = 'Mostrar columnas slip',
+            me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            swotros = false;
+        try{
+            var columns = grid.getColumns();
+            if(columns){
+                if(columns.length > 0){
+                    if(swmostrar == false){
+                        swotros = true;
+                    }
+                    for(var i = 0; i < columns.length; i++){
+                        Ice.log('column xtype',columns[i].xtype);
+                        if('actioncolumn' == columns[i].xtype){
+                            if('slip' == columns[i].colType){
+                                this.mostrarColumna(columns[i], swmostrar);
+                            } else {
+                                this.mostrarColumna(columns[i], swotros);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch(e){
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+
+    mostrarColumna(column, swmostrar){
+        if(swmostrar == true){
+            column.show();
+        } else {
+            column.hide();
+        }
+    },
+
+    getRowDataActionColumn: function(grid, rowIndex, colIndex){
+        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.getDataRowActionColumn grid',grid,'rowIndex',rowIndex,'colIndex',colIndex);
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            data;
+        try{
+            if(Ext.manifest.toolkit === 'classic'){
+                var store = grid.getStore();
+                data = store.getAt(rowIndex).getData();              
+            } else {
+                Ice.log('grid parent',grid.getParent());
+                var cell = grid.getParent(),
+                    record = cell.getRecord(),
+                    data = record.getData();
+            }
+        } catch (e){
+            Ice.generaExcepcion(e);
+        }
+        return data;
     }
 });

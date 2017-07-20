@@ -6,6 +6,9 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
         xtype: 'agregardocumento',
         /*requires: ['Ext.form.field.*'],*/
         
+        config: {
+            ruta: null
+        },
 // contruccion usando metodos ext y parametros de entrada
         constructor: function (config) {
             Ice.log('Ice.view.bloque.documentos.AgregarDocumento.constructor');
@@ -27,15 +30,21 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
                 config.modelValidators = comps.DOCUMENTOS.FORMULARIO.validators;
                 config.buttons = [
                     {
-                        text: 'Guardar'
+                        text: 'Guardar',
+                        handler: function(){
+                            Ice.log('ruta',config.ruta);
+                        }
                     },{
                         text: 'Cancelar',
                         handler: function(){
-                            this.up('window').close();
+                            if(Ice.classic()){
+                                this.up('window').close();
+                            } else {
+                                Ice.pop();
+                            }
                         }
                     }
                 ];
-                
             } catch(e){
                 Ice.generaExcepcion(e, paso);
             }
