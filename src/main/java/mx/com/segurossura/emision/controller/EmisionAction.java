@@ -1,6 +1,7 @@
 
 package mx.com.segurossura.emision.controller;
 
+import java.lang.management.ManagementFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,8 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.biosnettcs.core.Constantes;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
+import com.biosnettcs.portal.model.UsuarioVO;
+import com.opensymphony.xwork2.ActionContext;
 
 import mx.com.segurossura.emision.service.EmisionManager;
 
@@ -318,14 +322,20 @@ public class EmisionAction extends PrincipalCoreAction {
 			Utils.validate(params, "No se recibieron datos");
 			
 			
-			String pv_cdunieco_i= params.get("pv_cdunieco_i");
-			String pv_cdramo_i= params.get("pv_cdramo_i");
-			String pv_estado_i= params.get("pv_estado_i");
-			String pv_nmpoliza_i= params.get("pv_nmpoliza_i");
-			String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
+			String cdunieco= params.get("cdunieco");
+			String cdramo= params.get("cdramo");
+			String estado= params.get("estado");
+			String nmpoliza= params.get("nmpoliza");
+			String nmsuplem= params.get("nmsuplem");
+			
+			Utils.validate(cdunieco,"Falta cdunieco",
+					cdramo, "Falta cdramo",
+					estado, "Falta estado",
+					nmpoliza, "Falta nmpoliza",
+					nmsuplem, "nmsuplem");
             
             
-			params = emisionManager.obtenerTvalopol(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsuplem_i);
+			params = emisionManager.obtenerTvalopol(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
 			
 			success=true;
 			
@@ -708,7 +718,8 @@ public class EmisionAction extends PrincipalCoreAction {
             }
         )   
     public String confirmarPoliza() {
-    	logger.debug(Utils.log("###### confirmarPoliza params = ", params));
+    	logger.debug(Utils.log("###### confirmarPoliza params = ", params));    	
+    	
     	try {
     	    Utils.validate(params, "No se recibieron datos");
     	    String cdunieco  = params.get("cdunieco"),
@@ -724,7 +735,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   estado,   "Falta estado",
     	                   nmpoliza, "Falta nmpoliza");
     	    
-    	    String nmpolizaEmitida = emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem,newestad, newpoliza, pnmrecibo);
+    	    String nmpolizaEmitida = emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo);
     	    
     	    params = new HashMap<String, String>();
             params.put("nmpoliza", nmpolizaEmitida);
@@ -734,6 +745,72 @@ public class EmisionAction extends PrincipalCoreAction {
     	}
     	return SUCCESS;
     }
+    
+    @Action(        
+            value = "realizarPago", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )   
+    public String realizarPago() {
+    	logger.debug(Utils.log("###### confirmarPoliza params = ", params));
+    	@SuppressWarnings("rawtypes")
+		Map session = ActionContext.getContext().getSession();
+		
+		UsuarioVO user = (UsuarioVO) session.get(Constantes.USER);
+		// Si el usuario completo existe en sesion:
+        if (user != null && user.getRolActivo() != null && StringUtils.isNotBlank(user.getRolActivo().getCdsisrol())) {
+			
+            String pid = ManagementFactory.getRuntimeMXBean().getName();
+            logger.info("Usuario en sesion: {} - {} \nRol Activo: {} - {}\npid: {}", 
+                    user.getCdusuari(), user.getDsusuari(), 
+                    user.getRolActivo().getCdsisrol(), user.getRolActivo().getDssisrol(), pid);
+        }
+    	
+    	try {
+    	    Utils.validate(params, "No se recibieron datos");
+    	    
+    	    String cdunieco  = params.get("cdunieco"),
+    	           cdramo    = params.get("cdramo"),
+    	           estado    = params.get("estado"),
+    	           nmpoliza  = params.get("nmpoliza"),
+    	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
+    	           cdbanco   = params.get("cdbanco"),
+    	           dsbanco   = params.get("dsbanco"),
+    	           nmtarjeta = params.get("nmtarjeta"),
+    	           codseg    = params.get("codseg"),
+    	           fevencm    = params.get("fevencm"),
+    	           fevenca    = params.get("fevenca"),
+    	           nombre	 = params.get("nombre"),
+    	           email 	 = params.get("email"),
+    	           usuario = user.getCdusuari();
+    	    
+    	    Utils.validate(cdunieco, "Falta cdunieco",
+    	                   cdramo,   "Falta cdramo",
+    	                   estado,   "Falta estado",
+    	                   nmpoliza, "Falta nmpoliza",
+    	                   cdbanco,  "Falta cdbanco",
+    	                   dsbanco,	 "Falta dsbanco",
+    	                   nmtarjeta,"Falta nmtarjeta",
+    	                   codseg,	 "Fata codseg",
+    	                   fevencm,   "Falta fevencm,",
+    	                   fevenca,	 "Falta fevenca",
+    	                   nombre,   "Falta nombre",
+    	                   email, 	 "Falta email");
+    	    
+    	    String codigoautorizacion = emisionManager.realizarPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, 
+    	    															cdbanco, dsbanco, nmtarjeta, codseg, fevencm, 
+    	    															fevenca, nombre, email, usuario);
+    	    params.put("codaut", codigoautorizacion);
+    	    
+    	    
+    		success = true;
+    	} catch (Exception ex) {
+    	    message = Utils.manejaExcepcion(ex);
+    	}
+    	return SUCCESS;
+    }
+    
     
     @Action(        
             value = "obtenerTarifaMultipleTemp", 

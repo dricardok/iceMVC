@@ -24,6 +24,14 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
     onLimpiarFiltro: function(){
         this.limpiarFiltro();
     },
+
+    onCargarSlips: function(){
+        this.cargarSlips();
+    },
+
+    onRecargarDocumentos: function(){
+        this.recargarDocumentos();
+    },
     
     verDocumento: function(grid, rowIndex, colIndex){
         Ice.log('Ice.view.bloque.documentos.VentanaDocumentosController.verDocumento', grid, rowIndex, colIndex);
@@ -178,9 +186,38 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                 if(refs.dsdocume.getValue()){
                     Ice.log('extraparams',refs.listadocumentos.getStore().getProxy());
                     refs.listadocumentos.getStore().getProxy().extraParams['params.dsdocume'] = null;
+                    refs.listadocumentos.getStore().getProxy().extraParams['params.cdtipdoc'] = null;
                     refs.listadocumentos.getStore().load();
                 }
             }
+        } catch(e){
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+
+    cargarSlips: function(){
+        Ice.log('Ice.view.bloque.documentos.VentanaDocumentosController.cargarSlips');
+        var paso = 'Agregando documento',
+            me = this,
+            view = me.getView(),
+            refs = view.getReferences();
+        try{
+            refs.listadocumentos.getStore().getProxy().extraParams['params.cdtipdoc'] = 'SLIP';
+            refs.listadocumentos.getStore().load();
+        } catch(e){
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+
+    recargarDocumentos: function(){
+        Ice.log('Ice.view.bloque.documentos.VentanaDocumentosController.recargarDocumentos');
+        var paso = 'Agregando documento',
+            me = this,
+            view = me.getView(),
+            refs = view.getReferences();
+        try{
+            refs.listadocumentos.getStore().getProxy().extraParams['params.cdtipdoc'] = null;
+            refs.listadocumentos.getStore().load();
         } catch(e){
             Ice.generaExcepcion(e, paso);
         }

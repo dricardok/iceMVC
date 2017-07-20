@@ -372,7 +372,10 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                         iconCls: 'x-fa fa-key',
                         handler: function (bot) {
                             bot.up('ventanaprimas').cerrar();
-                            me.emitir();
+                            
+                            // me.emitir();
+                            
+                            me.validaTipoPago();
                         }
                     }, {
                         text: 'Modificar',
@@ -387,8 +390,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             Ice.manejaExcepcion(e, paso);
         }
     },
-    
-    
+        
     emitir: function () {
         Ice.log('controller.emision emitir');
         var me = this,
@@ -417,6 +419,138 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
         }
     },
 
+    validaTipoPago: function (params) {
+    	Ice.log('Ice.view.cotizacion.EmisionController.validaTipoPago');
+    	var me = this,
+    		view = me.getView(),
+    		paso = 'Validando forma de pago';
+    	
+    	try{
+    		var reqParams = Ice.convertirAParams({
+                cdunieco: view.getCdunieco(),
+                cdramo: view.getCdramo(),
+                estado: view.getEstado(),
+                nmpoliza: view.getNmpoliza(),
+                nmsuplem: view.getNmsuplem()
+            });
+    		
+    		Ice.request({
+    			mascara: paso,
+    			url: Ice.url.emision.obtieneTvalopol,
+    			params: reqParams,
+    			failure: (params && params.failure) || null,
+    			success: function (action) {
+    				var paso2 = 'Revisando forma de pago';
+    				try{    					
+    					if (action.params && action.params.otvalor03) {
+    						
+    						if(action.params.otvalor03 != 'N'){
+    							
+    							me.emitir();
+    						}
+    						else {
+    							
+    							me.mostrarVentanaPago();
+    						}
+    					}
+    				}catch(e) {
+    					 Ice.manejaExcepcion(e, paso2);
+    				}    				
+    			}
+    		});
+    		
+    	}catch(e){
+    		Ice.manejaExcepcion(e, paso);
+    	}
+    },
+	
+    mostrarVentanaPago: function () {
+    	Ice.log('Ice.view.cotizacion.EmisionController.mostraVentanaPago');
+    	var me = this,
+		view = me.getView(),
+		paso = 'Validando forma de pago';
+    	try {
+    		Ext.create('Ice.view.cotizacion.VentanaPagoTarjeta', {
+    			cdunieco: view.getCdunieco(),
+                cdramo: view.getCdramo(),
+                estado: view.getEstado(),
+                nmpoliza: view.getNmpoliza(),
+                nmsuplem: view.getNmsuplem(),
+                
+                buttons: [
+                    {
+                        text: 'Pagar',
+                        iconCls: 'x-fa fa-dollar',
+                        handler: function (boton) {
+                        	var ventana = boton.up('ventanapagotarjeta');
+                        	
+                        	me.pagar(ventana);
+                        }
+                    }, {
+                        text: 'Modificar',
+                        iconCls: 'x-fa fa-pencil',
+                        handler: function (boton) {
+                            boton.up('ventanapagotarjeta').cerrar();
+                        }
+                    }
+                ]
+    		}).mostrar();
+    	}catch(e) {
+    		Ice.manejaExcepcion(e, paso);
+    	}
+    }, 
+    
+    pagar: function (ventana) {
+    	Ice.log('Ice.');
+    	var me = this,
+    		view = ventana,
+    		form = ventana.down('form'),
+		//ref  = me.getRefItems('formpagotarjeta'),
+    	paso = "Realizando Pago";
+    	    	
+    	try {
+    		combobanco = Ice.query('[name=cdbanco]', form);			
+			
+			//Ice.validarFormulario(view);					
+			
+			Ice.request({
+	            mascara: paso,
+	            url: Ice.url.emision.realizarPago,
+	            params: Ice.convertirAParams({
+	                cdunieco: view.getCdunieco(),
+	                cdramo: view.getCdramo(),
+	                estado: view.getEstado(),
+	                nmpoliza: view.getNmpoliza(),
+	                nmsuplem: view.getNmsuplem(),
+	                cdbanco: form.getValues().cdbanco,
+	                dsbanco: combobanco.getRawValue(),
+	                nmtarjeta: form.getValues().nmtarjeta,
+	                codseg: form.getValues().codseg,
+	                fevencm: form.getValues().fevencm,
+	                fevenca: form.getValues().fevenca,
+	                nombre: form.getValues().nombre,
+	                email: form.getValues().email	                
+	            }),
+	            success: function (action) {	            	
+	            	
+	            	ventana.cerrar();
+	            	// Ice.mensajeCorrecto('Pago autorizado ');
+	            	
+	                me.emitir();
+	                
+	            },
+	            failure: function (action) {
+	            	
+	            	ventana.cerrar();
+	            	Ice.mensajeCorrecto('Transaccion rechazada' + action.params.message);
+	            }
+	        });			
+			
+		} catch(e) {
+			Ice.manejaExcepcion(e, paso);
+		}
+    },
+    
     abrirVentanaDocs: function(){
         Ice.log('controller.emision emitir');
         var me = this,

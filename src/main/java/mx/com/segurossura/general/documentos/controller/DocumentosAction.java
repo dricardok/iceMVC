@@ -81,7 +81,8 @@ public class DocumentosAction extends PrincipalCoreAction {
             String ntramite = params.get("ntramite");
             String cdsisrol = params.get("cdsisrol");
             String dsdocume = params.get("dsdocume");
-            datos = documentosManager.obtenerDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, ntramite, cdsisrol, dsdocume, start, limit);
+            String cdtipdoc = params.get("cdtipdoc");
+            datos = documentosManager.obtenerDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, ntramite, cdsisrol, dsdocume, cdtipdoc, start, limit);
             if(!datos.isEmpty()){
                 totalCount = Integer.parseInt(datos.get(0).get("total"));
             }
