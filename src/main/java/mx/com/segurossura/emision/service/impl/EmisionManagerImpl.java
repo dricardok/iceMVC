@@ -14,9 +14,11 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Constantes;
+import com.biosnettcs.core.HttpUtil;
 import com.biosnettcs.core.Utils;
 
 import mx.com.royalsun.alea.commons.bean.Banco;
@@ -52,6 +54,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	
 	@Autowired
 	private PagoManager pagoManager;
+	
+	@Value("${content.path}")
+	private String directorioBase;
 
 	@Override
 	public void movimientoTvalogar(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
@@ -482,17 +487,17 @@ public class EmisionManagerImpl implements EmisionManager {
 	@Override
 	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception {
+		
+		logger.debug("\n@@@@@@ confirmarPoliza @@@@@@");
+		
 		String paso = null, nmpolizaEmitida = null;
-		Map<String, String> datosPago  = null;		
+		Map<String, String> datosMrecibo = null;		
 		RequestWs request = null;
-		String documentoURL = "https://qa-servicios.segurossura.com.mx/blackBoxMvc/printer/TEXTLIB2_RTCL/1/501/1/M/0";
-		String docURL = "";
-		String docLocation = "";
+		String documentoRuta = "";
 		String extension = ".pdf";
-		String documentsLocation = "C:\\documents\\";
 		StringBuilder path = new StringBuilder();
 		List<Documento> documentos = null;
-	
+		boolean exito  = false;
 		try {
 		    paso = "Confirmando p\u00f3liza";
 			nmpolizaEmitida = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
@@ -501,15 +506,17 @@ public class EmisionManagerImpl implements EmisionManager {
 			logger.info("Poliza emitida: {}", nmpoliza);	
 			
 			
-			// Obteniendo nmrecibo
-			datosPago = emisionDAO.obtenerMrecibo(cdunieco, cdramo, estado, nmpolizaEmitida, nmsuplem).get(0);
+			// Obteniendo nmrecibo para obtener el nmrecibo de la poliza emitida
+			datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpolizaEmitida, null).get(0);
 			
+			logger.info("ObtenerDatosConfirmacion ", datosMrecibo);
 			
+			// Construir Request para el servicio de aplicar pago
 			request = new RequestWs();
 			request.setCdunieco(Integer.parseInt(cdunieco));
 			request.setCdramo(Integer.parseInt(cdramo));
 			request.setNmpoliza(Integer.parseInt(nmpoliza));
-			request.setNmrecibo(Integer.parseInt(datosPago.get("nmrecibo")));
+			request.setNmrecibo(Integer.parseInt(datosMrecibo.get("nmrecibo")));
 			
 			paso = new StringBuilder("Aplicando recibo en ALEA de la p\u00f3liza ").append(nmpoliza).toString();			
 			try{
@@ -530,39 +537,42 @@ public class EmisionManagerImpl implements EmisionManager {
 			
 			
 			// Especificar el path para almacenar documentos
-			path.append(documentsLocation).append(File.separator).append(cdunieco).append(File.separator).append(cdramo).append(File.separator).append(nmpoliza).append(File.separator).append(nmsuplem).append(File.separator);
+			path.append(directorioBase).append(File.separator).append(cdunieco).append(File.separator).append(cdramo).append(File.separator).append(nmpoliza).append(File.separator).append(nmsuplem).append(File.separator);
 	
 			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();
 			// Se guardan la lista de documentos:
 			for (Documento documento : documentos) {
 			    
                 String nmsolici = null; //TODO: agregar
-                String ntramite = "0";  //TODO: agregar
-                String tipmov   = null; //TODO: agregar
-                String cdtiptra = null; //TODO: agregar
+                String ntramite = "1";  //TODO: agregar
+                String cdtiptra = "1"; //TODO: agregar
                 String codidocu = null; //TODO: agregar
                 String cdorddoc = null; //TODO: agregar
                 String cdmoddoc = null; //TODO: agregar
                 String nmcertif = null; //TODO: agregar
                 String nmsituac = null; //TODO: agregar
+                String cdtipsub = datosMrecibo.get("cdtipsup");
                 
-                docURL = documento.getUrl();
-                
-                
-                documentosDAO.realizarMovimientoDocsPoliza(
-                        cdunieco, cdramo, estado, nmpoliza, nmsolici, nmsuplem, ntramite, 
-                        new Date(), documento.getId(), documento.getNombre(), tipmov, 
-                        Constantes.SI, cdtiptra, codidocu, new Date(), cdorddoc, cdmoddoc, 
-                        nmcertif, nmsituac, documento.getUrl(), Constantes.INSERT_MODE);                
-                
-				try
-				{	
-					FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(path+documento.getNombre()+extension), 10000, 10000); 
+              	try
+				{              		
+              		documentoRuta = path+documento.getNombre()+extension;
+              		
+              		//boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
+					exito = false;
+              		try {
+              			FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(documentoRuta), 10000, 10000);
+              			exito = true;
+              		}catch(Exception fe){
+              			logger.error(fe.getMessage(), fe);
+              		}
+              		
+              		documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpolizaEmitida, nmsolici, datosMrecibo.get("nmsuplem"), ntramite, new Date(),
+              				documento.getId(), documento.getNombre(), cdtipsub, exito ? Constantes.SI : Constantes.NO,
+              				cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, documento.getUrl(), path.toString(), documento.getTipo(), Constantes.INSERT_MODE);
+              		
+              		
 					
-					/* Esta fija la URL pro que las URLS del servicio mandan error 404  */
-					//FileUtils.copyURLToFile(new URL(documentoURL), new File(documentsLocation+documento.getNombre()+extension), 10000, 10000);
-					
-				}catch(Exception e){
+				}catch(Exception e) {
 					logger.error(e.getMessage(), e);
 					continue;
 				}
@@ -570,7 +580,13 @@ public class EmisionManagerImpl implements EmisionManager {
 			
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
+		} finally {
+			path.setLength(0);
+			path = null;
+			request = null;
 		}
+		logger.debug("\n@@@@@@ confirmarPoliza @@@@@@");
+		
 		return nmpolizaEmitida;
 	}
 	

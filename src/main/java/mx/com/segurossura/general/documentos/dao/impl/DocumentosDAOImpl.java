@@ -128,30 +128,30 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
     
     @Override
     public void realizarMovimientoDocsPoliza(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsolici, String nmsuplem,
-            String ntramite, Date feinici, String cddocume, String dsdocume, String tipmov, String swvisible, String cdtiptra,
-            String codidocu, Date fefecha, String cdorddoc, String cdmoddoc, String nmcertif, String nmsituac, String url, String accion) 
+            String ntramite, Date fefecha, String cddocume, String dsdocume, String cdtipsup, String swvisible, String cdtiptra,
+            String codidocu, String cdorddoc, String cdmoddoc, String nmcertif, String nmsituac, String url, String ruta, String cdtipodoc, String accion) 
     throws Exception {
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("pv_cdunieco_i", cdunieco);
         params.put("pv_cdramo_i", cdramo);
         params.put("pv_estado_i", estado);
         params.put("pv_nmpoliza_i", nmpoliza);
-        params.put("pv_nmsolici_i", nmsolici);
         params.put("pv_nmsuplem_i", nmsuplem);
         params.put("pv_ntramite_i", ntramite);
-        params.put("pv_feinici_i", feinici);
+        params.put("pv_fefecha_i", fefecha);
         params.put("pv_cddocume_i", cddocume);
         params.put("pv_dsdocume_i", dsdocume);
-        params.put("pv_tipmov_i", tipmov);
+        params.put("pv_cdtipsup_i", cdtipsup);
         params.put("pv_swvisible_i", swvisible);
         params.put("pv_cdtiptra_i", cdtiptra);
         params.put("pv_codidocu_i", codidocu);
-        params.put("pv_fefecha_i", fefecha);
         params.put("pv_cdorddoc_i", cdorddoc);
         params.put("pv_cdmoddoc_i", cdmoddoc);
         params.put("pv_nmcertif_i", nmcertif);
         params.put("pv_nmsituac_i", nmsituac);
         params.put("pv_url_i",      url);
+        params.put("pv_ruta_i", ruta);
+        params.put("pv_cdtipdoc_i", cdtipodoc);
         params.put("pv_accion_i", accion);
         
         ejecutaSP(new MovimientoTdocupolSP(getDataSource()), params);
@@ -164,23 +164,23 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
             declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i",   Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i",   Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_nmsolici_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));            
             declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_ntramite_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_feinici_i",  Types.DATE));
+            declareParameter(new SqlParameter("pv_fefecha_i",  Types.DATE));
             declareParameter(new SqlParameter("pv_cddocume_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_dsdocume_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_tipmov_i",   Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdtipsup_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_swvisible_i",Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdtiptra_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_codidocu_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_fefecha_i",  Types.DATE));
             declareParameter(new SqlParameter("pv_cdorddoc_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdmoddoc_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmcertif_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_url_i"     , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_ruta_i"   ,  Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdtipdoc_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_accion_i",   Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o",Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));

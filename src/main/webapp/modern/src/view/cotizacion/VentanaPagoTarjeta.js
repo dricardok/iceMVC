@@ -3,9 +3,10 @@ Ext.define('Ice.view.cotizacion.VentanaPagoTarjeta', {
 	xtype: 'ventanapagotarjeta',
 	
 	//controller: 'pagotarjeta',
+	//controller: 'emision',
 	
 	modal: true,
-	title: 'Datos Tarjeta',
+	title: 'Pago con tarjeta',
 	layout: 'fit',
 	resizable: false,
 	
@@ -40,11 +41,11 @@ Ext.define('Ice.view.cotizacion.VentanaPagoTarjeta', {
                 validators: true
             });
             
-            Ext.apply(me, {
-            	items: {
+            Ice.log('Componentes ', comps);
+            
+            config.items = [{
             		xtype: 'formice',
             		reference: 'formpagotarjeta',
-            		layout: 'anchor',
             		widht: '100%',
             		height: '100%',
                     bodyPadding: '10px 0px 0px 10px',
@@ -56,89 +57,91 @@ Ext.define('Ice.view.cotizacion.VentanaPagoTarjeta', {
                     },
             		items: comps.PAGO_TARJETA.FORMULARIO.items.concat([
             			{
-            				xtype: 'numberfield',
+            				xtype: 'textfieldice',
             				name: 'nmtarjeta',
-            				fieldLabel: 'Numero de tarjeta',
+            				label: 'Numero de tarjeta',
+            				maskRe: /[\d\-]/,
             				allowBlank: false,
             				allowDecimals: false,
             	            allowNegative: false,
             	            maxLength: 16
             				
             			}, {
-            				xtype: 'numberfield',
+            				xtype: 'textfieldice',
             				name: 'codseg',
-            				fieldLabel: 'Codigo seguridad',
+            				label: 'Codigo seguridad',
+            				maskRe: /[\d\-]/,
             				allowBlank: false,
             				allowDecimals: false,
             	            allowNegative: false,
             	            maxLength: 3
             			}, {
-            				xtype: 'combobox',
+            				xtype: 'comboice',
             				name: 'fevenca',
-            				fieldLabel: 'Año vencimiento',
+            				label: 'Año vencimiento',
             				store: {
-            					fields: ['id', 'name'],
+            					fields: ['key', 'value'],
             					data: [
-            					{"id":"17", "name":"2017"},
-            					{"id":"18", "name":"2018"},
-            					{"id":"19", "name":"2019"},
-            					{"id":"20", "name":"2020"},
-            					{"id":"21", "name":"2021"},
-            					{"id":"22", "name":"2022"},
-            					{"id":"23", "name":"2023"},
-            					{"id":"24", "name":"2024"},
-            					{"id":"25", "name":"2025"},
-            					{"id":"26", "name":"2026"},
-            					{"id":"27", "name":"2027"},
-            					{"id":"28", "name":"2028"},
-            					{"id":"29", "name":"2029"},
-            					{"id":"30", "name":"2030"}
+            					{"key":"17", "value":"2017"},
+            					{"key":"18", "value":"2018"},
+            					{"key":"19", "value":"2019"},
+            					{"key":"20", "value":"2020"},
+            					{"key":"21", "value":"2021"},
+            					{"key":"22", "value":"2022"},
+            					{"key":"23", "value":"2023"},
+            					{"key":"24", "value":"2024"},
+            					{"key":"25", "value":"2025"},
+            					{"key":"26", "value":"2026"},
+            					{"key":"27", "value":"2027"},
+            					{"key":"28", "value":"2028"},
+            					{"key":"29", "value":"2029"},
+            					{"key":"30", "value":"2030"}
             					]
             				},
             				queryMode: 'local',
-            				displayField: 'name',
-            				valueField: 'id',
+            				displayField: 'value',
+            				valueField: 'key',
             				
             			}, {
-            				xtype: 'combobox',
+            				xtype: 'comboice',
             				name: 'fevencm',
-            				fieldLabel: 'Mes vencimiento',
+            				label: 'Mes vencimiento',
             				store: {
-            					fields: ['id', 'name'],
+            					fields: ['key', 'value'],
             					data: [
-            					{"id":"01", "name":"Enero"},
-            					{"id":"02", "name":"Febrero"},
-            					{"id":"03", "name":"Marzo"},
-            					{"id":"04", "name":"Abril"},
-            					{"id":"05", "name":"Mayo"},
-            					{"id":"06", "name":"Junio"},
-            					{"id":"07", "name":"Julio"},
-            					{"id":"08", "name":"Agosto"},
-            					{"id":"09", "name":"Septiembre"},
-            					{"id":"10", "name":"Octubre"},
-            					{"id":"11", "name":"Noviembre"},
-            					{"id":"12", "name":"Diciembre"}
+            					{"key":"01", "value":"Enero"},
+            					{"key":"02", "value":"Febrero"},
+            					{"key":"03", "value":"Marzo"},
+            					{"key":"04", "value":"Abril"},
+            					{"key":"05", "value":"Mayo"},
+            					{"key":"06", "value":"Junio"},
+            					{"key":"07", "value":"Julio"},
+            					{"key":"08", "value":"Agosto"},
+            					{"key":"09", "value":"Septiembre"},
+            					{"key":"10", "value":"Octubre"},
+            					{"key":"11", "value":"Noviembre"},
+            					{"key":"12", "value":"Diciembre"}
             					]
             				},
             				queryMode: 'local',
-            				displayField: 'name',
-            				valueField: 'id',            				
+            				displayField: 'value',
+            				valueField: 'key',            				
             			}, {
-            				xtype: 'textfield',
+            				xtype: 'textfieldice',
             				name: 'nombre',
-            				fieldLabel: 'Nombre',
+            				label: 'Nombre',
             				allowBlank: false
             			}, {
-            				xtype: 'textfield',
+            				xtype: 'textfieldice',
             				name: 'email',
-            				fieldLabel: 'Correo electronico',
+            				label: 'Correo electronico',
             				vtype: 'email',
             				allowBlank: false
             			}]),
             		modelValidators:comps.PAGO_TARJETA.FORMULARIO.validators,
         			modelFields	:	comps.PAGO_TARJETA.FORMULARIO.fields
             	}
-            });
+            ].concat(config.items || []);
             
 		}catch(e) {
 			Ice.generaExcepcion(e, paso);

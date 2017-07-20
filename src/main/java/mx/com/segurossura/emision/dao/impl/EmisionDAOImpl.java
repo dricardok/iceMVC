@@ -1621,7 +1621,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 
 
 	@Override
-	public List<Map<String, String>> obtenerMrecibo(String cdunieco, String cdramo, String estado, String nmpoliza,
+	public List<Map<String, String>> obtenerDatosConfirmacion(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem) throws Exception {
 		Map<String, Object> params = new LinkedHashMap<String, Object>();       
         params.put("pv_cdunieco_i", cdunieco);
@@ -1630,7 +1630,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_nmpoliza_i", nmpoliza);
         params.put("pv_nmsuplem_i", nmsuplem);
         logger.debug("-->"+params);
-		Map<String, Object> resultado = ejecutaSP(new GetMrecibo(getDataSource()), params);
+		Map<String, Object> resultado = ejecutaSP(new GetDatosConfirmacion(getDataSource()), params);
         List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
 		if(listaDatos==null||listaDatos.size()==0) {
 			throw new ApplicationException("Sin resultados");
@@ -1638,16 +1638,16 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		return listaDatos;
 	}
 	
-	protected class GetMrecibo extends StoredProcedure {
-        protected GetMrecibo (DataSource dataSource) {
-            super(dataSource, "P_GET_MRECIBO");           
+	protected class GetDatosConfirmacion extends StoredProcedure {
+        protected GetDatosConfirmacion (DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_GET_DATOSCONFIRMACION");           
             declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i"   , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
             String[] cols = new String[] { "cdunieco", "cdramo", "estado", "nmpoliza", "nmsuplem",
-            							   "nmrecibo"};
+            							   "nmrecibo", "cdtipsup"};
 			declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
