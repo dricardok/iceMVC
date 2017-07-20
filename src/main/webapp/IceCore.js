@@ -152,7 +152,8 @@ var Ice = (
                 movimientoTdocupol: 'documentos/movimientoTdocupol.action',
                 obtenerDocumento: 'documentos/obtenerDocumento.action',
                 verArchivo: 'documentos/verArchivo.action',
-                descargarArchivo: 'documentos/descargarArchivo.action'
+                descargarArchivo: 'documentos/descargarArchivo.action',
+                subirArchivo: 'documentos/subirArchivo.action'
             },
             mesacontrol:{
             	

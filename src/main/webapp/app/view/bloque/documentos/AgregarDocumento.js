@@ -4,6 +4,7 @@
 Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {   
         extend: 'Ice.view.componente.FormDosColumnasIce',
         xtype: 'agregardocumento',
+        controller: 'agregardocumento',
         /*requires: ['Ext.form.field.*'],*/
         
         config: {
@@ -28,12 +29,11 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
                 config.items = comps.DOCUMENTOS.FORMULARIO.items;
                 config.modelFields = comps.DOCUMENTOS.FORMULARIO.fields;
                 config.modelValidators = comps.DOCUMENTOS.FORMULARIO.validators;
+                config.reference = 'form',
                 config.buttons = [
                     {
                         text: 'Guardar',
-                        handler: function(){
-                            Ice.log('ruta',config.ruta);
-                        }
+                        handler: 'onGuardar'
                     },{
                         text: 'Cancelar',
                         handler: function(){
