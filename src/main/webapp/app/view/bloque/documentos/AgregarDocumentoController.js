@@ -24,7 +24,8 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumentoController', {
                 mascara: 'Subiendo archivo slip',
                 url: Ice.url.bloque.documentos.subirArchivo,
                 params: {
-                    'params.nombre': refs.cddocume.getValue() 
+                    'params.nombre': refs.cddocume.getValue(),
+                    'params.ruta': view.ruta
                 },
                 success: function (json) {
                     var paso2 = 'Subiendo slip';

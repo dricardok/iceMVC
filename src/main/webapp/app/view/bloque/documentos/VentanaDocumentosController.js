@@ -144,8 +144,6 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
             var data = me.getRowDataActionColumn(grid, rowIndex, colIndex);
             Ice.log('data actualizarDocumento',data);
             var ventanaNuevo = Ext.create('Ice.view.componente.VentanaIce',{
-                minWidth: 400,
-                minHeight: 300,
                 closeAction: 'destroy',
                 closable: false,
                 title: 'Agregar documento',
@@ -153,9 +151,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                 items: [
                     {
                         xtype: 'agregardocumento',
-                        ruta: data.ruta,
-                        minWidth: 390,
-                        minHeight: 290
+                        ruta: data.ruta
                     }
                 ]
             });
