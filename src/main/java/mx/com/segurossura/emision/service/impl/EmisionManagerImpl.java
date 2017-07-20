@@ -567,7 +567,7 @@ public class EmisionManagerImpl implements EmisionManager {
               		}
               		
               		documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpolizaEmitida, nmsolici, datosMrecibo.get("nmsuplem"), ntramite, new Date(),
-              				documento.getId(), documento.getNombre(), cdtipsub, exito ? Constantes.SI : Constantes.NO,
+              				documento.getId(), documentoRuta, cdtipsub, exito ? Constantes.SI : Constantes.NO,
               				cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, documento.getUrl(), path.toString(), documento.getTipo(), Constantes.INSERT_MODE);
               		
               		
