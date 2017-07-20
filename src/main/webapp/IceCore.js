@@ -1645,10 +1645,10 @@ var Ice = (
             for (var name in validatorsAplican) {
                 // si es float/int y paso con true
                 if ((fieldsTypeMap[name] === 'float' || fieldsTypeMap[name] === 'int')
-                    && validaciones[name] === true) {
+                    && validaciones[name] === true && Ext.isEmpty(valores2[name])) {
                     var arrValidators = validatorsAplican[name];
                     for (var i = 0; i < arrValidators.length; i++) {
-                        if (arrValidators[i].type === 'presence' && Ext.isEmpty(valores2[name])) {
+                        if (arrValidators[i].type === 'presence') {
                             validaciones[name] = 'Este campo es obligatorio';
                             break;
                         }
