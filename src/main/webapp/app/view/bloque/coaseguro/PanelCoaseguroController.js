@@ -107,8 +107,8 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
                                 var paso = 'Cambio dscia';
                                 try{
                                     if(dscia){
-                                        Ice.log('dscia',dscia);
-                                        Ice.query('[name=cdcia]',refs.formCia).setValue(value);
+                                        Ice.log('cdcia',refs.formCia.getReferences().cdcia);
+                                        refs.formCia.getReferences().cdcia.setValue(value);
                                     }
                                 } catch(e){
                                     Ice.logWarn(paso, e);
@@ -311,31 +311,33 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
         var paso = 'Iniciando funcion guardar coaseguro cedido',
             me = this,
             view = me.getView(),
-            refs = view.getReferences(),
-            grid = refs.grid;
+            refs = view.getReferences();
         try{
             if(Ext.manifest.toolkit === 'classic'){
                 Ice.log('removeAt', rowIndex);
-                
+                refs.grid.getStore().removeAt(rowIndex);
             } else {
                 var cell = grid.getParent(),
                     record = cell.getRecord();
-                Ice.log('removeAt',record);
+                refs.grid.getStore().remove(record);
             }
-            grid.getStore().removeAt(rowIndex);
         } catch(e) {
             Ice.generaExcepcion(e);
         }
     },
 
     getRowDataActionColumn: function(grid, rowIndex, colIndex){
-        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.getDataRowActionColumn',grid,'rowIndex',rowIndex,'colIndex',colIndex);
-        var store = grid.getStore(),
+        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.getDataRowActionColumn grid',grid,'rowIndex',rowIndex,'colIndex',colIndex);
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
             data;
         try{
             if(Ext.manifest.toolkit === 'classic'){
+                var store = grid.getStore();
                 data = store.getAt(rowIndex).getData();              
             } else {
+                Ice.log('grid parent',grid.getParent());
                 var cell = grid.getParent(),
                     record = cell.getRecord(),
                     data = record.getData();

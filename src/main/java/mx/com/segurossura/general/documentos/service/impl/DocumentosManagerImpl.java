@@ -32,12 +32,12 @@ public class DocumentosManagerImpl implements DocumentosManager {
 
     @Override
     public List<Map<String, String>> obtenerDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, 
-            String ntramite, String cdsisrol, String dsdocume, long start, long limit) throws Exception {
+            String ntramite, String cdsisrol, String dsdocume, String cdtipdoc, long start, long limit) throws Exception {
         String paso = "";
         List<Map<String, String>> lista = new ArrayList<Map<String, String>>();
         try{
             paso = "Obteniendo lista documentos";
-            lista = documentosDAO.obtenerDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, ntramite, cdsisrol, dsdocume, start, limit);
+            lista = documentosDAO.obtenerDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, ntramite, cdsisrol, dsdocume, cdtipdoc, start, limit);
         } catch(Exception ex){
             Utils.generaExcepcion(ex, paso);
         }

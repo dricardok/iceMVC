@@ -16,6 +16,8 @@ Ext.define('Ice.view.componente.PanelIce', {
             if ((config.items || []).length > 0) {
                 Ice.agregarClases(config.items, ['ice-panel-item', 'ice-panel-item-classic']);
             }
+
+            Ice.convertirBotones(config.buttons);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

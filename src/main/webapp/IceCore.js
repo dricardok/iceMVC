@@ -29,12 +29,15 @@ var Ice = (
                     classic: 400,
                     modern: 300
                 }
+            },
+            boton: {
+                fontSize: '0.7em'
             }
         },
     
-	    roles:{
-			 AGENTE:'AGENTE'
-		 }
+	    roles: {
+            AGENTE: 'AGENTE'
+		}
     },
     
     /**
@@ -77,7 +80,9 @@ var Ice = (
             tarificarPlanes: 'emision/generarTarificacionPlanes.action',
             tarificarPlan: 'emision/generarTarificacionPlan.action',
         	obtenerTarifaPlanes: 'emision/obtenerTarifaMultipleTemp.action',
-            obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action'
+        	obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action',
+        	obtieneTvalopol: 'emision/obtieneTvalopol.action',
+        	realizarPago: 'emision/realizarPago.action'
          },
          
         bloque: {
@@ -1257,7 +1262,21 @@ var Ice = (
             // text
             if (config.label) {
                 column.text = config.label
-            }        
+            }
+
+            // renderer para numeros
+            if (config.tipocampo === 'N' || config.tipocampo === 'P') {
+                column.renderer = config.renderer || function (v) {
+                    if (Ext.isNumber(v)) {
+                        var format = "000,000";
+                        if (String(v).indexOf('.') !== -1) {
+                            format = format + '.00';
+                        }
+                        v = Ext.util.Format.number(v, format);
+                    }
+                    return v;
+                };
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -1585,6 +1604,7 @@ var Ice = (
 
             var refs = form.getReferences(),
                 valores = form.getValues() || {},
+                valores2 = form.getValues() || {},
                 fields = form.getModelFields() || [],
                 validators = form.getModelValidators() || {},
                 modelName = Ext.id(),
@@ -1614,6 +1634,28 @@ var Ice = (
             });
 
             var validaciones = Ext.create(modelName, valores).getValidation().getData();
+
+            // los campos tipo float no validan correctamente si el campo es obligatorio porque lo transforma a 0
+            // en el modelo. Con este bloque verificamos que si el campo es validado, el getValues()[name] no sea empty
+            var fieldsTypeMap = {};
+            for (var i = 0; i < fields.length; i++) {
+                fieldsTypeMap[fields[i].name] = fields[i].type;
+            }
+
+            for (var name in validatorsAplican) {
+                // si es float/int y paso con true
+                if ((fieldsTypeMap[name] === 'float' || fieldsTypeMap[name] === 'int')
+                    && validaciones[name] === true && Ext.isEmpty(valores2[name])) {
+                    var arrValidators = validatorsAplican[name];
+                    for (var i = 0; i < arrValidators.length; i++) {
+                        if (arrValidators[i].type === 'presence') {
+                            validaciones[name] = 'Este campo es obligatorio';
+                            break;
+                        }
+                    }
+                }
+            }
+            // fin de validacion de obligatorio para float
             
             Ice.log('Ice.obtenerErrores validaciones:', validaciones);
             
@@ -1935,5 +1977,41 @@ var Ice = (
 
     modern: function () {
         return Ext.manifest.toolkit !== 'classic';
+    },
+
+    convertirBotones: function (botones) {
+        Ice.log('Ice.convertirBotones botones:', botones);
+        var paso = 'Convirtiendo botones';
+        try {
+            if ((botones || []).length === 0){
+                return;
+            }
+            for (var i = 0; i < botones.length; i++) {
+                var boton = botones[i];
+                
+                // ignora: null, undefined, '->' y []
+                if (!boton || typeof boton !== 'object' || typeof boton.length === 'number') {
+                    continue;
+                }
+
+                if (!(boton.iconCls || (boton.getIconCls && boton.getIconCls()))) { // si no hay icono pongo bug
+                    boton.iconCls = 'x-fa fa-bug';
+                    boton.setIconCls && boton.setIconCls('x-fa fa-bug');
+                }
+
+                if (Ice.modern()) {
+                    if (boton.text || (boton.getText && boton.getText())) { // si tengo texto paso el icono arriba
+                        boton.iconAlign = 'top';
+                        boton.setIconAlign && boton.setIconAlign('top');
+                        var text = '<span style="font-size: ' + Ice.constantes.componente.boton.fontSize + ';">'
+                            + (boton.text || (boton.getText && boton.getText())) + '</span>';
+                        boton.text = text;
+                        boton.setText && boton.setText(text);
+                    }
+                }
+            }
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
     }
 });

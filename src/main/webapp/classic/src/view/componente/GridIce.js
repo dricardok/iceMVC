@@ -5,13 +5,15 @@ Ext.define('Ice.view.componente.GridIce', {
 	// config ext
 	maxHeight: Ice.constantes.componente.grid.altura.classic,
 	scrollable: true,
-	cls: ['ice-container', 'ice-container-classic', 'ice-panel', 'ice-panel-classic', 'ice-grid', 'ice-grid-classic'],
     
     constructor: function (config) {
 		Ice.log('Ice.view.componente.GridIce.constructor config:', config);
     	var me = this,
 		    paso = 'Construyendo grid';
 		try {
+			Ice.agregarClases(config, ['ice-container', 'ice-container-classic',
+			    'ice-panel', 'ice-panel-classic', 'ice-grid', 'ice-grid-classic']);
+
 			// se dividen y agregan los actionColumns
 			if ((config.actionColumns || []).length > 0) {
 				var cols = [];
@@ -33,6 +35,7 @@ Ext.define('Ice.view.componente.GridIce', {
 			}
 
 			// se suben los botones
+			Ice.convertirBotones(config.buttons);
 			if ((config.buttons || []).length > 0) {
 				config.tbar = ['->'].concat(config.tbar || []).concat(config.buttons);
 			}

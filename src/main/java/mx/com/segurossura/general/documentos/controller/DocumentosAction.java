@@ -1,10 +1,11 @@
 package mx.com.segurossura.general.documentos.controller;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.monitor.FileAlterationListener;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -13,16 +14,14 @@ import org.apache.struts2.convention.annotation.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.biosnettcs.core.HttpUtil;
+import com.biosnettcs.core.Constantes;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 
-import mx.com.royalsun.alea.client.DocumentoAPI;
-import mx.com.royalsun.alea.commons.bean.DocumentoContext;
-import mx.com.segurossura.emision.controller.ImpresionAction;
 import mx.com.segurossura.general.documentos.model.Archivo;
 import mx.com.segurossura.general.documentos.model.TipoArchivo;
 import mx.com.segurossura.general.documentos.service.DocumentosManager;
@@ -48,6 +47,11 @@ public class DocumentosAction extends PrincipalCoreAction {
     private long start;
     private long limit;
     private long totalCount;
+    
+    @Value("${content.path}")
+    private String contentPath;
+    
+    private File file;
     
     @Autowired
     private DocumentosManager documentosManager;
@@ -81,7 +85,8 @@ public class DocumentosAction extends PrincipalCoreAction {
             String ntramite = params.get("ntramite");
             String cdsisrol = params.get("cdsisrol");
             String dsdocume = params.get("dsdocume");
-            datos = documentosManager.obtenerDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, ntramite, cdsisrol, dsdocume, start, limit);
+            String cdtipdoc = params.get("cdtipdoc");
+            datos = documentosManager.obtenerDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, ntramite, cdsisrol, dsdocume, cdtipdoc, start, limit);
             if(!datos.isEmpty()){
                 totalCount = Integer.parseInt(datos.get(0).get("total"));
             }
@@ -221,8 +226,73 @@ public class DocumentosAction extends PrincipalCoreAction {
         }
         return SUCCESS;
     }
+    
+    
+    @Action(
+            value = "subirArchivo", 
+            results = {
+                @Result(name = "success", type = "json") 
+            }
+    )
+	public String subirArchivo() {
+    	
+		logger.debug(Utils.log(
+				"\n##########################", 
+				"\n###### subirArchivo ######", 
+				"\n###### file   = ", file, 
+				"\n###### params = ", params));
 
-    public boolean isSuccess() {
+		try {
+			Utils.validate(params, "No se recibio informacion del archivo");
+			Utils.validate(file, "No se recibio el archivo");
+			String ruta   = StringUtils.isNotBlank(params.get("ruta")) ? params.get("ruta")+Constantes.SEPARADOR_ARCHIVO : "";
+			String nombre = params.get("nombre");
+			if(StringUtils.isNotBlank(ruta)) {
+				logger.info("ruta carpeta:{}", ruta);
+				File carpeta = new File(ruta);
+				if (!carpeta.exists()) {
+					logger.info("No existe la carpeta::: " + carpeta.getAbsolutePath());
+					carpeta.mkdir();
+					if (carpeta.exists()) {
+						logger.info("Carpeta creada: {}", carpeta.getAbsolutePath());
+					} else {
+						logger.info("Carpeta NO creada: {}", carpeta.getAbsolutePath());
+					}
+				} else {
+					logger.info("Ya existe la carpeta {} " + ruta);
+				}
+			}
+			
+
+			String rutaCompletaArchivo = new StringBuilder(ruta).append(nombre).toString();
+			File temp = new File(rutaCompletaArchivo);
+			if(temp.exists()) {
+			    temp.delete();
+			}
+			
+            try {
+            	FileUtils.copyFile(file, new File(rutaCompletaArchivo));
+            	logger.info("Se creo el archivo {}", rutaCompletaArchivo);
+			} catch (Exception e) {
+				logger.info("NO se creo el archivo {}", rutaCompletaArchivo);
+			}
+		} catch (Exception e) {
+			logger.error("error al guardar el archivo", e);
+		}
+		logger.debug(Utils.log("\n###### subirArchivo ######", "\n##########################"));
+		return SUCCESS;
+	}
+    
+
+    public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public boolean isSuccess() {
         return success;
     }
 
