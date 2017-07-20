@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -47,7 +48,7 @@ public class DocumentosAction extends PrincipalCoreAction {
     private long limit;
     private long totalCount;
     
-    @Value("content.path")
+    @Value("${content.path}")
     private String contentPath;
     
     private File file;
@@ -246,9 +247,9 @@ public class DocumentosAction extends PrincipalCoreAction {
 			Utils.validate(file, "No se recibio el archivo");
 			String nombre = params.get("nombre");
 
-			String rutaCarpeta = new StringBuilder(contentPath).append(Constantes.SEPARADOR_ARCHIVO).append("ice")
-					.append(Constantes.SEPARADOR_ARCHIVO).append(params.get("ruta")).toString();
-
+			String rutaCarpeta = params.get("ruta");
+			
+			logger.info("rutaCarpeta:{}", rutaCarpeta);
 			File carpeta = new File(rutaCarpeta);
 			if (!carpeta.exists()) {
 				logger.info("No existe la carpeta::: " + carpeta.getAbsolutePath());
@@ -259,14 +260,21 @@ public class DocumentosAction extends PrincipalCoreAction {
 					logger.info("Carpeta NO creada: {}", carpeta.getAbsolutePath());
 				}
 			} else {
-				logger.debug("existe la carpeta   ::: " + rutaCarpeta);
+				logger.info("Ya existe la carpeta {} " + rutaCarpeta);
 			}
 
-			File file = new File(new StringBuilder(rutaCarpeta).append(Constantes.SEPARADOR_ARCHIVO).append(nombre).toString());
-			if (file.createNewFile()) {
-				success = true;
+			String rutaCompletaArchivo = new StringBuilder(rutaCarpeta).append(Constantes.SEPARADOR_ARCHIVO).append(nombre).toString();
+			File temp = new File(rutaCompletaArchivo);
+			if(temp.exists()) {
+			    temp.delete();
 			}
-
+			
+            try {
+            	FileUtils.copyFile(file, new File(rutaCompletaArchivo));
+            	logger.info("Se creo el archivo {}", rutaCompletaArchivo);
+			} catch (Exception e) {
+				logger.info("NO se creo el archivo {}", rutaCompletaArchivo);
+			}
 		} catch (Exception e) {
 			logger.error("error al guardar el archivo", e);
 		}
