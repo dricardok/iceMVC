@@ -775,4 +775,11 @@ $panel-anchor-width: dynamic($panel-anchor-height * 2.33);
     );
 }
 
-
+@mixin panel-light-ui{
+        @include panel-ui(
+       $ui: 'ice-cat-framed',    
+       $body-background-color: #DEEBF4
+        
+        
+    );
+}
