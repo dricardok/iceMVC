@@ -11,6 +11,7 @@ Ext.define('Ice.view.componente.VentanaIce', {
             paso = 'Construyendo ventana';
         try {
             Ice.agregarClases(config, ['ice-ventana', 'ice-ventana-classic']);
+            Ice.convertirBotones(config.buttons);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -19,6 +20,7 @@ Ext.define('Ice.view.componente.VentanaIce', {
     
     mostrar: function () {
         this.show();
+        return this;
     },
     
     cerrar:	function(){

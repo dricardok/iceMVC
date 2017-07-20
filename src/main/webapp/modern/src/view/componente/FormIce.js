@@ -69,10 +69,12 @@ Ext.define('Ice.view.componente.FormIce', {
 			me.callParent(arguments);
 
 			// botones
+			Ice.convertirBotones(me.getButtons());
             if ((me.getButtons() || []).length > 0) {
                 me.add({
                     xtype: 'toolbar',
                     docked: 'bottom',
+                    padding: 0,
                     items: ['->'].concat(me.getButtons())
                 });
             }

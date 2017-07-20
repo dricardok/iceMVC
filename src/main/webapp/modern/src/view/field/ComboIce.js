@@ -22,7 +22,7 @@ Ext.define('Ice.view.field.ComboIce', {
             paso = 'Instanciando select modern';
             
         try {
-            var store = {
+            var store = configIce.store || {
                 autoLoad: true,
                 fields: ['key', 'value', 'aux', 'aux2', 'aux3', 'aux4', 'aux5'],
                 proxy: {
