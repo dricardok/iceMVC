@@ -7,19 +7,26 @@ Ext.define('Ice.view.componente.GridIce', {
 		'Ext.grid.cell.Widget'
 	],
 
-	// config ice
+	// config ext
 	height: Ice.constantes.componente.grid.altura.modern,
 	scrollable: {
 		x: true,
 		y: true
 	},
-	userCls: ['ice-container', 'ice-container-modern', 'ice-panel', 'ice-panel-modern', 'ice-grid', 'ice-grid-modern'],
+
+	// config no ext
+	config: {
+		buttons: []
+	},
     
     constructor: function (config) {
 		Ice.log('Ice.view.componente.GridIce.constructor config:', config);
     	var me = this,
     		paso = 'Construyendo grid';
     	try {
+			Ice.agregarClases(config, ['ice-container', 'ice-container-modern',
+			    'ice-panel', 'ice-panel-modern', 'ice-grid', 'ice-grid-modern']);
+
 			// se dividen y agregan los actionColumns
 			if ((config.actionColumns || []).length > 0) {
 				var cols = [];
@@ -47,16 +54,6 @@ Ext.define('Ice.view.componente.GridIce', {
 				}
 				config.columns = (config.columns || []).concat(cols);
 			}
-
-			// botones
-			if ((config.buttons || []).length > 0) {
-				config.items = config.items || [];
-				config.items.push({
-					xtype: 'toolbar',
-					docked: 'top',
-					items: ['->'].concat(config.buttons)
-				});
-			}
     	} catch (e) {
     		Ice.generaExcepcion(e,paso);
     	}
@@ -74,6 +71,18 @@ Ext.define('Ice.view.componente.GridIce', {
 			////// antes de callParent //////
 			me.callParent(arguments);
 			////// despues de callParent //////
+
+			// botones
+			Ice.convertirBotones(me.getButtons());
+            if ((me.getButtons() || []).length > 0) {
+                me.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    padding: 0,
+                    items: ['->'].concat(me.getButtons())
+                });
+				me.setHeight(Ice.constantes.componente.grid.altura.modern + 65); // se aumenta por la barra
+            }
 
 			// el evento itemtap dispara itemclick para normalizarlo con classic
 			me.on({

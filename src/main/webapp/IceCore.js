@@ -29,12 +29,15 @@ var Ice = (
                     classic: 400,
                     modern: 300
                 }
+            },
+            boton: {
+                fontSize: '0.7em'
             }
         },
     
-	    roles:{
-			 AGENTE:'AGENTE'
-		 }
+	    roles: {
+            AGENTE: 'AGENTE'
+		}
     },
     
     /**
@@ -1257,7 +1260,21 @@ var Ice = (
             // text
             if (config.label) {
                 column.text = config.label
-            }        
+            }
+
+            // renderer para numeros
+            if (config.tipocampo === 'N' || config.tipocampo === 'P') {
+                column.renderer = config.renderer || function (v) {
+                    if (Ext.isNumber(v)) {
+                        var format = "000,000";
+                        if (String(v).indexOf('.') !== -1) {
+                            format = format + '.00';
+                        }
+                        v = Ext.util.Format.number(v, format);
+                    }
+                    return v;
+                };
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -1935,5 +1952,41 @@ var Ice = (
 
     modern: function () {
         return Ext.manifest.toolkit !== 'classic';
+    },
+
+    convertirBotones: function (botones) {
+        Ice.log('Ice.convertirBotones botones:', botones);
+        var paso = 'Convirtiendo botones';
+        try {
+            if ((botones || []).length === 0){
+                return;
+            }
+            for (var i = 0; i < botones.length; i++) {
+                var boton = botones[i];
+                
+                // ignora: null, undefined, '->' y []
+                if (!boton || typeof boton !== 'object' || typeof boton.length === 'number') {
+                    continue;
+                }
+
+                if (!(boton.iconCls || (boton.getIconCls && boton.getIconCls()))) { // si no hay icono pongo bug
+                    boton.iconCls = 'x-fa fa-bug';
+                    boton.setIconCls && boton.setIconCls('x-fa fa-bug');
+                }
+
+                if (Ice.modern()) {
+                    if (boton.text || (boton.getText && boton.getText())) { // si tengo texto paso el icono arriba
+                        boton.iconAlign = 'top';
+                        boton.setIconAlign && boton.setIconAlign('top');
+                        var text = '<span style="font-size: ' + Ice.constantes.componente.boton.fontSize + ';">'
+                            + (boton.text || (boton.getText && boton.getText())) + '</span>';
+                        boton.text = text;
+                        boton.setText && boton.setText(text);
+                    }
+                }
+            }
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
     }
 });

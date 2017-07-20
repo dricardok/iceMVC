@@ -48,6 +48,8 @@ Ext.define('Ice.view.componente.FormIce', {
                 config.tbar = null;
                 delete config.tbar;
             }
+
+            Ice.convertirBotones(config.buttons);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
