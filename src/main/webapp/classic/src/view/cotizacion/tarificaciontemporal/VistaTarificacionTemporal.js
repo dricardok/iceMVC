@@ -76,6 +76,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 				remoteSort: false,
 				proxy: {					
 					type: 'ajax',
+					timeout: 1000*60*5,
 					url: Ice.url.emision.obtenerTarifaPlanes,
 					extraParams: Ice.convertirAParams({
 						cdunieco: config.cdunieco,

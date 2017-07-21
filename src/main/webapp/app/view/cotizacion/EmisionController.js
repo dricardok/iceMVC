@@ -399,6 +399,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
         try {
             Ice.request({
                 mascara: paso,
+                timeout: 1000*60*5,
                 url: Ice.url.emision.emitir,
                 params: Ice.convertirAParams({
                     cdunieco: view.getCdunieco(),
@@ -436,6 +437,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
     		
     		Ice.request({
     			mascara: paso,
+    			timeout: 1000*60*5,
     			url: Ice.url.emision.obtieneTvalopol,
     			params: reqParams,
     			failure: (params && params.failure) || null,
@@ -515,6 +517,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 			
 			Ice.request({
 	            mascara: paso,
+	            timeout: 1000*60*5,
 	            url: Ice.url.emision.realizarPago,
 	            params: Ice.convertirAParams({
 	                cdunieco: view.getCdunieco(),
