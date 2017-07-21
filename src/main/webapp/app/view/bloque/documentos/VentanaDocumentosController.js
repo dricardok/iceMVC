@@ -154,7 +154,8 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                 items: [
                     {
                         xtype: 'agregardocumento',
-                        ruta: data.ruta
+                        ruta: data.ruta,
+                        nombre: data.cddocume
                     }
                 ]
             });

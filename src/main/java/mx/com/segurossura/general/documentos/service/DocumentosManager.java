@@ -28,5 +28,26 @@ public interface DocumentosManager {
     
     public void movimientoTdocupol() throws Exception;
     
+    /**
+     * Obtiene el documento de la liga
+     * 
+     * @param url
+     * @param contentType
+     * @param filename
+     * @return
+     * @throws Exception
+     */
     public Archivo obtenerDocumento(String url, String contentType, String filename) throws Exception;
+
+    /**
+     * Se recupera el archivo de ruta del servidor
+     * 
+     * @param url
+     * @param ruta
+     * @param contentType
+     * @param filename
+     * @return
+     * @throws Exception
+     */
+    public Archivo obtenerDocumento(String url, String ruta, String contentType, String filename) throws Exception;
 }

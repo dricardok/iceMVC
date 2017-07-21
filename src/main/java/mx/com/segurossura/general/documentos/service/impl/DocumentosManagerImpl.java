@@ -1,17 +1,18 @@
 package mx.com.segurossura.general.documentos.service.impl;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.biosnettcs.core.FTPSUtils;
 import com.biosnettcs.core.HttpUtil;
 import com.biosnettcs.core.Utils;
 
@@ -67,10 +68,46 @@ public class DocumentosManagerImpl implements DocumentosManager {
             paso = "Obteniendo documento";
             archivo.setContentType(contentType);
             if(StringUtils.isNotBlank(url) && StringUtils.isNotBlank(contentType)) {
-                archivo.setFileInputStream(getFileInputStream(url, filename));
+                archivo.setFileInputStream(getFileInputStream(url, null, filename));
             } else {
                 // Se asigna el fileInputStream:
-                archivo.setFileInputStream(getFileInputStream(url, filename));
+                archivo.setFileInputStream(getFileInputStream(url, null, filename));
+                
+                // Se asigna el contentType:
+                if(contentType == null){
+                    archivo.setContentType(obtieneContentType(filename));
+                }
+            }
+            
+            if(StringUtils.isNotBlank(filename)){
+                archivo.setFilename(filename);
+            }
+        } catch(Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
+        return archivo;
+    }
+    
+    @Override
+    public Archivo obtenerDocumento(String url, String ruta, String contentType, String filename) throws Exception {
+        logger.debug(StringUtils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@"
+               ,"\n@@@@@@ obtenerDocumento @@@@@@"
+               ,"\n@@@@@@ url", url
+               ,"\n@@@@@@ ruta", ruta
+               ,"\n@@@@@@ contentType", contentType
+               ,"\n@@@@@@ filename", filename
+               ));
+        Archivo archivo = new Archivo();
+        String paso = "";
+        try{
+            paso = "Obteniendo documento";
+            archivo.setContentType(contentType);
+            if(StringUtils.isNotBlank(url) && StringUtils.isNotBlank(contentType)) {
+                archivo.setFileInputStream(getFileInputStream(url, ruta, filename));
+            } else {
+                // Se asigna el fileInputStream:
+                archivo.setFileInputStream(getFileInputStream(url, ruta, filename));
                 
                 // Se asigna el contentType:
                 if(contentType == null){
@@ -118,12 +155,16 @@ public class DocumentosManagerImpl implements DocumentosManager {
      * @return
      * @throws Exception
      */
-    private InputStream getFileInputStream(String url, String filename) throws Exception{
+    private InputStream getFileInputStream(String url, String ruta, String filename) throws Exception{
         InputStream fileInputStream = null;
         try{
-            fileInputStream = HttpUtil.obtenInputStream(Utils.join(url));
-        } catch (Exception ex){
-            throw new Exception("Error al obtener archivo");
+            if(StringUtils.isBlank(ruta)){
+                fileInputStream = HttpUtil.obtenInputStream(url);                
+            } else {
+                fileInputStream = FileUtils.openInputStream(new File(Utils.join(ruta, filename)));                
+            }
+        } catch (Exception ex) {
+            throw new Exception(ex.getMessage()+" No se pudo recuperar el archivo");
         }
         return fileInputStream;
     }
