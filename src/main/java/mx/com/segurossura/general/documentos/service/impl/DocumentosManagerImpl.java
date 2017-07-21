@@ -65,6 +65,7 @@ public class DocumentosManagerImpl implements DocumentosManager {
         String paso = "";
         try{
             paso = "Obteniendo documento";
+            archivo.setContentType(contentType);
             if(StringUtils.isNotBlank(url) && StringUtils.isNotBlank(contentType)) {
                 archivo.setFileInputStream(getFileInputStream(url, filename));
             } else {
@@ -72,7 +73,9 @@ public class DocumentosManagerImpl implements DocumentosManager {
                 archivo.setFileInputStream(getFileInputStream(url, filename));
                 
                 // Se asigna el contentType:
-                archivo.setContentType(obtieneContentType(filename));
+                if(contentType == null){
+                    archivo.setContentType(obtieneContentType(filename));
+                }
             }
             
             if(StringUtils.isNotBlank(filename)){
@@ -118,7 +121,7 @@ public class DocumentosManagerImpl implements DocumentosManager {
     private InputStream getFileInputStream(String url, String filename) throws Exception{
         InputStream fileInputStream = null;
         try{
-            fileInputStream = HttpUtil.obtenInputStream(Utils.join(url,filename));
+            fileInputStream = HttpUtil.obtenInputStream(Utils.join(url));
         } catch (Exception ex){
             throw new Exception("Error al obtener archivo");
         }

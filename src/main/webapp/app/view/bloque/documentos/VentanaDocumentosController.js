@@ -108,7 +108,8 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                                 standardSubmit: true,
                                 target: '_blank',
                                 params:{
-                                    'params.url': data.ruta,
+                                    'params.url': data.url,
+                                    'params.ruta': data.ruta,
                                     'params.cddocume': data.cddocume,
                                     'params.cdtipdoc': data.cdtipdoc
                                 }
@@ -121,7 +122,8 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                                 standardSubmit: true,
                                 target: '_blank',
                                 params:{
-                                    'params.url': data.ruta,
+                                    'params.url': data.url,
+                                    'params.ruta': data.ruta,
                                     'params.cddocume': data.cddocume,
                                     'params.cdtipdoc': data.cdtipdoc
                                 }
