@@ -265,7 +265,7 @@ public class DocumentosAction extends PrincipalCoreAction {
 			Utils.validate(file, "No se recibio el archivo");
 			String ruta   = StringUtils.isNotBlank(params.get("ruta")) ? params.get("ruta")+Constantes.SEPARADOR_ARCHIVO : "";
 			String nombre = params.get("nombre");
-			nombre = nombre + TipoArchivo.RTF.getExtension();
+//			nombre = nombre + TipoArchivo.RTF.getExtension();
 			if(StringUtils.isNotBlank(ruta)) {
 				logger.info("ruta carpeta:{}", ruta);
 				File carpeta = new File(ruta);
