@@ -22,5 +22,11 @@ Ext.define('Ice.view.field.TextfieldIce', {
         
         Ext.apply(me, configTra);
         this.callParent(arguments);
+
+        me.on({
+            change: function (me, newValue) {
+                Ice.eventManager.change(me, newValue);
+            }
+        });
     }
 });
