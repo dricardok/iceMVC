@@ -620,6 +620,8 @@ public class EmisionAction extends PrincipalCoreAction {
     public String generarTarificacionPlan() {
     	logger.debug("Inicio generarTarificacion...");
         try {
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+            
             Utils.validate(params, "No se recibieron datos");
             String cdunieco = params.get("cdunieco");
             String cdramo =   params.get("cdramo");
@@ -634,7 +636,8 @@ public class EmisionAction extends PrincipalCoreAction {
             Utils.validate(nmpoliza, "Falta nmpoliza");
             Utils.validate(cdperpag, "Falta cdperpag");
             
-            Map<String, Object> resultados = emisionManager.generarTarificacionPlan(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdperpag);
+            Map<String, Object> resultados = emisionManager.generarTarificacionPlan(cdunieco, cdramo, estado, nmpoliza, nmsituac,
+                    cdperpag, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             logger.debug("resultado Tarificacion: {}", resultados);
             
             success = true;
@@ -870,6 +873,33 @@ public class EmisionAction extends PrincipalCoreAction {
     	    message = Utils.manejaExcepcion(ex);
     	}
     	return SUCCESS;
+    }
+    
+    @Action(        
+            value = "validarCargaCotizacion", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )   
+    public String validarCargaCotizacion () {
+        logger.debug(Utils.log("\n###### validarCargaCotizacion params: ", params));
+        try {
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+            Utils.validate(params, "No hay datos para validar carga de cotizaci\u00f3n");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   nmpoliza = params.get("nmpoliza"),
+                   cdusuari = usuario.getCdusuari(),
+                   cdsisrol = usuario.getRolActivo().getCdsisrol();
+            Utils.validate(cdunieco , "Falta cdunieco",
+                           cdramo   , "Falta cdramo",
+                           nmpoliza , "Falta nmpoliza");
+            params.putAll(emisionManager.validarCargaCotizacion(cdunieco, cdramo, nmpoliza, cdusuari, cdsisrol));
+            success = true;
+        } catch (Exception e) {
+            message = Utils.manejaExcepcion(e);
+        }
+        return SUCCESS;
     }
 	
 	public Map<String, String> getParams() {

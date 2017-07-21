@@ -408,11 +408,46 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     nmpoliza: view.getNmpoliza()
                 }),
                 success: function (action) {
-                    Ice.mensajeCorrecto({
-                        titulo: 'P\u00f3liza emitida',
-                        mensaje: 'Se emiti\u00f3 la p\u00f3liza ' + action.params.nmpoliza,
-                        callback: Ice.index
+                    var ventana = Ext.create('Ice.view.componente.VentanaIce',{
+                        platformConfig: {
+                            desktop: {
+                                width: 400
+                            }
+                        },
+                        modal: true,
+                        title: 'Aviso',
+                        html: '<div style="padding:10px;">Se emiti&oacute; la p&oacute;liza ' + action.params.nmpoliza + '</div>',
+                        buttons: [
+                            {
+                                text: 'Documentos',
+                                iconCls: 'x-fa fa-files-o',
+                                handler: function(me){
+                                    var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos',{
+                                        cdunieco: view.getCdunieco(),
+                                        cdramo: view.getCdramo(),
+                                        estado: 'M',
+                                        nmpoliza: action.params.nmpoliza
+                                    });
+                                    ventanaDocs.mostrar();
+                                    if (Ice.classic()) {
+                                        Ext.defer(function () {
+                                            ventanaDocs.setCollapsed(true);
+                                            ventanaDocs.showAt(Ext.getBody().getWidth() - (650 + 40), 40);
+                                        }, 600);
+                                    }
+                                    me.disabled();
+                                },
+                            },{
+                                text: 'Inicio',
+                                iconCls: 'x-fa fa-home',
+                                handler: function(me){
+                                    me.up('ventanaice').cerrar();
+                                    Ice.index();
+                                } 
+                            }
+                        ]
                     });
+                    ventana.mostrar();
                 }
             });
         } catch (e) {

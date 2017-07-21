@@ -81,7 +81,7 @@ public class DocumentosAction extends PrincipalCoreAction {
             Utils.validate(cdramo, "No se recibio el producto");
             Utils.validate(estado, "No se recibio el estado");
             Utils.validate(nmpoliza, "No se recibio el numero de póliza");
-            Utils.validate(nmsuplem, "No se recibio el numero de suplemento");
+//            Utils.validate(nmsuplem, "No se recibio el numero de suplemento");
             String ntramite = params.get("ntramite");
             String cdsisrol = params.get("cdsisrol");
             String dsdocume = params.get("dsdocume");
@@ -168,23 +168,35 @@ public class DocumentosAction extends PrincipalCoreAction {
         try{
             Utils.validate(params, "No se recibieron parametros");
             String url = params.get("url");
+            String ruta = params.get("ruta");
             Utils.validate(url, "No se recibio la url");
             String nombre = params.get("cddocume");
             String cdtipdoc = params.get("cdtipdoc");
             contentType = TipoArchivo.PDF.getContentType();
+            Archivo archivo = new Archivo();
             if(StringUtils.isNotBlank(cdtipdoc)){
-                if(cdtipdoc.toLowerCase().equals("slip")){
+                if(cdtipdoc.toUpperCase().equals("SLIP")){
                     contentType = TipoArchivo.RTF.getContentType();
+                    nombre = Utils.join(nombre,TipoArchivo.RTF.getExtension());
+                    archivo = documentosManager.obtenerDocumento(url, ruta, contentType, nombre);
                 }
+            } else {
+                archivo = documentosManager.obtenerDocumento(url, contentType, nombre);                
             }
-            Archivo archivo = documentosManager.obtenerDocumento(url, contentType, nombre);
             fileInputStream = archivo.getFileInputStream();
             filename = archivo.getFilename();
+            contentType = archivo.getContentType();
             success = true;
         } catch(Exception ex){
             success = false;
             mensaje = Utils.manejaExcepcion(ex);
         }
+        logger.debug(StringUtils.join(
+                "\n###### fileInputStream", fileInputStream
+               ,"\n###### filename", filename
+               ,"\n###### contentType", contentType
+               ,"\n###### descargarArchivo ######"
+               ));
         return SUCCESS;
     }
     
@@ -253,6 +265,7 @@ public class DocumentosAction extends PrincipalCoreAction {
 			Utils.validate(file, "No se recibio el archivo");
 			String ruta   = StringUtils.isNotBlank(params.get("ruta")) ? params.get("ruta")+Constantes.SEPARADOR_ARCHIVO : "";
 			String nombre = params.get("nombre");
+			nombre = nombre + TipoArchivo.RTF.getExtension();
 			if(StringUtils.isNotBlank(ruta)) {
 				logger.info("ruta carpeta:{}", ruta);
 				File carpeta = new File(ruta);

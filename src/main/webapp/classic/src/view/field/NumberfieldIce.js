@@ -70,7 +70,7 @@ Ext.define('Ice.view.field.NumberfieldIce', {
     /**
      * @cfg {Boolean} useThousandSeparator
      */
-    useThousandSeparator: true,
+    useThousandSeparator: false,
     
     /**
      * @inheritdoc

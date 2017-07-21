@@ -15,14 +15,18 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
         	    '<div class="plan_pago">',
                 '<table class="plan_pago_base shadow_card" style="width:250px; min-height:300px;">',
                     '<tr>',
-                        '<td class="plan_pago_monto">${total}<p class="moneda">Pesos</p>',
-                        '<tpl if="cdperpag!=12"><p class="rec_subsecuente">Recibo Subsecuente</p></td></tpl>',
+                        '<td class="plan_pago_monto">{total}<p class="moneda">Pesos</p>',
+                            '<tpl if="cdperpag!=12">',
+							    '<p class="rec_subsecuente">Recibo Subsecuente</p>',
+								'<p class="plan_pago_subsecuente">{subsecuentes}</p>',
+						    '</tpl>',
+						'</td>',
                     '</tr>',
                     '<tr style="background-color:#fff;">',
                         '<td style="text-align:center;">',
-                        '<tpl if="cdperpag==1"><p class="periocidad">Mensual</p><p>Primer Recibo</p><p class="monto_02">${primer_recibo}</p>',
-                        '<tpl elseif="cdperpag==3"><p class="periocidad">Trimestral</p><p>Primer Recibo</p><p class="monto_02">${primer_recibo}</p',
-                        '<tpl elseif="cdperpag==6"><p class="periocidad">Semestral</p><p>Primer Recibo</p><p class="monto_02">${primer_recibo}<p></p>',
+                        '<tpl if="cdperpag==1"><p class="periocidad">Mensual</p><p>Primer Recibo</p><p class="monto_02">{primer_recibo}</p>',
+                        '<tpl elseif="cdperpag==3"><p class="periocidad">Trimestral</p><p>Primer Recibo</p><p class="monto_02">{primer_recibo}</p',
+                        '<tpl elseif="cdperpag==6"><p class="periocidad">Semestral</p><p>Primer Recibo</p><p class="monto_02">{primer_recibo}<p></p>',
                         '<tpl elseif="cdperpag==12"><p class="periocidad">Anual</p><p>Unico Recibo</p>',
                         '</tpl>',
                         '</td>',
@@ -87,6 +91,17 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 					reader: {
 						type: 'json',
 						rootProperty: 'list'
+					}
+				},
+				listeners: {
+					load: function () {
+						Ext.suspendLayouts();
+						this.each(function (rec) {
+							rec.set('total'         , Ext.util.Format.usMoney(rec.get('total')));
+							rec.set('primer_recibo' , Ext.util.Format.usMoney(rec.get('primer_recibo')));
+							rec.set('subsecuentes'  , Ext.util.Format.usMoney(rec.get('subsecuentes')));
+						});
+						Ext.resumeLayouts();
 					}
 				}
 			};

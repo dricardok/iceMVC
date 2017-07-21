@@ -298,4 +298,10 @@ public interface EmisionDAO {
     public List<Map<String, String>> recuperarCotizadoresDisponibles (String cdusuari) throws Exception;
     
     public List<Map<String, String>> obtenerDatosConfirmacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+    
+    public void insertarAgenteDeSesion (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
+            String cdusuari) throws Exception;
+    
+    public Map<String, String> validarCargaCotizacion (String cdunieco, String cdramo, String nmpoliza, String cdusuari,
+            String cdsisrol) throws Exception;
 }

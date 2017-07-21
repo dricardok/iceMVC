@@ -21,6 +21,7 @@ import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 import com.biosnettcs.portal.model.UsuarioVO;
 import com.opensymphony.xwork2.ActionContext;
+
 import mx.com.segurossura.emision.service.DatosGeneralesManager;
 
 @Controller
@@ -54,7 +55,7 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
     public String valoresDefectoFijos () {
         logger.debug(Utils.log("###### valoresDefectoFijos params: ", params));
         try {
-            Utils.validateSession(session);
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             Utils.validate(params, "No hay datos");
             String cdunieco = params.get("cdunieco"),
                    cdramo   = params.get("cdramo"),
@@ -69,8 +70,8 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
                            nmsuplem, "Falta nmsuplem",
                            status,   "Falta status");
             
-            params = datosGeneralesManager.valoresDefectoFijos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, status, params.get("swcolind"),
-                    params.get("nmpolcoi"));
+            params = datosGeneralesManager.valoresDefectoFijos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, status,
+                    params.get("swcolind"), params.get("nmpolcoi"), usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             
             success = true;
         } catch (Exception ex) {

@@ -2,12 +2,12 @@
 package mx.com.segurossura.emision.service.impl;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Constantes;
-import com.biosnettcs.core.HttpUtil;
 import com.biosnettcs.core.Utils;
 
 import mx.com.royalsun.alea.commons.bean.Banco;
@@ -404,7 +403,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	
 	@Override
 	public Map<String, Object> generarTarificacionPlan(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String nmsituac, String cdperpag) throws Exception {
+			String nmsituac, String cdperpag, String cdusuari, String cdsisrol) throws Exception {
 		String paso = null;
 		Map<String, Object> res = null;		
 		List<Map<String, String>> mpolizas = null;
@@ -452,6 +451,35 @@ public class EmisionManagerImpl implements EmisionManager {
 			
 			res = generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
 			
+			// marcar la cotizacion como confirmada
+			Map<String, String> tvaloaux = null;
+			String accionTvaloaux = "U";
+			try {
+			    tvaloaux = emisionDAO.obtenerTvaloaux(cdunieco, cdramo, estado, nmpoliza, Bloque.DATOS_GENERALES.getCdbloque(),
+			            "-1", // nmsituac
+			            "*", // cdgarant
+			            "0", //nmsuplem
+			            "V" //status
+			            ).get(0);
+			} catch (Exception e) {
+			    tvaloaux = new LinkedHashMap<String, String>();
+			    accionTvaloaux = "I";
+			}
+			
+			tvaloaux.put("otvalor04", "S");
+			tvaloaux.put("otvalor05", cdusuari);
+			tvaloaux.put("otvalor06", cdsisrol);
+			
+			emisionDAO.ejecutarMovimientoTvaloaux(cdunieco, cdramo, estado, nmpoliza,
+			        Bloque.DATOS_GENERALES.getCdbloque(),
+			        "-1", // nmsituac
+			        "*", // cdgarant
+			        "0", // nmsuplem
+			        "V", // status
+			        tvaloaux.get("otvalor01"), tvaloaux.get("otvalor02"), tvaloaux.get("otvalor03"), tvaloaux.get("otvalor04"), tvaloaux.get("otvalor05"),
+	                tvaloaux.get("otvalor06"), tvaloaux.get("otvalor07"), tvaloaux.get("otvalor08"), tvaloaux.get("otvalor09"), tvaloaux.get("otvalor10"),
+                    tvaloaux.get("otvalor11"), tvaloaux.get("otvalor12"), tvaloaux.get("otvalor13"), tvaloaux.get("otvalor14"), tvaloaux.get("otvalor15"),
+			        accionTvaloaux);
 			
 			// Borrar ZWORK
 			emisionDAO.movimientoZworkcts(cdunieco, cdramo, estado, nmpoliza, "0");
@@ -830,5 +858,19 @@ public class EmisionManagerImpl implements EmisionManager {
 		}
 		logger.debug(Utils.join("\n@@@@@@ obtenerTarifaMultipleTemp", "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
 		return datos;
+	}
+	
+	@Override
+	public Map<String, String> validarCargaCotizacion (String cdunieco, String cdramo, String nmpoliza, String cdusuari,
+            String cdsisrol) throws Exception {
+	    Map<String, String> cot = null;
+	    String paso = "Validando cotizaci\u00f3n";
+	    try {
+	        cot = emisionDAO.validarCargaCotizacion(cdunieco, cdramo, nmpoliza, cdusuari, cdsisrol);
+	        
+	    } catch (Exception e) {
+	        Utils.generaExcepcion(e, paso);
+	    }
+	    return cot;
 	}
 }
