@@ -1090,8 +1090,9 @@ var Ice = (
             // xtype
             item.xtype = {
                 A: 'textfieldice',
-                N: 'numberfieldice',
-                P: 'numberfieldice',
+                N: 'numberfieldice', // int
+                P: 'numberfieldice', // float
+                M: 'numberfieldice', // money
                 F: 'datefieldice',
                 T: 'textareaice',
                 S: 'switchice',
@@ -1210,6 +1211,17 @@ var Ice = (
             if (config.tipocampo === 'PASSWORD') {
                 item.inputType = 'password';
             }
+
+
+            // para el tipo int
+            if (config.tipocampo === 'N') {
+                item.allowDecimals = false;
+            }
+
+            // para el tipo money
+            if (config.tipocampo === 'M') {
+                item.useThousandSeparator = true;
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -1278,18 +1290,9 @@ var Ice = (
                 column.text = config.label
             }
 
-            // renderer para numeros
-            if (config.tipocampo === 'N' || config.tipocampo === 'P') {
-                column.renderer = config.renderer || function (v) {
-                    if (Ext.isNumber(v)) {
-                        var format = "000,000";
-                        if (String(v).indexOf('.') !== -1) {
-                            format = format + '.00';
-                        }
-                        v = Ext.util.Format.number(v, format);
-                    }
-                    return v;
-                };
+            // renderer para money
+            if (config.tipocampo === 'M') {
+                column.renderer = config.renderer || Ext.util.Format.usMoney;
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
@@ -1334,6 +1337,7 @@ var Ice = (
                     A: 'string',
                     N: 'float',
                     P: 'float',
+                    M: 'float',
                     F: 'date',
                     T: 'string',
                     S: 'string',
