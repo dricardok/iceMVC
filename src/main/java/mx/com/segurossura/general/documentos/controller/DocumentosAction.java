@@ -173,13 +173,16 @@ public class DocumentosAction extends PrincipalCoreAction {
             String nombre = params.get("cddocume");
             String cdtipdoc = params.get("cdtipdoc");
             contentType = TipoArchivo.PDF.getContentType();
+            Archivo archivo = new Archivo();
             if(StringUtils.isNotBlank(cdtipdoc)){
                 if(cdtipdoc.toUpperCase().equals("SLIP")){
                     contentType = TipoArchivo.RTF.getContentType();
                     nombre = Utils.join(nombre,TipoArchivo.RTF.getExtension());
+                    archivo = documentosManager.obtenerDocumento(url, ruta, contentType, nombre);
                 }
+            } else {
+                archivo = documentosManager.obtenerDocumento(url, contentType, nombre);                
             }
-            Archivo archivo = documentosManager.obtenerDocumento(url, contentType, nombre);
             fileInputStream = archivo.getFileInputStream();
             filename = archivo.getFilename();
             contentType = archivo.getContentType();
@@ -262,6 +265,7 @@ public class DocumentosAction extends PrincipalCoreAction {
 			Utils.validate(file, "No se recibio el archivo");
 			String ruta   = StringUtils.isNotBlank(params.get("ruta")) ? params.get("ruta")+Constantes.SEPARADOR_ARCHIVO : "";
 			String nombre = params.get("nombre");
+			nombre = nombre + TipoArchivo.RTF.getExtension();
 			if(StringUtils.isNotBlank(ruta)) {
 				logger.info("ruta carpeta:{}", ruta);
 				File carpeta = new File(ruta);
