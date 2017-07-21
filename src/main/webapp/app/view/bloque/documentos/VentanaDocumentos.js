@@ -44,8 +44,9 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
             }
             
             if (!config.cdunieco || !config.cdramo || !config.estado ||!config.nmpoliza
-                || Ext.isEmpty(config.nmsuplem)) {alert();
-                throw 'Falta llave de p\u00f3liza para lista de documentos';
+            //    || Ext.isEmpty(config.nmsuplem)
+            ) {alert();
+                throw 'Falta llave de p\u00f3liza para ventana de documentos';
             }
             
             if(!config.itemsPerPage){

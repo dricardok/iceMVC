@@ -408,10 +408,35 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     nmpoliza: view.getNmpoliza()
                 }),
                 success: function (action) {
-                    Ice.mensajeCorrecto({
-                        titulo: 'P\u00f3liza emitida',
-                        mensaje: 'Se emiti\u00f3 la p\u00f3liza ' + action.params.nmpoliza,
-                        callback: Ice.index
+                    var ventana = Ext.create('Ice.view.componente.VentanaIce',{
+                        buttons: [
+                            {
+                                text: 'Documentos',
+                                iconCls: 'x-fa fa-files-o',
+                                handler: function(me){
+                                    var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos',{
+                                        cdunieco: view.getCdunieco(),
+                                        cdramo: view.getCdramo(),
+                                        estado: view.getEstado(),
+                                        nmpoliza: view.getNmpoliza()
+                                    });
+                                    ventanaDocs.mostrar();
+                                    if (Ice.classic()) {
+                                        Ext.defer(function () {
+                                            ventanaDocs.setCollapsed(true);
+                                            ventanaDocs.showAt(Ext.getBody().getWidth() - (650 + 40), 40);
+                                        }, 600);
+                                    }
+                                    me.disabled();
+                                },
+                            },{
+                                text: 'Inicio',
+                                iconCls: 'x-fa fa-home',
+                                handler: function(){
+                                    Ice.index();
+                                } 
+                            }
+                        ]
                     });
                 }
             });

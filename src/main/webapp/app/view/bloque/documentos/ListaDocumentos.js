@@ -33,7 +33,8 @@ Ext.define('Ice.view.bloque.documentos.ListaDocumentos', {
                     }
                     
                     if (!config.cdunieco || !config.cdramo || !config.estado ||!config.nmpoliza
-                        || Ext.isEmpty(config.nmsuplem)) {
+                    //    || Ext.isEmpty(config.nmsuplem)
+                    ) {
                         throw 'Falta llave de p\u00f3liza para lista de documentos';
                     }
                     

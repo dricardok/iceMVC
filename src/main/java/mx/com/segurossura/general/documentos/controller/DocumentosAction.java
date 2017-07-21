@@ -81,7 +81,7 @@ public class DocumentosAction extends PrincipalCoreAction {
             Utils.validate(cdramo, "No se recibio el producto");
             Utils.validate(estado, "No se recibio el estado");
             Utils.validate(nmpoliza, "No se recibio el numero de póliza");
-            Utils.validate(nmsuplem, "No se recibio el numero de suplemento");
+//            Utils.validate(nmsuplem, "No se recibio el numero de suplemento");
             String ntramite = params.get("ntramite");
             String cdsisrol = params.get("cdsisrol");
             String dsdocume = params.get("dsdocume");
@@ -176,6 +176,7 @@ public class DocumentosAction extends PrincipalCoreAction {
             if(StringUtils.isNotBlank(cdtipdoc)){
                 if(cdtipdoc.toUpperCase().equals("SLIP")){
                     contentType = TipoArchivo.RTF.getContentType();
+                    nombre = Utils.join(nombre,TipoArchivo.RTF.getExtension());
                 }
             }
             Archivo archivo = documentosManager.obtenerDocumento(url, contentType, nombre);
