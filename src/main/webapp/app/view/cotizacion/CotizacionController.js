@@ -306,6 +306,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 try {
                     Ice.request({
                         mascara: paso2,
+                        timeout: 1000*60*5,
                         url: Ice.url.emision.tarificarPlanes,
                         params: {
                             'params.cdunieco': view.getCdunieco(),

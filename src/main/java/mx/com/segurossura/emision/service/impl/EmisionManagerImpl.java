@@ -7,6 +7,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -461,53 +462,65 @@ public class EmisionManagerImpl implements EmisionManager {
 			try{
 				logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
 				documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, "0");
-				logger.debug("Documentos de impresion: {}", documentos, " cantidad ", (documentos!=null?documentos.size():null));
+				logger.debug("Fin de obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
 			}catch(Exception e){
 				logger.error(e.getMessage(), e);
 			}			
 			
 			path.append(generaRutaLlave(directorioBase, "ice", cdunieco, cdramo, estado, nmpoliza, "0"));			
 			
-			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();
-			// Se guardan la lista de documentos:
-			for (Documento documento : documentos) {
-			    
-                String nmsolici = null; //TODO: agregar
-                String ntramite = "1";  //TODO: agregar
-                String cdtiptra = "1"; //TODO: agregar
-                String codidocu = null; //TODO: agregar
-                String cdorddoc = null; //TODO: agregar
-                String cdmoddoc = null; //TODO: agregar
-                String nmcertif = null; //TODO: agregar
-                //String nmsituac = null; //TODO: agregar
-                //String cdtipsub = datosMrecibo.get("cdtipsup");
-                
-              	try
-				{              		
-              		documentoRuta = path + documento.getNombre() + (documento.getTipo().equals("SLIP") ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
-              		nombreExtension = documento.getNombre() + (documento.getTipo().equals("SLIP") ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
-              		
-              		//boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
-					exito = false;
-              		try {
-              			FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(documentoRuta), 10000, 10000);
-              			exito = true;
-              		}catch(Exception fe){
-              			logger.error(fe.getMessage(), fe);
-              		}
-              		
-              		documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpoliza, nmsolici, "0", ntramite, new Date(),
-              				documento.getId(), nombreExtension, "90", exito ? Constantes.SI : Constantes.NO, cdtiptra, codidocu, cdorddoc, 
-              				cdmoddoc, nmcertif, nmsituac, documento.getUrl(), path.toString(), documento.getTipo(), 
-              				Constantes.INSERT_MODE);
-              		
-              		
+			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();			
+			
+			if(documentos != null) {
+				
+				logger.debug("Numero de documentos devueltos para la Cotizacion {} " + documentos.size());
+			
+				// 	Se guardan la lista de documentos:
+				for (Documento documento : documentos) {
 					
-				}catch(Exception e) {
-					logger.error(e.getMessage(), e);
-					continue;
+					String nmsolici = null; //TODO: agregar
+					String ntramite = "1";  //TODO: agregar
+					String cdtiptra = "1"; //TODO: agregar
+					String codidocu = null; //TODO: agregar
+					String cdorddoc = null; //TODO: agregar
+					String cdmoddoc = null; //TODO: agregar
+					String nmcertif = null; //TODO: agregar
+					//String nmsituac = null; //TODO: agregar
+					//String cdtipsub = datosMrecibo.get("cdtipsup");
+					
+					try
+					{   
+						logger.info(documento.getId());
+						logger.info(documento.getNombre());
+						logger.info(documento.getTipo());
+						logger.info(documento.getUrl());
+						
+						
+						documentoRuta = path + documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
+						nombreExtension = documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
+						
+						//boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
+						exito = false;
+						try {
+							FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(documentoRuta), 10000, 10000);
+							exito = true;
+						}catch(Exception fe){
+							logger.error(fe.getMessage(), fe);
+						}
+              		
+						documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpoliza, nmsolici, "0", ntramite, new Date(),
+										documento.getId(), nombreExtension, "90", exito ? Constantes.SI : Constantes.NO, cdtiptra, codidocu, cdorddoc, 
+										cdmoddoc, nmcertif, nmsituac, documento.getUrl(), path.toString(), documento.getTipo(), 
+										Constantes.INSERT_MODE);             		
+					
+					}catch(Exception e) {
+						logger.error(e.getMessage(), e);
+						continue;
+					}
 				}
-            }
+			} else {
+				res.put("message", "Fallo al cargar documentos");
+			}
 			
 		}catch(Exception e) {
 			Utils.generaExcepcion(e, paso);
@@ -561,11 +574,11 @@ public class EmisionManagerImpl implements EmisionManager {
 	}
 
 	@Override
-	public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
+	public Map<String, String> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception {
 		
 		logger.debug("\n@@@@@@ confirmarPoliza @@@@@@");
-		
+		Map<String, String> results = new HashMap<String, String>();
 		String paso = null, nmpolizaEmitida = null;
 		Map<String, String> datosMrecibo = null;		
 		RequestWs request = null;
@@ -577,6 +590,7 @@ public class EmisionManagerImpl implements EmisionManager {
 		try {
 		    paso = "Confirmando p\u00f3liza";
 			nmpolizaEmitida = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
+			results.put("polizaemitida", nmpolizaEmitida);
 			estado = EstadoPoliza.MASTER.getClave();
 			nmpoliza = nmpolizaEmitida;
 			logger.info("Poliza emitida: {}", nmpoliza);	
@@ -605,55 +619,69 @@ public class EmisionManagerImpl implements EmisionManager {
 			
 			try{
 			logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);
-			documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
-			logger.debug("Documentos de impresion: {}", documentos, " cantidad ", (documentos!=null?documentos.size():null));
+			documentos = impresionManager.getDocumentos(cdunieco, cdramo, "M", nmpoliza, nmsuplem);
+			logger.debug("Fin de obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
 			}catch(Exception e){
 				logger.error(e.getMessage(), e);
 			}
 			
 			
 			// Especificar el path para almacenar documentos
-			path.append(directorioBase).append(File.separator).append("ice").append(File.separator).append(cdunieco).append(File.separator).append(cdramo).append(File.separator).append(nmpolizaEmitida).append(File.separator).append(datosMrecibo.get("nmsuplem")).append(File.separator);
-	
+			//path.append(directorioBase).append(File.separator).append("ice").append(File.separator).append(cdunieco).append(File.separator).append(cdramo).append(File.separator).append(nmpolizaEmitida).append(File.separator).append(datosMrecibo.get("nmsuplem")).append(File.separator);
+			path.append(generaRutaLlave(directorioBase, "ice", cdunieco, cdramo, "M", nmpolizaEmitida, datosMrecibo.get("nmsuplem")));
+			
 			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();
-			// Se guardan la lista de documentos:
-			for (Documento documento : documentos) {
-			    
-                String nmsolici = null; //TODO: agregar
-                String ntramite = "1";  //TODO: agregar
-                String cdtiptra = "1"; //TODO: agregar
-                String codidocu = null; //TODO: agregar
-                String cdorddoc = null; //TODO: agregar
-                String cdmoddoc = null; //TODO: agregar
-                String nmcertif = null; //TODO: agregar
-                String nmsituac = null; //TODO: agregar
-                String cdtipsub = datosMrecibo.get("cdtipsup");
-                
-              	try
-				{              		
-              		documentoRuta = path+documento.getNombre() + (documento.getTipo().equals("SLIP") ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
-              		nombreExtension = documento.getNombre() + (documento.getTipo().equals("SLIP") ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
-              		
-              		//boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
-					exito = false;
-              		try {
-              			FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(documentoRuta), 10000, 10000);
-              			exito = true;
-              		}catch(Exception fe){
-              			logger.error(fe.getMessage(), fe);
-              		}
-              		
-              		documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpolizaEmitida, nmsolici, datosMrecibo.get("nmsuplem"), ntramite, new Date(),
-              				documento.getId(), nombreExtension, cdtipsub, exito ? Constantes.SI : Constantes.NO,
-              				cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, documento.getUrl(), path.toString(), documento.getTipo(), Constantes.INSERT_MODE);
-              		
-              		
+			
+			if(documentos != null) {
+				
+				logger.debug("Numero de documentos devueltos para la Confirmacion {} " + documentos.size());
+			
+				// Se guardan la lista de documentos:
+				for (Documento documento : documentos) {
 					
-				}catch(Exception e) {
-					logger.error(e.getMessage(), e);
-					continue;
+					String nmsolici = null; //TODO: agregar
+					String ntramite = "1";  //TODO: agregar
+					String cdtiptra = "1"; //TODO: agregar
+					String codidocu = null; //TODO: agregar
+					String cdorddoc = null; //TODO: agregar
+					String cdmoddoc = null; //TODO: agregar
+					String nmcertif = null; //TODO: agregar
+					String nmsituac = null; //TODO: agregar
+					String cdtipsub = datosMrecibo.get("cdtipsup");
+					
+					try
+					{   
+						logger.info(documento.getId());
+						logger.info(documento.getNombre());
+						logger.info(documento.getTipo());
+						logger.info(documento.getUrl());
+						
+						
+						documentoRuta = path+documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
+						nombreExtension = documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
+						
+						//	boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
+						exito = false;
+						try {
+							FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(documentoRuta), 10000, 10000);
+							exito = true;
+						}catch(Exception fe){
+							logger.error(fe.getMessage(), fe);
+						}
+						
+						documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, "M", nmpolizaEmitida, nmsolici, datosMrecibo.get("nmsuplem"), ntramite, new Date(),
+										documento.getId(), nombreExtension, cdtipsub, exito ? Constantes.SI : Constantes.NO,
+										cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, documento.getUrl(), path.toString(), documento.getTipo(), Constantes.INSERT_MODE);
+              		              		
+					
+					}catch(Exception e) {
+						logger.error(e.getMessage(), e);
+						continue;
+					}
 				}
-            }
+			} else {
+				results.put("message", "Fallo al cargar documentos");				
+			}
 			
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
@@ -664,7 +692,7 @@ public class EmisionManagerImpl implements EmisionManager {
 		}
 		logger.debug("\n@@@@@@ confirmarPoliza @@@@@@");
 		
-		return nmpolizaEmitida;
+		return results;
 	}
 	
 	
@@ -743,20 +771,23 @@ public class EmisionManagerImpl implements EmisionManager {
             logger.debug("Valor obtenido ", transaccionResponse);
             
             if(transaccionResponse != null && transaccionResponse.getAuthCode() == "") {
+            	logger.info("Codigo de autorizacion: " + transaccionResponse.getAuthCode());
+                logger.info("Codigo de Error " + transaccionResponse.getCcErrCode());
+                logger.info("Mensage de respuesta " + transaccionResponse.getCcReturnMsg());
+                logger.info(transaccionResponse.getDcError());
+                logger.info(transaccionResponse.getParamError());
+                logger.info(transaccionResponse.getProcReturnCode());
+                logger.info(transaccionResponse.getProcReturnMsg());
+                logger.info(transaccionResponse.getProcReturnMsg());
+                logger.info(transaccionResponse.getResponseCode());
+                logger.info(transaccionResponse.getText());
+                logger.info(transaccionResponse.getTimeOut());
+                logger.info(transaccionResponse.getTotal());
+            	
             	throw new Exception(transaccionResponse.getDcError());
+            
             }
-            logger.info("Codigo de autorizacion: " + transaccionResponse.getAuthCode());
-            logger.info("Codigo de Error " + transaccionResponse.getCcErrCode());
-            logger.info("Mensage de respuesta " + transaccionResponse.getCcReturnMsg());
-            logger.info(transaccionResponse.getDcError());
-            logger.info(transaccionResponse.getParamError());
-            logger.info(transaccionResponse.getProcReturnCode());
-            logger.info(transaccionResponse.getProcReturnMsg());
-            logger.info(transaccionResponse.getProcReturnMsg());
-            logger.info(transaccionResponse.getResponseCode());
-            logger.info(transaccionResponse.getText());
-            logger.info(transaccionResponse.getTimeOut());
-            logger.info(transaccionResponse.getTotal());
+            
             
             resultado = transaccionResponse.getAuthCode();
 						
@@ -768,9 +799,7 @@ public class EmisionManagerImpl implements EmisionManager {
 		
 		return resultado;
 	}
-	
-	
-	
+		
 	@Override
 	public List<Map<String, String>> obtenerTarifaMultipleTemp(String cdunieco, String cdramo, String estado,
 			String nmpoliza) throws Exception {

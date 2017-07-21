@@ -587,7 +587,8 @@ var Ice = (
      *     success: function (responseJsonData) {}, <<< callback en caso de exito (opcional)
      *     failure: function () {},                 <<< callback en caso de error (opcional)
      *     mascara: 'Guardando datos',              <<< Texto a mostrar mientras se espera respuesta (opcional)
-     *     background: true                         <<< Para que no robe el focus en pantalla (opcional)
+     *     background: true,                        <<< Para que no robe el focus en pantalla (opcional)
+     *     timeout: 1000*60*2                       <<< timeout para la peticion en milliseconds
      * }
      * throws exception
      */
@@ -598,11 +599,19 @@ var Ice = (
                 ? {close: function (){}}
                 : Ice.mask(paso);
         try {
+        	var timeoutResp;
+        	if (params.timeout) {
+        		timeoutResp = Ext.Ajax.timeout;
+        		Ext.Ajax.timeout = params.timeout;
+        	}
             var requestParams = {
                 url: params.url,
                 success: function (response) {
                     Ice.log('Ice.request.response: ', response);
                     mask.close();
+                    if (timeoutResp) {
+                    	Ext.Ajax.timeout = timeoutResp;
+                    }
                     var paso2 = 'Decodificando respuesta del proceso: ' + ((params.mascara || 'enviando petici\00f3n').toLowerCase());
 
                     try {
@@ -631,6 +640,9 @@ var Ice = (
                 },
                 failure: function () {
                     mask.close();
+                    if (timeoutResp) {
+                    	Ext.Ajax.timeout = timeoutResp;
+                    }
                     if (params.failure && typeof params.failure === 'function') {
 
                         try {
