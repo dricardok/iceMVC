@@ -110,7 +110,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                                 params:{
                                     'params.url': data.url,
                                     'params.ruta': data.ruta,
-                                    'params.cddocume': data.cddocume,
+                                    'params.dsdocume': data.dsdocume,
                                     'params.cdtipdoc': data.cdtipdoc
                                 }
                             }
@@ -155,7 +155,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                     {
                         xtype: 'agregardocumento',
                         ruta: data.ruta,
-                        nombre: data.cddocume
+                        nombre: data.dsdocume
                     }
                 ]
             });
