@@ -96,7 +96,7 @@ public interface EmisionManager {
     public Map<String, Object> distribuirAgrupadores(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
     
     
-    public String confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
+    public Map<String, String> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception;
     
     

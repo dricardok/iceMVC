@@ -74,6 +74,7 @@ Ext.define('Ice.view.cotizacion.VentanaPrimas', {
                     ],
                     proxy: {
                         type: 'ajax',
+                        timeout: 1000*60*5,
                         url: Ice.url.emision.obtenerTarifa,
                         extraParams: {
                             'params.cdunieco': config.cdunieco,
