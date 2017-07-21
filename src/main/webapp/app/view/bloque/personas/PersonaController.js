@@ -26,7 +26,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     		me=this,
     		view=me.getView();
     	try{
-    		var form=view.down("[xtype=formulario]"),
+    		var form=view.down("[xtype=formice]"),
     			tvaloper={},
     			mpersona={};
     		me.validarCampos(form);

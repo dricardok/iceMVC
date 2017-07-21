@@ -168,23 +168,31 @@ public class DocumentosAction extends PrincipalCoreAction {
         try{
             Utils.validate(params, "No se recibieron parametros");
             String url = params.get("url");
+            String ruta = params.get("ruta");
             Utils.validate(url, "No se recibio la url");
             String nombre = params.get("cddocume");
             String cdtipdoc = params.get("cdtipdoc");
             contentType = TipoArchivo.PDF.getContentType();
             if(StringUtils.isNotBlank(cdtipdoc)){
-                if(cdtipdoc.toLowerCase().equals("slip")){
+                if(cdtipdoc.toUpperCase().equals("SLIP")){
                     contentType = TipoArchivo.RTF.getContentType();
                 }
             }
             Archivo archivo = documentosManager.obtenerDocumento(url, contentType, nombre);
             fileInputStream = archivo.getFileInputStream();
             filename = archivo.getFilename();
+            contentType = archivo.getContentType();
             success = true;
         } catch(Exception ex){
             success = false;
             mensaje = Utils.manejaExcepcion(ex);
         }
+        logger.debug(StringUtils.join(
+                "\n###### fileInputStream", fileInputStream
+               ,"\n###### filename", filename
+               ,"\n###### contentType", contentType
+               ,"\n###### descargarArchivo ######"
+               ));
         return SUCCESS;
     }
     
