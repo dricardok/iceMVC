@@ -159,7 +159,7 @@ public class DocumentosManagerImpl implements DocumentosManager {
         InputStream fileInputStream = null;
         try{
             if(StringUtils.isBlank(ruta)){
-                fileInputStream = HttpUtil.obtenInputStream(url);                
+                fileInputStream = HttpUtil.obtenInputStream(url);
             } else {
                 fileInputStream = FileUtils.openInputStream(new File(Utils.join(ruta, filename)));                
             }

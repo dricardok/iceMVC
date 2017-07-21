@@ -84,6 +84,11 @@ Ext.define('Ice.view.field.ComboIce', {
         Ext.apply(me, configTra);
         this.callParent(arguments);
         
+        me.on({
+            blur: function (me) {
+                Ice.eventManager.change(me, me.getValue());
+            }
+        });
         
         if (me.getPadres().length > 0 && me.up('form')) {
             
