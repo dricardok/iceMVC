@@ -83,7 +83,8 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
                     "rnum",
                     "tramite_endoso",
                     "url",
-                    "ruta"
+                    "ruta",
+                    "cdtipdoc"
             };
             declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_num_rec_o", Types.NUMERIC));

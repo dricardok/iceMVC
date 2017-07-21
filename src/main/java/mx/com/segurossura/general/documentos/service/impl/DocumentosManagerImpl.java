@@ -1,9 +1,7 @@
 package mx.com.segurossura.general.documentos.service.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,10 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.biosnettcs.core.FTPSUtils;
 import com.biosnettcs.core.HttpUtil;
 import com.biosnettcs.core.Utils;
 
-import mx.com.segurossura.general.documentos.controller.DocumentosAction;
 import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
 import mx.com.segurossura.general.documentos.model.Archivo;
 import mx.com.segurossura.general.documentos.model.TipoArchivo;
@@ -68,10 +66,10 @@ public class DocumentosManagerImpl implements DocumentosManager {
         try{
             paso = "Obteniendo documento";
             if(StringUtils.isNotBlank(url) && StringUtils.isNotBlank(contentType)) {
-                archivo.setFileInputStream(HttpUtil.obtenInputStream(url));
+                archivo.setFileInputStream(getFileInputStream(url, filename));
             } else {
                 // Se asigna el fileInputStream:
-                archivo.setFileInputStream(HttpUtil.obtenInputStream(url));
+                archivo.setFileInputStream(getFileInputStream(url, filename));
                 
                 // Se asigna el contentType:
                 archivo.setContentType(obtieneContentType(filename));
@@ -110,4 +108,20 @@ public class DocumentosManagerImpl implements DocumentosManager {
         return contentType;
     }
 
+    /**
+     * Obtiene inputStream de la ubicacion local o liga del archivo
+     * @param url
+     * @param filename
+     * @return
+     * @throws Exception
+     */
+    private InputStream getFileInputStream(String url, String filename) throws Exception{
+        InputStream fileInputStream = null;
+        try{
+            fileInputStream = HttpUtil.obtenInputStream(Utils.join(url,filename));
+        } catch (Exception ex){
+            throw new Exception("Error al obtener archivo");
+        }
+        return fileInputStream;
+    }
 }

@@ -63,14 +63,14 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                                 standardSubmit: true,
                                 target: '_blank',
                                 params:{
-                                    'params.url': data.url,
+                                    'params.url': data.ruta,
                                     'params.cddocume': data.cddocume
                                 }
                             }
                     );
                 } else {
                     window.open(Ice.url.bloque.documentos.verArchivo+'?'+
-                        'params.url='+encodeURIComponent(data.url)+
+                        'params.url='+encodeURIComponent(data.ruta)+
                         '&params.filename='+data.cddocume,
                         '_blank',
                         'width=800, height=600'
@@ -108,7 +108,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                                 standardSubmit: true,
                                 target: '_blank',
                                 params:{
-                                    'params.url': data.url,
+                                    'params.url': data.ruta,
                                     'params.cddocume': data.cddocume,
                                     'params.cdtipdoc': data.cdtipdoc
                                 }
@@ -121,8 +121,9 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                                 standardSubmit: true,
                                 target: '_blank',
                                 params:{
-                                    'params.url': data.url,
-                                    'params.cddocume': data.cddocume
+                                    'params.url': data.ruta,
+                                    'params.cddocume': data.cddocume,
+                                    'params.cdtipdoc': data.cdtipdoc
                                 }
                             }
                     );
