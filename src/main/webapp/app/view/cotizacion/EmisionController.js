@@ -409,6 +409,14 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 }),
                 success: function (action) {
                     var ventana = Ext.create('Ice.view.componente.VentanaIce',{
+                        platformConfig: {
+                            desktop: {
+                                width: 400
+                            }
+                        },
+                        modal: true,
+                        title: 'Aviso',
+                        html: '<div style="padding:10px;">Se emiti&oacute; la p&oacute;liza ' + action.params.nmpoliza + '</div>',
                         buttons: [
                             {
                                 text: 'Documentos',
@@ -417,8 +425,8 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                                     var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos',{
                                         cdunieco: view.getCdunieco(),
                                         cdramo: view.getCdramo(),
-                                        estado: view.getEstado(),
-                                        nmpoliza: view.getNmpoliza()
+                                        estado: 'M',
+                                        nmpoliza: action.params.nmpoliza
                                     });
                                     ventanaDocs.mostrar();
                                     if (Ice.classic()) {
@@ -432,12 +440,14 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                             },{
                                 text: 'Inicio',
                                 iconCls: 'x-fa fa-home',
-                                handler: function(){
+                                handler: function(me){
+                                    me.up('ventanaice').cerrar();
                                     Ice.index();
                                 } 
                             }
                         ]
                     });
+                    ventana.mostrar();
                 }
             });
         } catch (e) {
