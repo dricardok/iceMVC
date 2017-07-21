@@ -74,15 +74,16 @@ var Ice = (
         
         // URLs de emision
         emision: {
-            tarificar:     'emision/generarTarificacion.action',
-            obtenerTarifa: 'emision/obtenerDatosTarificacion.action',
-            emitir:        'emision/confirmarPoliza.action',
-            tarificarPlanes: 'emision/generarTarificacionPlanes.action',
-            tarificarPlan: 'emision/generarTarificacionPlan.action',
-        	obtenerTarifaPlanes: 'emision/obtenerTarifaMultipleTemp.action',
-        	obtenerTarifaPlan: 'emision/obtenerDetalleTarifaTemp.action',
-        	obtieneTvalopol: 'emision/obtieneTvalopol.action',
-        	realizarPago: 'emision/realizarPago.action'
+            tarificar:              'emision/generarTarificacion.action',
+            obtenerTarifa:          'emision/obtenerDatosTarificacion.action',
+            emitir:                 'emision/confirmarPoliza.action',
+            tarificarPlanes:        'emision/generarTarificacionPlanes.action',
+            tarificarPlan:          'emision/generarTarificacionPlan.action',
+        	obtenerTarifaPlanes:    'emision/obtenerTarifaMultipleTemp.action',
+        	obtenerTarifaPlan:      'emision/obtenerDetalleTarifaTemp.action',
+        	obtieneTvalopol:        'emision/obtieneTvalopol.action',
+        	realizarPago:           'emision/realizarPago.action',
+            validarCargaCotizacion: 'emision/validarCargaCotizacion.action'
          },
          
         bloque: {

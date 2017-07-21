@@ -93,14 +93,40 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 cdtipsit = record.get('cdtipsit'),
                 cdunieco = ventana.down('[name=cdunieco]').getValue(),
                 nmpoliza = ventana.down('[name=nmpoliza]').getValue();
-            ventana.cerrar();
-            Ice.query('#mainView').getController().redirectTo('cotizacion.action?' +
-                    'cdunieco=' + cdunieco + '&' +
-                    'cdramo='   + cdramo   + '&' +
-                    'estado='   + 'W'      + '&' +
-                    'nmpoliza=' + nmpoliza + '&' +
-                    'cdtipsit=' + cdtipsit + '&' +
-                    'nmsuplem=' + 0);
+            Ice.request({
+                mascara: 'Validando cotizaci\u00f3n',
+                url: Ice.url.emision.validarCargaCotizacion,
+                params: Ice.convertirAParams({
+                    cdunieco: cdunieco,
+                    cdramo: cdramo,
+                    nmpoliza: nmpoliza
+                }),
+                success: function (action) {
+                    var paso2 = 'Procesando cotizaci\u00f3n';
+                    try {
+                        if (action.params.swexiste !== 'S') {
+                            throw 'La cotizaci\u00f3n no existe';
+                        }
+                        var url;
+                        if (action.params.swconfir === 'S') {
+                            url = 'emision.action?';
+                        } else {
+                            url = 'cotizacion.action?';
+                        }
+                        ventana.cerrar();
+                        Ice.query('#mainView').getController().redirectTo(url +
+                            'cdunieco=' + cdunieco + '&' +
+                            'cdramo='   + cdramo   + '&' +
+                            'estado='   + 'W'      + '&' +
+                            'nmpoliza=' + nmpoliza + '&' +
+                            'cdtipsit=' + cdtipsit + '&' +
+                            'nmsuplem=' + 0
+                        );
+                    } catch (e) {
+                        Ice.manejaExcepcion(e, paso);
+                    }
+                }
+            });
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }

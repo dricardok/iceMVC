@@ -1654,4 +1654,65 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 			compile();
         }
     }
+	
+	@Override
+	public void insertarAgenteDeSesion (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
+            String cdusuari) throws Exception {
+	    Map<String, String> params = new LinkedHashMap<String, String>();
+	    params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        params.put("pv_cdusuari_i", cdusuari);
+        ejecutaSP(new InsertarAgenteDeSesionSP(getDataSource()), params);
+	}
+    
+    protected class InsertarAgenteDeSesionSP extends StoredProcedure {
+        protected InsertarAgenteDeSesionSP (DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_INSERTA_SESION_AGENTE");           
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdusuari_i" , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public Map<String, String> validarCargaCotizacion (String cdunieco, String cdramo, String nmpoliza, String cdusuari,
+            String cdsisrol) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_cdusuari_i", cdusuari);
+        params.put("pv_cdsisrol_i", cdsisrol);
+        Map<String, Object> bdRes = ejecutaSP(new ValidarCargaCotizacionSP(getDataSource()), params);
+        Map<String, String> result = new LinkedHashMap<String, String>();
+        result.put("swexiste", (String) bdRes.get("pv_swexiste_o"));
+        result.put("swconfir", (String) bdRes.get("pv_swconfir_o"));
+        logger.debug(Utils.log("\n****** validarCargaCotizacion result: ", result));
+        return result;
+    }
+    
+    protected class ValidarCargaCotizacionSP extends StoredProcedure {
+        protected ValidarCargaCotizacionSP (DataSource dataSource) {
+            super(dataSource, "PKG_VALIDA_ALEA.P_VALIDA_CARGAR_COTI");           
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdusuari_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdsisrol_i" , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_swexiste_o" , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_swconfir_o" , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            compile();
+        }
+    }
 }
