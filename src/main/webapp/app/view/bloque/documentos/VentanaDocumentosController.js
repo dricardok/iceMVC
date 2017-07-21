@@ -64,7 +64,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                                 target: '_blank',
                                 params:{
                                     'params.url': data.url,
-                                    'params.cddocume': data.cddocume
+                                    'params.dsdocume': data.dsdocume
                                 }
                             }
                     );
