@@ -37,7 +37,11 @@ public class ImpresionManagerImpl implements ImpresionManager{
 		try {
 			logger.debug("Invocando a servicio documentoClient con los parametros: {}", llave);
 			documentos = documentoClient.postAll(llave);
-			logger.debug("Documentos obtenidos: {}", documentos);
+			int numDocs = 0;
+			if(documentos != null) {
+				numDocs = documentos.size();
+			}
+			logger.debug("Documentos obtenidos {}: {}", numDocs, documentos);
 		}catch(ResponseException e){
 			logger.error("Error al invocar servicio de obtencion de documentos: ", e);
 		}
