@@ -32,12 +32,16 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 				    record = gridCoberturas.getStore().getAt(0);
             	//Ice.log("store- :",store)
 			var win = Ext.create('Ice.view.componente.VentanaIce', {
-			    title: 'Añadir cobertura',
-			    height: 250,
-			    width: 450,
+			    title: 'Seleccionar coberturas',
+				platformConfig: {
+					desktop: {
+						modal: true,
+						width: 600,
+						height: 400
+					}
+				},
 			    layout: 'fit',
 			    scrollable: true,
-				modal: true,
 			    items: [{ 
 					xtype: 'gridice',
 			        border: false,

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -33,7 +32,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     
     @Override
     public Map<String, String> valoresDefectoFijos (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
-            String status, String swcolind, String nmpolcoi) throws Exception {
+            String status, String swcolind, String nmpolcoi, String cdusuari, String cdsisrol) throws Exception {
         Map<String, String> valores = new LinkedHashMap<String, String>();
         String paso = null;
         try {
@@ -112,6 +111,16 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     valores.put(Utils.join("b1_", key), en.getValue());
                 }
             }
+            
+            // cuando es agente se intenta insertar su cdagente en mpoliage
+            // if (RolSistema.AGENTE.getCdsisrol().equals(cdsisrol)) {
+            //    try {
+            //        emisionDAO.insertarAgenteDeSesion(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdusuari);
+            //    } catch (Exception e) {
+            //        logger.warn("No se pudo insertar el agente del usuario en sesi\u00f3n", e);
+            //        throw new ApplicationException("No se encuentra la clave del agente en sesi\u00f3n. Favor de contactar a soporte");
+            //    }
+            // }
         } catch (Exception ex) {
             Utils.generaExcepcion(ex, paso);
         }
