@@ -867,7 +867,8 @@ var Ice = (
                                     buttons: lista[i].buttons === true,
                                     listeners: lista[i].listeners === true,
                                     fields: lista[i].fields === true,
-                                    validators: lista[i].validators === true
+                                    validators: lista[i].validators === true,
+                                    eventos: lista[i].eventos === true
                                 }
                             );
                         }
@@ -903,7 +904,8 @@ var Ice = (
      *     buttons: (boolean),
      *     listeners: (boolean),
      *     fields: (boolean),
-     *     validators: (boolean)
+     *     validators: (boolean),
+     *     eventos: (boolean)
      * }
      * @return seccion: {
      *     items: [
@@ -918,7 +920,8 @@ var Ice = (
      *     buttons: [ ... ],
      *     listeners: [ ... ],
      *     fields: [ ... ],
-     *     validators: [ ... ]
+     *     validators: [ ... ],
+     *     eventos: {}
      * }
      */
     generaSeccion: function (configComps, banderas) {
@@ -947,6 +950,9 @@ var Ice = (
             }
             if (banderas.validators === true) {
                 seccion.validators = Ice.generaValidators(configComps);
+            }
+            if (banderas.eventos === true) {
+                seccion.eventos = Ice.generaEventos(configComps);
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
@@ -1072,6 +1078,28 @@ var Ice = (
             Ice.generaExcepcion(e, paso);
         }
         return validators;
+    },
+
+    generaEventos: function (configComps) {
+        Ice.log('Ice.generaEventos configComps:', configComps);
+        var paso = 'Construyendo eventos',
+            eventos = {};
+        try {
+            configComps = configComps || [];
+            if (configComps.length === 0) {
+                Ice.logWarn('No se recuperaron eventos de la bd');
+            } else if (configComps.length > 1) {
+                throw 'Eventos duplicados';
+            } else {
+                var eventosString = configComps[0];
+                Ice.log('Evento se intenta hacer decode:', eventosString.handler);
+                eventos = Ext.JSON.decode(eventosString.handler);
+                Ice.log('eventos:', eventos);
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+        return eventos;
     },
     
     
