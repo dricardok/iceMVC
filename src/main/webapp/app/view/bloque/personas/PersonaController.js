@@ -88,7 +88,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     	
     	var paso='';
     	try{
-    		if(!form.modelValidators || !form.modelFields){
+    		if(!form.getModelValidators() || !form.getModelFields()){
     			throw 'No se puede validar el formulario'+form.getTitle();
     		}
     		
@@ -100,10 +100,10 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     		var view=this.getView();
     		Ice.log("-]",form);
     		Ice.query('[getName]',form).filter(function(it){
-    			return it.isHidden()!==true && typeof it.getName =='function' && form.modelValidators[it.getName()] ;
+    			return it.isHidden()!==true && typeof it.getName =='function' && form.getModelValidators()[it.getName()] ;
     		})
     		.forEach(function(it){
-    			validators[it.getName()] = form.modelValidators[it.getName()];
+    			validators[it.getName()] = form.getModelValidators()[it.getName()];
     		});
     		
     		Ice.log("refs , validators",refs, validators)
@@ -111,7 +111,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     		var modelName = Ext.id();
             var  modelo = Ext.define(modelName, {
                 extend: 'Ext.data.Model',
-                fields: form.modelFields,
+                fields: form.getModelFields(),
                 validators: validators
             });
             
@@ -176,7 +176,13 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 //	    					}else{
 //	    						it.setValue(datos[it.getName()]);
 //	    					}
-	    					it.setValue(datos[it.getName()]);
+	    					if(it.getStore){
+	    						it.getStore().load(function(){
+	    							it.setValue(datos[it.getName()]);
+	    						});
+	    					}else{
+	    						it.setValue(datos[it.getName()]);
+	    					}
 	    				});
     				}catch(e){
     					Ice.generaExcepcion(e,paso)
@@ -303,6 +309,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 		me=this,
 		view=me.getView();
 		try{
+			alert();
 			var datos={};
 			datos=Ice.utils.mergeObjects({},accion);
 			var form=Ice.query("#frmDomicilio")
@@ -331,72 +338,72 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 		}
     },
     
- validarCampos:function(form){
-    	
-    	var paso='';
-    	try{
-    		if(!form.modelValidators || !form.modelFields){
-    			throw 'No se puede validar el formulario'+form.getTitle();
-    		}
-    		
-    		paso = 'Construyendo modelo de validaci\u00f3n';
-    		
-    		var validators={};
-    		var refs=form.getReferences();
-    		var ref=null;
-    		var view=this.getView();
-    		Ice.log("-]",form);
-    		Ice.query('[getName]',form).filter(function(it){
-    			return it.isHidden()!==true && typeof it.getName =='function' && form.modelValidators[it.getName()] ;
-    		})
-    		.forEach(function(it){
-    			validators[it.getName()] = form.modelValidators[it.getName()];
-    		});
-    		
-    		Ice.log("refs , validators",refs, validators)
-    		
-    		var modelName = Ext.id();
-            var  modelo = Ext.define(modelName, {
-                extend: 'Ext.data.Model',
-                fields: form.modelFields,
-                validators: validators
-            });
-            
-           Ice.log( "Modelo",modelo)
-            
-            paso = 'Validando datos';
-            errores = Ext.create(modelName, form.getValues()).getValidation().getData();
-            Ice.log("Errores",errores)
-            var sinErrores = true,
-            erroresString = '';
-    	    Ext.suspendLayouts();
-    	    for (var name in errores) {
-    	        if (errores[name] !== true) {
-    	            sinErrores = false;
-    	            var ref = form.down('[name=' + name + ']');
-    	            if (Ext.manifest.toolkit === 'classic') {
-    	                ref.setActiveError(errores[name]);
-    	            } else {
-    	                erroresString = erroresString + ref.getLabel() + ': ' + errores[name] + '<br/>';
-    	            }
-    	        }
-    	    }
-    	    Ext.resumeLayouts();
-    	    
-    	    if (sinErrores !== true) {
-    	        if (Ext.manifest.toolkit === 'classic') {
-    	            throw 'Favor de revisar los datos';
-    	        } else {
-    	            throw erroresString;
-    	        }
-    	    }
-    		
-    	}catch(e){
-    		Ice.generaExcepcion(e,paso);
-    	}
-    },
-    
-    
+// validarCampos:function(form){
+//    	
+//    	var paso='';
+//    	try{
+//    		if(!form.modelValidators || !form.modelFields){
+//    			throw 'No se puede validar el formulario'+form.getTitle();
+//    		}
+//    		
+//    		paso = 'Construyendo modelo de validaci\u00f3n';
+//    		
+//    		var validators={};
+//    		var refs=form.getReferences();
+//    		var ref=null;
+//    		var view=this.getView();
+//    		Ice.log("-]",form);
+//    		Ice.query('[getName]',form).filter(function(it){
+//    			return it.isHidden()!==true && typeof it.getName =='function' && form.modelValidators[it.getName()] ;
+//    		})
+//    		.forEach(function(it){
+//    			validators[it.getName()] = form.modelValidators[it.getName()];
+//    		});
+//    		
+//    		Ice.log("refs , validators",refs, validators)
+//    		
+//    		var modelName = Ext.id();
+//            var  modelo = Ext.define(modelName, {
+//                extend: 'Ext.data.Model',
+//                fields: form.modelFields,
+//                validators: validators
+//            });
+//            
+//           Ice.log( "Modelo",modelo)
+//            
+//            paso = 'Validando datos';
+//            errores = Ext.create(modelName, form.getValues()).getValidation().getData();
+//            Ice.log("Errores",errores)
+//            var sinErrores = true,
+//            erroresString = '';
+//    	    Ext.suspendLayouts();
+//    	    for (var name in errores) {
+//    	        if (errores[name] !== true) {
+//    	            sinErrores = false;
+//    	            var ref = form.down('[name=' + name + ']');
+//    	            if (Ext.manifest.toolkit === 'classic') {
+//    	                ref.setActiveError(errores[name]);
+//    	            } else {
+//    	                erroresString = erroresString + ref.getLabel() + ': ' + errores[name] + '<br/>';
+//    	            }
+//    	        }
+//    	    }
+//    	    Ext.resumeLayouts();
+//    	    
+//    	    if (sinErrores !== true) {
+//    	        if (Ext.manifest.toolkit === 'classic') {
+//    	            throw 'Favor de revisar los datos';
+//    	        } else {
+//    	            throw erroresString;
+//    	        }
+//    	    }
+//    		
+//    	}catch(e){
+//    		Ice.generaExcepcion(e,paso);
+//    	}
+//    },
+//    
+//    
     
     valRfc:function(){
     	var me=this,
@@ -456,7 +463,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     		
     	}catch(e){
     		Ice.log(e)
-    		console.error(e.stack);
+    		//console.error(e.stack);
     		Ice.generaExcepcion(e,paso);
     	}
     	/**

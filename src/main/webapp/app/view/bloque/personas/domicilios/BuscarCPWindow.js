@@ -3,14 +3,11 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 	extend		:	"Ice.view.componente.VentanaIce",
 	controller	:	"buscarcpwindow",
 	xtype		:	"buscarcpwindow",
-	layout		:   "anchor",
 	scrollable	:	true,
-	title		:	"Buscar Domicilio",
-	width		:	"60%",
+	//modal		:	true,
+	width		:	"90%",
 	height		:	"80%",
-	defaults	:	{
-		bodyPadding: 20
-	},
+	title		:	"Buscar Domicilio",
 	config		:	{
 		record		:	{} 
 	},
@@ -29,15 +26,9 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 			
 			me.items=[
 				{
-					xtype		:	'formice',
+					xtype		:	'formtrescolumnasice',
 					scrollable	:	true,
-					layout		:	{
-						type		:	'table',
-						columns		:	2
-					},
-//					defaults	:	{
-//						bodyPadding: 10
-//					},
+					maxHeight	:	200,
 					items		:	comps.AGREGAR_PERSONAS.BUSCARCDPOS.items,
 					buttons		:	[
 						{
@@ -48,44 +39,49 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 					]
 				},
 				{
-					xtype		:	'gridice',
-					title		:	"Resultados",
+					xtype		:	'panelice',
 					scrollable	:	true,
-					minHeight	:	300,
-					height		:	300,
-					botones		:	[],
-					columns		:	[
+					maxHeight	:	150,
+					items		:	[
 						{
-							text		:	'CP',
-							dataIndex	:	'cdcodpos'
-						},
-						{
-							text		:	'Provincia',
-							dataIndex	:	'dsprovin'
-						},
-						{
-							text		:	'Ciudad',
-							dataIndex	:	'dsciudad'
-						},
-						{
-							text		:	'Municipio',
-							dataIndex	:	'dsmunici'
-						}
-					],
-					store		:	{
-						
-						fields	:["cdpostal",'otpoblac',"cdpais","descripl",'cdmunici','cdcodpos','cdprovin','dscodpos','dsprovin','dsciudad','cdciudad','dsmunici','tipoiva'],
-						proxy	:{
-							type 		:	'ajax',
-							url			:	Ice.url.bloque.personas.buscaCP,
-							reader 		: {
-								type 			: 'json',
-								rootProperty 	: 'list',
-								successProperty : 'success',
-								messageProperty : 'message'
+							xtype		:	'gridice',
+							title		:	"Resultados",
+							scrollable	:	true,
+							botones		:	[],
+							columns		:	[
+								{
+									text		:	'CP',
+									dataIndex	:	'cdcodpos'
+								},
+								{
+									text		:	'Provincia',
+									dataIndex	:	'dsprovin'
+								},
+								{
+									text		:	'Ciudad',
+									dataIndex	:	'dsciudad'
+								},
+								{
+									text		:	'Municipio',
+									dataIndex	:	'dsmunici'
+								}
+							],
+							store		:	{
+								
+								fields	:["cdpostal",'otpoblac',"cdpais","descripl",'cdmunici','cdcodpos','cdprovin','dscodpos','dsprovin','dsciudad','cdciudad','dsmunici','tipoiva'],
+								proxy	:{
+									type 		:	'ajax',
+									url			:	Ice.url.bloque.personas.buscaCP,
+									reader 		: {
+										type 			: 'json',
+										rootProperty 	: 'list',
+										successProperty : 'success',
+										messageProperty : 'message'
+									}
+								}
 							}
 						}
-					}
+					]
 				}
 			];
 			
