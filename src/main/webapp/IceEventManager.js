@@ -32,11 +32,12 @@ var Ice = (
                     // existe un changeValueProfile para name.value
                     iceEvents.changeValueProfile
                     && iceEvents.changeValueProfile[name]
-                    && iceEvents.changeValueProfile[name][value]
+                    // && iceEvents.changeValueProfile[name][value] se comenta para que se use *
                     // existe un changeEvents para name.[changeValueProfile]
                     && iceEvents.changeEvents
                     && iceEvents.changeEvents[name]
-                    && iceEvents.changeEvents[name][iceEvents.changeValueProfile[name][value]]
+                    // && iceEvents.changeEvents[name][iceEvents.changeValueProfile[name][value]] se cambia por la linea:
+                    && iceEvents.changeEvents[name][(iceEvents.changeValueProfile[name][value] || '*')]
                     )) {
                     return;
                 }
@@ -50,7 +51,7 @@ var Ice = (
                         }
                     }
                 };
-                var valueProfile = iceEvents.changeValueProfile[name][value];
+                var valueProfile = iceEvents.changeValueProfile[name][value] || '*';
                 if (iceEvents.changeEvents[name][valueProfile].visible) {
                     crearMapaItemsPorName();
                     Ext.suspendLayouts();
