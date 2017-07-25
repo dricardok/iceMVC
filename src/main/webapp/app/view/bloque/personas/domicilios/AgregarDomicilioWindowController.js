@@ -208,7 +208,15 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
 	    				var datos=json.params || {};
 	    				Ext.ComponentQuery.query('[getName]',root)
 	    				.forEach(function(it){
-	    					it.setValue(datos[it.getName()]);
+	    					
+	    					
+	    					if(it.getStore){
+	    						it.getStore().load(function(){
+	    							it.setValue(datos[it.getName()]);
+	    						});
+	    					}else{
+	    						it.setValue(datos[it.getName()]);
+	    					}
 	    				});
 	    				
 	    				if(call){

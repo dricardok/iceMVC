@@ -24,7 +24,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 	               items: true
 	           });
 			
-			me.items=[
+			config.items=[
 				{
 					xtype		:	'formtrescolumnasice',
 					scrollable	:	true,

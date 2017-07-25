@@ -13,7 +13,6 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 	autoShow		:	true,
 	title			:	'Agregar Domicilio',
 	constructor : 	function(config){
-		
 		var paso="",
 			me=this;
 		try{
@@ -49,7 +48,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
     			}
     		});
 			
-			me.items=[
+			config.items=[
 				{
 					xtype		:	"formtrescolumnasice",
 					reference	:	"formulario",

@@ -26,7 +26,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     		me=this,
     		view=me.getView();
     	try{
-    		var form=view.down("[xtype=formice]"),
+    		var form=view.down("[xtype=formtrescolumnasice]"),
     			tvaloper={},
     			mpersona={};
     		me.validarCampos(form);
@@ -309,7 +309,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 		me=this,
 		view=me.getView();
 		try{
-			alert();
+			
 			var datos={};
 			datos=Ice.utils.mergeObjects({},accion);
 			var form=Ice.query("#frmDomicilio")
@@ -1596,7 +1596,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     			var rfcGenerado = '';
     			Ice.log("args",arguments)
     			if(Number(tipoPersona) == 1) {// Persona fisica
-    				alert()
+    			
     				rfcGenerado = this. generaRFCPersonaFisica(nombre, nombre2, apaterno, amaterno, fecha);
     				
     			} else if(Number(tipoPersona) == 2 || tipoPersona == 'S') { // Persona moral y regimen Simplificado

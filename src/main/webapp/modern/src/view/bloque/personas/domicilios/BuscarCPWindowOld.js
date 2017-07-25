@@ -1,8 +1,8 @@
-Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
+Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow_",{
 	
 	extend		:	"Ice.view.componente.VentanaIce",
 	controller	:	"buscarcpwindow",
-	xtype		:	"buscarcpwindow",
+	xtype		:	"buscarcpwindow_",
 	scrollable	:	true,
 	title		:	"Buscar Domicilio",
 //	width		:	"60%",
