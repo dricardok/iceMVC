@@ -1550,6 +1550,9 @@ var Ice = (
             if (!view) {
                 throw 'Falta vista para suspender eventos';
             }
+            if (view.suspendEvents && typeof view.suspendEvents === 'function') {
+                view.suspendEvents();
+            }
             var comps = Ice.query('[suspendEvents]', view);
             for (var i = 0; i < comps.length; i++) {
                 var comp = comps[i];
@@ -1571,6 +1574,9 @@ var Ice = (
         try {
             if (!view) {
                 throw 'Falta vista para reaundar eventos';
+            }
+            if (view.resumeEvents && typeof view.resumeEvents === 'function') {
+                view.resumeEvents();
             }
             var comps = Ice.query('[resumeEvents]', view);
             for (var i = 0; i < comps.length; i++) {
@@ -1784,10 +1790,14 @@ var Ice = (
                             ref.getStore().valorOnLoad = '' + datos[att];
                             ref.getStore().on('load', function handleLoad (me) {
                                 me.removeListener('load', handleLoad);
+                                Ice.suspendEvents(me.padre);
                                 me.padre.setValue(me.valorOnLoad);
+                                Ice.eventManager.change(me.padre, me.valorOnLoad, true);
+                                Ice.resumeEvents(me.padre);
                             });
                         } else {
                             ref.setValue(datos[att]);
+                            Ice.eventManager.change(ref, datos[att], true);
                         }
                     }
                 }

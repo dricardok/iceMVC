@@ -355,7 +355,9 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                                     ref.getStore().valorOnLoad = '' + json.params[att];
                                     ref.getStore().on('load', function handleLoad (me) {
                                         me.removeListener('load', handleLoad);
+                                        Ice.suspendEvents(me.padre);
                                         me.padre.setValue(me.valorOnLoad);
+                                        Ice.resumeEvents(me.padre);
                                     });
                                 } else {
                                     ref.setValue(json.params[att]);

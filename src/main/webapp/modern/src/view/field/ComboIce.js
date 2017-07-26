@@ -65,6 +65,11 @@ Ext.define('Ice.view.field.ComboIce', {
         
         me.callParent(arguments);
         
+        me.on({
+            change: function (me) {
+                Ice.eventManager.change(me, me.getValue());
+            }
+        });
         
         if (me.getPadres().length > 0) {
             me.heredar = function () {
@@ -95,7 +100,8 @@ Ext.define('Ice.view.field.ComboIce', {
                 var padreName = me.getPadres()[i];
                 var padreComp = me.getParent().down('[name=' + padreName +']');
                 if (padreComp) {
-                    if (padreComp.xtype === 'comboice') {
+                    // los campos con picker no hacen blur
+                    if (padreComp.xtype === 'comboice' || padreComp.xtype === 'datefieldice') {
                         padreComp.on({
                             change: function () {
                                 me.heredar();

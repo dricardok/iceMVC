@@ -8,6 +8,16 @@ Ext.define('Ice.view.field.DatefieldIce', {
     labelAlign: 'top',
     msgTarget: 'under',
     
+    
+    getValue: function () {
+        var fecha = '',
+            value = this.callParent();
+        if (!Ext.isEmpty(value)) {
+            fecha = Ext.Date.format(value, Ext.util.Format.dateFormat);
+        }
+        return fecha;
+    },
+    
     initComponent: function () {
         var me = this,
             configIce = me.config, // la configuracion recibida de TCONFSCR
@@ -24,8 +34,8 @@ Ext.define('Ice.view.field.DatefieldIce', {
         this.callParent(arguments);
 
         me.on({
-            change: function (me, newValue) {
-                Ice.eventManager.change(me, newValue);
+            blur: function (me) {
+                Ice.eventManager.change(me, me.getValue());
             }
         });
     }

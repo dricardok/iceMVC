@@ -25,21 +25,24 @@ Ext.define('Ice.view.field.DatefieldIce', {
             }
         }
         this.callParent([val]);
-    }
-    
-    /*initComponent: function () {
+    },
+
+    initialize: function () {
+        Ice.log('Ice.view.field.DatefieldIce.initialize');
         var me = this,
-            configIce = me.config, // la configuracion recibida de TCONFSCR
-            configTra = {};        // la transformacion en atributos ext (ejemplo: label se pasa a fieldLabel en toolkit classic)
-        
-        
-        // label -> fieldLabel
-        if (configIce.label) {
-            configTra.fieldLabel = configIce.label;
+            paso = 'Configurando comportamiento de campo de fecha';
+        try {
+            ///////////////////////////////////////////////////////
+            me.callParent(arguments); /////////////////////////////
+            ///////////////////////////////////////////////////////
+
+            me.on({
+                change: function (me, newDate) { // aqui no sirve usar blur por el picker
+                    Ice.eventManager.change(me, me.getValue());
+                }
+            });
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
         }
-        
-        
-        Ext.apply(me, configTra);
-        this.callParent(arguments);
-    }*/
+    }
 });

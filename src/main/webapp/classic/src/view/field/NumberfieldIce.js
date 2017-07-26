@@ -64,8 +64,8 @@ Ext.define('Ice.view.field.NumberfieldIce', {
         this.callParent(arguments);
 
         me.on({
-            change: function (me, newValue) {
-                Ice.eventManager.change(me, newValue);
+            blur: function (me) {
+                Ice.eventManager.change(me, me.getValue());
             }
         });
     },
