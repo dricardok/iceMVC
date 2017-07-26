@@ -1,12 +1,13 @@
-Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
+Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow_",{
 	
 	extend		:	"Ice.view.componente.VentanaIce",
 	controller	:	"buscarcpwindow",
-	xtype		:	"buscarcpwindow",
+	xtype		:	"buscarcpwindow_",
+	layout		:   "anchor",
 	scrollable	:	true,
 	title		:	"Buscar Domicilio",
-//	width		:	"60%",
-//	height		:	"80%",
+	width		:	"60%",
+	height		:	"80%",
 	defaults	:	{
 		bodyPadding: 20
 	},
@@ -26,11 +27,14 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 	               items: true
 	           });
 			
-			config.items=[
+			me.items=[
 				{
 					xtype		:	'formice',
 					scrollable	:	true,
-					
+					layout		:	{
+						type		:	'table',
+						columns		:	2
+					},
 //					defaults	:	{
 //						bodyPadding: 10
 //					},
@@ -46,8 +50,10 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 				{
 					xtype		:	'gridice',
 					title		:	"Resultados",
-					width		:	'100%',
-        			height		: 	300,
+					scrollable	:	true,
+					minHeight	:	300,
+					height		:	300,
+					botones		:	[],
 					columns		:	[
 						{
 							text		:	'CP',
@@ -83,32 +89,23 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 				}
 			];
 			
-			config.buttons = [
-				{
-					xtype		:	'button',
-					text		:	'Elegir',
-					handler		:	'onElegir'
-				}
-		    	,
-		    	{
-			    	xtype	: 'button',
-			    	text	: 'Cancelar',
-			    	handler : 'onCancelar'
-		    	}
-		    ];
-			Ice.log("buttons",config.buttons);
-			if (config.buttons.length > 0) {
-			    config.items.push({
-		            xtype : 'toolbar',
-		            docked: 'bottom',
-		            items: config.buttons
-		        });
-			}
-			
 		}catch(e){
 			Ice.generaExcepcion(e,paso);
 		}
 		me.callParent(arguments);
-	}
+	},
+	buttons		:	[
+			{
+				xtype		:	'button',
+				text		:	'Elegir',
+				handler		:	'onElegir'
+			}
+	    	,
+	    	{
+		    	xtype	: 'button',
+		    	text	: 'Cancelar',
+		    	handler : 'onCancelar'
+	    	}
+	    ]
 	
 });

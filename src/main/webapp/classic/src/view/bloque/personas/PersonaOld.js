@@ -1,7 +1,7 @@
-Ext.define('Ice.view.bloque.personas.Persona', {
+Ext.define('Ice.view.bloque.personas.Persona_', {
 	
 		extend  :       'Ext.Panel',
-		xtype	:		'persona',
+		xtype	:		'persona_',
 		config	:		{
 			cdperson		:	null,
 			modelFields		:	[],
@@ -22,6 +22,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 	        Ice.log('Ice.view.bloque.DatosGenerales.constructor config:', config);
 	        var me = this,
 	            paso = 'Validando construcci\u00f3n de bloque de datos generales';
+	        	alert()
 	            try {
 	                if(!config.cdramo || !config.cdrol){
 	                	//throw 'No se recibio ramo o rol en el bloque de personas';

@@ -1,13 +1,12 @@
-Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
+Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow_",{
 	
 	extend		:	"Ice.view.componente.VentanaIce",
 	controller	:	"buscarcpwindow",
-	xtype		:	"buscarcpwindow",
-	layout		:   "anchor",
+	xtype		:	"buscarcpwindow_",
 	scrollable	:	true,
 	title		:	"Buscar Domicilio",
-	width		:	"60%",
-	height		:	"80%",
+//	width		:	"60%",
+//	height		:	"80%",
 	defaults	:	{
 		bodyPadding: 20
 	},
@@ -27,14 +26,11 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 	               items: true
 	           });
 			
-			me.items=[
+			config.items=[
 				{
 					xtype		:	'formice',
 					scrollable	:	true,
-					layout		:	{
-						type		:	'table',
-						columns		:	2
-					},
+					
 //					defaults	:	{
 //						bodyPadding: 10
 //					},
@@ -50,10 +46,8 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 				{
 					xtype		:	'gridice',
 					title		:	"Resultados",
-					scrollable	:	true,
-					minHeight	:	300,
-					height		:	300,
-					botones		:	[],
+					width		:	'100%',
+        			height		: 	300,
 					columns		:	[
 						{
 							text		:	'CP',
@@ -89,23 +83,32 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 				}
 			];
 			
+			config.buttons = [
+				{
+					xtype		:	'button',
+					text		:	'Elegir',
+					handler		:	'onElegir'
+				}
+		    	,
+		    	{
+			    	xtype	: 'button',
+			    	text	: 'Cancelar',
+			    	handler : 'onCancelar'
+		    	}
+		    ];
+			Ice.log("buttons",config.buttons);
+			if (config.buttons.length > 0) {
+			    config.items.push({
+		            xtype : 'toolbar',
+		            docked: 'bottom',
+		            items: config.buttons
+		        });
+			}
+			
 		}catch(e){
 			Ice.generaExcepcion(e,paso);
 		}
 		me.callParent(arguments);
-	},
-	buttons		:	[
-			{
-				xtype		:	'button',
-				text		:	'Elegir',
-				handler		:	'onElegir'
-			}
-	    	,
-	    	{
-		    	xtype	: 'button',
-		    	text	: 'Cancelar',
-		    	handler : 'onCancelar'
-	    	}
-	    ]
+	}
 	
 });

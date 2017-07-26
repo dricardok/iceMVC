@@ -6,23 +6,18 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 	config		:	{
 		cdperson	:	null,
 		nmorddom	:	null,
-		accion		:	"I"
+		accion		:	"I",
+		modelValidators:   {},
+		modelFields	:	[]
 	},
 	autoShow		:	true,
 	title			:	'Agregar Domicilio',
-	layout			: 	"fit",
-	height			:	"80%",
-	defaults		:{
-		bodyPadding: 20
-	},
 	constructor : 	function(config){
-		
 		var paso="",
 			me=this;
 		try{
 			if(config.cdperson && config.nmorddom){
 				config.accion="U";
-				//alert();
 			}
 			
 			Ice.log("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow.constructor: cdperson nmorddom",config.cdperson,config.nmorddom);
@@ -53,18 +48,11 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
     			}
     		});
 			
-			me.items=[
+			config.items=[
 				{
-					xtype		:	"formice",
+					xtype		:	"formtrescolumnasice",
 					reference	:	"formulario",
 					scrollable	:	true,
-					layout		:	{
-						type		:	'table',
-						columns		:	2
-					},
-					defaults	:	{
-						bodyPadding: 10
-					},
 					items		:	comps.AGREGAR_PERSONAS.MDOMICIL.items,
 			    	modelValidators:comps.AGREGAR_PERSONAS.MDOMICIL.validators,
         			modelFields	:	comps.AGREGAR_PERSONAS.MDOMICIL.fields,	
