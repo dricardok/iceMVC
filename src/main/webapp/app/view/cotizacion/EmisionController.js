@@ -313,6 +313,71 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             refs = view.getReferences(),
             paso = 'Guardando datos';
         try {
+        	paso = 'Ejecutando validaciones de integridad...';
+			Ice.request({
+				url: Ice.url.bloque.ejecutarValidacion,
+				params: {
+					'params.cdunieco': view.getCdunieco(),
+	    			'params.cdramo'  : view.getCdramo(),
+	    			'params.estado'  : view.getEstado(),
+	    			'params.nmpoliza': view.getNmpoliza(),
+	    			'params.nmsituac': 0,
+					'params.nmsuplem': view.getNmsuplem(),
+					 bloques: ["B0"]
+				},
+				success : function(json) {
+					Ice.log('success...', json);
+					Ice.log(json);
+					var paso3 = 'Evaluando validaciones';
+					try {
+    					var list = json.list || [];
+    					if (list.length > 0) {
+    						
+    						var hayErroresValidacion = false;
+							list.forEach(function (it) {
+								if ((it.tipo + '').toLowerCase() == 'error') {
+									hayErroresValidacion = true;
+								}
+							});
+    						
+							Ext.create('Ice.view.bloque.VentanaValidaciones', {
+								lista: list,
+				                buttons: [
+				                    {
+				                    	hidden: hayErroresValidacion,
+				                        text: 'Continuar',
+				                        iconCls: 'x-fa fa-forward',
+				                        handler: function (bot) {
+				                        	bot.up('ventanavalidaciones').cerrar();
+				                        	me.tarificar();
+				                        }
+				                    }
+				                ]
+							}).mostrar();
+							
+							if(hayErroresValidacion) {
+								throw "Favor de revisar los errores de validaci\u00F3n";
+							}
+    					} else {
+    						me.tarificar();
+    					}
+			        } catch (e) {
+			            Ice.manejaExcepcion(e, paso3);
+			        }
+				}
+			});
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+    },
+    
+    tarificar: function () {
+        var me = this,
+        view = me.getView(),
+        refs = view.getReferences(),
+        paso = 'Tarificando';
+        Ice.log(paso);
+        try {
             var callbackSuccess = function() {
                 var paso2 = 'Tarificando';
                 try {
