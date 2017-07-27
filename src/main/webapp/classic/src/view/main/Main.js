@@ -116,6 +116,12 @@ Ext.define('Ice.view.main.Main', {
             id: 'main-view-detail-wrap',
             reference: 'mainContainerWrap',
             flex: 1,
+            listeners: {
+                afterrender: 'mainCardPanelAfterrender'
+            },
+            onScrollEnd: function (x, y) {
+                this.fireEvent('onScrollEnd', this, x, y);
+            },
             items: [
             	
                 {

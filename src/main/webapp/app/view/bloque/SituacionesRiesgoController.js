@@ -46,9 +46,10 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             
             if (!cdtipsitCmp) {
                 throw 'No hay campo de tipo de situaci\u00f3n';
-            }
+            } 
 
             if (Ext.manifest.toolkit !== 'classic' && cdtipsitCmp.isXType('selectfield')) { // para los select
+                Ice.log('cdtipsitCmp',cdtipsitCmp);
                 cdtipsitCmp.on({
                     change: function(){
                         me.cargarValoresDefectoVariables();
