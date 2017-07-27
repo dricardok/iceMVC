@@ -113,4 +113,7 @@ public interface EmisionManager {
     public Map<String, String> validarCargaCotizacion (String cdunieco, String cdramo, String nmpoliza, String cdusuari,
             String cdsisrol) throws Exception;
     
+    public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
+            String nmsuplem) throws Exception;
+    
 }

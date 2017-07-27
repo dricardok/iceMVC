@@ -17,7 +17,13 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 		nmsuplem: null,
 		cdperpag: null,
 		nmsituac: null,
-		cdtipsit: null
+		cdtipsit: null,
+
+		// perfilamiento
+		cdptovta: null,
+		cdgrupo: null,
+		cdsubgpo: null,
+		cdperfil: null
 	},
 	
 	constructor: function (config) {
@@ -42,7 +48,12 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 					nmpoliza: config.nmpoliza,
 					nmsuplem: config.nmsuplem,
 					nmsituac: config.nmsituac,
-					cdtipsit: config.cdtipsit
+					cdtipsit: config.cdtipsit,
+
+					cdptovta: config.cdptovta,
+					cdgrupo: config.cdgrupo,
+					cdsubgpo: config.cdsubgpo,
+					cdperfil: config.cdperfil
 	    		}
 	        ];
 		} catch (e) {

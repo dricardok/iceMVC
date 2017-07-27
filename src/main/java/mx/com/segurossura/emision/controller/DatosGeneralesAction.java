@@ -62,7 +62,11 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
                    estado   = params.get("estado"),
                    nmpoliza = params.get("nmpoliza"),
                    nmsuplem = params.get("nmsuplem"),
-                   status   = params.get("status");
+                   status   = params.get("status"),
+                   cdptovta = params.get("cdptovta"),
+                   cdgrupo  = params.get("cdgrupo"),
+                   cdsubgpo = params.get("cdsubgpo"),
+                   cdperfil = params.get("cdperfil");
             
             Utils.validate(cdunieco, "Falta cdunieco",
                            cdramo,   "Falta cdramo",
@@ -71,7 +75,8 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
                            status,   "Falta status");
             
             params = datosGeneralesManager.valoresDefectoFijos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, status,
-                    params.get("swcolind"), params.get("nmpolcoi"), usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
+                    params.get("swcolind"), params.get("nmpolcoi"), usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol(),
+                    cdptovta, cdgrupo, cdsubgpo, cdperfil);
             
             success = true;
         } catch (Exception ex) {
@@ -105,7 +110,11 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
                    estado   = params.get("estado"),
                    nmpoliza = params.get("nmpoliza"),
                    nmsuplem = params.get("nmsuplem"),
-                   status   = params.get("status");
+                   status   = params.get("status"),
+                   cdptovta = params.get("cdptovta"),
+                   cdgrupo  = params.get("cdgrupo"),
+                   cdsubgpo = params.get("cdsubgpo"),
+                   cdperfil = params.get("cdperfil");
             
             Utils.validate(cdunieco , "Falta cdunieco",
                            cdramo   , "Falta cdramo",
@@ -130,7 +139,8 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
                     nmsuplem,
                     nmsuplem,
                     status,
-                    datosMpolizasPantalla
+                    datosMpolizasPantalla,
+                    cdptovta, cdgrupo, cdsubgpo, cdperfil
                     );
             
             success = true;

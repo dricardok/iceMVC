@@ -24,7 +24,8 @@ var Ice = (
             var paso = 'Administrando comportamiento din\u00e1mico';
             try {
                 var form = item.up('[getValues]') || {},
-                    name = item.getName(),
+                    // name = item.getName(), se comenta para usar:
+                    name = item.getReference(),
                     iceEvents = form.iceEvents;
                 Ice.log('Ice.eventManager.change form:', form, 'name:', name, 'iceEvents:', iceEvents);
                 if (!iceEvents) {

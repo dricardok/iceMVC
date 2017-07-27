@@ -511,4 +511,148 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
             compile();
         }
     }
+    
+    @Override
+    public List<Map<String, String>> obtenerPuntosVentaPorUsuario (String cdusuari) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdusuari_i", cdusuari);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerPuntosVentaPorUsuarioSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerPuntosVentaPorUsuarioSP extends StoredProcedure {
+        protected ObtenerPuntosVentaPorUsuarioSP(DataSource dataSource){
+            super(dataSource, "PKG_DATA_ALEA.P_GET_PUNTO_VENTA");
+            declareParameter(new SqlParameter("pv_cdusuari_i", Types.VARCHAR));
+            String[] cols = new String[] {
+                    "cdptovta",
+                    "dsobserv"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public List<Map<String, String>> obtenerGruposPorPuntosventaRamo (String cdptovta, String cdramo) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_cdptovta_i", cdptovta);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerGruposPorPuntosventaRamoSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerGruposPorPuntosventaRamoSP extends StoredProcedure {
+        protected ObtenerGruposPorPuntosventaRamoSP(DataSource dataSource){
+            super(dataSource, "PKG_DATA_ALEA.P_GET_GRUPOS_PV");
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdptovta_i", Types.VARCHAR));
+            String[] cols = new String[] {
+                    "cdgrupo",
+                    "dsgrupo"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    public List<Map<String, String>> obtenerSubgruposPorPuntoventaRamo (String cdptovta, String cdgrupo,
+            String cdramo) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_cdptovta_i", cdptovta);
+        params.put("pv_cdgrupo_i", cdgrupo);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerSubgruposPorPuntoventaRamoSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerSubgruposPorPuntoventaRamoSP extends StoredProcedure {
+        protected ObtenerSubgruposPorPuntoventaRamoSP(DataSource dataSource){
+            super(dataSource, "PKG_DATA_ALEA.P_GET_SUBGRUPOS_PV");
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdptovta_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdgrupo_i", Types.VARCHAR));
+            String[] cols = new String[] {
+                    "cdsubgrp",
+                    "dssubgrp"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    public List<Map<String, String>> obtenerPerfilesPorPuntoventaSubgrupoRamo (String cdptovta, String cdsubgpo,
+            String cdramo) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_cdptovta_i", cdptovta);
+        params.put("pv_cdsubgpo_i", cdsubgpo);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerPerfilesPorPuntoventaSubgrupoRamoSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerPerfilesPorPuntoventaSubgrupoRamoSP extends StoredProcedure {
+        protected ObtenerPerfilesPorPuntoventaSubgrupoRamoSP(DataSource dataSource){
+            super(dataSource, "PKG_DATA_ALEA.P_GET_PERFILES_PV");
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdptovta_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdsubgpo_i", Types.VARCHAR));
+            String[] cols = new String[] {
+                    "cdperfit",
+                    "dsperfit"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    public List<Map<String, String>> obtenerSucursalesDePuntoventa (String cdptovta) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdptovta_i", cdptovta);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerSucursalesDePuntoventaSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerSucursalesDePuntoventaSP extends StoredProcedure {
+        protected ObtenerSucursalesDePuntoventaSP(DataSource dataSource){
+            super(dataSource, "PKG_DATA_ALEA.P_GET_SUCURSAL_PV");
+            declareParameter(new SqlParameter("pv_cdptovta_i", Types.VARCHAR));
+            String[] cols = new String[] {
+                    "cdunieco",
+                    "dsunieco"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
 }

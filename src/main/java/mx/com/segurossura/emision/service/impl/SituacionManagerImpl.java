@@ -67,7 +67,7 @@ public class SituacionManagerImpl implements SituacionManager{
             
             paso = "Antes de obtener valores por defecto de situacion de riesgo";
             Map<String, String> valoresDefecto = emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac,
-                    nmsuplem, Bloque.SITUACIONES.getCdbloque(), "NULO");
+                    nmsuplem, Bloque.SITUACIONES.getCdbloque(), "NULO", null, null, null, null);
             
             if (!valoresDefecto.containsKey("fefecsit")) {
                 valoresDefecto.put("fefecsit", emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem)
@@ -146,7 +146,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     "U");
             
             paso = "Ejecutando valores por defecto de situacion";
-            emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), "NULO");
+            emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), "NULO", null, null, null, null);
             
             paso = "Recuperando valores variables";
             List<Map<String, String>> tvalositList = situacionDAO.obtieneTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac,
@@ -188,7 +188,7 @@ public class SituacionManagerImpl implements SituacionManager{
 	    String paso="";
 	    try{
 	        paso = "Antes de guardar valores por defecto";
-	        emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.GARANTIAS.getCdbloque(), "NULO");
+	        emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.GARANTIAS.getCdbloque(), "NULO", null, null, null, null);
 	        paso = "Recuperando valores variables";
 	    } catch (Exception ex){
 	        Utils.generaExcepcion(ex, paso);
@@ -480,7 +480,7 @@ public class SituacionManagerImpl implements SituacionManager{
             
             if (coberturas == null || coberturas.size() == 0) {
                 emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem,
-                        Bloque.BLOQUE_DUMMY_B18_B19_B19B.getCdbloque(), "NULO");
+                        Bloque.BLOQUE_DUMMY_B18_B19_B19B.getCdbloque(), "NULO", null, null, null, null);
             }
             
             validaciones.addAll(emisionDAO.ejecutarValidaciones(

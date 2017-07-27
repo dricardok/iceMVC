@@ -74,16 +74,17 @@ var Ice = (
         
         // URLs de emision
         emision: {
-            tarificar:              'emision/generarTarificacion.action',
-            obtenerTarifa:          'emision/obtenerDatosTarificacion.action',
-            emitir:                 'emision/confirmarPoliza.action',
-            tarificarPlanes:        'emision/generarTarificacionPlanes.action',
-            tarificarPlan:          'emision/generarTarificacionPlan.action',
-        	obtenerTarifaPlanes:    'emision/obtenerTarifaMultipleTemp.action',
-        	obtenerTarifaPlan:      'emision/obtenerDetalleTarifaTemp.action',
-        	obtieneTvalopol:        'emision/obtieneTvalopol.action',
-        	realizarPago:           'emision/realizarPago.action',
-            validarCargaCotizacion: 'emision/validarCargaCotizacion.action'
+            tarificar:                  'emision/generarTarificacion.action',
+            obtenerTarifa:              'emision/obtenerDatosTarificacion.action',
+            emitir:                     'emision/confirmarPoliza.action',
+            tarificarPlanes:            'emision/generarTarificacionPlanes.action',
+            tarificarPlan:              'emision/generarTarificacionPlan.action',
+        	obtenerTarifaPlanes:        'emision/obtenerTarifaMultipleTemp.action',
+        	obtenerTarifaPlan:          'emision/obtenerDetalleTarifaTemp.action',
+        	obtieneTvalopol:            'emision/obtieneTvalopol.action',
+        	realizarPago:               'emision/realizarPago.action',
+            validarCargaCotizacion:     'emision/validarCargaCotizacion.action',
+            obtenerPerfilamientoPoliza: 'emision/obtenerPerfilamientoPoliza.action'
          },
          
         bloque: {
@@ -1661,19 +1662,22 @@ var Ice = (
                 validators = form.getModelValidators() || {},
                 modelName = Ext.id(),
                 validatorsAplican = {};
-
-            Ice.log('Ice.obtenerErrores refs:', refs, 'valores:', valores, 'fields:', fields,
-                'validators:', validators);
             
             if (!refs) {
                 throw 'No hay referencias para validar errores';
             }
             
+            // transformo los refs a mapa de names, ya que el ref puede ser punto_venta pero el name otvalor12
+            refs = Ice.refsToNames(refs);
+
+            Ice.log('Ice.obtenerErrores refs:', refs, 'valores:', valores, 'fields:', fields,
+                'validators:', validators);
+            
             // solo aplican validators para campos que no esten ocultos
-            for (var att in refs) {
-                var ref = refs[att];
-                if (ref.isHidden() !== true && ref.getName && validators[ref.getName()]) {
-                    validatorsAplican[ref.getName()] = validators[ref.getName()];
+            for (var name in refs) {
+                var ref = refs[name];
+                if (ref.isHidden() !== true && validators[name]) {
+                    validatorsAplican[name] = validators[name];
                 }
             }
 
@@ -1695,7 +1699,7 @@ var Ice = (
             }
 
             for (var name in validatorsAplican) {
-                // si es float/int y paso con true
+                // si es float/int y la validacion dio resultado = true
                 if ((fieldsTypeMap[name] === 'float' || fieldsTypeMap[name] === 'int')
                     && validaciones[name] === true && Ext.isEmpty(valores2[name])) {
                     var arrValidators = validatorsAplican[name];
@@ -1711,10 +1715,10 @@ var Ice = (
             
             Ice.log('Ice.obtenerErrores validaciones:', validaciones);
             
-            for (var att in validaciones) {
-                if (validaciones[att] !== true) {
+            for (var name in validaciones) {
+                if (validaciones[name] !== true) {
                     errores = errores || {};
-                    errores[att] = validaciones[att];
+                    errores[name] = validaciones[name];
                 }
             }
             
@@ -1738,7 +1742,7 @@ var Ice = (
                 throw 'No se puede validar el formulario';
             }
 
-            var refs = form.getReferences(),
+            var refs = Ice.refsToNames(form.getReferences()),
                 errores = Ice.obtenerErrores(form);
             if (errores) {
                 if (Ext.manifest.toolkit === 'classic') {
@@ -1766,7 +1770,9 @@ var Ice = (
      * Carga un formulario. Recibe el form, los datos y opciones. Carga los campos que existan y
      * dispara la herencia de anidados.
      * opciones: {
-     *     sinReset (boolean)
+     *     sinReset (boolean),
+     *     callback (function),
+     *     sinUsarNames (boolean)
      * }
      */
     cargarFormulario: function (form, datos, opciones) {
@@ -1776,38 +1782,58 @@ var Ice = (
             if (!form) {
                 throw 'Falta el formulario';
             }
+            var setValuePendientes = 0, // numero de setValue pendientes por store.load
+                callbackInterno = function () {
+                    Ice.log('callbackInterno setValuePendientes:', setValuePendientes, 'opciones:', opciones);
+                    if (setValuePendientes === 0 && opciones && typeof opciones.callback === 'function') {
+                        var paso2 = 'Ejecutando callback posterior a cargar formulario';
+                        try {
+                            opciones.callback(form);
+                        } catch (e) {
+                            Ice.manejaExcepcion(e, paso2);
+                        }
+                    }
+                };
             Ice.suspendEvents(form);
             if (!(opciones && opciones.sinReset === true)) {
                 form.reset();
             }
             if (datos) {
                 var refs = form.getReferences() || {};
-                for (var att in datos) {
-                    var ref = refs[att];
+                if (!(opciones && opciones.sinUsarNames === true)) {
+                    refs = Ice.refsToNames(refs);
+                }
+                Ice.log('Ice.cargarFormulario refs:', refs);
+                for (var name in datos) {
+                    var ref = refs[name];
                     if (ref) {
                         if (ref.isXType('selectfield') && ref.getStore().getCount() === 0) { // aun no hay registros
                             ref.getStore().padre = ref;
-                            ref.getStore().valorOnLoad = '' + datos[att];
+                            ref.getStore().valorOnLoad = '' + datos[name];
+                            setValuePendientes = setValuePendientes + 1; // se agrega un pendiente
                             ref.getStore().on('load', function handleLoad (me) {
                                 me.removeListener('load', handleLoad);
                                 Ice.suspendEvents(me.padre);
                                 me.padre.setValue(me.valorOnLoad);
                                 Ice.eventManager.change(me.padre, me.valorOnLoad, true);
                                 Ice.resumeEvents(me.padre);
+                                setValuePendientes = setValuePendientes - 1; // se resta un pendiente
+                                callbackInterno(); // se intenta callback si ya no hay pendientes
                             });
                         } else {
-                            ref.setValue(datos[att]);
-                            Ice.eventManager.change(ref, datos[att], true);
+                            ref.setValue(datos[name]);
+                            Ice.eventManager.change(ref, datos[name], true);
                         }
                     }
                 }
-                for (var refKey in refs) {
-                    if (refs[refKey].heredar) {
-                        refs[refKey].heredar();
+                for (var name in refs) {
+                    if (refs[name].heredar) {
+                        refs[name].heredar();
                     }
                 }
             }
             Ice.resumeEvents(form);
+            callbackInterno(); // si no se dejo ningun setValue pendiente, se ejecutara de inmediato
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -1875,7 +1901,11 @@ var Ice = (
      * Esta funcion hace submit al index de la aplicacion
      */
     index: function () {
-        Ice.query('#mainView').getController().redirectTo('mesacontrol.action');
+        Ice.redirect('mesacontrol.action');
+    },
+
+    redirect: function (url) {
+        Ice.query('#mainView').getController().redirectTo(url);
     },
     
     utils: {
@@ -2068,6 +2098,44 @@ var Ice = (
             }
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
+        }
+    },
+    
+    /**
+     * Convierte las referencias a un objeto donde el key es el name en lugar del reference.
+     * @param refs -> las referencias de un formulario
+     * @return convierte cada referencia a su name
+     * entrada:
+     * {
+     *     cdunieco: comp,
+     *     cdramo: comp,
+     *     punto_venta: comp << esta referencia tiene getName() == otvalor12
+     * }
+     * salida:
+     * {
+     *     cdunieco: comp,
+     *     cdramo: comp,
+     *     otvalor12: comp << este campo tenia reference = punto_venta
+     * }
+     */
+    refsToNames: function (refs) {
+        Ice.log('Ice.refsToNames refs:', refs);
+        var paso = 'Convirtiendo referencias a names';
+        try {
+            if (!refs) {
+                return refs;
+            }
+            var namesMap;
+            for (refKey in refs) {
+                if (refs[refKey] && typeof refs[refKey].getName === 'function') {
+                    namesMap = namesMap || {};
+                    namesMap[refs[refKey].getName()] = refs[refKey];
+                }
+            }
+            Ice.log('Ice.refsToNames namesMap:', namesMap);
+            return namesMap;
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
         }
     }
 });

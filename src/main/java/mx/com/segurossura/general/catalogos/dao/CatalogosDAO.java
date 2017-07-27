@@ -139,4 +139,16 @@ public interface CatalogosDAO {
      * @throws Exception
      */
     public List<Map<String, String>> obtenerCompañias() throws Exception;
+    
+    public List<Map<String, String>> obtenerPuntosVentaPorUsuario (String cdusuari) throws Exception;
+    
+    public List<Map<String, String>> obtenerGruposPorPuntosventaRamo (String cdptovta, String cdramo) throws Exception;
+    
+    public List<Map<String, String>> obtenerSubgruposPorPuntoventaRamo (String cdptovta, String cdgrupo,
+            String cdramo) throws Exception;
+    
+    public List<Map<String, String>> obtenerPerfilesPorPuntoventaSubgrupoRamo (String cdptovta, String cdsubgpo,
+            String cdramo) throws Exception;
+    
+    public List<Map<String, String>> obtenerSucursalesDePuntoventa (String cdptovta) throws Exception;
 }

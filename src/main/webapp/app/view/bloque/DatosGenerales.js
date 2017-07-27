@@ -35,7 +35,13 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
         ],
         
         // otro
-        swcolind: 'I'
+        swcolind: 'I',
+
+        // perfilamiento
+        cdptovta: null,
+        cdgrupo: null,
+        cdsubgpo: null,
+        cdperfil: null
     },
     
     // validacion de parametros de entrada

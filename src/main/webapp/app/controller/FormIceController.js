@@ -2,13 +2,7 @@ Ext.define('Ice.app.controller.FormIceController', {
     extend: 'Ext.app.ViewController',
     
     /**
-     * Recupera los errores del formulario, el formulario debe tener getModelFields y getModelValidators.
-     * Regresa un objeto de errores o null.
-     * {
-     *     cdunieco: 'Favor de introducir la sucursal',
-     *     nmpoliza: 'La cotizaci\u00f3n es obligatoria',
-     *     edad: 'Debe ser mayor de edad'
-     * }
+     * Ver documentacion de Ice.obtenerErrores
      */
     obtenerErrores: function () {
         Ice.log('Ice.app.controller.FormIceController.obtenerErrores');
@@ -25,9 +19,7 @@ Ext.define('Ice.app.controller.FormIceController', {
     },
 
     /**
-     * Valida los campos del formulario, el formulario debe tener getModelFields y getModelValidators.
-     * Lanza excepcion si hay datos invalidos (en classic marca los campos en rojo, en modern la excepcion
-     * contiene la descripcion de errores)
+     * Ver documentacion de Ice.validarFormulario
      */
     validarFormulario: function () {
         Ice.log('Ice.app.controller.FormIceController.validarFormulario');
@@ -41,11 +33,7 @@ Ext.define('Ice.app.controller.FormIceController', {
     },
 
     /**
-     * Carga el formulario. Recibe los datos y opciones. Carga los campos que existan y
-     * dispara la herencia de anidados.
-     * opciones: {
-     *     sinReset (boolean)
-     * }
+     * Ver documentacion de Ice.cargarFormulario
      */
     cargarFormulario: function (datos, opciones) {
         Ice.log('Ice.app.controller.FormIceController.cargarFormulario datos:', datos, 'opciones:', opciones);

@@ -17,10 +17,16 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 				nmpoliza: view.getNmpoliza(),
 				cdperpag: rec.get('cdperpag'),
 				cdtipsit: view.getCdtipsit(),
+
+				// perfilamiento
+                cdptovta: view.getCdptovta(),
+                cdgrupo: view.getCdgrupo(),
+                cdsubgpo: view.getCdsubgpo(),
+                cdperfil: view.getCdperfil(),
 				
 				buttons: [
 					{
-						text: 'Confirmar',
+						text: 'Confirmar forma de pago',
 	                    iconCls: 'x-fa fa-key',
 						handler: function (me) {
 							var paso = 'Tarificando el plan seleccionado'; 							
@@ -29,6 +35,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 								// Tarifincando cotizacion con el plan seleccionado y redirecconando a emitir
 								Ice.request({
 					                mascara: paso,
+									timeout: 1000*60*5,
 					                url: Ice.url.emision.tarificarPlan,
 					                params: Ice.convertirAParams({
 										cdunieco: view.getCdunieco(),
@@ -41,9 +48,17 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 									}),
 					                success: function (action) {
 					                	me.up('ventanatarifastemporales').cerrar();
-					                	Ice.query('#mainView').getController().redirectTo('emision.action?cdunieco=' + view.getCdunieco() +
-				                                '&cdramo=' + view.getCdramo() + '&estado=' + view.getEstado() + '&nmpoliza=' + view.getNmpoliza() +
-				                                '&cdtipsit=' + view.getCdtipsit(),
+					                	Ice.query('#mainView').getController().redirectTo('emision.action?' +
+										    'cdunieco=' + view.getCdunieco() + '&' +
+											'cdramo='   + view.getCdramo()   + '&' +
+											'estado='   + view.getEstado()   + '&' +
+											'nmpoliza=' + view.getNmpoliza() + '&' +
+											'cdtipsit=' + view.getCdtipsit() + '&' +
+											// perfilamiento
+											'cdptovta=' + view.getCdptovta() + '&' +
+											'cdgrupo='  + view.getCdgrupo()  + '&' +
+											'cdsubgpo=' + view.getCdsubgpo() + '&' +
+											'cdperfil=' + view.getCdperfil(),
 				                            true);
 					                }
 					            });
