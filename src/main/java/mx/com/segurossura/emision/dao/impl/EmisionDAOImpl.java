@@ -1762,6 +1762,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             compile();
         }
     }
+    
     public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
             String nmsuplem) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();

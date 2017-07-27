@@ -509,17 +509,19 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
                     success: function (json) {
                         var paso2 = 'LLenando store';
                         try {
-                            Ice.log('json list',json.list,'params',json.params);
+                            Ice.log('json list',json.list,'params',json.params,'refs',refs);
                             if(view.cdtipcoa == 'A'){
                                 Ice.cargarFormulario(refs.formAceptado, json.params);
                             } else {
-                                Ice.cargarFormulario(refs.form, json.params);
-                                refs.grid.getStore().removeAll();
-                                for(var i = 0; i < json.list.length; i++){
-                                    refs.grid.getStore().add(json.list[i]);
+                                if(!Ext.isEmpty(refs.form.getReferences())){
+                                    Ice.cargarFormulario(refs.form, json.params);
+                                    refs.grid.getStore().removeAll();
+                                    for(var i = 0; i < json.list.length; i++){
+                                        refs.grid.getStore().add(json.list[i]);
+                                    }
+                                    refs.form.show();
+                                    refs.grid.show();
                                 }
-                                refs.form.show();
-                                refs.grid.show();
                             }
                         } catch (e) {
                             Ice.manejaExcepcion(e, paso2);
