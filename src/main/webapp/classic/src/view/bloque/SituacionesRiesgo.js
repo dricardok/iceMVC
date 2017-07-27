@@ -167,13 +167,13 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 						hidden: true,
 						buttons: [
 							{
-								xtype: 'button',
 								reference: 'btnGuardar',
 								text: 'Guardar',
+	                            iconCls: 'x-fa fa-save',
 								handler: 'onGuardarBloque'
 							},{
-								xtype: 'button',
 								text: 'Cancelar',
+	                            iconCls: 'x-fa fa-close',
 								handler: 'onCancelar'
 							}
 						],

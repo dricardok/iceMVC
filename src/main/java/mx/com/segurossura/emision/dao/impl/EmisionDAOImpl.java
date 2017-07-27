@@ -22,6 +22,7 @@ import org.springframework.stereotype.Repository;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
+import com.biosnettcs.core.dao.mapper.DinamicMapper;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
 import com.biosnettcs.core.exception.ApplicationException;
 
@@ -1393,22 +1394,23 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_estado_i"    , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmpoliza_i"  , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
-            String[] cols = new String[] { 
-                    "cdunieco",
-                    "cdramo",
-                    "estado",
-                    "nmpoliza",
-                    "nmsuplem", 
-                    "cdcia",
-                    "cdtipcoa",
-                    "status",
-                    "swabrido",
-                    "porcpart", 
-                    "cdmodelo",
-                    "swpagcom",
-                    "dscia"
-            };
-            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+//            String[] cols = new String[] { 
+//                    "cdunieco",
+//                    "cdramo",
+//                    "estado",
+//                    "nmpoliza",
+//                    "nmsuplem", 
+//                    "cdcia",
+//                    "cdtipcoa",
+//                    "status",
+//                    "swabrido",
+//                    "porcpart", 
+//                    "cdmodelo",
+//                    "swpagcom",
+//                    "dscia",
+//                    "cdesqcoa"
+//            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new DinamicMapper()));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  ,  Types.VARCHAR));
             compile();
@@ -1726,6 +1728,40 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     }
     
     @Override
+    public boolean tieneCoaseguro (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        Map<String, Object> bdRes = ejecutaSP(new TieneCoaseguroSP(getDataSource()), params);
+        boolean coaseguro = false;
+        if(!bdRes.isEmpty()){
+            if(bdRes.get("pv_coaseguro_o") != null){
+                String resp = (String) bdRes.get("pv_coaseguro_o");
+                if(resp.equals("S")){
+                    coaseguro = true;
+                }
+            }
+        }
+        return coaseguro;
+    }
+    
+    protected class TieneCoaseguroSP extends StoredProcedure {
+        protected TieneCoaseguroSP(DataSource dataSource) {
+            super(dataSource, "P_GET_COASEGURO");           
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_coaseguro_o" , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            compile();
+        }
+    }
     public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
             String nmsuplem) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
@@ -1758,6 +1794,58 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public void eliminaCoaseguro (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        ejecutaSP(new EliminaCoaseguroSP(getDataSource()), params);
+    }
+    
+    protected class EliminaCoaseguroSP extends StoredProcedure {
+        protected EliminaCoaseguroSP(DataSource dataSource) {
+            super(dataSource, "P_ELIMINA_COASEGURO");           
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public void actualizaSwitchCoaseguroCedido (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdesqcoa) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        params.put("pv_esqu_coaseg_i", cdesqcoa);
+        ejecutaSP(new ActualizaSwitchCoaseguroCedidoSP(getDataSource()), params);
+    }
+    
+    protected class ActualizaSwitchCoaseguroCedidoSP extends StoredProcedure {
+        protected ActualizaSwitchCoaseguroCedidoSP(DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_ACTU_COMI_COAS");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_esqu_coaseg_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
             compile();
         }
     }

@@ -22,6 +22,7 @@ import com.biosnettcs.portal.controller.PrincipalCoreAction;
 import com.biosnettcs.portal.model.UsuarioVO;
 import com.opensymphony.xwork2.ActionContext;
 
+import mx.com.segurossura.emision.service.DatosAuxiliaresManager;
 import mx.com.segurossura.emision.service.DatosGeneralesManager;
 
 @Controller
@@ -39,6 +40,9 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
     
     @Autowired
     private DatosGeneralesManager datosGeneralesManager;
+    
+    @Autowired
+    private DatosAuxiliaresManager datosAuxiliaresManager;
     
     /**
      * Lo primero que se ejecuta en bloque de datos generales.
@@ -241,7 +245,8 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
             if(list.size() > 0){
                 params.put("cdmodelo", list.get(0).get("cdmodelo"));
                 params.put("swpagcom", list.get(0).get("swpagcom"));
-                params.put("swpagcom", list.get(0).get("status"));
+                params.put("status", list.get(0).get("status"));
+                params.put("otvalor07", list.get(0).get("otvalor07"));
             }
             success = true;
         } catch (Exception ex) {
@@ -346,8 +351,10 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
                             nmpoliza, "No se recibio numero de poliza",
                             nmsuplem, "No se recibio suplemento de poliza",
                             cdtipcoa, "No se recibio tipo de coaseguro",
-                            status,   "No se recibio el status");
+                            status,   "No se recibio el status");           
             datosGeneralesManager.movimientoMpolicoa(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem, cdtipcoa, status, cdmodelo, swpagcom, list, accion);
+            datosAuxiliaresManager.guardarDatosAuxiliares(cdunieco, cdramo, estado, nmpoliza, "B1", "-1", "*", nmsuplem, status, params);
+            datosGeneralesManager.actualizaSwitchCoaseguroCedido(cdunieco, cdramo, estado, nmpoliza, nmsuplem, params);
             success = true;
         } catch (Exception ex) {
             success = false;
@@ -386,6 +393,36 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
                             nmpolizal, "No se recibio numero de poliza largo",
                             nmsuplem, "No se recibio suplemento de poliza");
             datosGeneralesManager.movimientoMsupcoa(cdcialider, cdunieco, cdramo, estado, nmpoliza, nmpolizal, nmsuplem, nmsuplem, tipodocu, ndoclider, status, accion);
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
+    @Action(
+            value = "datosGenerales/eliminaCoaseguro", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String eliminaCoaseguro() {
+        logger.debug(Utils.log("###### eliminaCoaseguro params: ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem");
+             Utils.validate(cdunieco, "No se recibio sucursal",
+                            cdramo,   "No se recibio producto",
+                            estado,   "No se recibio estado de la poliza",
+                            nmpoliza, "No se recibio numero de poliza",
+                            nmsuplem, "No se recibio suplemento de poliza");
+            datosGeneralesManager.eliminaCoaseguro(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
             success = true;
         } catch (Exception ex) {
             success = false;

@@ -103,4 +103,29 @@ public interface DatosGeneralesManager {
      * @throws Exception
      */
     public List<Map<String, String>> obtenerCoaseguroAceptado(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+    
+    /**
+     * Elimina tablas de coaseguro
+     * 
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsuplem
+     * @throws Exception
+     */
+    public void eliminaCoaseguro(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+    
+    /**
+     * Actualiza switch de coaseguro cedido
+     * 
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsuplem
+     * @param cdesqcoa
+     * @throws Exception
+     */
+    public void actualizaSwitchCoaseguroCedido(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, Map<String, String> cdesqcoa) throws Exception;
 }

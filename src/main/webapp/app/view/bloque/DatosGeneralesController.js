@@ -485,7 +485,6 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                             }
                         }
                         
-                        
                         if (params && params.success) {
                             paso2 = 'Ejecutando proceso posterior al guardado de datos generales';
                             params.success();
