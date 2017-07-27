@@ -654,7 +654,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     @Override
     public Map<String, String> ejecutarValoresDefecto (String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmsituac, String nmsuplem, String cdbloque, String cdgarant, String cdptovta, String cdgrupo, String cdsubgpo,
-            String cdperfil) throws Exception {
+            String cdperfil, String cdusuari, String cdsisrol) throws Exception {
         
         if (StringUtils.isBlank(cdgarant)) {
             cdgarant = "NULO";
@@ -672,7 +672,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_cdptovta_i" , cdptovta);
         params.put("pv_cdgrupo_i"  , cdgrupo);
         params.put("pv_cdsubgpo_i" , cdsubgpo);
-        params.put("pv_cdperfil_i" , cdperfil);
+        params.put("pv_cdperfit_i" , cdperfil);
+        params.put("pv_cdusuari_i" , cdusuari);
+        params.put("pv_cdsisrol_i" , cdsisrol);
         Map<String, Object> procRes = ejecutaSP(new EjecutarValoresDefectoSP(getDataSource()), params);
         String valores = (String) procRes.get("pv_string_val_o");
         if (StringUtils.isBlank(valores)) {
@@ -710,7 +712,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_cdptovta_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdgrupo_i"  , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdsubgpo_i" , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdperfil_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdperfit_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdusuari_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdsisrol_i" , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_string_val_o" , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o"     , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"      , Types.VARCHAR));

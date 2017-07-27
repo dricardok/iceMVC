@@ -279,7 +279,7 @@ public class EmisionManagerImpl implements EmisionManager {
 
 	@Override
 	public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String nmsituac) throws Exception {
+			String nmsituac, String cdusuari, String cdsisrol) throws Exception {
 		String paso = null;
 		Map<String, Object> res = null;
 		try {
@@ -296,7 +296,8 @@ public class EmisionManagerImpl implements EmisionManager {
 
 			paso = "Tarificando conceptos globales";
 			emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0",
-					Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO", null, null, null, null);
+					Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO", null, null, null, null,
+					cdusuari, cdsisrol);
 
 			emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, "0");
 		} catch (Exception ex) {
@@ -306,7 +307,8 @@ public class EmisionManagerImpl implements EmisionManager {
 	}
 	
 	@Override
-	public List<Map<String, Object>> generarTarificacionPlanes(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception {
+	public List<Map<String, Object>> generarTarificacionPlanes(String cdunieco, String cdramo, String estado, String nmpoliza,
+	        String nmsituac, String cdusuari, String cdsisrol) throws Exception {
 		String paso = null;
 		Map<String, Object> res = null;
 		List<Map<String, Object>> resultados = new ArrayList<Map<String, Object>>();
@@ -375,7 +377,9 @@ public class EmisionManagerImpl implements EmisionManager {
 				}
 				
 				paso = "Tarificando conceptos globales";
-				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0", Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO", null, null, null, null);
+				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0",
+				        Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO", null, null, null, null,
+				        cdusuari, cdsisrol);
 				
 				
 				emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, "0");
@@ -463,7 +467,7 @@ public class EmisionManagerImpl implements EmisionManager {
 				
 			}			
 			
-			res = generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+			res = generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdusuari, cdsisrol);
 			
 			// marcar la cotizacion como confirmada
 			Map<String, String> tvaloaux = null;

@@ -7,12 +7,14 @@ public interface SituacionManager {
     
     Map<String, String> obtenerSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdtipsit, String nmsuplem) throws Exception;
     
-    Map<String, String> valoresDefectoFijos (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+    Map<String, String> valoresDefectoFijos (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
+            String cdusuari, String cdsisrol) throws Exception;
     
     Map<String, String> valoresDefectoVariables (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, 
-            String nmsuplem, String status, Map<String, String> datos) throws Exception;
+            String nmsuplem, String status, Map<String, String> datos, String cdusuari, String cdsisrol) throws Exception;
     
-    void valoresDefectoCoberturas (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem) throws Exception;
+    void valoresDefectoCoberturas (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem,
+            String cdusuari, String cdsisrol) throws Exception;
     
 	public void movimientoMpolisit(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsituac, String nmsuplemEnd, String nmsuplem, String status, Map<String, String> datos,
@@ -35,7 +37,7 @@ public interface SituacionManager {
 	List<Map<String, String>> obtenerListaSituaciones(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem) throws Exception;
 	
 	List<Map<String, String>> actualizaSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, 
-            String nmsuplem, String status, Map<String, String> datos) throws Exception;
+            String nmsuplem, String status, Map<String, String> datos, String cdusuari, String cdsisrol) throws Exception;
 	
 	List<Map<String, String>> validaBloqueSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
 }

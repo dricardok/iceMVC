@@ -53,7 +53,8 @@ public interface EmisionManager {
      * @return
      * @throws Exception
      */
-    public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac)
+    public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
+            String cdusuari, String cdsisrol)
             throws Exception;
     
     /**
@@ -66,7 +67,8 @@ public interface EmisionManager {
      * @return
      * @throws Exception
      */
-    public List<Map<String, Object>> generarTarificacionPlanes(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception;
+    public List<Map<String, Object>> generarTarificacionPlanes(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String cdusuari, String cdsisrol) throws Exception;
     
     /**
      * Genera la tarificacion de una poliza bazado en un plan especifico

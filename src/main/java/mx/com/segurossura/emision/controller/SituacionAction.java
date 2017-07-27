@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
+import com.biosnettcs.portal.model.UsuarioVO;
 
 import mx.com.segurossura.emision.service.SituacionManager;
 
@@ -133,6 +134,7 @@ public class SituacionAction extends PrincipalCoreAction {
         logger.debug(Utils.log("###### valoresDefectoFijos", 
                                "###### params ", params));
         try {
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             Utils.validate(params, "No se recibieron parametros");
             String cdunieco = params.get("cdunieco");
             String cdramo = params.get("cdramo");
@@ -144,7 +146,8 @@ public class SituacionAction extends PrincipalCoreAction {
             Utils.validate(estado, "No se recibio el estado de la póliza");
             Utils.validate(nmpoliza, "No se recibio el numero de póliza");
             Utils.validate(nmsuplem, "No se recibio el suplemento");  
-            situacion = situacionManager.valoresDefectoFijos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+            situacion = situacionManager.valoresDefectoFijos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, usuario.getCdusuari(),
+                    usuario.getRolActivo().getCdsisrol());
             success = true;
         } catch (Exception ex) {
             message = Utils.manejaExcepcion(ex);
@@ -168,6 +171,7 @@ public class SituacionAction extends PrincipalCoreAction {
 	                           "\n###### valoresDefectoVariables ######", 
 	                           "\n###### params = ", params));
 	    try {
+	        UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
 	        Utils.validate(params, "No se recibieron par\u00e1metros");
 	        
 	        String cdunieco = params.get("cdunieco"),
@@ -187,7 +191,7 @@ public class SituacionAction extends PrincipalCoreAction {
 	                       status   , "Falta status");
 	        
 	        situacion = situacionManager.valoresDefectoVariables(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, status,
-	                params);
+	                params, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
 	        
 	        success = true;
 	    } catch (Exception ex) {
@@ -370,6 +374,7 @@ public class SituacionAction extends PrincipalCoreAction {
                                       "\n###### params = "    , params,
                                       "\n###### situacion = " , situacion));
         try {
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             Utils.validate(params, "No se recibieron par\u00e1metros");
             
             String cdunieco = params.get("cdunieco"),
@@ -388,7 +393,7 @@ public class SituacionAction extends PrincipalCoreAction {
                            status   , "Falta status");
             
             validaciones = situacionManager.actualizaSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, status,
-                    params);           
+                    params, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             
             success = true;
         } catch(Exception ex) {

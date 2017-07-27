@@ -298,7 +298,7 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 	@Override
 	public void agregaCobertura(String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmsituac, String nmsuplem
-            ,List<Map<String,String>> lista) throws Exception {
+            ,List<Map<String,String>> lista, String cdusuari, String cdsisrol) throws Exception {
 		
 		
 		logger.debug(Utils.join(
@@ -315,7 +315,8 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 			for(Map<String,String> m: lista){
 				
 				emisionDAO.movimientoMpoligar(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, m.get("cdgarant"), m.get("cdcapita"), null, "I");
-				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.CAPITALES.getCdbloque(),m.get("cdgarant"));
+				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem,
+				        Bloque.CAPITALES.getCdbloque(), m.get("cdgarant"), null, null, null, null, cdusuari, cdsisrol);
 
 			}
 

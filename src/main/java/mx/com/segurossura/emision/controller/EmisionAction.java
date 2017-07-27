@@ -552,6 +552,7 @@ public class EmisionAction extends PrincipalCoreAction {
         
         logger.debug("Inicio generarTarificacion...");
         try {
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             Utils.validate(params, "No se recibieron datos");
             String cdunieco = params.get("cdunieco");
             String cdramo =   params.get("cdramo");
@@ -563,7 +564,8 @@ public class EmisionAction extends PrincipalCoreAction {
             Utils.validate(estado,   "Falta estado");
             Utils.validate(nmpoliza, "Falta nmpoliza");
             
-            Map<String, Object> resultado = emisionManager.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+            Map<String, Object> resultado = emisionManager.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac,
+                    usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             logger.debug("resultado Tarificacion: {}", resultado);
             
             success=true;
@@ -586,6 +588,7 @@ public class EmisionAction extends PrincipalCoreAction {
     public String generarTarificacionPlanes() {
     	logger.debug("Inicio generarTarificacion...");
         try {
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             Utils.validate(params, "No se recibieron datos");
             String cdunieco = params.get("cdunieco");
             String cdramo =   params.get("cdramo");
@@ -597,7 +600,8 @@ public class EmisionAction extends PrincipalCoreAction {
             Utils.validate(estado,   "Falta estado");
             Utils.validate(nmpoliza, "Falta nmpoliza");
             
-            List<Map<String, Object>> resultados = emisionManager.generarTarificacionPlanes(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+            List<Map<String, Object>> resultados = emisionManager.generarTarificacionPlanes(cdunieco, cdramo, estado, nmpoliza, nmsituac,
+                    usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             logger.debug("resultado Tarificacion: {}", resultados);
             
             success = true;
