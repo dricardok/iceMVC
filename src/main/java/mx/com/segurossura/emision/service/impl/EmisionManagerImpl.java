@@ -261,14 +261,14 @@ public class EmisionManagerImpl implements EmisionManager {
 
 	@Override
 	public List<Map<String, String>> ejecutarValidaciones(String cdunieco, String cdramo, String estado,
-			String nmpoliza, String nmsituac, String nmsuplem, List<String> cdbloque) throws Exception {
+			String nmpoliza, String nmsituac, String nmsuplem, List<String> cdbloque, String cdusuari, String cdsisrol) throws Exception {
 		logger.debug("\n@@@@@@ ejecutarValidaciones @@@@@@");
 		String paso = "Ejecutando validaciones";
 		List<Map<String, String>> validaciones = new ArrayList<Map<String, String>>();
 		try {
 			for (String bloque : cdbloque) {
 			    validaciones.addAll(emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, null,
-						bloque));
+						bloque, cdusuari, cdsisrol));
 			}
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);

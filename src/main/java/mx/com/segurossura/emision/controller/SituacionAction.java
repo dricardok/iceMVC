@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 import com.biosnettcs.portal.model.UsuarioVO;
+import com.opensymphony.xwork2.ActionContext;
 
 import mx.com.segurossura.emision.service.SituacionManager;
 
@@ -454,6 +455,7 @@ public class SituacionAction extends PrincipalCoreAction {
                "\n###### params ",params
                ));
         try{
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             Utils.validate(params, "No se recibieron parametros");
             String cdunieco = params.get("cdunieco");
             String cdramo   = params.get("cdramo");
@@ -464,7 +466,8 @@ public class SituacionAction extends PrincipalCoreAction {
             Utils.validate(cdramo, "No se recibio producto");
             Utils.validate(estado, "No se recibio estado");
             Utils.validate(nmpoliza, "No se recibio poliza");
-            validaciones = situacionManager.validaBloqueSituacion(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+            validaciones = situacionManager.validaBloqueSituacion(cdunieco, cdramo, estado, nmpoliza, nmsuplem, usuario.getCdusuari(),
+                    usuario.getRolActivo().getCdsisrol());
             success = true;
         } catch(Exception ex) {
             success = false;

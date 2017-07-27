@@ -497,7 +497,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmsituac,
                     nmsuplem,
                     null,
-                    Bloque.SITUACIONES.getCdbloque()
+                    Bloque.SITUACIONES.getCdbloque(), cdusuari, cdsisrol
                     ));
             
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
@@ -508,7 +508,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmsituac,
                     nmsuplem,
                     null,
-                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque()
+                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), cdusuari, cdsisrol
                     ));
         } catch (Exception ex){
             Utils.generaExcepcion(ex, paso);
@@ -521,7 +521,8 @@ public class SituacionManagerImpl implements SituacionManager{
 	}
 
 	@Override
-	public List<Map<String, String>> validaBloqueSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception{
+	public List<Map<String, String>> validaBloqueSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
+	        String cdusuari, String cdsisrol) throws Exception{
 	    logger.debug(Utils.join(
                 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
                 "\n@@@@@@ validaBloqueSituacion"
@@ -538,7 +539,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     "0",
                     nmsuplem,
                     null,
-                    Bloque.SITUACIONES.getCdbloque()
+                    Bloque.SITUACIONES.getCdbloque(), cdusuari, cdsisrol
                     ));
             paso = "Antes de validar bloque "+Bloque.ATRIBUTOS_SITUACIONES.getCdbloque();
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
@@ -549,7 +550,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     "0",
                     nmsuplem,
                     null,
-                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque()
+                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), cdusuari, cdsisrol
                     ));
         } catch (Exception ex){
             Utils.generaExcepcion(ex, paso);

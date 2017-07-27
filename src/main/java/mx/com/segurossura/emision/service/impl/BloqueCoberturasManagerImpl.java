@@ -185,7 +185,8 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 			String pv_nmsuplem_i,
 			String pv_cdgarant_i,
 			String pv_cdcapita_i,
-			List<Map<String,String>> valores) throws Exception {
+			List<Map<String,String>> valores,
+			String cdusuari, String cdsisrol) throws Exception {
 		logger.debug(Utils.join(
 				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				,"\n@@@@@@ obtieneTatrigar"
@@ -209,17 +210,15 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 			}
 			paso="Validando";
 			lista.addAll(
-					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, Bloque.CAPITALES.getCdbloque())
-						);
+					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null,
+					        Bloque.CAPITALES.getCdbloque(), cdusuari, cdsisrol));
 			
 			lista.addAll(
-					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, Bloque.GARANTIAS.getCdbloque())
-						);
+					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null,
+					        Bloque.GARANTIAS.getCdbloque(), cdusuari, cdsisrol));
 			lista.addAll(
-					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, Bloque.ATRIBUTOS_GARANTIAS.getCdbloque())
-						);
-			
-
+					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null,
+					        Bloque.ATRIBUTOS_GARANTIAS.getCdbloque(), cdusuari, cdsisrol));
 		}catch(Exception ex)
 		{
 			Utils.generaExcepcion(ex, paso);

@@ -77,7 +77,7 @@ public interface EmisionDAO {
 	 * @throws Exception
 	 */
 	public List<Map<String, String>> ejecutarValidaciones (String cdunieco, String cdramo, String estado, String nmpoliza,
-	        String nmsituac, String nmsuplem, String cdperson, String cdbloque) throws Exception;
+	        String nmsituac, String nmsuplem, String cdperson, String cdbloque, String cdusuari, String cdsisrol) throws Exception;
 	
 	public List<Map<String,String>> obtieneMpoligarTabla(String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception;

@@ -40,7 +40,7 @@ public interface EmisionManager {
 			String Gv_Swcolind, String Gn_Nmpolcoi) throws Exception;
 	
 	List<Map<String, String>> ejecutarValidaciones(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String nmsituac, String nmsuplem, List<String> cdbloque) throws Exception;
+			String nmsituac, String nmsuplem, List<String> cdbloque, String cdusuari, String cdsisrol) throws Exception;
 
 	
     /**

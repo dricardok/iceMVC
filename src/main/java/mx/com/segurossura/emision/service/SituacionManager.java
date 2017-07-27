@@ -39,5 +39,6 @@ public interface SituacionManager {
 	List<Map<String, String>> actualizaSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, 
             String nmsuplem, String status, Map<String, String> datos, String cdusuari, String cdsisrol) throws Exception;
 	
-	List<Map<String, String>> validaBloqueSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+	List<Map<String, String>> validaBloqueSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
+	        String cdusuari, String cdsisrol) throws Exception;
 }

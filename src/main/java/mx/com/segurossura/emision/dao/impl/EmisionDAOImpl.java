@@ -789,7 +789,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Map<String, String>> ejecutarValidaciones (String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsituac, String nmsuplem, String cdperson, String cdbloque) throws Exception {
+            String nmsituac, String nmsuplem, String cdperson, String cdbloque, String cdusuari, String cdsisrol) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
         params.put("pv_cdunieco_i" , cdunieco);
         params.put("pv_cdramo_i"   , cdramo);
@@ -799,6 +799,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_nmsuplem_i" , nmsuplem);
         params.put("pv_cdperson_i" , cdperson);
         params.put("pv_cdbloque_i" , cdbloque);
+        params.put("pv_cdusuari_i" , cdusuari);
+        params.put("pv_cdsisrol_i" , cdsisrol);
         Map<String, Object> procRes = ejecutaSP(new EjecutarValidacionesSP(getDataSource()), params);
         List<Map<String, String>> validaciones = (List<Map<String, String>>) procRes.get("pv_registro_o");
         if (validaciones == null) {
@@ -819,6 +821,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdperson_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdbloque_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdusuari_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdsisrol_i" , Types.VARCHAR));
             String[] cols=new String[]{ "tipo", "otvalor" };
             declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));

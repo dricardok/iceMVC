@@ -495,8 +495,8 @@ public class EmisionAction extends PrincipalCoreAction {
 		
 		String result = SUCCESS;
 		
-		try
-		{
+		try {
+		    UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
 			
 			Utils.validate(params, "No se recibieron datos");
 			
@@ -519,7 +519,8 @@ public class EmisionAction extends PrincipalCoreAction {
 
 			//Utils.validate(nmsuplem,"Falta nmsuplem");
 			Utils.validate(bloques,"Faltan bloques");
-			list=emisionManager.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, bloques);
+			list=emisionManager.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, bloques, usuario.getCdusuari(),
+			        usuario.getRolActivo().getCdsisrol());
 
 			
 			

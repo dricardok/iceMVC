@@ -377,7 +377,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     "0", // nmsituac
                     nmsuplem,
                     null,
-                    Bloque.DATOS_GENERALES.getCdbloque()
+                    Bloque.DATOS_GENERALES.getCdbloque(), cdusuari, cdsisrol
                     ));
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
                     cdunieco,
@@ -387,7 +387,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     "0", // nmsituac
                     nmsuplem,
                     null,
-                    Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque()
+                    Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque(), cdusuari, cdsisrol
                     ));
             
         } catch (Exception ex) {
