@@ -48,8 +48,24 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 						}
 					};
 					
+					if(Ice.classic()){
+						it.emptyText="Click para buscar";
+						it.listeners={
+								render:function(el){
+									el.getEl().on('click',function(){
+
+								        me.getController().onFocusCP();
+								    });
+
+								}
+							};
+					}else{
+						it.value="Click para buscar";
+						it.listeners={
+								focus:'onFocusCP'
+							};
+					}
 					
-					it.emptyText="Click para buscar";
 					
     			}
     		});
