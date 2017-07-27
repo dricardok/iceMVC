@@ -39,7 +39,13 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
     			if(b){
     				it.cmpBuscar=true;
 					it.listeners={
-						focusenter:"onFocusCP"
+						render:function(el){
+							el.getEl().on('click',function(){
+
+						        me.getController().onFocusCP();
+						    });
+
+						}
 					};
 					
 					
