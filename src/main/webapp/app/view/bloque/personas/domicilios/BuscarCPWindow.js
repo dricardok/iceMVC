@@ -94,12 +94,14 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 			{
 				xtype		:	'button',
 				text		:	'Elegir',
-				handler		:	'onElegir'
+				iconCls 	: 	'x-fa fa-check',
+				handler		:	'onElegir' 
 			}
 	    	,
 	    	{
 		    	xtype	: 'button',
 		    	text	: 'Cancelar',
+		    	iconCls : 'x-fa fa-close',
 		    	handler : 'onCancelar'
 	    	}
 	    ]

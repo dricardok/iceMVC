@@ -112,5 +112,22 @@ public interface EmisionManager {
     
     public Map<String, String> validarCargaCotizacion (String cdunieco, String cdramo, String nmpoliza, String cdusuari,
             String cdsisrol) throws Exception;
+    /**
+     * Guarda los datos de la tarjeta en mpoligar, actualiza mpersona para establecer el email2 y si la forma de pago no es 
+     * anual ejecuta pl para estabecer el gestor de cobro  
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsuplem
+     * @param cdbanco
+     * @param nmtarjeta
+     * @param fevencm
+     * @param fevenca
+     * @param email
+     * @throws Exception Lanza un ApplicationException si algo salio mal
+     */
+	public void guardarDatosPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
+			String cdbanco, String nmtarjeta, String fevencm, String fevenca, String email) throws Exception;
     
 }
