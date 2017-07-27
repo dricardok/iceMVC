@@ -100,7 +100,7 @@ public class AgrupadoresManagerImpl implements AgrupadoresManager {
 				// Recupera el registro actual
 				Map<String, String> agrupador = null;
 				try {
-					agrupador = agrupadoresDAO.obtenerMpoliagr(cdunieco, cdramo, estado, nmpoliza, cdagrupa, nmsuplem_sesion).get(0);
+					agrupador = agrupadoresDAO.obtenerMpoliagr(cdunieco, cdramo, estado, nmpoliza,nmsuplem_sesion, cdagrupa ).get(0);
 				} catch (Exception ex) {
 					logger.warn("No se encuentra agrupador");
 				}

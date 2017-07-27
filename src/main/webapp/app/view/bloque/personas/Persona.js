@@ -32,8 +32,8 @@ Ext.define('Ice.view.bloque.personas.Persona', {
                 var compsTatriper = Ice.generaComponentes({
                     pantalla: 'TATRIPER',
                     seccion: 'TATRIPER',
-                    cdramo:	me.getCdramo(),
-                    cdrol:	me.getCdrol(),
+                    cdramo:	config.cdramo,
+                    cdrol:	config.cdrol,
                     items: true,
                     fields: true,
                     validators: true
@@ -100,12 +100,14 @@ Ext.define('Ice.view.bloque.personas.Persona', {
             			buttons		:	[
             				{
             					text:"Cancelar",
+            					iconCls: 'x-fa fa-close',
             					handler:function(){
             						Ice.pop()
             					}
             				},
             				{
             					text		:	'Guardar',
+            					iconCls		: 	'x-fa fa-save',
             					handler		:	'guardarPersona'
             				}
             			]	

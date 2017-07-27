@@ -231,10 +231,12 @@ Ext.define('Ice.view.bloque.Coberturas', {
 					{
 						// xtype: 'button',
 						text: 'Agregar',
+						iconCls: 'x-fa fa-plus-circle',
 						handler: 'agregarCoberturaMovil'
 					}, {
-						// xtype: 'button',
+						// xtype: 'button',fa-close
 						text: 'Cancelar',
+						iconCls: 'x-fa fa-close',
 						handler: 'cerrarAgregar'
 					}
 				]

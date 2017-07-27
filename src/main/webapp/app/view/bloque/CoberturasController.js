@@ -92,6 +92,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 			    buttons:[{
 			    	// xtype: 'button',
 			    	text: 'Agregar',
+			    	iconCls: 'x-fa fa-plus-circle',
 			    	handler: function (me) {
 						var list = [];
 			    		me.up("window").down("#gridAgrega").getSelectionModel().getSelection().forEach(

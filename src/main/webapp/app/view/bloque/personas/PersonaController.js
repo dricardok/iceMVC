@@ -2,6 +2,8 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 	extend: 'Ext.app.ViewController',
     alias: 'controller.persona',
     
+    eventGuardaPersona:true,
+    
     custom:function(){
     	var me=this,paso="",view =me.getView();
     	try{
@@ -41,10 +43,11 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     			}
     			
     			if(it.getName()=="fenacimi"){
-    				if (Ext.manifest.toolkit === 'classic') {
-    					valor=valor.getDate()+"-"+(1+valor.getMonth())+"-"+valor.getFullYear();
-    				}
-    				Ice.log("fechaa",it.getName(),valor)
+    				Ice.log("valll: ",valor);
+//    				if (Ext.manifest.toolkit === 'classic' ) {
+//    					valor=valor.getDate()+"-"+(1+valor.getMonth())+"-"+valor.getFullYear();
+//    				}
+//    				Ice.log("fechaa",it.getName(),valor)
     			}
     			if((""+it.getName()).indexOf("otvalor")!=-1){
     				tvaloper[it.getName()]=valor;
@@ -75,7 +78,11 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     					call();
     				}
     				Ice.mensaje("Se guardo correctamente");
-    				view.fireEvent("personaGuardada", view, json.params.cdperson);
+    				if(me.eventGuardaPersona){
+    					view.fireEvent("personaGuardada", view, json.params.cdperson);
+    				}else{
+    					me.eventGuardaPersona = true;
+    				}
     			}
     			
     		});
@@ -199,7 +206,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 		me=this,
 		view=me.getView();
 		try{
-			
+			me.eventGuardaPersona = false;
 			if(view.getAccion()==='I'){
 				Ext.Msg.confirm("Agregar Domicilio","Se guardarán los datos de la persona \u00bfDesea continuar?",function(opc){
 	      		  if(opc==='yes'){
