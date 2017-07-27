@@ -40,7 +40,6 @@ public class CatalogosManagerImpl implements CatalogosManager {
     public List<BaseVO> obtenerCatalogo (String catalogo, Map<String, String> params, String cdusuari, String cdsisrol) throws Exception {
         String paso = Utils.join("Recuperando cat\u00e1logo ", catalogo);
         List<BaseVO> lista = null;
-        
         try {
             // Si se encuentra el prefijo "CAT_" se busca en las tablas de apoyo: 
             if(catalogo.toUpperCase().startsWith("CAT_")) {
@@ -181,8 +180,8 @@ public class CatalogosManagerImpl implements CatalogosManager {
                             lista.add(new BaseVO(registro.get("cdmunici"), registro.get("dsmunici")));
                         }
                     }
-                   break;
-               case PROVINCIA:
+                    break;
+                case PROVINCIA:
                    
                     paso = "Recuperando catalogo provincia";
                     lista = new ArrayList<>();
@@ -193,7 +192,7 @@ public class CatalogosManagerImpl implements CatalogosManager {
                         }
                     }
                     break;
-               case COLONIA:
+                case COLONIA:
                     paso = "Recuperando catalogo colonia";
                     lista = new ArrayList<>();
                     if(StringUtils.isBlank(params.get("idPadre"))){
@@ -207,104 +206,139 @@ public class CatalogosManagerImpl implements CatalogosManager {
                     }
                    break;
                    
-               case CUACOM_RAMO:
-            	   paso = "Recuperando catalogo de cuadros comision";
-            	   lista = new ArrayList<>();
-            	   List<Map<String, String>> listaCuacom = catalogosDAO.obtenerCuadrosComision(params.get("cdramo"));
-            	   if(listaCuacom != null){
-            		   for (Map<String, String> registroTmanteni: listaCuacom) {
-            			   lista.add(new BaseVO(registroTmanteni.get("nmcuadro"), registroTmanteni.get("descripl")));
-            		   }
-            	   }
-            	   break;
-            	   
-               case TMANTENI:
-            	   paso = "Recuperando catalogo de TMANTENI";
-            	   lista = new ArrayList<>();
-            	   List<Map<String, String>> tmanteni = catalogosDAO.obtenerCatalogoTablaManteni(params.get("cdtabla"));
-            	   if(tmanteni != null){
-            		   for (Map<String, String> registro: tmanteni) {
-            			   lista.add(new BaseVO(registro.get("codigo"), registro.get("descripl")));
-            		   }
-            	   }
-            	   break;
-            	   
-               case AGRUPADORES_POLIZA:
-                   paso = "Recuperando cat\u00e1logo de agrupadores de p\u00f3liza";
-                   if (params != null) {
-                       lista = new ArrayList<>();
-                       int agrupadorMax = agrupadoresDAO.obtenerAgrupadorMaximo(
-                               params.get("cdunieco"), params.get("cdramo"), params.get("estado"), params.get("nmpoliza"),
-                               Utils.NVL(params.get("nmsuplem"), "0"));
-                       for (int i = 1; i <= agrupadorMax; i++) {
-                           lista.add(new BaseVO(i + "", i + ""));
-                       }
-                   }
-                   break;
-                   
-               case SUCURSALES_BANCARIAS:
-            	   paso = "Recuperando cat\u00e1logo de sucursales bancarias";
-            	   if (params == null) {
-            	       params = new HashMap<String, String>();
-            	   }
-        		   lista = new ArrayList<>();
-            	   List<Map<String, String>> sucBanc = catalogosDAO.obtenerSucuBanc(params.get("idPadre"));
-            	   if(sucBanc != null){
-            		   for (Map<String, String> registro: sucBanc) {
-            			   lista.add(new BaseVO(registro.get("cdsucurs"), registro.get("dssucurs")));
-            		   }
-            	   }
-            	   break;
-               case GESTORES_COBRANZA:
-            	   paso = "Recuperando cat\u00e1logo de gestores de cobranza";
-            	   lista = new ArrayList<>();
-                   List<Map<String, String>> gestoresCobranza = catalogosDAO.obtienerGestoresCob();
-                   if (gestoresCobranza != null) {
-                       for (Map<String, String> registro: gestoresCobranza) {
-                           lista.add(new BaseVO(registro.get("cdgestor"), registro.get("dsgestor")));
-                       }
-                   }
-            	   break;
-               case ESTATUS_TRAMITE:
-            	   paso = "Recuperando cat\u00e1logo de estatus de tramite";
-            	   lista = new ArrayList<>();
-            	   List<Map<String, String>> estatusTramite = catalogosDAO.obtenerEstatusTramite();
-                   if (estatusTramite != null) {
-                	   lista.add(new BaseVO("-1", "TAREAS PENDIENTES"));
-                	   lista.add(new BaseVO("0", "TODOS"));
-                       for (Map<String, String> registro: estatusTramite) {
-                           lista.add(new BaseVO(registro.get("estatus"), registro.get("dsestadomc")));
-                       }
-                   }
-                   break;
-               case COMPANIAS:
-                   paso = "Recuperando cat\u00e1logo de compa\u00f1ias";
-                   lista = new ArrayList<>();
-                   List<Map<String, String>> companias = catalogosDAO.obtenerCompañias();
-                   if (companias != null) {
-                       String swsura = Constantes.SI,
-                              cdcia = "";
-                       if(params != null){
-                           swsura = params.get("swsura");
-                           cdcia = emisionDAO.obtieneCdciaSURA();
-                       }
-                       for (Map<String, String> registro: companias) {
-                           BaseVO baseVO = new BaseVO();
-                           baseVO.setKey(registro.get("cdcia"));
-                           baseVO.setValue(registro.get("dscia"));
-                           if(cdcia.equals(registro.get("cdcia"))){
-                               if(swsura.equals(Constantes.SI)){
-                                   lista.add(baseVO);
-                               }
-                           } else {
-                               lista.add(baseVO);
-                           }
-                       }
-                   }
-                   break;
+                case CUACOM_RAMO:
+            	    paso = "Recuperando catalogo de cuadros comision";
+            	    lista = new ArrayList<>();
+            	    List<Map<String, String>> listaCuacom = catalogosDAO.obtenerCuadrosComision(params.get("cdramo"));
+            	    if(listaCuacom != null){
+            		    for (Map<String, String> registroTmanteni: listaCuacom) {
+            			    lista.add(new BaseVO(registroTmanteni.get("nmcuadro"), registroTmanteni.get("descripl")));
+            		    }
+            	    }
+            	    break;
+        	    case TMANTENI:
+            	    paso = "Recuperando catalogo de TMANTENI";
+            	    lista = new ArrayList<>();
+            	    List<Map<String, String>> tmanteni = catalogosDAO.obtenerCatalogoTablaManteni(params.get("cdtabla"));
+            	    if(tmanteni != null){
+            		    for (Map<String, String> registro: tmanteni) {
+            			    lista.add(new BaseVO(registro.get("codigo"), registro.get("descripl")));
+            		    }
+            	    }
+            	    break;
+        	    case AGRUPADORES_POLIZA:
+        	        paso = "Recuperando cat\u00e1logo de agrupadores de p\u00f3liza";
+                    if (params != null) {
+                        lista = new ArrayList<>();
+                        int agrupadorMax = agrupadoresDAO.obtenerAgrupadorMaximo(
+                                params.get("cdunieco"), params.get("cdramo"), params.get("estado"), params.get("nmpoliza"),
+                                Utils.NVL(params.get("nmsuplem"), "0"));
+                        for (int i = 1; i <= agrupadorMax; i++) {
+                            lista.add(new BaseVO(i + "", i + ""));
+                        }
+                    }
+                    break;
+                case SUCURSALES_BANCARIAS:
+            	    paso = "Recuperando cat\u00e1logo de sucursales bancarias";
+            	    if (params == null) {
+            	        params = new HashMap<String, String>();
+            	    }
+        		    lista = new ArrayList<>();
+            	    List<Map<String, String>> sucBanc = catalogosDAO.obtenerSucuBanc(params.get("idPadre"));
+            	    if(sucBanc != null){
+            		    for (Map<String, String> registro: sucBanc) {
+            			    lista.add(new BaseVO(registro.get("cdsucurs"), registro.get("dssucurs")));
+            		    }
+            	    }
+                    break;
+                case GESTORES_COBRANZA:
+                    paso = "Recuperando cat\u00e1logo de gestores de cobranza";
+                    lista = new ArrayList<>();
+                    List<Map<String, String>> gestoresCobranza = catalogosDAO.obtienerGestoresCob();
+                    if (gestoresCobranza != null) {
+                        for (Map<String, String> registro: gestoresCobranza) {
+                            lista.add(new BaseVO(registro.get("cdgestor"), registro.get("dsgestor")));
+                        }
+                    }
+            	    break;
+                case ESTATUS_TRAMITE:
+            	    paso = "Recuperando cat\u00e1logo de estatus de tramite";
+            	    lista = new ArrayList<>();
+            	    List<Map<String, String>> estatusTramite = catalogosDAO.obtenerEstatusTramite();
+                    if (estatusTramite != null) {
+                	    lista.add(new BaseVO("-1", "TAREAS PENDIENTES"));
+                	    lista.add(new BaseVO("0", "TODOS"));
+                        for (Map<String, String> registro: estatusTramite) {
+                            lista.add(new BaseVO(registro.get("estatus"), registro.get("dsestadomc")));
+                        }
+                    }
+                    break;
+                case COMPANIAS:
+                    paso = "Recuperando cat\u00e1logo de compa\u00f1ias";
+                    lista = new ArrayList<>();
+                    List<Map<String, String>> companias = catalogosDAO.obtenerCompañias();
+                    if (companias != null) {
+                        String swsura = Constantes.SI,
+                               cdcia = "";
+                        if(params != null){
+                            swsura = params.get("swsura");
+                            cdcia = emisionDAO.obtieneCdciaSURA();
+                        }
+                        for (Map<String, String> registro: companias) {
+                            BaseVO baseVO = new BaseVO();
+                            baseVO.setKey(registro.get("cdcia"));
+                            baseVO.setValue(registro.get("dscia"));
+                            if(cdcia.equals(registro.get("cdcia"))){
+                                if(swsura.equals(Constantes.SI)){
+                                    lista.add(baseVO);
+                                }
+                            } else {
+                                lista.add(baseVO);
+                            }
+                        }
+                    }
+                    break;
+                case PUNTOS_VENTA_X_USUARIO:
+                    List<Map<String, String>> puntosVentaPerfilamiento = catalogosDAO.obtenerPuntosVentaPorUsuario(cdusuari);
+                    lista = new ArrayList<>();
+                    for (Map<String, String> puntoVenta : puntosVentaPerfilamiento) {
+                        lista.add(new BaseVO(puntoVenta.get("cdptovta"), puntoVenta.get("dsobserv")));
+                    }
+                    break;
+                case GRUPOS_X_PUNTOVENTA_RAMO:
+                    List<Map<String, String>> gruposPerfilamiento = catalogosDAO.obtenerGruposPorPuntosventaRamo(params.get("idPadre"),
+                            params.get("cdramo"));
+                    lista = new ArrayList<>();
+                    for (Map<String, String> grupo : gruposPerfilamiento) {
+                        lista.add(new BaseVO(grupo.get("cdgrupo"), grupo.get("dsgrupo")));
+                    }
+                    break;
+                case SUBGRUPOS_X_PUNTOVENTA_RAMO:
+                    List<Map<String, String>> subgruposPerfilamiento = catalogosDAO.obtenerSubgruposPorPuntoventaRamo(
+                            params.get("idPadre"), params.get("idPadre2"), params.get("cdramo"));
+                    lista = new ArrayList<>();
+                    for (Map<String, String> subggrupo : subgruposPerfilamiento) {
+                        lista.add(new BaseVO(subggrupo.get("cdsubgrp"), subggrupo.get("dssubgrp")));
+                    }
+                    break;
+                case PERFILESTARIFA_X_PUNTOVENTA_SUBGRUPO_RAMO:
+                    List<Map<String, String>> perfilesPerfilamiento = catalogosDAO.obtenerPerfilesPorPuntoventaSubgrupoRamo(
+                            params.get("idPadre"), params.get("idPadre2"), params.get("cdramo"));
+                    lista = new ArrayList<>();
+                    for (Map<String, String> subggrupo : perfilesPerfilamiento) {
+                        lista.add(new BaseVO(subggrupo.get("cdperfit"), subggrupo.get("dsperfit")));
+                    }
+                    break;
+                case SUCURSAL_DE_PUNTO_VENTA:
+                    List<Map<String, String>> sucursalesDePuntoVenta = catalogosDAO.obtenerSucursalesDePuntoventa(params.get("idPadre"));
+                    lista = new ArrayList<>();
+                    for (Map<String, String> sucursal : sucursalesDePuntoVenta) {
+                        lista.add(new BaseVO(sucursal.get("cdunieco"), sucursal.get("dsunieco")));
+                    }
+                    break;
                 default:
                     throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));
-                }
+               }
             }
         } catch (Exception ex) {
             Utils.generaExcepcion(ex, paso);

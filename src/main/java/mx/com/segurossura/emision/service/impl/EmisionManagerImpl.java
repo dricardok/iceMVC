@@ -296,7 +296,7 @@ public class EmisionManagerImpl implements EmisionManager {
 
 			paso = "Tarificando conceptos globales";
 			emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0",
-					Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO");
+					Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO", null, null, null, null);
 
 			emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, "0");
 		} catch (Exception ex) {
@@ -375,7 +375,7 @@ public class EmisionManagerImpl implements EmisionManager {
 				}
 				
 				paso = "Tarificando conceptos globales";
-				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0", Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO");
+				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0", Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO", null, null, null, null);
 				
 				
 				emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, "0");
@@ -930,5 +930,18 @@ public class EmisionManagerImpl implements EmisionManager {
 		}catch (Exception e) {
 	        Utils.generaExcepcion(e, paso);
 	    }
+	}
+	
+	public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
+            String nmsuplem) throws Exception {
+	    Map<String, String> perf = null;
+	    String paso = "Recuperando perfilamiento de cotizaci\u00f3n";
+	    try {
+	        perf = emisionDAO.obtenerPerfilamientoPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+	    } catch (Exception e) {
+	        Utils.generaExcepcion(e, paso);
+	    }
+	    return perf;
+
 	}
 }

@@ -31,7 +31,13 @@ Ext.define('Ice.view.cotizacion.Emision', {
         bloqueActual: -1,
         
         // comportamiento
-        guardadoAutomaticoSuspendido: false
+        guardadoAutomaticoSuspendido: false,
+
+        // perfilamiento
+        cdptovta: null,
+        cdgrupo: null,
+        cdsubgpo: null,
+        cdperfil: null
     },
     items: [{
         xtype: 'tabpanelice',

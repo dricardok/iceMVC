@@ -65,6 +65,11 @@ Ext.define('Ice.view.field.ComboIce', {
         
         me.callParent(arguments);
         
+        me.on({
+            change: function (me) {
+                Ice.eventManager.change(me, me.getValue());
+            }
+        });
         
         if (me.getPadres().length > 0) {
             me.heredar = function () {
@@ -77,7 +82,7 @@ Ext.define('Ice.view.field.ComboIce', {
                 };
                 for (var i = 0; i < me.getPadres().length; i++) {
                     var padreName = me.getPadres()[i],
-                        padreComp = me.getParent().down('[name=' + padreName +']');
+                        padreComp = me.getParent().down('[reference=' + padreName +']');
                     if (padreComp) {
                         padresValues['idPadre' + (i === 0
                             ? ''
@@ -86,6 +91,11 @@ Ext.define('Ice.view.field.ComboIce', {
                     }
                 }
                 Ice.log('padresValues:', padresValues);
+                
+                // con esta linea evitamos multiples reload al store, se cancela la anterior si esta activa
+                // TODO: que pasa si el store tenia un listener en load y damos abort
+                me.getStore().getProxy().abort();
+                
                 me.getStore().reload({
                     params: Ice.convertirAParams(padresValues)
                 });
@@ -93,9 +103,10 @@ Ext.define('Ice.view.field.ComboIce', {
             
             for (var i = 0; i < me.getPadres().length; i++) {
                 var padreName = me.getPadres()[i];
-                var padreComp = me.getParent().down('[name=' + padreName +']');
+                var padreComp = me.getParent().down('[reference=' + padreName +']');
                 if (padreComp) {
-                    if (padreComp.xtype === 'comboice') {
+                    // los campos con picker no hacen blur
+                    if (padreComp.xtype === 'comboice' || padreComp.xtype === 'datefieldice') {
                         padreComp.on({
                             change: function () {
                                 me.heredar();

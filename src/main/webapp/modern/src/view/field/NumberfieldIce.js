@@ -3,21 +3,23 @@
  */
 Ext.define('Ice.view.field.NumberfieldIce', {
     extend: 'Ext.field.Number',
-    xtype: 'numberfieldice'
-    
-    /*initComponent: function () {
+    xtype: 'numberfieldice',
+
+    initialize: function () {
+        Ice.log('Ice.view.field.NumberfieldIce.initialize');
         var me = this,
-            configIce = me.config, // la configuracion recibida de TCONFSCR
-            configTra = {};        // la transformacion en atributos ext (ejemplo: label se pasa a fieldLabel en toolkit classic)
-        
-        
-        // label -> fieldLabel
-        if (configIce.label) {
-            configTra.fieldLabel = configIce.label;
+            paso = 'Configurando comportamiento de campo numerico';
+        try {
+            ///////////////////////////////////////////////////////
+            me.callParent(arguments); /////////////////////////////
+            ///////////////////////////////////////////////////////
+            me.on({
+                blur: function (me) {
+                    Ice.eventManager.change(me, me.getValue());
+                }
+            });
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
         }
-        
-        
-        Ext.apply(me, configTra);
-        this.callParent(arguments);
-    }*/
+    }
 });

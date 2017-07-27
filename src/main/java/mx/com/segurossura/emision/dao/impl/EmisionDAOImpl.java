@@ -652,7 +652,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     
     @Override
     public Map<String, String> ejecutarValoresDefecto (String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsituac, String nmsuplem, String cdbloque, String cdgarant) throws Exception {
+            String nmsituac, String nmsuplem, String cdbloque, String cdgarant, String cdptovta, String cdgrupo, String cdsubgpo,
+            String cdperfil) throws Exception {
         
         if (StringUtils.isBlank(cdgarant)) {
             cdgarant = "NULO";
@@ -667,6 +668,10 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_nmsuplem_i" , nmsuplem);
         params.put("pv_cdbloque_i" , cdbloque);
         params.put("pv_cdgarant_i" , cdgarant);
+        params.put("pv_cdptovta_i" , cdptovta);
+        params.put("pv_cdgrupo_i"  , cdgrupo);
+        params.put("pv_cdsubgpo_i" , cdsubgpo);
+        params.put("pv_cdperfil_i" , cdperfil);
         Map<String, Object> procRes = ejecutaSP(new EjecutarValoresDefectoSP(getDataSource()), params);
         String valores = (String) procRes.get("pv_string_val_o");
         if (StringUtils.isBlank(valores)) {
@@ -693,14 +698,18 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     protected class EjecutarValoresDefectoSP extends StoredProcedure {
         protected EjecutarValoresDefectoSP (DataSource dataSource) {
             super(dataSource, "PKG_STRUCT_ALEA.P_GET_VALDEF_BLQ");
-            declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_nmsituac_i",Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdbloque_i",Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdgarant_i",Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdbloque_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdgarant_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdptovta_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdgrupo_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdsubgpo_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdperfil_i" , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_string_val_o" , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o"     , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"      , Types.VARCHAR));
@@ -1710,6 +1719,43 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_cdsisrol_i" , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_swexiste_o" , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_swconfir_o" , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
+            String nmsuplem) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i" , cdunieco);
+        params.put("pv_cdramo_i"   , cdramo);
+        params.put("pv_estado_i"   , estado);
+        params.put("pv_nmpoliza_i" , nmpoliza);
+        params.put("pv_nmsuplem_i" , nmsuplem);
+        Map<String, Object> bdRes = ejecutaSP(new ObtenerPerfilamientoPolizaSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) bdRes.get("pv_registro_o");
+        Map<String, String> perf = null;
+        if (lista != null && lista.size() == 1) {
+            perf = lista.get(0);
+        } else if (lista != null && lista.size() > 1) {
+            throw new ApplicationException("Perfilamiento duplicado");
+        }
+        logger.debug(Utils.log("\n****** obtenerPerfilamientoPoliza result: ", perf));
+        return perf;
+    }
+    
+    protected class ObtenerPerfilamientoPolizaSP extends StoredProcedure {
+        protected ObtenerPerfilamientoPolizaSP (DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_GET_PERFIL_POLIZA");           
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
+            String[] cols = new String[] { "cdptovta", "cdgrupo", "cdsubgpo", "cdperfil" };
+            declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
             compile();

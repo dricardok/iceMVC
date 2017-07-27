@@ -102,7 +102,7 @@ Ext.define('Ice.view.field.ComboIce', {
                 };
                 for (var i = 0; i < me.getPadres().length; i++) {
                     var padreName = me.getPadres()[i],
-                        padreComp = me.up('form').down('[name=' + padreName + ']');
+                        padreComp = me.up('form').down('[reference=' + padreName + ']');
                     if (padreComp) {
                         padresValues['idPadre' + (i === 0
                             ? ''
@@ -111,6 +111,11 @@ Ext.define('Ice.view.field.ComboIce', {
                     }
                 }
                 Ice.log('padresValues:', padresValues);
+                
+                // con esta linea evitamos multiples reload al store, se cancela la anterior si esta activa
+                // TODO: que pasa si el store tenia un listener en load y damos abort
+                me.getStore().getProxy().abort();
+                
                 me.getStore().reload({
                     params: Ice.convertirAParams(padresValues)
                 });
@@ -118,16 +123,19 @@ Ext.define('Ice.view.field.ComboIce', {
             
             for (var i = 0; i < me.getPadres().length; i++) {
                 var padreName = me.getPadres()[i],
-                    padreComp = Ice.query('[name=' + padreName + ']'); // TODO no debe ser global, debe ir sobre form, pero da error
+                    padreComp = Ice.query('[reference=' + padreName + ']'); // TODO no debe ser global, debe ir sobre form, pero da error
+                Ice.log('padreComp:', padreComp);
                 if (padreComp) {
                     if (typeof padreComp.length === 'number') {
                         padreComp = padreComp[padreComp.length - 1];
                     }
-                    padreComp.on({
-                        blur: function () {
-                            me.heredar();
-                        }
-                    });
+                    if (padreComp) {
+                        padreComp.on({
+                            blur: function () {
+                                me.heredar();
+                            }
+                        });
+                    }
                 }
             }
         }

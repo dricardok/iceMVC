@@ -20,8 +20,14 @@ public enum Catalogos {
     SUCURSALES_BANCARIAS(""),
     GESTORES_COBRANZA(""),
     ESTATUS_TRAMITE(""),
-    COMPANIAS("");
-
+    COMPANIAS(""),
+    
+    // perfilamiento
+    PUNTOS_VENTA_X_USUARIO(""),
+    GRUPOS_X_PUNTOVENTA_RAMO(""),
+    SUBGRUPOS_X_PUNTOVENTA_RAMO(""),
+    PERFILESTARIFA_X_PUNTOVENTA_SUBGRUPO_RAMO(""),
+    SUCURSAL_DE_PUNTO_VENTA("");
     
     private String cdtabla;
     

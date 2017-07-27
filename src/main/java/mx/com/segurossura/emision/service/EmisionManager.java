@@ -130,4 +130,7 @@ public interface EmisionManager {
 	public void guardarDatosPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
 			String cdbanco, String nmtarjeta, String fevencm, String fevenca, String email) throws Exception;
     
+    public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
+            String nmsuplem) throws Exception;
+    
 }
