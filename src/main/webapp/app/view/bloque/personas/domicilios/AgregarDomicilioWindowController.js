@@ -1,7 +1,7 @@
 Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.agregardomiciliowindow',
-    
+    cpactivo:	false,
     custom	:	function(){
     	var me=this,paso="",view =me.getView();
     	try{
@@ -20,7 +20,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     	}
 	    	
     	}catch(e){
-    		//Ice.manejaExcepcion(e,paso);
+    		Ice.manejaExcepcion(e,paso);
     	}
     },
     
@@ -54,7 +54,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     				});
     				Ice.mensaje("Se guardo correctamente");
     				view.fireEvent("guardarDomicilio",view);
-    				view.cerrar();
+    				
     				
     			}
     			
@@ -149,43 +149,50 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     	try{
     		Ice.log("Evento");
     		
-    		if(!me.buscarcp){
-    			me.buscarcp=Ext.create("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
-    				
-    				closeAction:'method-hide',
-    				listeners:{
-    					elegir:function(me,record,grid){
-    						Ice.log("record: ",record);
-    						var form=view.down('[xtype=formulario]');
-    						Ice.log("form ", form);
-    						Ext.ComponentQuery.query("[getName][cmpBuscar]",form)
-    						.forEach(function(it){
-    							Ice.log(it.getName(),"it",it);
-    							it.setValue(record.get(it.getName()));
-    							Ice.log("it val new",it,record.get(it.getName()));
-    							switch(it.getName()){
-    								case "cdpais":
-    									it.setValue(record.get(it.getName())+"-"+record.get("descripl"));
-    									break;
-    								case 'cdprovin':
-    									it.setValue(record.get(it.getName())+"-"+record.get("dsprovin"));
-    									break;
-    							}
-    						
-    							
-    						});
-    						Ext.ComponentQuery
+//    		if(me.buscarcp)
+//				me.buscarcp.close();
+    		if(!me.cpactivo){
+    			me.cpactivo=true;
+				me.buscarcp=Ext.create("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
+					
+					//closeAction:'method-hide',
+					listeners:{
+						
+						close:function(){
+							me.cpactivo=false;
+						},
+						elegir:function(me,record,grid){
+							Ice.log("record: ",record);
+							var form=view.down('[xtype=formulario]');
+							Ice.log("form ", form);
+							Ext.ComponentQuery.query("[getName][cmpBuscar]",form)
+							.forEach(function(it){
+								Ice.log(it.getName(),"it",it);
+								it.setValue(record.get(it.getName()));
+								Ice.log("it val new",it,record.get(it.getName()));
+								switch(it.getName()){
+									case "cdpais":
+										it.setValue(record.get(it.getName())+"-"+record.get("descripl"));
+										break;
+									case 'cdprovin':
+										it.setValue(record.get(it.getName())+"-"+record.get("dsprovin"));
+										break;
+								}
+							
+								
+							});
+							Ext.ComponentQuery
 								.query("[getName]",view).forEach(function(it){
 									if(it.heredar) {it.heredar();}
 								});
-    						if(Ice.classic())
-    						   view.maximize();
-    					}
-    				}
-    			});
+	//    						if(Ice.classic())
+	//    						   view.maximize();
+						}
+					}
+				});
     		}
-    		if(Ice.classic())
-			     view.minimize();
+//    		if(Ice.classic())
+//			     view.minimize();
     		me.buscarcp.mostrar();
     	}catch(e){
     		Ice.manejaExcepcion(e,paso);

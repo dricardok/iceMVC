@@ -129,15 +129,22 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 						nmpoliza: this.config.nmpoliza,
 						nmsuplem: this.config.nmsuplem,
 						cdtipsit: this.config.cdtipsit,
+						selector: true,
 						//maxHeigth: 250,
-						buttons: [{
-							text: 'Agregar',
-							iconCls: 'x-fa fa-plus-circle',
-							handler: function(){
-								Ice.log('Agregar ',this);
-								me.getController().onAgregarClic();
-							}	                                    
-						}],
+						buttons: [
+							{
+								text: 'Agregar',
+								iconCls: 'x-fa fa-plus-circle',
+								handler: function(){
+									Ice.log('Agregar ',this);
+									me.getController().onAgregarClic();
+								}
+							}/*,{
+								text: 'Copiar',
+								iconCls: 'x-fa fa-copy',
+								handler: 'onCopiarSituacion'
+							}*/
+						],
 						actionColumns: [
 							{
 								xtype:'actioncolumn',
@@ -152,6 +159,12 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 									tooltip: 'Borrar',
 									handler: function(grid, rowIndex, colIndex){
 										me.getController().onBorrarClic(grid, rowIndex, colIndex);
+									}
+								},{
+									iconCls: 'x-fa fa-copy',
+									tooltip: 'Copiar',
+									handler: function(grid, rowIndex, colIndex){
+										me.getController().onCopiarSituacion(grid, rowIndex, colIndex);
 									}
 								}]
 							}

@@ -375,7 +375,13 @@ public class SituacionAction extends PrincipalCoreAction {
                                       "\n###### params = "    , params,
                                       "\n###### situacion = " , situacion));
         try {
-            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+            UsuarioVO usuario = null;
+            try{
+        		this.session = ActionContext.getContext().getSession(); //porque se uso SMD y eso pierde la sesion
+        		usuario =(UsuarioVO) Utils.validateSession(session);
+        	} catch (Exception e) {
+				logger.warn("No hay rol de sesion",e);
+			}
             Utils.validate(params, "No se recibieron par\u00e1metros");
             
             String cdunieco = params.get("cdunieco"),
@@ -480,6 +486,46 @@ public class SituacionAction extends PrincipalCoreAction {
         return SUCCESS;
     }
 	
+	
+	@Action(       
+            value = "copiaSituacion", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }                    
+        )   
+    public String copiaSituacion(){
+        logger.debug(StringUtils.join(
+                "\n#############################",
+               "\n###### copiaSituacion ######",
+               "\n###### params ",params
+               ));
+        try{
+            Utils.validate(params, "No se recibieron parametros");
+            String cdunieco = params.get("cdunieco");
+            String cdramo   = params.get("cdramo");
+            String estado   = params.get("estado");
+            String nmpoliza = params.get("nmpoliza");
+            String nmsuplem = params.get("nmsuplem");
+            String nmsituac = params.get("nmsituac");
+            String nmcopias = params.get("nmcopias");
+            Utils.validate(cdunieco, "No se recibio oficina");
+            Utils.validate(cdramo, "No se recibio producto");
+            Utils.validate(estado, "No se recibio estado");
+            Utils.validate(nmpoliza, "No se recibio poliza");
+            Utils.validate(nmsituac, "No se recibio la situacion de riesgo");
+            Utils.validate(nmcopias, "No se recibio el numero de copias");
+            situacionManager.copiaSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmcopias);
+            success = true;
+        } catch(Exception ex) {
+            success = false;
+            Utils.manejaExcepcion(ex);
+        }
+        logger.debug(StringUtils.join(
+                "\n###### copiaSituacion ######"
+               ,"\n#############################"
+               ));
+        return SUCCESS;
+    }
 //  Getters y Setters	
 
 	public Map<String, String> getParams() {

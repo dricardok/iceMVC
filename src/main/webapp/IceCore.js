@@ -114,7 +114,8 @@ var Ice = (
                 movimientoMpolisit: 'emision/movimientoMpolisit.action',
                 valoresDefectoFijos: 'emision/valoresDefectoFijos.action',
                 valoresDefectoVariables: 'emision/valoresDefectoVariables.action',
-                validaciones: 'emision/validaBloqueSituacion.action'
+                validaciones: 'emision/validaBloqueSituacion.action',
+                copiaSituacion: 'emision/copiaSituacion.action'
             },
             coberturas:{
                 datosCoberturas:            'coberturas/obtieneMpoligar.action',

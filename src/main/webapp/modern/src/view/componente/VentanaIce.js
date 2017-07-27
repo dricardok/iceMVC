@@ -20,6 +20,7 @@ Ext.define('Ice.view.componente.VentanaIce', {
     },
     
     cerrar:	function(){
+    	this.fireEvent('close',this);
     	Ice.pop();
     }
 });

@@ -345,4 +345,7 @@ public interface EmisionDAO {
     public void actualizaSwitchCoaseguroCedido (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdesqcoa) throws Exception;
     public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
             String nmsuplem) throws Exception;
+
+	public void actualizaGestorCobro(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem)
+			throws Exception;
 }
