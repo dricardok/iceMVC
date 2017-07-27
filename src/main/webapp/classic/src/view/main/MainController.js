@@ -331,21 +331,16 @@ Ext.define('Ice.view.main.MainController', {
                 iconAlign: 'top',
                 hidden: true,
                 padre: refs.mainContainerWrap,
-                y: Ext.getBody().getHeight() - 100,
-                listeners: {
-                    afterrender: function (me) {
-                        me.setX(Ext.getBody().getWidth() - me.getWidth());
-                    }
-                },
+                style: 'left: 100%; margin-left: -50px; top: 100%; margin-top: -100px; padding-left: 0px; padding-right: 0px;',
                 handler: function (me) {
                     me.padre.scrollTo(0, 0);
                 }
             });
             refs.mainContainerWrap.pivote = piv;
             refs.mainContainerWrap.on({
-                onScrollEnd: function (view, x, y) {
-                    Ice.log('onScrollEnd x:', x, 'y:', y);
-                    view.pivote[y > 100 ? 'show' : 'hide']();
+                onScrollEnd: function (view) {
+                    Ice.log('onScrollEnd');
+                    view.pivote[view.getScrollY() > 100 ? 'show' : 'hide']();
                 }
             });
         } catch (e) {

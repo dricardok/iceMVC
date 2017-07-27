@@ -147,16 +147,16 @@ Ext.define('Ice.view.main.Main', {
                         anchor: '100%'
                     }
                 }, {
-                    xtype: 'panel',
+                    xtype: 'container',
                     reference: 'userMenu',
                     itemId: 'userMenu',
                     width: 0,
                     layout: 'anchor',
                     cls: 'shadow',
-                    style: 'background: white;',
-                    bodyPadding: '20 20',
+                    style: 'background: white; padding: 0px 0px 0px 10px;',
                     defaults: {
-                     anchor: '100%'
+                        anchor: '100%',
+                        style: 'margin: 0px 10px 10px 0px;'
                     },
                     micro: true,
                     getMicro: function () {
@@ -166,8 +166,8 @@ Ext.define('Ice.view.main.Main', {
                         this.micro = micro;
                     },
                     items: [
-                    	
-                    	
+                        
+                        
                         {
                             xtype: 'comboice',
                             label: 'Cambiar rol',

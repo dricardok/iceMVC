@@ -183,10 +183,6 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     ? 'show'
                     : 'hide']();
             }
-
-            if (Ice.classic()) { alert('c');
-                view.updateLayout();
-            }
             
             if (view.getGuardadoAutomaticoSuspendido() !== true && oldCard) {
                 paso = 'Guardando datos';
