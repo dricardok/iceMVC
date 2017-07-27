@@ -98,7 +98,8 @@ var Ice = (
                 obtenerModeloCoaseguro: 'emision/datosGenerales/obtenerModeloCoaseguro.action',
                 movimientoCoaseguroCedido: 'emision/datosGenerales/movimientoCoaseguroCedido.action',
                 movimientoMsupcoa: 'emision/datosGenerales/movimientoMsupcoa.action',
-                movimientoMpolicoa: 'emision/datosGenerales/movimientoMpolicoa.action'
+                movimientoMpolicoa: 'emision/datosGenerales/movimientoMpolicoa.action',
+                eliminaCoaseguro: 'emision/datosGenerales/eliminaCoaseguro.action'
             },
             listaSituaciones: {
                 cargar: 'emision/obteneListaSituaciones.action'//'jsonLocal/bloqueDatosSituacionCargar.json'
