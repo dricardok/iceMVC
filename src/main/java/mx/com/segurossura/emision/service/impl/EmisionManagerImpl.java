@@ -926,7 +926,6 @@ public class EmisionManagerImpl implements EmisionManager {
 				throw new ApplicationException("Falta pl de frank");
 			}
 			
-			throw new ApplicationException("Falta pl de frank");
 		}catch (Exception e) {
 	        Utils.generaExcepcion(e, paso);
 	    }
