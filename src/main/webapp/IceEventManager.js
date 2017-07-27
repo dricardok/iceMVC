@@ -14,12 +14,18 @@ var Ice = (
         }
     )(Ice || {}, {
     eventManager: {
-        change: function (item, value) {
-            Ice.log('Ice.eventManager.change item:', item, 'value:', value);
+        /**
+         * @param item -> campo de formulario que dispara el evento
+         * @param value -> valor del campo (puede ser null)
+         * @param esCarga (opcional) -> cuando es la carga de un formulario (no deben hacerse setters)
+         */
+        change: function (item, value, esCarga) {
+            Ice.log('Ice.eventManager.change item:', item, 'value:', value, 'esCarga:', esCarga);
             var paso = 'Administrando comportamiento din\u00e1mico';
             try {
                 var form = item.up('[getValues]') || {},
-                    name = item.getName(),
+                    // name = item.getName(), se comenta para usar:
+                    name = item.getReference(),
                     iceEvents = form.iceEvents;
                 Ice.log('Ice.eventManager.change form:', form, 'name:', name, 'iceEvents:', iceEvents);
                 if (!iceEvents) {
@@ -32,11 +38,12 @@ var Ice = (
                     // existe un changeValueProfile para name.value
                     iceEvents.changeValueProfile
                     && iceEvents.changeValueProfile[name]
-                    && iceEvents.changeValueProfile[name][value]
+                    // && iceEvents.changeValueProfile[name][value] se comenta para que se use *
                     // existe un changeEvents para name.[changeValueProfile]
                     && iceEvents.changeEvents
                     && iceEvents.changeEvents[name]
-                    && iceEvents.changeEvents[name][iceEvents.changeValueProfile[name][value]]
+                    // && iceEvents.changeEvents[name][iceEvents.changeValueProfile[name][value]] se cambia por la linea:
+                    && iceEvents.changeEvents[name][(iceEvents.changeValueProfile[name][value] || '*')]
                     )) {
                     return;
                 }
@@ -50,7 +57,8 @@ var Ice = (
                         }
                     }
                 };
-                var valueProfile = iceEvents.changeValueProfile[name][value];
+                var valueProfile = iceEvents.changeValueProfile[name][value] || '*';
+                // para mostrar u ocultar campos
                 if (iceEvents.changeEvents[name][valueProfile].visible) {
                     crearMapaItemsPorName();
                     Ext.suspendLayouts();
@@ -62,6 +70,17 @@ var Ice = (
                         }
                     }
                     Ext.resumeLayouts();
+                }
+                // para setear valores
+                if (iceEvents.changeEvents[name][valueProfile].valor && esCarga !== true) {
+                    crearMapaItemsPorName();
+                    for (var targetName in iceEvents.changeEvents[name][valueProfile].valor) {
+                        if (formItemsMapByName[targetName]) {
+                            formItemsMapByName[targetName].setValue(
+                                iceEvents.changeEvents[name][valueProfile].valor[targetName]
+                            );
+                        }
+                    }
                 }
             } catch (e) {
                 Ice.manejaExcepcion(e, paso);

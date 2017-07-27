@@ -1,7 +1,7 @@
-Ext.define('Ice.view.bloque.personas.Persona', {
+Ext.define('Ice.view.bloque.personas.Persona_', {
 	
 		extend  	:       'Ext.Panel',
-		xtype		:		'persona',
+		xtype		:		'persona_',
 		controller 	: 		'persona',
 		scrollable	:		 true,
 		config	:		{

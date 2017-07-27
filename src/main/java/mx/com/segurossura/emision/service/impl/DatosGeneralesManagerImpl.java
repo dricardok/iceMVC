@@ -33,7 +33,8 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     
     @Override
     public Map<String, String> valoresDefectoFijos (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
-            String status, String swcolind, String nmpolcoi, String cdusuari, String cdsisrol) throws Exception {
+            String status, String swcolind, String nmpolcoi, String cdusuari, String cdsisrol, String cdptovta, String cdgrupo,
+            String cdsubgpo, String cdperfil) throws Exception {
         Map<String, String> valores = new LinkedHashMap<String, String>();
         String paso = null;
         try {
@@ -45,7 +46,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     "0", //nmsituac
                     nmsuplem,
                     Bloque.DATOS_GENERALES.getCdbloque(),
-                    null
+                    null, cdptovta, cdgrupo, cdsubgpo, cdperfil
                     );
             
             // se recuperan los valores minimos y se les agregan los valores por defecto 
@@ -131,7 +132,8 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     @Override
     public Map<String, String> valoresDefectoVariables (String cdusuari, String cdsisrol,
             String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsuplembloque, String nmsuplemsesion, String status, Map<String, String> datosMpolizasPantalla) throws Exception {
+            String nmsuplembloque, String nmsuplemsesion, String status, Map<String, String> datosMpolizasPantalla,
+            String cdptovta, String cdgrupo, String cdsubgpo, String cdperfil) throws Exception {
         logger.debug(Utils.log("@@@@@@ valoresDefectoVariables datosMpolizasPantalla = ", datosMpolizasPantalla));
         Map<String, String> valores = new LinkedHashMap<String, String>();
         String paso = null;
@@ -157,7 +159,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     "0", //nmsituac
                     nmsuplemsesion,
                     Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque(),
-                    null
+                    null, cdptovta, cdgrupo, cdsubgpo, cdperfil
                     );
             
             paso = "Recuperando valores variables";

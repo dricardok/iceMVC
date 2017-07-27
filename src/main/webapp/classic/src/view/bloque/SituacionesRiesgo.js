@@ -94,6 +94,17 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 				fields: true,
 				validators: true
 			});
+			
+			var eventsForm = Ice.generaComponentes({
+				pantalla: 'BLOQUE_LISTA_SITUACIONES',
+				seccion: 'EVENTOS',
+				modulo: me.modulo || '',
+				estatus: (me.flujo && me.flujo.estatus) || '',
+				cdramo: me.cdramo || '',
+				cdtipsit: me.cdtipsit ||'',
+				auxKey: me.auxkey || '',
+				eventos: true
+			});
 							
 			Ice.log('items',comps.BLOQUE_LISTA_SITUACIONES.LISTA.items);
 			Ice.log('itemsForm ',compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO);
@@ -168,78 +179,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 						],
 						modelFields: compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.fields,
 						modelValidators: compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.validators,
-						iceEvents: {
-							changeValueProfile: {
-								'b5b_otvalor01': {
-									'01': 'b',
-									'02': 'b',
-									'03': 'b',
-									'04': 'a'
-								}
-							},
-							changeEvents: {
-								'b5b_otvalor01': {
-									'a': {
-										visible: {
-											'b5b_otvalor02': 0,
-											'b5b_otvalor03': 1,
-											'b5b_otvalor04': 0,
-											'b5b_otvalor05': 0,
-											'b5b_otvalor06': 0,
-											'b5b_otvalor07': 0,
-											'b5b_otvalor08': 0,
-											'b5b_otvalor09': 0,
-											'b5b_otvalor10': 0,
-											'b5b_otvalor11': 0,
-											'b5b_otvalor12': 0,
-											'b5b_otvalor13': 0,
-											'b5b_otvalor14': 0,
-											'b5b_otvalor15': 0,
-											'b5b_otvalor16': 0,
-											'b5b_otvalor17': 1,
-											'b5b_otvalor18': 0,
-											'b5b_otvalor19': 0,
-											'b5b_otvalor20': 0,
-											'b5b_otvalor21': 0,
-											'b5b_otvalor22': 1,
-											'b5b_otvalor23': 1,
-											'b5b_otvalor24': 1,
-											'b5b_otvalor25': 1,
-											'b5b_otvalor26': 1
-										}
-									},
-									'b': {
-										visible: {
-											'b5b_otvalor02': 1,
-											'b5b_otvalor03': 1,
-											'b5b_otvalor04': 0,
-											'b5b_otvalor05': 0,
-											'b5b_otvalor06': 0,
-											'b5b_otvalor07': 0,
-											'b5b_otvalor08': 0,
-											'b5b_otvalor09': 0,
-											'b5b_otvalor10': 0,
-											'b5b_otvalor11': 0,
-											'b5b_otvalor12': 0,
-											'b5b_otvalor13': 0,
-											'b5b_otvalor14': 1,
-											'b5b_otvalor15': 1,
-											'b5b_otvalor16': 1,
-											'b5b_otvalor17': 1,
-											'b5b_otvalor18': 0,
-											'b5b_otvalor19': 0,
-											'b5b_otvalor20': 0,
-											'b5b_otvalor21': 0,
-											'b5b_otvalor22': 0,
-											'b5b_otvalor23': 0,
-											'b5b_otvalor24': 0,
-											'b5b_otvalor25': 0,
-											'b5b_otvalor26': 0
-										}
-									}
-								}
-							}
-						}
+						iceEvents: eventsForm.BLOQUE_LISTA_SITUACIONES.EVENTOS.eventos
 					}
 				]
 			});

@@ -1,15 +1,20 @@
-Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
+Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow_",{
 	
 	extend		:	"Ice.view.componente.VentanaIce",
 	controller	:	"agregardomiciliowindow",
-	xtype		:	"agregardomiciliowindow",
-	scrollable	:	true,
+	xtype		:	'agregardomiciliowindow_',
 	config		:	{
 		cdperson	:	null,
 		nmorddom	:	null,
 		accion		:	"I"
 	},
+	autoShow		:	true,
 	title			:	'Agregar Domicilio',
+	layout			: 	"fit",
+	height			:	"80%",
+	defaults		:{
+		bodyPadding: 20
+	},
 	constructor : 	function(config){
 		
 		var paso="",
@@ -17,17 +22,10 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 		try{
 			if(config.cdperson && config.nmorddom){
 				config.accion="U";
+				//alert();
 			}
-		}catch(e){
-			Ice.generaExcepcion(e,paso);
-		}
-		me.callParent(arguments);
-	},
-	
-	initialize : function(){
-		var paso="",
-			me=this;
-		try{
+			
+			Ice.log("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow.constructor: cdperson nmorddom",config.cdperson,config.nmorddom);
 			var comps = Ice.generaComponentes({
                 pantalla: 'AGREGAR_PERSONAS',
                 seccion: 'MDOMICIL',
@@ -49,21 +47,27 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 						focus:"onFocusCP"
 					};
 					
-					if(!it.value){
-						it.value="Click para buscar";
-					}
+					
+					it.emptyText="Click para buscar";
+					
     			}
     		});
-			Ice.log("-->",comps.AGREGAR_PERSONAS.MDOMICIL.items);
-			me.add(
+			
+			me.items=[
 				{
 					xtype		:	"formice",
 					reference	:	"formulario",
-					
-					
+					scrollable	:	true,
+					layout		:	{
+						type		:	'table',
+						columns		:	2
+					},
+					defaults	:	{
+						bodyPadding: 10
+					},
 					items		:	comps.AGREGAR_PERSONAS.MDOMICIL.items,
 			    	modelValidators:comps.AGREGAR_PERSONAS.MDOMICIL.validators,
-        			modelFields	:	comps.AGREGAR_PERSONAS.MDOMICIL.fields,
+        			modelFields	:	comps.AGREGAR_PERSONAS.MDOMICIL.fields,	
         			buttons		:	[
 		 			    	{
 						    	xtype	: 'button',
@@ -77,22 +81,20 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 		 			    	}
 		 			    ],
 				}
-			);
+			]
 			
 			
     		Ice.log("##",comps.AGREGAR_PERSONAS.MDOMICIL.items);
-
 		}catch(e){
 			Ice.generaExcepcion(e,paso);
 		}
 		me.callParent(arguments);
-		
 		try {
 			me.getController().custom();
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);
 		}
-	}
+	},
 	
 	
 	

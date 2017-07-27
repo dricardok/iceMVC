@@ -56,7 +56,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	@Autowired
 	private PagoManager pagoManager;
 	
-	@Value("${content.path}")
+	@Value("${content.ice.path}")
 	private String directorioBase;
 
 	@Override
@@ -282,7 +282,7 @@ public class EmisionManagerImpl implements EmisionManager {
 
 			paso = "Tarificando conceptos globales";
 			emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0",
-					Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO");
+					Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO", null, null, null, null);
 
 			emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, "0");
 		} catch (Exception ex) {
@@ -361,7 +361,7 @@ public class EmisionManagerImpl implements EmisionManager {
 				}
 				
 				paso = "Tarificando conceptos globales";
-				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0", Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO");
+				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0", Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO", null, null, null, null);
 				
 				
 				emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, "0");
@@ -495,7 +495,7 @@ public class EmisionManagerImpl implements EmisionManager {
 				logger.error(e.getMessage(), e);
 			}			
 			
-			path.append(generaRutaLlave(directorioBase, "ice", cdunieco, cdramo, estado, nmpoliza, "0"));			
+			path.append(generaRutaLlave(directorioBase, cdunieco, cdramo, estado, nmpoliza, "0"));			
 			
 			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();			
 			
@@ -655,8 +655,8 @@ public class EmisionManagerImpl implements EmisionManager {
 			
 			
 			// Especificar el path para almacenar documentos
-			//path.append(directorioBase).append(File.separator).append("ice").append(File.separator).append(cdunieco).append(File.separator).append(cdramo).append(File.separator).append(nmpolizaEmitida).append(File.separator).append(datosMrecibo.get("nmsuplem")).append(File.separator);
-			path.append(generaRutaLlave(directorioBase, "ice", cdunieco, cdramo, "M", nmpolizaEmitida, datosMrecibo.get("nmsuplem")));
+			
+			path.append(generaRutaLlave(directorioBase, cdunieco, cdramo, "M", nmpolizaEmitida, datosMrecibo.get("nmsuplem")));
 			
 			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();
 			
@@ -872,5 +872,18 @@ public class EmisionManagerImpl implements EmisionManager {
 	        Utils.generaExcepcion(e, paso);
 	    }
 	    return cot;
+	}
+	
+	@Override
+	public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
+            String nmsuplem) throws Exception {
+	    Map<String, String> perf = null;
+	    String paso = "Recuperando perfilamiento de cotizaci\u00f3n";
+	    try {
+	        perf = emisionDAO.obtenerPerfilamientoPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+	    } catch (Exception e) {
+	        Utils.generaExcepcion(e, paso);
+	    }
+	    return perf;
 	}
 }

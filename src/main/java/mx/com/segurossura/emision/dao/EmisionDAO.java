@@ -58,7 +58,8 @@ public interface EmisionDAO {
 			String pv_cdatribu_i) throws Exception;	
 	
 	public Map<String, String> ejecutarValoresDefecto (String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsituac, String nmsuplem, String cdbloque, String cdgarant) throws Exception;
+            String nmsituac, String nmsuplem, String cdbloque, String cdgarant, String cdptovta, String cdgrupo, String cdsubgpo,
+            String cdperfil) throws Exception;
 
 	public String obtenerCuadroComisionesDefault (String cdramo) throws Exception;
 	
@@ -342,4 +343,6 @@ public interface EmisionDAO {
      * @throws Exception
      */
     public void actualizaSwitchCoaseguroCedido (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdesqcoa) throws Exception;
+    public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
+            String nmsuplem) throws Exception;
 }

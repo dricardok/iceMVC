@@ -52,7 +52,13 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 		estado: null,
 		nmpoliza: null,
 		nmsuplem: null,
-		cdtipsit: null
+		cdtipsit: null,
+
+		// perfilamiento
+		cdptovta: null,
+		cdgrupo: null,
+		cdsubgpo: null,
+		cdperfil: null
 	},
 	
 	constructor: function (config) {

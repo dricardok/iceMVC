@@ -901,6 +901,36 @@ public class EmisionAction extends PrincipalCoreAction {
         }
         return SUCCESS;
     }
+    
+    @Action(        
+            value = "obtenerPerfilamientoPoliza", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )   
+    public String obtenerPerfilamientoPoliza () {
+        logger.debug(Utils.log("\n###### obtenerDatosPerfilamiento params: ", params));
+        try {
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+            Utils.validate(params, "No hay datos para obtener perfilamiento de p\u00f3liza");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem");
+            nmsuplem = Utils.NVL(nmsuplem, "0");
+            Utils.validate(cdunieco , "Falta cdunieco",
+                           cdramo   , "Falta cdramo",
+                           estado   , "Falta estado",
+                           nmpoliza , "Falta nmpoliza",
+                           nmsuplem , "Falta nmsuplem");
+            params.putAll(emisionManager.obtenerPerfilamientoPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem));
+            success = true;
+        } catch (Exception e) {
+            message = Utils.manejaExcepcion(e);
+        }
+        return SUCCESS;
+    }
 	
 	public Map<String, String> getParams() {
 		return params;

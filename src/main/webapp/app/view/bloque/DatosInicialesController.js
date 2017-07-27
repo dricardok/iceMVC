@@ -26,11 +26,11 @@ Ext.define('Ice.view.bloque.DatosInicialesController', {
         Ice.log('Ice.view.bloque.DatosInicialesController.custom');
         var me = this,
             view = me.getView(),
-            refs = view.getReferences(),
+            refs = view.getReferences() || {},
             paso = 'Configurando comportamiento bloque de datos iniciales';
         Ice.log('view: ',view);            
         try {
-            Ice.log('refs formadatosgenerales',refs.formdatosgenerales);
+            Ice.log('refs:', refs);
             if(refs.formdatosgenerales){
                 Ice.log('refs formadatosgenerales references',refs.formdatosgenerales.getReferences());
                 if(refs.formdatosgenerales.getReferences()){
@@ -59,7 +59,6 @@ Ext.define('Ice.view.bloque.DatosInicialesController', {
             }
             Ice.log('datosinicialescontroller cdtipcoa',cdtipcoa);
         } catch (e) {
-        	alert(e);
             Ice.generaExcepcion(e, paso);
         }
     },
