@@ -439,15 +439,15 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     			
     			return ;
     		}
-    		if (Ext.manifest.toolkit === 'classic') {
-    			var mes = "" + (1+fecha.getMonth());
-    			var pad = "00"
-    			mes = pad.substring(0, pad.length - mes.length) + mes
-    			var dia = "" + (fecha.getDate());
-    			var pad = "00"
-    			dia = pad.substring(0, pad.length - dia.length) + dia
-    			fecha=dia+"-"+mes+"-"+fecha.getFullYear();
-			}
+//    		if (Ext.manifest.toolkit === 'classic') {
+//    			var mes = "" + (1+fecha.getMonth());
+//    			var pad = "00"
+//    			mes = pad.substring(0, pad.length - mes.length) + mes
+//    			var dia = "" + (fecha.getDate());
+//    			var pad = "00"
+//    			dia = pad.substring(0, pad.length - dia.length) + dia
+//    			fecha=dia+"-"+mes+"-"+fecha.getFullYear();
+//			}
     		Ice.log("--->",fecha);
     		var res=null;
     		if(Number(tipoPersona) == 1) {// Persona fisica

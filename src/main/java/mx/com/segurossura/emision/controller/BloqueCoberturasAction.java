@@ -394,7 +394,7 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 		
 		try
 		{
-			
+			UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
 			
 			logger.debug("#####"+list);
 			logger.debug("#####"+params);
@@ -408,7 +408,8 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 			String pv_nmsituac_i= params.get("nmsituac");
 			String pv_nmsuplem_i= params.get("nmsuplem");
 			
-			bloqueCoberturasManager.agregaCobertura(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i,  list);
+			bloqueCoberturasManager.agregaCobertura(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i,
+			        pv_nmsuplem_i,  list, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             
 			 
             

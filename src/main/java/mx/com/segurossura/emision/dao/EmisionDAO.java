@@ -59,7 +59,7 @@ public interface EmisionDAO {
 	
 	public Map<String, String> ejecutarValoresDefecto (String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmsituac, String nmsuplem, String cdbloque, String cdgarant, String cdptovta, String cdgrupo, String cdsubgpo,
-            String cdperfil) throws Exception;
+            String cdperfil, String cdusuari, String cdsisrol) throws Exception;
 
 	public String obtenerCuadroComisionesDefault (String cdramo) throws Exception;
 	

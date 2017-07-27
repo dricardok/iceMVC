@@ -315,5 +315,41 @@ Ext.define('Ice.view.main.MainController', {
                 });
             }
         }
+    },
+
+    mainCardPanelAfterrender: function () {
+        Ice.log('Ice.view.main.MainController.mainCardPanelAfterrender');
+        var me = this,
+            refs = me.getReferences(),
+            paso = 'Creando pivote';
+        try {
+            var piv = Ext.create('Ext.button.Button', {
+                text: 'Arriba',
+                iconCls: 'x-fa fa-eject',
+                renderTo: Ext.getBody(),
+                floating: true,
+                iconAlign: 'top',
+                hidden: true,
+                padre: refs.mainContainerWrap,
+                y: Ext.getBody().getHeight() - 100,
+                listeners: {
+                    afterrender: function (me) {
+                        me.setX(Ext.getBody().getWidth() - me.getWidth());
+                    }
+                },
+                handler: function (me) {
+                    me.padre.scrollTo(0, 0);
+                }
+            });
+            refs.mainContainerWrap.pivote = piv;
+            refs.mainContainerWrap.on({
+                onScrollEnd: function (view, x, y) {
+                    Ice.log('onScrollEnd x:', x, 'y:', y);
+                    view.pivote[y > 100 ? 'show' : 'hide']();
+                }
+            });
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
     }
 });

@@ -46,7 +46,8 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     "0", //nmsituac
                     nmsuplem,
                     Bloque.DATOS_GENERALES.getCdbloque(),
-                    null, cdptovta, cdgrupo, cdsubgpo, cdperfil
+                    null, cdptovta, cdgrupo, cdsubgpo, cdperfil,
+                    cdusuari, cdsisrol
                     );
             
             // se recuperan los valores minimos y se les agregan los valores por defecto 
@@ -159,7 +160,8 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     "0", //nmsituac
                     nmsuplemsesion,
                     Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque(),
-                    null, cdptovta, cdgrupo, cdsubgpo, cdperfil
+                    null, cdptovta, cdgrupo, cdsubgpo, cdperfil,
+                    cdusuari, cdsisrol
                     );
             
             paso = "Recuperando valores variables";
