@@ -1,6 +1,6 @@
 Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 	
-	extend		:	"Ice.view.componente.VentanaIce",
+	extend		:	"Ice.view.componente.PanelPaddingIce",
 	controller	:	"agregardomiciliowindow",
 	xtype		:	'agregardomiciliowindow',
 	config		:	{
@@ -39,7 +39,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
     			if(b){
     				it.cmpBuscar=true;
 					it.listeners={
-						focus:"onFocusCP"
+						focusenter:"onFocusCP"
 					};
 					
 					

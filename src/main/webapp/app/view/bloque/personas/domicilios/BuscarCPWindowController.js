@@ -52,11 +52,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.BuscarCPWindowController', {
 		me=this,
 		view=me.getView();
 		try{
-			 if (Ext.manifest.toolkit === 'classic') {
-    			 view.hide();
-    		 }else{
-    			 view.cerrar();
-    		 }
+    		view.cerrar();
 		}catch(e){
 			Ice.manejaExcepcion(e,paso);
 		}
