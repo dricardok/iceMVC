@@ -29,7 +29,9 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
         cdptovta: null,
         cdgrupo: null,
         cdsubgpo: null,
-        cdperfil: null
+        cdperfil: null,
+
+        nuevaCotizacion: true
     },
 
     // construccion
@@ -58,22 +60,12 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
                     listeners: {
                         llaveGenerada: 'llaveGenerada'
                     }
-                },{
+                }, {
                     xtype: 'panelcoaseguro',
                     reference: 'panelcoaseguro',
                     title: 'Datos coaseguro',
-                    hidden : true,
-
-                    modulo: config.modulo,
-                    flujo: config.flujo,
-                    cdtipsit: config.cdtipsit,
-                    auxkey: config.auxkey,
-
-                    cdramo: config.cdramo,
-                    estado: config.estado,
-                    nmsuplem: config.nmsuplem,
-                    status: config.status
-                },{
+                    hidden : true
+                }, {
                     xtype: 'formauxiliar',
                     reference: 'formdatosauxiliares',
 
@@ -103,6 +95,8 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
                 config.items[i].cdgrupo  = config.cdgrupo;
                 config.items[i].cdsubgpo = config.cdsubgpo;
                 config.items[i].cdperfil = config.cdperfil;
+
+                config.items[i].nuevaCotizacion = config.nuevaCotizacion;
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);

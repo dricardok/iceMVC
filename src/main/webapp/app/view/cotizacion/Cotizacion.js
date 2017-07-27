@@ -85,6 +85,14 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             
             config.modulo = config.modulo || 'COTIZACION';
             config.flujo = config.flujo || {};
+            if (config.nuevaCotizacion === false
+                || config.nuevaCotizacion === 'false'
+                || config.nueva === false
+                || config.nueva === 'false') {
+                config.nuevaCotizacion = false;
+            } else {
+                config.nuevaCotizacion = true;
+            }
             
             if (config.estado === 'w') {
                 config.estado = 'W';

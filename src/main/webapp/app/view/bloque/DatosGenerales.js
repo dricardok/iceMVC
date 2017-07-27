@@ -31,7 +31,7 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
             'cdunieco'
         ],
         camposDisparanValoresDefectoVariables: [
-            'cdunieco', 'nmpoliza', 'b1_feefecto', 'b1_feproren'
+            'nmpoliza', 'b1_feefecto', 'b1_feproren'
         ],
         
         // otro

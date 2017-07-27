@@ -71,7 +71,9 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                             cdptovta: view.getCdptovta(),
                             cdgrupo: view.getCdgrupo(),
                             cdsubgpo: view.getCdsubgpo(),
-                            cdperfil: view.getCdperfil()
+                            cdperfil: view.getCdperfil(),
+
+                            nuevaCotizacion: view.getNuevaCotizacion()
                         });
                         if (view.getNuevaCotizacion() === true && index === 0 &&
                             bloqueExistente.xtype === 'datosiniciales') {
@@ -256,7 +258,9 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     cdptovta: view.getCdptovta(),
                     cdgrupo: view.getCdgrupo(),
                     cdsubgpo: view.getCdsubgpo(),
-                    cdperfil: view.getCdperfil()
+                    cdperfil: view.getCdperfil(),
+
+                    nuevaCotizacion: view.getNuevaCotizacion()
                 }));
             }
             

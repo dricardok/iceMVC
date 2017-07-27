@@ -130,11 +130,11 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             for (var i = 0; i < view.getCamposDisparanValoresDefectoVariables().length; i++) {
                 var name = view.getCamposDisparanValoresDefectoVariables()[i];
                 if (refs[name]) {
-                    if (Ext.manifest.toolkit === 'classic') {
-                        // refs[name].setFieldStyle('border-right: 1px solid blue;');
-                    } else {
-                        // refs[name].setStyle('border-right: 1px solid blue;');
-                    }
+                    // if (Ext.manifest.toolkit === 'classic') {
+                    //     refs[name].setFieldStyle('border-right: 1px solid blue;');
+                    // } else {
+                    //     refs[name].setStyle('border-right: 1px solid blue;');
+                    // }
                     
                     
                     if (Ext.manifest.toolkit !== 'classic' && refs[name].isXType('selectfield')) { // para los select
@@ -278,6 +278,11 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             accedeProcesar = false;
         var paso = 'Cargando valores por defecto variables de datos generales';
         try {
+            if (view.getDatosFijosNuevos() === true) {
+                Ice.logWarn('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoVariables faltan los datos fijos');
+                return;
+            }
+
             if (view.getDatosVariablesNuevos() !== true) {
                 Ice.logWarn('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoVariables los datos variables no son nuevos');
                 return;

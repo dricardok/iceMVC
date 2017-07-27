@@ -363,12 +363,12 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
                     url: Ice.url.bloque.datosGenerales.movimientoMsupcoa,
                     params: {
                         'params.cdcialider': data.cdcialider,
-                        'params.cdunieco': view.cdunieco,
-                        'params.cdramo': view.cdramo,
-                        'params.estado': view.estado,
-                        'params.nmpoliza': view.nmpoliza,
+                        'params.cdunieco': view.getCdunieco(),
+                        'params.cdramo': view.getCdramo(),
+                        'params.estado': view.getEstado(),
+                        'params.nmpoliza': view.getNmpoliza(),
                         'params.nmpolizal': data.nmpolizal,
-                        'params.nmsuplem': view.nmsuplem,
+                        'params.nmsuplem': view.getNmsuplem(),
                         'params.tipodocu': data.tipodocu,
                         'params.ndoclider': data.ndoclider,
                         'params.status': data.status,
@@ -422,12 +422,12 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
                 if(me.validaCompanias() == true){
                     Ice.log('Antes de hacer peticion ajax');
                     var params = data;
-                    params['cdunieco'] = view.cdunieco;
-                    params['cdramo'] = view.cdramo;
-                    params['estado'] = view.estado;
-                    params['nmpoliza'] = view.nmpoliza;
-                    params['nmsuplem'] = view.nmsuplem;
-                    params['cdtipcoa'] = view.cdtipcoa;
+                    params['cdunieco'] = view.getCdunieco();
+                    params['cdramo'] = view.getCdramo();
+                    params['estado'] = view.getEstado();
+                    params['nmpoliza'] = view.getNmpoliza();
+                    params['nmsuplem'] = view.getNmsuplem();
+                    params['cdtipcoa'] = view.getCdtipcoa();
                     params['accion'] = 'I';
                     Ice.request({
                         mascara: 'guardando coaseguro cedido',
@@ -469,10 +469,10 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
             view = me.getView(),
             refs = view.getReferences();
         try{
-            Ice.log('view cdtipcoa',view.cdtipcoa);
-            if(view.cdtipcoa == 'A'){
+            Ice.log('view cdtipcoa',view.getCdtipcoa());
+            if(view.getCdtipcoa() == 'A'){
                 me.guardarAceptado(callback);
-            } else if(view.cdtipcoa == 'N') {
+            } else if(view.getCdtipcoa() == 'N') {
                 me.eliminarCoaseguro(callback);
             } else {
                 me.guardarCedido(callback);
@@ -490,8 +490,8 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
             refs = view.getReferences(),
             url = '';
         try{
-            if(view.cdtipcoa != 'N'){
-                if(view.cdtipcoa == 'A'){
+            if(view.getCdtipcoa() != 'N'){
+                if(view.getCdtipcoa() == 'A'){
                     url = Ice.url.bloque.datosGenerales.obtenerCoaseguroAceptado;
                 } else {
                     url = Ice.url.bloque.datosGenerales.obtenerCoaseguroCedido;
@@ -500,17 +500,17 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
                     mascara: 'guardando coaseguro',
                     url: url,
                     params: {
-                        'params.cdunieco': view.cdunieco,
-                        'params.cdramo': view.cdramo,
-                        'params.estado': view.estado,
-                        'params.nmpoliza': view.nmpoliza,
-                        'params.nmsuplem': view.nmsuplem
+                        'params.cdunieco': view.getCdunieco(),
+                        'params.cdramo': view.getCdramo(),
+                        'params.estado': view.getEstado(),
+                        'params.nmpoliza': view.getNmpoliza(),
+                        'params.nmsuplem': view.getNmsuplem()
                     },
                     success: function (json) {
                         var paso2 = 'LLenando store';
                         try {
                             Ice.log('json list',json.list,'params',json.params,'refs',refs);
-                            if(view.cdtipcoa == 'A'){
+                            if(view.getCdtipcoa() == 'A'){
                                 Ice.cargarFormulario(refs.formAceptado, json.params);
                             } else {
                                 if(!Ext.isEmpty(refs.form.getReferences())){
@@ -570,16 +570,17 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
             view = me.getView(),
             refs = view.getReferences();
         try{
-            if(view.cdunieco && view.cdramo && view.estado && view.nmpoliza && view.nmsuplem){
+            if(view.getCdunieco() && view.getCdramo() && view.getEstado() && view.getNmpoliza() &&
+                !Ext.isEmpty(view.getNmsuplem())){
                 Ice.request({
                     mascara: 'eliminando coaseguro',
                     url: Ice.url.bloque.datosGenerales.eliminaCoaseguro,
                     params: {
-                        'params.cdunieco': view.cdunieco,
-                        'params.cdramo': view.cdramo,
-                        'params.estado': view.estado,
-                        'params.nmpoliza': view.nmpoliza,
-                        'params.nmsuplem': view.nmsuplem
+                        'params.cdunieco': view.getCdunieco(),
+                        'params.cdramo': view.getCdramo(),
+                        'params.estado': view.getEstado(),
+                        'params.nmpoliza': view.getNmpoliza(),
+                        'params.nmsuplem': view.getNmsuplem()
                     },
                     success: function (json) {
                         callback.success();

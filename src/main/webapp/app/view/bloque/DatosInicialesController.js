@@ -12,7 +12,8 @@ Ext.define('Ice.view.bloque.DatosInicialesController', {
         Ext.defer(function () {
             try {
                 me.custom();
-                if (view.getCdunieco() && view.getCdramo() && view.getEstado() && view.getNmpoliza()) {
+                if (view.getCdunieco() && view.getCdramo() && view.getEstado() && view.getNmpoliza()
+                    && view.getNuevaCotizacion() !== true) {
                     me.cargar();
                 }
             } catch (e) {

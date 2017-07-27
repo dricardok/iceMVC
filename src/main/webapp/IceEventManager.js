@@ -51,7 +51,7 @@ var Ice = (
                 var crearMapaItemsPorName = function () {
                     if (!formItemsMapByName) {
                         formItemsMapByName = {};
-                        var items = Ice.query('[name]', form);
+                        var items = Ice.query('[getName]' + (Ice.modern() ? '[parent]' : ''), form);
                         for (var i = 0; i < (items || []).length; i++) {
                             formItemsMapByName[items[i].getName()] = items[i];
                         }

@@ -94,7 +94,8 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                                         'cdgrupo='  + values.cdgrupo  + '&' +
                                         'cdsubgpo=' + values.cdsubgpo + '&' +
                                         'cdperfil=' + values.cdperfil + '&' +
-                                        'cdunieco=' + values.cdunieco
+                                        'cdunieco=' + values.cdunieco + '&' +
+                                        'nueva=true'
                                     );
                                 } catch (e) {
                                     Ice.manejaExcepcion(e, paso2);
@@ -177,7 +178,8 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                                         'cdptovta=' + action2.params.cdptovta + '&' +
                                         'cdgrupo='  + action2.params.cdgrupo  + '&' +
                                         'cdsubgpo=' + action2.params.cdsubgpo + '&' +
-                                        'cdperfil=' + action2.params.cdperfil
+                                        'cdperfil=' + action2.params.cdperfil + '&' +
+                                        'nueva=false'
                                     );
                                 } catch (e) {
                                     Ice.manejaExcepcion(e, paso3);

@@ -64,6 +64,17 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
                 validators: true
             });	                                
             Ice.log('itemsForm ',compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO);
+			
+			var eventsForm = Ice.generaComponentes({
+				pantalla: 'BLOQUE_LISTA_SITUACIONES',
+				seccion: 'EVENTOS', 
+				modulo: me.modulo || '',
+				estatus: (me.flujo && me.flujo.estatus) || '',
+				cdramo: me.cdramo || '',
+				cdtipsit: me.cdtipsit ||'',
+				auxKey: me.auxkey || '',
+				eventos: true
+			});
 
             var comps = Ice.generaComponentes({
                 pantalla: 'BLOQUE_LISTA_SITUACIONES',
@@ -157,7 +168,8 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
         //                               }
         //                           }
                         }
-                    ]
+                    ],
+                    iceEvents: eventsForm.BLOQUE_LISTA_SITUACIONES.EVENTOS.eventos
                 }
             ].concat(config.items || []);
         } catch (e) {
