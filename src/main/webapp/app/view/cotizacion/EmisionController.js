@@ -550,7 +550,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
     							
     							me.emitir();
     						}
-    						else {
+    						else if(Ice.constantes.roles.AGENTE==Ice.sesion.cdsisrol) {
     							
     							me.mostrarVentanaPago();
     						}
