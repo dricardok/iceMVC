@@ -82,6 +82,20 @@ var Ice = (
                         }
                     }
                 }
+                // para cambiar labels
+                if (iceEvents.changeEvents[name][valueProfile].label) {
+                    crearMapaItemsPorName();
+                    for (var targetName in iceEvents.changeEvents[name][valueProfile].label) {
+                        if (formItemsMapByName[targetName]) {
+                            formItemsMapByName[targetName].setLabel && formItemsMapByName[targetName].setLabel(
+                                iceEvents.changeEvents[name][valueProfile].label[targetName]
+                            );
+                            formItemsMapByName[targetName].setFieldLabel && formItemsMapByName[targetName].setFieldLabel(
+                                iceEvents.changeEvents[name][valueProfile].label[targetName]
+                            );
+                        }
+                    }
+                }
             } catch (e) {
                 Ice.manejaExcepcion(e, paso);
             }
