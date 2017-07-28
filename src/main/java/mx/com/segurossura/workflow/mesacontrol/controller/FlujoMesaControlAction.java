@@ -622,6 +622,9 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 		
 		try
 		{
+			// Recuperamos la referencia a la sesion, que se pierde al usar SMD:
+			this.session = ActionContext.getContext().getSession();
+			
 			Utils.validateSession(session);
 			
 			Utils.validate(params , "No se recibieron datos");
@@ -836,6 +839,9 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 		
 		try
 		{
+			// Recuperamos la referencia a la sesion, que se pierde al usar SMD:
+			this.session = ActionContext.getContext().getSession();
+			
 			Utils.validateSession(session);
 			
 			Utils.validate(params, "No se recibieron datos");
@@ -978,6 +984,9 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 		
 		try
 		{
+			// Recuperamos la referencia a la sesion, que se pierde al usar SMD:
+			this.session = ActionContext.getContext().getSession();
+			
 			Utils.validateSession(session);
 			
 			Utils.validate(params , "No se recibieron datos");
@@ -1150,6 +1159,9 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 		
 		try
 		{
+			// Recuperamos la referencia a la sesion, que se pierde al usar SMD:
+			this.session = ActionContext.getContext().getSession();
+			
 			Utils.validateSession(session);
 			
 			Utils.validate(params , "No se recibieron datos");
@@ -1994,6 +2006,9 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 		
 		try
 		{
+			// Recuperamos la referencia a la sesion, que se pierde al usar SMD:
+			this.session = ActionContext.getContext().getSession();
+			
 			Utils.validateSession(session);
 			
 			Utils.validate(params , "No se recibieron datos");
@@ -2041,6 +2056,9 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 		
 		try
 		{
+			// Recuperamos la referencia a la sesion, que se pierde al usar SMD:
+			this.session = ActionContext.getContext().getSession();
+			
 			Utils.validateSession(session);
 			
 			Utils.validate(params , "No se recibieron datos");
