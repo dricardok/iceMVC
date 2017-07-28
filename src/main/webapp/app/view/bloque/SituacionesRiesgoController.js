@@ -48,14 +48,16 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                 throw 'No hay campo de tipo de situaci\u00f3n';
             } 
 
+            //Ice.log('cdtipsitCmp',cdtipsitCmp.getStore().getData().length);
             if (Ext.manifest.toolkit !== 'classic' && cdtipsitCmp.isXType('selectfield')) { // para los select
-                Ice.log('cdtipsitCmp',cdtipsitCmp);
+                //Ice.log('cdtipsitCmp',cdtipsitCmp);
                 cdtipsitCmp.on({
                     change: function(){
                         me.cargarValoresDefectoVariables();
                     }
                 });
             } else {
+                //Ice.log('cdtipsitCmp',cdtipsitCmp);
                 cdtipsitCmp.on({
                     blur: function(){
                         me.cargarValoresDefectoVariables();
@@ -91,6 +93,10 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
 
     onCancelar: function () {
         this.cancelar();
+    },
+
+    onCopiarSituacion: function(grid, rowIndex, colIndex){
+        this.copiarSituacion(grid, rowIndex, colIndex);
     },
 
     agregar: function () {
@@ -561,10 +567,94 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
   
   limpiarForm: function(form){
       Ice.log('Ice.view.bloque.CoberturasController.limpiarForm');
-      paso = 'Limpiando formulario de situaciones de riesgo';
+      var paso = 'Limpiando formulario de situaciones de riesgo';
       try{
           form.reset();
       } catch (e){
+          Ice.generaExcepcion(e, paso);
+      }
+  },
+
+  copiarSituacion: function(grid, rowIndex, colIndex){
+      Ice.log('Ice.view.bloque.CoberturasController.copiarSituacion');
+      var me = this,
+          view = me.getView(),
+          refs = view.getReferences(),
+          paso = 'Copiando situacion de riesgo';
+      try{
+          if(Ext.manifest.toolkit === 'classic'){
+              data = grid.store.getAt(rowIndex).getData();              
+          } else {
+              var cell = grid.getParent(),
+                  record = cell.getRecord(),
+                  data = record.getData();
+          }
+
+          if(data){
+              var ventanaCopiar = Ext.create('Ice.view.componente.VentanaIce',{
+                  platformConfig: {
+                      desktop: {
+                          width: 400,
+                          style: 'padding:0px',
+                          bodyStyle: 'padding:5px'
+                      }
+                  },
+                  modal: true,
+                  items: [
+                      {
+                          xtype: 'numberfieldice',
+                          label: 'Copias',
+                          minValue: 1,
+                          value: 1,
+                          refs: 'nmcopias'
+                      }
+                  ],
+                  buttons: [
+                      {
+                          text: 'Aceptar',
+                          iconCls: 'x-fa fa-check',
+                          handler: function(){
+                              var nmcopias = this.up('ventanaice').down('numberfieldice').getValue();
+                              if(nmcopias){
+                                  Ice.request({
+                                      mascara: 'Copiando situacion de riesgo',
+                                      url: Ice.url.bloque.situacionesRiesgo.copiaSituacion,
+                                      params: {
+                                          'params.cdunieco' : view.getCdunieco(),
+                                          'params.cdramo': view.getCdramo(),
+                                          'params.estado': view.getEstado(),
+                                          'params.nmpoliza': view.getNmpoliza(),
+                                          'params.nmsituac': data.nmsituac,
+                                          'params.nmsuplem': view.getNmsuplem(),
+                                          'params.nmcopias': nmcopias
+                                      },
+                                      success: function (json) {
+                                          var paso2 = 'LLenando store';
+                                          try {
+                                              refs.grid.getStore().reload();
+                                              Ice.mensajeCorrecto('Se copio correctamente situacion de riesgo');
+                                              ventanaCopiar.cerrar();
+                                          } catch (e) {
+                                              Ice.mensajeCorrecto('No se copio situacion de riesgo');
+                                              Ice.manejaExcepcion(e, paso2);
+                                              ventanaCopiar.cerrar();
+                                          }
+                                      }
+                                  });
+                              }
+                          }
+                      },{
+                          text: 'Cancelar',
+                          iconCls: 'x-fa fa-close',
+                          handler: function(){
+                              ventanaCopiar.cerrar();
+                          }
+                      }
+                  ]
+              });
+              ventanaCopiar.mostrar();
+          }
+      } catch (e) {
           Ice.generaExcepcion(e, paso);
       }
   }
