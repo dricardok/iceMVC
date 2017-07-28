@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Constantes;
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.royalsun.alea.commons.bean.Banco;
 import mx.com.royalsun.alea.commons.bean.Documento;
@@ -27,7 +29,10 @@ import mx.com.royalsun.alea.commons.bean.RequestWs;
 import mx.com.royalsun.alea.commons.bean.Tarjeta;
 import mx.com.royalsun.alea.commons.bean.TransactionResponse;
 import mx.com.segurossura.emision.dao.EmisionDAO;
+import mx.com.segurossura.emision.dao.PersonasPolizaDAO;
+import mx.com.segurossura.emision.dao.RegistoPersonaDAO;
 import mx.com.segurossura.emision.dao.SituacionDAO;
+import mx.com.segurossura.emision.service.AgrupadoresManager;
 import mx.com.segurossura.emision.service.EmisionManager;
 import mx.com.segurossura.emision.service.ImpresionManager;
 import mx.com.segurossura.emision.service.PagoManager;
@@ -56,8 +61,17 @@ public class EmisionManagerImpl implements EmisionManager {
 	@Autowired
 	private PagoManager pagoManager;
 	
-	@Value("${content.path}")
+	@Value("${content.ice.path}")
 	private String directorioBase;
+	
+	@Autowired
+    private AgrupadoresManager agrupadoresManager;
+	
+	@Autowired
+    private PersonasPolizaDAO personasPolizaDAO;
+	
+	@Autowired
+	private RegistoPersonaDAO registroPersonaDao;
 
 	@Override
 	public void movimientoTvalogar(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
@@ -247,14 +261,14 @@ public class EmisionManagerImpl implements EmisionManager {
 
 	@Override
 	public List<Map<String, String>> ejecutarValidaciones(String cdunieco, String cdramo, String estado,
-			String nmpoliza, String nmsituac, String nmsuplem, List<String> cdbloque) throws Exception {
+			String nmpoliza, String nmsituac, String nmsuplem, List<String> cdbloque, String cdusuari, String cdsisrol) throws Exception {
 		logger.debug("\n@@@@@@ ejecutarValidaciones @@@@@@");
 		String paso = "Ejecutando validaciones";
 		List<Map<String, String>> validaciones = new ArrayList<Map<String, String>>();
 		try {
 			for (String bloque : cdbloque) {
 			    validaciones.addAll(emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, null,
-						bloque));
+						bloque, cdusuari, cdsisrol));
 			}
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
@@ -265,7 +279,7 @@ public class EmisionManagerImpl implements EmisionManager {
 
 	@Override
 	public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String nmsituac) throws Exception {
+			String nmsituac, String cdusuari, String cdsisrol) throws Exception {
 		String paso = null;
 		Map<String, Object> res = null;
 		try {
@@ -282,7 +296,8 @@ public class EmisionManagerImpl implements EmisionManager {
 
 			paso = "Tarificando conceptos globales";
 			emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0",
-					Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO");
+					Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO", null, null, null, null,
+					cdusuari, cdsisrol);
 
 			emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, "0");
 		} catch (Exception ex) {
@@ -292,7 +307,8 @@ public class EmisionManagerImpl implements EmisionManager {
 	}
 	
 	@Override
-	public List<Map<String, Object>> generarTarificacionPlanes(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception {
+	public List<Map<String, Object>> generarTarificacionPlanes(String cdunieco, String cdramo, String estado, String nmpoliza,
+	        String nmsituac, String cdusuari, String cdsisrol) throws Exception {
 		String paso = null;
 		Map<String, Object> res = null;
 		List<Map<String, Object>> resultados = new ArrayList<Map<String, Object>>();
@@ -361,7 +377,9 @@ public class EmisionManagerImpl implements EmisionManager {
 				}
 				
 				paso = "Tarificando conceptos globales";
-				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0", Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO");
+				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, "0", "0",
+				        Bloque.TARIFICACION_POLIZA_SITU.getCdbloque(), "NULO", null, null, null, null,
+				        cdusuari, cdsisrol);
 				
 				
 				emisionDAO.distribuirAgrupadores(cdunieco, cdramo, estado, nmpoliza, "0");
@@ -449,7 +467,7 @@ public class EmisionManagerImpl implements EmisionManager {
 				
 			}			
 			
-			res = generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+			res = generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdusuari, cdsisrol);
 			
 			// marcar la cotizacion como confirmada
 			Map<String, String> tvaloaux = null;
@@ -495,7 +513,7 @@ public class EmisionManagerImpl implements EmisionManager {
 				logger.error(e.getMessage(), e);
 			}			
 			
-			path.append(generaRutaLlave(directorioBase, "ice", cdunieco, cdramo, estado, nmpoliza, "0"));			
+			path.append(generaRutaLlave(directorioBase, cdunieco, cdramo, estado, nmpoliza, "0"));			
 			
 			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();			
 			
@@ -655,8 +673,8 @@ public class EmisionManagerImpl implements EmisionManager {
 			
 			
 			// Especificar el path para almacenar documentos
-			//path.append(directorioBase).append(File.separator).append("ice").append(File.separator).append(cdunieco).append(File.separator).append(cdramo).append(File.separator).append(nmpolizaEmitida).append(File.separator).append(datosMrecibo.get("nmsuplem")).append(File.separator);
-			path.append(generaRutaLlave(directorioBase, "ice", cdunieco, cdramo, "M", nmpolizaEmitida, datosMrecibo.get("nmsuplem")));
+			
+			path.append(generaRutaLlave(directorioBase, cdunieco, cdramo, "M", nmpolizaEmitida, datosMrecibo.get("nmsuplem")));
 			
 			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();
 			
@@ -872,5 +890,65 @@ public class EmisionManagerImpl implements EmisionManager {
 	        Utils.generaExcepcion(e, paso);
 	    }
 	    return cot;
+	}
+	
+	@Override
+	public void guardarDatosPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, 
+    		String nmsuplem, String cdbanco, String nmtarjeta, String fevencm, String fevenca, String email)throws Exception{
+		String paso="Guardando datos de pago con tarjeta";
+		String cdperson="";
+		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 
+				"\n@@@@@@ guardarDatosPagoTarjeta"));
+		try{
+			Map<String,String> map = new HashMap<>();
+			map.put("cdbanco",cdbanco);
+			map.put("cdtarcre",nmtarjeta);
+			map.put("fevencim",Utils.join("01/",fevencm,"/20",fevenca));
+			agrupadoresManager.realizarMovimientoMpoliagr(cdunieco, cdramo, estado, nmpoliza, "1.01", "0", "0", map, "U");
+			List<Map<String, String>> per = personasPolizaDAO.obtenerMpoliper(cdunieco, cdramo, estado, nmpoliza, "0", nmsuplem);
+			Optional<Map<String, String>> opt = per.stream().filter(
+						m->"TO".equals(m.get("cdrol"))
+					).findFirst();
+			if(opt.isPresent()){
+				cdperson=opt.get().get("cdperson");
+				logger.debug("@@@@@@ cdperson: "+cdperson);
+			}else{
+				throw new ApplicationException("No se encuentra a la persona");
+			}
+			Map<String, String> persona=null;
+			String accion="I";
+			try{
+				persona = registroPersonaDao.obtieneTvaloper(cdperson).get(0);
+			}catch(Exception e){
+				logger.warn("No hay registros en tvaloper para {}",cdperson);
+				persona=new HashMap<>();
+				accion="I";
+			}
+			persona.put("cdperson", cdperson);
+			persona.put("otvalor15", email);
+			logger.debug("@@@@ tvaloper: "+persona);
+			registroPersonaDao.movimientoTvaloper(cdperson, persona, accion);
+			Map<String, String> poliza = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0);
+			if(!"12".equals(poliza.get("cdperpag"))){
+				emisionDAO.actualizaGestorCobro(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+			}
+			
+		}catch (Exception e) {
+	        Utils.generaExcepcion(e, paso);
+	    }
+		logger.debug(Utils.join("\n@@@@@@ guardarDatosPagoTarjeta", "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
+	}
+	
+	public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
+            String nmsuplem) throws Exception {
+	    Map<String, String> perf = null;
+	    String paso = "Recuperando perfilamiento de cotizaci\u00f3n";
+	    try {
+	        perf = emisionDAO.obtenerPerfilamientoPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+	    } catch (Exception e) {
+	        Utils.generaExcepcion(e, paso);
+	    }
+	    return perf;
+
 	}
 }

@@ -21,7 +21,6 @@ import com.biosnettcs.portal.model.UsuarioVO;
 import com.opensymphony.xwork2.ActionContext;
 
 import mx.com.segurossura.emision.service.BloqueCoberturasManager;
-import mx.com.segurossura.emision.service.EmisionManager;
 
 @Controller
 @Scope("prototype")
@@ -244,7 +243,8 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 			
 			logger.debug("### "+list);
 			logger.debug("### "+params);
-			
+			this.session = ActionContext.getContext().getSession();
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
 			Utils.validate(params,"No hay parametros de entrada");
 			Utils.validate(list,"No hay parametros de entrada");
 			String  pv_cdunieco_i = params.get("cdunieco"), 
@@ -257,7 +257,8 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 					pv_cdgarant_i = params.get("cdgarant"), 
 					pv_cdcapita_i = params.get("cdcapita");
 			
-			list=bloqueCoberturasManager.guardarCobertura(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i, pv_nmsuplem_i, pv_cdgarant_i, pv_cdcapita_i, list);
+			list=bloqueCoberturasManager.guardarCobertura(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i,
+			        pv_nmsuplem_i, pv_cdgarant_i, pv_cdcapita_i, list, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
 			success=true;
 			
 		}
@@ -394,7 +395,7 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 		
 		try
 		{
-			
+			UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
 			
 			logger.debug("#####"+list);
 			logger.debug("#####"+params);
@@ -408,7 +409,8 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 			String pv_nmsituac_i= params.get("nmsituac");
 			String pv_nmsuplem_i= params.get("nmsuplem");
 			
-			bloqueCoberturasManager.agregaCobertura(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i,  list);
+			bloqueCoberturasManager.agregaCobertura(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i,
+			        pv_nmsuplem_i,  list, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             
 			 
             

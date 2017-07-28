@@ -23,7 +23,15 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
         modulo: null,
         cdtipsit: null,
         flujo: null,
-        auxkey: null
+        auxkey: null,
+        
+        // perfilamiento
+        cdptovta: null,
+        cdgrupo: null,
+        cdsubgpo: null,
+        cdperfil: null,
+
+        nuevaCotizacion: true
     },
 
     // construccion
@@ -52,22 +60,12 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
                     listeners: {
                         llaveGenerada: 'llaveGenerada'
                     }
-                },{
+                }, {
                     xtype: 'panelcoaseguro',
                     reference: 'panelcoaseguro',
                     title: 'Datos coaseguro',
-                    hidden : true,
-
-                    modulo: config.modulo,
-                    flujo: config.flujo,
-                    cdtipsit: config.cdtipsit,
-                    auxkey: config.auxkey,
-
-                    cdramo: config.cdramo,
-                    estado: config.estado,
-                    nmsuplem: config.nmsuplem,
-                    status: config.status
-                },{
+                    hidden : true
+                }, {
                     xtype: 'formauxiliar',
                     reference: 'formdatosauxiliares',
 
@@ -92,6 +90,13 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
                 config.items[i].cdtipsit = config.items[i].cdtipsit || config.cdtipsit;
                 config.items[i].flujo    = config.flujo;
                 config.items[i].auxkey   = config.auxkey;
+
+                config.items[i].cdptovta = config.cdptovta;
+                config.items[i].cdgrupo  = config.cdgrupo;
+                config.items[i].cdsubgpo = config.cdsubgpo;
+                config.items[i].cdperfil = config.cdperfil;
+
+                config.items[i].nuevaCotizacion = config.nuevaCotizacion;
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);

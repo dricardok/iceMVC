@@ -1,28 +1,23 @@
 Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 	
-	extend		:	"Ice.view.componente.VentanaIce",
+	extend		:	"Ice.view.componente.PanelPaddingIce",
 	controller	:	"agregardomiciliowindow",
 	xtype		:	'agregardomiciliowindow',
 	config		:	{
 		cdperson	:	null,
 		nmorddom	:	null,
-		accion		:	"I"
+		accion		:	"I",
+		modelValidators:   {},
+		modelFields	:	[]
 	},
 	autoShow		:	true,
 	title			:	'Agregar Domicilio',
-	layout			: 	"fit",
-	height			:	"80%",
-	defaults		:{
-		bodyPadding: 20
-	},
 	constructor : 	function(config){
-		
 		var paso="",
 			me=this;
 		try{
 			if(config.cdperson && config.nmorddom){
 				config.accion="U";
-				//alert();
 			}
 			
 			Ice.log("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow.constructor: cdperson nmorddom",config.cdperson,config.nmorddom);
@@ -44,27 +39,42 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
     			if(b){
     				it.cmpBuscar=true;
 					it.listeners={
-						focus:"onFocusCP"
+						render:function(el){
+							el.getEl().on('click',function(){
+
+						        me.getController().onFocusCP();
+						    });
+
+						}
 					};
 					
+					if(Ice.classic()){
+						it.emptyText="Click para buscar";
+						it.listeners={
+								render:function(el){
+									el.getEl().on('click',function(){
+
+								        me.getController().onFocusCP();
+								    });
+
+								}
+							};
+					}else{
+						it.value="Click para buscar";
+						it.listeners={
+								focus:'onFocusCP'
+							};
+					}
 					
-					it.emptyText="Click para buscar";
 					
     			}
     		});
 			
-			me.items=[
+			config.items=[
 				{
-					xtype		:	"formice",
+					xtype		:	"formtrescolumnasice",
 					reference	:	"formulario",
 					scrollable	:	true,
-					layout		:	{
-						type		:	'table',
-						columns		:	2
-					},
-					defaults	:	{
-						bodyPadding: 10
-					},
 					items		:	comps.AGREGAR_PERSONAS.MDOMICIL.items,
 			    	modelValidators:comps.AGREGAR_PERSONAS.MDOMICIL.validators,
         			modelFields	:	comps.AGREGAR_PERSONAS.MDOMICIL.fields,	
@@ -72,11 +82,13 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 		 			    	{
 						    	xtype	: 'button',
 						    	text	: 'Guardar',
+						    	iconCls		: 	'x-fa fa-save',
 						    	handler : 'guardarDomicilio'
 		 			    	},
 		 			    	{
 						    	xtype	: 'button',
 						    	text	: 'Cancelar',
+						    	iconCls: 'x-fa fa-close',
 						    	handler : 'cancelar'
 		 			    	}
 		 			    ],

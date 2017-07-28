@@ -65,7 +65,13 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
         bloqueActual: -1,
         
         // comportamiento
-        guardadoAutomaticoSuspendido: false
+        guardadoAutomaticoSuspendido: false,
+
+        // perfilamiento
+        cdptovta: null,
+        cdgrupo: null,
+        cdsubgpo: null,
+        cdperfil: null
     },
     
     constructor: function (config) {
@@ -79,6 +85,14 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             
             config.modulo = config.modulo || 'COTIZACION';
             config.flujo = config.flujo || {};
+            if (config.nuevaCotizacion === false
+                || config.nuevaCotizacion === 'false'
+                || config.nueva === false
+                || config.nueva === 'false') {
+                config.nuevaCotizacion = false;
+            } else {
+                config.nuevaCotizacion = true;
+            }
             
             if (config.estado === 'w') {
                 config.estado = 'W';

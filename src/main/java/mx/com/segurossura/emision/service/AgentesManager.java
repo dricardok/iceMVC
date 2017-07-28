@@ -11,7 +11,7 @@ public interface AgentesManager {
 			throws Exception;
 	
 	public List<Map<String, String>> guardarAgentes(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
-			String nmcuadro, String porredau, List<Map<String, String>> agentes)
+			String nmcuadro, String porredau, List<Map<String, String>> agentes, String cdusuari, String cdsisrol)
 			throws Exception;
 	
 	public List<Map<String, String>> buscarAgentes(String clave, String atributo) throws Exception;	

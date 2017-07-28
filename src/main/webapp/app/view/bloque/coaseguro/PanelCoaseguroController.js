@@ -348,8 +348,8 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
         return data;
     },
 
-    guardarAceptado: function(){
-        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.guardarAceptado');
+    guardarAceptado: function(callback){
+        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.guardarAceptado callback',callback);
         var paso = 'Iniciando funcion guardar coaseguro aceptado',
             me = this,
             view = me.getView(),
@@ -357,44 +357,60 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
         try{
             Ice.validarFormulario(refs.formAceptado);
             var data = refs.formAceptado.getValues();
-            Ice.request({
-                mascara: 'guardando coaseguro aceptado',
-                url: Ice.url.bloque.datosGenerales.movimientoMsupcoa,
-                params: {
-                    'params.cdcialider': data.cdcialider,
-                    'params.cdunieco': view.cdunieco,
-                    'params.cdramo': view.cdramo,
-                    'params.estado': view.estado,
-                    'params.nmpoliza': view.nmpoliza,
-                    'params.nmpolizal': data.nmpolizal,
-                    'params.nmsuplem': view.nmsuplem,
-                    'params.tipodocu': data.tipodocu,
-                    'params.ndoclider': data.ndoclider,
-                    'params.status': data.status,
-                    'params.accion': 'I'
-                },
-                success: function (json) {
-                    var paso2 = 'LLenando store';
-                    try {
-                        refs.formAceptado.hide();
-                    } catch (e) {
-                        Ice.manejaExcepcion(e, paso2);
+            if(data){
+                Ice.request({
+                    mascara: 'guardando coaseguro aceptado',
+                    url: Ice.url.bloque.datosGenerales.movimientoMsupcoa,
+                    params: {
+                        'params.cdcialider': data.cdcialider,
+                        'params.cdunieco': view.getCdunieco(),
+                        'params.cdramo': view.getCdramo(),
+                        'params.estado': view.getEstado(),
+                        'params.nmpoliza': view.getNmpoliza(),
+                        'params.nmpolizal': data.nmpolizal,
+                        'params.nmsuplem': view.getNmsuplem(),
+                        'params.tipodocu': data.tipodocu,
+                        'params.ndoclider': data.ndoclider,
+                        'params.status': data.status,
+                        'params.accion': 'I'
+                    },
+                    success: function (json) {
+                        var paso2 = 'LLenando store';
+                        try {
+                            if(callback){
+                                Ice.log('Se almaceno con exito el coaseguro aceptado');
+                                callback.success();
+                            }
+                            refs.formAceptado.hide();
+                        } catch (e) {
+                            if(params){
+                                params.failure();
+                            }
+                            Ice.manejaExcepcion(e, paso2);
+                        }
                     }
+                });
+            } else {
+                if(params){
+                    params.failure();
                 }
-            });
+                Ice.mensajeWarning('No se guardaron los datos coaseguro aceptado');
+            }
         } catch (e){
             Ice.generaExcepcion(e);
         }
     },
 
-    guardarCedido: function(){
-        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.guardarCedido');
+    guardarCedido: function(callback){
+        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.guardarCedido params', callback);
         var paso = 'Iniciando funcion guardar coaseguro cedido',
             me = this,
             view = me.getView(),
             refs = view.getReferences();
         try{
-            Ice.validarFormulario(refs.formAceptado);
+            Ice.log('Antes de validar formulario');
+            Ice.validarFormulario(refs.form);
+            Ice.log('Antes de obtener data del grid');
             var data = refs.form.getValues(),
                 dataGrid = refs.grid.getStore().getData(),
                 list = [];
@@ -402,29 +418,31 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
                 list[i] = dataGrid.items[i].data;
             }
             if(data){
+                Ice.log('Antes de validar compañias', list);
                 if(me.validaCompanias() == true){
+                    Ice.log('Antes de hacer peticion ajax');
+                    var params = data;
+                    params['cdunieco'] = view.getCdunieco();
+                    params['cdramo'] = view.getCdramo();
+                    params['estado'] = view.getEstado();
+                    params['nmpoliza'] = view.getNmpoliza();
+                    params['nmsuplem'] = view.getNmsuplem();
+                    params['cdtipcoa'] = view.getCdtipcoa();
+                    params['accion'] = 'I';
                     Ice.request({
-                        mascara: 'guardando coaseguro aceptado',
+                        mascara: 'guardando coaseguro cedido',
                         url: Ice.url.bloque.datosGenerales.movimientoCoaseguroCedido,
                         jsonData: {
-                            params: {
-                                'cdunieco': view.cdunieco,
-                                'cdramo': view.cdramo,
-                                'estado': view.estado,
-                                'nmpoliza': view.nmpoliza,
-                                'nmsuplem': view.nmsuplem,
-                                'cdtipcoa': view.cdtipcoa,
-                                'swabrido': data.swabrido,
-                                'cdmodelo': data.cdmodelo,
-                                'swpagcom': data.swpagcom,
-                                'status': data.status,
-                                'accion': 'I'
-                            },
+                            params: params,
                             list: list
                         },
                         success: function (json) {
                             var paso2 = 'LLenando store';
                             try {
+                                if(callback){
+                                    Ice.log('Se almaceno con exito el coaseguro cedido');
+                                    callback.success();
+                                }
                                 refs.formAceptado.hide();
                                 refs.grid.hide();
                             } catch (e) {
@@ -433,25 +451,31 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
                         }
                     });
                 } 
+            } else {
+                if(params){
+                    params.failure();
+                }
+                Ice.mensajeWarning('No se guardo coaseguro cedido');
             }
         } catch (e){
             Ice.generaExcepcion(e);
         }
     },
 
-    guardar: function(){
-        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.guardar');
+    guardar: function(callback){
+        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.guardar callback',callback);
         var paso = 'Iniciando funcion guardar coaseguro',
             me = this,
             view = me.getView(),
             refs = view.getReferences();
         try{
-            if(view.cdtipcoa != 'N'){
-                if(view.cdtipcoa == 'A'){
-                    this.guardarAceptado();
-                } else {
-                    this.guardarCedido();
-                }
+            Ice.log('view cdtipcoa',view.getCdtipcoa());
+            if(view.getCdtipcoa() == 'A'){
+                me.guardarAceptado(callback);
+            } else if(view.getCdtipcoa() == 'N') {
+                me.eliminarCoaseguro(callback);
+            } else {
+                me.guardarCedido(callback);
             }
         } catch (e){
             Ice.generaExcepcion(e);
@@ -466,8 +490,8 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
             refs = view.getReferences(),
             url = '';
         try{
-            if(view.cdtipcoa != 'N'){
-                if(view.cdtipcoa == 'A'){
+            if(view.getCdtipcoa() != 'N'){
+                if(view.getCdtipcoa() == 'A'){
                     url = Ice.url.bloque.datosGenerales.obtenerCoaseguroAceptado;
                 } else {
                     url = Ice.url.bloque.datosGenerales.obtenerCoaseguroCedido;
@@ -476,25 +500,28 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
                     mascara: 'guardando coaseguro',
                     url: url,
                     params: {
-                        'params.cdunieco': view.cdunieco,
-                        'params.cdramo': view.cdramo,
-                        'params.estado': view.estado,
-                        'params.nmpoliza': view.nmpoliza,
-                        'params.nmsuplem': view.nmsuplem
+                        'params.cdunieco': view.getCdunieco(),
+                        'params.cdramo': view.getCdramo(),
+                        'params.estado': view.getEstado(),
+                        'params.nmpoliza': view.getNmpoliza(),
+                        'params.nmsuplem': view.getNmsuplem()
                     },
                     success: function (json) {
                         var paso2 = 'LLenando store';
                         try {
-                            Ice.log('json list',json.list,'params',json.params);
-                            if(view.cdtipcoa == 'A'){
+                            Ice.log('json list',json.list,'params',json.params,'refs',refs);
+                            if(view.getCdtipcoa() == 'A'){
                                 Ice.cargarFormulario(refs.formAceptado, json.params);
                             } else {
-                                Ice.cargarFormulario(refs.form, json.params);
-                                for(var i = 0; i < json.list.length; i++){
-                                    refs.grid.getStore().add(json.list[i]);
+                                if(!Ext.isEmpty(refs.form.getReferences())){
+                                    Ice.cargarFormulario(refs.form, json.params);
+                                    refs.grid.getStore().removeAll();
+                                    for(var i = 0; i < json.list.length; i++){
+                                        refs.grid.getStore().add(json.list[i]);
+                                    }
+                                    refs.form.show();
+                                    refs.grid.show();
                                 }
-                                refs.form.show();
-                                refs.grid.show();
                             }
                         } catch (e) {
                             Ice.manejaExcepcion(e, paso2);
@@ -505,6 +532,69 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
         } catch (e){
             Ice.generaExcepcion(e);
         }
-    }
+    },
 
+    recargarPanelCoaseguro: function(cdtipcoa){
+        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.recargarPanelCoaseguro cdtipcoa',cdtipcoa);
+        var paso = 'Iniciando funcion guardar coaseguro',
+            me = this,
+            view = me.getView(),
+            refs = view.getReferences();
+        try{
+            view.setCdtipcoa(cdtipcoa);
+            if(cdtipcoa == 'A'){
+                refs.formAceptado.show();
+                refs.form.hide();
+                refs.grid.hide();
+                refs.formCia.hide();
+            } else if(cdtipcoa == 'N') {
+                refs.formAceptado.hide();
+                refs.form.hide();
+                refs.grid.hide();
+                refs.formCia.hide();
+            } else {
+                refs.formAceptado.hide();
+                refs.form.show();
+                refs.grid.show();
+            }
+        } catch(e) {
+            Ice.generaExcepcion(e);
+        }
+    },
+    
+    eliminarCoaseguro: function(callback){
+        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.eliminarCoaseguro');
+        var mensaje = '';
+        var paso = 'Iniciando funcion eliminar coaseguro',
+            me = this,
+            view = me.getView(),
+            refs = view.getReferences();
+        try{
+            if(view.getCdunieco() && view.getCdramo() && view.getEstado() && view.getNmpoliza() &&
+                !Ext.isEmpty(view.getNmsuplem())){
+                Ice.request({
+                    mascara: 'eliminando coaseguro',
+                    url: Ice.url.bloque.datosGenerales.eliminaCoaseguro,
+                    params: {
+                        'params.cdunieco': view.getCdunieco(),
+                        'params.cdramo': view.getCdramo(),
+                        'params.estado': view.getEstado(),
+                        'params.nmpoliza': view.getNmpoliza(),
+                        'params.nmsuplem': view.getNmsuplem()
+                    },
+                    success: function (json) {
+                        callback.success();
+                        mensaje = json.message;
+                    }
+                });                
+            } else {
+                Ice.log('No se elimino coaseguro');
+                callback.success();
+            }
+        } catch (e){
+            callback.failure();
+            Ice.generaExcepcion(e);
+        }
+        return mensaje;
+    }
 });

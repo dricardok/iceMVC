@@ -65,9 +65,16 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                             
                             modulo: view.getModulo(),
                             flujo: view.getFlujo(),
-                            cdtipsit: view.getCdtipsit()
+                            cdtipsit: view.getCdtipsit(),
+
+                            // perfilamiento
+                            cdptovta: view.getCdptovta(),
+                            cdgrupo: view.getCdgrupo(),
+                            cdsubgpo: view.getCdsubgpo(),
+                            cdperfil: view.getCdperfil(),
+
+                            nuevaCotizacion: view.getNuevaCotizacion()
                         });
-                        
                         if (view.getNuevaCotizacion() === true && index === 0 &&
                             bloqueExistente.xtype === 'datosiniciales') {
                             bloqueExistente.on({
@@ -245,7 +252,15 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     
                     modulo: view.getModulo(),
                     flujo: view.getFlujo(),
-                    cdtipsit: view.getCdtipsit()
+                    cdtipsit: view.getCdtipsit(),
+
+                    // perfilamiento
+                    cdptovta: view.getCdptovta(),
+                    cdgrupo: view.getCdgrupo(),
+                    cdsubgpo: view.getCdsubgpo(),
+                    cdperfil: view.getCdperfil(),
+
+                    nuevaCotizacion: view.getNuevaCotizacion()
                 }));
             }
             
@@ -355,6 +370,12 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
         		nmpoliza: view.getNmpoliza(),
         		nmsuplem: view.getNmsuplem(),
         		cdtipsit: view.getCdtipsit(),
+
+                // perfilamiento
+                cdptovta: view.getCdptovta(),
+                cdgrupo: view.getCdgrupo(),
+                cdsubgpo: view.getCdsubgpo(),
+                cdperfil: view.getCdperfil(),
         		
         		buttons : [{
         			text: 'Modificar',

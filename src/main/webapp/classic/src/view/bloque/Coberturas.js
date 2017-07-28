@@ -162,13 +162,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 								}
 							]
 						}],
-						bbar: Ext.create('Ext.PagingToolbar', {
-							store: store,
-							displayInfo: true,
-							emptyMsg: "",
-							displayMsg: 'Coberturas {0} - {1} of {2}',
-							inputItemWidth: 35
-						}),
+						
 						store: store
 					}, {
 						xtype: 'formtrescolumnasice',
@@ -176,6 +170,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 						hidden: true,
 						buttons: [{
 							text: 'Guardar',
+							iconCls: 'x-fa fa-save',
 							itemId: "btnGuardarCobertura",
 							handler: 'guardarCobertura'
 						}]

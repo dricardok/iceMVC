@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -32,7 +33,8 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     
     @Override
     public Map<String, String> valoresDefectoFijos (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
-            String status, String swcolind, String nmpolcoi, String cdusuari, String cdsisrol) throws Exception {
+            String status, String swcolind, String nmpolcoi, String cdusuari, String cdsisrol, String cdptovta, String cdgrupo,
+            String cdsubgpo, String cdperfil) throws Exception {
         Map<String, String> valores = new LinkedHashMap<String, String>();
         String paso = null;
         try {
@@ -44,7 +46,8 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     "0", //nmsituac
                     nmsuplem,
                     Bloque.DATOS_GENERALES.getCdbloque(),
-                    null
+                    null, cdptovta, cdgrupo, cdsubgpo, cdperfil,
+                    cdusuari, cdsisrol
                     );
             
             // se recuperan los valores minimos y se les agregan los valores por defecto 
@@ -130,7 +133,8 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     @Override
     public Map<String, String> valoresDefectoVariables (String cdusuari, String cdsisrol,
             String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsuplembloque, String nmsuplemsesion, String status, Map<String, String> datosMpolizasPantalla) throws Exception {
+            String nmsuplembloque, String nmsuplemsesion, String status, Map<String, String> datosMpolizasPantalla,
+            String cdptovta, String cdgrupo, String cdsubgpo, String cdperfil) throws Exception {
         logger.debug(Utils.log("@@@@@@ valoresDefectoVariables datosMpolizasPantalla = ", datosMpolizasPantalla));
         Map<String, String> valores = new LinkedHashMap<String, String>();
         String paso = null;
@@ -156,7 +160,8 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     "0", //nmsituac
                     nmsuplemsesion,
                     Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque(),
-                    null
+                    null, cdptovta, cdgrupo, cdsubgpo, cdperfil,
+                    cdusuari, cdsisrol
                     );
             
             paso = "Recuperando valores variables";
@@ -372,7 +377,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     "0", // nmsituac
                     nmsuplem,
                     null,
-                    Bloque.DATOS_GENERALES.getCdbloque()
+                    Bloque.DATOS_GENERALES.getCdbloque(), cdusuari, cdsisrol
                     ));
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
                     cdunieco,
@@ -382,7 +387,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     "0", // nmsituac
                     nmsuplem,
                     null,
-                    Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque()
+                    Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque(), cdusuari, cdsisrol
                     ));
             
         } catch (Exception ex) {
@@ -393,6 +398,11 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
 
     @Override
     public List<Map<String, String>> obtenerCoaseguroCedido(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception{
+        logger.debug(Utils.log("@@@@@@ obtenerCoaseguroCedido cdunieco=", cdunieco, 
+                " cdramo=", cdramo, 
+                " estado=", estado, 
+                " nmpoliza=", nmpoliza,
+                " nmsuplem=", nmsuplem));
         String paso = "Obteniendo coaseguro cedido";
         List<Map<String, String>> lista = new ArrayList<Map<String, String>>();
         try{
@@ -419,8 +429,14 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     public void movimientoMpolicoa(String cdunieco, String cdramo, String estado, String nmpoliza, 
             String nmsuplem_bloque, String nmsuplem_session, String cdtipcoa, String status, 
             String cdmodelo, String swpagcom, List<Map<String, String>> cias, String accion) throws Exception{
+        logger.debug(Utils.log("@@@@@@ movimientoMpolicoa cdunieco=", cdunieco, 
+                " cdramo=", cdramo, 
+                " estado=", estado, 
+                " nmpoliza=", nmpoliza,
+                " nmsuplem=", nmsuplem_bloque));
         String paso = "Movimiento coaseguro cedido";
         try {
+            validaCoaseguro(cdunieco, cdramo, estado, nmpoliza, nmsuplem_bloque);
             for(Map<String, String> cia: cias){
                 String cdcia = cia.get("cdcia");
                 String porcpart = cia.get("porcpart");
@@ -437,8 +453,14 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     public void movimientoMsupcoa(String cdcialider, String cdunieco, String cdramo, String estado, String nmpoliza,
             String nmpolizal, String nmsuplem_bloque, String nmsuplem_session, String tipodocu, String ndoclider, 
             String status, String accion) throws Exception{
+        logger.debug(Utils.log("@@@@@@ movimientoMsupcoa cdunieco=", cdunieco, 
+                " cdramo=", cdramo, 
+                " estado=", estado, 
+                " nmpoliza=", nmpoliza,
+                " nmsuplem=", nmsuplem_bloque));
         String paso = "Movimiento msupcoa";
         try{
+            validaCoaseguro(cdunieco, cdramo, estado, nmpoliza, nmsuplem_bloque);
             emisionDAO.movimientoMsupcoa(cdcialider, cdunieco, cdramo, estado, nmpoliza, nmpolizal, nmsuplem_bloque, nmsuplem_session, tipodocu, ndoclider, status, accion);
         } catch(Exception ex){
             Utils.generaExcepcion(ex, paso);
@@ -455,5 +477,47 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
             Utils.generaExcepcion(ex, paso);
         }
         return lista;
+    }
+    
+    private void validaCoaseguro(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception{
+        logger.debug(Utils.log("@@@@@@ validaCoaseguro cdunieco=", cdunieco, 
+                " cdramo=", cdramo, 
+                " estado=", estado, 
+                " nmpoliza=", nmpoliza,
+                " nmsuplem=", nmsuplem));
+        String paso = "Validando coaseguro de poliza";
+        try{
+            if(emisionDAO.tieneCoaseguro(cdunieco, cdramo, estado, nmpoliza, nmsuplem)){
+                emisionDAO.eliminaCoaseguro(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+            }
+        } catch (Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }
+    }
+    
+    @Override
+    public void eliminaCoaseguro(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception{
+        String paso = "Eliminando coaseguro de poliza";
+        try{
+            emisionDAO.eliminaCoaseguro(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+        } catch(Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }
+    }
+    
+    @Override
+    public void actualizaSwitchCoaseguroCedido(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, Map<String, String> cdesqcoa) throws Exception{
+        String paso = "Actualizando switch de coaseguro cedido";
+        try{
+            String otvalor = "";
+            for(String key:cdesqcoa.keySet()){
+                if(key.startsWith("otvalor")){
+                    otvalor = cdesqcoa.get(key);
+                    emisionDAO.actualizaSwitchCoaseguroCedido(cdunieco, cdramo, estado, nmpoliza, nmsuplem, otvalor);
+                }
+            }
+        } catch (Exception ex){
+            Utils.generaExcepcion(ex, paso);
+        }
     }
 }

@@ -15,7 +15,13 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
 		nmsuplem: null,
 		cdtipsit: null,
 		nmsituac: null,
-    	cdperpag: null
+    	cdperpag: null,
+
+        // perfilamiento
+        cdptovta: null,
+        cdgrupo: null,
+        cdsubgpo: null,
+        cdperfil: null
     },
     
     constructor: function (config) {
@@ -28,7 +34,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
     		}
 
             config.items = [{
-                xtype: 'grid',
+                xtype: 'gridice',
                 columns: [
                     {
                         text: 'Cobertura',

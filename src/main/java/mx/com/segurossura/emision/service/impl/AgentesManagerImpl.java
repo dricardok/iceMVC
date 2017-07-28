@@ -64,7 +64,8 @@ public class AgentesManagerImpl implements AgentesManager {
 
 	@Override
 	public List<Map<String, String>> guardarAgentes(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String nmsuplem, String nmcuadro, String porredau, List<Map<String, String>> agentes) throws Exception {
+			String nmsuplem, String nmcuadro, String porredau, List<Map<String, String>> agentes, String cdusuari, String cdsisrol
+			) throws Exception {
 		String paso = null;
 		List<Map<String, String>> validaciones = null;
 		try {
@@ -132,7 +133,7 @@ public class AgentesManagerImpl implements AgentesManager {
 	        
 	        paso = "Validando bloque de agentes";
 	        validaciones = emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, "0", nmsuplem, null,
-	                Bloque.AGENTES.getCdbloque());
+	                Bloque.AGENTES.getCdbloque(), cdusuari, cdsisrol);
 		} catch (Exception e) {
 			Utils.generaExcepcion(e, paso);
 		}

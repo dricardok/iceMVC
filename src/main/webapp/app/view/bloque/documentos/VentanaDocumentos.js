@@ -79,13 +79,13 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                                 iconCls: 'x-fa fa-eye',
                                 tooltip: 'Ver',
                                 handler: function(grid, rowIndex, colIndex) {
-                                    this.up('window').getController().onVerDocumento(grid, rowIndex, colIndex);
+                                    this.up('ventanaice').getController().onVerDocumento(grid, rowIndex, colIndex);
                                 }
                             },{
                                 iconCls: 'x-fa fa-download',
                                 tooltip: 'Descargar',
                                 handler: function(grid, rowIndex, colIndex){
-                                    this.up('window').getController().onDescargarDocumento(grid, rowIndex, colIndex);
+                                    this.up('ventanaice').getController().onDescargarDocumento(grid, rowIndex, colIndex);
                                 }
                             },{
                                 iconCls: 'x-fa fa-upload',
@@ -93,7 +93,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                                 colType: 'slip',
                                 hidden: true,
                                 handler: function(grid, rowIndex, colIndex) {
-                                    this.up('window').getController().onActualizarDocumento(grid, rowIndex, colIndex);
+                                    this.up('ventanaice').getController().onActualizarDocumento(grid, rowIndex, colIndex);
                                 }
                             },{
                                 iconCls: 'x-fa fa-download',
@@ -101,7 +101,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                                 colType: 'slip',
                                 hidden: true,
                                 handler: function(grid, rowIndex, colIndex){
-                                    this.up('window').getController().onDescargarDocumento(grid, rowIndex, colIndex);
+                                    this.up('ventanaice').getController().onDescargarDocumento(grid, rowIndex, colIndex);
                                 }
                             }
                         ]

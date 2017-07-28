@@ -52,7 +52,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.BuscarCPWindowController', {
 		me=this,
 		view=me.getView();
 		try{
-			view.cerrar();
+    		view.cerrar();
 		}catch(e){
 			Ice.manejaExcepcion(e,paso);
 		}
@@ -61,10 +61,10 @@ Ext.define('Ice.view.bloque.personas.domicilios.BuscarCPWindowController', {
     	paso="";
     	try{
     		var datos={};
-    		Ext.ComponentQuery.query("[getName]",form)
+    		Ext.ComponentQuery.query("[getName][getValue]",form)
     		.forEach(function(it){
     			Ice.log("-->",it.getValue(),typeof it.getValue())
-    			if(it.getValue() && String(it.getValue()).indexOf("-")!=-1){
+    			if(it.getValue() && String(it.getValue()).indexOf("-")!=-1 && it.getValue().split){
     				it.setValue(it.getValue().split("-")[0].trim());
     			}
     			datos["params."+it.getName()]=it.getValue();

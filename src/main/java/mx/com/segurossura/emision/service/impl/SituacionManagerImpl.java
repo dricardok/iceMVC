@@ -54,7 +54,8 @@ public class SituacionManagerImpl implements SituacionManager{
 	}
 	
 	@Override
-	public Map<String, String> valoresDefectoFijos (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception{
+	public Map<String, String> valoresDefectoFijos (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
+	        String cdusuari, String cdsisrol) throws Exception{
 	    logger.debug(Utils.join(
                 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
                 "\n@@@@@@ valoresDefectoFijos @@@@@@"                
@@ -67,7 +68,7 @@ public class SituacionManagerImpl implements SituacionManager{
             
             paso = "Antes de obtener valores por defecto de situacion de riesgo";
             Map<String, String> valoresDefecto = emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac,
-                    nmsuplem, Bloque.SITUACIONES.getCdbloque(), "NULO");
+                    nmsuplem, Bloque.SITUACIONES.getCdbloque(), "NULO", null, null, null, null, cdusuari, cdsisrol);
             
             if (!valoresDefecto.containsKey("fefecsit")) {
                 valoresDefecto.put("fefecsit", emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem)
@@ -113,7 +114,7 @@ public class SituacionManagerImpl implements SituacionManager{
 	
 	@Override
     public Map<String, String> valoresDefectoVariables (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, 
-            String nmsuplem, String status, Map<String, String> datos) throws Exception{
+            String nmsuplem, String status, Map<String, String> datos, String cdusuari, String cdsisrol) throws Exception{
         logger.debug("@@@@@@ valoresDefectoVariables");
         Map<String, String> valores = new LinkedHashMap<String, String>();
         String paso = null;
@@ -146,7 +147,9 @@ public class SituacionManagerImpl implements SituacionManager{
                     "U");
             
             paso = "Ejecutando valores por defecto de situacion";
-            emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), "NULO");
+            emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem,
+                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), "NULO", null, null, null, null,
+                    cdusuari, cdsisrol);
             
             paso = "Recuperando valores variables";
             List<Map<String, String>> tvalositList = situacionDAO.obtieneTvalosit(cdunieco, cdramo, estado, nmpoliza, nmsituac,
@@ -180,7 +183,8 @@ public class SituacionManagerImpl implements SituacionManager{
     }
 	
 	@Override
-	public void valoresDefectoCoberturas (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem) throws Exception{
+	public void valoresDefectoCoberturas (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
+	        String nmsuplem, String cdusuari, String cdsisrol) throws Exception{
 	    logger.debug(Utils.join(
 	            "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
 	            "\n@@@@@@ valoresDefectoCoberturas"                
@@ -188,7 +192,8 @@ public class SituacionManagerImpl implements SituacionManager{
 	    String paso="";
 	    try{
 	        paso = "Antes de guardar valores por defecto";
-	        emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.GARANTIAS.getCdbloque(), "NULO");
+	        emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, Bloque.GARANTIAS.getCdbloque(),
+	                "NULO", null, null, null, null, cdusuari, cdsisrol);
 	        paso = "Recuperando valores variables";
 	    } catch (Exception ex){
 	        Utils.generaExcepcion(ex, paso);
@@ -417,7 +422,7 @@ public class SituacionManagerImpl implements SituacionManager{
 	
 	@Override
 	public List<Map<String, String>> actualizaSituacion (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
-            String nmsuplem, String status, Map<String, String> datos) throws Exception {
+            String nmsuplem, String status, Map<String, String> datos, String cdusuari, String cdsisrol) throws Exception {
 	    logger.debug(Utils.join(
                 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
                 "\n@@@@@@ actualizaSituacion @@@@@@",
@@ -480,7 +485,8 @@ public class SituacionManagerImpl implements SituacionManager{
             
             if (coberturas == null || coberturas.size() == 0) {
                 emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem,
-                        Bloque.BLOQUE_DUMMY_B18_B19_B19B.getCdbloque(), "NULO");
+                        Bloque.BLOQUE_DUMMY_B18_B19_B19B.getCdbloque(), "NULO", null, null, null, null,
+                        cdusuari, cdsisrol);
             }
             
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
@@ -491,7 +497,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmsituac,
                     nmsuplem,
                     null,
-                    Bloque.SITUACIONES.getCdbloque()
+                    Bloque.SITUACIONES.getCdbloque(), cdusuari, cdsisrol
                     ));
             
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
@@ -502,7 +508,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmsituac,
                     nmsuplem,
                     null,
-                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque()
+                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), cdusuari, cdsisrol
                     ));
         } catch (Exception ex){
             Utils.generaExcepcion(ex, paso);
@@ -515,7 +521,8 @@ public class SituacionManagerImpl implements SituacionManager{
 	}
 
 	@Override
-	public List<Map<String, String>> validaBloqueSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception{
+	public List<Map<String, String>> validaBloqueSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
+	        String cdusuari, String cdsisrol) throws Exception{
 	    logger.debug(Utils.join(
                 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
                 "\n@@@@@@ validaBloqueSituacion"
@@ -532,7 +539,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     "0",
                     nmsuplem,
                     null,
-                    Bloque.SITUACIONES.getCdbloque()
+                    Bloque.SITUACIONES.getCdbloque(), cdusuari, cdsisrol
                     ));
             paso = "Antes de validar bloque "+Bloque.ATRIBUTOS_SITUACIONES.getCdbloque();
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
@@ -543,7 +550,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     "0",
                     nmsuplem,
                     null,
-                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque()
+                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), cdusuari, cdsisrol
                     ));
         } catch (Exception ex){
             Utils.generaExcepcion(ex, paso);
@@ -555,4 +562,20 @@ public class SituacionManagerImpl implements SituacionManager{
         return validaciones;
 	}
 	
+	public void copiaSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String nmcopias) throws Exception{
+	    logger.debug(Utils.join(
+                "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                "\n@@@@@@ copiaSituacion"
+               ));
+	    String paso = "Se copia situacion de riesgo";
+	    try{
+	        situacionDAO.copiaSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmcopias);
+	    } catch (Exception ex) {
+	        Utils.generaExcepcion(ex, paso);
+	    }
+	    logger.debug(Utils.join(
+                "\n@@@@@@ copiaSituacion"
+               ,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+               ));
+	}
 }

@@ -58,7 +58,8 @@ public interface EmisionDAO {
 			String pv_cdatribu_i) throws Exception;	
 	
 	public Map<String, String> ejecutarValoresDefecto (String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsituac, String nmsuplem, String cdbloque, String cdgarant) throws Exception;
+            String nmsituac, String nmsuplem, String cdbloque, String cdgarant, String cdptovta, String cdgrupo, String cdsubgpo,
+            String cdperfil, String cdusuari, String cdsisrol) throws Exception;
 
 	public String obtenerCuadroComisionesDefault (String cdramo) throws Exception;
 	
@@ -76,7 +77,7 @@ public interface EmisionDAO {
 	 * @throws Exception
 	 */
 	public List<Map<String, String>> ejecutarValidaciones (String cdunieco, String cdramo, String estado, String nmpoliza,
-	        String nmsituac, String nmsuplem, String cdperson, String cdbloque) throws Exception;
+	        String nmsituac, String nmsuplem, String cdperson, String cdbloque, String cdusuari, String cdsisrol) throws Exception;
 	
 	public List<Map<String,String>> obtieneMpoligarTabla(String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception;
@@ -304,4 +305,47 @@ public interface EmisionDAO {
     
     public Map<String, String> validarCargaCotizacion (String cdunieco, String cdramo, String nmpoliza, String cdusuari,
             String cdsisrol) throws Exception;
+    
+    /**
+     * Valida si la poliza tiene coaseguro
+     * 
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsuplem
+     * @return
+     * @throws Exception
+     */
+    public boolean tieneCoaseguro (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+    
+    /**
+     * Elimina tablas de coaseguro para cotizacion
+     * 
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsuplem
+     * @throws Exception
+     */
+    public void eliminaCoaseguro (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+    
+    /**
+     * Actualiza swabrido y swpagcom para mpolicoa segun coaseguro cedido
+     * 
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsuplem
+     * @param cdesqcoa
+     * @throws Exception
+     */
+    public void actualizaSwitchCoaseguroCedido (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdesqcoa) throws Exception;
+    public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
+            String nmsuplem) throws Exception;
+
+	public void actualizaGestorCobro(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem)
+			throws Exception;
 }

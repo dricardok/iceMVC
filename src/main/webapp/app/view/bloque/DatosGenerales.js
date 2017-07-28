@@ -31,11 +31,17 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
             'cdunieco'
         ],
         camposDisparanValoresDefectoVariables: [
-            'cdunieco', 'nmpoliza', 'b1_feefecto', 'b1_feproren'
+            'nmpoliza', 'b1_feefecto', 'b1_feproren'
         ],
         
         // otro
-        swcolind: 'I'
+        swcolind: 'I',
+
+        // perfilamiento
+        cdptovta: null,
+        cdgrupo: null,
+        cdsubgpo: null,
+        cdperfil: null
     },
     
     // validacion de parametros de entrada

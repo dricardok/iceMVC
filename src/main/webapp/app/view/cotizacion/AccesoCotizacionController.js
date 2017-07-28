@@ -66,15 +66,55 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
 
     onNuevaClic: function (btn) {
         Ice.log('Ice.view.cotizacion.AccesoCotizacionController.onNuevaClic btn:', btn);
-        var paso = 'Dirigiendo a cotizaci\u00f3n';
+        var me = this,
+            paso = 'Dirigiendo a cotizaci\u00f3n';
         try {
             var record = btn.up('ventanaice').record,
                 cdramo = record.get('cdramo'),
                 cdtipsit = record.get('cdtipsit');
             btn.up('ventanaice').cerrar();
-            Ice.query('#mainView').getController().redirectTo('cotizacion.action?' +
+            if (Ice.sesion.cdsisrol === Ice.constantes.roles.AGENTE) {
+                var venPer = Ext.create('Ice.view.cotizacion.VentanaPerfilamiento', {
+                    cdramo: cdramo,
+                    cdtipsit: cdtipsit,
+                    buttons: [
+                        {
+                            text: 'Aceptar',
+                            iconCls: 'x-fa fa-check',
+                            handler: function () {
+                                var paso2 = 'Accediendo al cotizador';
+                                try {
+                                    venPer.getController().validar();
+                                    var values = venPer.getController().getValues();
+                                    venPer.cerrar();
+                                    Ice.redirect('cotizacion.action?' +
+                                        'cdramo='   + cdramo          + '&' +
+                                        'cdtipsit=' + cdtipsit        + '&' +
+                                        'cdptovta=' + values.cdptovta + '&' +
+                                        'cdgrupo='  + values.cdgrupo  + '&' +
+                                        'cdsubgpo=' + values.cdsubgpo + '&' +
+                                        'cdperfil=' + values.cdperfil + '&' +
+                                        'cdunieco=' + values.cdunieco + '&' +
+                                        'nueva=true'
+                                    );
+                                } catch (e) {
+                                    Ice.manejaExcepcion(e, paso2);
+                                }
+                            }
+                        }, {
+                            text: 'Cancelar',
+                            iconCls: 'x-fa fa-close',
+                            handler: function () {
+                                venPer.cerrar();
+                            }
+                        }
+                    ]
+                }).mostrar();
+            } else {
+                Ice.redirect('cotizacion.action?' +
                     'cdramo='   + cdramo + '&' +
                     'cdtipsit=' + cdtipsit);
+            }
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -113,17 +153,41 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                         } else {
                             url = 'cotizacion.action?';
                         }
-                        ventana.cerrar();
-                        Ice.query('#mainView').getController().redirectTo(url +
-                            'cdunieco=' + cdunieco + '&' +
-                            'cdramo='   + cdramo   + '&' +
-                            'estado='   + 'W'      + '&' +
-                            'nmpoliza=' + nmpoliza + '&' +
-                            'cdtipsit=' + cdtipsit + '&' +
-                            'nmsuplem=' + 0
-                        );
+                        paso2 = 'Recuperando perfilamiento';
+                        Ice.request({
+                            mascara: paso2,
+                            url: Ice.url.emision.obtenerPerfilamientoPoliza,
+                            params: Ice.convertirAParams({
+                                cdunieco: cdunieco,
+                                cdramo: cdramo,
+                                estado: 'W',
+                                nmpoliza: nmpoliza,
+                                nmsuplem: '0'
+                            }),
+                            success: function (action2) {
+                                var paso3 = 'Redireccionando a pantalla de cotizaci\u00f3n/emisi\u00f3n';
+                                try {
+                                    ventana.cerrar();
+                                    Ice.query('#mainView').getController().redirectTo(url +
+                                        'cdunieco=' + cdunieco + '&' +
+                                        'cdramo='   + cdramo   + '&' +
+                                        'estado='   + 'W'      + '&' +
+                                        'nmpoliza=' + nmpoliza + '&' +
+                                        'cdtipsit=' + cdtipsit + '&' +
+                                        'nmsuplem=' + 0        + '&' +
+                                        'cdptovta=' + action2.params.cdptovta + '&' +
+                                        'cdgrupo='  + action2.params.cdgrupo  + '&' +
+                                        'cdsubgpo=' + action2.params.cdsubgpo + '&' +
+                                        'cdperfil=' + action2.params.cdperfil + '&' +
+                                        'nueva=false'
+                                    );
+                                } catch (e) {
+                                    Ice.manejaExcepcion(e, paso3);
+                                }
+                            }
+                        });
                     } catch (e) {
-                        Ice.manejaExcepcion(e, paso);
+                        Ice.manejaExcepcion(e, paso2);
                     }
                 }
             });

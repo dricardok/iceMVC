@@ -495,8 +495,8 @@ public class EmisionAction extends PrincipalCoreAction {
 		
 		String result = SUCCESS;
 		
-		try
-		{
+		try {
+		    UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
 			
 			Utils.validate(params, "No se recibieron datos");
 			
@@ -519,7 +519,8 @@ public class EmisionAction extends PrincipalCoreAction {
 
 			//Utils.validate(nmsuplem,"Falta nmsuplem");
 			Utils.validate(bloques,"Faltan bloques");
-			list=emisionManager.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, bloques);
+			list=emisionManager.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, bloques, usuario.getCdusuari(),
+			        usuario.getRolActivo().getCdsisrol());
 
 			
 			
@@ -552,6 +553,7 @@ public class EmisionAction extends PrincipalCoreAction {
         
         logger.debug("Inicio generarTarificacion...");
         try {
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             Utils.validate(params, "No se recibieron datos");
             String cdunieco = params.get("cdunieco");
             String cdramo =   params.get("cdramo");
@@ -563,7 +565,8 @@ public class EmisionAction extends PrincipalCoreAction {
             Utils.validate(estado,   "Falta estado");
             Utils.validate(nmpoliza, "Falta nmpoliza");
             
-            Map<String, Object> resultado = emisionManager.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+            Map<String, Object> resultado = emisionManager.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac,
+                    usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             logger.debug("resultado Tarificacion: {}", resultado);
             
             success=true;
@@ -586,6 +589,7 @@ public class EmisionAction extends PrincipalCoreAction {
     public String generarTarificacionPlanes() {
     	logger.debug("Inicio generarTarificacion...");
         try {
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             Utils.validate(params, "No se recibieron datos");
             String cdunieco = params.get("cdunieco");
             String cdramo =   params.get("cdramo");
@@ -597,7 +601,8 @@ public class EmisionAction extends PrincipalCoreAction {
             Utils.validate(estado,   "Falta estado");
             Utils.validate(nmpoliza, "Falta nmpoliza");
             
-            List<Map<String, Object>> resultados = emisionManager.generarTarificacionPlanes(cdunieco, cdramo, estado, nmpoliza, nmsituac);
+            List<Map<String, Object>> resultados = emisionManager.generarTarificacionPlanes(cdunieco, cdramo, estado, nmpoliza, nmsituac,
+                    usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             logger.debug("resultado Tarificacion: {}", resultados);
             
             success = true;
@@ -801,6 +806,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   nombre,   "Falta nombre",
     	                   email, 	 "Falta email");
     	    
+    	    emisionManager.guardarDatosPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdbanco, nmtarjeta, fevencm, fevenca, email);
     	    String codigoautorizacion = emisionManager.realizarPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, 
     	    															cdbanco, dsbanco, nmtarjeta, codseg, fevencm, 
     	    															fevenca, nombre, email, usuario);
@@ -895,6 +901,36 @@ public class EmisionAction extends PrincipalCoreAction {
                            cdramo   , "Falta cdramo",
                            nmpoliza , "Falta nmpoliza");
             params.putAll(emisionManager.validarCargaCotizacion(cdunieco, cdramo, nmpoliza, cdusuari, cdsisrol));
+            success = true;
+        } catch (Exception e) {
+            message = Utils.manejaExcepcion(e);
+        }
+        return SUCCESS;
+    }
+    
+    @Action(        
+            value = "obtenerPerfilamientoPoliza", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )   
+    public String obtenerPerfilamientoPoliza () {
+        logger.debug(Utils.log("\n###### obtenerDatosPerfilamiento params: ", params));
+        try {
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+            Utils.validate(params, "No hay datos para obtener perfilamiento de p\u00f3liza");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem");
+            nmsuplem = Utils.NVL(nmsuplem, "0");
+            Utils.validate(cdunieco , "Falta cdunieco",
+                           cdramo   , "Falta cdramo",
+                           estado   , "Falta estado",
+                           nmpoliza , "Falta nmpoliza",
+                           nmsuplem , "Falta nmsuplem");
+            params.putAll(emisionManager.obtenerPerfilamientoPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem));
             success = true;
         } catch (Exception e) {
             message = Utils.manejaExcepcion(e);

@@ -24,10 +24,10 @@ public interface BloqueCoberturasManager {
 
 	List<Map<String, String>> guardarCobertura(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i, String pv_nmpoliza_i,
 			String pv_nmsituac_i, String pv_cdtipsit_i, String pv_nmsuplem_i, String pv_cdgarant_i,
-			String pv_cdcapita_i, List<Map<String, String>> valores) throws Exception;
+			String pv_cdcapita_i, List<Map<String, String>> valores, String cdusuari, String cdsisrol) throws Exception;
 
 	void agregaCobertura(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
-			String nmsuplem,  List<Map<String, String>> lista)throws Exception;
+			String nmsuplem,  List<Map<String, String>> lista, String cdusuari, String cdsisrol)throws Exception;
 
 	List<Map<String, String>> obtieneTatrigarTconfscr(String pantalla, String seccion, String modulo, String estatus,String cdsisrol,
 			String pv_cdramo_i, String pv_cdtipsit_i, String pv_cdgarant_i, String pv_cdatribu_i) throws Exception;

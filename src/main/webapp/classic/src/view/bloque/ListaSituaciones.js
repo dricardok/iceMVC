@@ -17,7 +17,8 @@ Ext.define('Ice.view.bloque.ListaSituaciones', {
 		nmpoliza: null,
 		nmsuplem: null,
 		actionColumns: [],
-		situacionCero: false
+		situacionCero: false,
+		selector: false
 	},
 
 	// validacion de parametros de entrada
@@ -47,6 +48,15 @@ Ext.define('Ice.view.bloque.ListaSituaciones', {
 //                    }
 				
 				config.modulo = config.modulo || 'COTIZACION';
+
+				if (config.selector === true) {
+					config.selModel = {
+						type: 'checkboxmodel',
+						mode: 'SINGLE',
+						showHeaderCheckbox: false,
+						allowDeselect: true
+					};
+				}
 			
 			} catch (e) {
 				Ice.generaExcepcion(e, paso);

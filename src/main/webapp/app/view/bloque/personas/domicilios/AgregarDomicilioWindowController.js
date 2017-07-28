@@ -1,7 +1,7 @@
 Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.agregardomiciliowindow',
-    
+    cpactivo:	false,
     custom	:	function(){
     	var me=this,paso="",view =me.getView();
     	try{
@@ -12,7 +12,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
 	    			'params.cdperson'	:	view.getCdperson(),
 	    			'params.nmorddom'		:	view.getNmorddom()
 	    		};
-	    	var form=view.down('[xtype=formulario]');
+	    	var form=view.down('[reference=formulario]');
 	    	
 	    	me.llenarCampos(form,Ice.url.bloque.personas.obtenerDomicilio,params,function(){
 	    		form.down("[getName][name=cdcoloni]").heredar();
@@ -20,7 +20,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     	}
 	    	
     	}catch(e){
-    		//Ice.manejaExcepcion(e,paso);
+    		Ice.manejaExcepcion(e,paso);
     	}
     },
     
@@ -31,7 +31,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
 		try{
 			var datos={};
 			datos.cdperson=view.getCdperson();
-			var form=view.down("[xtype=formulario]");
+			var form=view.down("[reference=formulario]");
 			me.validarCampos(form);
 			Ext.ComponentQuery.query('[getName]',form).forEach(function(it){
 				
@@ -54,7 +54,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     				});
     				Ice.mensaje("Se guardo correctamente");
     				view.fireEvent("guardarDomicilio",view);
-    				view.cerrar();
+    				
     				
     			}
     			
@@ -81,8 +81,8 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     	
     	var paso='';
     	try{
-    		if(!form.modelValidators || !form.modelFields){
-    			throw 'No se puede validar el formulario'+form.getTitle();
+    		if(!form.getModelValidators() || !form.getModelFields()){
+    			throw 'No se puede validar el formulario '+form.getTitle();
     		}
     		
     		paso = 'Construyendo modelo de validaci\u00f3n';
@@ -93,10 +93,10 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     		var view=this.getView();
     		Ice.log("-]",form);
     		Ice.query('[getName]',form).filter(function(it){
-    			return it.isHidden()!==true && typeof it.getName =='function' && form.modelValidators[it.getName()] ;
+    			return it.isHidden()!==true && typeof it.getName =='function' && form.getModelValidators()[it.getName()] ;
     		})
     		.forEach(function(it){
-    			validators[it.getName()] = form.modelValidators[it.getName()];
+    			validators[it.getName()] = form.getModelValidators()[it.getName()];
     		});
     		
     		Ice.log("refs , validators",refs, validators)
@@ -104,7 +104,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     		var modelName = Ext.id();
             var  modelo = Ext.define(modelName, {
                 extend: 'Ext.data.Model',
-                fields: form.modelFields,
+                fields: form.getModelFields(),
                 validators: validators
             });
             
@@ -149,39 +149,50 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
     	try{
     		Ice.log("Evento");
     		
-    		if(!me.buscarcp){
-    			me.buscarcp=Ext.create("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
-    				
-    				closeAction:'method-hide',
-    				listeners:{
-    					elegir:function(me,record,grid){
-    						Ice.log("record: ",record);
-    						var form=view.down('[xtype=formulario]');
-    						Ice.log("form ", form);
-    						Ext.ComponentQuery.query("[getName][cmpBuscar]",form)
-    						.forEach(function(it){
-    							Ice.log(it.getName(),"it",it);
-    							it.setValue(record.get(it.getName()));
-    							Ice.log("it val new",it,record.get(it.getName()));
-    							switch(it.getName()){
-    								case "cdpais":
-    									it.setValue(record.get(it.getName())+"-"+record.get("descripl"));
-    									break;
-    								case 'cdprovin':
-    									it.setValue(record.get(it.getName())+"-"+record.get("dsprovin"));
-    									break;
-    							}
-    							
-    						});
-    						Ext.ComponentQuery
+//    		if(me.buscarcp)
+//				me.buscarcp.close();
+    		if(!me.cpactivo){
+    			me.cpactivo=true;
+				me.buscarcp=Ext.create("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
+					
+					//closeAction:'method-hide',
+					listeners:{
+						
+						close:function(){
+							me.cpactivo=false;
+						},
+						elegir:function(me,record,grid){
+							Ice.log("record: ",record);
+							var form=view.down('[xtype=formulario]');
+							Ice.log("form ", form);
+							Ext.ComponentQuery.query("[getName][cmpBuscar]",form)
+							.forEach(function(it){
+								Ice.log(it.getName(),"it",it);
+								it.setValue(record.get(it.getName()));
+								Ice.log("it val new",it,record.get(it.getName()));
+								switch(it.getName()){
+									case "cdpais":
+										it.setValue(record.get(it.getName())+"-"+record.get("descripl"));
+										break;
+									case 'cdprovin':
+										it.setValue(record.get(it.getName())+"-"+record.get("dsprovin"));
+										break;
+								}
+							
+								
+							});
+							Ext.ComponentQuery
 								.query("[getName]",view).forEach(function(it){
 									if(it.heredar) {it.heredar();}
 								});
-    					}
-    				}
-    			});
+	//    						if(Ice.classic())
+	//    						   view.maximize();
+						}
+					}
+				});
     		}
-			
+//    		if(Ice.classic())
+//			     view.minimize();
     		me.buscarcp.mostrar();
     	}catch(e){
     		Ice.manejaExcepcion(e,paso);
@@ -204,7 +215,15 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
 	    				var datos=json.params || {};
 	    				Ext.ComponentQuery.query('[getName]',root)
 	    				.forEach(function(it){
-	    					it.setValue(datos[it.getName()]);
+	    					
+	    					
+	    					if(it.getStore){
+	    						it.getStore().load(function(){
+	    							it.setValue(datos[it.getName()]);
+	    						});
+	    					}else{
+	    						it.setValue(datos[it.getName()]);
+	    					}
 	    				});
 	    				
 	    				if(call){

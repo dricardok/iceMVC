@@ -5,7 +5,7 @@ Ext.define('Ice.view.bloque.agrupadores.BloqueAgrupadores', {
     controller: 'bloqueagrupadores',
     
     // config ext
-    title: 'Agrupadores',
+    title: 'Facturación',
     platformConfig: {
         '!desktop': {
             scrollable: true

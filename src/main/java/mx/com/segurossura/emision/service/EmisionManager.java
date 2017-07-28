@@ -40,7 +40,7 @@ public interface EmisionManager {
 			String Gv_Swcolind, String Gn_Nmpolcoi) throws Exception;
 	
 	List<Map<String, String>> ejecutarValidaciones(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String nmsituac, String nmsuplem, List<String> cdbloque) throws Exception;
+			String nmsituac, String nmsuplem, List<String> cdbloque, String cdusuari, String cdsisrol) throws Exception;
 
 	
     /**
@@ -53,7 +53,8 @@ public interface EmisionManager {
      * @return
      * @throws Exception
      */
-    public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac)
+    public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
+            String cdusuari, String cdsisrol)
             throws Exception;
     
     /**
@@ -66,7 +67,8 @@ public interface EmisionManager {
      * @return
      * @throws Exception
      */
-    public List<Map<String, Object>> generarTarificacionPlanes(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac) throws Exception;
+    public List<Map<String, Object>> generarTarificacionPlanes(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String cdusuari, String cdsisrol) throws Exception;
     
     /**
      * Genera la tarificacion de una poliza bazado en un plan especifico
@@ -112,5 +114,25 @@ public interface EmisionManager {
     
     public Map<String, String> validarCargaCotizacion (String cdunieco, String cdramo, String nmpoliza, String cdusuari,
             String cdsisrol) throws Exception;
+    /**
+     * Guarda los datos de la tarjeta en mpoligar, actualiza mpersona para establecer el email2 y si la forma de pago no es 
+     * anual ejecuta pl para estabecer el gestor de cobro  
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsuplem
+     * @param cdbanco
+     * @param nmtarjeta
+     * @param fevencm
+     * @param fevenca
+     * @param email
+     * @throws Exception Lanza un ApplicationException si algo salio mal
+     */
+	public void guardarDatosPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
+			String cdbanco, String nmtarjeta, String fevencm, String fevenca, String email) throws Exception;
+    
+    public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
+            String nmsuplem) throws Exception;
     
 }

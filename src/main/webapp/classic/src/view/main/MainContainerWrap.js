@@ -28,7 +28,8 @@ Ext.define('Ice.view.main.MainContainerWrap', {
             height = Ext.Element.getViewportHeight() - (102 + 42),  // offset by (topmost toolbar height + toolbar delia)
             // We use itemId/getComponent instead of "reference" because the initial
             // layout occurs too early for the reference to be resolved
-            navTree = me.getComponent('navigationTreeList');
+            navTree = me.getComponent('navigationTreeList'),
+            userMenu = me.getComponent('userMenu');
 
         me.minHeight = height;
 
@@ -36,6 +37,14 @@ Ext.define('Ice.view.main.MainContainerWrap', {
             'min-height': height + 'px'
         });
 
+        userMenu.setStyle({
+            'min-height': height + 'px'
+        });
+
         me.callParent(arguments);
+    },
+
+    afterLayout: function () {
+        this.fireEvent('onScrollEnd', this); // para que esconda/muestre el pivote
     }
 });

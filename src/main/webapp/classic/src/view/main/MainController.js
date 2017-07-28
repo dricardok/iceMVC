@@ -315,5 +315,36 @@ Ext.define('Ice.view.main.MainController', {
                 });
             }
         }
+    },
+
+    mainCardPanelAfterrender: function () {
+        Ice.log('Ice.view.main.MainController.mainCardPanelAfterrender');
+        var me = this,
+            refs = me.getReferences(),
+            paso = 'Creando pivote';
+        try {
+            var piv = Ext.create('Ext.button.Button', {
+                text: 'Arriba',
+                iconCls: 'x-fa fa-eject',
+                renderTo: Ext.getBody(),
+                floating: true,
+                iconAlign: 'top',
+                hidden: true,
+                padre: refs.mainContainerWrap,
+                style: 'left: 100%; margin-left: -50px; top: 100%; margin-top: -100px; padding-left: 0px; padding-right: 0px;',
+                handler: function (me) {
+                    me.padre.scrollTo(0, 0);
+                }
+            });
+            refs.mainContainerWrap.pivote = piv;
+            refs.mainContainerWrap.on({
+                onScrollEnd: function (view) {
+                    Ice.log('onScrollEnd');
+                    view.pivote[view.getScrollY() > 100 ? 'show' : 'hide']();
+                }
+            });
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
     }
 });

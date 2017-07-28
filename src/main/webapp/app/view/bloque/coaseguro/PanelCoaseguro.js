@@ -55,6 +55,10 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguro', {
                 config.estado = 'W';
             }
 
+            if(!config.cdtipcoa){
+                config.cdtipcoa = 'N';
+            }
+            
             /*if(!config.cdtipcoa){
                 throw 'Falta tipo de coaseguro';
             } else {
@@ -145,8 +149,8 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguro', {
                     reference: 'form',
                     hidden: config.cdtipcoa == 'A' ? true:false,
                     items: form.BLOQUE_DATOS_GENERALES.COASEGURO_FORM.items,
-                    fields: form.BLOQUE_DATOS_GENERALES.COASEGURO_FORM.fields,
-                    validators: form.BLOQUE_DATOS_GENERALES.COASEGURO_FORM.validators
+                    modelFields: form.BLOQUE_DATOS_GENERALES.COASEGURO_FORM.fields,
+                    modelValidators: form.BLOQUE_DATOS_GENERALES.COASEGURO_FORM.validators
                 },{
                     xtype: 'gridice',
                     reference: 'grid',
@@ -176,11 +180,13 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguro', {
                     buttons: [
                         {
                             text: 'Agregar',
+                            iconCls: 'x-fa fa-plus-circle',
                             handler: 'onMostrarFormCia'
-                        },{
+                        }/*,{
                             text: 'Guardar',
+                            iconCls: 'x-fa fa-save',
                             handler: 'onGuardarCedido'
-                        }
+                        }*/
                     ]
                 },{
                     xtype: 'formdoscolumnasice',
@@ -204,14 +210,14 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguro', {
                     reference: 'formAceptado',
                     hidden: config.cdtipcoa == 'A' ? false:true,
                     items: formAceptado.BLOQUE_DATOS_GENERALES.COASEGURO_ACEPTADO_FORM.items,
-                    fields: formAceptado.BLOQUE_DATOS_GENERALES.COASEGURO_ACEPTADO_FORM.fields,
-                    validators: formAceptado.BLOQUE_DATOS_GENERALES.COASEGURO_ACEPTADO_FORM.validators,
-                    buttons: [
-                        {
-                            text: 'Guardar',
-                            handler: 'onGuardarAceptado'
-                        }
-                    ]
+                    modelFields: formAceptado.BLOQUE_DATOS_GENERALES.COASEGURO_ACEPTADO_FORM.fields,
+                    modelValidators: formAceptado.BLOQUE_DATOS_GENERALES.COASEGURO_ACEPTADO_FORM.validators
+//                    buttons: [
+//                        {
+//                            text: 'Guardar',
+//                            handler: 'onGuardarAceptado'
+//                        }
+//                    ]
                 }
             ];
         } catch (e) {

@@ -70,8 +70,8 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                     );
                 } else {
                     window.open(Ice.url.bloque.documentos.verArchivo+'?'+
-                        'params.url='+encodeURIComponent(data.ruta)+
-                        '&params.filename='+data.cddocume,
+                        'params.url='+encodeURIComponent(data.url)+
+                        '&params.filename='+data.dsdocume,
                         '_blank',
                         'width=800, height=600'
                     );
@@ -103,33 +103,33 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
             if(data){
                 if(Ext.manifest.toolkit === 'classic'){
                     Ext.create('Ext.form.Panel').submit(
-                            {
-                                url: Ice.url.bloque.documentos.descargarArchivo,
-                                standardSubmit: true,
-                                target: '_blank',
-                                params:{
-                                    'params.url': data.url,
-                                    'params.ruta': data.ruta,
-                                    'params.dsdocume': data.dsdocume,
-                                    'params.cdtipdoc': data.cdtipdoc
-                                }
+                        {
+                            url: Ice.url.bloque.documentos.descargarArchivo,
+                            standardSubmit: true,
+                            target: '_blank',
+                            params:{
+                                'params.url': data.url,
+                                'params.ruta': data.ruta,
+                                'params.dsdocume': data.dsdocume,
+                                'params.cdtipdoc': data.cdtipdoc
                             }
+                        }
                     );                    
                 } else {
                     var panel = Ext.create('Ext.form.Panel').submit(
-                            {
-                                url: Ice.url.bloque.documentos.descargarArchivo,
-                                standardSubmit: true,
-                                target: '_blank',
-                                params:{
-                                    'params.url': data.url,
-                                    'params.ruta': data.ruta,
-                                    'params.cddocume': data.cddocume,
-                                    'params.cdtipdoc': data.cdtipdoc
-                                }
+                        {
+                            url: Ice.url.bloque.documentos.descargarArchivo,
+                            standardSubmit: true,
+                            target: '_blank',
+                            params:{
+                                'params.url': data.url,
+                                'params.ruta': data.ruta,
+                                'params.dsdocume': data.dsdocume,
+                                'params.cdtipdoc': data.cdtipdoc
                             }
+                        }
                     );
-                    Ice.push(panel);
+//                    Ice.push(panel);
                 }
             }
         } catch(e){

@@ -9,6 +9,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
         Ice.log('Ice.view.bloque.DatosGeneralesController.init view:', view);
         var me = this,
             view = me.getView(),
+            refs = me.getReferences() || {},
             paso = 'Iniciando controlador de bloque de datos generales';
         try {
             me.callParent(arguments);
@@ -22,6 +23,43 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                         && !Ext.isEmpty(view.getNmsuplem()) && view.getModulo()) {
                         paso2 = 'Cargando bloque de datos generales';
                         me.cargar();
+                    } else {
+                        var setearValoresPerfilamiento = function () {
+                            var paso3 = 'Asignando valores de perfilamiento';
+                            try {
+                                if (view.getCdptovta() && view.getCdgrupo() && view.getCdsubgpo() && view.getCdperfil()) {
+                                    Ice.cargarFormulario(view, {
+                                        punto_venta: view.getCdptovta(),
+                                        grupo: view.getCdgrupo(),
+                                        subgrupo: view.getCdsubgpo(),
+                                        perfil_tarifa: view.getCdperfil()
+                                    }, {
+                                        sinReset: true,
+                                        sinUsarNames: true
+                                    });
+                                }
+                            } catch (e) {
+                                Ice.manejaExcepcion(e, paso3);
+                            }
+                        };
+
+                        if (view.getCdunieco()) { // se recibe la sucursal, por lo que se setea
+                            if (refs.cdunieco) {
+                                Ice.cargarFormulario(view, {cdunieco: view.getCdunieco()}, {
+                                    sinReset: true,
+                                    callback: function () {
+                                        view.on('valoresdefectovariables', function anon (me) {
+                                            me.removeListener('valoresdefectovariables', anon);
+                                            setearValoresPerfilamiento();
+                                        });
+                                        refs.cdunieco.fireEvent('change', refs.cdunieco);
+                                        refs.cdunieco.fireEvent('blur', refs.cdunieco);
+                                    }
+                                });
+                            }
+                        } else {
+                            setearValoresPerfilamiento();
+                        }
                     }
                 } catch (e) {
                     Ice.manejaExcepcion(e, paso2);
@@ -92,11 +130,11 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             for (var i = 0; i < view.getCamposDisparanValoresDefectoVariables().length; i++) {
                 var name = view.getCamposDisparanValoresDefectoVariables()[i];
                 if (refs[name]) {
-                    if (Ext.manifest.toolkit === 'classic') {
-                        // refs[name].setFieldStyle('border-right: 1px solid blue;');
-                    } else {
-                        // refs[name].setStyle('border-right: 1px solid blue;');
-                    }
+                    // if (Ext.manifest.toolkit === 'classic') {
+                    //     refs[name].setFieldStyle('border-right: 1px solid blue;');
+                    // } else {
+                    //     refs[name].setStyle('border-right: 1px solid blue;');
+                    // }
                     
                     
                     if (Ext.manifest.toolkit !== 'classic' && refs[name].isXType('selectfield')) { // para los select
@@ -129,7 +167,8 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
         Ice.log('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoFijos');
         var me = this,
             view = me.getView(),
-            refs = view.getReferences(),
+            refs = view.getReferences() || {},
+            nameRefs = Ice.refsToNames(view.getReferences() || {}),
             accedeProcesar = false;
         var paso = 'Cargando valores por defecto fijos de datos generales';
         try {
@@ -149,7 +188,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             
             for (var i = 0; i < view.getCamposDisparanValoresDefectoFijos().length; i++) {
                 var name = view.getCamposDisparanValoresDefectoFijos()[i];
-                if (refs[name] && errores[name]) {
+                if (nameRefs[name] && errores[name]) {
                     Ice.logWarn('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoFijos invalido <', name, ':', errores[name], '>');
                     return;
                 }
@@ -157,11 +196,16 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             }
             
             valores['params.cdunieco'] = viewValues.cdunieco || view.getCdunieco();
-            valores['params.cdramo'] = view.getCdramo();
-            valores['params.estado'] = view.getEstado();
+            valores['params.cdramo']   = view.getCdramo();
+            valores['params.estado']   = view.getEstado();
             valores['params.nmpoliza'] = viewValues.nmpoliza || view.getNmpoliza();
             valores['params.nmsuplem'] = view.getNmsuplem();
-            valores['params.status'] = view.getStatus();
+            valores['params.status']   = view.getStatus();
+
+            valores['params.cdptovta'] = (refs.punto_venta   && refs.punto_venta.getValue())   || view.getCdptovta();
+            valores['params.cdgrupo']  = (refs.grupo         && refs.grupo.getValue())         || view.getCdgrupo();
+            valores['params.cdsubgpo'] = (refs.subgrupo      && refs.subgrupo.getValue())      || view.getCdsubgpo();
+            valores['params.cdperfil'] = (refs.perfil_tarifa && refs.perfil_tarifa.getValue()) || view.getCdperfil();
             
             view.setProcesandoValoresDefecto(true);
             accedeProcesar = true;
@@ -199,8 +243,8 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                         // no permitir modificar la llave
                         for (var i = 0; i < view.getCamposDisparanValoresDefectoFijos().length; i++) {
                             var name = view.getCamposDisparanValoresDefectoFijos()[i];
-                            if (refs[name]) {
-                                refs[name].setReadOnly(true);
+                            if (nameRefs[name]) {
+                                nameRefs[name].setReadOnly(true);
                             }
                         }
 
@@ -230,9 +274,15 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
         var me = this,
             view = me.getView(),
             refs = view.getReferences(),
+            nameRefs = Ice.refsToNames(view.getReferences()),
             accedeProcesar = false;
         var paso = 'Cargando valores por defecto variables de datos generales';
         try {
+            if (view.getDatosFijosNuevos() === true) {
+                Ice.logWarn('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoVariables faltan los datos fijos');
+                return;
+            }
+
             if (view.getDatosVariablesNuevos() !== true) {
                 Ice.logWarn('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoVariables los datos variables no son nuevos');
                 return;
@@ -256,7 +306,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             var errores = me.obtenerErrores() || {};
             for (var i = 0; i < view.getCamposDisparanValoresDefectoVariables().length; i++) {
                 var name = view.getCamposDisparanValoresDefectoVariables()[i];
-                if (refs[name] && errores[name]) {
+                if (nameRefs[name] && errores[name]) {
                     Ice.logWarn('Ice.view.bloque.DatosGeneralesController.cargarValoresDefectoVariables invalido <', name, ':', errores[name], '>');
                     return;
                 }
@@ -264,11 +314,16 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             
             var valores = Ice.convertirAParams(view.getValues());
             valores['params.cdunieco'] = view.getCdunieco();
-            valores['params.cdramo'] = view.getCdramo();
-            valores['params.estado'] = view.getEstado();
+            valores['params.cdramo']   = view.getCdramo();
+            valores['params.estado']   = view.getEstado();
             valores['params.nmpoliza'] = view.getNmpoliza();
             valores['params.nmsuplem'] = view.getNmsuplem();
-            valores['params.status'] = view.getStatus();
+            valores['params.status']   = view.getStatus();
+
+            valores['params.cdptovta'] = (refs.punto_venta   && refs.punto_venta.getValue())   || view.getCdptovta();
+            valores['params.cdgrupo']  = (refs.grupo         && refs.grupo.getValue())         || view.getCdgrupo();
+            valores['params.cdsubgpo'] = (refs.subgrupo      && refs.subgrupo.getValue())      || view.getCdsubgpo();
+            valores['params.cdperfil'] = (refs.perfil_tarifa && refs.perfil_tarifa.getValue()) || view.getCdperfil();
             
             view.setProcesandoValoresDefecto(true);
             accedeProcesar = true;
@@ -285,7 +340,10 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                         }
                         
                         me.cargarFormulario(action.params, {
-                            sinReset: true
+                            sinReset: true,
+                            callback: function () {
+                                view.fireEvent('valoresdefectovariables', view);
+                            }
                         });
                         
                         view.setDatosVariablesNuevos(false);
@@ -342,26 +400,9 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                         view.setDatosFijosNuevos(false);
                         view.setDatosVariablesNuevos(false);
                         
-                        Ice.suspendEvents(view);
-                        
-                        view.reset();
-                        
                         var refs = view.getReferences();
-                        for (var att in json.params) {
-                            var ref = refs[att];
-                            if (ref) {
-                                if (ref.isXType('selectfield') && ref.getStore().getCount() === 0) { // aun no hay registros
-                                    ref.getStore().padre = ref;
-                                    ref.getStore().valorOnLoad = '' + json.params[att];
-                                    ref.getStore().on('load', function handleLoad (me) {
-                                        me.removeListener('load', handleLoad);
-                                        me.padre.setValue(me.valorOnLoad);
-                                    });
-                                } else {
-                                    ref.setValue(json.params[att]);
-                                }
-                            }
-                        }
+                        me.cargarFormulario(json.params);
+                        Ice.suspendEvents(view);
                         if (refs.cdunieco) {
                             refs.cdunieco.setValue(view.getCdunieco());
                         }
@@ -369,7 +410,6 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                             refs.nmpoliza.setValue(view.getNmpoliza());
                         }
                         Ice.resumeEvents(view);
-                        
                         
                         // no permitir modificar la llave
                         for (var i = 0; i < view.getCamposDisparanValoresDefectoFijos().length; i++) {
@@ -449,7 +489,6 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                                 throw 'Favor de revisar las validaciones';
                             }
                         }
-                        
                         
                         if (params && params.success) {
                             paso2 = 'Ejecutando proceso posterior al guardado de datos generales';
