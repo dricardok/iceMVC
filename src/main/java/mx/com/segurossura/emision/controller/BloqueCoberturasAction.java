@@ -191,7 +191,8 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 			
 			String cdsisrol=null;
         	try{
-        		this.session = ActionContext.getContext().getSession(); //porque se uso SMD y eso pierde la sesion
+        		// Recuperamos la referencia a la sesion, que se pierde al usar SMD:
+        		this.session = ActionContext.getContext().getSession();
         		UsuarioVO usr=(UsuarioVO) Utils.validateSession(session);
         		cdsisrol=usr.getRolActivo().getCdsisrol();
         	}catch (Exception e) {
@@ -243,7 +244,10 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 			
 			logger.debug("### "+list);
 			logger.debug("### "+params);
+			
+			// Recuperamos la referencia a la sesion, que se pierde al usar SMD:
 			this.session = ActionContext.getContext().getSession();
+			
             UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
 			Utils.validate(params,"No hay parametros de entrada");
 			Utils.validate(list,"No hay parametros de entrada");
@@ -395,6 +399,9 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 		
 		try
 		{
+			// Recuperamos la referencia a la sesion, que se pierde al usar SMD:
+			this.session = ActionContext.getContext().getSession();
+			
 			UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
 			
 			logger.debug("#####"+list);

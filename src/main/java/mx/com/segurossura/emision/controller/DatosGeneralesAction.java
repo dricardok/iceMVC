@@ -330,7 +330,9 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
     public String movimientoCoaseguroCedido() {
         logger.debug(Utils.log("###### movimientoCoaseguroCedido params: ", params,"list:", list));
         try {
-            this.session = ActionContext.getContext().getSession(); //porque se uso SMD y eso pierde la sesion
+        	// Recuperamos la referencia a la sesion, que se pierde al usar SMD:
+        	this.session = ActionContext.getContext().getSession();
+        	
             Utils.validateSession(session);
             Utils.validate(params, "No hay parametros");
             Utils.validate(list, "No hay datos");
