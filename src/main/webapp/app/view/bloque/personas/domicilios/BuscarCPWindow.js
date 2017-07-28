@@ -34,6 +34,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 						{
 					    	xtype	: 'button',
 					    	text	: 'Buscar',
+					    	iconCls : 'x-fa fa-search',
 					    	handler : 'onBuscar'
 				    	}
 					]

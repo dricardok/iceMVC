@@ -897,6 +897,8 @@ public class EmisionManagerImpl implements EmisionManager {
     		String nmsuplem, String cdbanco, String nmtarjeta, String fevencm, String fevenca, String email)throws Exception{
 		String paso="Guardando datos de pago con tarjeta";
 		String cdperson="";
+		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 
+				"\n@@@@@@ guardarDatosPagoTarjeta"));
 		try{
 			Map<String,String> map = new HashMap<>();
 			map.put("cdbanco",cdbanco);
@@ -927,12 +929,13 @@ public class EmisionManagerImpl implements EmisionManager {
 			registroPersonaDao.movimientoTvaloper(cdperson, persona, accion);
 			Map<String, String> poliza = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem).get(0);
 			if(!"12".equals(poliza.get("cdperpag"))){
-				throw new ApplicationException("Falta pl de frank");
+				emisionDAO.actualizaGestorCobro(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
 			}
 			
 		}catch (Exception e) {
 	        Utils.generaExcepcion(e, paso);
 	    }
+		logger.debug(Utils.join("\n@@@@@@ guardarDatosPagoTarjeta", "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
 	}
 	
 	public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,

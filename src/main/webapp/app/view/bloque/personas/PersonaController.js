@@ -28,6 +28,9 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     		me=this,
     		view=me.getView();
     	try{
+    		if(me.eventGuardaPersona && view.down('[xtype=domicilios]').getStore().count()<=0){
+    			throw 'Falta agregar un domicilio';
+    		}
     		var form=view.down("[xtype=formtrescolumnasice]"),
     			tvaloper={},
     			mpersona={};
@@ -211,29 +214,31 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 				Ext.Msg.confirm("Agregar Domicilio","Se guardarán los datos de la persona \u00bfDesea continuar?",function(opc){
 	      		  if(opc==='yes'){
 	      			me.guardarPersona(function(cdperson){
-	      				Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
+	      				Ice.push(Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 		    	    		listeners:{
 		    	    			guardarDomicilio:function(){
 		    	    				view.down('[xtype=domicilios]').getStore().proxy.extraParams['params.cdperson']=view.getCdperson();
 		    	    				view.down('[xtype=domicilios]').getStore().load();
+		    	    				Ice.pop();
 		    	    			}
 		    	    		},
 		    	    		cdperson:view.getCdperson()
-		    	    	}).mostrar(); 
+		    	    	})); 
 	      			});
 	      			
 	      		  }
 	      		});
 			}else{
-				Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
+				Ice.push(Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 		    		listeners:{
 		    			guardarDomicilio:function(){
 		    				view.down('[xtype=domicilios]').getStore().proxy.extraParams['params.cdperson']=view.getCdperson();
 		    				view.down('[xtype=domicilios]').getStore().load();
+		    				Ice.pop();
 		    			}
 		    		},
     	    		cdperson:view.getCdperson()
-		    	}).mostrar();
+		    	}));
 			}
 	    	
 		}catch(e){
@@ -260,16 +265,17 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
             }
     		
     		Ice.log("record",record,record.get("cdperson"),record.get("nmorddom"));
-    		Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
+    		Ice.push(Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
     			
     			cdperson:record.get("cdperson"),
 				nmorddom:record.get("nmorddom"),
 	    		listeners:{
 	    			guardarDomicilio:function(){
 	    				view.down('[xtype=domicilios]').getStore().load();
+	    				Ice.pop();
 	    			}
 	    		}
-	    	}).mostrar();
+	    	}));
     		
     		
     	}catch(e){
