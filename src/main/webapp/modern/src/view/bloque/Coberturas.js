@@ -168,6 +168,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 				buttons: [{
 					// xtype: 'button',
 					text: 'Guardar',
+					iconCls: 'x-fa fa-save',
 					itemId: "btnGuardarCobertura",
 					handler: 'guardarCoberturaMovil'
 				}]

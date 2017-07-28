@@ -924,6 +924,7 @@ public class EmisionManagerImpl implements EmisionManager {
 				persona=new HashMap<>();
 				accion="I";
 			}
+			persona.put("cdperson", cdperson);
 			persona.put("otvalor15", email);
 			logger.debug("@@@@ tvaloper: "+persona);
 			registroPersonaDao.movimientoTvaloper(cdperson, persona, accion);
