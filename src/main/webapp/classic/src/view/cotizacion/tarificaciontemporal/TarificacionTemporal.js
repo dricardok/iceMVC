@@ -2,6 +2,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 	extend: 'Ice.view.componente.PanelIce',
 	xtype: 'tarificaciontemporal',
 	title:'Elige tu Plan',
+	style:'margin 20px auto; text-align: center; font-size:18px; line-height: 20px; text-align:center !important; color:#707372; padding:15px 0px !important;font-weight:600;',
+	ui:'ice-catalogo',
+	cls: 'titulo_plan align_plans',
 	requires: [
 		'Ext.toolbar.TextItem'
 	],
@@ -40,8 +43,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 			config.items = [
 				   {
 					xtype: 'vistatarificaciontemporal',
-					style: 'background:#DEEBF4; padding: 0 0 0 3%;',
+					style: 'background:#DEEBF4; margin: 0 auto;',
 					reference: 'vistatarificaciontemporal',
+					cls:'',
 					
 					cdunieco: config.cdunieco,
 					cdramo: config.cdramo,

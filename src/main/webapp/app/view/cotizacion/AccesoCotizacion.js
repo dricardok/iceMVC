@@ -2,7 +2,8 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
     extend: 'Ice.view.componente.PanelIce',
     xtype: 'accesocotizacion',
     ui:'ice-catalogo',
-    
+    cls: 'titulo',
+    style:'background-color:#fff !important; ',
     controller: 'accesocotizacion',
 
 //    layout: 'fit',
@@ -10,9 +11,13 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
     platformConfig: {
     	'!desktop': {
 //    		title: 'Cotizadores'
-    	}
+    		scrollable: true
+    	},
+		'desktop': {
+			scrollable: false
+		}
     },
-    scrollable: true,
+    
 
     constructor: function (config) {
         Ice.log();
@@ -26,7 +31,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
                 	xtype: 'container',
                 	ui:'ice-catalogo',
                 	// height: 100,
-                	html: '<div class="titulo_cotiz" style="text-align: center;"><span style="font-size:18px; color:#707372; padding:15px 0px !important;font-weight:600;">Cotizadores</span></div>'
+                	html: '<div class="titulo_cotiz" style="text-align: center;"></br><span style="font-size:22px; color:#707372; padding:30px 0px !important;font-weight:600;">Cotizadores</span></div>'
                 });
             }
             items.push({
@@ -39,33 +44,37 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
                     desktop: {
                         tpl: new Ext.XTemplate(
                           '<tpl for=".">',
-                                '<div class="producto_cot" style="margin: 0 auto">',
-                                    '<table class="plan_pago_base shadow_card" style="width:230px; height:180px;">',
+                                '<div class="wrap_producto" style="width:250px; height:120px; padding-top:1%;">',
+                                    '<table style="margin:0 auto;">',
                                         '<tr>',
-                                            '<td class="producto">{dsramo}</td>',
+                                            '<td><p class="icon_product generic C{cdramo}"></p></td>',
                                         '</tr>',
-                                            '<tr style="background-color:#fff;">',
-                                            '<td class="slogan">Cotizar</td>',
-                                            '</tr>',
+                                        '<tr>',
+                                        '<td><p class="text_product">{dsramo}</p></td>',
+                                        '</tr>',
+                                        
                                     '</table>',
-                                '</div>',                              
+                                '</div>',                             
                           '</tpl>'
                         )
-                    },
+                    }, 
                     '!desktop': {
-                        itemTpl: new Ext.XTemplate( 
+                        itemTpl: new Ext.XTemplate(
                             '<tpl for=".">',
-                            	'<div class="producto_cot style="margin: 0 auto"">',
-                                	'<div class="plan_pago_base shadow_card2" style="width:230px; height:130px;">',
-                                		'<div class="producto">{dsramo}</div>',
-                                			'<div class="slogan">Cotizar</div>',
-                                	'</div>',
-                                '</div>',
+                                 '<table class="wrap_producto" style="width:250px; height:100px; margin-top:5%;">',
+                                     '<tr>',
+                                 		'<td><p class="icon_product generic C{cdramo}"></p></td>',
+                                 	 '</tr>',
+                                 	 '<tr>',
+                                 		'<td><p class="text_product">{dsramo}</p></td>', 
+                                 	 '</tr>',		
+                                '</table',
                             '</tpl>'
                         )
                     }
                 },
-                itemSelector: 'div.producto_cot',
+ 
+                itemSelector: 'div.wrap_producto',
                 store: {
                     autoLoad: true,
                     fields: ['cdramo', 'dsramo', 'cdtipsit', 'dstipsit'],

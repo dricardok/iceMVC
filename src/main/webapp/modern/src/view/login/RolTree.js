@@ -4,7 +4,7 @@
 Ext.define('Ice.view.login.RolTree', {
     extend: 'Ext.dataview.DataView',
     xtype: 'roltree',
-    
+    cls:'padding_seleccion_rol_',
     
     // validacion y modificacion de config
     constructor: function (config) {
@@ -36,7 +36,7 @@ Ext.define('Ice.view.login.RolTree', {
         }
     },
     
-    style: 'padding: 30% 0 0 0;background: url(resources/images/BGEasyAlea.jpg); background-repeat: no-repeat; background-size: cover;background-position: 80% 25%; !important;',
+    style: 'background: url(resources/images/BGEasyAlea.jpg); background-repeat: no-repeat; background-size: cover;background-position: 80% 25%; !important;',
     itemTpl: new Ext.XTemplate(
         '<tpl for=".">',
             '<div class="btn_rol_suscriptor thumb-wrap">',

@@ -326,12 +326,13 @@ Ext.define('Ice.view.main.MainController', {
             var piv = Ext.create('Ext.button.Button', {
                 text: 'Arriba',
                 iconCls: 'x-fa fa-eject',
+                cls:'pivote',
                 renderTo: Ext.getBody(),
                 floating: true,
                 iconAlign: 'top',
                 hidden: true,
                 padre: refs.mainContainerWrap,
-                style: 'left: 100%; margin-left: -50px; top: 100%; margin-top: -100px; padding-left: 0px; padding-right: 0px;',
+                style: 'left: 100%; margin-left: -50px; top: 100%; margin-top: -100px; padding-left: 0px; padding-right: 0px;transition: all 250ms;',
                 handler: function (me) {
                     me.padre.scrollTo(0, 0);
                 }

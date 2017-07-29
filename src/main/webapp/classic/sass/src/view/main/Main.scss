@@ -348,7 +348,7 @@
 );
 
 @include extjs-button-small-ui(
-    $ui: 'Secundario-sm',
+    $ui: 'Secundario-sm-framed',
     $color: #fff,
     $glyph-color: #fff,
     $background-color: $azulo-s,
@@ -413,12 +413,24 @@
 
     @include extjs-panel-ui(
         $ui: 'ice-catalogo-framed',    
-        $ui-body-background-color: $azulbd,
+        $ui-body-background-color: transparent,
         $ui-body-font-size: $font-pnl,
         $ui-body-color: $font-grey
         
     );
     
-    
-    
+//PIVOTE//
+
+    @include extjs-button-small-ui(
+    $ui: 'pivote-framed',
+    $color: #fff,
+    $glyph-color: #fff,
+    $background-color: $azulo-s,
+    $border-color: $azulo-s,
+    $border-width: 0
+);
+
+
+
+
     

@@ -37,7 +37,7 @@
 	border-bottom-width:0px;
 	border-left-color:#00B5CB;
 	display:block;
-	width:28%;
+	width:40%;
 	margin: 20px auto;
 	padding: 10px;
 	background-color: rgba(0, 51, 160, .75);
@@ -48,12 +48,8 @@
 	-webkit-transition: all .25s ease-in-out;
 		&:hover{
 		 -webkit-transform: scale(1.1);
-		 background-color: rgba(0, 51, 160, .90); }
-		 
+		 background-color: rgba(0, 51, 160, .90); }		 
 }
-
-
-
 
 
 .txt_btn_rol {
@@ -86,7 +82,9 @@
     line-height: 25px; 
 }
 
-//Clases para seleccion de Plan Tarificacion
+
+
+//-------------------Clases para seleccion de PLAN DE TARIFICACIÓN
 
 
 .plan_pago_base{
@@ -97,7 +95,6 @@
           }
 }
 
-
 .plan_pago_monto{
     border-style: solid;
     border-left-width: 12px;
@@ -105,44 +102,75 @@
     border-right-width: 0px;
     border-bottom-width: 0px;
     border-left-color: #0033a0;
-    padding: 20px 10px 0px;
+    padding: 10px 0px;
     background-color: #00b5cb;
     color: #fff;
-    font-size: 35px !important;
+    font-size: 28px !important;
     line-height: 27px ;
     text-align: center;
-        .rec_subsecuente{
-         font-size: 14px; 
-         font-weight: 300;
-         line-height: 0px;   
-        }
+        .total{
+           font-size: 16px;  
+           font-weight: 400;
+           line-height: 0px
+           }
+     
         .moneda{
             font-size: 12px;
             line-height: 12px;        
-            font-weight: 300;}
-                    
+            font-weight: 300;
+            }              
+}
+    
+.total02{
+           
+           font-size: 16px;  
+           font-weight: 400;
+           line-height: 0px;
+           color:$font-grey;           
+ }
+
+.periocidad{
+              font-size: 24px;
+              line-height: 24px; 
+              font-weight: 600;
+              color:$font-grey;               
+            }  
+
+
+.rec_subsecuente{
+         font-size: 14px; 
+         font-weight: 500;
+         line-height: 0px;
+         color:$font-grey;
 }
 
 
-
-.periocidad{
-              font-size: 22px;
-              //line-height: 12px; 
-              font-weight: 600;
-              color:$font-grey;
-              
-                            
-            }  
-        
-.titulo_plan{
-                  font-size: 60px;
-              }
-        
-        
-.monto_02{
+.monto02{
     font-size: 20px;
     font-weight: 600;
-  }      
+    line-height: 0px;
+    color:#fff;
+    
+  }
+
+.monto03{
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 10px;
+    color:$font-grey;  
+    }
+
+
+        
+.titulo_plan{
+             font-size: 60px;
+              }
+      
+.x-title-align-left{
+    .x-title-text-ice-catalogo{
+        text-align:center !important;
+    }
+}
 
 
 .shadow_card{
@@ -176,62 +204,200 @@
         background-color: $azulbd;
 }
 
-//Clases para seleccion de producto
 
-.producto{
-    border-style: solid;
-    border-left-width: 0px;
-    border-top-width: 0px;
-    border-right-width: 0px;
-    border-bottom-width: 12px;
-    border-bottom-color: #0033a0;
-    padding: 10px 10px 0px;
-    background-color: #00B5CB;
-    color: #fff;
-    font-size: 20px !important;
-    line-height: 22px;
-    text-align: center !important;
-    height:120px;
-                            
+
+.align_plans{
+    
+    padding: 0 0 0 12%;
+    
 }
+
+
+//-------------------Clases para seleccion de PRODUCTO
+
+
 
 .back_productos{
-     padding:0% 0% 0% 2%;
+     padding:0% 0% 0% 8%;
 }
 
-.slogan{
-              font-size: 14px;
-              line-height: 14px;              
-              color:$font-grey;
-              text-align:center;      
-            } 
         
-         
-.shadow_card{
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-}
-
-
  .thumb > .x-view-item-focused{    
    
     &:focus {outline: 0px solid transparent !important;}
     &:visited {outline: 0px solid transparent !important;}         
 }
 
-.producto_cot{
-    float:left;
-    padding: 2% 2%;    
+ 
+.wrap_producto{
+     margin:3.5% 3.5%;
+     float: left;
+     -webkit-transition: all .25s ease-in-out; 
+     
+     &:hover { -webkit-transform: scale(1.3);
+              }  
+                  
+            .icon_product{                  
+            width:80px;
+            height:80px;
+            border-radius:50px;
+            background-color:rgba(112, 115, 114, 0.5);
+            margin: 0 auto; 
+            cursor: pointer;
+            -webkit-transition: all .25s ease-in-out; 
+            &:hover {        
+                        background-color:$azulc-s;
+                        -webkit-transform: scale(1.3);
+                        
+                         }
+           }
+       
+        .text_product{    
+         padding: 10px 0px;
+         //background-color: #00b5cb;
+         font-size: 18px !important;
+         line-height: 20px ;
+         text-align: center !important;    
+         color:$font-grey;
+          &:hover {     font-weight: 500;
+                         }  
+           }
+           
+    }
+
+//clases de los iconos segun el ramo de productos
+
+.generic{
+  &:after {
+        content: "\f007";
+        font-family: FontAwesome;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: inherit;
+        color:#fff;  
+        font-size:2.8em;
+        position:absolute;
+        padding: 22px 0px 0px 17px;
+             }
 }
 
-.titulo_cotiz{
-    font-size:24px !important;
-    color: $font-grey !important;
-    text-align:center !important;
-    padding-top:15px;
-    font-weight:600;      
+ 
+.C201{
+      &:after {
+        content: "\f1b9";
+        padding:30px 0px 0px 19px;        
+        }
+}
+
+.C202{
+      &:after {
+        content: "\f207 ";
+        padding: 29px 0px 0px 24px;       
+        }
+}
+
+.C203{    
+    &:after {
+        content: "\f0fd";
+        padding: 31px 0px 0px 23px;        
+        }
 }
 
 
+
+.C211{    
+    &:after {
+        content: "\f1ba";
+        padding: 29px 0px 0px 18px;        
+        }
+}
+
+
+.C301{ 
+      &:after {
+        content: "\f0d1"; 
+        padding:31px 17px 0px 20px;        
+        }
+    }
+
+.C402{ 
+       
+      &:after {
+        content: "\f109"; 
+        padding:31px 17px 0px 21px;        
+        }
+ }
+
+
+.C409{ 
+       
+      &:after {
+        content: "\f0d6"; 
+        padding:31px 17px 0px 21px;        
+        }
+ }
+
+.C420{ 
+      &:after {
+        content: "\f0c0";
+        padding: 30px 0px 0px 21px;        
+        }
+ }
+
+.C430{ 
+      &:after {
+        content: "\f0b1";
+        padding: 30px 0px 0px 21px;       
+        }
+ }
+
+
+.C501{
+       
+      &:after {
+        content: "\f1ad"; 
+        padding:30px 0px 0px 25px;        
+        }
+}
+.C601{
+     &:after {
+        content: "\f0e7 ";
+        padding:30px 0px 0px 31px;         
+        }
+                   
+}
+ 
+.C606{
+      &:after {
+        content: "\f0fa";
+        padding: 30px 0px 0px 22px;        
+        }
+}
+ 
+.C607{
+     &:after {
+        content: "\f0fd";
+        padding: 30px 0px 0px 22px;        
+        }
+}
+
+.C901{
+      &:after {
+        content: "\f21e";
+        padding: 32px 0px 0px 22px;        
+        }
+}
+
+//Estilos Pivote Classic
+
+.pivote{
+    transition: all 250ms;
+    transition-property: all;
+    transition-duration: 250ms;
+    transition-timing-function: initial;
+    transition-delay: initial;
+    
+}
 
 
 
@@ -252,3 +418,18 @@
     } 
           
    }
+
+@media only screen and (max-width: 1280px) {
+  .btn_rol_suscriptor  {
+          width:40%;
+          height: auto !important; 
+          padding-top: 12px;
+          }
+        
+   .back_productos{
+    padding:0%;
+   }     
+   }
+
+ 
+ 

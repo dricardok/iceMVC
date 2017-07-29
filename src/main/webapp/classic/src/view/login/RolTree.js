@@ -4,6 +4,7 @@
 Ext.define('Ice.view.login.RolTree', {
     extend: 'Ext.view.View',
     xtype: 'roltree',
+ 
     
     
     // validacion y modificacion de config

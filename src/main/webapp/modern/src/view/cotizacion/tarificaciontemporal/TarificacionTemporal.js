@@ -2,7 +2,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 	extend: 'Ice.view.componente.VentanaIce',
 	xtype: 'tarificaciontemporal',
 	ui:'ice-cat',
-	
+	style: 'background:#DEEBF4;',
+	cls:'back_plan',
 	// config ext
 	title: 'Elige tu Plan',
 	scrollable: true,
