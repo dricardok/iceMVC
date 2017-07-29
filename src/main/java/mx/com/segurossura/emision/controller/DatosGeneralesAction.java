@@ -433,6 +433,169 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
         return SUCCESS;
     }
     
+    @Action(
+            value = "datosGenerales/obtenerExclusionesSituacCoaCedParc", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String obtenerExclusionesSituacCoaCedParc() {
+        logger.debug(Utils.log("###### obtenerExclusionesSituacCoaCedParc params: ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsituac = params.get("nmsituac"),
+                   nmsuplem = params.get("nmsuplem");
+             Utils.validate(cdunieco, "No se recibio sucursal",
+                            cdramo,   "No se recibio producto",
+                            estado,   "No se recibio estado de la poliza",
+                            nmpoliza, "No se recibio numero de poliza",
+                            nmsuplem, "No se recibio suplemento de poliza");
+            list = datosGeneralesManager.obtenerExclusionesSituacCoaCedParc(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem);
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
+    @Action(
+            value = "datosGenerales/obtenerExclusionesCoberCoaCedParc", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String obtenerExclusionesCoberCoaCedParc() {
+        logger.debug(Utils.log("###### obtenerExclusionesCoberCoaCedParc params: ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsituac = params.get("nmsituac"),
+                   cdgarant = params.get("cdgarant"),
+                   nmsuplem = params.get("nmsuplem");
+             Utils.validate(cdunieco, "No se recibio sucursal",
+                            cdramo,   "No se recibio producto",
+                            estado,   "No se recibio estado de la poliza",
+                            nmpoliza, "No se recibio numero de poliza",
+                            nmsuplem, "No se recibio suplemento de poliza");
+            list = datosGeneralesManager.obtenerExclusionesCoberCoaCedParc(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdgarant, nmsuplem);
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
+    @Action(
+            value = "datosGenerales/obtenerCoaseguroPoliza", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String obtenerCoaseguroPoliza() {
+        logger.debug(Utils.log("###### obtenerCoaseguroPoliza params: ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem");
+             Utils.validate(cdunieco, "No se recibio sucursal",
+                            cdramo,   "No se recibio producto",
+                            estado,   "No se recibio estado de la poliza",
+                            nmpoliza, "No se recibio numero de poliza",
+                            nmsuplem, "No se recibio suplemento de poliza");
+            String cdtipcoa = datosGeneralesManager.obtenerCoaseguroPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+            params.put("cdtipcoa", cdtipcoa);
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
+    @Action(
+            value = "datosGenerales/movimientoExclusionesSituacCoaCedParc", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String movimientoExclusionesSituacCoaCedParc() {
+        logger.debug(Utils.log("###### obtenerExclusionesSituacCoaCedParc params: ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsituac = params.get("nmsituac"),
+                   nmsuplem = params.get("nmsuplem"),
+                   accion   = params.get("accion");
+             Utils.validate(cdunieco, "No se recibio sucursal",
+                            cdramo,   "No se recibio producto",
+                            estado,   "No se recibio estado de la poliza",
+                            nmpoliza, "No se recibio numero de poliza",
+                            nmsuplem, "No se recibio suplemento de poliza",
+                            accion,   "No se recibio la accion");
+            datosGeneralesManager.movimientoExclusionesSituacCoaCedParc(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, accion);
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
+    @Action(
+            value = "datosGenerales/movimientoExclusionesCoberCoaCedParc", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String movimientoExclusionesCoberCoaCedParc() {
+        logger.debug(Utils.log("###### obtenerExclusionesCoberCoaCedParc params: ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsituac = params.get("nmsituac"),
+                   cdgarant = params.get("cdgarant"),
+                   nmsuplem = params.get("nmsuplem"),
+                   accion   = params.get("accion");
+             Utils.validate(cdunieco, "No se recibio sucursal",
+                            cdramo,   "No se recibio producto",
+                            estado,   "No se recibio estado de la poliza",
+                            nmpoliza, "No se recibio numero de poliza",
+                            nmsituac, "No se recibio la situacion de riesgo",
+                            cdgarant, "No se recibio la cobertura",
+                            nmsuplem, "No se recibio suplemento de poliza",
+                            accion,   "No se recibio la accion");
+            datosGeneralesManager.movimientoExclusionesCoberCoaCedParc(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdgarant, nmsuplem, accion);
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
     public boolean isSuccess() {
         return success;
     }

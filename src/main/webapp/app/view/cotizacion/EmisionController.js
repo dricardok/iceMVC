@@ -315,58 +315,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             paso = 'Guardando datos';
         try {
         	paso = 'Ejecutando validaciones de integridad...';
-			Ice.request({
-				url: Ice.url.bloque.ejecutarValidacion,
-				params: {
-					'params.cdunieco': view.getCdunieco(),
-	    			'params.cdramo'  : view.getCdramo(),
-	    			'params.estado'  : view.getEstado(),
-	    			'params.nmpoliza': view.getNmpoliza(),
-	    			'params.nmsituac': 0,
-					'params.nmsuplem': view.getNmsuplem(),
-					 bloques: ["B0"]
-				},
-				success : function(json) {
-					Ice.log('success...', json);
-					Ice.log(json);
-					var paso3 = 'Evaluando validaciones';
-					try {
-    					var list = json.list || [];
-    					if (list.length > 0) {
-    						
-    						var hayErroresValidacion = false;
-							list.forEach(function (it) {
-								if ((it.tipo + '').toLowerCase() == 'error') {
-									hayErroresValidacion = true;
-								}
-							});
-    						
-							Ext.create('Ice.view.bloque.VentanaValidaciones', {
-								lista: list,
-				                buttons: [
-				                    {
-				                    	hidden: hayErroresValidacion,
-				                        text: 'Continuar',
-				                        iconCls: 'x-fa fa-forward',
-				                        handler: function (bot) {
-				                        	bot.up('ventanavalidaciones').cerrar();
-				                        	me.tarificar();
-				                        }
-				                    }
-				                ]
-							}).mostrar();
-							
-							if(hayErroresValidacion) {
-								throw "Favor de revisar los errores de validaci\u00F3n";
-							}
-    					} else {
-    						me.tarificar();
-    					}
-			        } catch (e) {
-			            Ice.manejaExcepcion(e, paso3);
-			        }
-				}
-			});
+			me.revisarCoaseguro();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -834,5 +783,117 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 		}catch(e){
 			Ice.manejaExcepcion(e, paso);
 		}
-	}
+    },
+    
+    revisarCoaseguro: function(){
+        var paso = 'Revisando coaseguro',
+            me = this,
+            view = me.getView(),
+            refs = view.getReferences();
+        Ice.request({
+            mascara: paso,
+            url: Ice.url.bloque.datosGenerales.obtenerCoaseguroPoliza,
+            params: {
+                'params.cdunieco': view.getCdunieco(),
+                'params.cdramo': view.getCdramo(),
+                'params.estado': view.getEstado(),
+                'params.nmpoliza': view.getNmpoliza(),
+                'params.nmsuplem': view.getNmsuplem()
+            },
+            success: function (action) {
+                var paso2 = 'Obteniendo coaseguro';
+                try {
+                    if(action.params.cdtipcoa == 'P'){
+                        var pantallaExclusionesCoaseguro = Ext.create('Ice.view.bloque.coaseguro.VentanaExclusionesCoaseguro',{
+                            modal: true,
+                            cdunieco: view.getCdunieco(),
+                            cdramo: view.getCdramo(),
+                            estado: view.getEstado(),
+                            nmpoliza: view.getNmpoliza(),
+                            nmsuplem: view.getNmsuplem(),
+                            buttons: [
+                                {
+                                    text: 'Aceptar',
+                                    iconCls: 'x-fa fa-save',
+                                    handler: function(){
+                                        pantallaExclusionesCoaseguro.cerrar();
+                                        me.cotizar();
+                                    }
+                                }
+                            ]
+                        });
+                        pantallaExclusionesCoaseguro.mostrar();
+                    } else {
+                        me.cotizar();
+                    }
+                } catch (e) {
+                    Ice.manejaExcepcion(e, paso2);
+                }
+            }
+        });
+    },
+
+    cotizar: function(){
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            paso = 'Guardando datos';
+        try {
+        	paso = 'Ejecutando validaciones de integridad...';
+			Ice.request({
+				url: Ice.url.bloque.ejecutarValidacion,
+				params: {
+					'params.cdunieco': view.getCdunieco(),
+	    			'params.cdramo'  : view.getCdramo(),
+	    			'params.estado'  : view.getEstado(),
+	    			'params.nmpoliza': view.getNmpoliza(),
+	    			'params.nmsituac': 0,
+					'params.nmsuplem': view.getNmsuplem(),
+					 bloques: ["B0"]
+				},
+				success : function(json) {
+					Ice.log('success...', json);
+					Ice.log(json);
+					var paso3 = 'Evaluando validaciones';
+					try {
+    					var list = json.list || [];
+    					if (list.length > 0) {
+    						
+    						var hayErroresValidacion = false;
+							list.forEach(function (it) {
+								if ((it.tipo + '').toLowerCase() == 'error') {
+									hayErroresValidacion = true;
+								}
+							});
+    						
+							Ext.create('Ice.view.bloque.VentanaValidaciones', {
+								lista: list,
+				                buttons: [
+				                    {
+				                    	hidden: hayErroresValidacion,
+				                        text: 'Continuar',
+				                        iconCls: 'x-fa fa-forward',
+				                        handler: function (bot) {
+				                        	bot.up('ventanavalidaciones').cerrar();
+				                        	me.tarificar();
+				                        }
+				                    }
+				                ]
+							}).mostrar();
+							
+							if(hayErroresValidacion) {
+								throw "Favor de revisar los errores de validaci\u00F3n";
+							}
+    					} else {
+    						me.tarificar();
+    					}
+			        } catch (e) {
+			            Ice.manejaExcepcion(e, paso3);
+			        }
+				}
+			});
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+    }
 });

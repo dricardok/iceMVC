@@ -182,6 +182,7 @@ public class AgentesAction extends PrincipalCoreAction {
             Utils.validate(cdagente, "Se debe indicar codigo de agente");
             
             list = agentesManager.buscarAgentes(cdagente, "CLAVE");
+            //list = agentesManager.buscarAgentes(null, cdagente, "CLAVE");
             
             success = true;
             

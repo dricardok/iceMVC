@@ -401,6 +401,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                         view.setDatosVariablesNuevos(false);
                         
                         var refs = view.getReferences();
+                        Ice.log('Ice.view.bloque.DatosGeneralesController.cargar refs',refs);
                         me.cargarFormulario(json.params);
                         Ice.suspendEvents(view);
                         if (refs.cdunieco) {

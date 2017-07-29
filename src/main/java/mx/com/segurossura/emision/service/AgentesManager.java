@@ -16,5 +16,15 @@ public interface AgentesManager {
 	
 	public List<Map<String, String>> buscarAgentes(String clave, String atributo) throws Exception;	
 	
+	/*
+	 * Obtiene los agentes
+	 * @param rolSistema Rol del sistema actual
+	 * @param clave    
+	 * @param atributo 
+	 * @return
+	 * @throws Exception
+	 *s
+	public List<Map<String, String>> buscarAgentes(String rolSistema, String clave, String atributo) throws Exception;	
+	*/
 	public boolean validaAgente(String cdagente, String cdramo, String cdproceso) throws Exception;
 }

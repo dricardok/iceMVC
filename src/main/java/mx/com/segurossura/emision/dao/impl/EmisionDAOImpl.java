@@ -1883,4 +1883,160 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             compile();
         }
     }
+    
+    @Override
+    public List<Map<String, String>> obtenerTsiexcoa(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsituac_i", nmsituac);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        Map<String, Object> resultado = ejecutaSP(new ObtenerTsiexcoaSP(getDataSource()), params);
+        List<Map<String, String>> lista =(List<Map<String,String>>)resultado.get("pv_registro_o");
+        if(lista == null||lista.size() == 0) {
+            throw new ApplicationException("Sin resultados");
+        }
+        return lista;
+    }
+    
+    protected class ObtenerTsiexcoaSP extends StoredProcedure {
+        protected ObtenerTsiexcoaSP(DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_GET_TSIEXCOA");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new DinamicMapper()));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public List<Map<String, String>> obtenerTgrexcoa(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsituac_i", nmsituac);
+        params.put("pv_cdgarant_i", cdgarant);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        Map<String, Object> resultado = ejecutaSP(new ObtenerTgrexcoaSP(getDataSource()), params);
+        List<Map<String, String>> lista =(List<Map<String,String>>)resultado.get("pv_registro_o");
+        if(lista == null||lista.size() == 0) {
+            throw new ApplicationException("Sin resultados");
+        }
+        return lista;
+    }
+    
+    protected class ObtenerTgrexcoaSP extends StoredProcedure {
+        protected ObtenerTgrexcoaSP(DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_GET_TGREXCOA");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdgarant_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new DinamicMapper()));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public String obtenerCdtipcoaPoliza(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        Map<String, Object> resultado = ejecutaSP(new ObtenerCdtipcoaPolizaSP(getDataSource()), params);
+        String cdtipcoa =(String)resultado.get("pv_cdtipcoa_o");
+        return cdtipcoa;
+    }
+    
+    protected class ObtenerCdtipcoaPolizaSP extends StoredProcedure {
+        protected ObtenerCdtipcoaPolizaSP(DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_GET_CDTIPCOA_POLIZA");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_cdtipcoa_o", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public void movimientoTsiexcoa(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String accion) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsituac_i", nmsituac);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        params.put("pv_accion_i", nmsuplem);
+        ejecutaSP(new MovimientoTsiexcoaSP(getDataSource()), params);
+    }
+    
+    protected class MovimientoTsiexcoaSP extends StoredProcedure {
+        protected MovimientoTsiexcoaSP(DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_MOV_TSIEXCOA");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_accion_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public void movimientoTgrexcoa (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdgarant, String nmsuplem, String accion) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsituac_i", nmsituac);
+        params.put("pv_cdgarant_i", cdgarant);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        params.put("pv_accion_i", nmsuplem);
+        ejecutaSP(new actualizaGestorCobroSP(getDataSource()), params);
+    }
+    
+    protected class movimientoTgrexcoaSP extends StoredProcedure {
+        protected movimientoTgrexcoaSP(DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_MOV_TSIEXCOA");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdgarant_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_accion_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
 }

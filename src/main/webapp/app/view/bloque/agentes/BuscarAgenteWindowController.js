@@ -16,6 +16,9 @@ Ext.define('Ice.view.bloque.agentes.BuscarAgenteWindowController', {
     
     onBuscar   :   function(){
     	var me=this,paso="",view =me.getView();
+    	
+    	Ice.log('me==', me);
+    	Ice.log('view==', view);
     	try{
     		var cdagente=view.down("[xtype=textfieldice]").getValue();
 			if (!cdagente) {
@@ -59,8 +62,10 @@ Ext.define('Ice.view.bloque.agentes.BuscarAgenteWindowController', {
 				throw 'Favor de seleccionar un agente';
 			}
 			
-    		Ice.log("record agente",record);
-    		view.fireEvent("elegiragente",view,record);
+    		Ice.log("BuscarAgenteWindowController record agente:", record);
+    		Ice.log("BuscarAgenteWindowController view agente:", view);
+			view.fireEvent("elegiragente", view, record);
+    		Ice.log("after elegiragente...",view,record);
     		view.setCdagente(record.get("cdagente"));
     		view.cerrar();
     	

@@ -47,6 +47,19 @@ Ext.define('Ice.view.bloque.personas.Persona', {
                     validators: true
                 });
             	
+            	var eventsForm = Ice.generaComponentes({
+    				pantalla: 'AGREGAR_PERSONAS',
+    				seccion: 'EVENTOS',
+    				modulo: me.modulo || '',
+    				estatus: (me.flujo && me.flujo.estatus) || '',
+    				cdramo: me.cdramo || '',
+    				cdtipsit: me.cdtipsit ||'',
+    				auxKey: me.auxkey || '',
+    				eventos: true
+    			});
+            	
+            	Ice.log("44444$$ $ ",eventsForm);
+            	
             	var fenacimi=compsMpersona.AGREGAR_PERSONAS.MPERSONA.items.find(function(it){
             		return it.name=="fenacimi";
             	});
@@ -110,7 +123,9 @@ Ext.define('Ice.view.bloque.personas.Persona', {
             					iconCls		: 	'x-fa fa-save',
             					handler		:	'guardarPersona'
             				}
-            			]	
+            			],
+            			iceEvents: eventsForm.AGREGAR_PERSONAS.EVENTOS.eventos
+            			
             	}
             	 Ext.apply(config, {
                      items: [

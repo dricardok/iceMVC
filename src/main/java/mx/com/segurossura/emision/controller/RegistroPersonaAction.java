@@ -123,20 +123,26 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            String  dsapell1 = mpersona.get("dsapell1");
 	            String  dsapell2 = mpersona.get("dsapell2");
 	            
-	            String  dsnombre = Utils.join(dsnombr1," ",
-	            							  dsnombr2," ",
-	            							  dsapell1," ",
-	            							  dsapell2);
+	            
 	            
 	            String  cdtipper = mpersona.get("cdtipper");
 	            String  otfisjur = mpersona.get("otfisjur");
-	            String  otsexo = mpersona.get("otsexo");
+	            String  otsexo   = mpersona.get("otsexo");
 	            String  fenacimi = mpersona.get("fenacimi");
 	            String  cdprovin = mpersona.get("cdprovin");
+	            String  dsnombre="";
+	            
+	            if("1".equals(otfisjur)){
+        	          dsnombre = Utils.join(dsnombr1," ",
+					  dsnombr2," ",
+					  dsapell1," ",
+					  dsapell2);
+	            }
+	            
 	            
 	            Utils.validate(cdtipide,"No se recibió tipo de identificador");
 	            Utils.validate(cdideper,"No se recibió  identificador");
-	            Utils.validate(dsnombre,"No se recibió nombre");
+	            //Utils.validate(dsnombre,"No se recibió nombre");
 	            Utils.validate(accion,"No se recibió acción");
 	            if("I".equals(accion)){
 	            	cdperson=registroPersonaManager.generaCdperson();
