@@ -138,6 +138,41 @@ public class AgentesDAOImpl extends HelperJdbcDao implements AgentesDAO {
             compile();
         }
     }
+    
+    
+	@SuppressWarnings("unchecked")
+    @Override
+	public List<Map<String, String>> buscarAgentesEnGrupo(String cdagente, String cdunieco, String cdramo,
+			String estado, String nmpoliza, String nmsuplem) throws Exception {
+		
+        Map<String, Object> params = new LinkedHashMap<String, Object>();       
+        params.put("pv_cdagente_i", cdagente);
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i",   cdramo);
+        params.put("pv_estado_i",   estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        Map<String, Object> resultado = ejecutaSP(new BuscarAgentesEnGrupoSP(getDataSource()), params);
+        List<Map<String,String>> listaDatos = (List<Map<String,String>>)resultado.get("pv_registro_o");
+        return listaDatos;
+    }
+                 
+    protected class BuscarAgentesEnGrupoSP extends StoredProcedure{
+        protected BuscarAgentesEnGrupoSP(DataSource dataSource) {
+            super(dataSource,"PKG_DATA_ALEA.P_GET_AGENTES_X_GRUPO"); 
+            declareParameter(new SqlParameter("pv_cdgrupo_i",  Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdagente_i", Types.VARCHAR));
+            String[] cols=new String[]{
+                     "cdagente",
+                     "dsnombre"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            compile();
+        }
+    }
+    
 	
     @SuppressWarnings("unchecked")
     @Override
