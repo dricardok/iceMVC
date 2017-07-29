@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,6 +31,7 @@ import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.dao.PersonasPolizaDAO;
 import mx.com.segurossura.emision.dao.RegistoPersonaDAO;
 import mx.com.segurossura.emision.dao.SituacionDAO;
+import mx.com.segurossura.emision.service.DatosAuxiliaresManager;
 import mx.com.segurossura.emision.service.AgrupadoresManager;
 import mx.com.segurossura.emision.service.EmisionManager;
 import mx.com.segurossura.emision.service.ImpresionManager;
@@ -57,6 +57,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	
 	@Autowired
 	private DocumentosDAO documentosDAO;
+	
+	@Autowired
+	private DatosAuxiliaresManager datosAuxiliaresManager;
 	
 	@Autowired
 	private PagoManager pagoManager;
@@ -422,25 +425,25 @@ public class EmisionManagerImpl implements EmisionManager {
 	@Override
 	public Map<String, Object> generarTarificacionPlan(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsituac, String cdperpag, String cdusuari, String cdsisrol) throws Exception {
+		logger.debug("\n@@@@@@ generarTarificacionPlan @@@@@@");
+		
 		String paso = null;
 		Map<String, Object> res = null;		
 		List<Map<String, String>> mpolizas = null;
+		Map<String, String> params = new HashMap<String, String>();
 		Map<String, String> mpoliza = null;
-		SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
-		String documentoRuta = "";
-		String nombreExtension = "";
-		StringBuilder path = new StringBuilder();
-		List<Documento> documentos = null;
-		boolean exito = false;
-		
-		logger.debug("\n@@@@@@ generarTarificacionPlan @@@@@@");
+		SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");	
 		
 		try{
+			
+			logger.debug("Obteneniendo poliza {} {} {} {} {} ", cdunieco, cdramo, estado, nmpoliza);
 			
 			mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, "0");
 			
 			if(mpolizas!=null && !mpolizas.isEmpty() && mpolizas.get(0) != null ){
 				mpoliza = mpolizas.get(0);
+				
+				logger.debug("Actualizando poliza {} {} {} {} {} ", mpoliza.get("cdunieco"), mpoliza.get("cdramo"), mpoliza.get("estado"), mpoliza.get("nmpoliza"), mpoliza.get("nmsuplem"));
 				
 				emisionDAO.movimientoMpolizas(mpoliza.get("cdunieco"), mpoliza.get("cdramo"), mpoliza.get("estado"), mpoliza.get("nmpoliza"),
 						  mpoliza.get("nmsuplem"), mpoliza.get("nmsuplem"), mpoliza.get("status"), mpoliza.get("swestado"),
@@ -467,109 +470,49 @@ public class EmisionManagerImpl implements EmisionManager {
 				
 			}			
 			
+			
+			logger.debug("Generando tarificacion...");
 			res = generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdusuari, cdsisrol);
+		
 			
-			// marcar la cotizacion como confirmada
-			Map<String, String> tvaloaux = null;
-			String accionTvaloaux = "U";
-			try {
-			    tvaloaux = emisionDAO.obtenerTvaloaux(cdunieco, cdramo, estado, nmpoliza, Bloque.DATOS_GENERALES.getCdbloque(),
-			            "-1", // nmsituac
-			            "*", // cdgarant
-			            "0", //nmsuplem
-			            "V" //status
-			            ).get(0);
-			} catch (Exception e) {
-			    tvaloaux = new LinkedHashMap<String, String>();
-			    accionTvaloaux = "I";
-			}
 			
-			tvaloaux.put("otvalor04", "S");
-			tvaloaux.put("otvalor05", cdusuari);
-			tvaloaux.put("otvalor06", cdsisrol);
-			
-			emisionDAO.ejecutarMovimientoTvaloaux(cdunieco, cdramo, estado, nmpoliza,
-			        Bloque.DATOS_GENERALES.getCdbloque(),
-			        "-1", // nmsituac
+			// marcar la cotizacion como confirmada			
+			logger.debug("Marcar la contizacion como confirmada");
+			params = new HashMap<String, String>();
+			params.put("otvalor04", "S");
+			params.put("otvalor05", cdusuari);
+			params.put("otvalor06", cdsisrol);
+			datosAuxiliaresManager.guardarDatosAuxiliares(cdunieco, cdramo, estado, nmpoliza, Bloque.DATOS_GENERALES.getCdbloque(), 
+					"-1", // nmsitua
 			        "*", // cdgarant
 			        "0", // nmsuplem
 			        "V", // status
-			        tvaloaux.get("otvalor01"), tvaloaux.get("otvalor02"), tvaloaux.get("otvalor03"), tvaloaux.get("otvalor04"), tvaloaux.get("otvalor05"),
-	                tvaloaux.get("otvalor06"), tvaloaux.get("otvalor07"), tvaloaux.get("otvalor08"), tvaloaux.get("otvalor09"), tvaloaux.get("otvalor10"),
-                    tvaloaux.get("otvalor11"), tvaloaux.get("otvalor12"), tvaloaux.get("otvalor13"), tvaloaux.get("otvalor14"), tvaloaux.get("otvalor15"),
-			        accionTvaloaux);
+					params);
 			
+						
 			// Borrar ZWORK
-			emisionDAO.movimientoZworkcts(cdunieco, cdramo, estado, nmpoliza, "0");
+			//logger.debug("Borrar tablas zwork temporales");			
+			//emisionDAO.movimientoZworkcts(cdunieco, cdramo, estado, nmpoliza, "0");
 			
-			
-			paso = new StringBuilder("Obteniendo documentos de la p\u00f3liza ").append(nmpoliza).toString();
-			
-			try{
-				logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
-				documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, "0");
-				logger.debug("Fin de obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
-			}catch(Exception e){
-				logger.error(e.getMessage(), e);
-			}			
-			
-			path.append(generaRutaLlave(directorioBase, cdunieco, cdramo, estado, nmpoliza, "0"));			
-			
-			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();			
-			
-			if(documentos != null) {
-				
-				logger.debug("Numero de documentos devueltos para la Cotizacion {} " + documentos.size());
-			
-				// 	Se guardan la lista de documentos:
-				for (Documento documento : documentos) {
-					
-					String nmsolici = null; //TODO: agregar
-					String ntramite = "1";  //TODO: agregar
-					String cdtiptra = "1"; //TODO: agregar
-					String codidocu = null; //TODO: agregar
-					String cdorddoc = null; //TODO: agregar
-					String cdmoddoc = null; //TODO: agregar
-					String nmcertif = null; //TODO: agregar
-					//String nmsituac = null; //TODO: agregar
-					//String cdtipsub = datosMrecibo.get("cdtipsup");
-					
-					try
-					{   
-						logger.info(documento.getId());
-						logger.info(documento.getNombre());
-						logger.info(documento.getTipo());
-						logger.info(documento.getUrl());
-						
-						
-						documentoRuta = path + documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
-						nombreExtension = documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
-						
-						//boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
-						exito = false;
-						try {
-							FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(documentoRuta), 10000, 10000);
-							exito = true;
-						}catch(Exception fe){
-							logger.error(fe.getMessage(), fe);
-						}
-              		
-						documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpoliza, nmsolici, "0", ntramite, new Date(),
-										documento.getId(), nombreExtension, "90", exito ? Constantes.SI : Constantes.NO, cdtiptra, codidocu, cdorddoc, 
-										cdmoddoc, nmcertif, nmsituac, documento.getUrl(), path.toString(), documento.getTipo(), 
-										Constantes.INSERT_MODE);             		
-					
-					}catch(Exception e) {
-						logger.error(e.getMessage(), e);
-						continue;
-					}
-				}
-			} else {
-				res.put("message", "Fallo al cargar documentos");
-			}
+			/*
+			// marcar la cotizacion como pendiente de documentos
+			logger.debug("marcar la cotizacion como pendiente de documentos...");	
+			params.clear();
+			params.put("otvalor08", "S");
+			datosAuxiliaresManager.guardarDatosAuxiliares(cdunieco, cdramo, estado, nmpoliza, Bloque.DATOS_GENERALES.getCdbloque(), 
+					"-1", // nmsituac
+			        "*", // cdgarant
+			        "0", // nmsuplem
+			        "V", // status
+					params);
+			*/
 			
 		}catch(Exception e) {
 			Utils.generaExcepcion(e, paso);
+		}finally {
+			mpolizas.clear();
+			mpolizas = null;
+			mpoliza = null;
 		}
 		
 		return res;
@@ -587,6 +530,111 @@ public class EmisionManagerImpl implements EmisionManager {
 			}
 		}
 		return sb != null ?  sb.toString() : null;
+	}
+		
+	@Override
+	public Map<String, String> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion) throws Exception {
+		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+				     "@@@@@@@@@ generarDocumentos");
+		List<Documento> documentos = null;
+		Map<String, String> datosMrecibo = null;
+		Map<String, String> results = new HashMap<String, String>();
+		StringBuilder path = new StringBuilder();
+		StringBuilder paso = new StringBuilder();
+		boolean exito = false;
+		String documentoRuta = "";
+		String nombreExtension = "";
+		
+		try {
+			
+			// Obteniendo nmrecibo para obtener el nmrecibo de la poliza emitida
+			
+			logger.debug("Obteniendo informacion para generar documentos");
+			try {
+				
+				if(isCotizacion.toLowerCase().equals("true")) { 
+				
+					datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpoliza, null).get(0);
+					
+				}
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+			
+			documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+			
+			logger.debug("Fin de obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
+			
+				
+			// Especificar el path para almacenar documentos				
+			path.append(generaRutaLlave(directorioBase, cdunieco, cdramo, estado, nmpoliza, nmsuplem));
+				
+			paso.append("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();
+			
+			
+			if(documentos != null) {
+				
+				logger.debug("Numero de documentos devueltos para la Confirmacion {} " + documentos.size());
+				
+				// Se guardan la lista de documentos:
+				for (Documento documento : documentos) {
+						
+					String nmsolici = null; //TODO: agregar
+					String ntramite = "1";  //TODO: agregar
+					String cdtiptra = "1"; //TODO: agregar
+					String codidocu = null; //TODO: agregar
+					String cdorddoc = null; //TODO: agregar
+					String cdmoddoc = null; //TODO: agregar
+					String nmcertif = null; //TODO: agregar
+					String nmsituac = null; //TODO: agregar
+					String cdtipsub = "90";
+					String localnmsuplem = isCotizacion.toLowerCase().equals("false") ? nmsuplem : datosMrecibo.get("nmsuplem");
+					try
+					{   
+						logger.info(documento.getId());
+						logger.info(documento.getNombre());
+						logger.info(documento.getTipo());
+						logger.info(documento.getUrl());
+						
+						
+						documentoRuta = path+documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
+						nombreExtension = documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
+							
+						//	boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
+						exito = false;
+						try {
+							FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(documentoRuta), 10000, 10000);
+							exito = true;
+						}catch(Exception fe){
+							logger.error(fe.getMessage(), fe);
+							
+						}
+						
+						documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpoliza, nmsolici, localnmsuplem, ntramite, new Date(),
+																   documento.getId(), nombreExtension, cdtipsub, exito ? Constantes.SI : Constantes.NO,
+																   cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, documento.getUrl(), 
+																   path.toString(), documento.getTipo(), Constantes.INSERT_MODE);	             		              		
+						
+					}catch(Exception e) {
+						logger.error(e.getMessage(), e);					
+						continue;
+					}
+				}
+			} else {
+					
+			}			
+			
+		}catch(Exception ex) {
+			Utils.generaExcepcion(ex, paso.toString());
+		}		
+		
+		logger.debug("@@@@@@@@@ generarDocumentos",
+				     "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
+		return results;
 	}
 	
 	@Override
@@ -623,20 +671,19 @@ public class EmisionManagerImpl implements EmisionManager {
 	public Map<String, String> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception {
 		
-		logger.debug("\n@@@@@@ confirmarPoliza @@@@@@");
+		logger.debug("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+					 "@@@@@@ confirmarPoliza @@@@@@");
 		Map<String, String> results = new HashMap<String, String>();
 		String paso = null, nmpolizaEmitida = null;
-		Map<String, String> datosMrecibo = null;		
+		Map<String, String> datosMrecibo = null;
 		RequestWs request = null;
-		String documentoRuta = "";
-		String nombreExtension = "";
-		StringBuilder path = new StringBuilder();
-		List<Documento> documentos = null;
-		boolean exito  = false;
+		
 		try {
-		    paso = "Confirmando p\u00f3liza";
+		    
+			paso = "Confirmando p\u00f3liza";
 			nmpolizaEmitida = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
 			results.put("polizaemitida", nmpolizaEmitida);
+			
 			estado = EstadoPoliza.MASTER.getClave();
 			nmpoliza = nmpolizaEmitida;
 			logger.info("Poliza emitida: {}", nmpoliza);	
@@ -645,8 +692,8 @@ public class EmisionManagerImpl implements EmisionManager {
 			// Obteniendo nmrecibo para obtener el nmrecibo de la poliza emitida
 			datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpolizaEmitida, null).get(0);
 			
-			logger.info("ObtenerDatosConfirmacion ", datosMrecibo);
 			
+			logger.info("ObtenerDatosConfirmacion ", datosMrecibo);
 			// Construir Request para el servicio de aplicar pago
 			request = new RequestWs();
 			request.setCdunieco(Integer.parseInt(cdunieco));
@@ -661,93 +708,40 @@ public class EmisionManagerImpl implements EmisionManager {
 				logger.error(e.getMessage(), e);
 			}
 			
-			paso = new StringBuilder("Obteniendo documentos de la p\u00f3liza ").append(nmpoliza).toString();
 			
-			try{
-			logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);
-			documentos = impresionManager.getDocumentos(cdunieco, cdramo, "M", nmpoliza, nmsuplem);
-			logger.debug("Fin de obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
-			}catch(Exception e){
-				logger.error(e.getMessage(), e);
-			}
+			// marcar la cotizacion como pendiente de documentos
+			logger.debug("marcar la emision como pendiente de documentos...");	
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("otvalor08", "S");
+			datosAuxiliaresManager.guardarDatosAuxiliares(cdunieco, cdramo, estado, nmpoliza, Bloque.DATOS_GENERALES.getCdbloque(), 
+								"-1", // nmsituac
+						        "*", // cdgarant
+						        "0", // nmsuplem
+						        "V", // status
+								params);
 			
-			
-			// Especificar el path para almacenar documentos
-			
-			path.append(generaRutaLlave(directorioBase, cdunieco, cdramo, "M", nmpolizaEmitida, datosMrecibo.get("nmsuplem")));
-			
-			paso = new StringBuilder("Guardando documentos de la p\u00f3liza ").append(nmpoliza).toString();
-			
-			if(documentos != null) {
-				
-				logger.debug("Numero de documentos devueltos para la Confirmacion {} " + documentos.size());
-			
-				// Se guardan la lista de documentos:
-				for (Documento documento : documentos) {
-					
-					String nmsolici = null; //TODO: agregar
-					String ntramite = "1";  //TODO: agregar
-					String cdtiptra = "1"; //TODO: agregar
-					String codidocu = null; //TODO: agregar
-					String cdorddoc = null; //TODO: agregar
-					String cdmoddoc = null; //TODO: agregar
-					String nmcertif = null; //TODO: agregar
-					String nmsituac = null; //TODO: agregar
-					String cdtipsub = datosMrecibo.get("cdtipsup");
-					
-					try
-					{   
-						logger.info(documento.getId());
-						logger.info(documento.getNombre());
-						logger.info(documento.getTipo());
-						logger.info(documento.getUrl());
 						
-						
-						documentoRuta = path+documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
-						nombreExtension = documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
-						
-						//	boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
-						exito = false;
-						try {
-							FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(documentoRuta), 10000, 10000);
-							exito = true;
-						}catch(Exception fe){
-							logger.error(fe.getMessage(), fe);
-						}
-						
-						documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, "M", nmpolizaEmitida, nmsolici, datosMrecibo.get("nmsuplem"), ntramite, new Date(),
-										documento.getId(), nombreExtension, cdtipsub, exito ? Constantes.SI : Constantes.NO,
-										cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, documento.getUrl(), path.toString(), documento.getTipo(), Constantes.INSERT_MODE);
-              		              		
-					
-					}catch(Exception e) {
-						logger.error(e.getMessage(), e);
-						continue;
-					}
-				}
-			} else {
-				results.put("message", "Fallo al cargar documentos");				
-			}
-			
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		} finally {
-			path.setLength(0);
-			path = null;
 			request = null;
+			datosMrecibo.clear();
+			datosMrecibo = null;
+			
 		}
-		logger.debug("\n@@@@@@ confirmarPoliza @@@@@@");
+		
+		logger.debug("\n@@@@@@ confirmarPoliza @@@@@@",
+				     "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		
 		return results;
 	}
-	
-	
+		
 	@Override
 	public String realizarPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, 
     		String nmsuplem, String cdbanco, String dsbanco, String nmtarjeta, 
     		String codseg, String fevencm, String fevenca, String nombre, String email, String usuario) throws Exception {
 		
-		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "\n@@@@@@ realizarPago"));
+		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "\n@@@@@@ realizarPagoTarjeta"));
 		
 		String paso = "";		
 		String resultado = null;		
@@ -816,7 +810,8 @@ public class EmisionManagerImpl implements EmisionManager {
             logger.debug("Fin de la consulta del servicio de pago ");
             logger.debug("Valor obtenido ", transaccionResponse);
             
-            if(transaccionResponse != null && transaccionResponse.getAuthCode() == "") {
+            if(transaccionResponse != null) {            	
+            	
             	logger.info("Codigo de autorizacion: " + transaccionResponse.getAuthCode());
                 logger.info("Codigo de Error " + transaccionResponse.getCcErrCode());
                 logger.info("Mensage de respuesta " + transaccionResponse.getCcReturnMsg());
@@ -829,9 +824,11 @@ public class EmisionManagerImpl implements EmisionManager {
                 logger.info(transaccionResponse.getText());
                 logger.info(transaccionResponse.getTimeOut());
                 logger.info(transaccionResponse.getTotal());
+                
+            	if(transaccionResponse.getAuthCode() == "") {           	
             	
-            	throw new Exception(transaccionResponse.getDcError());
-            
+            		throw new Exception(transaccionResponse.getDcError());
+            	}
             }
             
             
@@ -841,7 +838,7 @@ public class EmisionManagerImpl implements EmisionManager {
 		}catch(Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}		
-		logger.debug(Utils.join("\n@@@@@@ obtenerTarifaMultipleTemp", "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
+		logger.debug(Utils.join("\n@@@@@@ realizarPagoTarjeta", "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
 		
 		return resultado;
 	}

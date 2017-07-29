@@ -366,7 +366,7 @@ $logo-image-height: 25px;
     line-height: $main-toolbar-height;
 
     font-size: 16px;
-    color: #fff;
+    color: #f5f5f5;
     padding-left: $main-nav-collapsed-width; // for symmetry
     position: relative;
 
@@ -429,7 +429,7 @@ $logo-image-height: 25px;
 
 
 
-//Media Query logo Sura head 1 Modern
+//Media Query logo Sura head 1 Modern movil
 
 
 @media only screen and (max-width: 360px) {
@@ -439,9 +439,17 @@ $logo-image-height: 25px;
         top: 0px !important;  
       }     
   }
+
+.align_plans{
+    background-color: $azulbd;
+    padding:  0 0 0 12%;
 }
 
-@media only screen and (max-width: 768px) {
+}
+
+//Media Query logo Sura head 1 Modern Tablet
+
+@media only screen and (max-width: 767px) {
   .sura-logo {
       
       &:before {

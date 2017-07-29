@@ -3,8 +3,8 @@
  */
 Ext.define('Ice.view.cotizacion.CotizacionController', {
     extend: 'Ext.app.ViewController',
+    cls:'footer_taf',
     alias: 'controller.cotizacion',
-    
     init: function () {
         this.callParent(arguments);
 

@@ -77,7 +77,7 @@ Ext.define('Ice.view.componente.GridIce', {
             if ((me.getButtons() || []).length > 0) {
                 me.add({
                     xtype: 'toolbar',
-                    docked: 'top',
+                    docked: 'bottom',
                     padding: 0,
                     items: ['->'].concat(me.getButtons())
                 });
