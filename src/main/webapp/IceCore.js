@@ -1130,6 +1130,7 @@ var Ice = (
                 S: 'switchice',
                 FF: 'filefieldice',
                 CDPERSONPICKER: 'cdpersonpicker',
+                CDAGENTEPICKER: 'cdagentepicker',
                 PASSWORD: 'textfieldice'
             }[config.tipocampo];
             if (!item.xtype) {
@@ -1375,6 +1376,7 @@ var Ice = (
                     S: 'string',
                     FF: 'string',
                     CDPERSONPICKER: 'string',
+                    CDAGENTEPICKER: 'string',
                     PASSWORD: 'string'
                 }[config.tipocampo];
             if (!field.type) {
