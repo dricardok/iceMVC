@@ -84,7 +84,8 @@ var Ice = (
         	obtieneTvalopol:            'emision/obtieneTvalopol.action',
         	realizarPago:               'emision/realizarPago.action',
             validarCargaCotizacion:     'emision/validarCargaCotizacion.action',
-            obtenerPerfilamientoPoliza: 'emision/obtenerPerfilamientoPoliza.action'
+            obtenerPerfilamientoPoliza: 'emision/obtenerPerfilamientoPoliza.action',
+            generarDocumentos: 			'emision/generarDocumentos.action'
          },
          
         bloque: {
@@ -1897,6 +1898,28 @@ var Ice = (
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
+    },
+    
+    cerrarVentanas: function () {
+    	var paso = 'Cerrar ventanas';
+    	try{
+    		
+    		//if (Ext.manifest.toolkit === 'classic') {
+    			
+    			var ventanas = Ext.ComponentQuery.query('ventanaice');
+    			
+    			//console.log(ventanas);
+    			if(ventanas) {
+    				Ext.each(ventanas, function(ventana) { ventana.cerrar(); });
+    			}
+    		/*	
+    		} else {
+    			
+    		} */   		
+    	} catch (e) {
+    		Ice.generaExcepcion(e, paso);
+    	}
+    	
     },
     
     /**

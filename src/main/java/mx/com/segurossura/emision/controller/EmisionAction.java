@@ -938,6 +938,41 @@ public class EmisionAction extends PrincipalCoreAction {
         return SUCCESS;
     }
 	
+    @Action(        
+            value = "generarDocumentos", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        ) 
+    public String generarDocumentos(){
+    	logger.debug(Utils.log("\n###### generarDocumentos params: ", params));
+    	try {
+    		Utils.validate(params, "No se recibieron datos");
+    	    String cdunieco  = params.get("cdunieco"),
+    	           cdramo    = params.get("cdramo"),
+    	           estado    = params.get("estado"),
+    	           nmpoliza  = params.get("nmpoliza"),
+    	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
+    	           iscotizacion = params.get("iscotizacion");
+    	    
+    	    Utils.validate(cdunieco, "Falta cdunieco",
+    	                   cdramo,   "Falta cdramo",
+    	                   estado,   "Falta estado",
+    	                   nmpoliza, "Falta nmpoliza",
+    	                   iscotizacion, "Falta iscotizacion");
+    	    
+    	    
+    	    Map<String, String> resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion);
+    	    success = true;
+    	    
+    	}catch(Exception ex){
+    		message = Utils.manejaExcepcion(ex);
+    		success = false;
+    	}
+    	
+    	return SUCCESS;
+    }
+    
 	public Map<String, String> getParams() {
 		return params;
 	}

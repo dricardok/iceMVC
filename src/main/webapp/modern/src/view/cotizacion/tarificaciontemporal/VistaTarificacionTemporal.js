@@ -9,7 +9,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 	// config ext
 	// height: '100%',
 	
-	scrollable: false,
+	scrollable: true,
 
     center: true,
     
@@ -23,7 +23,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
                '<table class="plan_pago_base shadow_card" style="width:250px; height:300px;">',
                    '<tr>',
                        '<tpl>',
-                       '<td class="plan_pago_monto"><p class="total">Prima Total</p>{total}<p class="moneda">Pesos</p>',
+                       '<td class="plan_pago_monto"><p class="total">Prima Total</p>{total}<p class="moneda">{cdmoneda}</p>',
                        '</tpl>',
                        '<tpl if="cdperpag!=12">',	
                          '<p class="monto02">{primer_recibo}</p><p class="total">Primer Recibo</p>',
@@ -83,7 +83,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 			
 			config.store = {
 				autoLoad: true,
-				fields: [ 'estado', 'subsecuentes', 'total', 'cdramo', 'nmpoliza', 'cdunieco', { name: 'cdperpag', type: 'int' }, 'primer_recibo' ],
+				fields: [ 'estado', 'subsecuentes', 'total', 'cdramo', 'nmpoliza', 'cdunieco', { name: 'cdperpag', type: 'int' }, 'primer_recibo', 'cdmoneda', 'dsmoneda'],
 				sorters: [{
 					direction: 'DESC',
 				    property:	"cdperpag"

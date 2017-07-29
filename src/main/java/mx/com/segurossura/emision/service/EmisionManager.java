@@ -85,6 +85,20 @@ public interface EmisionManager {
             String cdperpag, String cdusuari, String cdsisrol) throws Exception;
     
     /**
+     * Generar docmentos
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsuplem
+     * @param cdtipsup
+     * @return
+     * @throws Exception
+     */
+    public Map<String, String> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion) throws Exception;
+    
+    
+    /**
      * Obtiene los datos de la tarificacion
      * @param cdunieco
      * @param cdramo
