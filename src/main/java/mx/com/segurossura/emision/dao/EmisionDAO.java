@@ -343,9 +343,81 @@ public interface EmisionDAO {
      * @throws Exception
      */
     public void actualizaSwitchCoaseguroCedido (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdesqcoa) throws Exception;
+    
     public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
             String nmsuplem) throws Exception;
 
 	public void actualizaGestorCobro(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem)
 			throws Exception;
+	
+	/**
+	 * Obtiene datos de situaciones de coaseguro cedido parcial
+	 * 
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsituac
+	 * @param nmsuplem
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Map<String, String>> obtenerTsiexcoa(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem) throws Exception;
+	
+	/**
+	 * Obtiene datos de coberturas por situacion de coaseguro cedido parcial
+	 * 
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsituac
+	 * @param cdgarant
+	 * @param nmsuplem
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Map<String, String>> obtenerTgrexcoa(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception;
+	
+	/**
+	 * Obtiene tipo de coaseguro de poliza
+	 * 
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsuplem
+	 * @return
+	 * @throws Exception
+	 */
+	public String obtenerCdtipcoaPoliza(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+	
+	/**
+	 * Movimiento a situaciones excluidas de coaseguro cedido parcial
+	 * 
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsituac
+	 * @param nmsuplem
+	 * @param accion
+	 * @throws Exception
+	 */
+	public void movimientoTsiexcoa(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String accion) throws Exception;
+	
+	/**
+	 * Movimiento a coberturas excluidas de coaseguro cedido parcial
+	 * 
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsituac
+	 * @param cdgarant
+	 * @param nmsuplem
+	 * @param accion
+	 * @throws Exception
+	 */
+	public void movimientoTgrexcoa (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdgarant, String nmsuplem, String accion) throws Exception;
 }

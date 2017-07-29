@@ -520,4 +520,65 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
             Utils.generaExcepcion(ex, paso);
         }
     }
+    
+    @Override
+    public List<Map<String, String>> obtenerExclusionesSituacCoaCedParc(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem) throws Exception{
+        String paso = "Obtener situaciones excluidas de coaseguro cedido parcial";
+        List<Map<String, String>> exclusiones = new ArrayList<Map<String, String>>();
+        try{
+            exclusiones = emisionDAO.obtenerTsiexcoa(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem);
+        } catch(Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }
+        return exclusiones;
+    }
+
+    @Override
+    public List<Map<String, String>> obtenerExclusionesCoberCoaCedParc(String cdunieco, String cdramo, String estado,
+            String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception {
+        List<Map<String, String>> exclusiones = new ArrayList<Map<String, String>>();
+        String paso = "Obteniendo coberturas excluidas de coaseguro cedido parcial";
+        try{
+            exclusiones = emisionDAO.obtenerTgrexcoa(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdgarant, nmsuplem);
+        } catch(Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }
+        return exclusiones;
+    }
+
+    @Override
+    public String obtenerCoaseguroPoliza(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem)
+            throws Exception {
+        List<Map<String, String>> exclusiones = new ArrayList<Map<String, String>>();
+        String paso = "Obteniendo coaseguro de poliza",
+               cdtipcoa = "";
+        try{
+            cdtipcoa = emisionDAO.obtenerCdtipcoaPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+        } catch(Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }
+        return cdtipcoa;
+    }
+
+    @Override
+    public void movimientoExclusionesSituacCoaCedParc(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String nmsuplem, String accion) throws Exception {
+        String paso = "Modificando situaciones excluidas de coaseguro cedido parcial";
+        try{
+            emisionDAO.movimientoTsiexcoa(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, accion);
+        } catch(Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }
+    }
+
+    @Override
+    public void movimientoExclusionesCoberCoaCedParc(String cdunieco, String cdramo, String estado, String nmpoliza,
+            String nmsituac, String cdgarant, String nmsuplem, String accion) throws Exception {
+        String paso = "Modificando coberturas excluidas de coaseguro cedido parcial";
+        try{
+            emisionDAO.movimientoTgrexcoa(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdgarant, nmsuplem, accion);
+        } catch(Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }   
+    }
 }

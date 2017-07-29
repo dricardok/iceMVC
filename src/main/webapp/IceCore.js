@@ -101,7 +101,12 @@ var Ice = (
                 movimientoCoaseguroCedido: 'emision/datosGenerales/movimientoCoaseguroCedido.action',
                 movimientoMsupcoa: 'emision/datosGenerales/movimientoMsupcoa.action',
                 movimientoMpolicoa: 'emision/datosGenerales/movimientoMpolicoa.action',
-                eliminaCoaseguro: 'emision/datosGenerales/eliminaCoaseguro.action'
+                eliminaCoaseguro: 'emision/datosGenerales/eliminaCoaseguro.action',
+                obtenerExclusionesSituacCoaCedParc: 'emision/datosGenerales/obtenerExclusionesSituacCoaCedParc.action',
+                obtenerExclusionesCoberCoaCedParc: 'emision/datosGenerales/obtenerExclusionesCoberCoaCedParc.action',
+                obtenerCoaseguroPoliza: 'emision/datosGenerales/obtenerCoaseguroPoliza.action',
+                movimientoExclusionesSituacCoaCedParc: 'emision/datosGenerales/movimientoExclusionesSituacCoaCedParc.action',
+                movimientoExclusionesCoberCoaCedParc: 'emision/datosGenerales/movimientoExclusionesCoberCoaCedParc.action'
             },
             listaSituaciones: {
                 cargar: 'emision/obteneListaSituaciones.action'//'jsonLocal/bloqueDatosSituacionCargar.json'

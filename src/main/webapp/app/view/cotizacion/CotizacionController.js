@@ -316,38 +316,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             refs = view.getReferences(),
             paso = 'Guardando datos';
         try {
-            var callbackSuccess = function() {
-                var paso2 = 'Tarificando';
-                try {
-                    Ice.request({
-                        mascara: paso2,
-                        timeout: 1000*60*5,
-                        url: Ice.url.emision.tarificarPlanes,
-                        params: {
-                            'params.cdunieco': view.getCdunieco(),
-                            'params.cdramo': view.getCdramo(),
-                            'params.estado': view.getEstado(),
-                            'params.nmpoliza': view.getNmpoliza(),
-                            'params.nmsuplem': view.getNmsuplem(),
-                            'params.nmsituac': '0'
-                        },
-                        success: function (action) {
-                            var paso3 = 'Mostrando tarifa';
-                            try {
-                                 me.mostrarTarifasPlan();
-                            } catch (e) {
-                                Ice.manejaExcepcion(e, paso3);
-                            }
-                        }
-                    });
-                } catch (e) {
-                    Ice.manejaExcepcion(e, paso2);
-                }
-            };
-            
-            refs.tabpanel.getActiveTab().getController().guardar({
-                success: callbackSuccess
-            });
+           me.revisarCoaseguro();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -430,6 +399,97 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 ]
             }).mostrar();
         } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+    },
+
+    revisarCoaseguro: function(){
+        var paso = 'Revisando coaseguro',
+            me = this,
+            view = me.getView(),
+            refs = view.getReferences();
+        Ice.request({
+            mascara: paso,
+            url: Ice.url.bloque.datosGenerales.obtenerCoaseguroPoliza,
+            params: {
+                'params.cdunieco': view.getCdunieco(),
+                'params.cdramo': view.getCdramo(),
+                'params.estado': view.getEstado(),
+                'params.nmpoliza': view.getNmpoliza(),
+                'params.nmsuplem': view.getNmsuplem()
+            },
+            success: function (action) {
+                var paso2 = 'Obteniendo coaseguro';
+                try {
+                    if(action.params.cdtipcoa == 'P'){
+                        var pantallaExclusionesCoaseguro = Ext.create('Ice.view.bloque.coaseguro.VentanaExclusionesCoaseguro',{
+                            modal: true,
+                            cdunieco: view.getCdunieco(),
+                            cdramo: view.getCdramo(),
+                            estado: view.getEstado(),
+                            nmpoliza: view.getNmpoliza(),
+                            nmsuplem: view.getNmsuplem(),
+                            buttons: [
+                                {
+                                    text: 'Aceptar',
+                                    iconCls: 'x-fa fa-save',
+                                    handler: function(){
+                                        pantallaExclusionesCoaseguro.cerrar();
+                                        me.cotizar();
+                                    }
+                                }
+                            ]
+                        });
+                        pantallaExclusionesCoaseguro.mostrar();
+                    } else {
+                        me.cotizar();
+                    }
+                } catch (e) {
+                    Ice.manejaExcepcion(e, paso2);
+                }
+            }
+        });
+    },
+
+    cotizar: function(){
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            paso = 'Cotizando datos';
+        try {
+            var callbackSuccess = function() {
+                var paso2 = 'Tarificando';
+                try {
+                    Ice.request({
+                        mascara: paso2,
+                        timeout: 1000*60*5,
+                        url: Ice.url.emision.tarificarPlanes,
+                        params: {
+                            'params.cdunieco': view.getCdunieco(),
+                            'params.cdramo': view.getCdramo(),
+                            'params.estado': view.getEstado(),
+                            'params.nmpoliza': view.getNmpoliza(),
+                            'params.nmsuplem': view.getNmsuplem(),
+                            'params.nmsituac': '0'
+                        },
+                        success: function (action) {
+                            var paso3 = 'Mostrando tarifa';
+                            try {
+                                 me.mostrarTarifasPlan();
+                            } catch (e) {
+                                Ice.manejaExcepcion(e, paso3);
+                            }
+                        }
+                    });
+                } catch (e) {
+                    Ice.manejaExcepcion(e, paso2);
+                }
+            };
+            
+            refs.tabpanel.getActiveTab().getController().guardar({
+                success: callbackSuccess
+            });
+        } catch(e) {
             Ice.manejaExcepcion(e, paso);
         }
     }

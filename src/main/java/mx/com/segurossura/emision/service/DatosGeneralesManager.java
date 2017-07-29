@@ -128,4 +128,25 @@ public interface DatosGeneralesManager {
      * @throws Exception
      */
     public void actualizaSwitchCoaseguroCedido(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, Map<String, String> cdesqcoa) throws Exception;
+    
+    /**
+     * Obtiene situaciones excluidas de coaseguro cedido parcial
+     * 
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsituac
+     * @param nmsuplem
+     * @throws Exception
+     */
+    public List<Map<String, String>> obtenerExclusionesSituacCoaCedParc(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem) throws Exception;
+    
+    public List<Map<String, String>> obtenerExclusionesCoberCoaCedParc(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception;
+    
+    public String obtenerCoaseguroPoliza(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+    
+    public void movimientoExclusionesSituacCoaCedParc(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String accion) throws Exception;
+    
+    public void movimientoExclusionesCoberCoaCedParc(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdgarant, String nmsuplem, String accion) throws Exception;
 }
