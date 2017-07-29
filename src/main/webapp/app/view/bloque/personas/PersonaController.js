@@ -7,14 +7,30 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     custom:function(){
     	var me=this,paso="",view =me.getView();
     	try{
-    		
+    		view.down('[name=fenacimi]').on({
+    			change:function(it){
+    				view.down('#frmPersona [fieldLabel=Edad]')
+    				.setValue(
+    						Ext.Date.diff(
+    								Ext.Date.parse(it.getValue(),'d/m/Y'),
+    								new Date(),
+    								Ext.Date.YEAR
+    								)
+    				);
+    			}
+    		});
+    		view.down('[name=fenacimi]').setValue(Ext.Date.parse(new Date(),'d/m/Y'))
     		if(view.getCdperson()){
 	    		params={
 	    			'params.cdperson'	:	view.getCdperson(),
 	    			'params.cdrol'		:	view.getCdrol(),
 	    			'params.cdramo'		:	view.getCdramo()
 	    		};
+	    		
+	    		
 	    		me.llenarCampos(view.down('#frmPersona'),Ice.url.bloque.personas.obtenerPersona,params);
+	    		
+	    		
     		}
     		
     	}catch(e){
@@ -160,7 +176,9 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     },
     
     llenarCampos:function(root,url,params){
-    	paso=""
+    	var paso="",
+		me=this,
+		view=me.getView();
     	try{
     		Ice.request({
     			url:url,
@@ -169,31 +187,40 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     				var paso="";
     				try{
 	    				var datos=json.params || {};
-	    				Ext.ComponentQuery.query('[getName]',root)
-	    				.forEach(function(it){
-//	    					if(it.getName()=='fenacimi'){
-//	    						var fecha = datos[it.getName()];
-//	    						var s=fecha.split("/");
-//	    						try{
-//	    							fecha = s[1]+"/"+s[0]+"/"+s[2];
-//	    							it.setValue(new Date(fecha));
-//	    							
-//	    						}catch(e){
+	    				Ice.cargarFormulario(root,datos);
+	    				view.down('#frmPersona [fieldLabel=Edad]')
+	    				.setValue(
+	    						Ext.Date.diff(
+	    								Ext.Date.parse(view.down('[name=fenacimi]').getValue(),'d/m/Y'),
+	    								new Date(),
+	    								Ext.Date.YEAR
+	    								)
+	    				);
+//	    				Ext.ComponentQuery.query('[getName]',root)
+//	    				.forEach(function(it){
+////	    					if(it.getName()=='fenacimi'){
+////	    						var fecha = datos[it.getName()];
+////	    						var s=fecha.split("/");
+////	    						try{
+////	    							fecha = s[1]+"/"+s[0]+"/"+s[2];
+////	    							it.setValue(new Date(fecha));
+////	    							
+////	    						}catch(e){
+////	    							it.setValue(datos[it.getName()]);
+////	    							Ice.error("No se pudo parsear la fecha",e);
+////	    						}
+////	    						
+////	    					}else{
+////	    						it.setValue(datos[it.getName()]);
+////	    					}
+//	    					if(it.getStore){
+//	    						it.getStore().load(function(){
 //	    							it.setValue(datos[it.getName()]);
-//	    							Ice.error("No se pudo parsear la fecha",e);
-//	    						}
-//	    						
+//	    						});
 //	    					}else{
 //	    						it.setValue(datos[it.getName()]);
 //	    					}
-	    					if(it.getStore){
-	    						it.getStore().load(function(){
-	    							it.setValue(datos[it.getName()]);
-	    						});
-	    					}else{
-	    						it.setValue(datos[it.getName()]);
-	    					}
-	    				});
+//	    				});
     				}catch(e){
     					Ice.generaExcepcion(e,paso)
     				}
