@@ -3118,7 +3118,7 @@ the height of a multi-line element */
     border-bottom-width: 0px;
     border-left-color: #00b5cb;
     display: block;
-    width: 28%;
+    width: 40%;
     margin: 20px auto;
     padding: 10px;
     background-color: rgba(0, 51, 160, 0.75);
@@ -3133,11 +3133,11 @@ the height of a multi-line element */
     -webkit-transform: scale(1.1);
     background-color: rgba(0, 51, 160, 0.9);
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:59 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:55 */
 .txt_btn_rol {
     position: relative;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:61 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:57 */
 .txt_btn_rol:before {
     content: "\f0c0";
     font-family: FontAwesome;
@@ -3152,7 +3152,7 @@ the height of a multi-line element */
     left: 0;
     line-height: 25px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:76 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:72 */
 .chev_rol:after {
     content: "\f105";
     font-family: FontAwesome;
@@ -3165,16 +3165,16 @@ the height of a multi-line element */
     left: 0;
     line-height: 25px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:92 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:90 */
 .plan_pago_base {
     -webkit-transition: all 0.25s ease-in-out;
     background-color: #fff;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:95 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:93 */
 .plan_pago_base:hover {
     -webkit-transform: scale(1.3);
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:101 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:98 */
 .plan_pago_monto {
     border-style: solid;
     border-left-width: 12px;
@@ -3182,59 +3182,87 @@ the height of a multi-line element */
     border-right-width: 0px;
     border-bottom-width: 0px;
     border-left-color: #0033a0;
-    padding: 20px 10px 0px;
+    padding: 10px 0px;
     background-color: #00b5cb;
     color: #fff;
-    font-size: 35px !important;
+    font-size: 28px !important;
     line-height: 27px;
     text-align: center;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:114 */
-.plan_pago_monto .rec_subsecuente {
-    font-size: 14px;
-    font-weight: 300;
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:111 */
+.plan_pago_monto .total {
+    font-size: 16px;
+    font-weight: 400;
     line-height: 0px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:119 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:117 */
 .plan_pago_monto .moneda {
     font-size: 12px;
     line-height: 12px;
     font-weight: 300;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:128 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:124 */
+.total02 {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 0px;
+    color: #707372;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:132 */
 .periocidad {
-    font-size: 22px;
+    font-size: 24px;
+    line-height: 24px;
     font-weight: 600;
     color: #707372;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:137 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:140 */
+.rec_subsecuente {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 0px;
+    color: #707372;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:148 */
+.monto02 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 0px;
+    color: #fff;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:156 */
+.monto03 {
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 10px;
+    color: #707372;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:165 */
 .titulo_plan {
     font-size: 60px;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:142 */
-.monto_02 {
-    font-size: 20px;
-    font-weight: 600;
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:170 */
+.x-title-align-left .x-title-text-ice-catalogo {
+    text-align: center !important;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:148 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:176 */
 .shadow_card {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:155 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:183 */
 .thumb:focus {
     outline: 2px solid transparent !important;
     background-color: #0033a0;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:157 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:185 */
 .thumb:visited {
     outline: 2px solid transparent !important;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:161 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:189 */
 .plan_pago {
     float: left;
     padding: 2% 1%;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:167 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:195 */
 .titulo_plan {
     font-weight: 600 !important;
     text-decoration: inherit;
@@ -3246,73 +3274,177 @@ the height of a multi-line element */
     text-align: center;
     background-color: #deebf4;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:181 */
-.producto {
-    border-style: solid;
-    border-left-width: 0px;
-    border-top-width: 0px;
-    border-right-width: 0px;
-    border-bottom-width: 12px;
-    border-bottom-color: #0033a0;
-    padding: 10px 10px 0px;
-    background-color: #00b5cb;
-    color: #fff;
-    font-size: 20px !important;
-    line-height: 22px;
-    text-align: center !important;
-    height: 120px;
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:209 */
+.align_plans {
+    padding: 0 0 0 12%;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:198 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:220 */
 .back_productos {
-    padding: 0% 0% 0% 2%;
+    padding: 0% 0% 0% 8%;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:202 */
-.slogan {
-    font-size: 14px;
-    line-height: 14px;
-    color: #707372;
-    text-align: center;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:210 */
-.shadow_card {
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:217 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:227 */
 .thumb > .x-view-item-focused:focus {
     outline: 0px solid transparent !important;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:218 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:228 */
 .thumb > .x-view-item-focused:visited {
     outline: 0px solid transparent !important;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:221 */
-.producto_cot {
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:232 */
+.wrap_producto {
+    margin: 3.5% 3.5%;
     float: left;
-    padding: 2% 2%;
+    -webkit-transition: all 0.25s ease-in-out;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:226 */
-.titulo_cotiz {
-    font-size: 24px !important;
-    color: #707372 !important;
-    text-align: center !important;
-    padding-top: 15px;
-    font-weight: 600;
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:237 */
+.wrap_producto:hover {
+    -webkit-transform: scale(1.3);
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:240 */
+.wrap_producto .icon_product {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+    background-color: rgba(112, 115, 114, 0.5);
+    margin: 0 auto;
+    cursor: pointer;
+    -webkit-transition: all 0.25s ease-in-out;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:248 */
+.wrap_producto .icon_product:hover {
+    background-color: #00b5cb;
+    -webkit-transform: scale(1.3);
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:255 */
+.wrap_producto .text_product {
+    padding: 10px 0px;
+    font-size: 18px !important;
+    line-height: 20px;
+    text-align: center !important;
+    color: #707372;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:262 */
+.wrap_producto .text_product:hover {
+    font-weight: 500;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:271 */
+.generic:after {
+    content: "\f007";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    color: #fff;
+    font-size: 2.8em;
+    position: absolute;
+    padding: 22px 0px 0px 17px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:286 */
+.C201:after {
+    content: "\f1b9";
+    padding: 30px 0px 0px 19px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:293 */
+.C202:after {
+    content: "\f207 ";
+    padding: 29px 0px 0px 24px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:300 */
+.C203:after {
+    content: "\f0fd";
+    padding: 31px 0px 0px 23px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:309 */
+.C211:after {
+    content: "\f1ba";
+    padding: 29px 0px 0px 18px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:317 */
+.C301:after {
+    content: "\f0d1";
+    padding: 31px 17px 0px 20px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:325 */
+.C402:after {
+    content: "\f109";
+    padding: 31px 17px 0px 21px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:334 */
+.C409:after {
+    content: "\f0d6";
+    padding: 31px 17px 0px 21px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:341 */
+.C420:after {
+    content: "\f0c0";
+    padding: 30px 0px 0px 21px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:348 */
+.C430:after {
+    content: "\f0b1";
+    padding: 30px 0px 0px 21px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:357 */
+.C501:after {
+    content: "\f1ad";
+    padding: 30px 0px 0px 25px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:363 */
+.C601:after {
+    content: "\f0e7 ";
+    padding: 30px 0px 0px 31px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:371 */
+.C606:after {
+    content: "\f0fa";
+    padding: 30px 0px 0px 22px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:378 */
+.C607:after {
+    content: "\f0fd";
+    padding: 30px 0px 0px 22px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:385 */
+.C901:after {
+    content: "\f21e";
+    padding: 32px 0px 0px 22px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:393 */
+.pivote {
+    transition: all 250ms;
+    transition-property: all;
+    transition-duration: 250ms;
+    transition-timing-function: initial;
+    transition-delay: initial;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:406 */
 @media only screen and (min-height: 1024px) {
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:241 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:407 */
     .btn_rol_suscriptor {
         width: 28%;
         height: auto !important;
         padding-top: 12px;
     }
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:247 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:413 */
     .plan_pago {
         padding: 8% 1%;
     }
-    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:250 */
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:416 */
     .titulo_plan {
         padding-top: 8% !important;
+    }
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:422 */
+@media only screen and (max-width: 1280px) {
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:423 */
+    .btn_rol_suscriptor {
+        width: 40%;
+        height: auto !important;
+        padding-top: 12px;
+    }
+    /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Component.scss:429 */
+    .back_productos {
+        padding: 0%;
     }
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/Editor.scss:2 */
@@ -9250,10 +9382,14 @@ body > .x-mask {
     border-top: transparent;
     border-width: 2px;
     border-style: solid;
-    padding-bottom: 13px;
-    padding-left: 0px !important;
+    padding: 13px 0px 0px 0px !important;
+    background-color: #fff;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:968 */
+.x-panel-header-default {
+    background-color: #fff;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:972 */
 .x-action-col-icon {
     margin: 0 5px;
 }
@@ -16060,61 +16196,4 @@ div.x-border-layout-ct {
 .x-tab-focus .x-tab-default-top-mc {
     background-repeat: repeat-x;
     background-image: url(images/tab/tab-default-top-focus-fbg.gif);
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2963 */
-.x-tab-focus.x-tab-over .x-tab-default-top-tl,
-.x-tab-focus.x-tab-over .x-tab-default-top-bl,
-.x-tab-focus.x-tab-over .x-tab-default-top-tr,
-.x-tab-focus.x-tab-over .x-tab-default-top-br,
-.x-tab-focus.x-tab-over .x-tab-default-top-tc,
-.x-tab-focus.x-tab-over .x-tab-default-top-bc {
-    background-image: url(images/tab/tab-default-top-focus-over-corners.gif);
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2972 */
-.x-tab-focus.x-tab-over .x-tab-default-top-ml,
-.x-tab-focus.x-tab-over .x-tab-default-top-mr {
-    background-image: url(images/tab/tab-default-top-focus-over-sides.gif);
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2977 */
-.x-tab-focus.x-tab-over .x-tab-default-top-mc {
-    background-repeat: repeat-x;
-    background-image: url(images/tab/tab-default-top-focus-over-fbg.gif);
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2963 */
-.x-tab.x-tab-active .x-tab-default-top-tl,
-.x-tab.x-tab-active .x-tab-default-top-bl,
-.x-tab.x-tab-active .x-tab-default-top-tr,
-.x-tab.x-tab-active .x-tab-default-top-br,
-.x-tab.x-tab-active .x-tab-default-top-tc,
-.x-tab.x-tab-active .x-tab-default-top-bc {
-    background-image: url(images/tab/tab-default-top-active-corners.gif);
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2972 */
-.x-tab.x-tab-active .x-tab-default-top-ml,
-.x-tab.x-tab-active .x-tab-default-top-mr {
-    background-image: url(images/tab/tab-default-top-active-sides.gif);
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2977 */
-.x-tab.x-tab-active .x-tab-default-top-mc {
-    background-repeat: repeat-x;
-    background-image: url(images/tab/tab-default-top-active-fbg.gif);
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2963 */
-.x-tab-focus.x-tab-active .x-tab-default-top-tl,
-.x-tab-focus.x-tab-active .x-tab-default-top-bl,
-.x-tab-focus.x-tab-active .x-tab-default-top-tr,
-.x-tab-focus.x-tab-active .x-tab-default-top-br,
-.x-tab-focus.x-tab-active .x-tab-default-top-tc,
-.x-tab-focus.x-tab-active .x-tab-default-top-bc {
-    background-image: url(images/tab/tab-default-top-focus-active-corners.gif);
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2972 */
-.x-tab-focus.x-tab-active .x-tab-default-top-ml,
-.x-tab-focus.x-tab-active .x-tab-default-top-mr {
-    background-image: url(images/tab/tab-default-top-focus-active-sides.gif);
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2977 */
-.x-tab-focus.x-tab-active .x-tab-default-top-mc {
-    background-repeat: repeat-x;
-    background-image: url(images/tab/tab-default-top-focus-active-fbg.gif);
 }

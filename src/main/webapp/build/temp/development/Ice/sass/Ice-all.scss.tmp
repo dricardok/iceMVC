@@ -923,6 +923,7 @@ $include-ice-view-cotizacion-tarificaciontemporal-ventanatarificaciontemporal: d
 $include-ice-view-cotizacion-tarificaciontemporal-vistatarificaciontemporal: dynamic(true);;
 $include-ice-view-cotizacion-tarificaciontemporal-vistatarificaciontemporalcontroller: dynamic(true);;
 $include-ice-view-field-cdagentepicker: dynamic(true);;
+$include-ice-view-field-cdagentepickercontroller: dynamic(true);;
 $include-ice-view-field-cdpersonpicker: dynamic(true);;
 $include-ice-view-field-cdpersonpickercontroller: dynamic(true);;
 $include-ice-view-field-cdpersonpickerold: dynamic(true);;
