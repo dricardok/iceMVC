@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.portal.model.RolSistema;
 
 import mx.com.segurossura.emision.dao.AgentesDAO;
 import mx.com.segurossura.emision.dao.EmisionDAO;
@@ -150,23 +151,21 @@ public class AgentesManagerImpl implements AgentesManager {
 		
         	paso = "Recuperando agentes del catalogo";
         	agentes = agentesDAO.buscarAgentes(clave, atributo);
-        	/*
-        	// si el rol es agente
-        	if(RolSistema.AGENTE.getCdsisrol().equals(anObject)) {
-        		agentesDAO.buscarAgentesEnGrupo(cdagente, cdunieco, cdramo, estado, nmpoliza, nmsuplem)
-        	} else {
-        		agentes = agentesDAO.buscarAgentes(clave, atributo);
-        	}
-        	*/
 	        
         }catch(Exception e){
-        	e.printStackTrace();
         	Utils.generaExcepcion(e, paso);
         }
 		
 		return agentes;	
 	}
-
+	
+	
+	@Override
+	public List<Map<String, String>> buscarAgentesEnGrupo(String cdagente, String cdgrupo) throws Exception {
+		
+		return agentesDAO.buscarAgentesEnGrupo(cdagente, cdgrupo);
+	}
+		
 	@Override
 	public boolean validaAgente(String cdagente, String cdramo, String cdproceso) throws Exception {
 		String paso = null;

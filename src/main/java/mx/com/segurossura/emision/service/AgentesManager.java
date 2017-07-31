@@ -16,6 +16,16 @@ public interface AgentesManager {
 	
 	public List<Map<String, String>> buscarAgentes(String clave, String atributo) throws Exception;	
 	
+	/**
+	 * 
+	 * @param cdsisrol
+	 * @param cdagente
+	 * @param cdgrupo
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Map<String, String>> buscarAgentesEnGrupo(String cdagente, String cdgrupo) throws Exception;
+	
 	/*
 	 * Obtiene los agentes
 	 * @param rolSistema Rol del sistema actual

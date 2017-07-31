@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
+import com.biosnettcs.portal.model.RolSistema;
 import com.biosnettcs.portal.model.UsuarioVO;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -176,13 +177,17 @@ public class AgentesAction extends PrincipalCoreAction {
         
         try {
         
-        	Utils.validateSession(session);
+        	UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             Utils.validate(params, "No se recibieron datos para cargar cotizaci\u00f3n");
             String cdagente = params.get("cdagente");
+            String cdgrupo = params.get("cdgrupo");
             Utils.validate(cdagente, "Se debe indicar codigo de agente");
             
-            list = agentesManager.buscarAgentes(cdagente, "CLAVE");
-            //list = agentesManager.buscarAgentes(null, cdagente, "CLAVE");
+        	if(RolSistema.AGENTE.getCdsisrol().equals(usuario.getRolActivo().getCdsisrol())) {
+        		list = agentesManager.buscarAgentesEnGrupo(cdagente, cdgrupo);
+        	} else {
+        		list = agentesManager.buscarAgentes(cdagente, "CLAVE");
+        	}
             
             success = true;
             
