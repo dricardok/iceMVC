@@ -573,10 +573,10 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
 
     @Override
     public void movimientoExclusionesCoberCoaCedParc(String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsituac, String cdgarant, String nmsuplem, String accion) throws Exception {
+            String nmsituac, String cdcapita, String nmsuplem, String accion) throws Exception {
         String paso = "Modificando coberturas excluidas de coaseguro cedido parcial";
         try{
-            emisionDAO.movimientoTgrexcoa(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdgarant, nmsuplem, accion);
+            emisionDAO.movimientoTgrexcoa(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdcapita, nmsuplem, accion);
         } catch(Exception ex) {
             Utils.generaExcepcion(ex, paso);
         }   

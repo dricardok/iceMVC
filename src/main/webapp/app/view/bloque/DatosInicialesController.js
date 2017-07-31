@@ -33,8 +33,8 @@ Ext.define('Ice.view.bloque.DatosInicialesController', {
         try {
             Ice.log('refs:', refs);
             if(refs.formdatosgenerales){
-                Ice.log('refs formadatosgenerales references',refs.formdatosgenerales.getReferences());
                 if(refs.formdatosgenerales.getReferences()){
+                    Ice.log('refs formadatosgenerales references',refs.formdatosgenerales.getReferences());
                     var cdtipcoa = refs.formdatosgenerales.getReferences().b1_cdtipcoa;
                     if(cdtipcoa){
                         cdtipcoa.on({
@@ -102,19 +102,20 @@ Ext.define('Ice.view.bloque.DatosInicialesController', {
             paso = 'Cargando datos iniciales';
         try {
             Ice.log('Ice.view.bloque.DatosInicialesController.cargar refs', refs);
-            refs.formdatosgenerales.getController().cargar();
-            if(refs.formdatosgenerales){
-                var values = refs.formdatosgenerales.getValues();
-                Ice.log('Ice.view.bloque.DatosInicialesController.cargar refs.formdatosgenerales.getValues()',values);
-                if(values){
-                    if(values.b1_cdtipcoa){
-                        refs.panelcoaseguro.cdunieco = values.cdunieco;
-                        refs.panelcoaseguro.nmpoliza = values.nmpoliza;
-                        refs.panelcoaseguro.cdtipcoa = values.cdtipcoa;
-                        refs.panelcoaseguro.getController().cargar();
+            refs.formdatosgenerales.getController().cargar({
+                success: function(){
+                    var values = refs.formdatosgenerales.getValues();
+                    Ice.log('Ice.view.bloque.DatosInicialesController.cargar refs.formdatosgenerales.getValues()',values);
+                    if(values){
+                        if(!Ext.isEmpty(values.b1_cdtipcoa)){
+                            refs.panelcoaseguro.cdunieco = values.cdunieco;
+                            refs.panelcoaseguro.nmpoliza = values.nmpoliza;
+                            refs.panelcoaseguro.cdtipcoa = values.cdtipcoa;
+                            refs.panelcoaseguro.getController().cargar();
+                        }
                     }
                 }
-            }
+            });
             refs.formdatosauxiliares.getController().cargar();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
