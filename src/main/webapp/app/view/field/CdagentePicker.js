@@ -30,7 +30,7 @@ Ext.define('Ice.view.field.CdagentePicker', {
             }
             config.items = [
                 {
-                    xtype: 'numberfieldice',
+                    xtype: 'textfieldice',
                     hidden: true,
                     name: 'cdagente',
                     reference: 'cdagente'

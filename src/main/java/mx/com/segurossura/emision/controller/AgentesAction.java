@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
+import com.biosnettcs.portal.model.RolSistema;
 import com.biosnettcs.portal.model.UsuarioVO;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -175,13 +176,20 @@ public class AgentesAction extends PrincipalCoreAction {
         logger.debug(Utils.log("### cargar params: ", params));
         
         try {
-        
-        	Utils.validateSession(session);
+        	UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             Utils.validate(params, "No se recibieron datos para cargar cotizaci\u00f3n");
             String cdagente = params.get("cdagente");
+            String cdgrupo = params.get("cdgrupo");
+            String cdptovta = params.get("cdptovta");
             Utils.validate(cdagente, "Se debe indicar codigo de agente");
             
-            list = agentesManager.buscarAgentes(cdagente, "CLAVE");
+            //Si el rol es agente y tenemos el grupo y punto de venta, buscamos los agentes en dicho grupo:
+			if (RolSistema.AGENTE.getCdsisrol().equals(usuario.getRolActivo().getCdsisrol())
+					&& StringUtils.isNotBlank(cdgrupo) && StringUtils.isNotBlank(cdptovta)) {
+        		list = agentesManager.buscarAgentesEnGrupo(cdagente, cdgrupo, cdptovta);
+        	} else {
+        		list = agentesManager.buscarAgentes(cdagente, "CLAVE");
+        	}
             
             success = true;
             

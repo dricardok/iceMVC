@@ -152,13 +152,19 @@ public class AgentesManagerImpl implements AgentesManager {
         	agentes = agentesDAO.buscarAgentes(clave, atributo);
 	        
         }catch(Exception e){
-        	e.printStackTrace();
         	Utils.generaExcepcion(e, paso);
         }
 		
 		return agentes;	
 	}
-
+	
+	
+	@Override
+	public List<Map<String, String>> buscarAgentesEnGrupo(String cdagente, String cdgrupo, String cdptovta) throws Exception {
+		
+		return agentesDAO.buscarAgentesEnGrupo(cdagente, cdgrupo, cdptovta);
+	}
+		
 	@Override
 	public boolean validaAgente(String cdagente, String cdramo, String cdproceso) throws Exception {
 		String paso = null;

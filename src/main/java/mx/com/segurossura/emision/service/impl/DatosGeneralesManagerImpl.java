@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
 
+import mx.com.segurossura.emision.dao.AgentesDAO;
 import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.service.DatosGeneralesManager;
 import mx.com.segurossura.general.catalogos.model.Bloque;
@@ -30,6 +30,9 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     
     @Autowired
     private EmisionDAO emisionDAO;
+    
+    @Autowired
+    private AgentesDAO agentesDAO;
     
     @Override
     public Map<String, String> valoresDefectoFijos (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
@@ -315,6 +318,17 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                 }
             }
             
+            /* TODO: descomentar
+            paso = "Obteniendo cuadro de comision del agente";
+            String cesionComisionAgente = null;
+            String cdAgentePantalla = datosPantalla.get("cdagente");
+            if (StringUtils.isNotBlank(cdAgentePantalla)) {
+				logger.debug("Buscamos cuadro de comision del agente {}", cdAgentePantalla);
+				cesionComisionAgente = emisionDAO.obtenerCuadroComisionAgente(cdAgentePantalla, cdramo);
+				logger.debug("Cuadro de comision para agente {} es: {}", cdAgentePantalla, cesionComisionAgente);
+            }
+            */
+            
             paso = "Guardando datos";
             emisionDAO.movimientoMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem,
                     mpolizas.get("status"),
@@ -366,8 +380,17 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
             emisionDAO.movimientoTvalopol(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem, tvalopol.get("status"),
                     otvalores, "M" // accion
                     );
-            
-            
+            /* TODO: descomentar
+            // Si existe cdagente lo actualizamos:
+			if (StringUtils.isNotBlank(cdAgentePantalla)) {
+				paso = "Actualizando agente";
+				logger.debug("Agente en pantalla para guardar: {}", cdAgentePantalla);
+    			agentesDAO.movimientoMpoliage(cdunieco, cdramo, estado, nmpoliza, null, nmsuplem, nmsuplem, null, null, "D");
+    			// TODO: Cambiar valores de cdtipoag y porredau por constantes:
+    			agentesDAO.movimientoMpoliage(cdunieco, cdramo, estado, nmpoliza, datosPantalla.get("cdagente"), nmsuplem,
+    					nmsuplem, "1", "100", "I");
+            }
+            */
             paso = "Ejecutando validaciones";
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
                     cdunieco,
