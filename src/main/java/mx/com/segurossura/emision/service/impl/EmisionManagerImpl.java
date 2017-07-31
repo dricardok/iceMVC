@@ -533,7 +533,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	}
 		
 	@Override
-	public Map<String, String> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion) throws Exception {
+	public Map<String, String> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion, String cdusuari) throws Exception {
 		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
 				     "@@@@@@@@@ generarDocumentos");
 		List<Documento> documentos = null;
@@ -544,7 +544,7 @@ public class EmisionManagerImpl implements EmisionManager {
 		boolean exito = false;
 		String documentoRuta = "";
 		String nombreExtension = "";
-		
+		String urlSLIP;
 		try {
 			
 			// Obteniendo nmrecibo para obtener el nmrecibo de la poliza emitida
@@ -597,16 +597,16 @@ public class EmisionManagerImpl implements EmisionManager {
 						logger.info(documento.getId());
 						logger.info(documento.getNombre());
 						logger.info(documento.getTipo());
-						logger.info(documento.getUrl());
-						
+						logger.info(documento.getUrl());						
 						
 						documentoRuta = path+documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
-						nombreExtension = documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
+						nombreExtension = documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());						
+						urlSLIP = documento.getTipo()!=null ? documento.getUrl()+"/"+cdusuari+"/rtf" : documento.getUrl();
 							
 						//	boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
 						exito = false;
 						try {
-							FileUtils.copyURLToFile(new URL(documento.getUrl()), new File(documentoRuta), 10000, 10000);
+							FileUtils.copyURLToFile(new URL(urlSLIP), new File(documentoRuta), 10000, 10000);
 							exito = true;
 						}catch(Exception fe){
 							logger.error(fe.getMessage(), fe);
@@ -615,7 +615,7 @@ public class EmisionManagerImpl implements EmisionManager {
 						
 						documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpoliza, nmsolici, localnmsuplem, ntramite, new Date(),
 																   documento.getId(), nombreExtension, cdtipsub, exito ? Constantes.SI : Constantes.NO,
-																   cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, documento.getUrl(), 
+																   cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, urlSLIP, 
 																   path.toString(), documento.getTipo(), Constantes.INSERT_MODE);	             		              		
 						
 					}catch(Exception e) {

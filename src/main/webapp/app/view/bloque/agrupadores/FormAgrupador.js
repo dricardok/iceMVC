@@ -1,5 +1,5 @@
 Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
-    extend: 'Ice.view.componente.FormDosColumnasIce',
+    extend: 'Ice.view.componente.PanelPaddingIce',
     xtype: 'formagrupador',
     
     controller: 'formagrupador',
@@ -26,6 +26,11 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
         modelValidators: []
     },
     
+    platformConfig		:	{
+		'!desktop'		:	{
+			scrollable		:	true
+		}
+	},
     guardar: function () {
         this.fireEvent('guardar', this);
     },
@@ -65,7 +70,18 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
                 validators: true
             });
             
-            config.items = (comps.FORM_AGRUPADOR.FORM.items || []).concat(config.items || []);
+            config.items = ([
+	            	{
+	            		xtype		:	'formdoscolumnasice',
+	            		reference	:	'form',
+	            		items		:	comps.FORM_AGRUPADOR.FORM.items
+	            	},
+	            	{
+	                    xtype: 'domicilios',
+	                    reference: 'gridDomicilios',
+	                    selector: true
+	                }
+            	] || []).concat(config.items || []);
             config.modelFields = comps.FORM_AGRUPADOR.FORM.fields || [];
             config.modelValidators = comps.FORM_AGRUPADOR.FORM.validators || [];
 
