@@ -63,6 +63,8 @@ public interface EmisionDAO {
 
 	public String obtenerCuadroComisionesDefault (String cdramo) throws Exception;
 	
+	public String obtenerCuadroComisionAgente (String cdagente, String cdramo) throws Exception;
+	
 	/**
 	 * Ejecuta las validaciones de una poliza para el bloque indicado
 	 * @param cdunieco Sucursal de la poliza

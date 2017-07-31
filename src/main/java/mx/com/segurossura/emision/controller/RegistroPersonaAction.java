@@ -302,7 +302,11 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	        	logger.debug("Datos de Enviados: {} ", params);
 	        	String cdperson=params.get("cdperson");
 	        	Utils.validate(cdperson,"No se recibió cdperson");
-	        	params= registroPersonaManager.obtieneTvaloper(cdperson).get(0);
+	        	try{
+	        		params= registroPersonaManager.obtieneTvaloper(cdperson).get(0);
+	        	}catch(Exception e){
+	        		params=new HashMap<>();
+	        	}
 	        	params.putAll(registroPersonaManager.obtieneMpersona(cdperson).get(0));
 	        	logger.debug("..>",registroPersonaManager.obtieneMpersona(cdperson).get(0));
 	            success = true;

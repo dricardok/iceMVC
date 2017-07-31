@@ -28,7 +28,7 @@ Ext.define('Ice.view.bloque.personas.Persona', {
                 if(config.cdperson){
                 	config.accion="U";
                 }
-                
+                //alert(config.cdramo+' - '+config.cdrol);
                 var compsTatriper = Ice.generaComponentes({
                     pantalla: 'TATRIPER',
                     seccion: 'TATRIPER',
@@ -58,7 +58,6 @@ Ext.define('Ice.view.bloque.personas.Persona', {
     				eventos: true
     			});
             	
-            	Ice.log("44444$$ $ ",eventsForm);
             	
             	var fenacimi=compsMpersona.AGREGAR_PERSONAS.MPERSONA.items.find(function(it){
             		return it.name=="fenacimi";

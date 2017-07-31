@@ -222,6 +222,44 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
         
         Ice.log('Ice.view.bloque.BuscarPersonaController.validaBusqueda');
         return valid;
+    },
+    
+    editarPersona:function(grid, rowIndex, colIndex){
+    	Ice.log('Ice.view.bloque.BuscarPersonaController.nuevo');
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+            paso = 'Editar persona';
+        try{
+        	Ice.log(grid,rowIndex,colIndex);
+    		
+    		if(Ext.manifest.toolkit === 'classic'){
+    			var record=grid.getStore().getAt(rowIndex);            
+            } else {
+                var cell = grid.getParent(),
+                    record = cell.getRecord(),
+                    data = record.getData();
+            }
+            Ice.log('nuevo refs',refs);
+            var persona = Ext.create('Ice.view.bloque.personas.Persona',{
+                reference: 'persona',
+                cdramo:view.getCdramo(),
+                cdrol:view.getCdrol(),
+                cdperson:record.get("cdperson"),
+                listeners: {
+                    'personaGuardada': function(personaView, cdperson){
+                        Ice.log('personaGuardado.view',view);
+                        Ice.query('[name=dsatribu]', view.getReferences().formBusquedaPersonas).setValue('CDPERSON');
+                        Ice.query('[name=otvalor]', view.getReferences().formBusquedaPersonas).setValue(cdperson);
+                        Ice.pop();
+                    }
+                }
+            });            
+            Ice.push(persona);
+        } catch(e){
+            Ice.generaExcepcion(e, paso);
+        }
+        Ice.log('Ice.view.bloque.BuscarPersonaController.nuevo');
     }
     
     // navigate: function(panel, direction, nuevoPanel){

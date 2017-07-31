@@ -55,6 +55,7 @@ Ext.define('Ice.view.field.CdpersonPickerController', {
     buscar: function () {
         Ice.log('Ice.view.field.CdpersonPickerController.buscar');
         var me = this,
+        	view = me.getView(),
             paso = 'Obteniendo valor de cdperson';
         try {
             var windowBuscar = Ext.create('Ice.view.bloque.personas.BuscarPersona', {
@@ -62,7 +63,9 @@ Ext.define('Ice.view.field.CdpersonPickerController', {
                     obtenerCdperson: function (view, cdperson) {
                         me.setValue(cdperson);
                     }
-                }
+                },
+                cdrol: view.getCdrol(),
+                cdramo: view.getCdramo()
             });
             Ice.push(windowBuscar);
 //            windowBuscar.width = 400;
