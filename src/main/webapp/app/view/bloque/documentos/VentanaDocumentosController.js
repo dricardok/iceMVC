@@ -248,10 +248,16 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                         swotros = true;
                     }
                     for(var i = 0; i < columns.length; i++){
-                        Ice.log('column xtype',columns[i].xtype);
                         if('actioncolumn' == columns[i].xtype){
+                            Ice.log('column xtype',columns[i]);
                             if('slip' == columns[i].colType){
-                                this.mostrarColumna(columns[i], swmostrar);
+                                if(Ice.sesion.cdsisrol == Ice.constantes.roles.AGENTE){
+                                    if(columns[i].reference != 'upload_slip'){
+                                        this.mostrarColumna(columns[i], swmostrar);
+                                    }
+                                } else {
+                                    this.mostrarColumna(columns[i], swmostrar);
+                                }
                             } else {
                                 this.mostrarColumna(columns[i], swotros);
                             }
