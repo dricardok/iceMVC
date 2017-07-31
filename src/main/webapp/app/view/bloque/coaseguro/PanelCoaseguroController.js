@@ -482,52 +482,62 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
         }
     },
 
-    cargar: function(){
-        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.cargar');
+    cargar: function(config){
+        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.cargar config',config);
         var paso = 'Iniciando funcion guardar coaseguro',
             me = this,
             view = me.getView(),
             refs = view.getReferences(),
             url = '';
         try{
-            if(view.getCdtipcoa() != 'N'){
-                if(view.getCdtipcoa() == 'A'){
-                    url = Ice.url.bloque.datosGenerales.obtenerCoaseguroAceptado;
-                } else {
-                    url = Ice.url.bloque.datosGenerales.obtenerCoaseguroCedido;
-                }
-                Ice.request({
-                    mascara: 'guardando coaseguro',
-                    url: url,
-                    params: {
-                        'params.cdunieco': view.getCdunieco(),
-                        'params.cdramo': view.getCdramo(),
-                        'params.estado': view.getEstado(),
-                        'params.nmpoliza': view.getNmpoliza(),
-                        'params.nmsuplem': view.getNmsuplem()
-                    },
-                    success: function (json) {
-                        var paso2 = 'LLenando store';
-                        try {
-                            Ice.log('json list',json.list,'params',json.params,'refs',refs);
-                            if(view.getCdtipcoa() == 'A'){
-                                Ice.cargarFormulario(refs.formAceptado, json.params);
-                            } else {
-                                if(!Ext.isEmpty(refs.form.getReferences())){
-                                    Ice.cargarFormulario(refs.form, json.params);
-                                    refs.grid.getStore().removeAll();
-                                    for(var i = 0; i < json.list.length; i++){
-                                        refs.grid.getStore().add(json.list[i]);
-                                    }
-                                    refs.form.show();
-                                    refs.grid.show();
-                                }
-                            }
-                        } catch (e) {
-                            Ice.manejaExcepcion(e, paso2);
-                        }
+            Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.cargar cdtipcoa',config.b1_cdtipcoa);
+            if(config.b1_cdtipcoa){
+                if(config.b1_cdtipcoa != 'N'){
+                    if(config.b1_cdtipcoa === 'A'){
+                        url = Ice.url.bloque.datosGenerales.obtenerCoaseguroAceptado;
+                    } else {
+                        url = Ice.url.bloque.datosGenerales.obtenerCoaseguroCedido;
                     }
-                });
+                    Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.cargar url',url);
+                    Ice.request({
+                        mascara: 'cargando coaseguro',
+                        url: url,
+                        params: {
+                            'params.cdunieco': config.cdunieco,
+                            'params.cdramo': view.getCdramo(),
+                            'params.estado': view.getEstado(),
+                            'params.nmpoliza': config.nmpoliza,
+                            'params.nmsuplem': view.getNmsuplem()
+                        },
+                        success: function (json) {
+                            var paso2 = 'LLenando store';
+                            try {
+                                Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.cargar json list',json.list,'params',json.params,'refs',refs,'cdtipcoa',config.b1_cdtipcoa);
+                                if(config.b1_cdtipcoa == 'A'){
+                                    if(!Ext.isEmpty(refs.formAceptado.getReferences())){
+                                        Ice.cargarFormulario(refs.formAceptado, json.params);
+                                        refs.form.hide();
+                                        refs.grid.hide();
+                                        refs.formAceptado.show();
+                                    }
+                                } else {
+                                    if(!Ext.isEmpty(refs.form.getReferences())){
+                                        Ice.cargarFormulario(refs.form, json.params);
+                                        refs.grid.getStore().removeAll();
+                                        for(var i = 0; i < json.list.length; i++){
+                                            refs.grid.getStore().add(json.list[i]);
+                                        }
+                                        refs.form.show();
+                                        refs.grid.show();
+                                        refs.formAceptado.hide();
+                                    }
+                                }
+                            } catch (e) {
+                                Ice.manejaExcepcion(e, paso2);
+                            }
+                        }
+                    });
+                }
             }
         } catch (e){
             Ice.generaExcepcion(e);

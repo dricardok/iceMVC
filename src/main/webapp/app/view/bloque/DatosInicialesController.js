@@ -108,10 +108,10 @@ Ext.define('Ice.view.bloque.DatosInicialesController', {
                     Ice.log('Ice.view.bloque.DatosInicialesController.cargar refs.formdatosgenerales.getValues()',values);
                     if(values){
                         if(!Ext.isEmpty(values.b1_cdtipcoa)){
-                            refs.panelcoaseguro.cdunieco = values.cdunieco;
-                            refs.panelcoaseguro.nmpoliza = values.nmpoliza;
-                            refs.panelcoaseguro.cdtipcoa = values.cdtipcoa;
-                            refs.panelcoaseguro.getController().cargar();
+                            refs.panelcoaseguro.setCdunieco(values.cdunieco);
+                            refs.panelcoaseguro.setNmpoliza(values.nmpoliza);
+                            refs.panelcoaseguro.setCdtipcoa(values.cdtipcoa);
+                            refs.panelcoaseguro.getController().cargar(values);
                         }
                     }
                 }
