@@ -47,17 +47,19 @@ Ext.define('Ice.view.bloque.coaseguro.VentanaExclusionesCoaseguroController', {
                 selModelSit = refs.gridSituaciones.selModel;
                 selModelCob = refs.gridCoberturas.selModel;
             storeSit.on({
-                endupdate: function(){
+                load: function(){
+                    Ice.log('Actualizando store de situaciones');
                     view.setCargacompleta('S');
                 }
             });
             storeCob.on({
-                endupdate: function(){
+                load: function(){
                     view.setCargacompleta('S');
                 }
             });
             selModelSit.on({
                 select: function(selected, record, index){
+                    Ice.log('selModelSit select selected',selected,'record',record,'index',index,'cargaCompleta',view.getCargacompleta());
                     if(view.getCargacompleta() == 'S'){
                         var data = record.data;
                         data['accion'] = 'N';
@@ -65,6 +67,7 @@ Ext.define('Ice.view.bloque.coaseguro.VentanaExclusionesCoaseguroController', {
                     }
                 },
                 deselect: function(deselected, record, index){
+                    Ice.log('selModelSit deselect selected',deselected,'record',record,'index',index,'cargaCompleta',view.getCargacompleta());
                     if(view.getCargacompleta() == 'S'){
                         var data = record.data;
                         data['accion'] = 'S';
@@ -81,11 +84,11 @@ Ext.define('Ice.view.bloque.coaseguro.VentanaExclusionesCoaseguroController', {
                     }
                 },
                 deselect: function(deselected, record, index){
-                    if(view.getCargacompleta() == 'S'){
+                    //if(view.getCargacompleta() == 'S'){
                         var data = record.data;
                         data['accion'] = 'S';
                         me.excluirCoberturas(data);
-                    }
+                    //}
                 }
             });
         } catch (e) {
@@ -145,6 +148,8 @@ Ext.define('Ice.view.bloque.coaseguro.VentanaExclusionesCoaseguroController', {
                             refs.gridSituaciones.getStore().reload();
                             refs.gridSituaciones.show();
                         } catch (e) {
+                            refs.gridSituaciones.getStore().reload();
+                            refs.gridSituaciones.show();
                             Ice.manejaExcepcion(e, paso2);
                         }
                     }
@@ -180,9 +185,11 @@ Ext.define('Ice.view.bloque.coaseguro.VentanaExclusionesCoaseguroController', {
                         var paso2 = 'Actualizando lista de coberturas ';
                         try {
                             refs.gridCoberturas.getStore().getProxy().extraParams['nmsituac'] = data.nmsituac;
+                            view.setCargacompleta('N');
                             refs.gridCoberturas.getStore().load();
-                            refs.gridCoberturas.show();
                         } catch (e) {
+                            refs.gridCoberturas.getStore().getProxy().extraParams['nmsituac'] = data.nmsituac;
+                            refs.gridCoberturas.getStore().load();
                             Ice.manejaExcepcion(e, paso2);
                         }
                     }

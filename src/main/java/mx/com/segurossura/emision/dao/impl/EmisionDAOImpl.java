@@ -1989,7 +1989,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_nmpoliza_i", nmpoliza);
         params.put("pv_nmsituac_i", nmsituac);
         params.put("pv_nmsuplem_i", nmsuplem);
-        params.put("pv_accion_i", nmsuplem);
+        params.put("pv_accion_i", accion);
         ejecutaSP(new MovimientoTsiexcoaSP(getDataSource()), params);
     }
     
@@ -2010,28 +2010,28 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     }
     
     @Override
-    public void movimientoTgrexcoa (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdgarant, String nmsuplem, String accion) throws Exception{
+    public void movimientoTgrexcoa (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdcapita, String nmsuplem, String accion) throws Exception{
         Map<String, String> params = new LinkedHashMap<String, String>();
         params.put("pv_cdunieco_i", cdunieco);
         params.put("pv_cdramo_i", cdramo);
         params.put("pv_estado_i", estado);
         params.put("pv_nmpoliza_i", nmpoliza);
         params.put("pv_nmsituac_i", nmsituac);
-        params.put("pv_cdgarant_i", cdgarant);
+        params.put("pv_cdcapita_i", cdcapita);
         params.put("pv_nmsuplem_i", nmsuplem);
-        params.put("pv_accion_i", nmsuplem);
-        ejecutaSP(new actualizaGestorCobroSP(getDataSource()), params);
+        params.put("pv_accion_i", accion);
+        ejecutaSP(new movimientoTgrexcoaSP(getDataSource()), params);
     }
     
     protected class movimientoTgrexcoaSP extends StoredProcedure {
         protected movimientoTgrexcoaSP(DataSource dataSource) {
-            super(dataSource, "PKG_DATA_ALEA.P_MOV_TSIEXCOA");
+            super(dataSource, "PKG_DATA_ALEA.P_MOV_TGREXCOA");
             declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdgarant_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdcapita_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_accion_i", Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));

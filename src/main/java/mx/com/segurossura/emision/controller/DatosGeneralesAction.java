@@ -534,7 +534,7 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
             }
         )
     public String movimientoExclusionesSituacCoaCedParc() {
-        logger.debug(Utils.log("###### obtenerExclusionesSituacCoaCedParc params: ", params));
+        logger.debug(Utils.log("###### movimientoExclusionesSituacCoaCedParc params: ", params));
         try {
             Utils.validateSession(session);
             Utils.validate(params, "No hay datos");
@@ -567,7 +567,7 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
             }
         )
     public String movimientoExclusionesCoberCoaCedParc() {
-        logger.debug(Utils.log("###### obtenerExclusionesCoberCoaCedParc params: ", params));
+        logger.debug(Utils.log("###### movimientoExclusionesCoberCoaCedParc params: ", params));
         try {
             Utils.validateSession(session);
             Utils.validate(params, "No hay datos");
@@ -576,7 +576,7 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
                    estado   = params.get("estado"),
                    nmpoliza = params.get("nmpoliza"),
                    nmsituac = params.get("nmsituac"),
-                   cdgarant = params.get("cdgarant"),
+                   cdcapita = params.get("cdcapita"),
                    nmsuplem = params.get("nmsuplem"),
                    accion   = params.get("accion");
              Utils.validate(cdunieco, "No se recibio sucursal",
@@ -584,10 +584,10 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
                             estado,   "No se recibio estado de la poliza",
                             nmpoliza, "No se recibio numero de poliza",
                             nmsituac, "No se recibio la situacion de riesgo",
-                            cdgarant, "No se recibio la cobertura",
+                            cdcapita, "No se recibio la cobertura",
                             nmsuplem, "No se recibio suplemento de poliza",
                             accion,   "No se recibio la accion");
-            datosGeneralesManager.movimientoExclusionesCoberCoaCedParc(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdgarant, nmsuplem, accion);
+            datosGeneralesManager.movimientoExclusionesCoberCoaCedParc(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdcapita, nmsuplem, accion);
             success = true;
         } catch (Exception ex) {
             success = false;

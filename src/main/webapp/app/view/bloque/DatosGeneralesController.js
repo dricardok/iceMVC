@@ -419,6 +419,10 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                                 refs[name].setReadOnly(true);
                             }
                         }
+
+                        if(config){
+                            config.success();
+                        }
                     } catch (e) {
                         Ice.manejaExcepcion(e, paso2);
                     }
