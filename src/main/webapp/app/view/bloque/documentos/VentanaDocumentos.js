@@ -92,6 +92,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                                 tooltip: 'Subir slip',
                                 colType: 'slip',
                                 hidden: true,
+                                reference: 'upload_slip',
                                 handler: function(grid, rowIndex, colIndex) {
                                     this.up('ventanaice').getController().onActualizarDocumento(grid, rowIndex, colIndex);
                                 }

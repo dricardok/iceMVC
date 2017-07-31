@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,7 +153,14 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 															d-> d.get("cdatribu").equals(m.get("name_cdatribu"))
 													).findFirst();
 				if(res.isPresent()){
+					String tipocampo = m.get("tipocampo");
 					m.putAll(res.get());
+					if (StringUtils.isNotBlank(tipocampo)) {
+						logger.debug(Utils.log("Se respeta el tipocampo del atributo de cobertura: ", pv_cdgarant_i, ", ",
+							" atributo: ", m.get("name_cdatribu"), ", tipocampo: ", tipocampo));
+						m.put("tipocampo", tipocampo);
+                        m.put("swformat", tipocampo);
+					}
 					logger.debug("fuss"+m.toString());
 					resultado.add(m);
 				}
