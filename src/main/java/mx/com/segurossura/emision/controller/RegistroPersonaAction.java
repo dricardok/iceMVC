@@ -130,7 +130,7 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            String  otsexo   = mpersona.get("otsexo");
 	            String  fenacimi = mpersona.get("fenacimi");
 	            String  cdprovin = mpersona.get("cdprovin");
-	            String  dsnombre="";
+	            String  dsnombre = mpersona.get("dsnombr");
 	            
 	            if("1".equals(otfisjur)){
         	          dsnombre = Utils.join(dsnombr1," ",
