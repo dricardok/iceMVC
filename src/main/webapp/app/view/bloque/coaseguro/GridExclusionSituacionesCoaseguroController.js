@@ -50,7 +50,7 @@ Ext.define('Ice.view.bloque.coaseguro.GridExclusionSituacionesCoaseguroControlle
                         var data = records[i].data;
                         Ice.log('data ',i,' es ',data);
                         if(data.swtch_exc == 'S'){
-                            view.getSelectionModel().select(i);
+                            view.getSelectionModel().select(i, true);
                         }
                     }
                 }

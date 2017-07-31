@@ -9,7 +9,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     	try{
     		view.down('[name=fenacimi]').on({
     			change:function(it){
-    				view.down('#frmPersona [fieldLabel=Edad]')
+    				view.down('#frmPersona [fieldLabel*=Edad]')
     				.setValue(
     						Ext.Date.diff(
     								Ext.Date.parse(it.getValue(),'d/m/Y'),

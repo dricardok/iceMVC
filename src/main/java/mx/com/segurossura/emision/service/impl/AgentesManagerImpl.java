@@ -161,9 +161,9 @@ public class AgentesManagerImpl implements AgentesManager {
 	
 	
 	@Override
-	public List<Map<String, String>> buscarAgentesEnGrupo(String cdagente, String cdgrupo) throws Exception {
+	public List<Map<String, String>> buscarAgentesEnGrupo(String cdagente, String cdgrupo, String cdptovta) throws Exception {
 		
-		return agentesDAO.buscarAgentesEnGrupo(cdagente, cdgrupo);
+		return agentesDAO.buscarAgentesEnGrupo(cdagente, cdgrupo, cdptovta);
 	}
 		
 	@Override

@@ -786,6 +786,33 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         }
     }
     
+    
+	@Override
+	public String obtenerCuadroComisionAgente (String cdagente, String cdramo) throws Exception {
+	    Map<String, Object> params = new LinkedHashMap<String, Object>();
+	    params.put("pv_cdagente_i", cdagente);
+	    params.put("pv_cdramo_i",   cdramo);
+        Map<String, Object> resultado = ejecutaSP(new ObtenerCuadroComisionAgenteSP(getDataSource()), params);
+        String nmcuadro = (String) resultado.get("pv_nmcuadro_o");
+        if (StringUtils.isBlank(nmcuadro)) {
+            throw new ApplicationException("No hay cuadro de comisiones default para el ramo");
+        }
+        return nmcuadro;
+    }
+    
+    protected class ObtenerCuadroComisionAgenteSP extends StoredProcedure{
+        protected ObtenerCuadroComisionAgenteSP(DataSource dataSource) {
+            super(dataSource,"PKG_DATA_ALEA.P_GET_CUADRO_AGENTE");
+            declareParameter(new SqlParameter("pv_cdramo_i",      Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdagente_i",    Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_nmcuadro_o", Types.VARCHAR)); 
+            declareParameter(new SqlOutParameter("pv_msg_id_o",   Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o",    Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    
     @SuppressWarnings("unchecked")
     @Override
     public List<Map<String, String>> ejecutarValidaciones (String cdunieco, String cdramo, String estado, String nmpoliza,
@@ -2031,8 +2058,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdcapita_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdcapita_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_accion_i", Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));

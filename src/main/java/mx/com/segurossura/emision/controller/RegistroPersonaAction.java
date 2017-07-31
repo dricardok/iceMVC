@@ -130,7 +130,7 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            String  otsexo   = mpersona.get("otsexo");
 	            String  fenacimi = mpersona.get("fenacimi");
 	            String  cdprovin = mpersona.get("cdprovin");
-	            String  dsnombre="";
+	            String  dsnombre = mpersona.get("dsnombr");
 	            
 	            if("1".equals(otfisjur)){
         	          dsnombre = Utils.join(dsnombr1," ",
@@ -302,7 +302,11 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	        	logger.debug("Datos de Enviados: {} ", params);
 	        	String cdperson=params.get("cdperson");
 	        	Utils.validate(cdperson,"No se recibió cdperson");
-	        	params= registroPersonaManager.obtieneTvaloper(cdperson).get(0);
+	        	try{
+	        		params= registroPersonaManager.obtieneTvaloper(cdperson).get(0);
+	        	}catch(Exception e){
+	        		params=new HashMap<>();
+	        	}
 	        	params.putAll(registroPersonaManager.obtieneMpersona(cdperson).get(0));
 	        	logger.debug("..>",registroPersonaManager.obtieneMpersona(cdperson).get(0));
 	            success = true;

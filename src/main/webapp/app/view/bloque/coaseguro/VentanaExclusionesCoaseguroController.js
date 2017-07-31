@@ -145,9 +145,11 @@ Ext.define('Ice.view.bloque.coaseguro.VentanaExclusionesCoaseguroController', {
                     success: function (action) {
                         var paso2 = 'Recargando lista de situaciones';
                         try {
+                            view.setCargacompleta('N');
                             refs.gridSituaciones.getStore().reload();
                             refs.gridSituaciones.show();
                         } catch (e) {
+                            view.setCargacompleta('N');
                             refs.gridSituaciones.getStore().reload();
                             refs.gridSituaciones.show();
                             Ice.manejaExcepcion(e, paso2);
@@ -189,6 +191,7 @@ Ext.define('Ice.view.bloque.coaseguro.VentanaExclusionesCoaseguroController', {
                             refs.gridCoberturas.getStore().load();
                         } catch (e) {
                             refs.gridCoberturas.getStore().getProxy().extraParams['nmsituac'] = data.nmsituac;
+                            view.setCargacompleta('N');
                             refs.gridCoberturas.getStore().load();
                             Ice.manejaExcepcion(e, paso2);
                         }
