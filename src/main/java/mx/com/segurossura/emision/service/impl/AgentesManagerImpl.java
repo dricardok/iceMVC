@@ -150,23 +150,21 @@ public class AgentesManagerImpl implements AgentesManager {
 		
         	paso = "Recuperando agentes del catalogo";
         	agentes = agentesDAO.buscarAgentes(clave, atributo);
-        	/*
-        	// si el rol es agente
-        	if(RolSistema.AGENTE.getCdsisrol().equals(anObject)) {
-        		agentesDAO.buscarAgentesEnGrupo(cdagente, cdunieco, cdramo, estado, nmpoliza, nmsuplem)
-        	} else {
-        		agentes = agentesDAO.buscarAgentes(clave, atributo);
-        	}
-        	*/
 	        
         }catch(Exception e){
-        	e.printStackTrace();
         	Utils.generaExcepcion(e, paso);
         }
 		
 		return agentes;	
 	}
-
+	
+	
+	@Override
+	public List<Map<String, String>> buscarAgentesEnGrupo(String cdagente, String cdgrupo, String cdptovta) throws Exception {
+		
+		return agentesDAO.buscarAgentesEnGrupo(cdagente, cdgrupo, cdptovta);
+	}
+		
 	@Override
 	public boolean validaAgente(String cdagente, String cdramo, String cdproceso) throws Exception {
 		String paso = null;

@@ -21,12 +21,9 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 	
 	// config no ext
 	config		:	{
-	cdunieco: null,
-        cdramo:   null,
-        estado:   null,
-        nmpoliza: null,
-        nmsuplem: null,
-		cdagente: null
+		cdagente: null,
+		cdgrupo:  null,
+		cdptovta: null
 	},
 	
 	constructor : 	function(config){
