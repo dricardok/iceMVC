@@ -263,7 +263,7 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
             }
         )
     public String obtenerCoaseguroAceptado() {
-        logger.debug(Utils.log("###### obtenerCoaseguroCedido params: ", params));
+        logger.debug(Utils.log("###### obtenerCoaseguroAceptado params: ", params));
         try {
             Utils.validateSession(session);
             Utils.validate(params, "No hay datos");

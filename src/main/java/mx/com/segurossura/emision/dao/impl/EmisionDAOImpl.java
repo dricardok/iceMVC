@@ -2031,8 +2031,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdcapita_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdcapita_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_accion_i", Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
