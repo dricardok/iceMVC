@@ -31,6 +31,26 @@ Ext.define('Ice.view.bloque.personas.PersonaRol', {
                 cdramo: config.cdramo,
                 items: true
             });
+            
+            try{
+            	var cdperson=comps.PERSONA_ROL.FORMULARIO.items.find(function(it){
+            		return it.name=='cdperson';
+            	});
+            	cdperson.cdramo=config.cdramo;
+            	
+            	var cdrol=comps.PERSONA_ROL.FORMULARIO.items.find(function(it){
+            		return it.name=='cdrol';
+            	});
+            	cdrol.listeners={
+            			change:function(it){
+            				Ice.query('[xtype=cdpersonpicker]',me).setCdrol(it.getValue());
+            			}
+            	}
+            	cdrol
+            }catch(e){
+            	Ice.log(e);
+            	
+            }
 
             config.items = (comps.PERSONA_ROL.FORMULARIO.items || []).concat(config.items || []);
         } catch (e) {
