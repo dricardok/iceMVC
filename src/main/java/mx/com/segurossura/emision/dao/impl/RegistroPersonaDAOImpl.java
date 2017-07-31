@@ -90,7 +90,7 @@ public class RegistroPersonaDAOImpl extends HelperJdbcDao implements RegistoPers
         Map<String, Object> resultado = ejecutaSP(new ObtieneTvaloperSP(getDataSource()), params);
 		List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
         if (listaDatos == null || listaDatos.size() == 0) {
-			throw new ApplicationException("Sin resultados");
+			//throw new ApplicationException("Sin resultados");
 		}
 		return listaDatos;
     }
