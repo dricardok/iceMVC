@@ -16,5 +16,15 @@ public interface AgentesManager {
 	
 	public List<Map<String, String>> buscarAgentes(String clave, String atributo) throws Exception;	
 	
+	/**
+	 * Obtiene los agentes de un grupo que coincidan con el cdagente solicitado
+	 * @param  cdagente Clave de agente solicitada
+	 * @param  cdgrupo  Grupo donde se buscarán los agentes
+	 * @param  cdptovta Punto de venta
+	 * @return Lista de agentes que pertenecen al grupo y que coinciden con la clave de agente
+	 * @throws Exception
+	 */
+	public List<Map<String, String>> buscarAgentesEnGrupo(String cdagente, String cdgrupo, String cdptovta) throws Exception;
+
 	public boolean validaAgente(String cdagente, String cdramo, String cdproceso) throws Exception;
 }

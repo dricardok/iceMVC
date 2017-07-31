@@ -21,11 +21,13 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 	
 	// config no ext
 	config		:	{
-		cdagente	:	null
+		cdagente: null,
+		cdgrupo:  null,
+		cdptovta: null
 	},
 	
 	constructor : 	function(config){
-		
+		Ice.log('Ice.view.bloque.agentes.BuscarAgenteWindow.constructor * config:', config);
 		var me = this,
 		    paso="Construyendo buscador de agentes";
 		try{

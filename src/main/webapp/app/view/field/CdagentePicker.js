@@ -30,7 +30,7 @@ Ext.define('Ice.view.field.CdagentePicker', {
             }
             config.items = [
                 {
-                    xtype: 'numberfieldice',
+                    xtype: 'textfieldice',
                     hidden: true,
                     name: 'cdagente',
                     reference: 'cdagente'
@@ -44,6 +44,7 @@ Ext.define('Ice.view.field.CdagentePicker', {
                 }, {
                     xtype: 'button',
                     iconCls: 'x-fa fa-search',
+                    style:'margin-top: 29px !important;',
                     scope: me,
                     handler: function () {
                         this.getController().onBuscar();
