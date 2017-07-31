@@ -37,8 +37,9 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupadorController', {
 	                                 'params.cdperson': me.cdperson.getValue()
 	                             },
 	                             callback:function(){
-	                             	
-	                             	gridDomicilios.getSelectionModel().select(Number(me.nmorddom)-1);
+	                            	 if(Ice.classic()){
+	                            		 gridDomicilios.getSelectionModel().select(Number(me.nmorddom)-1);
+	                            	 }
 	                             }
 	                         });
                          refs.gridDomicilios.show();
