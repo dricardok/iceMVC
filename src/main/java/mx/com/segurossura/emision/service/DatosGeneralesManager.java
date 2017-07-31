@@ -148,5 +148,5 @@ public interface DatosGeneralesManager {
     
     public void movimientoExclusionesSituacCoaCedParc(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String accion) throws Exception;
     
-    public void movimientoExclusionesCoberCoaCedParc(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdgarant, String nmsuplem, String accion) throws Exception;
+    public void movimientoExclusionesCoberCoaCedParc(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdcapita, String nmsuplem, String accion) throws Exception;
 }
