@@ -28,6 +28,7 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupadorController', {
              Ice.log('cdperson',me.cdperson);
              me.cdperson.on({
                  change: function(){
+                	 me.cdperson = Ice.query('[xtype=numberfieldice]', refs.form.getReferences().cdperson);
                      Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdperson.change ',me.cdperson.getValue());
                      if(me.cdperson.getValue()){
                     	 if(me.nmorddom && me.cdperson)
