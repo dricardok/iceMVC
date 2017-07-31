@@ -422,4 +422,6 @@ public interface EmisionDAO {
 	 * @throws Exception
 	 */
 	public void movimientoTgrexcoa (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdcapita, String nmsuplem, String accion) throws Exception;
+	
+	public List<Map<String, String>> obtenerRegistrosPerfilamiento (String cdusuari, String cdramo) throws Exception;
 }

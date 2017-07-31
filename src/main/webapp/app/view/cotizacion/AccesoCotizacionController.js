@@ -77,31 +77,49 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 var venPer = Ext.create('Ice.view.cotizacion.VentanaPerfilamiento', {
                     cdramo: cdramo,
                     cdtipsit: cdtipsit,
+                    listeners: {
+                        seleccionarPerfil: function (view, cdptovta, cdgrupo, cdsubgpo, cdperfil, cdunieco) {
+                            Ice.log('Ice.view.cotizacion.AccesoCotizacionController args:', arguments);
+                            venPer.cerrar();
+                            Ice.redirect('cotizacion.action?' +
+                                'cdramo='   + cdramo          + '&' +
+                                'cdtipsit=' + cdtipsit        + '&' +
+                                'cdptovta=' + cdptovta + '&' +
+                                'cdgrupo='  + cdgrupo  + '&' +
+                                'cdsubgpo=' + cdsubgpo + '&' +
+                                'cdperfil=' + cdperfil + '&' +
+                                'cdunieco=' + cdunieco + '&' +
+                                'nueva=true'
+                            );
+                        }
+                    },
                     buttons: [
+                        // ya no se usan porque se convierte en grid
+                        // {
+                        //     text: 'Aceptar',
+                        //     iconCls: 'x-fa fa-check',
+                        //     handler: function () {
+                        //         var paso2 = 'Accediendo al cotizador';
+                        //         try {
+                        //             venPer.getController().validar();
+                        //             var values = venPer.getController().getValues();
+                        //             venPer.cerrar();
+                        //             Ice.redirect('cotizacion.action?' +
+                        //                 'cdramo='   + cdramo          + '&' +
+                        //                 'cdtipsit=' + cdtipsit        + '&' +
+                        //                 'cdptovta=' + values.cdptovta + '&' +
+                        //                 'cdgrupo='  + values.cdgrupo  + '&' +
+                        //                 'cdsubgpo=' + values.cdsubgpo + '&' +
+                        //                 'cdperfil=' + values.cdperfil + '&' +
+                        //                 'cdunieco=' + values.cdunieco + '&' +
+                        //                 'nueva=true'
+                        //             );
+                        //         } catch (e) {
+                        //             Ice.manejaExcepcion(e, paso2);
+                        //         }
+                        //     }
+                        // },
                         {
-                            text: 'Aceptar',
-                            iconCls: 'x-fa fa-check',
-                            handler: function () {
-                                var paso2 = 'Accediendo al cotizador';
-                                try {
-                                    venPer.getController().validar();
-                                    var values = venPer.getController().getValues();
-                                    venPer.cerrar();
-                                    Ice.redirect('cotizacion.action?' +
-                                        'cdramo='   + cdramo          + '&' +
-                                        'cdtipsit=' + cdtipsit        + '&' +
-                                        'cdptovta=' + values.cdptovta + '&' +
-                                        'cdgrupo='  + values.cdgrupo  + '&' +
-                                        'cdsubgpo=' + values.cdsubgpo + '&' +
-                                        'cdperfil=' + values.cdperfil + '&' +
-                                        'cdunieco=' + values.cdunieco + '&' +
-                                        'nueva=true'
-                                    );
-                                } catch (e) {
-                                    Ice.manejaExcepcion(e, paso2);
-                                }
-                            }
-                        }, {
                             text: 'Cancelar',
                             iconCls: 'x-fa fa-close',
                             handler: function () {

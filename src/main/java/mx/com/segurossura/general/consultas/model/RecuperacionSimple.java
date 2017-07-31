@@ -127,7 +127,8 @@ public enum RecuperacionSimple {
     RECUPERAR_RANGO_DESCUENTO_RECARGO                       ("M"),
     
     // Sura
-    OBTENER_COTIZADORES_DISPONIBLES ("L");
+    OBTENER_COTIZADORES_DISPONIBLES ("L"),
+    OBTENER_REGISTROS_PERFILAMIENTO("L");
      
     private String tipo;
 
