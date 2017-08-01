@@ -46,17 +46,54 @@ Ext.define('Ice.view.cotizacion.VentanaPerfilamiento', {
 				cdramo: config.cdramo,
 				cdtipsit: config.cdtipsit,
 				auxKey: config.auxkey,
-                items: true,
+                // items: true,
                 fields: true,
-                validators: true
+                // validators: true
+                columns: true
 			});
 
             config.items = [{
-                xtype: 'formdoscolumnasice',
-                reference: 'form',
-                items: comps.VENTANA_PERFILAMIENTO.FORM.items || [],
-                modelFields: comps.VENTANA_PERFILAMIENTO.FORM.fields || [],
-                modelValidators: comps.VENTANA_PERFILAMIENTO.FORM.validators || []
+                xtype: 'gridice',
+                reference: 'grid',
+                // items: comps.VENTANA_PERFILAMIENTO.FORM.items || [],
+                // modelFields: comps.VENTANA_PERFILAMIENTO.FORM.fields || [],
+                // modelValidators: comps.VENTANA_PERFILAMIENTO.FORM.validators || []
+                columns: comps.VENTANA_PERFILAMIENTO.FORM.columns || [],
+                store: {
+                    autoLoad: true,
+                    fields: comps.VENTANA_PERFILAMIENTO.FORM.fields || [],
+                    proxy: {
+                        type: 'ajax',
+                        url: Ice.url.core.recuperacionSimple,
+                        extraParams: {
+                            'params.consulta': 'OBTENER_REGISTROS_PERFILAMIENTO',
+                            'params.cdramo': config.cdramo
+                        },
+                        reader: {
+                            type: 'json',
+                            rootProperty: 'list'
+                        }
+                    },
+                    listeners: {
+                        load: function (store, records, success) {
+                            if (success === true) {
+                                if (records.length === 0) {
+                                    Ext.defer(function () {
+                                        me.cerrar();
+                                        Ice.mensajeError('Usted no tiene perfil para cotizar este producto');
+                                    }, 300);
+                                } else if (records.length === 1) {
+                                    Ext.defer(function () {
+                                        me.getController().onItemclick(me, records[0]);
+                                    }, 300)
+                                }
+                            }
+                        }
+                    }
+                },
+                listeners: {
+                    itemclick: 'onItemclick'
+                }
             }].concat(config.items || []);
         } catch (e) {
             Ice.generaExcepcion(e, paso);

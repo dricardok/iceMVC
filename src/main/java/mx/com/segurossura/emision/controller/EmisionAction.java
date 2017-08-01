@@ -947,6 +947,7 @@ public class EmisionAction extends PrincipalCoreAction {
     public String generarDocumentos(){
     	logger.debug(Utils.log("\n###### generarDocumentos params: ", params));
     	try {
+    		UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
     		Utils.validate(params, "No se recibieron datos");
     	    String cdunieco  = params.get("cdunieco"),
     	           cdramo    = params.get("cdramo"),
@@ -962,7 +963,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   iscotizacion, "Falta iscotizacion");
     	    
     	    
-    	    Map<String, String> resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion);
+    	    Map<String, String> resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());
     	    success = true;
     	    
     	}catch(Exception ex){

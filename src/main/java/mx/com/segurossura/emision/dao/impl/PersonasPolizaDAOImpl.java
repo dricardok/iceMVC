@@ -157,4 +157,28 @@ public class PersonasPolizaDAOImpl extends HelperJdbcDao implements PersonasPoli
 	            compile();
 	        }
 	    }
+
+    public void clonarTomadorParaAseguradoYAgrupador (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        ejecutaSP(new ClonarTomadorParaAseguradoYAgrupadorSP(getDataSource()), params);
+    }
+    
+    protected class ClonarTomadorParaAseguradoYAgrupadorSP extends StoredProcedure {
+        protected ClonarTomadorParaAseguradoYAgrupadorSP (DataSource dataSource) {
+            super(dataSource,"PKG_DATA_ALEA.P_DUPLICA_AS_AGR");
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
+            compile();
+        }
+    }
 }

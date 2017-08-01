@@ -2066,4 +2066,31 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             compile();
         }
     }
+    
+    @Override
+    public List<Map<String, String>> obtenerRegistrosPerfilamiento (String cdusuari, String cdramo) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdusuari_i", cdusuari);
+        params.put("pv_cdramo_i", cdramo);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerRegistrosPerfilamientoSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String,String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerRegistrosPerfilamientoSP extends StoredProcedure {
+        protected ObtenerRegistrosPerfilamientoSP (DataSource dataSource) {
+            super(dataSource, "PKG_LOV_ALEA.P_GET_DATOS_PV");           
+            declareParameter(new SqlParameter("pv_cdusuari_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            String[] cols = new String[] {"cdptovta", "dsobserv", "cdgrupo", "dsgrupo", "cdsubgrupo", "dssubgrp", "cdperfit", "dsperfit",
+                    "cdunieco", "dsunieco"};
+            declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            compile();
+        }
+    }
 }

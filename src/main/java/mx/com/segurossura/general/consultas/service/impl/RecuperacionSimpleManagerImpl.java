@@ -1349,6 +1349,8 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
                 lista = despachadorDAO.recuperarDetallesMesaHora(params.get("ntramite"));
             }
             */
+			} else if (consulta.equals(RecuperacionSimple.OBTENER_REGISTROS_PERFILAMIENTO)) {
+			    lista = emisionDAO.obtenerRegistrosPerfilamiento(cdusuari, params.get("cdramo"));
             } else {
                 throw new ApplicationException(Utils.join("No se ha implementado la consulta (", consulta, ")"));
             }

@@ -13,4 +13,6 @@ public interface PersonasPolizaDAO {
             String nmorddom, String swfallec, String accion) throws Exception;
 	
 	List<Map<String, String>> obtenerPersonasCriterio(String cdunieco, String cdramo, String estado, String nmpoliza, String cdatribu, String otvalor) throws Exception;
+	
+	public void clonarTomadorParaAseguradoYAgrupador (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
 }
