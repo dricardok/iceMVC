@@ -7,7 +7,16 @@ Ext.define('Ice.view.cotizacion.VentanaPagoTarjeta', {
 	
 	modal: true,
 	title: 'Pago con tarjeta',
-	layout: 'fit',
+	platformConfig: {
+        desktop: {
+            modal: true,
+            width: 800
+        },
+        '!desktop': {
+            layout: 'fit'
+        }
+    },
+	//layout: 'fit',
 	resizable: false,
 	
 	config: {
@@ -43,18 +52,19 @@ Ext.define('Ice.view.cotizacion.VentanaPagoTarjeta', {
             
             Ext.apply(me, {
             	items: {
-            		xtype: 'formice',
+            		xtype: 'formdoscolumnasice',
             		reference: 'formpagotarjeta',
-            		layout: 'anchor',
-            		widht: '100%',
-            		height: '100%',
-                    bodyPadding: '10px 0px 0px 10px',
+            		//layout: 'anchor',
+            		//width: 400,
+            		//height: '100%',
+                    //bodyPadding: '10px 0px 0px 10px',                    
                     defaults: {                    	
-                    	labelAlign: 'left',
-                	    labelWidth: 100,
-                        margin: '0px 10px 10px 0px'	
-                        
+                    	labelAlign: 'top',
+                	    //labelWidth: 100,
+                        //margin: '0px 10px 10px 0px'	
+                        //anchor: '100%'
                     },
+                    
             		items: comps.PAGO_TARJETA.FORMULARIO.items.concat([
             			{
             				xtype: 'textfield',
