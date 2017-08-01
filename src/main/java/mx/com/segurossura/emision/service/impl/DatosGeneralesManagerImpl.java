@@ -257,6 +257,17 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                 logger.warn("No hay tvalopol", e);
             }
             
+            paso = "Cargando agente de la p\u00F3liza";
+            List<Map<String, String>> listaAgentes = agentesDAO.obtieneMpoliage(cdunieco, cdramo, estado, nmpoliza, null, nmsuplem);
+            if(listaAgentes != null && listaAgentes.size() > 0) {
+            	for (Map<String, String> ag : listaAgentes) {
+            		// TODO: RBS Hacer enum de tipo agente, estatus Vivo y quitar valores fijos
+    				if("1".equals(ag.get("cdtipoag")) && "V".equals(ag.get("status"))) {
+    					datos.put("cdagente", ag.get("cdagente"));
+    				}
+    			}
+            }
+            
             if ("P".equals(estado)) {
                 datos.put("estado", "");
                 datos.put("nmpoliza", "");
@@ -318,16 +329,13 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                 }
             }
             
-            /* TODO: descomentar
             paso = "Obteniendo cuadro de comision del agente";
             String cesionComisionAgente = null;
             String cdAgentePantalla = datosPantalla.get("cdagente");
             if (StringUtils.isNotBlank(cdAgentePantalla)) {
-				logger.debug("Buscamos cuadro de comision del agente {}", cdAgentePantalla);
 				cesionComisionAgente = emisionDAO.obtenerCuadroComisionAgente(cdAgentePantalla, cdramo);
 				logger.debug("Cuadro de comision para agente {} es: {}", cdAgentePantalla, cesionComisionAgente);
             }
-            */
             
             paso = "Guardando datos";
             emisionDAO.movimientoMpolizas(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem,
@@ -356,7 +364,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     Utils.parse(mpolizas.get("feemisio")),
                     mpolizas.get("cdperpag"),
                     mpolizas.get("nmpoliex"),
-                    mpolizas.get("nmcuadro"),
+                    StringUtils.isNotBlank(cesionComisionAgente) ? cesionComisionAgente : mpolizas.get("nmcuadro"),
                     mpolizas.get("porredau"),
                     mpolizas.get("swconsol"),
                     mpolizas.get("nmpolcoi"),
@@ -380,17 +388,17 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
             emisionDAO.movimientoTvalopol(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem, tvalopol.get("status"),
                     otvalores, "M" // accion
                     );
-            /* TODO: descomentar
+            
             // Si existe cdagente lo actualizamos:
 			if (StringUtils.isNotBlank(cdAgentePantalla)) {
 				paso = "Actualizando agente";
 				logger.debug("Agente en pantalla para guardar: {}", cdAgentePantalla);
     			agentesDAO.movimientoMpoliage(cdunieco, cdramo, estado, nmpoliza, null, nmsuplem, nmsuplem, null, null, "D");
-    			// TODO: Cambiar valores de cdtipoag y porredau por constantes:
+    			// TODO: RBS Cambiar valores de cdtipoag y porredau por constantes:
     			agentesDAO.movimientoMpoliage(cdunieco, cdramo, estado, nmpoliza, datosPantalla.get("cdagente"), nmsuplem,
     					nmsuplem, "1", "100", "I");
             }
-            */
+			
             paso = "Ejecutando validaciones";
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
                     cdunieco,

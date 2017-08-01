@@ -9,8 +9,28 @@ Ext.define('Ice.view.field.CdagentePickerController', {
         refs = view.getReferences(),
         paso = 'Modificando valor de cdagente';
         try {
-	        refs.cdagente.setValue(data.cdagente);
-	        refs.dsnombre.setValue(data.dsnombre);
+            Ice.request({
+                mascara: 'Recuperando datos de agente',
+                url: Ice.url.bloque.agentes.buscar,
+                params: {
+                    'params.cdagente': param
+                },
+                success: function (json) {
+                    var paso2 = 'Asignando nombre de agente';
+                    try {
+                        Ice.log("json", json.listas);
+                        if(json.list && json.list[0]) {
+                            var data = json.list[0];
+                            refs.cdagente.setValue(data.cdagente);
+                            refs.dsnombre.setValue(data.dsnombre);
+                        } else {
+                            mensajeWarning('No se pudo recuperar el agente');
+                        }
+                    } catch (e) {
+                        Ice.manejaExcepcion(e, paso2);
+                    }
+                }
+            });
         } catch (e){
             Ice.generaExcepcion(e, paso);
         }
