@@ -39,6 +39,8 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupadorController', {
 	                             callback:function(){
 	                            	 if(Ice.classic()){
 	                            		 gridDomicilios.getSelectionModel().select(Number(me.nmorddom)-1);
+	                            	 }else{
+	                            		 var row = gridDomicilios.select(Number(me.nmorddom)-1);
 	                            	 }
 	                             }
 	                         });
@@ -72,8 +74,12 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupadorController', {
 	                                    'params.cdperson': me.cdperson.getValue()
 	                                },
 	                                callback:function(){
-	                                	
-	                                	gridDomicilios.getSelectionModel().select(Number(action.params.nmorddom)-1);
+	                                	if(Ice.classic()){
+	                                		gridDomicilios.getSelectionModel().select(Number(action.params.nmorddom)-1);
+	                                	}else{
+		                            		 var row = gridDomicilios.select(Number(me.nmorddom)-1);
+		                            		
+		                            	}
 	                                }
 	                            });
                         	

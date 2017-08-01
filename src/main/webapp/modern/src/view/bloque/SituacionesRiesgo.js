@@ -32,7 +32,8 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
             'cdunieco', 'cdramo', 'estado', 'nmpoliza', 'nmsituac', 'status', 'nmsuplem', 'cdtipsit', 'fefecsit'
         ],
         modelFields: [],
-        modelValidators: []
+        modelValidators: [],
+        cdtipsitUnico: false
     },
 
     constructor: function (config) {
