@@ -582,14 +582,14 @@ public class EmisionManagerImpl implements EmisionManager {
 				// Se guardan la lista de documentos:
 				for (Documento documento : documentos) {
 						
-					String nmsolici = null; //TODO: agregar
-					String ntramite = "1";  //TODO: agregar
-					String cdtiptra = "1"; //TODO: agregar
-					String codidocu = null; //TODO: agregar
-					String cdorddoc = null; //TODO: agregar
-					String cdmoddoc = null; //TODO: agregar
-					String nmcertif = null; //TODO: agregar
-					String nmsituac = null; //TODO: agregar
+					String nmsolici = null; // TODO: RBS agregar cuando se agregue la Mesa de control
+					String ntramite = "1";  // TODO: RBS agregar cuando se agregue la Mesa de control
+					String cdtiptra = "1";  // TODO: RBS agregar cuando se agregue la Mesa de control
+					String codidocu = null; // TODO: RBS agregar cuando se agregue la Mesa de control
+					String cdorddoc = null; // TODO: RBS agregar cuando se agregue la Mesa de control
+					String cdmoddoc = null; // TODO: RBS agregar cuando se agregue la Mesa de control
+					String nmcertif = null; // TODO: RBS agregar cuando se agregue la Mesa de control
+					String nmsituac = null; // TODO: RBS agregar cuando se agregue la Mesa de control
 					String cdtipsub = "90";
 					String localnmsuplem = isCotizacion.toLowerCase().equals("false") ? nmsuplem : datosMrecibo.get("nmsuplem");
 					try
