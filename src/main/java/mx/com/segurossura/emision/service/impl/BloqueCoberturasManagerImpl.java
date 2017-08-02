@@ -213,20 +213,22 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 						emisionDAO.movimientoTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, m.get("name").substring("otvalor".length()), pv_nmsuplem_i, pv_nmsituac_i, pv_cdgarant_i, m.get("valor"), "U");
 					}else{//mpolicap
 						emisionDAO.movimientoMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, pv_cdcapita_i, m.get("valor"), pv_nmsuplem_i, "U");
+						emisionDAO.ejecutarValoresDefecto(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i,
+						        Bloque.ATRIBUTOS_GARANTIAS.getCdbloque(), pv_cdgarant_i, null, null, null, null, cdusuari, cdsisrol);
 					}
 				}
 			}
 			paso="Validando";
 			lista.addAll(
 					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null,
-					        Bloque.CAPITALES.getCdbloque(), cdusuari, cdsisrol));
+					        Bloque.CAPITALES.getCdbloque(), null, null, null, cdusuari, cdsisrol));
 			
 			lista.addAll(
 					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null,
-					        Bloque.GARANTIAS.getCdbloque(), cdusuari, cdsisrol));
+					        Bloque.GARANTIAS.getCdbloque(), null, null, null, cdusuari, cdsisrol));
 			lista.addAll(
 					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null,
-					        Bloque.ATRIBUTOS_GARANTIAS.getCdbloque(), cdusuari, cdsisrol));
+					        Bloque.ATRIBUTOS_GARANTIAS.getCdbloque(), null, null, null, cdusuari, cdsisrol));
 		}catch(Exception ex)
 		{
 			Utils.generaExcepcion(ex, paso);

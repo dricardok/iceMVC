@@ -133,7 +133,7 @@ public class AgentesManagerImpl implements AgentesManager {
 	        
 	        paso = "Validando bloque de agentes";
 	        validaciones = emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, "0", nmsuplem, null,
-	                Bloque.AGENTES.getCdbloque(), cdusuari, cdsisrol);
+	                Bloque.AGENTES.getCdbloque(), null, null, null, cdusuari, cdsisrol);
 		} catch (Exception e) {
 			Utils.generaExcepcion(e, paso);
 		}

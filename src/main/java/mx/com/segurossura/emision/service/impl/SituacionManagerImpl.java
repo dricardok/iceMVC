@@ -497,7 +497,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmsituac,
                     nmsuplem,
                     null,
-                    Bloque.SITUACIONES.getCdbloque(), cdusuari, cdsisrol
+                    Bloque.SITUACIONES.getCdbloque(), null, null, null, cdusuari, cdsisrol
                     ));
             
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
@@ -508,7 +508,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     nmsituac,
                     nmsuplem,
                     null,
-                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), cdusuari, cdsisrol
+                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), null, null, null, cdusuari, cdsisrol
                     ));
         } catch (Exception ex){
             Utils.generaExcepcion(ex, paso);
@@ -539,7 +539,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     "0",
                     nmsuplem,
                     null,
-                    Bloque.SITUACIONES.getCdbloque(), cdusuari, cdsisrol
+                    Bloque.SITUACIONES.getCdbloque(), null, null, null, cdusuari, cdsisrol
                     ));
             paso = "Antes de validar bloque "+Bloque.ATRIBUTOS_SITUACIONES.getCdbloque();
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
@@ -550,7 +550,7 @@ public class SituacionManagerImpl implements SituacionManager{
                     "0",
                     nmsuplem,
                     null,
-                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), cdusuari, cdsisrol
+                    Bloque.ATRIBUTOS_SITUACIONES.getCdbloque(), null, null, null, cdusuari, cdsisrol
                     ));
         } catch (Exception ex){
             Utils.generaExcepcion(ex, paso);

@@ -469,6 +469,9 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             valores['params.nmpoliza'] = view.getValues().nmpoliza || view.getNmpoliza();
             valores['params.nmsuplem'] = view.getNmsuplem();
             valores['params.status']   = view.getStatus();
+            valores['params.cdptovta']   = view.getCdptovta();
+            valores['params.cdsubgpo']   = view.getCdsubgpo();
+            valores['params.cdperfit']   = view.getCdperfil();
             
             paso = 'Guardando datos generales';
             Ice.request({
