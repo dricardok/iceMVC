@@ -8,45 +8,48 @@ Ext.define('Ice.view.field.NumberfieldIce', {
     labelAlign: 'top',
     msgTarget: 'under',
 
-    constructor: function (config) {
-        var me = this,
-            paso = 'Construyendo campo numerico';
-        try {
-            // los campos numericos no llevan minLength ni maxLength
-            var maxLength = config.maxLength,
-                minLength = config.minLength;
-            delete config.maxLength;
-            delete config.minLength;
+    /**
+     * JTEZVA 2 AGOSTO 2K17: SE COMENTA PORQUE ERA MOLESTO VER MENSAJES COMO ESTE: VALOR MINIMO 99999999999999999
+     */
+    // constructor: function (config) {
+    //     var me = this,
+    //         paso = 'Construyendo campo numerico';
+    //     try {
+    //         // los campos numericos no llevan minLength ni maxLength
+    //         var maxLength = config.maxLength,
+    //             minLength = config.minLength;
+    //         delete config.maxLength;
+    //         delete config.minLength;
 
-            // si el campo no tiene maxValue pero tenia maxLength, se cambia (maxLength 5 = maxValue 99999)
-            if (Ext.isEmpty(config.maxValue) && Number(maxLength || 0) > 0) {
-                var maxval = '';
-                for (var i = 0; i < Number(maxLength); i++) {
-                    maxval = String(maxval) + String(9);
-                }
-                Ice.log('maxLength ', maxLength, ' to maxValue ', maxval);
-                config.maxValue = Number(maxval);
-            }
+    //         // si el campo no tiene maxValue pero tenia maxLength, se cambia (maxLength 5 = maxValue 99999)
+    //         if (Ext.isEmpty(config.maxValue) && Number(maxLength || 0) > 0) {
+    //             var maxval = '';
+    //             for (var i = 0; i < Number(maxLength); i++) {
+    //                 maxval = String(maxval) + String(9);
+    //             }
+    //             Ice.log('maxLength ', maxLength, ' to maxValue ', maxval);
+    //             config.maxValue = Number(maxval);
+    //         }
 
-            // si el campo no tiene minValue pero tenia minLength, se cambia (minLength 3 = minValue 100)
-            if (Ext.isEmpty(config.minValue) && Number(minLength || 0) > 0) {
-                var minval;
-                if (Number(minLength) === 1) {
-                    minval = '0';
-                } else {
-                    minval = '1';
-                    for (var i = 1; i < Number(minLength); i++) {
-                        minval = String(minval) + String(0);
-                    }
-                }
-                Ice.log('minLength ', minLength, ' to minValue ', minval);
-                config.minValue = Number(minval);
-            }
-        } catch (e) {
-            Ice.generaExcepcion(e, paso);
-        }
-        me.callParent(arguments);
-    },
+    //         // si el campo no tiene minValue pero tenia minLength, se cambia (minLength 3 = minValue 100)
+    //         if (Ext.isEmpty(config.minValue) && Number(minLength || 0) > 0) {
+    //             var minval;
+    //             if (Number(minLength) === 1) {
+    //                 minval = '0';
+    //             } else {
+    //                 minval = '1';
+    //                 for (var i = 1; i < Number(minLength); i++) {
+    //                     minval = String(minval) + String(0);
+    //                 }
+    //             }
+    //             Ice.log('minLength ', minLength, ' to minValue ', minval);
+    //             config.minValue = Number(minval);
+    //         }
+    //     } catch (e) {
+    //         Ice.generaExcepcion(e, paso);
+    //     }
+    //     me.callParent(arguments);
+    // },
     
     initComponent: function () {
         var me = this,
