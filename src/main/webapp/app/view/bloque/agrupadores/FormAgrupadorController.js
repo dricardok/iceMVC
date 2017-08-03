@@ -15,6 +15,7 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupadorController', {
     },
     cdperson:null,
     nmorddom:null,
+    
     cargar: function () {
         Ice.log('controller.formagrupador.cargar');
         var me = this,
@@ -29,9 +30,10 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupadorController', {
              me.cdperson.on({
                  change: function(){
                 	 me.cdperson = Ice.query('[xtype=numberfieldice]', refs.form.getReferences().cdperson);
+                	 
                      Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdperson.change ',me.cdperson.getValue());
                      if(me.cdperson.getValue()){
-                    	 if(me.nmorddom && me.cdperson)
+                    	 if( me.cdperson){
 	                         refs.gridDomicilios.getStore().load({
 	                             params: {
 	                                 'params.cdperson': me.cdperson.getValue()
@@ -39,9 +41,12 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupadorController', {
 	                             callback:function(){
 	                            	 if(Ice.classic()){
 	                            		 gridDomicilios.getSelectionModel().select(Number(me.nmorddom)-1);
+	                            	 }else{
+	                            		 var row = gridDomicilios.select(Number(me.nmorddom)-1);
 	                            	 }
 	                             }
 	                         });
+                    	 }
                          refs.gridDomicilios.show();
                          
                          
@@ -65,19 +70,23 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupadorController', {
                     if (action.params) {
                         Ice.cargarFormulario(view.down('[reference=form]'), action.params);
                         me.nmorddom=action.params.nmorddom;
-                        if(Ice.classic()){
-                        	if(me.nmorddom && me.cdperson)
-	                        	gridDomicilios.getStore().load({
-	                                params: {
-	                                    'params.cdperson': me.cdperson.getValue()
-	                                },
-	                                callback:function(){
-	                                	
-	                                	gridDomicilios.getSelectionModel().select(Number(action.params.nmorddom)-1);
-	                                }
-	                            });
+                        
+                    	if( me.cdperson)
+                        	gridDomicilios.getStore().load({
+                                params: {
+                                    'params.cdperson': me.cdperson.getValue()
+                                },
+                                callback:function(){
+                                	if(Ice.classic()){
+                                		gridDomicilios.getSelectionModel().select(Number(action.params.nmorddom)-1);
+                                	}else{
+	                            		var row = gridDomicilios.select(Number(me.nmorddom)-1);
+	                            		
+	                            	}
+                                }
+                          });
                         	
-                        }
+                        
                     }
                 }
             });

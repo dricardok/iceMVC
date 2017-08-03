@@ -13,8 +13,16 @@ Ext.define('Ice.view.field.TextfieldIce', {
             ///////////////////////////////////////////////////////
             me.callParent(arguments); /////////////////////////////
             ///////////////////////////////////////////////////////
+            
+            try {
+                me.el.dom.getElementsByTagName('input')[0].style['text-transform'] = 'uppercase';
+            } catch (e) {
+                Ice.logWarn('Warning al intentar hacer uppercase de textfieldice modern');
+            }
+            
             me.on({
                 blur: function (me) {
+                    me.setValue((me.getValue() || '').toUpperCase());
                     Ice.eventManager.change(me, me.getValue());
                 }
             });
