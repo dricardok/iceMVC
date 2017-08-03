@@ -334,6 +334,7 @@ Ext.define('Ice.view.main.MainController', {
                 padre: refs.mainContainerWrap,
                 style: 'left: 100%; margin-left: -50px; top: 100%; margin-top: -100px; padding-left: 0px; padding-right: 0px;transition: all 250ms;',
                 handler: function (me) {
+                    me.hide();
                     me.padre.scrollTo(0, 0);
                 }
             });
@@ -341,7 +342,11 @@ Ext.define('Ice.view.main.MainController', {
             refs.mainContainerWrap.on({
                 onScrollEnd: function (view) {
                     Ice.log('onScrollEnd');
-                    view.pivote[view.getScrollY() > 100 ? 'show' : 'hide']();
+                    if (view.getScrollY() > 100 && view.pivote.isHidden()) {
+                        view.pivote.show();
+                    } else if (view.getScrollY() <= 100 && !view.pivote.isHidden()) {
+                        view.pivote.hide();
+                    }
                 }
             });
         } catch (e) {

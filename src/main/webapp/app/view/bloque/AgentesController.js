@@ -81,7 +81,27 @@ Ext.define('Ice.view.bloque.AgentesController', {
             	success: function(action) {
 					if (action.params['valido'] === 'N') {
 						throw 'El agente no es valido';
-					}
+					}/* else {
+						
+						Ice.request({
+			            	mascara: 'Validando cuadro de comisi\u00F3n de agente',
+			            	url: Ice.url.bloque.agentes.validarCuadroAgente,
+			            	params: {
+			            		'params.cdunieco': view.getCdunieco(),
+			            		'params.cdramo'  : view.getCdramo(),
+			            		'params.estado'  : view.getEstado(),
+			            		'params.nmpoliza': view.getNmpoliza(),
+			            		'params.nmsuplem': view.getNmsuplem(),
+			            		'params.cdagente': codagente
+			            	},
+			            	success: function(action) {
+								if (action.params['valido'] === 'N') {
+									throw 'El agente debe tener el mismo cuadro de comision que el agente principal';
+								}
+			            	}
+			            });
+						
+					}*/
             	}
             });
      		

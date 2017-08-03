@@ -599,6 +599,7 @@ var Ice = (
      *     mascara: 'Guardando datos',              <<< Texto a mostrar mientras se espera respuesta (opcional)
      *     background: true,                        <<< Para que no robe el focus en pantalla (opcional)
      *     timeout: 1000*60*2                       <<< timeout para la peticion en milliseconds
+     *     async: true								<<< Tipo de peticion 
      * }
      * throws exception
      */
@@ -615,6 +616,7 @@ var Ice = (
         		Ext.Ajax.timeout = params.timeout;
         	}
             var requestParams = {
+            	async:params.async===false?false:true,
                 url: params.url,
                 success: function (response) {
                     Ice.log('Ice.request.response: ', response);
