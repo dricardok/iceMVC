@@ -67,4 +67,18 @@ public interface AgentesDAO {
 	 */
 	public boolean validaAgente(String cdagente, String cdramo, String cdproceso) throws Exception;
 	
+	/**
+	 * Valida que el cuadro de comision del agente sea el mismo que el del agente principal
+	 * @param cdunieco Sucursal
+	 * @param cdramo   Ramo de la poliza
+	 * @param estado   Estado de la poliza
+	 * @param nmpoliza Numero de poliza
+	 * @param nmsuplem Suplemento de la poliza
+	 * @param cdagente Clave de agente
+	 * @return true si el cuadro de comision del agente es el mismo que el del agente principal en la poliza, false si no lo es
+	 * @throws Exception
+	 */
+	public boolean validarCuadroComisionAgentePorPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsuplem, String cdagente) throws Exception;
+	
 }
