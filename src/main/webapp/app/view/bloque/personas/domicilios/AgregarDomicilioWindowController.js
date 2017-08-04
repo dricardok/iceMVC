@@ -71,7 +71,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.AgregarDomicilioWindowController
 		me=this,
 		view=me.getView();
 		try{
-			view.cerrar()
+			Ice.pop();
 		}catch(e){
 			Ice.manejaExcepcion(e,paso);
 		}
