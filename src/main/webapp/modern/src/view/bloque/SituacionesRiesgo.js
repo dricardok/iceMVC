@@ -115,12 +115,19 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
                             handler: function(grid, rowIndex, colIndex) {
                                 me.getController().onActualizar(grid, rowIndex, colIndex);
                             }
-                        } , {
+                        },{
                             xtype: 'button',
                             ui: 'action',
                             iconCls: 'x-fa fa-minus-circle',
                             handler: function(grid, rowIndex, colIndex){
                                 me.getController().onBorrarClic(grid, rowIndex, colIndex);
+                            }
+                        },{
+                            xtype: 'button',
+                            ui: 'action',
+                            iconCls: 'x-fa fa-copy',
+                            handler: function(grid, rowIndex, colIndex){
+                                me.getController().onCopiarSituacion(grid, rowIndex, colIndex);
                             }
                         }
                     ],

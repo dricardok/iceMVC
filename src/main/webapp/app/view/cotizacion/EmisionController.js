@@ -640,7 +640,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 	    	paso = "Realizando Pago";
     	    	
     	try {
-    		combobanco = Ice.query('[name=cdbanco]', form);			
+    		combobanco = form.getReferences().cdbanco;			
 			
 			//Ice.validarFormulario(view);					
 			
