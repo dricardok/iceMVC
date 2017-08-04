@@ -133,7 +133,7 @@ public class AgentesManagerImpl implements AgentesManager {
 	        
 	        paso = "Validando bloque de agentes";
 	        validaciones = emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, "0", nmsuplem, null,
-	                Bloque.AGENTES.getCdbloque(), cdusuari, cdsisrol);
+	                Bloque.AGENTES.getCdbloque(), null, null, null, cdusuari, cdsisrol);
 		} catch (Exception e) {
 			Utils.generaExcepcion(e, paso);
 		}
@@ -176,11 +176,16 @@ public class AgentesManagerImpl implements AgentesManager {
         	val = agentesDAO.validaAgente(cdagente, cdramo, cdproceso);
 	        
         }catch(Exception e){
-        	e.printStackTrace();
         	Utils.generaExcepcion(e, paso);
         }
 		return val;
 	}
 	
+	@Override
+	public boolean validarCuadroComisionAgentePorPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsuplem, String cdagente) throws Exception {
+		
+		return agentesDAO.validarCuadroComisionAgentePorPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdagente);
+	}
 	
 }

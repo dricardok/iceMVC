@@ -408,7 +408,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     "0", // nmsituac
                     nmsuplem,
                     null,
-                    Bloque.DATOS_GENERALES.getCdbloque(), cdusuari, cdsisrol
+                    Bloque.DATOS_GENERALES.getCdbloque(), datosPantalla.get("cdptovta"), datosPantalla.get("cdsubgpo"), datosPantalla.get("cdperfit"), cdusuari, cdsisrol
                     ));
             validaciones.addAll(emisionDAO.ejecutarValidaciones(
                     cdunieco,
@@ -418,7 +418,7 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                     "0", // nmsituac
                     nmsuplem,
                     null,
-                    Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque(), cdusuari, cdsisrol
+                    Bloque.ATRIBUTOS_DATOS_GENERALES.getCdbloque(),datosPantalla.get("cdptovta"), datosPantalla.get("cdsubgpo"), datosPantalla.get("cdperfit"), cdusuari, cdsisrol
                     ));
             
         } catch (Exception ex) {
