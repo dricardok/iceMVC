@@ -35,7 +35,9 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
                 cdperson;
             Ice.log('Ice.view.bloque.personas.PersonasPolizaController.custom refs:', refs);
             cdperson = Ice.query('[xtype=numberfieldice]', refs.form.getReferences().cdperson);
-            Ice.log('cdperson',cdperson);
+            cdrol = refs.form.getReferences().cdrol;
+            Ice.log('Ice.view.bloque.personas.PersonasPolizaController.custom.cdperson',cdperson);
+            Ice.log('Ice.view.bloque.personas.PersonasPolizaController.custom.cdrol',cdrol);
             cdperson.on({
                 change: function(){
                     Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdperson.change ',cdperson.getValue());

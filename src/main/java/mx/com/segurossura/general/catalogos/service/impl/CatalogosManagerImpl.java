@@ -143,7 +143,7 @@ public class CatalogosManagerImpl implements CatalogosManager {
                 case ROLES_X_RAMO:
                     paso = "Recuperando catalogo roles por ramo";
                     lista = new ArrayList<>();
-                    List<Map<String, String>> listaRoles = catalogosDAO.obtenerRolXRamo(params.get("cdramo"));
+                    List<Map<String, String>> listaRoles = catalogosDAO.obtenerRolXRamo(params.get("cdramo"), params.get("cdnivel"));
                     if (listaRoles != null) {
                         for (Map<String, String> registroTmanteni: listaRoles) {
                             lista.add(new BaseVO(registroTmanteni.get("cdrol"), registroTmanteni.get("descripl")));

@@ -683,7 +683,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             valores = valores.trim();
         }
         
-        logger.debug(Utils.log("****** ejecutarValoresDefecto valores = ", valores));
+        logger.info("****** ejecutarValoresDefecto {} {}-{}-{}-{}-{} sit {} valores = {}", 
+        		cdbloque, cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsituac, valores);
         
         Map<String, String> valoresMap = new LinkedHashMap<String, String>();
         
@@ -694,7 +695,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             }
         }
         
-        logger.debug(Utils.log("****** ejecutarValoresDefecto valoresMap = ", valoresMap));
+        logger.info("****** ejecutarValoresDefecto {} {}-{}-{}-{}-{} sit {} valoresMap = {}", 
+        		cdbloque, cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsituac, valoresMap);
+        
         return valoresMap;
     }
 
@@ -838,7 +841,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         if (validaciones == null) {
             validaciones = new ArrayList<Map<String, String>>();
         }
-        logger.debug(Utils.log("****** PKG_STRUCT_ALEA.P_GET_VALIDA_BLQ validaciones = ", validaciones));
+        logger.info("****** PKG_STRUCT_ALEA.P_GET_VALIDA_BLQ {} {}-{}-{}-{}-{} sit {} validaciones = {}", 
+        		cdbloque, cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsituac, validaciones);
+        
         return validaciones;
     }
 
