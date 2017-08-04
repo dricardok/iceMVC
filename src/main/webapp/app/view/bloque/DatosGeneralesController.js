@@ -86,8 +86,13 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                     change: function (me, value) {
                         var paso = 'Calculando fin de vigencia';
                         try {
-                            me.cambiarFechasTemporalidad(refs);
-                            //refs.b1_feproren.setValue(Ext.Date.add(value, Ext.Date.YEAR, 1));
+                            alert('Antes de cambiar fecha');
+                            if(refs.b1_ottempot.getValue()){
+                                me.cambiarFechasTemporalidad(refs);
+                            } else {
+                                refs.b1_feproren.setValue(Ext.Date.add(value, Ext.Date.YEAR, 1));
+                            }
+                            alert('Despues de cambiar fecha');
                         } catch (e) {
                             Ice.logWarn(paso, e);
                         }
@@ -103,19 +108,8 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 if(refs.b1_ottempot){
                     refs.b1_ottempot.on({
                         change: function(){
-                            Ice.log('Cambiando store ottempot cambiando',refs.b1_ottempot);
+                            Ice.log('Cambiando store ottempot cambiando',refs.b1_ottempot);                            
                             me.cambiarFechasTemporalidad(refs);
-                            /*if(refs.b1_ottempot.getValue() == 'R'){
-                                refs.b1_fevencim.setValue('');
-                                refs.b1_fevencim.hide();
-                                refs.b1_feproren.setValue(Ext.Date.add(refs.b1_feefecto.getValue(), Ext.Date.YEAR, 1));
-                                refs.b1_feproren.show();
-                            } else {
-                                refs.b1_feproren.setValue('');
-                                refs.b1_feproren.hide();
-                                refs.b1_fevencim.setValue(Ext.Date.add(refs.b1_feefecto.getValue(), Ext.Date.YEAR, 1));
-                                refs.b1_fevencim.show();
-                            }*/
                         }
                     });
                 }
