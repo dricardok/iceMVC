@@ -122,5 +122,15 @@ Ext.define('Ice.view.field.ComboIce', {
                 }
             }
         }
+    },
+    
+    getRawValue: function () {
+    	var me = this,
+    	    paso = 'Recuperando descripci\u00f3n de la selecci\u00f3n del combo';
+    	try {
+    		return me.el.dom.getElementsByTagName('input')[0].value;
+    	} catch (e) {
+    		Ice.generaExcepcion(e, paso);
+    	}
     }
 });
