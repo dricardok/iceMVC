@@ -5,14 +5,18 @@ Ext.define("Ice.view.bloque.documentos.historial.TurnadosChart",{
     controller: 'turnadoschart',
 
 
-    width: 650,
+    
+    
+    config	:	{
+    	
+    	inicio	:	null,
+		fin		:	null
+    },
     
     constructor:function(config){
     	
     	var paso="Turnados chart",me=this;
 		try{
-			Ice.log("Entrada _:" ,config);
-			//var store = Ext.create("Ice.store.bloque.mesacontrol.historial.TurnadosStore",{ntramite:config.ntramite,});
 			var data=[];
 			Ice.request({
 				url		:	Ice.url.bloque.mesacontrol.historial.obtenerThmesacontrol,
@@ -21,7 +25,6 @@ Ext.define("Ice.view.bloque.documentos.historial.TurnadosChart",{
 				},
 				async	:	false,
 				success:function(datos){
-					Ice.log("Data :",datos);
 					data = datos.list;
 				}
 			});
@@ -29,24 +32,28 @@ Ext.define("Ice.view.bloque.documentos.historial.TurnadosChart",{
 			Ice.log("data",data);
 			data.forEach(function(it){
 				fus["data"+i]=it;
-				Ice.log("data..",it)
 				
 				i++;
 			});
+			config.inicio = Ext.Date.parse(fus["data0"].fefecha, "d/m/Y H:i").getTime();
+			if(Ext.isEmpty(fus["data"+(i-1)].fefecha_fin)){
+				fus["data"+(i-1)].fefecha_fin=Ext.Date.format(new Date(),"d/m/Y H:i")
+				config.fin    = (new Date()).getTime();
+			}else{
+				config.fin    = Ext.Date.parse(fus["data"+(i-1)].fefecha_fin, "d/m/Y H:i").getTime();
+			}
 			var objStore={
 					ntramite	:	config.ntramite
 			};
 			Ice.log("fus :",fus)
 			
 			for(var key in fus){
-				Ice.log(" key  val",key , fus[key].fefecha,"--------",fus[key].fefecha_fin)
-				objStore[key] =1472768580000+ (Number(
+				objStore[key] = (Number(
 						Ext.Date.parse(fus[key].fefecha_fin, "d/m/Y H:i").getTime()
 						)-Number(
 								Ext.Date.parse(fus[key].fefecha, "d/m/Y H:i").getTime()
 								));
 			}
-			Ice.log("objStore",objStore);
 			
 			var dataStore=[
 				objStore
@@ -63,13 +70,13 @@ Ext.define("Ice.view.bloque.documentos.historial.TurnadosChart",{
 			for(var key in fus){
 				dataFeldX.push(key);
 			}
-			Ice.log("dataFieldX : ",dataFeldX,"\n dataTitle : ",dataTitle);
 			
 			config.items=[{
 		        xtype: 'cartesian',
 		        reference: 'chart',
+		        title		:	"Turnados",
 		        width: '100%',
-		        height: 500,
+		        height:	300,
 		        legend: {
 		            docked: 'right'
 		        },
@@ -79,35 +86,16 @@ Ext.define("Ice.view.bloque.documentos.historial.TurnadosChart",{
 		        },
 		        insetPadding: 40,
 		        flipXY: true,
-		        sprites: [{
-		            type: 'text',
-		            text: 'Bar Charts - 100% Stacked Bars',
-		            fontSize: 22,
-		            width: 100,
-		            height: 30,
-		            x: 40, // the sprite x position
-		            y: 20  // the sprite y position
-		        }, {
-		            type: 'text',
-		            text: 'Data: Browser Stats 2012',
-		            fontSize: 10,
-		            x: 12,
-		            y: 480
-		        }, {
-		            type: 'text',
-		            text: 'Source: http://www.w3schools.com/',
-		            fontSize: 10,
-		            x: 12,
-		            y: 495
-		        }],
 		        axes: [{
 		            type: 'numeric',
 		            fields: dataFeldX[0],
 		            position: 'bottom',
 		            grid: true,
-//		            minimum: objStore .data0,
-//		            maximum: objStore .data1,
-		           // majorTickSteps: ,
+		            label: {
+		                rotate: {
+		                    degrees: -45
+		                }
+		            },
 		            renderer: 'onAxisLabelXRender'
 		        }, {
 		            type: 'category',
@@ -131,16 +119,14 @@ Ext.define("Ice.view.bloque.documentos.historial.TurnadosChart",{
 		            },
 		            tooltip: {
 		                trackMouse: true,
-		                //renderer: 'onSeriesTooltipRender'
+		                renderer: 'onSeriesTooltipRender'
 		            }
 		        }]
 		    }];
 		}catch(e){
 			Ice.manejaExcepcion(e,paso);
 		}
-		Ice.log("Medio _:" ,config);
 		me.callParent([config]);
-		Ice.log("Sal _:" ,config);
     }
 
     
