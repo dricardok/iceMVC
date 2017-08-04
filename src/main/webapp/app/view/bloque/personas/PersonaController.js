@@ -9,7 +9,8 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     	try{
     		view.down('[name=fenacimi]').on({
     			change:function(it){
-    				view.down('#frmPersona [fieldLabel*=Edad]')
+    				
+    				view.down('#frmPersona [reference=_edad_]')
     				.setValue(
     						Ext.Date.diff(
     								Ext.Date.parse(it.getValue(),'d/m/Y'),
@@ -188,7 +189,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     				try{
 	    				var datos=json.params || {};
 	    				Ice.cargarFormulario(root,datos);
-	    				view.down('#frmPersona [fieldLabel=Edad]')
+	    				view.down('#frmPersona [reference=_edad_]')
 	    				.setValue(
 	    						Ext.Date.diff(
 	    								Ext.Date.parse(view.down('[name=fenacimi]').getValue(),'d/m/Y'),
