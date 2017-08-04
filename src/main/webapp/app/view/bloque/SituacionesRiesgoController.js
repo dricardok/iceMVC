@@ -461,6 +461,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             var form = refs.form;
             if (form.isHidden() !== true) {
                 Ice.validarFormulario(form);
+                me.guardarBloque();
             }
             Ice.request({
                 mascara: 'Antes de lanzar validaciones de bloque de situacion',

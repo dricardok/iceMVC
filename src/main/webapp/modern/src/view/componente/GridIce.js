@@ -43,7 +43,14 @@ Ext.define('Ice.view.componente.GridIce', {
 						col.ui = 'action';
 						col.width = null;
 						delete col.width;
+
+						var colHidden =  col.hidden === true ? true:false;
+						col.hidden = false;
+						delete col.hidden;
+						
 						cols.push({
+							colType: col.colType || '',
+							hidden: colHidden,
 							width: 60,
 							cell: {
 								xtype: 'widgetcell',
