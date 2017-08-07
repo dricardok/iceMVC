@@ -1,5 +1,5 @@
 Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
-	extend		:	"Ext.Panel",
+	extend		:	"Ice.view.componente.PanelPaddingIce",
 	xtype		:	"historialpanel",
 	controller 	: 	"historialpanel",
 	//scrollable	:	true,
@@ -7,6 +7,10 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
         
        // 'Ext.chart.CartesianChart'
     ],
+    
+    config		:	{
+    	ntramite		:	null
+    },
 	
 	constructor: function (config) {
 		
@@ -15,12 +19,10 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 			
 			var graficaEve={
 					xtype		:	'cartesian',
-					scrollable	:	true,
-					
+					title		:	"Eventos",
 					width		:	"40%",
 					height		:	250,
 					innerPadding: 	20,
-			        insetPadding: 	'50 40 10 10',
 			        store: {
 			            type: 'eventosstore'
 			        },
@@ -74,87 +76,21 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 					
 			};
 			
-			
-			var graficaTur={
-			        xtype: 'cartesian',
-			        reference: 'chart',
-			        width: '40%',
-			        height: 250,
-			        legend: {
-			            docked: 'right'
-			        },
-			        store: {
-			            type: 'turnadosstore'
-			        },
-			        insetPadding: 40,
-			        flipXY: true,
-			        sprites: [{
-			            type: 'text',
-			            text: 'Bar Charts - 100% Stacked Bars',
-			            fontSize: 22,
-			            width: 100,
-			            height: 30,
-			            x: 40, // the sprite x position
-			            y: 20  // the sprite y position
-			        }, {
-			            type: 'text',
-			            text: 'Data: Browser Stats 2012',
-			            fontSize: 10,
-			            x: 12,
-			            y: 480
-			        }, {
-			            type: 'text',
-			            text: 'Source: http://www.w3schools.com/',
-			            fontSize: 10,
-			            x: 12,
-			            y: 495
-			        }],
-			        axes: [{
-			            type: 'numeric',
-			            fields: 'data1',
-			            position: 'bottom',
-			            grid: true,
-			            minimum: 0,
-			            maximum: 100,
-			            majorTickSteps: 10,
-			           // renderer: 'onAxisLabelRender'
-			        }, {
-			            type: 'category',
-			            fields: 'month',
-			            position: 'left',
-			            grid: true
-			        }],
-			        series: [{
-			            type: 'bar',
-			            fullStack: true,
-			            title: [ 'IE', 'Firefox', 'Chromeee', 'Safari', 'Others' ],
-			            xField: 'month',
-			            yField: [ 'data1', 'data2', 'data3', 'data4', 'other' ],
-			            axis: 'bottom',
-			            stacked: true,
-			            style: {
-			                opacity: 0.80
-			            },
-			            highlight: {
-			                fillStyle: 'yellow'
-			            },
-			            tooltip: {
-			                trackMouse: true,
-			                //renderer: 'onSeriesTooltipRender'
-			            }
-			        }],
-			        flex	:1
-			    };
-			
 			config.items = [
 				{
-					xtype		:	"panel",
+					xtype		:	"panelice",
 					width		:	"100%",
 					layout		:	"hbox",
-					title		:	"Grafica",
+					title		:	"Historial",
 					//scrollable	:	true,
 					items		:	[
-						graficaEve,Ext.create("Ice.view.bloque.documentos.historial.TurnadosChart",{flex:1})
+						graficaEve,
+						
+					    {
+							xtype		:	"turnadoschart",
+							ntramite	:	config.ntramite,
+							flex		:	1
+					    }
 					]
 				},
 				{
@@ -189,7 +125,59 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 					store		:		 {
 			            type: 'eventosstore'
 			        }
+				},
+				{
+					xtype		:	'gridice',
+					title		:	"Turnados",
+					columns		:	[
+						{
+							text		:	"Usuario",	
+							dataIndex	:	"dsusuari",
+							flex		:	3,
+							renderer	:	function(dat,m,record){
+								return record.get("cdusuari") + " - " + record.get("dsusuari");
+							}
+						}
+						,
+						{
+							text		:	"Inicio",	
+							flex		:	1.5,
+							dataIndex	:	"fefecha"
+						}
+						,
+						{
+							text		:	"Fin",	
+							flex		:	1.5,
+							dataIndex	:	"fefecha_fin",
+							
+						}
+						,
+						{
+							text		:	"Tiempo",	
+							dataIndex	:	"dsestatus",
+							flex		:	2.5,
+							renderer	:	function(dat,m,record){
+								
+								var nfecha=(Number(
+										Ext.Date.parse(record.get("fefecha_fin"), "d/m/Y H:i").getTime()
+								)-Number(
+										Ext.Date.parse(record.get("fefecha"), "d/m/Y H:i").getTime()
+										));
+						        var tSeg = Math.floor(Number(nfecha) / 1000),
+							        tMin = Math.floor(tSeg / 60),
+							        tHor = Math.floor(tMin / 60),
+							        tDia = Math.floor(tHor / 24);
+						        
+						        return tDia+ ' día(s), ' + tHor%24 + ' hora(s), ' + tMin%60 +
+						             ' minuto(s).';
+							}
+						}
+					],
+					store		:		 {
+			            type: 'turnadosstore'
+			        }
 				}
+				
 			];
 		}catch(e){
 			Ice.manejaExcepcion(e,paso);

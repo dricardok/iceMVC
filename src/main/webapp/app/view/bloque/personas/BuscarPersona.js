@@ -54,6 +54,7 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                     items: comps.BUSQUEDA_PERSONA.FORMULARIO.items,
                     buttons: [{
                         text: 'Buscar',
+                        iconCls: 'x-fa fa-search',
                         handler: 'onBuscar'
                     }]
                 }, {
@@ -75,7 +76,21 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                                 messageProperty: 'message'
                             }
                         }                               
-                    }
+                    },
+                    actionColumns	:	[
+        				{
+								xtype : 'actioncolumn',
+								items : [
+											{
+												iconCls : 'x-fa fa-edit',
+												tooltip : 'Editar',
+												handler : function(grid,row,col){
+													me.getController().editarPersona(grid,row,col)
+												}
+											}
+										]
+							}
+        			]
                 }
             ].concat(config.items || []);
 

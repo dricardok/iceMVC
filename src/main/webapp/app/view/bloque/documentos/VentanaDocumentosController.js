@@ -71,7 +71,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                 } else {
                     window.open(Ice.url.bloque.documentos.verArchivo+'?'+
                         'params.url='+encodeURIComponent(data.url)+
-                        '&params.filename='+data.dsdocume,
+                        '&params.dsdocume='+data.dsdocume,
                         '_blank',
                         'width=800, height=600'
                     );
@@ -116,6 +116,14 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                         }
                     );                    
                 } else {
+                    window.open(Ice.url.bloque.documentos.descargarArchivo+'?'+
+                        'params.url='+encodeURIComponent(data.url)+
+                        '&params.ruta='+encodeURIComponent(data.ruta)+
+                        '&params.dsdocume='+encodeURIComponent(data.dsdocume)+
+                        '&params.cdtipdoc='+data.cdtipdoc,
+                        '_blank',
+                        'width=800, height=600'
+                    );/*
                     var panel = Ext.create('Ext.form.Panel').submit(
                         {
                             url: Ice.url.bloque.documentos.descargarArchivo,
@@ -129,6 +137,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                             }
                         }
                     );
+                    */
 //                    Ice.push(panel);
                 }
             }
@@ -242,18 +251,44 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
             swotros = false;
         try{
             var columns = grid.getColumns();
+            Ice.log('Ice.view.bloque.documentos.VentanaDocumentosController.mostrarActionColumnsSlip columns',columns);
             if(columns){
                 if(columns.length > 0){
                     if(swmostrar == false){
                         swotros = true;
                     }
                     for(var i = 0; i < columns.length; i++){
-                        Ice.log('column xtype',columns[i].xtype);
-                        if('actioncolumn' == columns[i].xtype){
-                            if('slip' == columns[i].colType){
-                                this.mostrarColumna(columns[i], swmostrar);
+                        var column, xtype, colType, reference;
+                        if(Ice.classic()){
+                            column = columns[i];
+                            xtype = column.xtype;
+                            colType = column.colType;
+                        } else {
+                            column = columns[i].config.cell;
+                            xtype = column.xtype;
+                            if(column.widget){
+                                if(column.widget.colType){
+                                    colType = column.widget.colType;
+                                }
+                                if(column.widget.reference){
+                                    reference = column.widget.reference;
+                                }
+                            }
+                        }
+                        //Ice.log('column', column, 'xtype', xtype, 'colType', colType);
+                        if('actioncolumn' == xtype || 'widgetcell' == xtype){
+                            Ice.log('columna ',i);
+                            if('slip' == colType){
+                                //Ice.log('Ice.sesion.cdsisrol', Ice.sesion.cdsisrol, 'Ice.constantes.roles.AGENTE', Ice.constantes.roles.AGENTE);
+                                if(Ice.sesion.cdsisrol == Ice.constantes.roles.AGENTE){
+                                    if(column.reference != 'upload_slip'){
+                                        me.mostrarColumna(columns[i], swmostrar);
+                                    }
+                                } else {
+                                    me.mostrarColumna(columns[i], swmostrar);
+                                }
                             } else {
-                                this.mostrarColumna(columns[i], swotros);
+                                me.mostrarColumna(columns[i], swotros);
                             }
                         }
                     }
@@ -265,6 +300,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
     },
 
     mostrarColumna(column, swmostrar){
+        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.mostrarColumna column', column, 'swmostrar', swmostrar);
         if(swmostrar == true){
             column.show();
         } else {

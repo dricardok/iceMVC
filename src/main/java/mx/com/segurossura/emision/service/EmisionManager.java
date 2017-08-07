@@ -95,7 +95,7 @@ public interface EmisionManager {
      * @return
      * @throws Exception
      */
-    public Map<String, String> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion) throws Exception;
+    public Map<String, String> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion, String usuario) throws Exception;
     
     
     /**

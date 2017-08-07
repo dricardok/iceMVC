@@ -146,6 +146,7 @@ public class AgrupadoresAction extends PrincipalCoreAction {
                    cdagrupa    = params.get("cdagrupa"),
                    nmsuplem    = params.get("nmsuplem"),
                    status      = params.get("status"),
+//                   nmorddom    = params.get("nmorddom"),
                    nmsuplemEnd = params.get("nmsuplemEnd"),
                    accion      = params.get("accion");
             

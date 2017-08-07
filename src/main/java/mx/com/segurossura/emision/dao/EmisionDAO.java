@@ -63,6 +63,8 @@ public interface EmisionDAO {
 
 	public String obtenerCuadroComisionesDefault (String cdramo) throws Exception;
 	
+	public String obtenerCuadroComisionAgente (String cdagente, String cdramo) throws Exception;
+	
 	/**
 	 * Ejecuta las validaciones de una poliza para el bloque indicado
 	 * @param cdunieco Sucursal de la poliza
@@ -73,11 +75,14 @@ public interface EmisionDAO {
 	 * @param nmsuplem Suplemento de la poliza
 	 * @param cdperson Codigo de la persona a validar o null si no se validara
 	 * @param cdbloque Codigo del bloque de datos a validar
+	 * @param cdptovta TODO
+	 * @param cdsubgpo TODO
+	 * @param cdperfit TODO
 	 * @return Lista de errores de validacion del bloque
 	 * @throws Exception
 	 */
 	public List<Map<String, String>> ejecutarValidaciones (String cdunieco, String cdramo, String estado, String nmpoliza,
-	        String nmsituac, String nmsuplem, String cdperson, String cdbloque, String cdusuari, String cdsisrol) throws Exception;
+	        String nmsituac, String nmsuplem, String cdperson, String cdbloque, String cdptovta, String cdsubgpo, String cdperfit, String cdusuari, String cdsisrol) throws Exception;
 	
 	public List<Map<String,String>> obtieneMpoligarTabla(String cdunieco, String cdramo, String estado,
             String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception;
@@ -420,4 +425,6 @@ public interface EmisionDAO {
 	 * @throws Exception
 	 */
 	public void movimientoTgrexcoa (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdcapita, String nmsuplem, String accion) throws Exception;
+	
+	public List<Map<String, String>> obtenerRegistrosPerfilamiento (String cdusuari, String cdramo) throws Exception;
 }

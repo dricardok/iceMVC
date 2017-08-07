@@ -86,7 +86,13 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                     change: function (me, value) {
                         var paso = 'Calculando fin de vigencia';
                         try {
-                            refs.b1_feproren.setValue(Ext.Date.add(value, Ext.Date.YEAR, 1));
+                            alert('Antes de cambiar fecha');
+                            if(refs.b1_ottempot.getValue()){
+                                me.cambiarFechasTemporalidad(refs);
+                            } else {
+                                refs.b1_feproren.setValue(Ext.Date.add(value, Ext.Date.YEAR, 1));
+                            }
+                            alert('Despues de cambiar fecha');
                         } catch (e) {
                             Ice.logWarn(paso, e);
                         }
@@ -97,6 +103,17 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             //    refs.b1_feefecto.setValue(new Date());
             //}
             
+            if(refs.b1_ottempot){
+                Ice.log('Cambiando store ottempot',refs.b1_ottempot);
+                if(refs.b1_ottempot){
+                    refs.b1_ottempot.on({
+                        change: function(){
+                            Ice.log('Cambiando store ottempot cambiando',refs.b1_ottempot);                            
+                            me.cambiarFechasTemporalidad(refs);
+                        }
+                    });
+                }
+            }
             
             // agregar disparadores valores defecto fijos
             for (var i = 0; i < view.getCamposDisparanValoresDefectoFijos().length; i++) {
@@ -469,6 +486,9 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             valores['params.nmpoliza'] = view.getValues().nmpoliza || view.getNmpoliza();
             valores['params.nmsuplem'] = view.getNmsuplem();
             valores['params.status']   = view.getStatus();
+            valores['params.cdptovta']   = view.getCdptovta();
+            valores['params.cdsubgpo']   = view.getCdsubgpo();
+            valores['params.cdperfit']   = view.getCdperfil();
             
             paso = 'Guardando datos generales';
             Ice.request({
@@ -485,7 +505,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                             
                             var error = false;
                             for (var i = 0; i < action.list.length; i++) {
-                                if (action.list[i].tipo.toLowerCase() === 'error') {
+                                if ((action.list[i].tipo || '').toLowerCase() === 'error') {
                                     error = true; // para que no avance si hay validaciones tipo "error"
                                     break;
                                 }
@@ -590,6 +610,23 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
+        }
+    },
+
+    cambiarFechasTemporalidad: function(refs){
+        Ice.log('Ice.view.bloque.DatosGeneralesController.cambiarFechasTemporalidad refs',refs);
+        if(refs){
+            if(refs.b1_ottempot.getValue() == 'R'){
+                refs.b1_fevencim.hide();
+                refs.b1_feproren.show();
+                refs.b1_fevencim.setValue(null);
+                refs.b1_feproren.setValue(Ext.Date.add(new Date(refs.b1_feefecto.getValue()), Ext.Date.YEAR, 1));
+            } else {
+                refs.b1_fevencim.show();
+                refs.b1_feproren.hide();
+                refs.b1_feproren.setValue(null);
+                refs.b1_fevencim.setValue(Ext.Date.add(new Date(refs.b1_feefecto.getValue()), Ext.Date.YEAR, 1));
+            }
         }
     }
 });

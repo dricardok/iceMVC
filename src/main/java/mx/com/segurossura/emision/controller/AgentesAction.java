@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.biosnettcs.core.Constantes;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
+import com.biosnettcs.portal.model.RolSistema;
 import com.biosnettcs.portal.model.UsuarioVO;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -53,7 +55,7 @@ public class AgentesAction extends PrincipalCoreAction {
         try {
         
         	Utils.validateSession(session);
-            Utils.validate(params, "No se recibieron datos para cargar cotizaci\u00f3n");
+            Utils.validate(params, "No se recibieron datos para cargar agente");
             String cdunieco = params.get("cdunieco"),
                    cdramo = params.get("cdramo"),
                    estado = params.get("estado"),
@@ -93,7 +95,7 @@ public class AgentesAction extends PrincipalCoreAction {
         try {
         
         	Utils.validateSession(session);
-            Utils.validate(params, "No se recibieron datos para cargar cotizaci\u00f3n");
+            Utils.validate(params, "No se recibieron datos para cargar agentes");
             String cdunieco = params.get("cdunieco"),
                    cdramo = params.get("cdramo"),
                    estado = params.get("estado"),
@@ -136,7 +138,7 @@ public class AgentesAction extends PrincipalCoreAction {
         try {
         	this.session = ActionContext.getContext().getSession();
         	UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
-            Utils.validate(params, "No se recibieron datos para cargar cotizaci\u00f3n");
+            Utils.validate(params, "No se recibieron datos para guardar agentes");
             String cdunieco = params.get("cdunieco"),
                    cdramo = params.get("cdramo"),
                    estado = params.get("estado"),
@@ -175,13 +177,20 @@ public class AgentesAction extends PrincipalCoreAction {
         logger.debug(Utils.log("### cargar params: ", params));
         
         try {
-        
-        	Utils.validateSession(session);
-            Utils.validate(params, "No se recibieron datos para cargar cotizaci\u00f3n");
+        	UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+            Utils.validate(params, "No se recibieron datos para buscar agentes");
             String cdagente = params.get("cdagente");
+            String cdgrupo = params.get("cdgrupo");
+            String cdptovta = params.get("cdptovta");
             Utils.validate(cdagente, "Se debe indicar codigo de agente");
             
-            list = agentesManager.buscarAgentes(cdagente, "CLAVE");
+            //Si el rol es agente y tenemos el grupo y punto de venta, buscamos los agentes en dicho grupo:
+			if (RolSistema.AGENTE.getCdsisrol().equals(usuario.getRolActivo().getCdsisrol())
+					&& StringUtils.isNotBlank(cdgrupo) && StringUtils.isNotBlank(cdptovta)) {
+        		list = agentesManager.buscarAgentesEnGrupo(cdagente, cdgrupo, cdptovta);
+        	} else {
+        		list = agentesManager.buscarAgentes(cdagente, "CLAVE");
+        	}
             
             success = true;
             
@@ -205,7 +214,7 @@ public class AgentesAction extends PrincipalCoreAction {
         try {
         
         	Utils.validateSession(session);
-            Utils.validate(params, "No se recibieron datos para cargar cotizaci\u00f3n");
+            Utils.validate(params, "No se recibieron datos para validar agente");
             String cdagente = params.get("cdagente");
             String cdramo = params.get("cdramo");
             String cdproceso = params.get("cdproceso");
@@ -224,7 +233,42 @@ public class AgentesAction extends PrincipalCoreAction {
         return SUCCESS;
     }
 	
-
+	
+	@Action(
+            value = "agentes/validarCuadroAgente", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String validarCuadroAgente() {
+        
+        try {
+        	Utils.validateSession(session);
+            Utils.validate(params, "No se recibieron datos para validar agente");
+            Utils.validate(
+            		 params.get("cdunieco"), "Falta la sucursal",
+            		 params.get("cdramo"),   "Falta el ramo",
+            		 params.get("estado"),   "Falta el estado",
+            		 params.get("nmpoliza"), "Falta el numero de poliza",
+            		 params.get("nmsuplem"), "Se debe indicar el suplemento de la \\u00F3",
+            		 params.get("cdagente"), "Se debe indicar el agente"
+                     );
+            
+			params.put("valido",
+					agentesManager.validarCuadroComisionAgentePorPoliza(params.get("cdunieco"), params.get("cdramo"),
+							params.get("estado"), params.get("nmpoliza"), params.get("nmsuplem"), params.get("cdagente"))
+					? Constantes.SI : Constantes.NO);
+            
+            success = true;
+            
+        } catch (Exception ex) {
+            message = Utils.manejaExcepcion(ex);
+        }
+        
+        return SUCCESS;
+    }
+	
+	
 	public boolean isSuccess() {
 		return success;
 	}

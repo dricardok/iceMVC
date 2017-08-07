@@ -1,10 +1,14 @@
 Ext.define('Ice.view.bloque.personas.PersonaPoliza', {	
 	extend  :       'Ice.view.componente.PanelPaddingIce',
-	xtype	:		'personapoliza',
+	xtype	:		'c',
 	controller : 'personapoliza',
 
     // config ext
-	scrollable: true,
+    platformConfig: {
+        '!desktop': {
+            scrollable: true,
+        }
+    },
 
     // config no ext
 	config	:		{
@@ -56,7 +60,8 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                 {
                     xtype: 'cdpersoncdrol',
                     reference: 'form',
-                    cdramo: config.cdramo
+                    cdramo: config.cdramo,
+                    nmsituac: config.nmsituac
                 }, {
                     xtype: 'domicilios',
                     reference: 'gridDomicilios',

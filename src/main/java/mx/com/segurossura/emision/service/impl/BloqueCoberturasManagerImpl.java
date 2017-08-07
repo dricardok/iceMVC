@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,7 +153,14 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 															d-> d.get("cdatribu").equals(m.get("name_cdatribu"))
 													).findFirst();
 				if(res.isPresent()){
+					String tipocampo = m.get("tipocampo");
 					m.putAll(res.get());
+					if (StringUtils.isNotBlank(tipocampo)) {
+						logger.debug(Utils.log("Se respeta el tipocampo del atributo de cobertura: ", pv_cdgarant_i, ", ",
+							" atributo: ", m.get("name_cdatribu"), ", tipocampo: ", tipocampo));
+						m.put("tipocampo", tipocampo);
+                        m.put("swformat", tipocampo);
+					}
 					logger.debug("fuss"+m.toString());
 					resultado.add(m);
 				}
@@ -205,20 +213,22 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 						emisionDAO.movimientoTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, m.get("name").substring("otvalor".length()), pv_nmsuplem_i, pv_nmsituac_i, pv_cdgarant_i, m.get("valor"), "U");
 					}else{//mpolicap
 						emisionDAO.movimientoMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, pv_cdcapita_i, m.get("valor"), pv_nmsuplem_i, "U");
+						emisionDAO.ejecutarValoresDefecto(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i,
+						        Bloque.ATRIBUTOS_GARANTIAS.getCdbloque(), pv_cdgarant_i, null, null, null, null, cdusuari, cdsisrol);
 					}
 				}
 			}
 			paso="Validando";
 			lista.addAll(
 					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null,
-					        Bloque.CAPITALES.getCdbloque(), cdusuari, cdsisrol));
+					        Bloque.CAPITALES.getCdbloque(), null, null, null, cdusuari, cdsisrol));
 			
 			lista.addAll(
 					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null,
-					        Bloque.GARANTIAS.getCdbloque(), cdusuari, cdsisrol));
+					        Bloque.GARANTIAS.getCdbloque(), null, null, null, cdusuari, cdsisrol));
 			lista.addAll(
 					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null,
-					        Bloque.ATRIBUTOS_GARANTIAS.getCdbloque(), cdusuari, cdsisrol));
+					        Bloque.ATRIBUTOS_GARANTIAS.getCdbloque(), null, null, null, cdusuari, cdsisrol));
 		}catch(Exception ex)
 		{
 			Utils.generaExcepcion(ex, paso);

@@ -56,6 +56,10 @@ public class PersonasPolizaManagerImpl implements PersonasPolizaManager {
         try{
             paso = "Consultando datos";
             personasPolizaDAO.movimientoMpoliper(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdrol, cdperson, cdrolNew, cdpersonNew, nmsuplem_sesion, nmsuplem_bloque, nmorddom, swfallec, accion);
+            
+            if ("0".equals(nmsituac) && "TO".equals(cdrol)) {
+                personasPolizaDAO.clonarTomadorParaAseguradoYAgrupador(cdunieco, cdramo, estado, nmpoliza, nmsuplem_sesion);
+            }
         } catch(Exception ex) {
             Utils.generaExcepcion(ex, paso);
         }

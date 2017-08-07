@@ -683,7 +683,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             valores = valores.trim();
         }
         
-        logger.debug(Utils.log("****** ejecutarValoresDefecto valores = ", valores));
+        logger.info("****** ejecutarValoresDefecto {} {}-{}-{}-{}-{} sit {} valores = {}", 
+        		cdbloque, cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsituac, valores);
         
         Map<String, String> valoresMap = new LinkedHashMap<String, String>();
         
@@ -694,7 +695,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             }
         }
         
-        logger.debug(Utils.log("****** ejecutarValoresDefecto valoresMap = ", valoresMap));
+        logger.info("****** ejecutarValoresDefecto {} {}-{}-{}-{}-{} sit {} valoresMap = {}", 
+        		cdbloque, cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsituac, valoresMap);
+        
         return valoresMap;
     }
 
@@ -786,10 +789,37 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         }
     }
     
+    
+	@Override
+	public String obtenerCuadroComisionAgente (String cdagente, String cdramo) throws Exception {
+	    Map<String, Object> params = new LinkedHashMap<String, Object>();
+	    params.put("pv_cdagente_i", cdagente);
+	    params.put("pv_cdramo_i",   cdramo);
+        Map<String, Object> resultado = ejecutaSP(new ObtenerCuadroComisionAgenteSP(getDataSource()), params);
+        String nmcuadro = (String) resultado.get("pv_nmcuadro_o");
+        if (StringUtils.isBlank(nmcuadro)) {
+            throw new ApplicationException("No hay cuadro de comisiones default para el ramo");
+        }
+        return nmcuadro;
+    }
+    
+    protected class ObtenerCuadroComisionAgenteSP extends StoredProcedure{
+        protected ObtenerCuadroComisionAgenteSP(DataSource dataSource) {
+            super(dataSource,"PKG_DATA_ALEA.P_GET_CUADRO_AGENTE");
+            declareParameter(new SqlParameter("pv_cdramo_i",      Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdagente_i",    Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_nmcuadro_o", Types.VARCHAR)); 
+            declareParameter(new SqlOutParameter("pv_msg_id_o",   Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o",    Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    
     @SuppressWarnings("unchecked")
     @Override
     public List<Map<String, String>> ejecutarValidaciones (String cdunieco, String cdramo, String estado, String nmpoliza,
-            String nmsituac, String nmsuplem, String cdperson, String cdbloque, String cdusuari, String cdsisrol) throws Exception {
+            String nmsituac, String nmsuplem, String cdperson, String cdbloque, String cdptovta, String cdsubgpo, String cdperfit, String cdusuari, String cdsisrol) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
         params.put("pv_cdunieco_i" , cdunieco);
         params.put("pv_cdramo_i"   , cdramo);
@@ -799,6 +829,11 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_nmsuplem_i" , nmsuplem);
         params.put("pv_cdperson_i" , cdperson);
         params.put("pv_cdbloque_i" , cdbloque);
+        
+        params.put("pv_cdptovta_i" , cdptovta);
+        params.put("pv_cdsubgpo_i" , cdsubgpo);
+        params.put("pv_cdperfit_i" , cdperfit);
+        
         params.put("pv_cdusuari_i" , cdusuari);
         params.put("pv_cdsisrol_i" , cdsisrol);
         Map<String, Object> procRes = ejecutaSP(new EjecutarValidacionesSP(getDataSource()), params);
@@ -806,7 +841,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         if (validaciones == null) {
             validaciones = new ArrayList<Map<String, String>>();
         }
-        logger.debug(Utils.log("****** PKG_STRUCT_ALEA.P_GET_VALIDA_BLQ validaciones = ", validaciones));
+        logger.info("****** PKG_STRUCT_ALEA.P_GET_VALIDA_BLQ {} {}-{}-{}-{}-{} sit {} validaciones = {}", 
+        		cdbloque, cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsituac, validaciones);
+        
         return validaciones;
     }
 
@@ -821,6 +858,10 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_nmsuplem_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdperson_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdbloque_i" , Types.VARCHAR));
+            
+            declareParameter(new SqlParameter("pv_cdptovta_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdsubgpo_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdperfit_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdusuari_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdsisrol_i" , Types.VARCHAR));
             String[] cols=new String[]{ "tipo", "otvalor" };
@@ -2036,6 +2077,33 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlParameter("pv_accion_i", Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public List<Map<String, String>> obtenerRegistrosPerfilamiento (String cdusuari, String cdramo) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdusuari_i", cdusuari);
+        params.put("pv_cdramo_i", cdramo);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerRegistrosPerfilamientoSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String,String>>) procRes.get("pv_registro_o");
+        if (lista == null) {
+            lista = new ArrayList<Map<String, String>>();
+        }
+        return lista;
+    }
+    
+    protected class ObtenerRegistrosPerfilamientoSP extends StoredProcedure {
+        protected ObtenerRegistrosPerfilamientoSP (DataSource dataSource) {
+            super(dataSource, "PKG_LOV_ALEA.P_GET_DATOS_PV");           
+            declareParameter(new SqlParameter("pv_cdusuari_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            String[] cols = new String[] {"cdptovta", "dsobserv", "cdgrupo", "dsgrupo", "cdsubgrupo", "dssubgrp", "cdperfit", "dsperfit",
+                    "cdunieco", "dsunieco"};
+            declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
             compile();
         }
     }

@@ -634,12 +634,13 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
     	Ice.log('Ice.');
     	var me = this,
     		view = ventana,
-    		form = ventana.down('form'),
-		//ref  = me.getRefItems('formpagotarjeta'),
-    	paso = "Realizando Pago";
+    		//form = ventana.down('form'),
+    		form = ventana.getReferences().formpagotarjeta,
+			//ref  = me.getRefItems('formpagotarjeta'),
+	    	paso = "Realizando Pago";
     	    	
     	try {
-    		combobanco = Ice.query('[name=cdbanco]', form);			
+    		combobanco = form.getReferences().cdbanco;			
 			
 			//Ice.validarFormulario(view);					
 			

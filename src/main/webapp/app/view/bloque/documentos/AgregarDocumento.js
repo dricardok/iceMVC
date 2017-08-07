@@ -17,7 +17,8 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
                 }
             },
             '!desktop': {
-                scrollable: true
+                scrollable: true,
+                enableSubmissionForm: false
             }
         },
         

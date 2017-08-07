@@ -1,6 +1,7 @@
 .classpath
 .project
 .settings/*
+.tern-project
 bin/*
 target/*
 src/main/resources/rebel.xml

@@ -42,12 +42,14 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             }
 
             var formRefs = form.getReferences(),
-                cdtipsitCmp = formRefs.cdtipsit;
+                cdtipsitCmp = formRefs.cdtipsit,
+                storeCdtipsit = cdtipsitCmp.getStore();
             
             if (!cdtipsitCmp) {
                 throw 'No hay campo de tipo de situaci\u00f3n';
             } 
 
+            Ice.log('cdtipsitCmp ',cdtipsitCmp);
             //Ice.log('cdtipsitCmp',cdtipsitCmp.getStore().getData().length);
             if (Ext.manifest.toolkit !== 'classic' && cdtipsitCmp.isXType('selectfield')) { // para los select
                 //Ice.log('cdtipsitCmp',cdtipsitCmp);
@@ -69,7 +71,19 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             	if (r.length === 0) {
             		me.agregar();
             	}
-            })
+            });
+
+            /*storeCdtipsit.on({
+                load: function(){
+                    Ice.log('store cdtipsit data',storeCdtipsit.data);
+                    if(storeCdtipsit.data.length == 1){
+                        Ice.log('storeCdtipsit ',storeCdtipsit.getRange()[0].data.key);
+                        cdtipsitCmp.hide();
+                        cdtipsitCmp.setValue(storeCdtipsit.getRange()[0].data.key);
+                        view.setCdtipsitUnico(true);
+                    }
+                }
+            });*/
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -153,6 +167,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                                 //alert(Ext.ComponentQuery.query("[name=nmsituac]")[0].getValue());
                                 formRefs.cdtipsit.setValue(r[0]);
                                 formRefs.cdtipsit.fireEvent('blur', formRefs.cdtipsit);
+                                formRefs.cdtipsit.hide();
                             }
                         });
                     } catch (e) {
@@ -446,6 +461,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             var form = refs.form;
             if (form.isHidden() !== true) {
                 Ice.validarFormulario(form);
+                me.guardarBloque();
             }
             Ice.request({
                 mascara: 'Antes de lanzar validaciones de bloque de situacion',

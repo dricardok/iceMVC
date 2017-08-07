@@ -7,6 +7,7 @@ Ext.define('Ice.view.field.TextfieldIce', {
     
     labelAlign: 'top',
     msgTarget: 'under',
+    fieldStyle: 'text-transform: uppercase;',
     
     initComponent: function () {
         var me = this,
@@ -25,6 +26,7 @@ Ext.define('Ice.view.field.TextfieldIce', {
 
         me.on({
             blur: function (me) {
+                me.setValue((me.getValue() || '').toUpperCase())
                 Ice.eventManager.change(me, me.getValue());
             }
         });
