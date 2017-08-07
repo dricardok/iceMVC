@@ -125,7 +125,12 @@ public class DocumentosAction extends PrincipalCoreAction {
             String url = params.get("url");
             Utils.validate(url, "No se recibio la url");
             String nombre = params.get("dsdocume");
-            contentType = TipoArchivo.PDF.getContentType();
+            for(TipoArchivo tp:TipoArchivo.values()){
+                if(tp.getExtension().equals(nombre.substring(nombre.lastIndexOf('.'), nombre.length()))){
+                    contentType = tp.getContentType();
+                    break;
+                }
+            }
             Archivo archivo = documentosManager.obtenerDocumento(url, contentType, nombre);
             fileInputStream = archivo.getFileInputStream();
             filename = archivo.getFilename();
