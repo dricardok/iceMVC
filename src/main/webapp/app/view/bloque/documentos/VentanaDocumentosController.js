@@ -71,7 +71,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                 } else {
                     window.open(Ice.url.bloque.documentos.verArchivo+'?'+
                         'params.url='+encodeURIComponent(data.url)+
-                        '&params.filename='+data.dsdocume,
+                        '&params.dsdocume='+data.dsdocume,
                         '_blank',
                         'width=800, height=600'
                     );
