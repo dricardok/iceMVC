@@ -251,24 +251,44 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
             swotros = false;
         try{
             var columns = grid.getColumns();
+            Ice.log('Ice.view.bloque.documentos.VentanaDocumentosController.mostrarActionColumnsSlip columns',columns);
             if(columns){
                 if(columns.length > 0){
                     if(swmostrar == false){
                         swotros = true;
                     }
                     for(var i = 0; i < columns.length; i++){
-                        if('actioncolumn' == columns[i].xtype){
-                            Ice.log('column xtype',columns[i]);
-                            if('slip' == columns[i].colType){
+                        var column, xtype, colType, reference;
+                        if(Ice.classic()){
+                            column = columns[i];
+                            xtype = column.xtype;
+                            colType = column.colType;
+                        } else {
+                            column = columns[i].config.cell;
+                            xtype = column.xtype;
+                            if(column.widget){
+                                if(column.widget.colType){
+                                    colType = column.widget.colType;
+                                }
+                                if(column.widget.reference){
+                                    reference = column.widget.reference;
+                                }
+                            }
+                        }
+                        //Ice.log('column', column, 'xtype', xtype, 'colType', colType);
+                        if('actioncolumn' == xtype || 'widgetcell' == xtype){
+                            Ice.log('columna ',i);
+                            if('slip' == colType){
+                                //Ice.log('Ice.sesion.cdsisrol', Ice.sesion.cdsisrol, 'Ice.constantes.roles.AGENTE', Ice.constantes.roles.AGENTE);
                                 if(Ice.sesion.cdsisrol == Ice.constantes.roles.AGENTE){
-                                    if(columns[i].reference != 'upload_slip'){
-                                        this.mostrarColumna(columns[i], swmostrar);
+                                    if(column.reference != 'upload_slip'){
+                                        me.mostrarColumna(columns[i], swmostrar);
                                     }
                                 } else {
-                                    this.mostrarColumna(columns[i], swmostrar);
+                                    me.mostrarColumna(columns[i], swmostrar);
                                 }
                             } else {
-                                this.mostrarColumna(columns[i], swotros);
+                                me.mostrarColumna(columns[i], swotros);
                             }
                         }
                     }
@@ -280,6 +300,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
     },
 
     mostrarColumna(column, swmostrar){
+        Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.mostrarColumna column', column, 'swmostrar', swmostrar);
         if(swmostrar == true){
             column.show();
         } else {
