@@ -25,8 +25,8 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumentoController', {
                 {
                     url: Ice.url.bloque.documentos.subirArchivo,
                     params:{
-                        'params.nombre': view.nombre,
-                        'params.ruta': view.ruta
+                        'params.nombre': view.getNombre(),
+                        'params.ruta': view.getRuta()
                     },
                     success: function(){
                         mask.close();

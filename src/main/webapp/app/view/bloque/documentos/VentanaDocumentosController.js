@@ -116,6 +116,14 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                         }
                     );                    
                 } else {
+                    window.open(Ice.url.bloque.documentos.descargarArchivo+'?'+
+                        'params.url='+encodeURIComponent(data.url)+
+                        '&params.ruta='+encodeURIComponent(data.ruta)+
+                        '&params.dsdocume='+encodeURIComponent(data.dsdocume)+
+                        '&params.cdtipdoc='+data.cdtipdoc,
+                        '_blank',
+                        'width=800, height=600'
+                    );/*
                     var panel = Ext.create('Ext.form.Panel').submit(
                         {
                             url: Ice.url.bloque.documentos.descargarArchivo,
@@ -129,6 +137,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                             }
                         }
                     );
+                    */
 //                    Ice.push(panel);
                 }
             }
