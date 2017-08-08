@@ -401,7 +401,13 @@ function centrarVentana(ventana)
 function centrarVentanaInterna(ventana)
 {
     try {
-        var y = $(window.parent).scrollTop() + 50;
+        try {
+            var y = $(window.parent).scrollTop() + 50;
+        } catch (e) {
+            try {
+                console.warn('warning: ', e);
+            } catch (e) {}
+        }
         //debug('y:',y);
         ventana.setPosition(ventana.getPosition()[0],y);    
     } catch(e) {

@@ -3,6 +3,7 @@ package mx.com.segurossura.general.consultas.dao.impl;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -2874,34 +2875,31 @@ public class ConsultasDAOImpl extends HelperJdbcDao implements ConsultasDAO {
 			compile();
 		}
 	}
+	*/
 	
 	@Override
 	public List<Map<String,String>> recuperarTiposRamo() throws Exception
 	{
-		Map<String,Object>       procRes = ejecutaSP(new RecuperarTiposRamo(getDataSource()),new LinkedHashMap<String,String>());
-		List<Map<String,String>> lista   = (List<Map<String,String>>)procRes.get("pv_registro_o");
-		if(lista==null)
-		{
+		Map<String,Object> procRes = ejecutaSP(new RecuperarTiposRamo(getDataSource()), new LinkedHashMap<String, String>());
+		List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+		if (lista == null) {
 			lista = new ArrayList<Map<String,String>>();
 		}
 		return lista;
 	}
 	
-	protected class RecuperarTiposRamo extends StoredProcedure
-	{
-		protected RecuperarTiposRamo(DataSource dataSource)
-		{
-			super(dataSource,"PKG_CONSULTA.P_OBTENER_TIPOS_RAMO");
-			String[] cols = new String[]{
-					"CDTIPRAM"  , "DSTIPRAM"
-            };
+	protected class RecuperarTiposRamo extends StoredProcedure {
+		protected RecuperarTiposRamo (DataSource dataSource) {
+			super(dataSource,"PKG_LOV_ALEA.P_OBTENER_TIPOS_RAMO");
+			String[] cols = new String[]{ "CDTIPRAM", "DSTIPRAM" };
 			declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
-			declareParameter(new SqlOutParameter("pv_msg_id_o"   , OracleTypes.NUMERIC));
-			declareParameter(new SqlOutParameter("pv_title_o"    , OracleTypes.VARCHAR));
+			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
 			compile();
 		}
 	}
 	
+	/*
 	@Override
 	public List<Map<String,String>> recuperarRamosPorTipoRamo(String cdtipram) throws Exception
 	{
