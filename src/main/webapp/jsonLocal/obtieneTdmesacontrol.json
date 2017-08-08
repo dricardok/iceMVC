@@ -1,6 +1,58 @@
-{"errormessage":null,"imap1":null,"lista":null,"mensaje":null,"msgresult":null,"olist1":null,"params":null,"respuesta":null,"rol":null,"list":[
-{"cdusuari":"smatxga","cdusuari_ini":"smatxga","dsusuari_ini":"ximena garcia de alva","dsusuari_fin":"ximena garcia de alva","status":"3","cdusuari_dest":null,"cdtiptra":"1","cdsisrol_dest":null,"cdclausu":null,"cdsisrol_ini":"suscriptor","usuario_fin":"ximena garcia de alva","fecha":"18\/08\/2016 09:03","dsstatus":"confirmado","dsusuari":"ximena garcia de alva","ntramite":"23648","fechafin":"18\/08\/2016 09:03","dsusuari_dest":"ximena garcia de alva","dssisrol_fin":"suscriptor emisión salud","comments":"el trámite se emitió","dssisrol_ini":"suscriptor emisión salud","cdmotivo":null,"swagente":"s","cdsisrol_fin":"suscriptor","nmordina":"5","dssisrol_dest":"suscriptor emisión salud"},
-{"cdusuari":"smatxga","cdusuari_ini":"a0","dsusuari_ini":"agente directo","dsusuari_fin":"agente directo","status":"18","cdusuari_dest":null,"cdtiptra":"1","cdsisrol_dest":null,"cdclausu":null,"cdsisrol_ini":"ejecutivocuenta","usuario_fin":"ximena garcia de alva","fecha":"18\/08\/2016 08:57","dsstatus":"en espera de emisión","dsusuari":"agente directo","ntramite":"23648","fechafin":"18\/08\/2016 09:03","dsusuari_dest":"agente directo","dssisrol_fin":"agente","comments":"trámite turnado a status \"en espera de emisión\": prueba","dssisrol_ini":"agente","cdmotivo":null,"swagente":"s","cdsisrol_fin":"suscriptor","nmordina":"4","dssisrol_dest":"agente"},
-{"cdusuari":"zzz","cdusuari_ini":"smatmai","dsusuari_ini":"manuel angeles islas","dsusuari_fin":"manuel angeles islas","status":"17","cdusuari_dest":null,"cdtiptra":"1","cdsisrol_dest":null,"cdclausu":null,"cdsisrol_ini":"cotizador","usuario_fin":"agente directo","fecha":"18\/08\/2016 08:56","dsstatus":"cotización aprobada","dsusuari":"manuel angeles islas","ntramite":"23648","fechafin":"18\/08\/2016 08:57","dsusuari_dest":"manuel angeles islas","dssisrol_fin":"suscriptor técnico salud","comments":"prueba","dssisrol_ini":"suscriptor técnico salud","cdmotivo":null,"swagente":"s","cdsisrol_fin":"ejecutivocuenta","nmordina":"3","dssisrol_dest":"suscriptor técnico salud"},
-{"cdusuari":"smatmai.","cdusuari_ini":"a0","dsusuari_ini":"agente directo","dsusuari_fin":"agente directo","status":"14","cdusuari_dest":null,"cdtiptra":"1","cdsisrol_dest":null,"cdclausu":null,"cdsisrol_ini":"ejecutivocuenta","usuario_fin":"manuel angeles islas","fecha":"18\/08\/2016 08:47","dsstatus":"en cotización","dsusuari":"agente directo","ntramite":"23648","fechafin":"18\/08\/2016 08:56","dsusuari_dest":"agente directo","dssisrol_fin":"agente","comments":"se guardó un nuevo trámite en mesa de control desde cotización de agente","dssisrol_ini":"agente","cdmotivo":null,"swagente":"s","cdsisrol_fin":"cotizador","nmordina":"2","dssisrol_dest":"agente"},
-{"cdusuari":"zzz","cdusuari_ini":"a0","dsusuari_ini":"agente directo","dsusuari_fin":"agente directo","status":"14","cdusuari_dest":null,"cdtiptra":"1","cdsisrol_dest":null,"cdclausu":null,"cdsisrol_ini":"ejecutivocuenta","usuario_fin":"agente directo","fecha":"18\/08\/2016 08:47","dsstatus":"en cotización","dsusuari":"agente directo","ntramite":"23648","fechafin":"18\/08\/2016 08:47","dsusuari_dest":"agente directo","dssisrol_fin":"agente","comments":"se guardó un nuevo trámite en mesa de control desde cotización de agente","dssisrol_ini":"agente","cdmotivo":null,"swagente":"s","cdsisrol_fin":"ejecutivocuenta","nmordina":"1","dssisrol_dest":"agente"}],"slist2":null,"smap1":{"pv_ntramite_i":"23648"},"smap2":null,"success":true,"tmpntramite":null,"username":null}
+{"errormessage":null,"imap1":null,"lista":null,"mensaje":null,"msgresult":null,"olist1":null,"params":null,"respuesta":null,"rol":null,"list":
+
+
+
+[
+            {   
+                "ntramite" : "12345"
+                ,"nmordina" : ""
+                ,"cdtiptra" : ""
+                ,"cdclausu" : ""
+                ,"fecha" : "18\/10\/1991 15:30"
+                ,"comments" : "hola"
+                ,"cdusuari" : "ops$"
+                ,"cdmotivo" : ""
+                ,"swagente" : ""
+                ,"dsestadomc" : "estado"
+                ,"cdsisrol" : "agente"
+                ,"cdmodulo" : ""
+                ,"cdevento" : ""
+                ,"dsusuari" : "cesar armando "
+                ,"dssisrol" : "agente"
+            },
+            {   
+                "ntramite" : "12345"
+                ,"nmordina" : ""
+                ,"cdtiptra" : ""
+                ,"cdclausu" : ""
+                ,"fecha" : "18\/11\/1991 18:50"
+                ,"comments" : "comment"
+                ,"cdusuari" : "ops$otro"
+                ,"cdmotivo" : ""
+                ,"swagente" : ""
+                ,"dsestadomc" : "estado"
+                ,"cdsisrol" : "agente"
+                ,"cdmodulo" : ""
+                ,"cdevento" : ""
+                ,"dsusuari" : "cordero castro "
+                ,"dssisrol" : "suscriptor"
+            },{   
+                "ntramite" : "12345"
+                ,"nmordina" : ""
+                ,"cdtiptra" : ""
+                ,"cdclausu" : ""
+                ,"fecha" : "18\/12\/1991 15:30"
+                ,"comments" : "hola"
+                ,"cdusuari" : "ops$"
+                ,"cdmotivo" : ""
+                ,"swagente" : ""
+                ,"dsestadomc" : "estado"
+                ,"cdsisrol" : "agente"
+                ,"cdmodulo" : ""
+                ,"cdevento" : ""
+                ,"dsusuari" : "cesar armando "
+                ,"dssisrol" : "agente"
+            }
+]
+
+,"slist2":null,"smap1":{"pv_ntramite_i":"23648"},"smap2":null,"success":true,"tmpntramite":null,"username":null}

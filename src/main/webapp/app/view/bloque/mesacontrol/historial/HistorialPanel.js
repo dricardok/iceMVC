@@ -24,7 +24,8 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 					height		:	250,
 					innerPadding: 	20,
 			        store: {
-			            type: 'eventosstore'
+			            type: 'eventosstore',
+			            ntramite: config.ntramite
 			        },
 			        axes: [ {
                         type: 'time',
@@ -35,7 +36,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
                     }, {
                         type: 'category',
                         position: 'left',
-                        fields: ['cdusuari','dssisrol_fin'],
+                        fields: ['cdusuari','dssisrol'],
                         title: 'Usuario',
                         grid: true,
                         renderer		:	function(ax,label,lay,last){
@@ -96,6 +97,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 				{
 					xtype		:	'gridice',
 					title		:	"Eventos",
+					reference	:	'gridEventos',
 					columns		:	[
 						{
 							text		:	"No.",	
@@ -119,11 +121,27 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 						,
 						{
 							text		:	"Estado",	
-							dataIndex	:	"dsestatus"
+							dataIndex	:	"dsestadomc"
+						},
+						
+					],
+					actionColumns		:	[
+						{
+							xtype : 'actioncolumn',
+							items : [
+										{
+											iconCls : 'x-fa fa-edit',
+											tooltip : 'Modificar detalle',
+											handler : function(grid,row,col){
+												me.getController().modificarDetalle(grid,row,col)
+											}
+										}
+									]
 						}
 					],
 					store		:		 {
-			            type: 'eventosstore'
+			            type: 'eventosstore',
+			            ntramite: config.ntramite
 			        }
 				},
 				{
@@ -174,7 +192,8 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 						}
 					],
 					store		:		 {
-			            type: 'turnadosstore'
+			            type: 'turnadosstore',
+			            ntramite: config.ntramite
 			        }
 				}
 				

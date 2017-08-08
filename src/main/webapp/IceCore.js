@@ -176,8 +176,9 @@ var Ice = (
                 },
             	
             	historial:{
-            		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json",
-            		obtenerThmesacontrol:"jsonLocal/obtieneThmesacontrol.json"
+            		obtenerTdmesacontrol:"mesacontrol/historial/obtenerTdmesacontrol.action",
+            		obtenerThmesacontrol:"mesacontrol/historial/obtenerThmesacontrol.action",
+            		movimientoThmesacontrol:'mesacontrol/historial/movimientoTdmesacontrol.action'
             	}
             },
             datosAuxiliares: {

@@ -17,6 +17,9 @@ Ext.define("Ice.view.bloque.documentos.historial.TurnadosChart",{
     	
     	var paso="Turnados chart",me=this;
 		try{
+			if(!config.ntramite){
+				throw 'No se recibio ntramite 2';
+			}
 			var data=[];
 			Ice.request({
 				url		:	Ice.url.bloque.mesacontrol.historial.obtenerThmesacontrol,
