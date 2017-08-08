@@ -64,14 +64,23 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                                 target: '_blank',
                                 params:{
                                     'params.url': data.url,
-                                    'params.dsdocume': data.dsdocume
+                                    'params.ruta': data.ruta,
+                                    'params.dsdocume': data.dsdocume,
+                                    'params.cdtipdoc': data.cdtipdoc
                                 }
                             }
                     );
                 } else {
                     window.open(Ice.url.bloque.documentos.verArchivo+'?'+
                         'params.url='+encodeURIComponent(data.url)+
-                        '&params.dsdocume='+data.dsdocume,
+                        '&params.ruta='+encodeURIComponent(data.ruta)+
+                        '&params.cddocume='+data.cddocume+
+                        '&params.cdtipdoc='+encodeURIComponent(data.cdtipdoc)+
+                        '&params.cdunieco='+view.getCdunieco()+
+                        '&params.cdramo='+view.getCdramo()+
+                        '&params.estado='+view.getEstado()+
+                        '&params.nmpoliza='+view.getNmpoliza()+
+                        '&params.nmsuplem='+view.getNmsuplem(),
                         '_blank',
                         'width=800, height=600'
                     );
@@ -119,8 +128,13 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                     window.open(Ice.url.bloque.documentos.descargarArchivo+'?'+
                         'params.url='+encodeURIComponent(data.url)+
                         '&params.ruta='+encodeURIComponent(data.ruta)+
-                        '&params.dsdocume='+encodeURIComponent(data.dsdocume)+
-                        '&params.cdtipdoc='+data.cdtipdoc,
+                        '&params.cddocume='+data.cddocume+
+                        '&params.cdtipdoc='+data.cdtipdoc+
+                        '&params.cdunieco='+view.getCdunieco()+
+                        '&params.cdramo='+view.getCdramo()+
+                        '&params.estado='+view.getEstado()+
+                        '&params.nmpoliza='+view.getNmpoliza()+
+                        '&params.nmsuplem='+view.getNmsuplem(),
                         '_blank',
                         'width=800, height=600'
                     );/*

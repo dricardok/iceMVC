@@ -123,15 +123,16 @@ public class DocumentosAction extends PrincipalCoreAction {
         try{
             Utils.validate(params, "No se recibieron parametros");
             String url = params.get("url");
-            Utils.validate(url, "No se recibio la url");
+            String ruta = params.get("ruta");
             String nombre = params.get("dsdocume");
-            for(TipoArchivo tp:TipoArchivo.values()){
-                if(tp.getExtension().equals(nombre.substring(nombre.lastIndexOf('.'), nombre.length()))){
-                    contentType = tp.getContentType();
-                    break;
-                }
-            }
-            Archivo archivo = documentosManager.obtenerDocumento(url, contentType, nombre);
+            String cddocume = params.get("cddocume");
+            String cdunieco = params.get("cdunieco");
+            String cdramo = params.get("cdramo");
+            String estado = params.get("estado");
+            String nmpoliza = params.get("nmpoliza");
+            String nmsuplem = params.get("nmsuplem");
+            Utils.validate(url, "No se recibio la url");
+            Archivo archivo = documentosManager.obtenerDocumento(cdunieco, cdramo, estado, nmpoliza, nmsuplem, url, ruta, nombre, cddocume);
             fileInputStream = archivo.getFileInputStream();
             filename = archivo.getFilename();
             success = true;
@@ -176,18 +177,13 @@ public class DocumentosAction extends PrincipalCoreAction {
             String ruta = params.get("ruta");
             Utils.validate(url, "No se recibio la url");
             String nombre = params.get("dsdocume");
-            String cdtipdoc = params.get("cdtipdoc");
-            contentType = TipoArchivo.PDF.getContentType();
-            Archivo archivo = new Archivo();
-            if(StringUtils.isNotBlank(cdtipdoc)){
-                if(cdtipdoc.toUpperCase().equals("SLIP")){
-                    contentType = TipoArchivo.RTF.getContentType();
-//                    nombre = Utils.join(nombre,TipoArchivo.RTF.getExtension());
-                    archivo = documentosManager.obtenerDocumento(url, ruta, contentType, nombre);
-                }
-            } else {
-                archivo = documentosManager.obtenerDocumento(url, contentType, nombre);                
-            }
+            String cddocume = params.get("cddocume");
+            String cdunieco = params.get("cdunieco");
+            String cdramo = params.get("cdramo");
+            String estado = params.get("estado");
+            String nmpoliza = params.get("nmpoliza");
+            String nmsuplem = params.get("nmsuplem");
+            Archivo archivo = documentosManager.obtenerDocumento(cdunieco, cdramo, estado, nmpoliza, nmsuplem, url, ruta, nombre, cddocume);
             fileInputStream = archivo.getFileInputStream();
             filename = archivo.getFilename();
             contentType = archivo.getContentType();
@@ -240,8 +236,14 @@ public class DocumentosAction extends PrincipalCoreAction {
         try{
             String url = params.get("url");
             String name = params.get("name");
+            String cddocume = params.get("cddocume");
+            String cdunieco = params.get("cdunieco");
+            String cdramo = params.get("cdramo");
+            String estado = params.get("estado");
+            String nmpoliza = params.get("nmpoliza");
+            String nmsuplem = params.get("nmsuplem");
             contentType = TipoArchivo.PDF.getContentType();
-            Archivo archivo = documentosManager.obtenerDocumento(url, contentType, name);
+            Archivo archivo = documentosManager.obtenerDocumento(cdunieco, cdramo, estado, nmpoliza, nmsuplem, url, contentType, name, cddocume);
             fileInputStream = archivo.getFileInputStream();
             filename = archivo.getFilename();
         } catch(Exception ex){

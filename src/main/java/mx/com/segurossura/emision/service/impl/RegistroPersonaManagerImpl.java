@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.emision.dao.RegistoPersonaDAO;
 import mx.com.segurossura.emision.service.RegistroPersonaManager;
@@ -158,6 +159,11 @@ public class RegistroPersonaManagerImpl implements RegistroPersonaManager {
 		try{
 			
 			paso="Consultando datos";
+			String resp=registroPersonaDao.personaDuplicada(cdperson, dsnombre, fenacimi);
+			logger.debug(accion+"Valida persona dup: "+resp);
+			if(resp!=null && !"".equals(resp.trim()) && "I".equals(accion)){
+				throw new ApplicationException(resp);
+			}
 			registroPersonaDao.movimientoMpersona(cdperson, cdtipide, cdideper, dsnombre, dsnombr1, dsnombr2, dsapell1, dsapell2, cdtipper, otfisjur, otsexo, fenacimi, cdprovin, accion);
 			
 
