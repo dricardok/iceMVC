@@ -193,4 +193,36 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
             compile();
         }
     }
+    
+    @Override
+    public String ObtenerDescripcionDocumento(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cddocume) throws Exception {
+        String dsdocume = "";
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        params.put("pv_cddocume_i", cddocume);
+        Map<String, Object> procResult = ejecutaSP(new ObtenerDescripcionDocumentoSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procResult.get("pv_registro_o");
+        dsdocume = procResult.get("pv_dsdocume_o").toString();
+        return dsdocume;
+    }
+
+    protected class ObtenerDescripcionDocumentoSP extends StoredProcedure {
+        protected ObtenerDescripcionDocumentoSP(DataSource dataSource) {
+            super(dataSource, "P_GET_DSDOCUME");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cddocume_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_dsdocume_o", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
 }
