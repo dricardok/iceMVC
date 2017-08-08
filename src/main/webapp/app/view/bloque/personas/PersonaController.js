@@ -80,6 +80,8 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     		accion=view.getAccion();
 //    		view.fireEvent("personaGuardada", view, json.params.cdperson);
     		Ice.request({
+    			
+    			timeout:999999999999,
     			url:Ice.url.bloque.personas.guardarPersona,
     			jsonData:{
     				tvaloper:tvaloper,
