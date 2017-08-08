@@ -761,22 +761,25 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 				background: true,
 				params: reqParams,
 				failure: function () {
-					
-					pbar.hide();
-					error.show();
-					Ice.query('button', ventana)[0].disabled();
-					//Ice.query('button', ventana)[1].show();
-					
-					
+					try {
+						pbar.hide();
+						error.show();
+						Ice.query('button', ventana)[0].disabled();
+						//Ice.query('button', ventana)[1].show();
+					} catch (e) {
+						Ice.logWarn('warning al querer actualizar estatus de barra de generacion de docs', e);
+					}
 				},
 				success: function (action) {
-					
-					pbar.hide();
-					error.setHtml('<p>Documentos generados</p>');
-					error.show();
-					//Ice.query('button', ventana)[1].hide();
-					Ice.query('button', ventana)[0].enable();
-					
+					try {
+						pbar.hide();
+						error.setHtml('<p>Documentos generados</p>');
+						error.show();
+						//Ice.query('button', ventana)[1].hide();
+						Ice.query('button', ventana)[0].enable();
+					}catch(e) {
+						Ice.logWarn('warning al querer actualizar estatus de barra de generacion de docs', e);
+					}					
 				}
 			});
 			
