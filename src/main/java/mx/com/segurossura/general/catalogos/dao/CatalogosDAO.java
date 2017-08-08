@@ -71,10 +71,11 @@ public interface CatalogosDAO {
      * Obtiene el catalogo de roles por ramo
      * 
      * @param cdramo Codigo de ramo
+     * @param cdnivel Nivel de usuario
      * @return Lista de elementos del catalogo
      * @throws Exception
      */
-    public List<Map<String, String>> obtenerRolXRamo (String cdramo) throws Exception;
+    public List<Map<String, String>> obtenerRolXRamo (String cdramo, String cdnivel) throws Exception;
     
     /**
      * Obtiene personas de acuerdo a criterio cdatribu

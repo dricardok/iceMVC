@@ -224,9 +224,10 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Map<String, String>> obtenerRolXRamo(String cdramo) throws Exception {
+	public List<Map<String, String>> obtenerRolXRamo(String cdramo, String cdnivel) throws Exception {
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put("pv_cdramo_i", cdramo);
+		params.put("pv_cdnivel_i", cdnivel);
 		Map<String, Object> procRes = ejecutaSP(new ObtenerRolXRamo(getDataSource()), params);
 		List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
 		if (lista == null) {
@@ -239,6 +240,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
 		protected ObtenerRolXRamo(DataSource dataSource) {
 			super(dataSource, "PKG_LOV_ALEA.P_LOV_ROLXRAMO");
 			declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdnivel_i", Types.VARCHAR));
 			String[] cols = new String[] { "cdrol", "descripl" };
 			declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));

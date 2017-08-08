@@ -271,7 +271,7 @@ public class EmisionManagerImpl implements EmisionManager {
 		try {
 			for (String bloque : cdbloque) {
 			    validaciones.addAll(emisionDAO.ejecutarValidaciones(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, null,
-						bloque, cdusuari, cdsisrol));
+						bloque, null, null, null, cdusuari, cdsisrol));
 			}
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);

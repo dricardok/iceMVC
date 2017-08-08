@@ -176,8 +176,9 @@ var Ice = (
                 },
             	
             	historial:{
-            		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json",
-            		obtenerThmesacontrol:"jsonLocal/obtieneThmesacontrol.json"
+            		obtenerTdmesacontrol:"mesacontrol/historial/obtenerTdmesacontrol.action",
+            		obtenerThmesacontrol:"mesacontrol/historial/obtenerThmesacontrol.action",
+            		movimientoThmesacontrol:'mesacontrol/historial/movimientoTdmesacontrol.action'
             	}
             },
             datosAuxiliares: {
@@ -599,6 +600,7 @@ var Ice = (
      *     mascara: 'Guardando datos',              <<< Texto a mostrar mientras se espera respuesta (opcional)
      *     background: true,                        <<< Para que no robe el focus en pantalla (opcional)
      *     timeout: 1000*60*2                       <<< timeout para la peticion en milliseconds
+     *     async: true								<<< Tipo de peticion 
      * }
      * throws exception
      */
@@ -609,19 +611,12 @@ var Ice = (
                 ? {close: function (){}}
                 : Ice.mask(paso);
         try {
-        	var timeoutResp;
-        	if (params.timeout) {
-        		timeoutResp = Ext.Ajax.timeout;
-        		Ext.Ajax.timeout = params.timeout;
-        	}
             var requestParams = {
+            	async:params.async===false?false:true,
                 url: params.url,
                 success: function (response) {
                     Ice.log('Ice.request.response: ', response);
                     mask.close();
-                    if (timeoutResp) {
-                    	Ext.Ajax.timeout = timeoutResp;
-                    }
                     var paso2 = 'Decodificando respuesta del proceso: ' + ((params.mascara || 'enviando petici\00f3n').toLowerCase());
 
                     try {
@@ -650,9 +645,6 @@ var Ice = (
                 },
                 failure: function () {
                     mask.close();
-                    if (timeoutResp) {
-                    	Ext.Ajax.timeout = timeoutResp;
-                    }
                     if (params.failure && typeof params.failure === 'function') {
 
                         try {
@@ -668,6 +660,9 @@ var Ice = (
                 requestParams.params = params.params;
             } else if (params.jsonData) {
                 requestParams.jsonData = params.jsonData;
+            }
+            if(params.timeout){
+           	 requestParams.timeout = params.timeout;
             }
             Ext.Ajax.request(requestParams);
         } catch (e) {

@@ -9,7 +9,8 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     	try{
     		view.down('[name=fenacimi]').on({
     			change:function(it){
-    				view.down('#frmPersona [fieldLabel*=Edad]')
+    				
+    				view.down('#frmPersona [reference=_edad_]')
     				.setValue(
     						Ext.Date.diff(
     								Ext.Date.parse(it.getValue(),'d/m/Y'),
@@ -78,7 +79,9 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     		Ice.log("Datos de persona a enviar: ",mpersona,tvaloper);
     		accion=view.getAccion();
 //    		view.fireEvent("personaGuardada", view, json.params.cdperson);
+    		Ext.Ajax.setTimeout ( 9999999999999999);
     		Ice.request({
+    			
     			url:Ice.url.bloque.personas.guardarPersona,
     			jsonData:{
     				tvaloper:tvaloper,
@@ -188,7 +191,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     				try{
 	    				var datos=json.params || {};
 	    				Ice.cargarFormulario(root,datos);
-	    				view.down('#frmPersona [fieldLabel=Edad]')
+	    				view.down('#frmPersona [reference=_edad_]')
 	    				.setValue(
 	    						Ext.Date.diff(
 	    								Ext.Date.parse(view.down('[name=fenacimi]').getValue(),'d/m/Y'),

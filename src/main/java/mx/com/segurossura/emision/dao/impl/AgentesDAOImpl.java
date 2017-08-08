@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Repository;
 
+import com.biosnettcs.core.Constantes;
 import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
@@ -172,9 +173,8 @@ public class AgentesDAOImpl extends HelperJdbcDao implements AgentesDAO {
     }
     
 	
-    @SuppressWarnings("unchecked")
     @Override
-    public boolean validaAgente(String cdagente, String cdramo,String cdproceso) throws Exception{         
+    public boolean validaAgente(String cdagente, String cdramo,String cdproceso) throws Exception {
         Map<String, Object> params = new LinkedHashMap<String, Object>();       
         params.put("pv_cdagente_i", cdagente);
         params.put("pv_cdramo_i", cdramo);
@@ -199,6 +199,46 @@ public class AgentesDAOImpl extends HelperJdbcDao implements AgentesDAO {
             declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
             /** use function instead of stored procedure */
             setFunction(true);
+            compile();
+        }
+    }
+    
+    @Override
+    public boolean validarCuadroComisionAgentePorPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsuplem, String cdagente) throws Exception {
+    	
+        Map<String, Object> params = new LinkedHashMap<String, Object>();       
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i",   cdramo);
+        params.put("pv_estado_i",   estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        params.put("pv_cdagente_i", cdagente);
+        
+        Map<String, Object> resultado = ejecutaSP(new ValCuadroAgentePorPolizaSP(getDataSource()), params);
+        Boolean dat = ((String)resultado.get("v_return")).equals(Constantes.SI);
+        return dat;
+    }
+                 
+    protected class ValCuadroAgentePorPolizaSP extends StoredProcedure{
+        protected ValCuadroAgentePorPolizaSP(DataSource dataSource) {
+            super(dataSource,"PKG_DATA_ALEA.F_VAL_CUADRO_AGENTE_X_POLIZA"); 
+            
+            /** important that the out parameter is defined before the in parameter. */
+            declareParameter(new SqlOutParameter("v_return",    Types.VARCHAR));
+            
+            declareParameter(new SqlParameter("pv_cdunieco_i",  Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i",  Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i",  Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i",  Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i",  Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdagente_i",  Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o",  Types.VARCHAR));
+            
+            /** use function instead of stored procedure */
+            setFunction(true);
+            
             compile();
         }
     }

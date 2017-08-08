@@ -117,7 +117,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
                     record = cell.getRecord(),
                     data = record.getData();
             }            
-            var nmsituac = data.nmsituac;            
+            var nmsituac = data.nmsituac;
             paso = 'Antes de ejecutar funcion cargar personas';
             refs.gridPersonas.getController().onCargar(nmsituac);
             refs.gridPersonas.setNmsituac(nmsituac);
@@ -254,7 +254,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
                 estado: view.getEstado(),
                 nmpoliza: view.getNmpoliza(),
                 nmsuplem: view.getNmsuplem(),
-                nmsituac: dataPer.nmsituac,
+                nmsituac: refs.gridPersonas.getNmsituac(),
                 cdperson: dataPer.cdperson,
                 cdrol: dataPer.cdrol,
                 cdtipsit: view.getCdtipsit(),
