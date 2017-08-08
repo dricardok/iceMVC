@@ -44,11 +44,85 @@ Ext.define('Ice.view.bloque.coaseguro.VentanaExclusionesCoaseguroController', {
             Ice.log('Ice.view.bloque.VentanaExclusionesCoaseguroController refs:', refs);
             var storeSit = refs.gridSituaciones.getStore(),
                 storeCob = refs.gridCoberturas.getStore(),
+                selModelSit,
+                selModelCob;
+            if(Ice.classic()){
                 selModelSit = refs.gridSituaciones.selModel;
                 selModelCob = refs.gridCoberturas.selModel;
+                selModelSit.on({
+                    select: function(selected, record, index){
+                        Ice.log('selModelSit select selected',selected,'record',record,'index',index,'cargaCompleta',view.getCargacompleta());
+                        if(view.getCargacompleta() == 'S'){
+                            var data = record.data;
+                            data['accion'] = 'N';
+                            me.excluirSituacion(data);
+                        }
+                    },
+                    deselect: function(deselected, record, index){
+                        Ice.log('selModelSit deselect selected',deselected,'record',record,'index',index,'cargaCompleta',view.getCargacompleta());
+                        if(view.getCargacompleta() == 'S'){
+                            var data = record.data;
+                            data['accion'] = 'S';
+                            me.excluirSituacion(data);
+                        }
+                    }
+                });
+                selModelCob.on({
+                    select: function(selected, record, index){
+                        if(view.getCargacompleta() == 'S'){
+                            var data = record.data;
+                            data['accion'] = 'N';
+                            me.excluirCoberturas(data);
+                        }
+                    },
+                    deselect: function(deselected, record, index){
+                        //if(view.getCargacompleta() == 'S'){
+                            var data = record.data;
+                            data['accion'] = 'S';
+                            me.excluirCoberturas(data);
+                        //}
+                    }
+                });
+            } else {
+                selModelSit = refs.gridSituaciones;
+                selModelCob = refs.gridCoberturas;
+                selModelSit.on({
+                    select: function(selected, record, index){
+                        Ice.log('selModelSit select selected',selected,'record',record,'index',index,'cargaCompleta',view.getCargacompleta());
+                        if(view.getCargacompleta() == 'S'){
+                            var data = record.data;
+                            data['accion'] = 'N';
+                            me.excluirSituacion(data);
+                        }
+                    },
+                    deselect: function(deselected, record, index){
+                        Ice.log('selModelSit deselect selected',deselected,'record',record,'index',index,'cargaCompleta',view.getCargacompleta());
+                        if(view.getCargacompleta() == 'S'){
+                            var data = record.data;
+                            data['accion'] = 'S';
+                            me.excluirSituacion(data);
+                        }
+                    }
+                });
+                selModelCob.on({
+                    select: function(selected, record, index){
+                        if(view.getCargacompleta() == 'S'){
+                            var data = record.data;
+                            data['accion'] = 'N';
+                            me.excluirCoberturas(data);
+                        }
+                    },
+                    deselect: function(deselected, record, index){
+                        //if(view.getCargacompleta() == 'S'){
+                            var data = record.data;
+                            data['accion'] = 'S';
+                            me.excluirCoberturas(data);
+                        //}
+                    }
+                });
+            }
             storeSit.on({
                 load: function(){
-                    Ice.log('Actualizando store de situaciones');
                     view.setCargacompleta('S');
                 }
             });
@@ -57,40 +131,7 @@ Ext.define('Ice.view.bloque.coaseguro.VentanaExclusionesCoaseguroController', {
                     view.setCargacompleta('S');
                 }
             });
-            selModelSit.on({
-                select: function(selected, record, index){
-                    Ice.log('selModelSit select selected',selected,'record',record,'index',index,'cargaCompleta',view.getCargacompleta());
-                    if(view.getCargacompleta() == 'S'){
-                        var data = record.data;
-                        data['accion'] = 'N';
-                        me.excluirSituacion(data);
-                    }
-                },
-                deselect: function(deselected, record, index){
-                    Ice.log('selModelSit deselect selected',deselected,'record',record,'index',index,'cargaCompleta',view.getCargacompleta());
-                    if(view.getCargacompleta() == 'S'){
-                        var data = record.data;
-                        data['accion'] = 'S';
-                        me.excluirSituacion(data);
-                    }
-                }
-            });
-            selModelCob.on({
-                select: function(selected, record, index){
-                    if(view.getCargacompleta() == 'S'){
-                        var data = record.data;
-                        data['accion'] = 'N';
-                        me.excluirCoberturas(data);
-                    }
-                },
-                deselect: function(deselected, record, index){
-                    //if(view.getCargacompleta() == 'S'){
-                        var data = record.data;
-                        data['accion'] = 'S';
-                        me.excluirCoberturas(data);
-                    //}
-                }
-            });
+           
         } catch (e) {
         	alert(e);
             Ice.generaExcepcion(e, paso);
