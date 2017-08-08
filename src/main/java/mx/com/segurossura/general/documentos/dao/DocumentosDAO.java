@@ -59,4 +59,17 @@ public interface DocumentosDAO {
             String codidocu, String cdorddoc, String cdmoddoc, String nmcertif, String nmsituac, String url, String ruta, String cdtipodoc, String accion) 
     throws Exception;
     
+    /**
+     * Recupera el campo dsdocume de tdocupol
+     * 
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsuplem
+     * @param cddocume
+     * @return
+     * @throws Exception
+     */
+    public String ObtenerDescripcionDocumento(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cddocume) throws Exception;
 }

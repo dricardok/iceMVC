@@ -54,18 +54,18 @@ public class DocumentosManagerImpl implements DocumentosManager {
     }
 
     @Override
-    public Archivo obtenerDocumento(String url, String contentType, String filename) throws Exception {
+    public Archivo obtenerDocumento(String url, String filename) throws Exception {
         logger.debug(StringUtils.join(
                 "\n@@@@@@@@@@@@@@@@@@@@@@@@"
                ,"\n@@@@@@ obtenerDocumento @@@@@@"
                ,"\n@@@@@@ url", url
-               ,"\n@@@@@@ contentType", contentType
                ,"\n@@@@@@ filename", filename
                ));
         Archivo archivo = new Archivo();
         String paso = "";
         try{
             paso = "Obteniendo documento";
+            String contentType = obtieneContentType(filename);
             archivo.setContentType(contentType);
             if(StringUtils.isNotBlank(url) && StringUtils.isNotBlank(contentType)) {
                 archivo.setFileInputStream(getFileInputStream(url, null, filename));
@@ -89,20 +89,33 @@ public class DocumentosManagerImpl implements DocumentosManager {
     }
     
     @Override
-    public Archivo obtenerDocumento(String url, String ruta, String contentType, String filename) throws Exception {
+    public Archivo obtenerDocumento(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, 
+            String url, String ruta, String filename, String cddocume) throws Exception {
         logger.debug(StringUtils.join(
                 "\n@@@@@@@@@@@@@@@@@@@@@@@@"
                ,"\n@@@@@@ obtenerDocumento @@@@@@"
+               ,"\n@@@@@@ cdunieco", cdunieco
+               ,"\n@@@@@@ cdramo", cdramo
+               ,"\n@@@@@@ estado", estado
+               ,"\n@@@@@@ nmpoliza", nmpoliza
+               ,"\n@@@@@@ nmsuplem", nmsuplem
                ,"\n@@@@@@ url", url
                ,"\n@@@@@@ ruta", ruta
-               ,"\n@@@@@@ contentType", contentType
                ,"\n@@@@@@ filename", filename
+               ,"\n@@@@@@ cddocume", cddocume
                ));
         Archivo archivo = new Archivo();
         String paso = "";
         try{
             paso = "Obteniendo documento";
+            if(StringUtils.isNotBlank(cddocume)){
+                filename = documentosDAO.ObtenerDescripcionDocumento(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cddocume);
+            }
+            String contentType = obtieneContentType(filename);
             archivo.setContentType(contentType);
+            if(StringUtils.isNotBlank(cddocume)){
+                logger.debug(StringUtils.join("Obteniendo dsdocume ", cddocume));
+            }
             if(StringUtils.isNotBlank(url) && StringUtils.isNotBlank(contentType)) {
                 archivo.setFileInputStream(getFileInputStream(url, ruta, filename));
             } else {

@@ -37,7 +37,7 @@ public interface DocumentosManager {
      * @return
      * @throws Exception
      */
-    public Archivo obtenerDocumento(String url, String contentType, String filename) throws Exception;
+    public Archivo obtenerDocumento(String url, String filename) throws Exception;
 
     /**
      * Se recupera el archivo de ruta del servidor
@@ -49,5 +49,6 @@ public interface DocumentosManager {
      * @return
      * @throws Exception
      */
-    public Archivo obtenerDocumento(String url, String ruta, String contentType, String filename) throws Exception;
+    public Archivo obtenerDocumento(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
+            String url, String ruta, String filename, String cddocume) throws Exception;
 }
