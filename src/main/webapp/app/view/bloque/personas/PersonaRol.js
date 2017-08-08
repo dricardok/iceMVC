@@ -49,10 +49,10 @@ Ext.define('Ice.view.bloque.personas.PersonaRol', {
                 });
                 
                 cdrol['param2'] = 'params.cdnivel';
-                if(config.getNmsituac() > 0){
+                if(config.nmsituac > 0){
                     cdrol['value2'] = '1';
                 } else {
-                    cdrol['value2'] = config.getNmsituac();
+                    cdrol['value2'] = config.nmsituac;
                 }
                 Ice.log('Ice.view.bloque.PersonaRol.constructor recargar ',cdrol);
                 /*cdrol.getStore().load({
