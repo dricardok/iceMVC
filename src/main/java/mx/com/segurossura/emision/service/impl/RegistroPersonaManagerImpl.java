@@ -160,8 +160,8 @@ public class RegistroPersonaManagerImpl implements RegistroPersonaManager {
 			
 			paso="Consultando datos";
 			String resp=registroPersonaDao.personaDuplicada(cdperson, dsnombre, fenacimi);
-			logger.debug("Valida persona dup: "+resp);
-			if(resp!=null && !"".equals(resp.trim())){
+			logger.debug(accion+"Valida persona dup: "+resp);
+			if(resp!=null && !"".equals(resp.trim()) && "I".equals(accion)){
 				throw new ApplicationException(resp);
 			}
 			registroPersonaDao.movimientoMpersona(cdperson, cdtipide, cdideper, dsnombre, dsnombr1, dsnombr2, dsapell1, dsapell2, cdtipper, otfisjur, otsexo, fenacimi, cdprovin, accion);
