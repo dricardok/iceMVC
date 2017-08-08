@@ -342,6 +342,7 @@
 }
 </style>
 <script type="text/javascript" src="${ctx}/IceCore.js"></script>
+<script type="text/javascript" src="${ctx}/IceEventManager.js"></script>
 
 <script type="text/javascript">
     // se inyecta una variable al objeto global Ice, se usa dentro de SelectorMultiple.js
@@ -353,7 +354,12 @@
 <script type="text/javascript" src="${ctx}/res/js/jsPlumb/jsPlumb-2.0.4.js"></script>
 <script type="text/javascript" src="${ctx}/res/js/extjs4/base_extjs4.js?${now}"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/res/js/extjs4/resources/my-custom-theme/my-custom-theme-all.css" />
+<script type="text/javascript" src="${ctx}/classic/src/view/field/ComboIce.js"></script>
+
+<script type="text/javascript" src="${ctx}/res/js/jquery/jquery-1.10.2.min.js"></script>
+
 <script>
+
 ////// iframe //////
 var stop = false;
 if(inIframe())
@@ -452,7 +458,10 @@ var _p52_cargando = false;
 var _p52_debug = false;
 
 var _p52_params = <s:property value="%{convertToJSON('params')}" escapeHtml="false" />;
-Ice.log('_p52_params:', _p52_params, '.');
+Ice.log('_p52_params:', _p52_params);
+
+var _p52_mapaListas = <s:property value="%{convertToJSON('mapaListas')}" escapeHtml="false" />;
+Ice.log('_p52_mapaListas:', _p52_mapaListas);
 
 var _p52_tituloPrincipal;
 ////// variables //////
@@ -720,9 +729,9 @@ Ext.onReady(function()
         anchor     : [ 'Perimeter' , { shape : 'Rectangle' } ]
         ,isSource  : true
         ,isTarget  : true
-    };    
-   
-    _p52_formTtipflumc = Ext.create('Ext.window.Window',
+    };
+
+     _p52_formTtipflumc = Ext.create('Ext.window.Window',
     {
         title        : 'TR\u00C1MITE'
         ,modal       : true
@@ -733,10 +742,9 @@ Ext.onReady(function()
             {
                 defaults : { style : 'margin:5px;' }
                 ,border  : 0
-                ,items   :
+                ,items   : Ice.generaItems(_p52_mapaListas.ttipfluFormItems || [], true, '${ctx}/').concat(
                 [
-                    <s:property value="items.ttipfluFormItems" escapeHtml="false" />
-                    ,{
+                    {
                         xtype       : 'fieldcontainer'
                         ,fieldLabel : 'PROPIEDADES'
                         ,items      :
@@ -763,7 +771,7 @@ Ext.onReady(function()
                             }
                         ]
                     }
-                ]
+                ])
             })//zxc
             ,Ext.create('Ext.grid.Panel',
             {
@@ -1093,8 +1101,7 @@ Ext.onReady(function()
                             }
                         ]
                     }
-                    ,<s:property value="items.comboCdtipram" escapeHtml="false" />
-                ]
+                ].concat(Ice.generaItems(_p52_mapaListas.comboCdtipram || [], true, '${ctx}/'))
             })
             ,Ext.create('Ext.grid.Panel',
             {
@@ -6630,4 +6637,3 @@ function _p52_numberContainsSubstrInStr(subStr, str){
 <div id="_p52_divpri" style="height:740px;border:1px solid #CCCCCC;"></div>
 </body>
 </html>
-// MAXIMO DE UN PARAMETRO VARCHAR PARA UNA EXPRESION: #PL['F_CONSULTA_DINAMICA';&VNUMTRA;'12345678901234567890123456789012345678901234567890123456X']

@@ -21,6 +21,8 @@ import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.general.catalogos.dao.CatalogosDAO;
 import mx.com.segurossura.general.catalogos.model.Catalogos;
 import mx.com.segurossura.general.catalogos.service.CatalogosManager;
+import mx.com.segurossura.general.consultas.dao.ConsultasDAO;
+import mx.com.segurossura.workflow.mesacontrol.dao.FlujoMesaControlDAO;
 
 @Service
 public class CatalogosManagerImpl implements CatalogosManager {
@@ -35,6 +37,12 @@ public class CatalogosManagerImpl implements CatalogosManager {
     
     @Autowired
     private EmisionDAO emisionDAO;
+    
+    @Autowired
+    private FlujoMesaControlDAO flujoMesaControlDAO;
+    
+    @Autowired
+    private ConsultasDAO consultasDAO;
     
     @Override
     public List<BaseVO> obtenerCatalogo (String catalogo, Map<String, String> params, String cdusuari, String cdsisrol) throws Exception {
@@ -336,9 +344,36 @@ public class CatalogosManagerImpl implements CatalogosManager {
                         lista.add(new BaseVO(sucursal.get("cdunieco"), sucursal.get("dsunieco")));
                     }
                     break;
+                case TTIPTRAMC:
+                    List<Map<String, String>> listaTiposTramite = flujoMesaControlDAO.recuperaTtiptramc();
+                    lista = new ArrayList<>();
+                    for (Map<String, String> tipoTramite : listaTiposTramite) {
+                        lista.add(new BaseVO(tipoTramite.get("CDTIPTRA"), tipoTramite.get("DSTIPTRA")));
+                    }
+                    break;
+                case TTIPSUPL:
+                    if (params == null) {
+                        params = new HashMap<String, String>();
+                    }
+                    lista = new ArrayList<BaseVO>();
+                    if ("S".equalsIgnoreCase(params.get("ninguno"))) {
+                        lista.add(new BaseVO("0", "NINGUNO"));
+                    }
+                    List<Map<String, String>> listaTipoSuplementos = flujoMesaControlDAO.recuperarTtipsupl(params.get("idPadre"));
+                    for (Map<String, String> tipoSuplementoIterado : listaTipoSuplementos) {
+                        lista.add(new BaseVO(tipoSuplementoIterado.get("CDTIPSUP"), tipoSuplementoIterado.get("DSTIPSUP")));
+                    }
+                    break;
+                case TIPOS_RAMO:
+                    List<Map<String, String>> listaTiposRamo = consultasDAO.recuperarTiposRamo();
+                    lista = new ArrayList<BaseVO>();
+                    for (Map<String, String> tipoRamoIterado : listaTiposRamo) {
+                        lista.add(new BaseVO(tipoRamoIterado.get("CDTIPRAM"), tipoRamoIterado.get("DSTIPRAM")));
+                    }
+                    break;
                 default:
                     throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));
-               }
+                }
             }
         } catch (Exception ex) {
             Utils.generaExcepcion(ex, paso);
