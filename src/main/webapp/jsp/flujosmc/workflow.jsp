@@ -1725,10 +1725,7 @@ Ext.onReady(function()
             {
                 defaults : { style : 'margin:5px;' }
                 ,border  : 0
-                ,items   :
-                [
-                    <s:property value="items.tdocumeFormItems" escapeHtml="false" />
-                ]
+                ,items   : Ice.generaItems(_p52_mapaListas.tdocumeFormItems || [], true, '${ctx}/')
                 ,buttonAlign : 'center'
                 ,buttons     :
                 [
@@ -1821,10 +1818,9 @@ Ext.onReady(function()
             {
                 defaults : { style : 'margin:5px;' }
                 ,border  : 0
-                ,items   :
+                ,items   : (Ice.generaItems(_p52_mapaListas.trequisiFormItems || [], true, '${ctx}/') || []).concat(
                 [
-                    <s:property value="items.trequisiFormItems" escapeHtml="false" />
-                    ,{
+                    {
                         xtype       : 'fieldcontainer'
                         ,fieldLabel : 'PROPIEDADES'
                         ,items      :
@@ -1837,7 +1833,7 @@ Ext.onReady(function()
                             }
                         ]
                     }
-                ]
+                ])
                 ,buttonAlign : 'center'
                 ,buttons     :
                 [
@@ -2771,8 +2767,8 @@ Ext.onReady(function()
                                                         }
                                                     ]
                                                 })
-                                            }
-                                            ,<s:property value="items.comboEtapa" escapeHtml="false" />
+                                            },
+                                            (Ice.generaItems(_p52_mapaListas.comboEtapa || [], true, '${ctx}/') || [{border: 0}])[0],
                                             ,{border : 0}
                                             ,{
                                                 xtype       : 'fieldcontainer'
