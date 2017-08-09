@@ -5,7 +5,10 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
     controller: 'formagrupador',
     
     // config ext
-    title: 'Datos para facturación',
+    title: {
+    		text:'Datos para Facturación',
+    		style:'margin:16px 40px 16px 40px;',
+    	},
     
     // configuracion no ext
     config: {

@@ -87,23 +87,23 @@
 
 
 .x-mask-msg-text {
-    //padding: 25px 0px;
+    padding: 85px 0px 0px 0px;
     background-image: url(images/loadmask/loading.gif);
-    background-size: 100% !important;
+    background-size: 300px auto !important;
     background-repeat: no-repeat;
     background-position: center 0;
-    margin:20px;
+    margin:0 20px;
     
 }
 
 .x-mask-msg {
     padding: 10px;
-    background: #000000 !important;
+    background: #fff !important;
 }
 
 .x-mask-msg-inner {
     padding: 0;
     background-color: transparent !important;
-    color: #fff !important;
+    color:$font-grey!important;
     font: 400 13px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
 }
