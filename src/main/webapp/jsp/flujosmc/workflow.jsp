@@ -348,6 +348,7 @@
     // se inyecta una variable al objeto global Ice, se usa dentro de SelectorMultiple.js
     var Ice = Ice || {};
     Ice.contexto = "${ctx}/";
+    var _GLOBAL_DIRECTORIO_ICONOS = '${icons}';
 </script>
 
 <script type="text/javascript" src="${ctx}/res/js/extjs4/ext-all.js"></script>
