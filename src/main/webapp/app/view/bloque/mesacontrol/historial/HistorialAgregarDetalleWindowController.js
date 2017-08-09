@@ -41,7 +41,11 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialAgregarDetalleWindowCo
     	}catch(e){
     		Ice.manejaExcepcion(e,paso);
     	}
-    }
+    },
+    
+    cancelar : function(){
+		this.getView().cerrar();
+	}
 });
 	
 	
