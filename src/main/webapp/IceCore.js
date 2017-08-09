@@ -176,8 +176,9 @@ var Ice = (
                 },
             	
             	historial:{
-            		obtenerTdmesacontrol:"jsonLocal/obtieneTdmesacontrol.json",
-            		obtenerThmesacontrol:"jsonLocal/obtieneThmesacontrol.json"
+            		obtenerTdmesacontrol:"mesacontrol/historial/obtenerTdmesacontrol.action",
+            		obtenerThmesacontrol:"mesacontrol/historial/obtenerThmesacontrol.action",
+            		movimientoThmesacontrol:'mesacontrol/historial/movimientoTdmesacontrol.action'
             	}
             },
             datosAuxiliares: {
@@ -610,20 +611,12 @@ var Ice = (
                 ? {close: function (){}}
                 : Ice.mask(paso);
         try {
-        	var timeoutResp;
-        	if (params.timeout) {
-        		timeoutResp = Ext.Ajax.timeout;
-        		Ext.Ajax.timeout = params.timeout;
-        	}
             var requestParams = {
             	async:params.async===false?false:true,
                 url: params.url,
                 success: function (response) {
                     Ice.log('Ice.request.response: ', response);
                     mask.close();
-                    if (timeoutResp) {
-                    	Ext.Ajax.timeout = timeoutResp;
-                    }
                     var paso2 = 'Decodificando respuesta del proceso: ' + ((params.mascara || 'enviando petici\00f3n').toLowerCase());
 
                     try {
@@ -652,9 +645,6 @@ var Ice = (
                 },
                 failure: function () {
                     mask.close();
-                    if (timeoutResp) {
-                    	Ext.Ajax.timeout = timeoutResp;
-                    }
                     if (params.failure && typeof params.failure === 'function') {
 
                         try {
@@ -670,6 +660,9 @@ var Ice = (
                 requestParams.params = params.params;
             } else if (params.jsonData) {
                 requestParams.jsonData = params.jsonData;
+            }
+            if(params.timeout){
+           	 requestParams.timeout = params.timeout;
             }
             Ext.Ajax.request(requestParams);
         } catch (e) {
@@ -975,14 +968,14 @@ var Ice = (
     /**
      * Genera un arreglo de items para formulario
      */
-    generaItems: function (configComps) {
+    generaItems: function (configComps, modoExt4, contexto) {
         Ice.log('Ice.generaItems args:', arguments);
         var paso = 'Generando items',
             items = [];
         try {
             configComps = configComps || [];
             for (var i = 0; i < configComps.length; i++) {
-                items.push(Ice.generaItem(configComps[i]));
+                items.push(Ice.generaItem(configComps[i], modoExt4, contexto));
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
@@ -1117,7 +1110,7 @@ var Ice = (
     /**
      * Genera un item para formulario
      */
-    generaItem: function (config) {
+    generaItem: function (config, modoExt4, contexto) {
         //Ice.log('Ice.generaItem args:', arguments);
         var paso = 'Construyendo item',
             item = {};
@@ -1126,34 +1119,71 @@ var Ice = (
                 throw 'No se recibi\u00f3 configuraci\u00f3n de item';
             }
             
-            // xtype
-            item.xtype = {
-                A: 'textfieldice',
-                N: 'numberfieldice', // int
-                P: 'numberfieldice', // float
-                M: 'numberfieldice', // money
-                F: 'datefieldice',
-                T: 'textareaice',
-                S: 'switchice',
-                FF: 'filefieldice',
-                CDPERSONPICKER: 'cdpersonpicker',
-                CDAGENTEPICKER: 'cdagentepicker',
-                PASSWORD: 'textfieldice'
-            }[config.tipocampo];
-            if (!item.xtype) {
-                throw 'Tipocampo incorrecto para item';
-            }
-            if (config.catalogo) {
-                item.xtype = 'comboice';
-                item.catalogo = config.catalogo;
-                if(!Ext.isEmpty(config.queryparam)){
-                    item.queryParam = config.queryparam;
-                    item.queryCaching = false;
-                    item.queryMode = "remote";
-                    item.autoLoad = false;
-                    item.hideTrigger = true;
-                    item.minChars = 3;
-                    item.fieldStyle = 'text-transform:uppercase';
+            if (modoExt4 !== true) {
+                // xtype
+                item.xtype = {
+                    A: 'textfieldice',
+                    N: 'numberfieldice', // int
+                    P: 'numberfieldice', // float
+                    M: 'numberfieldice', // money
+                    F: 'datefieldice',
+                    T: 'textareaice',
+                    S: 'switchice',
+                    FF: 'filefieldice',
+                    CDPERSONPICKER: 'cdpersonpicker',
+                    CDAGENTEPICKER: 'cdagentepicker',
+                    PASSWORD: 'textfieldice'
+                }[config.tipocampo];
+                if (!item.xtype) {
+                    throw 'Tipocampo incorrecto para item';
+                }
+                if (config.catalogo) {
+                    item.xtype = 'comboice';
+                    item.catalogo = config.catalogo;
+                    if(!Ext.isEmpty(config.queryparam)){
+                        item.queryParam = config.queryparam;
+                        item.queryCaching = false;
+                        item.queryMode = "remote";
+                        item.autoLoad = false;
+                        item.hideTrigger = true;
+                        item.minChars = 3;
+                        item.fieldStyle = 'text-transform:uppercase';
+                    }
+                }
+            } else {
+                // xtype
+                item.xtype = {
+                    A: 'textfield',
+                    N: 'numberfield', // int
+                    P: 'numberfield', // float
+                    M: 'numberfield', // money
+                    F: 'datefield',
+                    T: 'textarea',
+                    // S: 'switchice',
+                    FF: 'filefield'
+                    // CDPERSONPICKER: 'cdpersonpicker',
+                    // CDAGENTEPICKER: 'cdagentepicker',
+                    // PASSWORD: 'textfieldice'
+                }[config.tipocampo];
+                if (!item.xtype) {
+                    throw 'Tipocampo incorrecto para item';
+                }
+                if (config.catalogo) {
+                    item.xtype = 'comboice';
+                    
+                    item.modoExt4 = true;
+                    item.contexto = contexto;
+
+                    item.catalogo = config.catalogo;
+                    if(!Ext.isEmpty(config.queryparam)){
+                        item.queryParam = config.queryparam;
+                        item.queryCaching = false;
+                        item.queryMode = "remote";
+                        item.autoLoad = false;
+                        item.hideTrigger = true;
+                        item.minChars = 3;
+                        item.fieldStyle = 'text-transform:uppercase';
+                    }
                 }
             }
             
@@ -1188,7 +1218,11 @@ var Ice = (
             
             // label
             if (config.label) {
-                item.label = config.label
+                if (modoExt4 !== true) {
+                    item.label = config.label
+                } else {
+                    item.fieldLabel = config.label;
+                }
             }
             
             
@@ -1228,7 +1262,7 @@ var Ice = (
 
             
             // validaciones
-            if (Ext.manifest.toolkit === 'classic') {
+            if (modoExt4 === true || Ext.manifest.toolkit === 'classic') {
                 if (config.swobliga === 'S') {
                     item.allowBlank = false;
                 }

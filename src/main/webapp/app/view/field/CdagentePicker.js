@@ -40,7 +40,8 @@ Ext.define('Ice.view.field.CdagentePicker', {
                     labelAlign: config.labelAlign || 'top',
                     name: 'dsnombre',
                     reference: 'dsnombre',
-                    readOnly: true
+                    readOnly: true,
+                    allowBlank: this.allowBlank || true                    
                 }, {
                     xtype: 'button',
                     iconCls: 'x-fa fa-search',

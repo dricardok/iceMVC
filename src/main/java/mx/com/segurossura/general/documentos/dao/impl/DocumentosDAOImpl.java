@@ -52,7 +52,7 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
 
     protected class ObtenerDocumentosDAO extends StoredProcedure {
         protected ObtenerDocumentosDAO(DataSource dataSource) {
-            super(dataSource, "P_Get_documentos_f");
+            super(dataSource, "PKG_DATA_ALEA.P_GET_DOCUMENTOS_F");
             declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
@@ -189,6 +189,38 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
             declareParameter(new SqlParameter("pv_cdtipdoc_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_accion_i",   Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o",Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public String ObtenerDescripcionDocumento(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cddocume) throws Exception {
+        String dsdocume = "";
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        params.put("pv_cddocume_i", cddocume);
+        Map<String, Object> procResult = ejecutaSP(new ObtenerDescripcionDocumentoSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procResult.get("pv_registro_o");
+        dsdocume = procResult.get("pv_dsdocume_o").toString();
+        return dsdocume;
+    }
+
+    protected class ObtenerDescripcionDocumentoSP extends StoredProcedure {
+        protected ObtenerDescripcionDocumentoSP(DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_GET_DSDOCUME");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cddocume_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_dsdocume_o", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
             compile();
         }

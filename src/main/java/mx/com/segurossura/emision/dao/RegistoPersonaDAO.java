@@ -31,4 +31,6 @@ public interface RegistoPersonaDAO {
 
 	String generaCdperson() throws Exception;
 
+	String personaDuplicada(String cdperson, String dsnombre, Date fenacimi) throws Exception;
+
 }

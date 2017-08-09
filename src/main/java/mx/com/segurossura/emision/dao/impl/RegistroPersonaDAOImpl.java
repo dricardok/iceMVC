@@ -23,6 +23,7 @@ import com.biosnettcs.core.dao.mapper.GenericMapper;
 import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.emision.dao.RegistoPersonaDAO;
+import mx.com.segurossura.emision.dao.impl.EmisionDAOImpl.BbvtarxincF;
 import mx.com.segurossura.emision.model.TvaloperVO;
 import mx.com.segurossura.emision.model.TvalositVO;
 
@@ -565,4 +566,34 @@ public class RegistroPersonaDAOImpl extends HelperJdbcDao implements RegistoPers
 			compile();
 		}
 	}
+	
+	@Override
+    public String personaDuplicada(String cdperson, String dsnombre, Date fenacimi)
+            throws Exception {
+        
+        Map<String, Object> params = new LinkedHashMap<String, Object>();       
+        params.put("pv_cdperson_i", cdperson);
+        params.put("pv_dsnombre_i", dsnombre);
+        params.put("pv_ntfenaci_i", fenacimi);
+        Map<String, Object> resultado = ejecutaSP(new PersonaDuplicadaF(getDataSource()), params);
+        String res= ((String)resultado.get("v_return"));
+        
+        return res;
+    }
+    
+    protected class PersonaDuplicadaF extends StoredProcedure {
+        protected PersonaDuplicadaF (DataSource dataSource) {
+            super(dataSource, "PKG_VALIDA_ALEA.F_PERSONA_DUP");
+            /** important that the out parameter is defined before the in parameter. */
+            declareParameter(new SqlOutParameter("v_return",    Types.VARCHAR));  
+            declareParameter(new SqlParameter("pv_cdperson_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_dsnombre_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_ntfenaci_i"   , Types.DATE));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o",  Types.VARCHAR));
+            /** use function instead of stored procedure */
+            setFunction(true);
+            compile();
+        }
+    }
 }

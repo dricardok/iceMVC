@@ -1480,7 +1480,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     
     protected class ObtenerModeloCoaseguro extends StoredProcedure {
         protected ObtenerModeloCoaseguro(DataSource dataSource) {
-            super(dataSource, "P_GET_TMODECOA");
+            super(dataSource, "PKG_DATA_ALEA.P_GET_TMODECOA");
             declareParameter(new SqlParameter("pv_cdmodelo_i"  , Types.VARCHAR));
             String[] cols = new String[] { 
                     "cdcia",
@@ -1520,7 +1520,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
  
     protected class MovimientoMpolicoaSP extends StoredProcedure {
         protected MovimientoMpolicoaSP (DataSource dataSource) {
-            super(dataSource,"P_MOV_MPOLICOA");
+            super(dataSource,"PKG_DATA_ALEA.P_MOV_MPOLICOA");
             declareParameter(new SqlParameter("pv_cdunieco_i",          Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i",            Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i",            Types.VARCHAR));
@@ -1564,7 +1564,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     
     protected class MovimientoMsupcoaSP extends StoredProcedure {
         protected MovimientoMsupcoaSP (DataSource dataSource) {
-            super(dataSource,"P_MOV_MSUPCOA");
+            super(dataSource,"PKG_DATA_ALEA.P_MOV_MSUPCOA");
             declareParameter(new SqlParameter("pv_cdcialider_i",        Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdunieco_i",          Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i",            Types.VARCHAR));
@@ -1598,7 +1598,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     
     protected class ObtieneCdciaSURASP extends StoredProcedure {
         protected ObtieneCdciaSURASP(DataSource dataSource) {
-            super(dataSource,"P_GET_CDCIA_SURA");
+            super(dataSource,"PKG_DATA_ALEA.P_GET_CDCIA_SURA");
             declareParameter(new SqlOutParameter("pv_cdcia_o",  Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o",  Types.VARCHAR));
@@ -1624,7 +1624,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     
     protected class ObtenerCoaseguroAceptadoDAO extends StoredProcedure {
         protected ObtenerCoaseguroAceptadoDAO (DataSource dataSource) {
-            super(dataSource, "P_GET_MSUPCOA");
+            super(dataSource, "PKG_DATA_ALEA.P_GET_MSUPCOA");
             declareParameter(new SqlParameter("pv_cdunieco_i"  , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i"    , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i"    , Types.VARCHAR));
@@ -1799,7 +1799,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     
     protected class TieneCoaseguroSP extends StoredProcedure {
         protected TieneCoaseguroSP(DataSource dataSource) {
-            super(dataSource, "P_GET_COASEGURO");           
+            super(dataSource, "PKG_DATA_ALEA.P_GET_COASEGURO");           
             declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i" , Types.VARCHAR));
@@ -1861,7 +1861,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     
     protected class EliminaCoaseguroSP extends StoredProcedure {
         protected EliminaCoaseguroSP(DataSource dataSource) {
-            super(dataSource, "P_ELIMINA_COASEGURO");           
+            super(dataSource, "PKG_DATA_ALEA.P_ELIMINA_COASEGURO");           
             declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i" , Types.VARCHAR));
