@@ -606,7 +606,7 @@ public class EmisionManagerImpl implements EmisionManager {
 						//	boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
 						exito = false;
 						try {
-							FileUtils.copyURLToFile(new URL(urlSLIP), new File(documentoRuta), 10000, 10000);
+							FileUtils.copyURLToFile(new URL(urlSLIP), new File(documentoRuta), 120000, 120000);
 							exito = true;
 						}catch(Exception fe){
 							logger.error(fe.getMessage(), fe);

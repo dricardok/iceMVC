@@ -51,33 +51,56 @@ Ext.define('Ice.view.field.ComboIce', {
             fields: ['key', 'value', 'aux', 'aux2', 'aux3', 'aux4', 'aux5'],
             proxy: {
                 type: 'ajax',
-                url: Ice.url.core.obtenerCatalogo,
+                url: (me.modoExt4 === true && me.contexto || '') + Ice.url.core.obtenerCatalogo,
                 reader: {
                     type: 'json',
-                    rootProperty: 'list'
+                    rootProperty: 'list',
+                    root: 'list' // esto es para ext js version 4
                 },
                 extraParams: {
-                    catalogo: configIce.catalogo || ''
+                    catalogo: (me.modoExt4 === true && me.catalogo) || configIce.catalogo || ''
                 }
             }
         };
         
         
         // extraParams
-        if (configIce.param1) {
-            configTra.store.proxy.extraParams[configIce.param1] = configIce.value1 || '';
+        if (me.modoExt4 !== true) {
+            if (configIce.param1) {
+                configTra.store.proxy.extraParams[configIce.param1] = configIce.value1 || '';
+            }
+            if (configIce.param2) {
+                configTra.store.proxy.extraParams[configIce.param2] = configIce.value2 || '';
+            }
+            if (configIce.param3) {
+                configTra.store.proxy.extraParams[configIce.param3] = configIce.value3 || '';
+            }
+            if (configIce.param4) {
+                configTra.store.proxy.extraParams[configIce.param4] = configIce.value4 || '';
+            }
+            if (configIce.param5) {
+                configTra.store.proxy.extraParams[configIce.param5] = configIce.value5 || '';
+            }
+        } else {
+            if (me.param1) {
+                configTra.store.proxy.extraParams[me.param1] = me.value1 || '';
+            }
+            if (me.param2) {
+                configTra.store.proxy.extraParams[me.param2] = me.value2 || '';
+            }
+            if (me.param3) {
+                configTra.store.proxy.extraParams[me.param3] = me.value3 || '';
+            }
+            if (me.param4) {
+                configTra.store.proxy.extraParams[me.param4] = me.value4 || '';
+            }
+            if (me.param5) {
+                configTra.store.proxy.extraParams[me.param5] = me.value5 || '';
+            }
         }
-        if (configIce.param2) {
-            configTra.store.proxy.extraParams[configIce.param2] = configIce.value2 || '';
-        }
-        if (configIce.param3) {
-            configTra.store.proxy.extraParams[configIce.param3] = configIce.value3 || '';
-        }
-        if (configIce.param4) {
-            configTra.store.proxy.extraParams[configIce.param4] = configIce.value4 || '';
-        }
-        if (configIce.param5) {
-            configTra.store.proxy.extraParams[configIce.param5] = configIce.value5 || '';
+
+        if (me.modoExt4 === true) {
+            configTra.labelAlign = 'left';
         }
         
         

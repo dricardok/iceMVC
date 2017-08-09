@@ -41,12 +41,26 @@ Ext.define('Ice.view.bloque.coaseguro.GridExclusionCoberturasCoaseguro', {
                     }
 
                     if (config.selector == 'true') {
-                        config.selModel = {
-                            type: 'checkboxmodel',
-                            mode: 'SIMPLE',
-                            showHeaderCheckbox: false,
-                            allowDeselect: true
-                        };
+                        if(Ice.classic()){
+                            config.selModel = {
+                                    type: 'checkboxmodel',
+                                    mode: 'SIMPLE',
+                                    showHeaderCheckbox: false,
+                                    allowDeselect: true
+                            };                            
+                        } else {
+                            config.plugins = {
+                                type: 'gridmultiselection',
+                                selectionColumn: {
+                                    width: 100
+                                }
+                            };
+                            
+                            config.selectable = {
+                                rows: false,
+                                cells: true
+                            };
+                        }
                     }
 
                     var compsGrid = Ice.generaComponentes({

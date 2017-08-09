@@ -19,6 +19,7 @@ import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
+import org.springframework.jdbc.support.nativejdbc.OracleJdbc4NativeJdbcExtractor;
 import org.springframework.stereotype.Repository;
 
 import com.biosnettcs.core.Utils;
@@ -114,7 +115,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 		{
 			super(dataSource,"PKG_MESACONTROL.P_GET_TESTADOMC");
 			declareParameter(new SqlParameter("cdestadomc" , Types.VARCHAR));
-			String[] cols=new String[]{ "ESTATUS" , "DSESTADOMC" };
+			String[] cols=new String[]{ "CDESTADOMC" , "DSESTADOMC" };
 			declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
@@ -2505,6 +2506,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 		protected GuardarTtipflurolSP(DataSource dataSource)
 		{
 			super(dataSource,"PKG_MESACONTROL.P_MOV_TTIPFLUROL");
+			this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor());
 			declareParameter(new SqlParameter("cdtipflu" , Types.VARCHAR));
 			declareParameter(new SqlParameter("array"    , Types.ARRAY , "LISTA_LISTAS_VARCHAR2"));
 			declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
@@ -2588,6 +2590,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 		protected GuardarTflujorolSP(DataSource dataSource)
 		{
 			super(dataSource,"PKG_MESACONTROL.P_MOV_TFLUJOROL");
+			this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor());
 			declareParameter(new SqlParameter("cdtipflu"  , Types.VARCHAR));
 			declareParameter(new SqlParameter("cdflujomc" , Types.VARCHAR));
 			declareParameter(new SqlParameter("array"     , Types.ARRAY , "LISTA_LISTAS_VARCHAR2"));
@@ -4173,6 +4176,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
     protected class MovimientoTfluaccrolLoteSP extends StoredProcedure {
         protected MovimientoTfluaccrolLoteSP (DataSource dataSource) {
             super(dataSource,"PKG_MESACONTROL.P_MOV_TFLUACCROL_LOTE");
+            this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor());
             declareParameter(new SqlParameter("array", Types.ARRAY, "LISTA_LISTAS_VARCHAR2"));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
@@ -4205,6 +4209,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
         protected ActualizaCoordenadasLoteSP(DataSource dataSource)
         {
             super(dataSource,"PKG_MESACONTROL.P_ACTUALIZA_COORDS_LOTE");
+            this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor());
             declareParameter(new SqlParameter("array", Types.ARRAY, "LISTA_LISTAS_VARCHAR2"));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
@@ -4237,6 +4242,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
         protected MovimientoTflurevdocLoteSP(DataSource dataSource)
         {
             super(dataSource,"PKG_MESACONTROL.P_MOV_TFLUREVDOC_LOTE");
+            this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor());
             declareParameter(new SqlParameter("array", Types.ARRAY, "LISTA_LISTAS_VARCHAR2"));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
@@ -4269,6 +4275,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
         protected MovimientoTflurevreqLoteSP(DataSource dataSource)
         {
             super(dataSource,"PKG_MESACONTROL.P_MOV_TFLUREVREQ_LOTE");
+            this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor());
             declareParameter(new SqlParameter("array", Types.ARRAY, "LISTA_LISTAS_VARCHAR2"));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));

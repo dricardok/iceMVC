@@ -52,7 +52,7 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
 
     protected class ObtenerDocumentosDAO extends StoredProcedure {
         protected ObtenerDocumentosDAO(DataSource dataSource) {
-            super(dataSource, "P_Get_documentos_f");
+            super(dataSource, "PKG_DATA_ALEA.P_GET_DOCUMENTOS_F");
             declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
@@ -212,7 +212,7 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
 
     protected class ObtenerDescripcionDocumentoSP extends StoredProcedure {
         protected ObtenerDescripcionDocumentoSP(DataSource dataSource) {
-            super(dataSource, "P_GET_DSDOCUME");
+            super(dataSource, "PKG_DATA_ALEA.P_GET_DSDOCUME");
             declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));

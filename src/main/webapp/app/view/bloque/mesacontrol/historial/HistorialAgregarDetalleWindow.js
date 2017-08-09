@@ -30,7 +30,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialAgregarDetalleWindow",
         			reference	:	'comentarios',
         			fieldLabel	:	'Se recibe con los siguientes comentarios',
         			width		:	'100%',
-        			height		:	'60%',
+        			maxRows		:   7,
         			value		:	config.record.get('comments')
         		},
         		{
@@ -38,6 +38,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialAgregarDetalleWindow",
         			readOnly	:	false,
         			reference	:	'ncommentario',
         			fieldLabel	:	'Nuevo comentario:',
+        			maxRows		:    7,
         			width		:	'100%'
         		}
         	];
@@ -52,13 +53,13 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialAgregarDetalleWindow",
 	buttons		:		[
 		{
 			text		:	'Cancelar',
-			handler		:	function(){
-				this.cerrar();
-			}
+			iconCls 	: 'x-fa fa-close',
+			handler		:	'cancelar'
 			
 		},
 		{
 			text		:	'Agregar Detalle',
+			iconCls 	: 'x-fa fa-plus-circle',
 			handler		:	'agregarDetalle'
 		}
 	]
