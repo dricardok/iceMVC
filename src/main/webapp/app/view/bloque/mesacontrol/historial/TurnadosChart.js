@@ -80,8 +80,18 @@ Ext.define("Ice.view.bloque.documentos.historial.TurnadosChart",{
 		        title		:	"Turnados",
 		        width: '100%',
 		        height:	300,
+		        
 		        legend: {
-		            docked: 'right'
+		        	platformConfig: {
+		        		desktop: {
+		        			docked: 'right'
+		        		},
+		        		'!desktop'	:	{
+		        			docked: 'top',
+				            width: '80%',
+				            heigth:'80%'
+		        		}
+		        	}
 		        },
 		        store: {
 					fields		:	["ntramite"].concat(dataFeldX)	,
