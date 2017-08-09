@@ -23,6 +23,10 @@ var Ice = (
             Ice.log('Ice.eventManager.change item:', item, 'value:', value, 'esCarga:', esCarga);
             var paso = 'Administrando comportamiento din\u00e1mico';
             try {
+                if (item.modoExt4 === true) {
+                    return;
+                }
+
                 var form = item.up('[getValues]') || {},
                     // name = item.getName(), se comenta para usar:
                     name = item.getReference(),
