@@ -32,8 +32,9 @@
         <struts2.version>2.5.10.1</struts2.version>
         <spring.version>4.3.8.RELEASE</spring.version>
         <jackson.version>1.9.10</jackson.version>
-        <alea.client.version>2.2</alea.client.version>
-        <pago.client.version>1.6.1</pago.client.version>
+        <alea.client.version>2.3</alea.client.version>
+        <pago.client.version>1.6.2</pago.client.version>
+        <alea.commons.version>1.7.4</alea.commons.version>
     </properties>
     
     <dependencies>
@@ -289,12 +290,30 @@
 			<groupId>mx.com.royalsun.alea</groupId>
 			<artifactId>alea-client</artifactId>
 			<version>${alea.client.version}</version>
-		</dependency>
+			<exclusions>
+				<exclusion>
+					<groupId>mx.com.royalsun.alea</groupId>
+					<artifactId>alea-commons</artifactId>
+				</exclusion>
+			</exclusions>
+        </dependency>
 		
 		<dependency>
 			<groupId>mx.com.royalsun.alea</groupId>
 			<artifactId>pago-client</artifactId>
 			<version>${pago.client.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>mx.com.royalsun.alea</groupId>
+					<artifactId>alea-commons</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>mx.com.royalsun.alea</groupId>
+			<artifactId>alea-commons</artifactId>
+			<version>${alea.commons.version}</version>
 		</dependency>
                 
     </dependencies>
