@@ -75,8 +75,7 @@ public class MesaControlAction extends PrincipalCoreAction {
             String nombre = params.get("nombre");
             String nmsolici = params.get("nmsolici");           
             
-            list = mesaControlManager.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, 
-            									      cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici);
+            list = mesaControlManager.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici);
             
             success = true;
 		}catch(Exception ex){

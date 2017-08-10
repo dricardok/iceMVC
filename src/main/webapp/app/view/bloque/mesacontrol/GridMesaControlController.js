@@ -1,8 +1,10 @@
 Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
-	extend: 'Ext.app.ViewController',
+	extend: 'Ice.app.controller.FormIceController',
 	alias: 'controller.gridmesacontrol',
 	
-	onItemClick: function () {
-		alert('onItemClic');
+	
+	onItemClic : function () {
+		Ext.Msg.alert('Recordset seleccionado');
 	}
+	
 });

@@ -277,7 +277,7 @@ public class CatalogosManagerImpl implements CatalogosManager {
                 	    lista.add(new BaseVO("-1", "TAREAS PENDIENTES"));
                 	    lista.add(new BaseVO("0", "TODOS"));
                         for (Map<String, String> registro: estatusTramite) {
-                            lista.add(new BaseVO(registro.get("estatus"), registro.get("dsestadomc")));
+                            lista.add(new BaseVO(registro.get("cdestadomc"), registro.get("dsestadomc")));
                         }
                     }
                     break;
