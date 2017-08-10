@@ -633,6 +633,15 @@ Ext.define('Ice.view.bloque.CoberturasController', {
  	    				paso = "cargando coberturas";
     	    			gridCoberturas.getStore().load();
 						gridCoberturas.down('#botonBorrar').hide();
+						agre.getStore().extraParams= {
+						    cdunieco: view.getCdunieco(),
+			    			cdramo: view.getCdramo(),
+			    			estado: view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
+			    			nmpoliza: view.getNmpoliza(),
+			    			nmsuplem: view.getNmsuplem(),
+			    			nmsituac: view.getNmsituac(),
+			    			cdtipsit : view.getCdtipsit()
+	 	    			}
     	    			agre.getStore().load();
     	    			Ice.mensajeCorrecto({
 							titulo: 'Correcto',
@@ -910,7 +919,17 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 			// btn.up("[xtype=bloquecoberturas]").getItems().items.forEach(function (it) {
 			// 	it.setHidden(true);
 			// });
-			view.down("#panela").getStore().load();
+			view.down("#panela").getStore().load({
+				params:{
+				    'params.pv_cdunieco_i': view.getCdunieco(),
+	    			'params.pv_cdramo_i': view.getCdramo(),
+	    			'params.pv_estado_i': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
+	    			'params.pv_nmpoliza_i': view.getNmpoliza(),
+	    			'params.pv_nmsuplem_i': view.getNmsuplem(),
+	    			'params.pv_nmsituac_i': view.getNmsituac(),
+	    			'params.pv_cdtipsit_i' : view.getCdtipsit()
+	    			}
+			});
 			view.down("#panela").setHidden(false);
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);
