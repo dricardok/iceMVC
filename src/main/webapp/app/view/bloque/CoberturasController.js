@@ -844,7 +844,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 			gridCoberturas.getStore().proxy.extraParams = {
 				'params.pv_cdunieco_i': view.getCdunieco(),
 				'params.pv_cdramo_i': view.getCdramo(),
-				'params.pv_estado_i': view.getEstado(),
+				'params.pv_estado_i': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
 				'params.pv_nmpoliza_i': view.getNmpoliza(),
 				'params.pv_nmsuplem_i': view.getNmsuplem(),
 				'params.pv_nmsituac_i': record.get('nmsituac'),
