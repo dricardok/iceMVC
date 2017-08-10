@@ -5,7 +5,7 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 	controller	:	"buscaragentewindow",
 
 	// config ext
-	title: 'Buscar agente',
+	title: 'Buscar Agente',
 	scrollable: true,
 	modal: true,
 	bodyPadding: '20 0 0 20',
