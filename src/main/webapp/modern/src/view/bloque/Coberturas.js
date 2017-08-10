@@ -170,7 +170,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 					text: 'Guardar',
 					iconCls: 'x-fa fa-save',
 					itemId: "btnGuardarCobertura",
-					handler: 'guardarCoberturaMovil'
+					handler: 'guardarCoberturas'
 				}]
 			};
 			me.add(form);
@@ -199,7 +199,8 @@ Ext.define('Ice.view.bloque.Coberturas', {
 							'params.pv_estado_i': me.config.estado,
 							'params.pv_nmpoliza_i': me.config.nmpoliza,
 							'params.pv_nmsuplem_i': me.config.nmsuplem,
-							'params.pv_nmsituac_i': me.config.nmsituac
+							'params.pv_nmsituac_i': me.config.nmsituac,
+							'params.pv_cdtipsit_i': me.getCdtipsit()
 						},
 						url: Ice.url.bloque.coberturas.datosCoberturas,
 						reader: {

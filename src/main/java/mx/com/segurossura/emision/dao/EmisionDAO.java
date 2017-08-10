@@ -15,7 +15,7 @@ public interface EmisionDAO {
 			String accion) throws Exception;
 
 	List<Map<String, String>> obtieneMpoligar(String cdunieco, String cdramo, String estado,
-			String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception;
+			String nmpoliza, String nmsituac, String cdgarant, String nmsuplem, String pv_cdtipsit_i, String perfil) throws Exception;
 
 	List<Map<String, String>> obtieneMpolicap(String cdunieco, String cdramo, String estado,
 			String nmpoliza, String nmsituac, String cdcapita, String nmsuplem) throws Exception;
