@@ -31,7 +31,7 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 
 	@Override
 	public List<Map<String, String>> obtieneMpoligar(String pv_cdunieco_i, String pv_cdramo_i, String pv_estado_i,
-			String pv_nmpoliza_i, String pv_nmsituac_i, String pv_cdgarant_i, String pv_nmsuplem_i) throws Exception {
+			String pv_nmpoliza_i, String pv_nmsituac_i, String pv_cdgarant_i, String pv_nmsuplem_i, String pv_cdtipsit_i, String perfil) throws Exception {
 		// TODO Auto-generated method stub
 		logger.debug(Utils.join(
 				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -44,7 +44,7 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 			
 			paso="Consultando datos";
 			
-			datos=emisionDAO.obtieneMpoligar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdgarant_i, pv_nmsuplem_i);
+			datos=emisionDAO.obtieneMpoligar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdgarant_i, pv_nmsuplem_i, pv_cdtipsit_i, perfil);
 					
 
 		}catch(Exception ex)

@@ -41,6 +41,10 @@ public class MesaControlAction extends PrincipalCoreAction {
 	
 	private static SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
 	
+    private long start;
+    private long limit;
+    private long totalCount;
+	
 	@Autowired
     private MesaControlManager mesaControlManager;
 	
@@ -56,7 +60,9 @@ public class MesaControlAction extends PrincipalCoreAction {
 		logger.debug(StringUtils.join(
                 "\n################################",
                 "\n###### obtenerMesaControl ######",
-                "\n###### params ", params
+                "\n###### params ", params,
+                "\n###### start", start,
+                "\n###### limit", limit
                ));
 		try{
 			Utils.validate(params, "No se recibieron parametros");			
@@ -75,8 +81,11 @@ public class MesaControlAction extends PrincipalCoreAction {
             String nombre = params.get("nombre");
             String nmsolici = params.get("nmsolici");           
             
-            list = mesaControlManager.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici);
-            
+            list = mesaControlManager.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici, start, limit);
+            if(!list.isEmpty()){
+                totalCount = Integer.parseInt(list.get(0).get("total"));
+            }
+            success = true;
             success = true;
 		}catch(Exception ex){
 			success = false;

@@ -40,7 +40,7 @@
     @if not is-null($loadmask-msg-background-gradient) {
         @include background-gradient($loadmask-msg-background-color, $loadmask-msg-background-gradient);
     } @else {
-        background: $blanco-s;
+        background:transparent;
     }
 }
 
@@ -52,7 +52,7 @@
         border-color: $loadmask-msg-inner-border-color;
     }
     background-color: $loadmask-msg-inner-background-color;
-    color: $loadmask-msg-inner-color;
+    color: #fff;
     font: $loadmask-msg-inner-font;
 }
 
@@ -82,4 +82,28 @@
             }
         }
     }
+}
+
+
+
+.x-mask-msg-text {
+    padding: 85px 0px 0px 0px;
+    background-image: url(images/loadmask/loading.gif);
+    background-size: 300px auto !important;
+    background-repeat: no-repeat;
+    background-position: center 0;
+    margin:0 20px;
+    
+}
+
+.x-mask-msg {
+    padding: 10px;
+    background: #fff !important;
+}
+
+.x-mask-msg-inner {
+    padding: 0;
+    background-color: transparent !important;
+    color:$font-grey!important;
+    font: 400 13px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
 }

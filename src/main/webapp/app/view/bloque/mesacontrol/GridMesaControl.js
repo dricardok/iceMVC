@@ -5,6 +5,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControl', {
 	controller: 'gridmesacontrol',
 	
 	title: 'Tramites',
+	height: 300,
 	
 	config: {
 		cdunieco: null,
@@ -15,9 +16,8 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControl', {
 		cdagente: null,
 		ntramite: null,
 		
-		modulo: null,
-        flujo: null,
-        auxkey: null
+		itemsPerPage: null,
+		actionColumns: []
 	},
 	
 	constructor: function (config) {
@@ -33,19 +33,41 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControl', {
 				columns: true
 			});
 			
-			config.columns = (comps.MESA_CONTROL.GRID.columns || []).concat(config.columns || []);			
-			config.store = {
-					autoLoad: true,
-	                fields: comps.MESA_CONTROL.GRID.fields || [],
-	                proxy: {
-	                	type: 'ajax',
-	                	url: Ice.url.bloque.mesacontrol.obtenerTramites,
-	                	reader: {
-	                		type: 'json',
-	                		rootProperty: 'list'
-	                	}
-	                }
-			};			
+			var store = Ext.create('Ext.data.Store', {
+				id: 'mesacontrolstore',
+				autoLoad: false,
+                fields: comps.MESA_CONTROL.GRID.fields || [],
+                pageSize: config.itemsPerPage,
+                proxy: {
+                	type: 'ajax',
+                	url: Ice.url.bloque.mesacontrol.obtenerTramites,
+                	reader: {
+                		type: 'json',
+                		rootProperty: 'list',
+                		totalProperty: 'totalCount'
+                	}
+                }
+			});
+			
+			
+			store.load({
+                params: {
+                    'params.ntramite': config.ntramite,
+                    start: 0,
+                    limit: config.itemsPerPage
+                }
+            });
+			
+			
+			config.columns = (comps.MESA_CONTROL.GRID.columns || []).concat(config.columns || []);
+			config.store = store;
+			config.bbar = {
+                    xtype: 'pagingtoolbar',
+                    displayInfo: true
+            };
+			config.rowNumbers = {
+                    text: 'Index'
+            };
 			
 		} catch(e) {
 			Ice.generaExcepcion(e, paso);

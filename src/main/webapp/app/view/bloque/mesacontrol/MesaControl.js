@@ -15,7 +15,8 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
     		reference: 'formmesacontrol'
     	}, {
     		xtype: 'gridmesacontrol',
-    		reference: 'gridmesacontrol'
+    		reference: 'gridmesacontrol',
+    		itemsPerPage: 50
     	}
     ]
 });

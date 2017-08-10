@@ -16,12 +16,13 @@ Ext.define('Ice.view.bloque.mesacontrol.FormMesaControlController', {
 			storegrid.removeAll();
 			storegrid.load({
 				params: {
+					'params.cdunieco':formRefs.cdunieco.getValue(),
 					'params.cdramo':formRefs.cdramo.getValue(),
 					'params.estado':formRefs.estado.getValue(),
 					'params.nmpoliza':formRefs.nmpoliza.getValue(),
 					'params.cdagente':formRefs.cdagente.getValue(),
 					'params.ntramite':formRefs.ntramite.getValue(),
-					'params.estatus':formRefs.estatus.getValue(),
+					'params.estatus':formRefs.cdestadomc.getValue(),
 					'params.fstatusi':formRefs.fstatusi.getValue(),
 					'params.fstatusf':formRefs.fstatusf.getValue(),
 					'params.nombre':formRefs.nombre.getValue(),

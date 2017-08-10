@@ -2,7 +2,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 	extend		:	"Ice.view.componente.PanelPaddingIce",
 	xtype		:	"historialpanel",
 	controller 	: 	"historialpanel",
-	//scrollable	:	true,
+	scrollable	:	true,
 	requires: [
         
        // 'Ext.chart.CartesianChart'
@@ -20,7 +20,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 			var graficaEve={
 					xtype		:	'cartesian',
 					title		:	"Eventos",
-					width		:	"40%",
+					width		:	"100%",
 					height		:	250,
 					innerPadding: 	20,
 			        store: {
@@ -65,14 +65,19 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
                             defaults: {
                                 style: 'margin: 5px;'
                             },
-                            layout			:	{
-                            	type		:	'table',
-                            	columns		:	2
-                            },
+//                            layout			:	{
+//                            	type		:	'table',
+//                            	columns		:	2
+//                            },
                             renderer		:	'onRendererToolTip'
                         }
                     },
-                    flex		:	1	
+                    platformConfig: {
+		        		desktop: {
+		        			flex		:	1	
+		        		}
+		        	}
+                    
 
 					
 			};
@@ -81,16 +86,31 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 				{
 					xtype		:	"panelice",
 					width		:	"100%",
-					layout		:	"hbox",
+					
 					title		:	"Historial",
-					//scrollable	:	true,
+					
+					platformConfig: {
+						desktop: {
+							layout		:	"hbox",
+							width: '90%',
+							height: '40%'
+						}
+					},
 					items		:	[
 						graficaEve,
 						
 					    {
 							xtype		:	"turnadoschart",
 							ntramite	:	config.ntramite,
-							flex		:	1
+							platformConfig: {
+				        		desktop: {
+				        			flex		:	1	
+				        		},
+				        		'!desktop'	:	{
+				        			
+				        		}
+				        	}
+							
 					    }
 					]
 				},
@@ -152,8 +172,16 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 							text		:	"Usuario",	
 							dataIndex	:	"dsusuari",
 							flex		:	3,
-							renderer	:	function(dat,m,record){
-								return record.get("cdusuari") + " - " + record.get("dsusuari");
+							renderer	:	function(a,rm,rc){
+								var record ;
+								if(Ice.classic()){
+									record = rc;
+									Ice.log("record: ",record)
+									return record.get("cdusuari") + " - " + record.get("dsusuari");
+								}else {
+									return rm.data.cdusuari + ' - ' + rm.data.dsusuari;
+								}
+								
 							}
 						}
 						,
@@ -174,20 +202,33 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 							text		:	"Tiempo",	
 							dataIndex	:	"dsestatus",
 							flex		:	2.5,
-							renderer	:	function(dat,m,record){
+							renderer	:	function(dat,rm,record){
+								var paso='Render tiempo grid turnados',
+									fefin,feini ;
+								try{
+									if(Ice.classic()){
+										fefin = record.get("fefecha_fin");
+										feini = record.get("fefecha");
+									}else{
+										fefin = rm.get("fefecha_fin");
+										feini = rm.get("fefecha");
+									}
+									var nfecha=(Number(
+											Ext.Date.parse(fefin, "d/m/Y H:i").getTime()
+									)-Number(
+											Ext.Date.parse(feini, "d/m/Y H:i").getTime()
+											));
+							        var tSeg = Math.floor(Number(nfecha) / 1000),
+								        tMin = Math.floor(tSeg / 60),
+								        tHor = Math.floor(tMin / 60),
+								        tDia = Math.floor(tHor / 24);
+							        
+							        return tDia+ ' día(s), ' + tHor%24 + ' hora(s), ' + tMin%60 +
+							             ' minuto(s).';
+								}catch(e){
+									Ice.manejaExcepcion(e,paso);
+								}
 								
-								var nfecha=(Number(
-										Ext.Date.parse(record.get("fefecha_fin"), "d/m/Y H:i").getTime()
-								)-Number(
-										Ext.Date.parse(record.get("fefecha"), "d/m/Y H:i").getTime()
-										));
-						        var tSeg = Math.floor(Number(nfecha) / 1000),
-							        tMin = Math.floor(tSeg / 60),
-							        tHor = Math.floor(tMin / 60),
-							        tDia = Math.floor(tHor / 24);
-						        
-						        return tDia+ ' día(s), ' + tHor%24 + ' hora(s), ' + tMin%60 +
-						             ' minuto(s).';
 							}
 						}
 					],

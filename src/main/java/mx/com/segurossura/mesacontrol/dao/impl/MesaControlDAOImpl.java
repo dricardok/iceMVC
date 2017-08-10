@@ -31,7 +31,7 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String, String>> obtenerTramites(String cdunieco, String cdramo, String estado, String nmpoliza, 
-			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici) throws Exception {
+			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici, long start, long limit) throws Exception {
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		//params.put("pv_cdunieco_i", cdunieco);
 	    //params.put("pv_cdramo_i",   cdramo);
@@ -44,6 +44,8 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
 	    //params.put("pv_fecstatusfin_i", hasta);
 	    //params.put("pv_nombre_i", nombre);
 	    //params.put("pv_nmsolici_i", nmsolici);
+	    //params.put("pv_start_i", start);
+        //params.put("pv_limit_i", limit);
 	    logger.debug("-->"+params);
 	    Map<String, Object> resultado = ejecutaSP(new ObtieneMesaControl(getDataSource()), params);
         List<Map<String, String>> listaDatos = (List<Map<String, String>>) resultado.get("pv_registro_o");
@@ -56,7 +58,7 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
 	
 	protected class ObtieneMesaControl extends StoredProcedure {
 		protected ObtieneMesaControl(DataSource dataSource) {
-            super(dataSource, "OPS$DHPERNIA.PKG_MESACONTROL.P_GET_TMESACONTROL");
+            super(dataSource, "PKG_MESACONTROL.P_GET_TMESACONTROL");
             //declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
             //declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
             //declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
@@ -68,7 +70,8 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
             //declareParameter(new SqlParameter("pv_fecstatusfin_i", Types.DATE));
             //declareParameter(new SqlParameter("pv_nombre_i", Types.VARCHAR));
             //declareParameter(new SqlParameter("pv_nmsolici_i", Types.VARCHAR));            
-           
+            //declareParameter(new SqlParameter("pv_start_i", Types.NUMERIC));
+            //declareParameter(new SqlParameter("pv_limit_i", Types.NUMERIC));
             String[] cols = new String[] {
             		"NTRAMITE",     
                     "CDUNIECO",   

@@ -7,5 +7,5 @@ import java.util.Map;
 public interface MesaControlDAO {
 	
 	public List<Map<String, String>> obtenerTramites(String cdunieco, String cdramo, String estado, String nmpoliza, 
-			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici) throws Exception;
+			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici, long start, long limit) throws Exception;
 }

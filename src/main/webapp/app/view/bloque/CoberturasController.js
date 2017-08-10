@@ -64,7 +64,8 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             	    			'params.pv_estado_i': view.getEstado(),
             	    			'params.pv_nmpoliza_i': view.getNmpoliza(),
             	    			'params.pv_nmsuplem_i': view.getNmsuplem(),
-            	    			'params.pv_nmsituac_i': view.getNmsituac()
+            	    			'params.pv_nmsituac_i': view.getNmsituac(),
+            	    			'params.pv_cdtipsit_i': view.getCdtipsit()
 							},
 							url: Ice.url.bloque.coberturas.datosCoberturas,
 		                    reader: {
@@ -127,7 +128,8 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 									estado : view.getEstado(),
 									nmpoliza : view.getNmpoliza(),
 									nmsituac : view.getNmsituac(),
-									nmsuplem : view.getNmsuplem()
+									nmsuplem : view.getNmsuplem(),
+									cdtipsit : view.getCdtipsit()
 								}
 							},
 							success: function() {
@@ -423,8 +425,15 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	guardar: function (params) {
 		var paso = 'Validando coberturas';
 		try {
-			var view=this.getView();
 			
+			var view = this.getView(),
+		    form = view.down('[reference=form]'),
+			elementos = [];
+			Ice.log("form",form);
+			if(Ext.ComponentQuery.query('[xtype=numberfieldice][getValue]',form).length>0){
+				this.guardarCoberturas(params);
+				return;
+			}
 			Ice.request({
 				url: Ice.url.bloque.ejecutarValidacion,
 				params: {
@@ -437,7 +446,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 					 bloques: ["B18","B19","B19B"]
 				},
 				success:function(json){
-					Ice.log(json);
+					Ice.log("json: ",json);
 					var paso2 = 'Evaluando validaciones';
 					try {
     					var list = json.list || [];
@@ -614,7 +623,8 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 		    			estado: view.getEstado(),
 		    			nmpoliza: view.getNmpoliza(),
 		    			nmsuplem: view.getNmsuplem(),
-		    			nmsituac: view.getNmsituac()
+		    			nmsituac: view.getNmsituac(),
+		    			cdtipsit : view.getCdtipsit()
  	    			}
  	    		},
  	    		success: function () {
@@ -623,6 +633,15 @@ Ext.define('Ice.view.bloque.CoberturasController', {
  	    				paso = "cargando coberturas";
     	    			gridCoberturas.getStore().load();
 						gridCoberturas.down('#botonBorrar').hide();
+						agre.getStore().extraParams= {
+						    cdunieco: view.getCdunieco(),
+			    			cdramo: view.getCdramo(),
+			    			estado: view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
+			    			nmpoliza: view.getNmpoliza(),
+			    			nmsuplem: view.getNmsuplem(),
+			    			nmsituac: view.getNmsituac(),
+			    			cdtipsit : view.getCdtipsit()
+	 	    			}
     	    			agre.getStore().load();
     	    			Ice.mensajeCorrecto({
 							titulo: 'Correcto',
@@ -653,21 +672,26 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 		}
 	},
 
-	guardarCobertura: function (me) {
+	guardarCoberturas: function (params) {
 		var paso = "Agregando coberturas";
 		try {
 			var view = this.getView(),
-			    form = view.down('form'),
+			    form = view.down('[reference=form]'),
 				elementos = [];
-	    	this.validarCampos(form);
+				Ice.log("form",form);
+			if(form.down('[getValue]')){
+				this.validarCampos(form);
+			}
 	    	
 	    	form.items.items.forEach(function (it, idx) {
-	    		elementos.push({
-	    			valor: it.getValue(),
-	    			valorOriginal: it.valorOriginal,
-	    			name: it.name,
-	    			tabla: it.tabla
-	    		})
+	    		if(it.getValue){
+		    		elementos.push({
+		    			valor: it.getValue(),
+		    			valorOriginal: it.valorOriginal,
+		    			name: it.name,
+		    			tabla: it.tabla
+		    		})
+	    		}
 	    	});
 	    	Ice.request({
 	    		url: Ice.url.bloque.coberturas.guardarCoberturas,
@@ -684,23 +708,22 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 		    			cdcapita: view.getCdcapita()
 	    			}
 	    		},
-	    		success: function (json) {
-					Ice.log("-->_", json);
-					var paso2 = "Revisando validaciones de coberturas";
+	    		success:function(json){
+					Ice.log("json: ",json);
+					var paso2 = 'Evaluando validaciones';
 					try {
-						var list = json.list || [];
-						
-						if (list.length != 0) {
-							Ice.log("-list->", list);
-		    				Ext.create('Ice.view.bloque.VentanaValidaciones', {
+    					var list = json.list || [];
+    					if (list.length>0) {
+							Ext.create('Ice.view.bloque.VentanaValidaciones', {
 								lista: list
 							}).mostrar();
-		    				list.forEach(function (it) {
-								if ((it.tipo + '').toLowerCase() == 'error') {
+
+							list.forEach(function (it) {
+								if((it.tipo+'').toLowerCase()=='error') {
 									throw "Favor de revisar las validaciones";
 								}
 							});
-		    			} else {
+    					}else {
 		    				Ice.mensajeCorrecto({
 			    				titulo: 'Correcto',
 			    				mensaje: "Datos guardados correctamente"
@@ -708,14 +731,35 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 		    			}
 						form.hide();
 		    			view.down("#gridCoberturas").getStore().load();
-	    			} catch (e) {
-	    				Ice.manejaExcepcion(e, paso2);
-	    			}
-	    		}
+
+						if (params && params.success) {
+							paso2 = 'Ejecutando proceso posterior a coberturas';
+    						params.success();
+					    }
+				    } catch (e) {
+				        Ice.manejaExcepcion(e, paso2);
+						if (params && params.failure) {
+							var paso4 = 'Ejecutando failure posterior a coberturas';
+							try {
+								params.failure();
+							} catch (e) {
+								Ice.manejaExcepcion(e, paso4);
+							}
+						}
+				    }
+				},
+				failure: (params && params.failure) || null
 	    	});
-	    	this.guardar();
-		} catch(e) {
+		} catch (e) {
 			Ice.manejaExcepcion(e, paso);
+			if (params && params.failure) {
+				var paso3 = 'Ejecutando failure posterior a coberturas';
+				try {
+					params.failure();
+				} catch (e) {
+					Ice.manejaExcepcion(e, paso3);
+				}
+			}
 		}
 	},
 	
@@ -781,7 +825,6 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 					}
 				}
 			});
-			//this.guardar()
 		} catch (e) {
 			Ice.manejaExcepcion(e,paso)
 		}
@@ -810,10 +853,11 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 			gridCoberturas.getStore().proxy.extraParams = {
 				'params.pv_cdunieco_i': view.getCdunieco(),
 				'params.pv_cdramo_i': view.getCdramo(),
-				'params.pv_estado_i': view.getEstado(),
+				'params.pv_estado_i': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
 				'params.pv_nmpoliza_i': view.getNmpoliza(),
 				'params.pv_nmsuplem_i': view.getNmsuplem(),
-				'params.pv_nmsituac_i': record.get('nmsituac')
+				'params.pv_nmsituac_i': record.get('nmsituac'),
+				'params.pv_cdtipsit_i': view.getCdtipsit()
 			};
 			gridCoberturas.setTitle("Coberturas de la situación: " + record.get('nmsituac')
 			    + " Póliza: " + view.getCdunieco() + " - " + view.getCdramo() + " - " + view.getEstado()
@@ -875,7 +919,17 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 			// btn.up("[xtype=bloquecoberturas]").getItems().items.forEach(function (it) {
 			// 	it.setHidden(true);
 			// });
-			view.down("#panela").getStore().load();
+			view.down("#panela").getStore().load({
+				params:{
+				    'params.pv_cdunieco_i': view.getCdunieco(),
+	    			'params.pv_cdramo_i': view.getCdramo(),
+	    			'params.pv_estado_i': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
+	    			'params.pv_nmpoliza_i': view.getNmpoliza(),
+	    			'params.pv_nmsuplem_i': view.getNmsuplem(),
+	    			'params.pv_nmsituac_i': view.getNmsituac(),
+	    			'params.pv_cdtipsit_i' : view.getCdtipsit()
+	    			}
+			});
 			view.down("#panela").setHidden(false);
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);

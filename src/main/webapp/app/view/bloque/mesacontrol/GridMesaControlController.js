@@ -4,7 +4,24 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 	
 	
 	onItemClic : function () {
-		Ext.Msg.alert('Recordset seleccionado');
+		//Ext.Msg.alert('Recordset seleccionado');
+		
+		var ventana = Ext.create('Ice.view.bloque.mesacontrol.VentanaMesaControl', {
+			
+			buttons: [{
+				text: 'Documentos',
+				handler: function () {
+					Ext.Msg.alert('Aviso', 'Ver documentos');
+				}
+			}, {
+				text: 'Historial',
+				handler: function () {
+					Ext.Msg.alert('Aviso', 'Ver historial');
+				}
+			}]
+		});
+		
+		ventana.mostrar();
 	}
 	
 });

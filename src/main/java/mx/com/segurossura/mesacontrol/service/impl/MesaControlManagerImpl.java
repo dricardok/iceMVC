@@ -24,7 +24,7 @@ public class MesaControlManagerImpl implements MesaControlManager {
 	
 	@Override
 	public List<Map<String, String>> obtenerTramites(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici)
+			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici, long start, long limit)
 			throws Exception {
 		
 		logger.debug(Utils.join(
@@ -35,7 +35,7 @@ public class MesaControlManagerImpl implements MesaControlManager {
         List<Map<String, String>> datos = null;
 		try {
 			paso="Consultando datos";
-			datos = mesaControlDAO.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici);
+			datos = mesaControlDAO.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici, start, limit);
 			
         } catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);

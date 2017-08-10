@@ -347,6 +347,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 cdperfil: view.getCdperfil(),
         		
         		buttons : [{
+        			cls: '',
         			text: 'Modificar',
         			iconCls: 'x-fa fa-pencil',
         			handler: function(me){
