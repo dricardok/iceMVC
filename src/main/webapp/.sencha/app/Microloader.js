@@ -307,8 +307,12 @@ Ext.Microloader = Ext.Microloader || (function () {
 
             applyCacheBuster: function(url) {
                 var tstamp = new Date().getTime(),
-                    sep = url.indexOf('?') === -1 ? '?' : '&';
-                url = url + sep + "_dc=" + tstamp;
+                    sep = url.indexOf('?') === -1 ? '?' : '&',
+                    progressive = Ext.manifest.progressive,
+                    serviceWorker = progressive && progressive.serviceWorker;
+                if (!serviceWorker) {
+                    url = url + sep + "_dc=" + tstamp;
+                }
                 return url;
             },
 
@@ -351,6 +355,7 @@ Ext.Microloader = Ext.Microloader || (function () {
                             Boot.load(Manifest.url);
                         }
                         else {
+                            Manifest.url = url;
                             Boot.fetch(Microloader.applyCacheBuster(url), function(result) {
                                 Microloader.setManifest(result.content);
                             });
@@ -396,6 +401,7 @@ Ext.Microloader = Ext.Microloader || (function () {
                 if (progressive && progressive.serviceWorker) {
                     if ('serviceWorker' in navigator) {
                         navigator.serviceWorker.register('./' + progressive.serviceWorker);
+                        Ext.Boot.config.disableCaching = false;
                     }
                 }
                 

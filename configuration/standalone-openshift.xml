@@ -30,6 +30,7 @@
     <system-properties>
         <property name="config.path" value="${env.CONFIG_PATH}"/>
         <property name="logs.path" value="${env.LOGS_PATH}"/>
+		<property name="content.path" value="${env.CONTENT_PATH}"/>
     </system-properties>
     <management>
         <security-realms>
