@@ -847,7 +847,8 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 				'params.pv_estado_i': view.getEstado(),
 				'params.pv_nmpoliza_i': view.getNmpoliza(),
 				'params.pv_nmsuplem_i': view.getNmsuplem(),
-				'params.pv_nmsituac_i': record.get('nmsituac')
+				'params.pv_nmsituac_i': record.get('nmsituac'),
+				'params.pv_cdtipsit_i': view.getCdtipsit()
 			};
 			gridCoberturas.setTitle("Coberturas de la situación: " + record.get('nmsituac')
 			    + " Póliza: " + view.getCdunieco() + " - " + view.getCdramo() + " - " + view.getEstado()
