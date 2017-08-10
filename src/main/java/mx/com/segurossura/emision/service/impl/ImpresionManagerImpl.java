@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import mx.com.royalsun.alea.commons.api.IDocumentoFactoryAPI;
@@ -22,6 +23,9 @@ public class ImpresionManagerImpl implements ImpresionManager{
 	@Autowired
 	IDocumentoFactoryAPI documentoFactoryClient;
 	
+	@Value("${printer.internal}")
+	private boolean printerInternal;
+	
 
 	@Override
 	public List<Documento> getDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza,
@@ -35,7 +39,7 @@ public class ImpresionManagerImpl implements ImpresionManager{
 		pol.setSuplemento(Integer.parseInt(nmsuplem));
 		
 		RequestImpresion ri = new RequestImpresion(pol);
-		ri.setPrinterInternal(true);
+		ri.setPrinterInternal(printerInternal);
 		
 		List<Documento> documentos = null;
 		
