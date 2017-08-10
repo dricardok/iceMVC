@@ -4,7 +4,7 @@
 <struts>
     
     <!-- Dev Mode: -->
-    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.devMode" value="false"/>
     <!-- Load custom default resource bundles: -->
     <!--constant name="struts.custom.i18n.resources" value=""/-->
     <!-- Parser to handle HTTP POST requests, encoded using the MIME-type multipart/form-data: -->
