@@ -11,12 +11,15 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Repository;
 
+import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
@@ -26,6 +29,8 @@ import mx.com.segurossura.general.catalogos.dao.CatalogosDAO;
 
 @Repository
 public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
+    
+    private Logger logger = LoggerFactory.getLogger(CatalogosDAOImpl.class);
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -202,7 +207,9 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put("pv_cdtabla_i", cdtabla);
 		Map<String, Object> procRes = ejecutaSP(new ObtenerCatalogoTablaApoyoSP(getDataSource()), params);
-		return (List<BaseVO>) procRes.get("pv_registro_o");
+		List<BaseVO> lista = (List<BaseVO>) procRes.get("pv_registro_o");
+		logger.debug(Utils.log("\n****** obtenerCatalogoTablaApoyo cdtabla: ", cdtabla, ", lista: ", lista));
+		return lista;
 	}
 
 	protected class ObtenerCatalogoTablaApoyoSP extends StoredProcedure {

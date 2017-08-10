@@ -46,17 +46,22 @@ Ext.define('Ice.view.field.ComboIce', {
         
         
         // store
+        var reader = {
+            type: 'json',
+            rootProperty: 'list'
+        };
+        
+        if (me.modoExt4 === true) {
+        	reader.root = 'list';
+        }
+        
         configTra.store = configIce.store || {
             autoLoad: true,
             fields: ['key', 'value', 'aux', 'aux2', 'aux3', 'aux4', 'aux5'],
             proxy: {
                 type: 'ajax',
                 url: (me.modoExt4 === true && me.contexto || '') + Ice.url.core.obtenerCatalogo,
-                reader: {
-                    type: 'json',
-                    rootProperty: 'list',
-                    root: 'list' // esto es para ext js version 4
-                },
+                reader: reader,
                 extraParams: {
                     catalogo: (me.modoExt4 === true && me.catalogo) || configIce.catalogo || ''
                 }

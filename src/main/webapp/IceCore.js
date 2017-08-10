@@ -179,7 +179,11 @@ var Ice = (
             		obtenerTdmesacontrol:"mesacontrol/historial/obtenerTdmesacontrol.action",
             		obtenerThmesacontrol:"mesacontrol/historial/obtenerThmesacontrol.action",
             		movimientoThmesacontrol:'mesacontrol/historial/movimientoTdmesacontrol.action'
-            	}
+            	},
+            	
+            	turnar: 'flujomesacontrol/turnarTramite.action',
+            	pantallaExterna: 'flujomesacontrol/pantallaExterna.action',
+            	cargarAccionesEntidad: 'flujomesacontrol/cargarAccionesEntidad.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
@@ -2205,5 +2209,26 @@ var Ice = (
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
+    },
+    
+    /**
+     * Evalua, si el valor origen esta vacio, regresa el segundo parametro, caso contrario
+     * regresa el primero
+     * 
+     * Entrada: 
+     * {
+     *      origen: comp,
+     *      valor: comp
+     * }
+     * Salida: {
+     *      valor: comp
+     * }
+     * 
+     */
+    nvl: function(origen, valor){
+        if (Ext.isEmpty(origen) || '_null' === '_' + origen) {
+            return !Ext.isEmpty(valor) ? valor : '';
+        }
+        return origen;
     }
 });

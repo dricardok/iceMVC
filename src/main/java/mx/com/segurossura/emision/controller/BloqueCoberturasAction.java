@@ -66,10 +66,12 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 			 String pv_nmsituac_i= params.get("pv_nmsituac_i");
 			 String pv_cdgarant_i= params.get("pv_cdgarant_i");
 			 String pv_nmsuplem_i= params.get("pv_nmsuplem_i");
+			 String pv_cdtipsit_i= params.get("pv_cdtipsit_i");
 			 
-            
-            
-			list=bloqueCoberturasManager.obtieneMpoligar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdgarant_i, pv_nmsuplem_i);
+           UsuarioVO usuario = (UsuarioVO)Utils.validateSession(session) ;
+            String perfil = usuario.getRolActivo().getCdsisrol();
+			list=bloqueCoberturasManager
+					.obtieneMpoligar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdgarant_i, pv_nmsuplem_i, pv_cdtipsit_i, perfil);
 			logger.debug("-->"+list);
 			
 			success=true;
@@ -260,6 +262,7 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 					pv_nmsuplem_i = params.get("nmsuplem"), 
 					pv_cdgarant_i = params.get("cdgarant"), 
 					pv_cdcapita_i = params.get("cdcapita");
+			
 			
 			list=bloqueCoberturasManager.guardarCobertura(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_cdtipsit_i,
 			        pv_nmsuplem_i, pv_cdgarant_i, pv_cdcapita_i, list, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
