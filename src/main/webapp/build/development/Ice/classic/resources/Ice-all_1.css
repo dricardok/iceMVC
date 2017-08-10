@@ -3484,13 +3484,13 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/LoadMask.scss:29 */
 .x-mask-msg {
     padding: 10px;
-    background: #fff;
+    background: transparent;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/LoadMask.scss:47 */
 .x-mask-msg-inner {
     padding: 0;
     background-color: transparent;
-    color: #404040;
+    color: #fff;
     font: 400 13px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/LoadMask.scss:59 */
@@ -3503,6 +3503,27 @@ body > .x-mask {
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/LoadMask.scss:70 */
 .x-rtl.x-mask-msg-text {
     padding: 25px 0 0 0;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/LoadMask.scss:89 */
+.x-mask-msg-text {
+    padding: 85px 0px 0px 0px;
+    background-image: url(images/loadmask/loading.gif);
+    background-size: 300px auto !important;
+    background-repeat: no-repeat;
+    background-position: center 0;
+    margin: 0 20px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/LoadMask.scss:99 */
+.x-mask-msg {
+    padding: 10px;
+    background: #fff !important;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/LoadMask.scss:104 */
+.x-mask-msg-inner {
+    padding: 0;
+    background-color: transparent !important;
+    color: #707372!important;
+    font: 400 13px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/ProgressBar.scss:96 */
 .x-progress-default {
@@ -9382,16 +9403,19 @@ body > .x-mask {
     border-top: transparent;
     border-width: 2px;
     border-style: solid;
-    padding: 13px 0px 0px 0px !important;
     background-color: #fff;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:968 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:967 */
 .x-panel-header-default {
     background-color: #fff;
 }
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:972 */
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:971 */
 .x-action-col-icon {
     margin: 0 5px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/panel/Panel.scss:975 */
+.x-panel-header-default-horizontal.x-header-noborder {
+    padding: 12px 16px 12px 0px !important;
 }
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/container/ButtonGroup.scss:101 */
 .x-btn-group-default {
@@ -16186,14 +16210,4 @@ div.x-border-layout-ct {
 .x-tab-focus .x-tab-default-top-tc,
 .x-tab-focus .x-tab-default-top-bc {
     background-image: url(images/tab/tab-default-top-focus-corners.gif);
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2972 */
-.x-tab-focus .x-tab-default-top-ml,
-.x-tab-focus .x-tab-default-top-mr {
-    background-image: url(images/tab/tab-default-top-focus-sides.gif);
-}
-/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/tab/Tab.scss:2977 */
-.x-tab-focus .x-tab-default-top-mc {
-    background-repeat: repeat-x;
-    background-image: url(images/tab/tab-default-top-focus-fbg.gif);
 }
