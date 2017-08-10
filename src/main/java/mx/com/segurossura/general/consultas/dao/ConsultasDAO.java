@@ -363,7 +363,9 @@ public interface ConsultasDAO {
 	
 	public String recuperarTparagen(ParametroGeneral paragen) throws Exception;
 	
+	*/
 	public List<Map<String,String>> recuperarTiposRamo() throws Exception;
+	/*
 	
 	public List<Map<String,String>> recuperarRamosPorTipoRamo(String cdtipram) throws Exception;
 	

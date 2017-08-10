@@ -51,7 +51,7 @@ Ext.define('SelectorMultiple',{
                             xtype     : 'actioncolumn',
                             width     : 30,
                             tooltip   : 'Agregar',
-                            icon      : '${icons}add.png',
+                            icon      : _GLOBAL_DIRECTORIO_ICONOS + 'add.png',
                             handler   : function(me, row, col, item, e, record)
                             {
                                 me.up('panel').up('panel').down('[itemId=gridSelVar]').getStore().add(record.copy());
@@ -83,7 +83,7 @@ Ext.define('SelectorMultiple',{
                         xtype     : 'actioncolumn',
                         width     : 30,
                         tooltip   : 'Borrar',
-                        icon      : '${icons}delete.png',
+                        icon      : _GLOBAL_DIRECTORIO_ICONOS + 'delete.png',
                         handler   : function(me, row, col, item, e, record)
                         {
                             me.getStore().remove(record);

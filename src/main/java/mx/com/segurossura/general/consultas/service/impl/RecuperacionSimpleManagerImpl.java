@@ -1007,12 +1007,11 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
 				lista = flujoMesaControlDAO.recuperaTrequisi();
 		    } else if (consulta.equals(RecuperacionSimple.RECUPERAR_TICONOS)) {
 				lista = flujoMesaControlDAO.recuperaTiconos();
-			/*
-			else if(consulta.equals(RecuperacionSimple.RECUPERAR_TFLUJOMC))
-			{
+		    } else if(consulta.equals(RecuperacionSimple.RECUPERAR_TFLUJOMC)) {
 				String cdtipflu = params.get("cdtipflu");
 				lista = flujoMesaControlDAO.recuperaTflujomc(cdtipflu, null);
 			}
+			/*
 			else if(consulta.equals(RecuperacionSimple.RECUPERAR_TFLUEST))
 			{
 				String cdtipflu   = params.get("cdtipflu");
@@ -1118,8 +1117,9 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
 				String cdaccion=params.get("cdaccion");
 				lista = flujoMesaControlDAO.recuperaTfluaccrol(cdtipflu, cdflujomc, cdaccion);
 			*/
-			} else if (consulta.equals(RecuperacionSimple.RECUPERAR_ROLES)) {
+			else if (consulta.equals(RecuperacionSimple.RECUPERAR_ROLES)) {
 				lista = consultasDAO.recuperarRolesTodos();
+			}
 			/*
 			}
 			else if(consulta.equals(RecuperacionSimple.RECUPERAR_EXCLUSION_TURNADOS))
@@ -1165,8 +1165,8 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
 				
 				lista = consultasDAO.llenaCombo(cdunieco, cdramo, estado, nmpoliza);
 			}
-			else if(consulta.equals(RecuperacionSimple.RECUPERAR_TTIPFLUROL))
-			{
+			*/
+			else if (consulta.equals(RecuperacionSimple.RECUPERAR_TTIPFLUROL)) {
 				paso = "Recuperando permisos de tr\u00e1mite por rol";
 				logger.debug(paso);
 				
@@ -1175,22 +1175,19 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
 				Utils.validate(cdtipflu, "No se recibi\u00f3 el tr\u00e1mite");
 				
 				lista = flujoMesaControlDAO.recuperarTtipflurol(cdtipflu);
-			}
-			else if(consulta.equals(RecuperacionSimple.RECUPERAR_TFLUJOROL))
-			{
+			} else if (consulta.equals(RecuperacionSimple.RECUPERAR_TFLUJOROL)) {
 				paso = "Recuperando permisos de proceso por rol";
 				logger.debug(paso);
 				
-				String cdtipflu    = params.get("cdtipflu")
-						,cdflujomc = params.get("cdflujomc");
+				String cdtipflu  = params.get("cdtipflu"),
+				       cdflujomc = params.get("cdflujomc");
 				
-				Utils.validate(
-						cdtipflu   , "No se recibi\u00f3 el tr\u00e1mite"
-						,cdflujomc , "No se recibi\u00f3 el proceso"
-						);
+				Utils.validate(cdtipflu  , "No se recibi\u00f3 el tr\u00e1mite",
+				               cdflujomc , "No se recibi\u00f3 el proceso");
 				
 				lista = flujoMesaControlDAO.recuperarTflujorol(cdtipflu,cdflujomc);
 			}
+		    /*
 			else if(consulta.equals(RecuperacionSimple.RECUPERAR_TFLUMAIL))
 			{
 				paso = "Recuperando permisos de proceso por rol";
@@ -1208,7 +1205,6 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
 				
 				lista = flujoMesaControlDAO.recuperaTflumail(cdtipflu, cdflujomc, cdmail);
 			 */
-			}
 			else if (consulta.equals(RecuperacionSimple.RECUPERAR_TVARMAIL)) {
 			    paso = "Recuperando permisos de proceso por rol";
 			    lista = flujoMesaControlDAO.recuperaTvarmailSP();
@@ -1218,6 +1214,7 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
 			        miCdusuariCotizadoresDisp = cdusuari;
 			    }
 			    lista = emisionDAO.recuperarCotizadoresDisponibles(miCdusuariCotizadoresDisp);
+			}
 			/*
 			}
 			else if (consulta.equals(RecuperacionSimple.RECUPERAR_MPOLIZAS_POR_PARAMETROS_VARIABLES)) {
@@ -1349,7 +1346,7 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
                 lista = despachadorDAO.recuperarDetallesMesaHora(params.get("ntramite"));
             }
             */
-			} else if (consulta.equals(RecuperacionSimple.OBTENER_REGISTROS_PERFILAMIENTO)) {
+			else if (consulta.equals(RecuperacionSimple.OBTENER_REGISTROS_PERFILAMIENTO)) {
 			    lista = emisionDAO.obtenerRegistrosPerfilamiento(cdusuari, params.get("cdramo"));
             } else {
                 throw new ApplicationException(Utils.join("No se ha implementado la consulta (", consulta, ")"));

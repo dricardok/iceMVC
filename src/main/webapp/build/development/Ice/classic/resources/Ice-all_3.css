@@ -1,3 +1,18 @@
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1176 */
+.x-nbr .x-segmented-button-item-horizontal.x-btn-soft-green-toolbar-small.x-segmented-button-first:after {
+    left: 1px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1179 */
+.x-nbr .x-segmented-button-item-horizontal.x-btn-soft-green-toolbar-small.x-segmented-button-last:after {
+    right: 1px;
+}
+/* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1185 */
+.x-nbr .x-segmented-button-item-vertical.x-btn-soft-green-toolbar-small:after {
+    top: 0;
+    right: 1px;
+    bottom: 0;
+    left: 1px;
+}
 /* E:/projects/eclipse/oxygen/iceMVC/src/main/webapp/ext/classic/theme-neutral/sass/src/button/Button.scss:1191 */
 .x-nbr .x-segmented-button-item-vertical.x-btn-soft-green-toolbar-small.x-segmented-button-first:after {
     top: 1px;

@@ -82,8 +82,6 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 			paso = "Recuperando componentes";
 			logger.debug(paso);
 			
-			GeneradorCampos gc=new GeneradorCampos(ServletActionContext.getServletContext().getServletContextName());
-			
 			items.put("ttipfluFormItems", componentesDAO.obtenerListaComponentesSP("FLUJOMC", "TTIPFLU", null, null,
 			        null, null, cdsisrol, null));
 			

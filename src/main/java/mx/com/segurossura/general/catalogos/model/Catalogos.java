@@ -21,6 +21,9 @@ public enum Catalogos {
     GESTORES_COBRANZA(""),
     ESTATUS_TRAMITE(""),
     COMPANIAS(""),
+    TTIPTRAMC(""),
+    TTIPSUPL(""),
+    TIPOS_RAMO(""),
     
     // perfilamiento
     PUNTOS_VENTA_X_USUARIO(""),

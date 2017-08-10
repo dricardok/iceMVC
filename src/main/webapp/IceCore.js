@@ -179,7 +179,11 @@ var Ice = (
             		obtenerTdmesacontrol:"mesacontrol/historial/obtenerTdmesacontrol.action",
             		obtenerThmesacontrol:"mesacontrol/historial/obtenerThmesacontrol.action",
             		movimientoThmesacontrol:'mesacontrol/historial/movimientoTdmesacontrol.action'
-            	}
+            	},
+            	
+            	turnar: 'flujomesacontrol/turnarTramite.action',
+            	pantallaExterna: 'flujomesacontrol/pantallaExterna.action',
+            	cargarAccionesEntidad: 'flujomesacontrol/cargarAccionesEntidad.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
@@ -968,14 +972,14 @@ var Ice = (
     /**
      * Genera un arreglo de items para formulario
      */
-    generaItems: function (configComps) {
+    generaItems: function (configComps, modoExt4, contexto) {
         Ice.log('Ice.generaItems args:', arguments);
         var paso = 'Generando items',
             items = [];
         try {
             configComps = configComps || [];
             for (var i = 0; i < configComps.length; i++) {
-                items.push(Ice.generaItem(configComps[i]));
+                items.push(Ice.generaItem(configComps[i], modoExt4, contexto));
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
@@ -1110,7 +1114,7 @@ var Ice = (
     /**
      * Genera un item para formulario
      */
-    generaItem: function (config) {
+    generaItem: function (config, modoExt4, contexto) {
         //Ice.log('Ice.generaItem args:', arguments);
         var paso = 'Construyendo item',
             item = {};
@@ -1119,34 +1123,71 @@ var Ice = (
                 throw 'No se recibi\u00f3 configuraci\u00f3n de item';
             }
             
-            // xtype
-            item.xtype = {
-                A: 'textfieldice',
-                N: 'numberfieldice', // int
-                P: 'numberfieldice', // float
-                M: 'numberfieldice', // money
-                F: 'datefieldice',
-                T: 'textareaice',
-                S: 'switchice',
-                FF: 'filefieldice',
-                CDPERSONPICKER: 'cdpersonpicker',
-                CDAGENTEPICKER: 'cdagentepicker',
-                PASSWORD: 'textfieldice'
-            }[config.tipocampo];
-            if (!item.xtype) {
-                throw 'Tipocampo incorrecto para item';
-            }
-            if (config.catalogo) {
-                item.xtype = 'comboice';
-                item.catalogo = config.catalogo;
-                if(!Ext.isEmpty(config.queryparam)){
-                    item.queryParam = config.queryparam;
-                    item.queryCaching = false;
-                    item.queryMode = "remote";
-                    item.autoLoad = false;
-                    item.hideTrigger = true;
-                    item.minChars = 3;
-                    item.fieldStyle = 'text-transform:uppercase';
+            if (modoExt4 !== true) {
+                // xtype
+                item.xtype = {
+                    A: 'textfieldice',
+                    N: 'numberfieldice', // int
+                    P: 'numberfieldice', // float
+                    M: 'numberfieldice', // money
+                    F: 'datefieldice',
+                    T: 'textareaice',
+                    S: 'switchice',
+                    FF: 'filefieldice',
+                    CDPERSONPICKER: 'cdpersonpicker',
+                    CDAGENTEPICKER: 'cdagentepicker',
+                    PASSWORD: 'textfieldice'
+                }[config.tipocampo];
+                if (!item.xtype) {
+                    throw 'Tipocampo incorrecto para item';
+                }
+                if (config.catalogo) {
+                    item.xtype = 'comboice';
+                    item.catalogo = config.catalogo;
+                    if(!Ext.isEmpty(config.queryparam)){
+                        item.queryParam = config.queryparam;
+                        item.queryCaching = false;
+                        item.queryMode = "remote";
+                        item.autoLoad = false;
+                        item.hideTrigger = true;
+                        item.minChars = 3;
+                        item.fieldStyle = 'text-transform:uppercase';
+                    }
+                }
+            } else {
+                // xtype
+                item.xtype = {
+                    A: 'textfield',
+                    N: 'numberfield', // int
+                    P: 'numberfield', // float
+                    M: 'numberfield', // money
+                    F: 'datefield',
+                    T: 'textarea',
+                    // S: 'switchice',
+                    FF: 'filefield'
+                    // CDPERSONPICKER: 'cdpersonpicker',
+                    // CDAGENTEPICKER: 'cdagentepicker',
+                    // PASSWORD: 'textfieldice'
+                }[config.tipocampo];
+                if (!item.xtype) {
+                    throw 'Tipocampo incorrecto para item';
+                }
+                if (config.catalogo) {
+                    item.xtype = 'comboice';
+                    
+                    item.modoExt4 = true;
+                    item.contexto = contexto;
+
+                    item.catalogo = config.catalogo;
+                    if(!Ext.isEmpty(config.queryparam)){
+                        item.queryParam = config.queryparam;
+                        item.queryCaching = false;
+                        item.queryMode = "remote";
+                        item.autoLoad = false;
+                        item.hideTrigger = true;
+                        item.minChars = 3;
+                        item.fieldStyle = 'text-transform:uppercase';
+                    }
                 }
             }
             
@@ -1181,7 +1222,11 @@ var Ice = (
             
             // label
             if (config.label) {
-                item.label = config.label
+                if (modoExt4 !== true) {
+                    item.label = config.label
+                } else {
+                    item.fieldLabel = config.label;
+                }
             }
             
             
@@ -1221,7 +1266,7 @@ var Ice = (
 
             
             // validaciones
-            if (Ext.manifest.toolkit === 'classic') {
+            if (modoExt4 === true || Ext.manifest.toolkit === 'classic') {
                 if (config.swobliga === 'S') {
                     item.allowBlank = false;
                 }
@@ -2164,5 +2209,26 @@ var Ice = (
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
+    },
+    
+    /**
+     * Evalua, si el valor origen esta vacio, regresa el segundo parametro, caso contrario
+     * regresa el primero
+     * 
+     * Entrada: 
+     * {
+     *      origen: comp,
+     *      valor: comp
+     * }
+     * Salida: {
+     *      valor: comp
+     * }
+     * 
+     */
+    nvl: function(origen, valor){
+        if (Ext.isEmpty(origen) || '_null' === '_' + origen) {
+            return !Ext.isEmpty(valor) ? valor : '';
+        }
+        return origen;
     }
 });
