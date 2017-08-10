@@ -206,18 +206,35 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 			
 			paso="Guardando datos";
 			List<Map<String, String>> lista=new ArrayList<>();
-			for(Map<String,String> m: valores){
-				logger.debug("@@@@@ "+m);
+			Optional<Map<String, String>> mpolicap = valores.stream().filter(
+									  m-> !(m.get("tabla")==null || "null".equals(m.get("tabla")))
+								   ).findFirst();
+			
+			if(mpolicap.isPresent()){
+				
+				Map<String, String> m = mpolicap.get();
+				logger.debug("mpolicap:"+m);
+				
 				if(m.get("valor")!= null && !m.get("valor").equals(m.get("valorOriginal"))){
-					if(m.get("tabla")==null || "null".equals(m.get("tabla"))){
-						emisionDAO.movimientoTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, m.get("name").substring("otvalor".length()), pv_nmsuplem_i, pv_nmsituac_i, pv_cdgarant_i, m.get("valor"), "U");
-					}else{//mpolicap
-						emisionDAO.movimientoMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, pv_cdcapita_i, m.get("valor"), pv_nmsuplem_i, "U");
-						emisionDAO.ejecutarValoresDefecto(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i,
-						        Bloque.ATRIBUTOS_GARANTIAS.getCdbloque(), pv_cdgarant_i, null, null, null, null, cdusuari, cdsisrol);
-					}
+					logger.debug("Entro a mpolicap");
+					emisionDAO.movimientoMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, pv_cdcapita_i, m.get("valor"), pv_nmsuplem_i, "U");
+					emisionDAO.ejecutarValoresDefecto(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i,
+					        Bloque.ATRIBUTOS_GARANTIAS.getCdbloque(), pv_cdgarant_i, null, null, null, null, cdusuari, cdsisrol);
+				}else{
+					valores.stream().filter(
+											m2 -> (m2.get("tabla")==null || "null".equals(m2.get("tabla"))) && (m2.get("valor")!= null && !m2.get("valor").equals(m2.get("valorOriginal")))
+							).peek(m3 -> logger .debug("ele: "+m3))
+							.forEach(m2 -> {
+								try {
+									logger.debug("tvalogar:"+m2);
+									emisionDAO.movimientoTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, m2.get("name").substring("otvalor".length()), pv_nmsuplem_i, pv_nmsituac_i, pv_cdgarant_i, m2.get("valor"), "U");
+								} catch (Exception e) {
+									logger.error("Error movimiento tvalogar: {}",e);
+								}
+							});
 				}
 			}
+
 			paso="Validando";
 			lista.addAll(
 					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null,

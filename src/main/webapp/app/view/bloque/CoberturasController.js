@@ -318,14 +318,15 @@ Ext.define('Ice.view.bloque.CoberturasController', {
     						try {
     							var valores = json.list ? json.list[0] || {} : {},
     							    mcap = response.list ? response.list[0] || {} : {};
-								
+								Ice.log("mcap",mcap);
 								form.items.items.forEach(function (it, idx) {
-									Ice.log("item:", it);
+									
     					    		if (it.setValue) {
 										var name = it.name || it.referenceKey;
 	    					    		it.setValue(valores[name]);
 	    					    		it.valorOriginal = it.getValue();
     					    		}
+    					    		Ice.log("item:", it);
     					    	});
     					    	//suma asegurada
     					    	var sa = form.items.items.find(function (e) {
@@ -335,6 +336,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
     							Ice.log("->", mcap);
     							var n = sa.name || sa.referenceKey;
     					    	sa.setValue(mcap[n]);
+    					    	sa.valorOriginal = sa.getValue();
     						} catch (e) {
     							Ice.manejaExcepcion(e, paso2);
     						}
