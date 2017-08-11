@@ -35,7 +35,7 @@ Ext.define('Ice.view.login.Login', {
                     reference: 'suraLogo',
                     cls: '',
                     style:'text-align:right;background-color:#0033a0',
-                    html: '<div style="padding:10px;"><img src="resources/images/logo_sura_bco.png"></div>',
+                    html: '<div style="padding:20px; float:left;"><img src="resources/images/logo_sura_bco.png"></div>',
                     align:'stretch'
                 },
             	
