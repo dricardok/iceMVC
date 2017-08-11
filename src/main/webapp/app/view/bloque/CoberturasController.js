@@ -291,7 +291,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
     		params: {
     			'params.cdunieco': view.getCdunieco(),
     			'params.cdramo': view.getCdramo(),
-    			'params.estado': view.getEstado(),
+    			'params.estado': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
     			'params.nmpoliza': view.getNmpoliza(),
     			'params.nmsuplem': view.getNmsuplem(),
     			'params.nmsituac': view.getNmsituac(),
@@ -306,7 +306,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 						params: {
 							'params.cdunieco': view.getCdunieco(),
     		    			'params.cdramo': view.getCdramo(),
-    		    			'params.estado': view.getEstado(),
+    		    			'params.estado': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
     		    			'params.nmpoliza': view.getNmpoliza(),
     		    			'params.nmsuplem': view.getNmsuplem(),
     		    			'params.nmsituac': view.getNmsituac(),
@@ -690,7 +690,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 		    		elementos.push({
 		    			valor: it.getValue(),
 		    			valorOriginal: it.valorOriginal,
-		    			name: it.name,
+		    			name: it.getName(),
 		    			tabla: it.tabla
 		    		})
 	    		}
@@ -702,7 +702,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	    			params: {
 	    				cdunieco: view.getCdunieco(),
 		    			cdramo: view.getCdramo(),
-		    			estado: view.getEstado(),
+		    			estado: view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
 		    			nmpoliza: view.getNmpoliza(),
 		    			nmsuplem: view.getNmsuplem(),
 		    			nmsituac: view.getNmsituac(),
