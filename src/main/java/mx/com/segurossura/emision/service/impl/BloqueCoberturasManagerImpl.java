@@ -154,12 +154,16 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 													).findFirst();
 				if(res.isPresent()){
 					String tipocampo = m.get("tipocampo");
+					String swobliga = m.get("swobliga");
 					m.putAll(res.get());
+					m.put("swobliga", swobliga);
+					logger.debug("swobliga",swobliga);
 					if (StringUtils.isNotBlank(tipocampo)) {
 						logger.debug(Utils.log("Se respeta el tipocampo del atributo de cobertura: ", pv_cdgarant_i, ", ",
 							" atributo: ", m.get("name_cdatribu"), ", tipocampo: ", tipocampo));
 						m.put("tipocampo", tipocampo);
                         m.put("swformat", tipocampo);
+                        
 					}
 					logger.debug("fuss"+m.toString());
 					resultado.add(m);

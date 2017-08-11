@@ -729,7 +729,7 @@ var Ice = (
                 Ice.log("sec ",secciones)
                 if ("TATRIGAR" == secciones.pantalla && "TATRIGAR" == secciones.seccion) {
                      secciones.mapperAttr=function(obj){
-                            obj.label=obj.dsatribu;
+                            //obj.label=obj.dsatribu;
                             obj.tipocampo=obj.swformat
                             obj.name_cdatribu=obj.cdatribu
                             obj.maxlength=obj.nmlmax
