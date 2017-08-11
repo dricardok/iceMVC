@@ -161,9 +161,10 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	coberturaObligatoria: function(v, ri, ci, it, record) {
 		var paso = "valida deshabilitando cobertura";
 		try {
-			if (record.get('opcional') === 'N') {
+			if (record.get('swobliga') !== 'N') {
 				return true;
 			}
+			return false;
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);
 		}
