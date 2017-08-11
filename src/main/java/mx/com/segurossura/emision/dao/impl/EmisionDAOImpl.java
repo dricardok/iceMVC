@@ -265,7 +265,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 	@SuppressWarnings("unchecked")
     @Override
 	public List<Map<String,String>> obtieneMpoligar(String cdunieco, String cdramo, String estado,
-            String nmpoliza, String nmsituac, String cdgarant, String nmsuplem) throws Exception{
+            String nmpoliza, String nmsituac, String cdgarant, String nmsuplem, String pv_cdtipsit_i, String perfil) throws Exception{
 	    
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		
@@ -276,6 +276,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 		params.put("pv_nmsituac_i",      nmsituac);
 		params.put("pv_cdgarant_i",      cdgarant);
 		params.put("pv_nmsuplem_i",      nmsuplem);
+		params.put("pv_cdtipsit_i",      pv_cdtipsit_i);
+		params.put("pv_perfil_i",      perfil);
 		logger.debug("-->"+params);
 		Map<String, Object> resultado = ejecutaSP(new ObtieneMpoligarSP(getDataSource()), params);
         List<Map<String,String>>listaDatos=(List<Map<String,String>>)resultado.get("pv_registro_o");
@@ -295,10 +297,12 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 			declareParameter(new SqlParameter("pv_nmsituac_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_cdgarant_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdtipsit_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_perfil_i",Types.VARCHAR));
 			      
             String[] cols = new String[] { "cdunieco", "cdramo", "estado", "nmpoliza", "nmsituac",
                     "cdgarant", "nmsuplem", "cdcapita", "status", "swmanual",
-                    "fevencim", "ptcapita", "deducible", "dsgarant", "amparada" };
+                    "fevencim", "ptcapita", "deducible", "dsgarant", "amparada" ,"swobliga" };
 			declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));

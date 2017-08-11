@@ -531,6 +531,26 @@ public class EmisionManagerImpl implements EmisionManager {
 		}
 		return sb != null ?  sb.toString() : null;
 	}
+	
+	
+	private void generaDirectorio(String...carpetas) throws Exception{
+		StringBuilder sb = null;
+		if(carpetas != null) {
+			sb = new StringBuilder();
+			for(String carpeta : carpetas) {
+				
+				sb.append(carpeta);
+				sb.append(File.separator);
+				
+				File dir = new File(sb.toString());
+				
+				dir.setWritable(true, false);
+				dir.setExecutable(true, false);
+				dir.setReadable(true, false);
+				
+			}
+		}		
+	}
 		
 	@Override
 	public Map<String, String> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion, String cdusuari) throws Exception {
@@ -606,8 +626,12 @@ public class EmisionManagerImpl implements EmisionManager {
 						//	boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
 						exito = false;
 						try {
-							FileUtils.copyURLToFile(new URL(urlSLIP), new File(documentoRuta), 10000, 10000);
+							
+							generaDirectorio(directorioBase, cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+							
+							FileUtils.copyURLToFile(new URL(urlSLIP), new File(documentoRuta), 120000, 120000);
 							exito = true;
+							
 						}catch(Exception fe){
 							logger.error(fe.getMessage(), fe);
 							

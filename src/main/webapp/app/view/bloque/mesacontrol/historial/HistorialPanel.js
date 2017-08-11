@@ -88,7 +88,6 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 					width		:	"100%",
 					
 					title		:	"Historial",
-					//scrollable	:	true,
 					
 					platformConfig: {
 						desktop: {
