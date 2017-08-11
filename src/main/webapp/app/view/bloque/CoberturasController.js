@@ -291,7 +291,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
     		params: {
     			'params.cdunieco': view.getCdunieco(),
     			'params.cdramo': view.getCdramo(),
-    			'params.estado': view.getEstado(),
+    			'params.estado': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
     			'params.nmpoliza': view.getNmpoliza(),
     			'params.nmsuplem': view.getNmsuplem(),
     			'params.nmsituac': view.getNmsituac(),
@@ -306,7 +306,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 						params: {
 							'params.cdunieco': view.getCdunieco(),
     		    			'params.cdramo': view.getCdramo(),
-    		    			'params.estado': view.getEstado(),
+    		    			'params.estado': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
     		    			'params.nmpoliza': view.getNmpoliza(),
     		    			'params.nmsuplem': view.getNmsuplem(),
     		    			'params.nmsituac': view.getNmsituac(),
@@ -318,14 +318,15 @@ Ext.define('Ice.view.bloque.CoberturasController', {
     						try {
     							var valores = json.list ? json.list[0] || {} : {},
     							    mcap = response.list ? response.list[0] || {} : {};
-								
+								Ice.log("mcap",mcap);
 								form.items.items.forEach(function (it, idx) {
-									Ice.log("item:", it);
+									
     					    		if (it.setValue) {
 										var name = it.name || it.referenceKey;
 	    					    		it.setValue(valores[name]);
 	    					    		it.valorOriginal = it.getValue();
     					    		}
+    					    		Ice.log("item:", it);
     					    	});
     					    	//suma asegurada
     					    	var sa = form.items.items.find(function (e) {
@@ -335,6 +336,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
     							Ice.log("->", mcap);
     							var n = sa.name || sa.referenceKey;
     					    	sa.setValue(mcap[n]);
+    					    	sa.valorOriginal = sa.getValue();
     						} catch (e) {
     							Ice.manejaExcepcion(e, paso2);
     						}
@@ -688,7 +690,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 		    		elementos.push({
 		    			valor: it.getValue(),
 		    			valorOriginal: it.valorOriginal,
-		    			name: it.name,
+		    			name: it.getName(),
 		    			tabla: it.tabla
 		    		})
 	    		}
@@ -700,7 +702,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	    			params: {
 	    				cdunieco: view.getCdunieco(),
 		    			cdramo: view.getCdramo(),
-		    			estado: view.getEstado(),
+		    			estado: view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
 		    			nmpoliza: view.getNmpoliza(),
 		    			nmsuplem: view.getNmsuplem(),
 		    			nmsituac: view.getNmsituac(),

@@ -63,6 +63,8 @@ Ext.define('Ice.view.bloque.Coberturas', {
 		var me = this,
 		    paso = 'Construyendo bloque lista de situaciones';
 		try {
+			paso='Estado ...';
+			me.setEstado(me.getEstado()?me.getEstado().toUpperCase():me.getEstado()),
 			paso = " creando grid coberturas";
 			var it = {
 				listeners: {
