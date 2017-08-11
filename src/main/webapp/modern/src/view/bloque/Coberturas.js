@@ -63,6 +63,8 @@ Ext.define('Ice.view.bloque.Coberturas', {
 		var me = this,
 		    paso = 'Construyendo bloque lista de situaciones';
 		try {
+			paso='Estado ...';
+			me.setEstado(me.getEstado()?me.getEstado().toUpperCase():me.getEstado()),
 			paso = " creando grid coberturas";
 			var it = {
 				listeners: {
@@ -125,7 +127,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 						extraParams: {
 							'params.pv_cdunieco_i': me.config.cdunieco,
 							'params.pv_cdramo_i': me.config.cdramo,
-							'params.pv_estado_i': me.config.estado,
+							'params.pv_estado_i': me.getEstado()?me.getEstado().toUpperCase():me.getEstado(),
 							'params.pv_nmpoliza_i': me.config.nmpoliza,
 							'params.pv_nmsuplem_i': me.config.nmsuplem,
 							'params.pv_nmsituac_i': me.getNmsituac()
@@ -147,7 +149,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 						handler: 'borraCoberturaMovil'
 					}, {
 						// xtype: 'button',
-						text: 'Agregar',
+						text: 'Agregar Cobertura',
 						iconCls: 'x-fa fa-plus-circle',
 						// hidden: true,
 						handler: function (btn) {
@@ -194,12 +196,12 @@ Ext.define('Ice.view.bloque.Coberturas', {
 						type: 'ajax',
 						autoLoad: true,
 						extraParams: {
-							'params.pv_cdunieco_i': me.config.cdunieco,
-							'params.pv_cdramo_i': me.config.cdramo,
-							'params.pv_estado_i': me.config.estado,
-							'params.pv_nmpoliza_i': me.config.nmpoliza,
-							'params.pv_nmsuplem_i': me.config.nmsuplem,
-							'params.pv_nmsituac_i': me.config.nmsituac,
+							'params.pv_cdunieco_i': me.getCdunieco(),
+							'params.pv_cdramo_i': me.getCdramo(),
+							'params.pv_estado_i': me.getEstado()?me.getEstado().toUpperCase():me.getEstado(),
+							'params.pv_nmpoliza_i': me.getNmpoliza(),
+							'params.pv_nmsuplem_i': me.getNmsuplem(),
+							'params.pv_nmsituac_i': me.getNmsituac(),
 							'params.pv_cdtipsit_i': me.getCdtipsit()
 						},
 						url: Ice.url.bloque.coberturas.datosCoberturas,

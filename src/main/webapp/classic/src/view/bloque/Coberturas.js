@@ -86,6 +86,15 @@ Ext.define('Ice.view.bloque.Coberturas', {
 					type: 'ajax',
 					autoLoad: true,
 					url: Ice.url.bloque.coberturas.datosCoberturas,
+					extraParams: {
+						'params.pv_cdunieco_i': me.config.cdunieco,
+						'params.pv_cdramo_i': me.config.cdramo,
+						'params.pv_estado_i': me.config.estado,
+						'params.pv_nmpoliza_i': me.config.nmpoliza,
+						'params.pv_nmsuplem_i': me.config.nmsuplem,
+						'params.pv_nmsituac_i': me.config.nmsituac,
+						'params.pv_cdtipsit_i': me.getCdtipsit()
+					},
 					reader: {
 						type: 'json',
 						rootProperty: 'list',

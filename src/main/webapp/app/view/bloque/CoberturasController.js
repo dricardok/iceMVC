@@ -161,9 +161,10 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	coberturaObligatoria: function(v, ri, ci, it, record) {
 		var paso = "valida deshabilitando cobertura";
 		try {
-			if (record.get('opcional') === 'N') {
+			if (record.get('swobliga') !== 'N') {
 				return true;
 			}
+			return false;
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);
 		}
@@ -176,6 +177,10 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 			var record = grid.store.getAt(rowIndex);
 			Ext.MessageBox.confirm("Borrar Cobertura", "\u00bfEst\u00e1s seguro de borrar la cobertura?", function(opc) {
 				if (opc === 'yes') {
+					
+					if(record.get('swobliga')==='S'){
+						throw 'Esta cobertura no se puede borrar.'
+					}
 					Ice.request({
 						url: Ice.url.bloque.coberturas.borrarCobertura,
 						params: {
@@ -291,7 +296,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
     		params: {
     			'params.cdunieco': view.getCdunieco(),
     			'params.cdramo': view.getCdramo(),
-    			'params.estado': view.getEstado(),
+    			'params.estado': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
     			'params.nmpoliza': view.getNmpoliza(),
     			'params.nmsuplem': view.getNmsuplem(),
     			'params.nmsituac': view.getNmsituac(),
@@ -306,7 +311,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 						params: {
 							'params.cdunieco': view.getCdunieco(),
     		    			'params.cdramo': view.getCdramo(),
-    		    			'params.estado': view.getEstado(),
+    		    			'params.estado': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
     		    			'params.nmpoliza': view.getNmpoliza(),
     		    			'params.nmsuplem': view.getNmsuplem(),
     		    			'params.nmsituac': view.getNmsituac(),
@@ -318,14 +323,15 @@ Ext.define('Ice.view.bloque.CoberturasController', {
     						try {
     							var valores = json.list ? json.list[0] || {} : {},
     							    mcap = response.list ? response.list[0] || {} : {};
-								
+								Ice.log("mcap",mcap);
 								form.items.items.forEach(function (it, idx) {
-									Ice.log("item:", it);
+									
     					    		if (it.setValue) {
 										var name = it.name || it.referenceKey;
 	    					    		it.setValue(valores[name]);
 	    					    		it.valorOriginal = it.getValue();
     					    		}
+    					    		Ice.log("item:", it);
     					    	});
     					    	//suma asegurada
     					    	var sa = form.items.items.find(function (e) {
@@ -335,6 +341,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
     							Ice.log("->", mcap);
     							var n = sa.name || sa.referenceKey;
     					    	sa.setValue(mcap[n]);
+    					    	sa.valorOriginal = sa.getValue();
     						} catch (e) {
     							Ice.manejaExcepcion(e, paso2);
     						}
@@ -556,12 +563,11 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	borraCoberturaMovil: function (btn) {
 		var paso = "Borrando cobertura";
 		try {
-			var record = btn.up("bloquecoberturas").down("#gridCoberturas").getSelection(),
+				var record = btn.up("bloquecoberturas").down("#gridCoberturas").getSelection(),
 			    grid = btn.up("bloquecoberturas").down("#gridCoberturas");
-			    // ventana = Ext.MessageBox.confirm ? Ext.MessageBox : Ext.Msgventana.confirm(
-				// 	"Borrar Cobertura", "\u00bfEstás seguro de borrar la cobertura?",
-				// 	function(opc) {
-				// 		if (opc === 'yes') {
+				if(record.get('swobliga')==='S'){
+					throw 'Esta cobertura no se puede borrar.'
+				}
 				Ice.request({
 					url: Ice.url.bloque.coberturas.borrarCobertura,
 					params: {
@@ -590,7 +596,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 				// 	}
 				// );
 		} catch (e) {
-			Ice.generaExcepcion(e, paso);
+			Ice.manejaExcepcion(e, paso);
 		}
 	},
 
@@ -633,6 +639,15 @@ Ext.define('Ice.view.bloque.CoberturasController', {
  	    				paso = "cargando coberturas";
     	    			gridCoberturas.getStore().load();
 						gridCoberturas.down('#botonBorrar').hide();
+						agre.getStore().extraParams= {
+						    cdunieco: view.getCdunieco(),
+			    			cdramo: view.getCdramo(),
+			    			estado: view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
+			    			nmpoliza: view.getNmpoliza(),
+			    			nmsuplem: view.getNmsuplem(),
+			    			nmsituac: view.getNmsituac(),
+			    			cdtipsit : view.getCdtipsit()
+	 	    			}
     	    			agre.getStore().load();
     	    			Ice.mensajeCorrecto({
 							titulo: 'Correcto',
@@ -679,7 +694,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 		    		elementos.push({
 		    			valor: it.getValue(),
 		    			valorOriginal: it.valorOriginal,
-		    			name: it.name,
+		    			name: it.getName(),
 		    			tabla: it.tabla
 		    		})
 	    		}
@@ -691,7 +706,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	    			params: {
 	    				cdunieco: view.getCdunieco(),
 		    			cdramo: view.getCdramo(),
-		    			estado: view.getEstado(),
+		    			estado: view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
 		    			nmpoliza: view.getNmpoliza(),
 		    			nmsuplem: view.getNmsuplem(),
 		    			nmsituac: view.getNmsituac(),
@@ -844,7 +859,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 			gridCoberturas.getStore().proxy.extraParams = {
 				'params.pv_cdunieco_i': view.getCdunieco(),
 				'params.pv_cdramo_i': view.getCdramo(),
-				'params.pv_estado_i': view.getEstado(),
+				'params.pv_estado_i': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
 				'params.pv_nmpoliza_i': view.getNmpoliza(),
 				'params.pv_nmsuplem_i': view.getNmsuplem(),
 				'params.pv_nmsituac_i': record.get('nmsituac'),
@@ -910,7 +925,17 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 			// btn.up("[xtype=bloquecoberturas]").getItems().items.forEach(function (it) {
 			// 	it.setHidden(true);
 			// });
-			view.down("#panela").getStore().load();
+			view.down("#panela").getStore().load({
+				params:{
+				    'params.pv_cdunieco_i': view.getCdunieco(),
+	    			'params.pv_cdramo_i': view.getCdramo(),
+	    			'params.pv_estado_i': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
+	    			'params.pv_nmpoliza_i': view.getNmpoliza(),
+	    			'params.pv_nmsuplem_i': view.getNmsuplem(),
+	    			'params.pv_nmsituac_i': view.getNmsituac(),
+	    			'params.pv_cdtipsit_i' : view.getCdtipsit()
+	    			}
+			});
 			view.down("#panela").setHidden(false);
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);

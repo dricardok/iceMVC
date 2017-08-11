@@ -302,7 +302,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 			      
             String[] cols = new String[] { "cdunieco", "cdramo", "estado", "nmpoliza", "nmsituac",
                     "cdgarant", "nmsuplem", "cdcapita", "status", "swmanual",
-                    "fevencim", "ptcapita", "deducible", "dsgarant", "amparada" };
+                    "fevencim", "ptcapita", "deducible", "dsgarant", "amparada" ,"swobliga" };
 			declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
