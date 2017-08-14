@@ -2151,12 +2151,12 @@ var Ice = (
                 if (!boton || typeof boton !== 'object' || typeof boton.length === 'number') {
                     continue;
                 }
-
+                /*
                 if (!(boton.iconCls || (boton.getIconCls && boton.getIconCls()))) { // si no hay icono pongo bug
                     boton.iconCls = 'x-fa fa-bug';
                     boton.setIconCls && boton.setIconCls('x-fa fa-bug');
                 }
-
+				*/
                 if (Ice.modern()) {
                     if (boton.text || (boton.getText && boton.getText())) { // si tengo texto paso el icono arriba
                         boton.iconAlign = 'top';
