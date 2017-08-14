@@ -165,6 +165,13 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
                         m.put("swformat", tipocampo);
                         
 					}
+					switch(m.get("swformat")){
+						case  "N": 
+						case  "P": 
+						case  "M":
+							m.put("swobliga", "S");
+							m.put("valor", "0");
+					}
 					logger.debug("fuss"+m.toString());
 					resultado.add(m);
 				}
@@ -227,7 +234,7 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 			}
 			
 			valores.stream().filter(
-						m2 -> (m2.get("tabla")==null || "null".equals(m2.get("tabla"))) && (m2.get("valor")!= null && !m2.get("valor").equals(m2.get("valorOriginal")))
+						m2 -> (m2.get("tabla")==null || "null".equals(m2.get("tabla"))) && ((m2.get("valor")!= null && !m2.get("valor").equals(m2.get("valorOriginal"))) || (m2.get("valorOriginal")!=null && !m2.get("valorOriginal").equals(m2.get("valor")) ))
 					).peek(m3 -> logger .debug("ele: "+m3))
 					.forEach(m2 -> {
 						try {
