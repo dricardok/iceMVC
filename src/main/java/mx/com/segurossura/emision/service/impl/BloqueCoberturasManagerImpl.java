@@ -239,7 +239,7 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 					.forEach(m2 -> {
 						try {
 							logger.debug("tvalogar:"+m2);
-							emisionDAO.movimientoTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, m2.get("name").substring("otvalor".length()), pv_nmsuplem_i, pv_nmsituac_i, pv_cdgarant_i, m2.get("valor"), "U");
+							emisionDAO.movimientoTvalogar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, m2.get("name").substring("otvalor".length()), pv_nmsuplem_i, pv_nmsituac_i, pv_cdgarant_i, m2.get("valor"), m2.get("valor")==null?"D":"U");
 						} catch (Exception e) {
 							logger.error("Error movimiento tvalogar: {}",e);
 						}
