@@ -275,6 +275,14 @@
     $background-color: $color-soft-purple,
     $border-color:darken($color-soft-purple, 5%)
 );
+@include extjs-button-small-ui(
+    $ui: 'secundario-sm-framed',
+    $color: #606060,
+    $glyph-color: #606060,
+    $background-color: $sec-color,
+    $border-color: transparent,
+    $border-width: 0
+);
 
 
 @include extjs-button-small-ui(
@@ -347,14 +355,7 @@
     $border-width: 0
 );
 
-@include extjs-button-small-ui(
-    $ui: 'Secundario-sm-framed',
-    $color: #fff,
-    $glyph-color: #fff,
-    $background-color: $azulo-s,
-    $border-color: $azulo-s,
-    $border-width: 0
-);
+
 @include extjs-button-large-ui(
     $ui: 'Secundario-lg',
     $line-height: 34px,

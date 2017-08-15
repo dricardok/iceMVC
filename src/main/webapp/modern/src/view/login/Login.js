@@ -55,7 +55,11 @@ Ext.define('Ice.view.login.Login', {
                     name: 'password',
                     bind: '{login.password}'
                 },
-                
+                {
+                	xtype: 'component',
+                	style:'padding: 8px 20px 0px 20px;text-decoration:underline;',
+                	html: '<a href="https://www.segurossura.com.mx/Utilidades/templates/unlock.html?"  class="linksura" style="font-size:12px !important;color:#707372 !important; line-height:30px !important;">¿Olvid&oacute; su Contrase&ntilde;a?</a>'
+                },
                 {
                     xtype: 'toolbar',
                     docked: 'bottom',

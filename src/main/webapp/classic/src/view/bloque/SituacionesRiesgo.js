@@ -182,11 +182,12 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 							{
 								reference: 'btnGuardar',
 								text: 'Guardar',
-	                            iconCls: 'x-fa fa-save',
+	                            iconCls: 'x-fa fa-save',	                            
 								handler: 'onGuardarBloque'
 							},{
 								text: 'Cancelar',
 	                            iconCls: 'x-fa fa-close',
+	                            ui:'secundario-sm',
 								handler: 'onCancelar'
 							}
 						],

@@ -98,7 +98,7 @@ Ext.define('Ice.view.login.Login', {
                     layout: 'hbox',
                     style: 'padding: 20px 30px !important;', 
                     items: [
-                        {
+                       /* {
                             xtype: 'checkboxfield',
                             //flex : 1,
                             cls: 'form-panel-font-color rememberMeCheckbox',
@@ -106,11 +106,11 @@ Ext.define('Ice.view.login.Login', {
                             //bind: '{persist}',
                             style: 'font-size; 11px !important; margin-right: 80px;',
                             boxLabel: 'Guardar Contraseña'
-                        }, {
+                        },*/ {
                             xtype: 'component',
                             width: 150,
                             //style: 'border: 1px solid red;',
-                            html: '<a href="#passwordreset" onclick="return false;" class="linksura" style="font-size:12px !important;color:#707372 !important; line-height:30px !important;">¿Olvid&oacute; su Contrase&ntilde;a?</a>'
+                            html: '<a href="https://www.segurossura.com.mx/Utilidades/templates/unlock.html?"  class="linksura" style="font-size:12px !important;color:#707372 !important; line-height:30px !important;">¿Olvid&oacute; su Contrase&ntilde;a?</a>'
                         }
                     ]
                 }       
@@ -123,7 +123,7 @@ Ext.define('Ice.view.login.Login', {
                 {
                     text: 'Ir',
                     reference: 'loginbutton',
-                    iconCls: '',
+                    iconCls: 'x-fa fa-key',
                     style: 'margin-right:30px !important;',
                     handler: 'onAceptarClic',
                     
