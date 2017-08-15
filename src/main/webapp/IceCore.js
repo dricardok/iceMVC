@@ -168,7 +168,7 @@ var Ice = (
             mesacontrol:{
             	
             	obtenerTramites:		'mesacontrol/obtenerTramites.action',
-            	
+            	movimientoMesacontrol:	'mesacontrol/movimientoMesacontrol.action',
             	documentos: {
                     obtenerDocumentos: 'documentos/obtenerDocumentos.action',
                     movimientoTdocupol: 'documentos/movimientoTdocupol.action',
