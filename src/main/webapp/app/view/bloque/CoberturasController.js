@@ -161,9 +161,10 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	coberturaObligatoria: function(v, ri, ci, it, record) {
 		var paso = "valida deshabilitando cobertura";
 		try {
-			if (record.get('opcional') === 'N') {
+			if (record.get('swobliga') !== 'N') {
 				return true;
 			}
+			return false;
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);
 		}
@@ -176,6 +177,10 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 			var record = grid.store.getAt(rowIndex);
 			Ext.MessageBox.confirm("Borrar Cobertura", "\u00bfEst\u00e1s seguro de borrar la cobertura?", function(opc) {
 				if (opc === 'yes') {
+					
+					if(record.get('swobliga')==='S'){
+						throw 'Esta cobertura no se puede borrar.'
+					}
 					Ice.request({
 						url: Ice.url.bloque.coberturas.borrarCobertura,
 						params: {
@@ -558,12 +563,11 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	borraCoberturaMovil: function (btn) {
 		var paso = "Borrando cobertura";
 		try {
-			var record = btn.up("bloquecoberturas").down("#gridCoberturas").getSelection(),
+				var record = btn.up("bloquecoberturas").down("#gridCoberturas").getSelection(),
 			    grid = btn.up("bloquecoberturas").down("#gridCoberturas");
-			    // ventana = Ext.MessageBox.confirm ? Ext.MessageBox : Ext.Msgventana.confirm(
-				// 	"Borrar Cobertura", "\u00bfEstás seguro de borrar la cobertura?",
-				// 	function(opc) {
-				// 		if (opc === 'yes') {
+				if(record.get('swobliga')==='S'){
+					throw 'Esta cobertura no se puede borrar.'
+				}
 				Ice.request({
 					url: Ice.url.bloque.coberturas.borrarCobertura,
 					params: {
@@ -592,7 +596,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 				// 	}
 				// );
 		} catch (e) {
-			Ice.generaExcepcion(e, paso);
+			Ice.manejaExcepcion(e, paso);
 		}
 	},
 

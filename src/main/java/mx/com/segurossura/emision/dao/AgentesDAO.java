@@ -46,6 +46,7 @@ public interface AgentesDAO {
 	 */
 	public List<Map<String,String>> buscarAgentes(String clave, String atributo) throws Exception;
 	
+	
 	/**
 	 * Obtiene los agentes de un grupo que coincidan con el cdagente solicitado
 	 * @param  cdagente Clave de agente solicitada

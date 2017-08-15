@@ -598,12 +598,21 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           refs = view.getReferences(),
           paso = 'Copiando situacion de riesgo';
       try{
+          var numbfield = {
+              xtype: 'numberfieldice',
+              label: 'Copias',
+              minValue: 1,
+              value: 1,              
+              refs: 'nmcopias'
+          };
           if(Ext.manifest.toolkit === 'classic'){
-              data = grid.store.getAt(rowIndex).getData();              
+              data = grid.store.getAt(rowIndex).getData();
+              numbfield['allowDecimals'] = false;
           } else {
               var cell = grid.getParent(),
                   record = cell.getRecord(),
                   data = record.getData();
+              numbfield['decimals'] = 0;
           }
 
           if(data){
@@ -616,22 +625,15 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                       }
                   },
                   modal: true,
-                  items: [
-                      {
-                          xtype: 'numberfieldice',
-                          label: 'Copias',
-                          minValue: 1,
-                          value: 1,
-                          refs: 'nmcopias'
-                      }
-                  ],
+                  items: [numbfield],
                   buttons: [
                       {
                           text: 'Aceptar',
                           iconCls: 'x-fa fa-check',
                           handler: function(){
                               var nmcopias = this.up('ventanaice').down('numberfieldice').getValue();
-                              if(nmcopias){
+                              var isDecimal = nmcopias % 1;
+                              if(!isDecimal){
                                   Ice.request({
                                       mascara: 'Copiando situación de riesgo',
                                       url: Ice.url.bloque.situacionesRiesgo.copiaSituacion,
@@ -657,6 +659,9 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                                           }
                                       }
                                   });
+                              } else {
+                                  Ice.mensajeWarning('El campo no puede tener decimales');
+                                  this.up('ventanaice').down('numberfieldice').setValue(0);
                               }
                           }
                       },{

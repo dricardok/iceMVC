@@ -129,7 +129,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 						nmpoliza: this.config.nmpoliza,
 						nmsuplem: this.config.nmsuplem,
 						cdtipsit: this.config.cdtipsit,
-						selector: true,
+						selector: false,
 						//maxHeigth: 250,
 						buttons: [
 							{
