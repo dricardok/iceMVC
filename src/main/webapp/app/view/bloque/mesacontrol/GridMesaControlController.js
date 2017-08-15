@@ -8,6 +8,8 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 		
 		var ventana = Ext.create('Ice.view.bloque.mesacontrol.VentanaMesaControl', {
 			
+			modal: true,
+			
 			buttons: [{
 				text: 'Documentos',
 				handler: function () {
@@ -19,6 +21,40 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 					Ext.Msg.alert('Aviso', 'Ver historial');
 				}
 			}]
+		});
+		
+		ventana.mostrar();
+	},
+	
+	onNuevoTramiteClic: function () {
+		
+		var ventana = Ext.create('Ice.view.componente.VentanaIce',  {
+			
+			title: 'Registrar nuevo tramite', 
+			width: 500,
+			modal: true,
+			//height: 300,			
+			//layout: 'fit',
+			
+			items: [
+				{
+					xtype: 'formnuevotramite'
+				}
+			],
+			
+			buttons: [
+				{
+					text: 'Continuar',
+					handler: function(){
+						
+					}
+				}, {
+					text: 'Cancelar',
+					handler:  function() {
+						ventana.cerrar();
+					}
+				}
+			]
 		});
 		
 		ventana.mostrar();

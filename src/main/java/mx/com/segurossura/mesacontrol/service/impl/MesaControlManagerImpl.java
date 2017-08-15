@@ -34,7 +34,7 @@ public class MesaControlManagerImpl implements MesaControlManager {
 		String paso = "";
         List<Map<String, String>> datos = null;
 		try {
-			paso="Consultando datos";
+			paso="Consultando tramites de mesa de control";
 			datos = mesaControlDAO.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici, start, limit);
 			
         } catch (Exception ex) {

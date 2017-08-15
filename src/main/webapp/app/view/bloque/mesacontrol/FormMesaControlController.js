@@ -27,7 +27,6 @@ Ext.define('Ice.view.bloque.mesacontrol.FormMesaControlController', {
 					'params.fstatusf':formRefs.fstatusf.getValue(),
 					'params.nombre':formRefs.nombre.getValue(),
 					'params.nmsolici':formRefs.nmsolici.getValue()
-					
 				}
 			});
 		}catch(e) {

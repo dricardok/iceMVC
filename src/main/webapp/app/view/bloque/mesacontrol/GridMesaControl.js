@@ -5,26 +5,33 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControl', {
 	controller: 'gridmesacontrol',
 	
 	title: 'Tramites',
-	height: 300,
+	height: 500,
 	
 	config: {
-		cdunieco: null,
+		cdunieco : null,
 		cdramo: null,
-		cdsubram: null,
 		estado: null,
 		nmpoliza: null,
 		cdagente: null,
 		ntramite: null,
+		estatus: null,
+		fstatusi: null,
+		fstatusf: null,
+		nombre: null,
+		nmsolici: null,
 		
-		itemsPerPage: null,
-		actionColumns: []
+		itemsPerPage: null
 	},
 	
 	constructor: function (config) {
 		Ice.log('Ice.view.bloque.mesacontrol.GridMesaControl.constructor config:', config);
 		
 		var me= this,
+			view = me.up(),
 			paso = 'Construyendo grid mesa control';
+		
+			Ice.log('Formulario de mesa de control', view);
+		
 		try {
 			var comps = Ice.generaComponentes({
 				pantalla: 'MESA_CONTROL',
@@ -45,15 +52,38 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControl', {
                 		type: 'json',
                 		rootProperty: 'list',
                 		totalProperty: 'totalCount'
-                	}
+                	},
+                	extraParams: {
+                    	'params.cdunieco':config.cdunieco,
+    					'params.cdramo':config.ramo,
+    					'params.estado':config.estado,
+    					'params.nmpoliza':config.nmpoliza,
+    					'params.cdagente':config.cdagente,
+    					'params.ntramite':config.ntramite,
+    					'params.estatus':config.estatus,
+    					'params.fstatusi':config.fstatusi,
+    					'params.fstatusf':config.fstatusf,
+    					'params.nombre':config.nombre,
+    					'params.nmsolici':config.nmsolici
+                    }
                 }
 			});
 			
 			
 			store.load({
                 params: {
-                    'params.ntramite': config.ntramite,
-                    start: 0,
+                	'params.cdunieco':config.cdunieco,
+					'params.cdramo':config.ramo,
+					'params.estado':config.estado,
+					'params.nmpoliza':config.nmpoliza,
+					'params.cdagente':config.cdagente,
+					'params.ntramite':config.ntramite,
+					'params.estatus':config.estatus,
+					'params.fstatusi':config.fstatusi,
+					'params.fstatusf':config.fstatusf,
+					'params.nombre':config.nombre,
+					'params.nmsolici':config.nmsolici,
+					start: 0,
                     limit: config.itemsPerPage
                 }
             });
@@ -63,11 +93,21 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControl', {
 			config.store = store;
 			config.bbar = {
                     xtype: 'pagingtoolbar',
+                    store: store,
                     displayInfo: true
             };
+			
+			
 			config.rowNumbers = {
                     text: 'Index'
             };
+			
+			config.buttons = [
+				{
+					text: 'Nuevo tramite',
+					handler: 'onNuevoTramiteClic'
+				}
+			].concat(config.buttons || []);
 			
 		} catch(e) {
 			Ice.generaExcepcion(e, paso);

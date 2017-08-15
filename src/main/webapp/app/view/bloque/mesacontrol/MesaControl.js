@@ -16,7 +16,8 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
     	}, {
     		xtype: 'gridmesacontrol',
     		reference: 'gridmesacontrol',
-    		itemsPerPage: 50
+    		itemsPerPage: 50,
+    		estatus: -1
     	}
     ]
 });
