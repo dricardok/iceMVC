@@ -304,7 +304,8 @@ Ext.define('Ice.view.bloque.AgentesController', {
 				items: [{
 					xtype: 'numberfieldice',
 					label: 'Porcentaje',
-					style: 'margin: 20px;'
+					style: 'margin: 20px;',
+					minValue: 0
 				}],
 				buttons: [
 					{

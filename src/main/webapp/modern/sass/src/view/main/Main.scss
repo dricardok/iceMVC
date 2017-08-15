@@ -426,8 +426,76 @@ $logo-image-height: 25px;
 
 
 
+.x-loading-spinner {
+    -webkit-animation-name: none;
+    -webkit-animation-duration: 0s;
+    -webkit-animation-iteration-count: none;
+    -webkit-animation-timing-function: none;
+    animation-name: none;
+    animation-duration: 0s;
+    animation-timing-function: none;
+    animation-iteration-count: none;
+}
+
+.x-loading-spinner {
+    font-size: 0 !important ;
+    height: 1em;
+    width: 1em;
+    -webkit-transform-origin: 0.5em 0.5em;
+    transform-origin: 0.5em 0.5em;
+}
 
 
+.x-loading-spinner{
+position:relative;
+}
+.x-loading-spinner:before{
+    width:20px;
+    height:20px;
+    border-radius:20px;
+    content:'';
+    position:absolute;
+    background:$azulo-s;
+    animation: x-loading-spinnerbefore 1.5s infinite ease-in-out;
+}
+ 
+.x-loading-spinner:after{
+    width:20px;
+    height:20px;
+    border-radius:20px;
+    background:blue;
+    content:'';
+    position:absolute;
+    background:$azulc-s;
+    right:3px;
+    animation: x-loading-spinnerafter 1.5s infinite ease-in-out;
+}
+ 
+@keyframes x-loading-spinnerbefore {
+    0% {transform: translateX(0px) rotate(0deg)}
+    50% {transform: translateX(50px) scale(1.2) rotate(260deg); background:#0033a0;border-radius:0px;}
+      100% {transform: translateX(0px) rotate(0deg)}
+}
+@keyframes x-loading-spinnerafter {
+    0% {transform: translateX(0px)}
+    50% {transform: translateX(-50px) scale(1.2) rotate(-260deg);background:#00B5CB;border-radius:0px;}
+    100% {transform: translateX(0px)}
+}    
+
+
+.x-mask .x-mask-inner {
+    position: relative;
+    background: transparent !important;
+    color: #fff;
+    text-align: center;
+    padding: 0.4em;
+    font-size: 0.95em;
+    font-weight: bold;
+}
+
+.x-mask .x-mask-message{
+color: #888686 !important;   
+}
 
 //Media Query logo Sura head 1 Modern movil
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.portal.model.RolSistema;
 
 import mx.com.segurossura.emision.dao.AgentesDAO;
 import mx.com.segurossura.emision.dao.EmisionDAO;

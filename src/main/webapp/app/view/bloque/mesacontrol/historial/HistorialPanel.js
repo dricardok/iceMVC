@@ -16,7 +16,9 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 		
 		var me = this,paso="";
 		try{
-			
+			if(!config.ntramite){
+				throw 'No se recibio en ntramite para el bloque historial MC.';
+			}
 			var graficaEve={
 					xtype		:	'cartesian',
 					title		:	"Eventos",

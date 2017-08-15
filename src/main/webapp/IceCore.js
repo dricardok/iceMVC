@@ -168,7 +168,7 @@ var Ice = (
             mesacontrol:{
             	
             	obtenerTramites:		'mesacontrol/obtenerTramites.action',
-            	
+            	movimientoMesacontrol:	'mesacontrol/movimientoMesacontrol.action',
             	documentos: {
                     obtenerDocumentos: 'documentos/obtenerDocumentos.action',
                     movimientoTdocupol: 'documentos/movimientoTdocupol.action',
@@ -729,7 +729,7 @@ var Ice = (
                 Ice.log("sec ",secciones)
                 if ("TATRIGAR" == secciones.pantalla && "TATRIGAR" == secciones.seccion) {
                      secciones.mapperAttr=function(obj){
-                            obj.label=obj.dsatribu;
+                            //obj.label=obj.dsatribu;
                             obj.tipocampo=obj.swformat
                             obj.name_cdatribu=obj.cdatribu
                             obj.maxlength=obj.nmlmax
@@ -2151,12 +2151,12 @@ var Ice = (
                 if (!boton || typeof boton !== 'object' || typeof boton.length === 'number') {
                     continue;
                 }
-
+                /*
                 if (!(boton.iconCls || (boton.getIconCls && boton.getIconCls()))) { // si no hay icono pongo bug
                     boton.iconCls = 'x-fa fa-bug';
                     boton.setIconCls && boton.setIconCls('x-fa fa-bug');
                 }
-
+				*/
                 if (Ice.modern()) {
                     if (boton.text || (boton.getText && boton.getText())) { // si tengo texto paso el icono arriba
                         boton.iconAlign = 'top';
