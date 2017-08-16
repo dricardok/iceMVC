@@ -36,6 +36,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
             }
             items.push({
                 xtype: 'dataviewice',
+                style:'height:100%; margin-top:-38px;',
                 //html:'<div class="">Cotizadores</div>',
                 reference: 'dataview',
                 cls: 'back_productos',

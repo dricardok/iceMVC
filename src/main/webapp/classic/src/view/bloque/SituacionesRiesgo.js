@@ -186,9 +186,9 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 								handler: 'onGuardarBloque'
 							},{
 								text: 'Cancelar',
+								ui:'gray',
 	                            iconCls: 'x-fa fa-close',
-	                            ui:'secundario-sm',
-								handler: 'onCancelar'
+	                            handler: 'onCancelar'
 							}
 						],
 						modelFields: compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.fields,
