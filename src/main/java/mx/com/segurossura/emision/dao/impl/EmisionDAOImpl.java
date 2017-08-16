@@ -1556,7 +1556,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_cdramo_i", cdramo);
         params.put("pv_estado_i", estado);
         params.put("pv_nmpoliza_i", nmpoliza);
-        params.put("pv_nmpolizal_i", nmpoliza);
+        params.put("pv_nmpolizal_i", nmpolizal);
         params.put("pv_nmsuplembloque_i", nmsuplem_bloque);
         params.put("pv_nmsuplemsesion_i", nmsuplem_session);
         params.put("pv_tipodocu_i", tipodocu);

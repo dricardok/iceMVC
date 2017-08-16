@@ -260,8 +260,11 @@ Ext.define('Ice.view.bloque.CoberturasController', {
                 fields: true,
                 validators: true
 			});
+			var firstItem = null;
             mpolicap.BLOQUE_COBERTURAS.MPOLICAP.items.forEach(function (it, idx) {
 				it.tabla = "MPOLICAP";
+				if(idx==0)
+					firstItem = it.name;
             });
 
 			form.setTitle("Cobertura: " + record.get('cdgarant') + " - "
@@ -279,8 +282,15 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             
             Ice.log("-------->", form.modelValidators);
             this.cargarValores(form);
+           
 
 			form.show();
+			Ext.ComponentQuery.query("[name="+firstItem+"]",form).forEach(function(it){
+            	if(it.focus){
+            		it.focus();
+            		Ice.log("Focus it:",firstItem);
+            	}
+	        });
 		} catch (e) {
 			Ice.manejaExcepcion(e, paso);
     	}
@@ -539,9 +549,11 @@ Ext.define('Ice.view.bloque.CoberturasController', {
                 fields: true,
                 validators: true
             });
-
+            var firstItem = null;
             mpolicap.BLOQUE_COBERTURAS.MPOLICAP.items.forEach(function (it, idx) {
             	it.tabla = "MPOLICAP";
+            	if(idx==0)
+					firstItem = it.name;
             })
             
             form.modelValidators = Ice.utils.mergeObjects(comps.TATRIGAR.TATRIGAR.validators,
@@ -555,6 +567,12 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 
 			form.show();
             this.cargarValores(form);
+            Ext.ComponentQuery.query("[name="+firstItem+"]",form).forEach(function(it){
+            	if(it.focus){
+            		it.focus();
+            		Ice.log("Focus it:",firstItem);
+            	}
+	        });
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);
 		}
