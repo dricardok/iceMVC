@@ -95,7 +95,7 @@ Ext.define('Ice.view.bloque.coaseguro.GridExclusionSituacionesCoaseguro', {
                         }
                     });
                     
-                    store.load({
+                    /*store.load({
                         params: {
                             'params.cdunieco': config.cdunieco,
                             'params.cdramo': config.cdramo,
@@ -103,7 +103,7 @@ Ext.define('Ice.view.bloque.coaseguro.GridExclusionSituacionesCoaseguro', {
                             'params.nmpoliza': config.nmpoliza,
                             'params.nmsuplem': config.nmsuplem
                         }
-                    });
+                    });*/
                     
                     
                     config.columns = compsGrid.COASEGURO.COASEGURO_EXCLUSION_SIT_GRID.columns;
