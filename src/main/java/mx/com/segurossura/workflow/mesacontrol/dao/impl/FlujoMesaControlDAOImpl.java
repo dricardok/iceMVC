@@ -2279,7 +2279,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 	}
 	
 	@Override
-	public List<Map<String,String>> recuperaTtipflumcPorRolPorUsuario(String agrupamc,String cdsisrol,String cdusuari) throws Exception
+	public List<Map<String,String>> recuperarTtipflumcPorRolPorUsuario(String agrupamc,String cdsisrol,String cdusuari) throws Exception
 	{
 		Map<String,String> params = new LinkedHashMap<String,String>();
 		params.put("agrupamc" , agrupamc);
@@ -2329,6 +2329,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 		{
 			lista = new ArrayList<Map<String,String>>();
 		}
+		logger.info("Numero de tipos de flujo ", lista.size());
 		return lista;
 	}
 	
