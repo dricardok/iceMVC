@@ -58,8 +58,12 @@ Ext.define('Ice.view.field.CdagentePickerController', {
 		refs = view.getReferences(),
 		paso = 'Obteniendo valor de cdagente';
         try {
-        	var cdgrupo  = me.getView().up('bloquedatosgenerales').getCdgrupo();
-        	var cdptovta = me.getView().up('bloquedatosgenerales').getCdptovta();
+        	try{
+	        	var cdgrupo  = me.getView().up('bloquedatosgenerales').getCdgrupo();
+	        	var cdptovta = me.getView().up('bloquedatosgenerales').getCdptovta();
+        	}catch(e){
+        		Ice.log("Error en cdagentepicker");
+        	}
         	
 			Ext.create("Ice.view.bloque.agentes.BuscarAgenteWindow", {
 				listeners: {

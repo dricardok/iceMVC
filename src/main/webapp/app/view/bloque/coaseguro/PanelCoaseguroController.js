@@ -177,9 +177,9 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
             values = refs.formCia.getValues();
             Ice.log('dscia rawValue', dscia.getRawValue());
             Ice.log('refs.formCia.dataEdit',refs.formCia.dataEdit);
-            if(refs.formCia.dataEdit === null){
-                values['dscia'] = dscia.getRawValue();
-            }
+            //if(refs.formCia.dataEdit === null){
+            values['dscia'] = dscia.getRawValue();
+            //}
             if(me.validaCompania(values)){
                 var rec = values;
                 refs.grid.getStore().add(rec);
@@ -296,6 +296,7 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
             view = me.getView(),
             refs = view.getReferences();
         try{
+            me.recuperaCiaEditada();
             var data = me.getRowDataActionColumn(grid, rowIndex, colIndex);
             Ice.cargarFormulario(refs.formCia, data);
             refs.formCia.dataEdit = data;
@@ -372,7 +373,7 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
                         'params.tipodocu': data.tipodocu,
                         'params.ndoclider': data.ndoclider,
                         'params.status': data.status,
-                        'params.accion': 'I'
+                        'params.accion': 'U'
                     },
                     success: function (json) {
                         var paso2 = 'LLenando store';
