@@ -19,6 +19,7 @@ import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.emision.dao.AgentesDAO;
 import mx.com.segurossura.emision.dao.EmisionDAO;
+import mx.com.segurossura.emision.service.AgrupadoresManager;
 import mx.com.segurossura.emision.service.DatosGeneralesManager;
 import mx.com.segurossura.general.catalogos.model.Bloque;
 import mx.com.segurossura.general.utils.ValoresMinimosUtils;
@@ -33,6 +34,9 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
     
     @Autowired
     private AgentesDAO agentesDAO;
+    
+    @Autowired
+    private AgrupadoresManager agrupadoresManager;
     
     @Override
     public Map<String, String> valoresDefectoFijos (String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
@@ -384,10 +388,16 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
                 
                 otvalores.put(key, tvalopol.get(key));
             }
-            
+            // Actualizando Mpoliagr
+            paso="Actualizando esquema de pago";
+            Map<String,String> datos = new HashMap<>();
+            logger.debug("Esquema de pago: {}",otvalores.get("otvalor03"));
+            datos.put("cdforpag","S".equals(otvalores.get("otvalor03"))?"8":"3");
+            agrupadoresManager.realizarMovimientoMpoliagr(cdunieco, cdramo, estado, nmpoliza, "1.01", nmsuplem, nmsuplem, datos, "U");
             emisionDAO.movimientoTvalopol(cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsuplem, tvalopol.get("status"),
                     otvalores, "M" // accion
                     );
+            
             
             // Si existe cdagente lo actualizamos:
 			if (StringUtils.isNotBlank(cdAgentePantalla)) {
