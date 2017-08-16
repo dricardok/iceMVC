@@ -59,7 +59,7 @@ Ext.define('Ice.view.componente.GridIce', {
 						});
 					}
 				}
-				config.columns = (config.columns || []).concat(cols);
+				config.columns = (cols || []).concat(config.columns);
 			}
     	} catch (e) {
     		Ice.generaExcepcion(e,paso);
