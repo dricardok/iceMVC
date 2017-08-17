@@ -60,7 +60,7 @@ public class HistorialDAOImpl extends HelperJdbcDao implements HistorialDAO {
 	                    ,"dsusuari"
 	                    ,"dssisrol"
 	            };
-	            declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
+	            declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols,true)));
 	            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 	            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
 	            compile();
@@ -99,7 +99,7 @@ public class HistorialDAOImpl extends HelperJdbcDao implements HistorialDAO {
 	                    ,"estatus_fin"
 	                    ,"fefecha_fin"
 	            };
-	            declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
+	            declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols,true)));
 	            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 	            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
 	            compile();
