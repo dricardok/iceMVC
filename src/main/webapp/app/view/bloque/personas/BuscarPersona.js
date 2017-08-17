@@ -89,9 +89,36 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
 												}
 											}
 										]
+							},
+							{
+								xtype : 'actioncolumn',
+								items : [
+											{
+												iconCls : 'x-fa  fa-book',
+												tooltip : 'Ver domicilios',
+												handler : function(grid,row,col){
+													me.getController().verDomicilios(grid,row,col)
+												}
+											}
+										]
 							}
-        			]
+							
+        			],
+        			
+                },
+                {
+                	xtype		:	'panelice',
+                	reference	:	'domiciliosContainer',
+                	items		:	[{
+                        xtype: 'domicilios',
+                        reference: 'gridDomicilios',
+                        selector: true,
+                        hidden	: true,
+                        scrollable:true,
+                        agregarDomicilio:true
+                    }]
                 }
+                
             ].concat(config.items || []);
 
             config.buttons = [

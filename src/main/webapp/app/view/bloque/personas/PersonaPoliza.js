@@ -1,6 +1,6 @@
 Ext.define('Ice.view.bloque.personas.PersonaPoliza', {	
 	extend  :       'Ice.view.componente.PanelPaddingIce',
-	xtype	:		'c',
+	xtype	:		'personapoliza',
 	controller : 'personapoliza',
 
     // config ext

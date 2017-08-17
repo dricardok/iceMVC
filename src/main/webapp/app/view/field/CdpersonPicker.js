@@ -16,7 +16,8 @@ Ext.define('Ice.view.field.CdpersonPicker', {
         nmsituac: null,
         nmsuplem: null,
         cdrol: null,
-        mostrarRol: 'false'
+        mostrarRol: 'false',
+        domicilioSel: null
     },
     
     constructor: function (config) {

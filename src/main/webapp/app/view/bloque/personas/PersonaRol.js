@@ -43,6 +43,13 @@ Ext.define('Ice.view.bloque.personas.PersonaRol', {
             		return it.name=='cdperson';
             	});
             	cdperson.cdramo = config.cdramo;
+            	cdperson.listeners = {
+                	personachange:function(pick,cdperson,dom){
+                		var gridDomicilios = pick.up('[xtype=personapoliza]').lookupReference('gridDomicilios');
+                		gridDomicilios.setSelection(dom);
+                		Ice.log("sel dom:",gridDomicilios.setSelection,"---",dom,"|||")
+                	}
+                };
             	
             	var cdrol = comps.PERSONA_ROL.FORMULARIO.items.find(function(it){
             		return it.name=='cdrol';
