@@ -2056,7 +2056,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 			declareParameter(new SqlParameter("NMSUPLEM"   , Types.VARCHAR));
 			String[] cols=new String[]{
 					"NTRAMITE"  ,"CDUNIECO" ,"CDRAMO"   ,"ESTADO"   ,"NMPOLIZA" ,"NMSUPLEM"  ,"NMSOLICI" ,"CDSUCADM"
-					,"CDSUCDOC" ,"CDSUBRAM" ,"CDTIPTRA" ,"FERECEPC" ,"CDAGENTE" ,"REFERENCIA","NOMBRE"   ,"FECSTATU"
+					,"CDSUCDOC" ,"CDTIPTRA" ,"FERECEPC" ,"CDAGENTE" ,"REFERENCIA","NOMBRE"   ,"FECSTATU"
 					,"STATUS"   ,"COMMENTS" ,"CDTIPSIT"
 					,"OTVALOR01","OTVALOR02","OTVALOR03","OTVALOR04","OTVALOR05","OTVALOR06" ,"OTVALOR07","OTVALOR08","OTVALOR09","OTVALOR10"
 					,"OTVALOR11","OTVALOR12","OTVALOR13","OTVALOR14","OTVALOR15","OTVALOR16" ,"OTVALOR17","OTVALOR18","OTVALOR19","OTVALOR20"
@@ -4579,4 +4579,34 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
         }
     }
     
+    @Override
+    public String ejecutaValidacion (String functionName, String ntramite, String aux, String json) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_ntramite_i" , ntramite);
+        params.put("pv_aux_i"      , aux);
+        params.put("pv_config_i"   , json);
+        Map<String, Object> resultado = ejecutaSP(new EjecutaValidacionFuncionSP(functionName, getDataSource()), params);
+        String result = (String) resultado.get("v_return");
+        if (StringUtils.isBlank(result)) {
+            result = "";
+        }
+        logger.debug(Utils.log("\n****** ejecutaValidacion in functionName = F_ICE_WF_", functionName, ", ntramite=", ntramite,
+                ", aux='", aux, "', json='", json, "'\n****** ejecutaValidacion out result='", result, "'"));
+        return result;
+    }
+                 
+    protected class EjecutaValidacionFuncionSP extends StoredProcedure {
+        protected EjecutaValidacionFuncionSP (String functionName, DataSource dataSource) {
+            super(dataSource, Utils.join("F_ICE_WF_", functionName));
+            
+            /** important that the out parameter is defined before the in parameter. */
+            declareParameter(new SqlOutParameter("v_return"   , Types.VARCHAR));  
+            declareParameter(new SqlParameter("pv_ntramite_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_aux_i"      , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_config_i"   , Types.VARCHAR));
+            /** use function instead of stored procedure */
+            setFunction(true);
+            compile();
+        }
+    }
 }

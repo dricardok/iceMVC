@@ -181,9 +181,14 @@ var Ice = (
             		movimientoThmesacontrol:'mesacontrol/historial/movimientoTdmesacontrol.action'
             	},
             	
-            	turnar: 'flujomesacontrol/turnarTramite.action',
-            	pantallaExterna: 'flujomesacontrol/pantallaExterna.action',
-            	cargarAccionesEntidad: 'flujomesacontrol/cargarAccionesEntidad.action'
+            	turnar                        : 'flujomesacontrol/turnarTramite.action',
+            	pantallaExterna               : 'flujomesacontrol/pantallaExterna.action',
+                cargarAccionesEntidad         : 'flujomesacontrol/cargarAccionesEntidad.action',
+                ejecutarValidacion            : 'flujomesacontrol/ejecutaValidacion.action',
+                obtenerDatosValidacionCliente : 'flujomesacontrol/recuperarDatosTramiteValidacionCliente.action',
+                ejecutarRevision              : 'flujomesacontrol/ejecutaRevision.action',
+                marcarRevisionConfirmada      : 'flujomesacontrol/marcarRevisionConfirmada.action',
+                marcarRequisitoRevision       : 'flujomesacontrol/marcarRequisitoRevision.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',

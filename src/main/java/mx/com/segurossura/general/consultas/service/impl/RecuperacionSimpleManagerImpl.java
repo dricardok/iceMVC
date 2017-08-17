@@ -1083,13 +1083,14 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
 				
 				lista = flujoMesaControlDAO.recuperaTfluproc(cdtipflu, cdflujomc);
 			}
-			else if(consulta.equals(RecuperacionSimple.RECUPERAR_TFLUVAL))
-			{
+			*/
+			else if (consulta.equals(RecuperacionSimple.RECUPERAR_TFLUVAL)) {
 				String cdtipflu  = params.get("cdtipflu");
 				String cdflujomc = params.get("cdflujomc");
 				String cdvalida  = params.get("cdvalida");
 				lista = flujoMesaControlDAO.recuperaTfluval(cdtipflu, cdflujomc, cdvalida);
 			}
+		    /*
 			else if(consulta.equals(RecuperacionSimple.RECUPERAR_TFLUREV))
 			{
 				String cdtipflu = params.get("cdtipflu");

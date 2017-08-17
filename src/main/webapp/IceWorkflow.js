@@ -223,18 +223,17 @@ var Ice = (
                         }
                     }
                 });
-            }
-            /*else if (tipodest === 'C') {
-                ck = 'Recuperando valores de componente';
+            } else if (tipodest === 'C') {
+                paso = 'Recuperando valores de componente';
                 Ice.request({
-                    mascara: ck,
+                    mascara: paso,
                     url: Ice.url.core.recuperacionSimple,
                     params: {
-                        'params.consulta'  : 'RECUPERAR_TCOMPMC',
-                        'params.CDCOMPMC' : clavedest
+                        'params.consulta': 'RECUPERAR_TCOMPMC',
+                        'params.CDCOMPMC': clavedest
                     },
-                    success : function(json){
-                        var ck = 'Decodificando respuesta al recuperar valores de componente';
+                    success : function (json){
+                        var paso2 = 'Procesando componente';
                         try {
                             if(json.list.length == 0) {
                                 throw 'El componente no existe';
@@ -244,1276 +243,577 @@ var Ice = (
                             var compData = json.list[0];
                             Ice.log('compData:',compData);
                             
-                            ck = 'Creando componente';
+                            paso2 = 'Creando componente';
                             // Ext.syncRequire(_GLOBAL_DIRECTORIO_DEFINES+compData.NOMCOMP);
-                            new window[compData.NOMCOMP]({
-                                cdtipflu: cdtipflu,
-                                cdflujomc: cdflujomc,
-                                tipoent: tipodest,
-                                claveent: clavedest,
-                                webid: webiddest,
-                                aux: aux,
-                                ntramite: ntramite,
-                                status: status,
-                                cdunieco: cdunieco,
-                                cdramo: cdramo,
-                                estado: estado,
-                                nmpoliza: nmpoliza,
-                                nmsituac: nmsituac,
-                                nmsuplem: nmsuplem,
-                                cdusuari: cdusuari,
-                                cdsisrol: cdsisrol
+                            Ext.create({
+                                xtype     : compData.NOMCOMP,
+                                ntramite  : ntramite,
+                                status    : status,
+                                cdtipflu  : cdtipflu,
+                                cdflujomc : cdflujomc,
+                                tipoent   : tipodest,
+                                claveent  : clavedest,
+                                webid     : webiddest,
+                                cdunieco  : cdunieco,
+                                cdramo    : cdramo,
+                                estado    : estado,
+                                nmpoliza  : nmpoliza,
+                                nmsituac  : nmsituac,
+                                nmsuplem  : nmsuplem,
+                                aux       : aux
                             }).mostrar();
                         } catch(e) {
-                            Ice.manejaExcepcion(e,ck);
+                            Ice.manejaExcepcion(e, paso2);
                         }
                     }
                 });
             } else if (tipodest === 'O') {
-                ck = 'Recuperando valores de proceso';
-                Ext.Ajax.request({
-                    url: Ice.url.core.recuperacionSimple,
-                    params:{
+                paso = 'Recuperando valores de servicio';
+                Ice.request({
+                    mascara : paso,
+                    url     : Ice.url.core.recuperacionSimple,
+                    params  : {
                         'params.consulta'  : 'RECUPERAR_TPROCMC',
                         'params.CDPROCMC' : clavedest
                     },
-                    success : function(json){
-                        var ck = 'Decodificando respuesta al recuperar valores de proceso';
+                    success : function (json){
+                        var paso2 = 'Decodificando respuesta al recuperar valores de servicio';
                         try{
-                            if(json.list.length==0){
-                                throw 'El proceso no existe';
-                            } else if(json.list.length>1) {
-                                throw 'Proceso duplicado';
+                            if (json.list.length === 0) {
+                                throw 'El servicio no existe';
+                            } else if (json.list.length > 1) {
+                                throw 'Servicio duplicado';
                             }
                             var data = json.list[0];
                             Ice.log('data:',data);
                             
-                            ck = 'Recuperando acciones posteriores al proceso';
-                            Ext.Ajax.request({
-                                mascara: ck,
-                                url: Ice.url.bloque.mesacontrol.cargarAccionesEntidad,
-                                params: {
-                                    'params.cdtipflu': cdtipflu,
-                                    'params.cdflujomc': cdflujomc,
-                                    'params.tipoent': tipodest,
-                                    'params.cdentidad': clavedest,
-                                    'params.webid': webiddest
-                                },
-                                success : function(json){
-                                    var ck = 'Decodificando respuesta al recuperar acciones posteriores al proceso';
-                                    try {
-                                        var numSalidas = 0,
-                                            accion1   = '',
-                                            accion2   = '',
-                                            accExito  = '',
-                                            accError  = '';
-                                        // CDACCION: "138"
-                                        // CDCOMPMC: null
-                                        // CDESTADOMC: null
-                                        // CDFLUJOMC: "12"
-                                        // CDICONO: null
-                                        // CDPANTMC: null
-                                        // CDPROCMC: null
-                                        // CDREVISI: null
-                                        // CDTIPFLU: "1"
-                                        // CDVALIDA: "20"
-                                        // CDVALOR: null
-                                        // CLAVEDEST: "20"
-                                        // DSACCION: "next"
-                                        // IDDESTIN: "1450139785755_1072"
-                                        // IDORIGEN: "1450121226109_9387"
-                                        // TIPODEST: "V"
-                                        // WEBIDCOMP: null
-                                        // WEBIDDEST: "1450139785755_1072"
-                                        // WEBIDESTADO: null
-                                        // WEBIDPANT: null
-                                        // WEBIDPROC: null
-                                        // WEBIDREVISI: null
-                                        // WEBIDVALIDA: "1450139785755_1072"
-                                        if(json.list.length == 1){
-                                            numSalidas = 1;
-                                            accion1    = json.list[0];
-                                        } else if(json.list.length==2) {
-                                            numSalidas = 2;
-                                            accion1    = json.list[0];
-                                            accion2    = json.list[1];
-                                            
-                                            if(Ice.nvl(accion1.CDVALOR,'') == 'EXITO') {
-                                                accExito = accion1;
-                                            } else if(Ice.nvl(accion2.CDVALOR,'') == 'EXITO') {
-                                                accExito = accion2;
-                                            }
-                                            if(Ice.nvl(accion1.CDVALOR,'')=='ERROR'){
-                                                accError = accion1;
-                                            } else if(Ice.nvl(accion2.CDVALOR,'') == 'ERROR'){
-                                                accError = accion2;
-                                            }
-                                            
-                                            if(Ext.isEmpty(accExito)||Ext.isEmpty(accError)){
-                                                throw 'Las acciones relacionadas al proceso no tienen el valor EXITO/ERROR adecuado';
-                                            }
-                                        } else if(json.list.length > 2) {
-                                            throw 'El proceso tiene demasiadas acciones relacionadas';
+                            paso2 = 'Recuperando acciones posteriores al servicio';
+                            Ice.cargarAccionesEntidad(cdtipflu, cdflujomc, tipodest, clavedest, webiddest, function (list){
+                                var paso3 = 'Procesando acciones posteriores al servicio';
+                                try {
+                                    var numSalidas = 0,
+                                        accion1    = '',
+                                        accion2    = '',
+                                        accExito   = '',
+                                        accError   = '';
+                                    if (list.length == 1) {
+                                        numSalidas = 1;
+                                        accion1    = list[0];
+                                    } else if (list.length == 2) {
+                                        numSalidas = 2;
+                                        accion1    = list[0];
+                                        accion2    = list[1];
+                                        
+                                        if (Ice.nvl(accion1.CDVALOR, '') === 'EXITO') {
+                                            accExito = accion1;
+                                        } else if (Ice.nvl(accion2.CDVALOR, '') === 'EXITO') {
+                                            accExito = accion2;
+                                        }
+
+                                        if (Ice.nvl(accion1.CDVALOR, '') === 'ERROR') {
+                                            accError = accion1;
+                                        } else if (Ice.nvl(accion2.CDVALOR, '') === 'ERROR') {
+                                            accError = accion2;
                                         }
                                         
-                                        ck = 'Ejecutando proceso';
-                                        Ice.request({
-                                            mascara: ck,
-                                            url      : _GLOBAL_CONTEXTO+data.URLPROCMC,
-                                            params: {
-                                                'flujo.cdtipflu': cdtipflu,
-                                                'flujo.cdflujomc': cdflujomc,
-                                                'flujo.tipoent': tipodest,
-                                                'flujo.claveent': clavedest,
-                                                'flujo.webid': webiddest,
-                                                'flujo.ntramite': ntramite,
-                                                'flujo.status': status,
-                                                'flujo.cdunieco': cdunieco,
-                                                'flujo.cdramo': cdramo,
-                                                'flujo.estado': estado,
-                                                'flujo.nmpoliza': nmpoliza,
-                                                'flujo.nmsituac': nmsituac,
-                                                'flujo.nmsuplem': nmsuplem,
-                                                'flujo.aux': aux
-                                            },
-                                            success : function (json){
-                                                var ck = 'Decodificando respuesta al ejecutar proceso';
-                                                try{
-                                                    Ice.log('### proceso:',json);
-                                                    // if (json.success == true){
-                                                    if(numSalidas == 0){
-                                                        mensajeCorrecto('AVISO',json.message,callback);
-                                                    } else if(numSalidas == 1){
-                                                        // JTEZVA 2016 08 30 YA NO QUIERO AVISOS, QUE CONTINUE
-                                                        // mensajeCorrecto
-                                                        // (
-                                                        //     'AVISO'
-                                                        //     ,json.message
-                                                        //     ,function()
-                                                        //     {
-                                                                Ice.procesaAccion(
-                                                                    cdtipflu
-                                                                    ,cdflujomc
-                                                                    ,accion1.TIPODEST
-                                                                    ,accion1.CLAVEDEST
-                                                                    ,accion1.WEBIDDEST
-                                                                    ,aux
-                                                                    ,ntramite
-                                                                    ,status
-                                                                    ,cdunieco
-                                                                    ,cdramo
-                                                                    ,estado
-                                                                    ,nmpoliza
-                                                                    ,nmsituac
-                                                                    ,nmsuplem
-                                                                    ,cdusuari
-                                                                    ,cdsisrol
-                                                                    ,callback
-                                                                );
-                                                            // }
-                                                    } else if(numSalidas == 2) {
-                                                        //  JTEZVA 2016 08 30 YA NO QUIERO AVISOS, QUE CONTINUE
-                                                        // mensajeCorrecto
-                                                        // (
-                                                        //     'AVISO'
-                                                        //     ,json.message
-                                                        //     ,function()
-                                                        //     {
-                                                                Ice.procesaAccion(
-                                                                    cdtipflu
-                                                                    ,cdflujomc
-                                                                    ,accExito.TIPODEST
-                                                                    ,accExito.CLAVEDEST
-                                                                    ,accExito.WEBIDDEST
-                                                                    ,aux
-                                                                    ,ntramite
-                                                                    ,status
-                                                                    ,cdunieco
-                                                                    ,cdramo
-                                                                    ,estado
-                                                                    ,nmpoliza
-                                                                    ,nmsituac
-                                                                    ,nmsuplem
-                                                                    ,cdusuari
-                                                                    ,cdsisrol
-                                                                    ,callback
-                                                                );
-                                                        //     }
-                                                        // );
-                                                    }
-                                                    // else
-                                                    // {
-                                                    //     if(numSalidas<2)
-                                                    //     {
-                                                    //         mensajeError(json.message);
-                                                    //     }
-                                                    //     else
-                                                    //     {
-                                                    //         mensajeError
-                                                    //         (
-                                                    //             json.message
-                                                    //             ,function()
-                                                    //             {
-                                                    //                 Ice.procesaAccion
-                                                    //                 (
-                                                    //                     cdtipflu
-                                                    //                     ,cdflujomc
-                                                    //                     ,accError.TIPODEST
-                                                    //                     ,accError.CLAVEDEST
-                                                    //                     ,accError.WEBIDDEST
-                                                    //                     ,aux
-                                                    //                     ,ntramite
-                                                    //                     ,status
-                                                    //                     ,cdunieco
-                                                    //                     ,cdramo
-                                                    //                     ,estado
-                                                    //                     ,nmpoliza
-                                                    //                     ,nmsituac
-                                                    //                     ,nmsuplem
-                                                    //                     ,cdusuari
-                                                    //                     ,cdsisrol
-                                                    //                     ,callback
-                                                    //                 );
-                                                    //             }
-                                                    //         );
-                                                    //     }
-                                                    // }
+                                        if (Ext.isEmpty(accExito) || Ext.isEmpty(accError)) {
+                                            throw 'Las acciones relacionadas al servicio no tienen el valor EXITO/ERROR adecuado';
+                                        }
+                                    } else if(list.length > 2) {
+                                        throw 'El servicio tiene demasiadas acciones relacionadas';
+                                    }
+                                    
+                                    paso3 = 'Invocando servicio';
+                                    Ice.request({
+                                        mascara : paso3,
+                                        url     : data.URLPROCMC,
+                                        params  : {
+                                            'flujo.cdtipflu'  : cdtipflu,
+                                            'flujo.cdflujomc' : cdflujomc,
+                                            'flujo.tipoent'   : tipodest,
+                                            'flujo.claveent'  : clavedest,
+                                            'flujo.webid'     : webiddest,
+                                            'flujo.ntramite'  : ntramite,
+                                            'flujo.status'    : status,
+                                            'flujo.cdunieco'  : cdunieco,
+                                            'flujo.cdramo'    : cdramo,
+                                            'flujo.estado'    : estado,
+                                            'flujo.nmpoliza'  : nmpoliza,
+                                            'flujo.nmsituac'  : nmsituac,
+                                            'flujo.nmsuplem'  : nmsuplem,
+                                            'flujo.aux'       : aux
+                                        },
+                                        success : function (json){
+                                            var paso4 = 'Procesando acci\u00f3n posterior al servicio';
+                                            try {
+                                                Ice.log('### proceso:', json);
+                                                if (numSalidas === 0) {
+                                                    Ice.mensajeCorrecto({
+                                                        titulo: 'AVISO',
+                                                        mensaje: json.message,
+                                                        callback: callback
+                                                    });
+                                                } else if (numSalidas === 1) {
+                                                    Ice.procesaAccion(
+                                                        cdtipflu,
+                                                        cdflujomc,
+                                                        accion1.TIPODEST,
+                                                        accion1.CLAVEDEST,
+                                                        accion1.WEBIDDEST,
+                                                        aux,
+                                                        ntramite,
+                                                        status,
+                                                        cdunieco,
+                                                        cdramo,
+                                                        estado,
+                                                        nmpoliza,
+                                                        nmsituac,
+                                                        nmsuplem,
+                                                        callback
+                                                    );
+                                                } else if (numSalidas === 2) {
+                                                    Ice.procesaAccion(
+                                                        cdtipflu,
+                                                        cdflujomc,
+                                                        accExito.TIPODEST,
+                                                        accExito.CLAVEDEST,
+                                                        accExito.WEBIDDEST,
+                                                        aux,
+                                                        ntramite,
+                                                        status,
+                                                        cdunieco,
+                                                        cdramo,
+                                                        estado,
+                                                        nmpoliza,
+                                                        nmsituac,
+                                                        nmsuplem,
+                                                        callback
+                                                    );
                                                 }
-                                                catch(e)
-                                                {
-                                                    if(numSalidas<2)
-                                                    {
-                                                        Ice.manejaExcepcion(e,ck);
-                                                    }
-                                                    else
-                                                    {
-                                                        Ice.logError(e);
-                                                        Ice.mensajeError({
-                                                            mensaje: 'Error al manejar respuesta de proceso',
-                                                            callback: function () {
-                                                                Ice.procesaAccion(
-                                                                    cdtipflu
-                                                                    ,cdflujomc
-                                                                    ,accError.TIPODEST
-                                                                    ,accError.CLAVEDEST
-                                                                    ,accError.WEBIDDEST
-                                                                    ,aux
-                                                                    ,ntramite
-                                                                    ,status
-                                                                    ,cdunieco
-                                                                    ,cdramo
-                                                                    ,estado
-                                                                    ,nmpoliza
-                                                                    ,nmsituac
-                                                                    ,nmsuplem
-                                                                    ,cdusuari
-                                                                    ,cdsisrol
-                                                                    ,callback
-                                                                );
-                                                            }
-                                                        });
-                                                    }
-                                                }
-                                            }
-                                            ,failure : function(response)
-                                            {
-                                                if(numSalidas<2)
-                                                {
-                                                    errorComunicacion(null,'Error al ejecutar proceso');
-                                                }
-                                                else
-                                                {
-                                                    mensajeError({
-                                                        mensaje: 'Error de comunicaci\u00f3n al ejecutar proceso',
-                                                        callback: function() {
+                                            } catch (e) {
+                                                if (numSalidas < 2) {
+                                                    Ice.manejaExcepcion(e, paso4);
+                                                } else {
+                                                    Ice.logError(e);
+                                                    Ice.mensajeError({
+                                                        mensaje: 'Error al manejar respuesta de servicio',
+                                                        callback: function () {
                                                             Ice.procesaAccion(
-                                                                cdtipflu
-                                                                ,cdflujomc
-                                                                ,accError.TIPODEST
-                                                                ,accError.CLAVEDEST
-                                                                ,accError.WEBIDDEST
-                                                                ,aux
-                                                                ,ntramite
-                                                                ,status
-                                                                ,cdunieco
-                                                                ,cdramo
-                                                                ,estado
-                                                                ,nmpoliza
-                                                                ,nmsituac
-                                                                ,nmsuplem
-                                                                ,cdusuari
-                                                                ,cdsisrol
-                                                                ,callback
+                                                                cdtipflu,
+                                                                cdflujomc,
+                                                                accError.TIPODEST,
+                                                                accError.CLAVEDEST,
+                                                                accError.WEBIDDEST,
+                                                                aux,
+                                                                ntramite,
+                                                                status,
+                                                                cdunieco,
+                                                                cdramo,
+                                                                estado,
+                                                                nmpoliza,
+                                                                nmsituac,
+                                                                nmsuplem,
+                                                                callback
                                                             );
                                                         }
                                                     });
                                                 }
                                             }
-                                        });
-                                    } catch (e) {
-                                        Ice.manejaExcepcion(e,ck);
-                                    }
+                                        },
+                                        failure: function () {
+                                            if (numSalidas === 2) {
+                                                Ice.mensajeError({
+                                                    mensaje: 'Error de comunicaci\u00f3n al ejecutar proceso',
+                                                    callback: function() {
+                                                        Ice.procesaAccion(
+                                                            cdtipflu,
+                                                            cdflujomc,
+                                                            accError.TIPODEST,
+                                                            accError.CLAVEDEST,
+                                                            accError.WEBIDDEST,
+                                                            aux,
+                                                            ntramite,
+                                                            status,
+                                                            cdunieco,
+                                                            cdramo,
+                                                            estado,
+                                                            nmpoliza,
+                                                            nmsituac,
+                                                            nmsuplem,
+                                                            callback
+                                                        );
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+                                } catch (e) {
+                                    Ice.manejaExcepcion(e, paso3);
                                 }
                             });
                         } catch (e) {
-                            Ice.manejaExcepcion(e,ck);
+                            Ice.manejaExcepcion(e, paso2);
                         }
                     }
                 });
             } else if (tipodest === 'V') {
-                ck = 'Recuperando valores de validaci\u00f3n';
+                paso = 'Recuperando valores de validaci\u00f3n';
                 Ice.request({
-                    mascara: ck,
-                    url      : Ice.url.core.recuperacionSimple
-                    ,params  :
-                    {
-                        'params.consulta'   : 'RECUPERAR_TFLUVAL'
-                        ,'params.cdtipflu'  : cdtipflu
-                        ,'params.cdflujomc' : cdflujomc
-                        ,'params.cdvalida'  : clavedest
-                    }
-                    ,success : function(json)
-                    {
-                        var ck = 'Decodificando respuesta al recuperar valores de validaci\u00f3n';
-                        try
-                        {
-                            Ice.log('### tfluval:',json);
-                            if(json.list.length==0)
-                            {
+                    mascara: paso,
+                    url: Ice.url.core.recuperacionSimple,
+                    params: {
+                        'params.consulta'  : 'RECUPERAR_TFLUVAL',
+                        'params.cdtipflu'  : cdtipflu,
+                        'params.cdflujomc' : cdflujomc,
+                        'params.cdvalida'  : clavedest
+                    },
+                    success: function (json) {
+                        var paso2 = 'Decodificando respuesta al recuperar valores de validaci\u00f3n';
+                        try {
+                            Ice.log('### tfluval:', json);
+                            if (json.list.length === 0) {
                                 throw 'La validaci\u00f3n no existe';
-                            }
-                            else if(json.list.length>1)
-                            {
+                            } else if (json.list.length > 1) {
                                 throw 'Validaci\u00f3n duplicada';
                             }
                             var data = json.list[0];
                             Ice.log('data:',data);
                             
                             var cliente = false;
-                            if('x'+data.CDVALIDAFK=='x-1')
-                            {
-                                if(Ext.isEmpty(data.JSVALIDA))
-                                {
+                            if ('x' + data.CDVALIDAFK === 'x-1') {
+                                if (Ext.isEmpty(data.JSVALIDA)) {
                                     throw 'La validaci\u00f3n no cuenta con una clave ni validaci\u00f3n cliente';
-                                }
-                                else
-                                {
+                                } else {
                                     cliente = true;
                                 }
                             }
                             
-                            ck = 'Recuperando acciones posteriores a la validaci\u00f3n';
-                            Ext.Ajax.request({
-                                mascara: ck,
-                                url      : Ice.url.bloque.mesacontrol.cargarAccionesEntidad
-                                ,params  :
-                                {
-                                    'params.cdtipflu'   : cdtipflu
-                                    ,'params.cdflujomc' : cdflujomc
-                                    ,'params.tipoent'   : tipodest
-                                    ,'params.cdentidad' : clavedest
-                                    ,'params.webid'     : webiddest
-                                }
-                                ,success : function(json)
-                                {
-                                    var ck = 'Decodificando respuesta al recuperar acciones posteriores a la validaci\u00f3n';
-                                    try
-                                    {
-                                        Ice.log('### acciones:',json);
-                                        var numSalidas = json.list.length
-                                            ,acciones  = json.list;
-                                        // CDACCION: "138"
-                                        // CDCOMPMC: null
-                                        // CDESTADOMC: null
-                                        // CDFLUJOMC: "12"
-                                        // CDICONO: null
-                                        // CDPANTMC: null
-                                        // CDPROCMC: null
-                                        // CDREVISI: null
-                                        // CDTIPFLU: "1"
-                                        // CDVALIDA: "20"
-                                        // CDVALOR: null
-                                        // CLAVEDEST: "20"
-                                        // DSACCION: "next"
-                                        // IDDESTIN: "1450139785755_1072"
-                                        // IDORIGEN: "1450121226109_9387"
-                                        // TIPODEST: "V"
-                                        // WEBIDCOMP: null
-                                        // WEBIDDEST: "1450139785755_1072"
-                                        // WEBIDESTADO: null
-                                        // WEBIDPANT: null
-                                        // WEBIDPROC: null
-                                        // WEBIDREVISI: null
-                                        // WEBIDVALIDA: "1450139785755_1072"
-                                        if (json.list.length === 0) {
-                                            throw 'No hay acciones relacionadas a la validaci\u00f3n';
-                                        }
-                                        for (var i = 0; i < numSalidas; i++) {
-                                            if(Ext.isEmpty(acciones[i].CDVALOR))
-                                            {
-                                                throw 'Las acciones relacionadas a la validaci\u00f3n no tienen valor';
-                                            }
-                                        }
-                                        
-                                        if (!cliente) {
-                                            ck = 'Ejecutando validaci\u00f3n';
-                                            Ice.request({
-                                                mascara: ck,
-                                                url      : _GLOBAL_URL_VALIDACION
-                                                ,params  :
-                                                {
-                                                    'flujo.cdtipflu'     : cdtipflu
-                                                    ,'flujo.cdflujomc'   : cdflujomc
-                                                    ,'flujo.tipoent'     : tipodest
-                                                    ,'flujo.claveent'    : clavedest
-                                                    ,'flujo.webid'       : webiddest
-                                                    ,'flujo.ntramite'    : ntramite
-                                                    ,'flujo.status'      : status
-                                                    ,'flujo.cdunieco'    : cdunieco
-                                                    ,'flujo.cdramo'      : cdramo
-                                                    ,'flujo.estado'      : estado
-                                                    ,'flujo.nmpoliza'    : nmpoliza
-                                                    ,'flujo.nmsituac'    : nmsituac
-                                                    ,'flujo.nmsuplem'    : nmsuplem
-                                                    ,'params.cdvalidafk' : data.CDVALIDAFK
-                                                }
-                                                ,success : function(json)
-                                                {
-                                                    var ck = 'Decodificando respuesta al ejecutar validaci\u00f3n';
-                                                    try
-                                                    {
-                                                        Ice.log('### validacion:',json);
-                                                        var valorRespValid = json.params.salida
-                                                            ,salida        = '';
-                                                        Ice.log('Resultado validacion java: ', valorRespValid);
-                                                        for(var i=0 ; i<numSalidas ; i++)
-                                                        {
-                                                            if ( 'x' + acciones[i].CDVALOR === 'x' + valorRespValid) {
-                                                                salida = acciones[i];
-                                                                break;
-                                                            }
-                                                            // CUANDO LA RESPUESTA DE LA VALIDACION JAVA INICIA CON '*' (EJ: *JTEZVA|PROGRAMADOR)
-                                                            // BUSCAMOS UNA ACCION CUYO VALOR SEA '*', EJECUTAMOS ESA ACCION
-                                                            // Y LE MANDAMOS COMO AUXILIAR LA RESPUESTA JAVA SIN EL '*' (EJ: JTEZVA|PROGRAMADOR)
-                                                            else if (acciones[i].CDVALOR === '*'
-                                                                && !Ext.isEmpty(valorRespValid)
-                                                                && valorRespValid.indexOf('*') === 0
-                                                            ) {
-                                                                salida = acciones[i];
-                                                                salida.AUX = valorRespValid.substr(1);
-                                                                break;
-                                                            }
-                                                        }
-                                                        if(Ext.isEmpty(salida))
-                                                        {
-                                                            throw 'La validaci\u00f3n regres\u00f3 un valor que no tiene acci\u00f3n relacionada';
-                                                        }
-                                                        Ice.procesaAccion(
-                                                            cdtipflu
-                                                            ,cdflujomc
-                                                            ,salida.TIPODEST
-                                                            ,salida.CLAVEDEST
-                                                            ,salida.WEBIDDEST
-                                                            ,salida.AUX
-                                                            ,ntramite
-                                                            ,status
-                                                            ,cdunieco
-                                                            ,cdramo
-                                                            ,estado
-                                                            ,nmpoliza
-                                                            ,nmsituac
-                                                            ,nmsuplem
-                                                            ,cdusuari
-                                                            ,cdsisrol
-                                                            ,callback
-                                                        );
-                                                    } catch (e) {
-                                                        Ice.manejaExcepcion(e,ck);
-                                                    }
-                                                }
-                                            });
-                                        }
-                                        else//evaluacion cliente
-                                        {
-                                            ck = 'Recuperando datos para validaci\u00f3n cliente';
-                                            Ice.request({
-                                                mascara: ck,
-                                                url      : _GLOBAL_URL_VALIDACION_MONTAR_DATOS
-                                                ,params  :
-                                                {
-                                                    'flujo.cdtipflu'   : cdtipflu
-                                                    ,'flujo.cdflujomc' : cdflujomc
-                                                    ,'flujo.tipoent'   : tipodest
-                                                    ,'flujo.claveent'  : clavedest
-                                                    ,'flujo.webid'     : webiddest
-                                                    ,'flujo.ntramite'  : ntramite
-                                                    ,'flujo.status'    : status
-                                                    ,'flujo.cdunieco'  : cdunieco
-                                                    ,'flujo.cdramo'    : cdramo
-                                                    ,'flujo.estado'    : estado
-                                                    ,'flujo.nmpoliza'  : nmpoliza
-                                                    ,'flujo.nmsituac'  : nmsituac
-                                                    ,'flujo.nmsuplem'  : nmsuplem
-                                                }
-                                                ,success : function(json)
-                                                {
-                                                    var ck = 'Decodificando respuesta al recuperar datos para validaci\u00f3n cliente';
-                                                    try
-                                                    {
-                                                        Ice.log('### datos memoria validacion javascript:',json);
-                                                        ck = 'Construyendo validaci\u00f3n cliente';
-                                                        eval('var validacionCliente=function(DATOS){Ice.log("DATOS:",DATOS);'+data.JSVALIDA+'};');
-                                                        Ice.log('validacionCliente:',validacionCliente);
-                                                        
-                                                        ck = 'Invocando validaci\u00f3n cliente';
-                                                        var valorRespValid = validacionCliente(json.datosTramite)
-                                                            ,salida        = '';
-                                                        Ice.log('Resultado validacion cliente: ', valorRespValid);
-                                                        for(var i=0 ; i<numSalidas ; i++)
-                                                        {
-                                                            if('x'+acciones[i].CDVALOR=='x'+valorRespValid)
-                                                            {
-                                                                salida = acciones[i];
-                                                                break;
-                                                            }
-                                                            // CUANDO LA RESPUESTA DE LA VALIDACION CLIENTE INICIA CON '*' (EJ: *JTEZVA|PROGRAMADOR)
-                                                            // BUSCAMOS UNA ACCION CUYO VALOR SEA '*', EJECUTAMOS ESA ACCION
-                                                            // Y LE MANDAMOS COMO AUXILIAR LA RESPUESTA JAVA SIN EL '*' (EJ: JTEZVA|PROGRAMADOR)
-                                                            else if (acciones[i].CDVALOR === '*'
-                                                                && !Ext.isEmpty(valorRespValid)
-                                                                && valorRespValid.indexOf('*') === 0
-                                                            ) {
-                                                                salida = acciones[i];
-                                                                salida.AUX = valorRespValid.substr(1);
-                                                                break;
-                                                            }
-                                                        }
-                                                        if(Ext.isEmpty(salida))
-                                                        {
-                                                            throw 'La validaci\u00f3n cliente regres\u00f3 un valor que no tiene acci\u00f3n relacionada';
-                                                        }
-                                                        Ice.procesaAccion(
-                                                            cdtipflu
-                                                            ,cdflujomc
-                                                            ,salida.TIPODEST
-                                                            ,salida.CLAVEDEST
-                                                            ,salida.WEBIDDEST
-                                                            ,salida.AUX
-                                                            ,ntramite
-                                                            ,status
-                                                            ,cdunieco
-                                                            ,cdramo
-                                                            ,estado
-                                                            ,nmpoliza
-                                                            ,nmsituac
-                                                            ,nmsuplem
-                                                            ,cdusuari
-                                                            ,cdsisrol
-                                                            ,callback
-                                                        );
-                                                    }
-                                                    catch(e)
-                                                    {
-                                                        Ice.manejaExcepcion(e,ck);
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    } catch (e) {
-                                        Ice.manejaExcepcion(e,ck);
+                            paso2 = 'Recuperando acciones posteriores a la validaci\u00f3n';
+                            Ice.cargarAccionesEntidad(cdtipflu, cdflujomc, tipodest, clavedest, webiddest, function (list) {
+                                var paso3 = 'Decodificando respuesta al recuperar acciones posteriores a la validaci\u00f3n';
+                                try {
+                                    var json = {
+                                        list: list
+                                    };
+                                    Ice.log('### acciones:',json);
+                                    var numSalidas = json.list.length,
+                                        acciones   = json.list;
+                                    if (json.list.length === 0) {
+                                        throw 'No hay acciones relacionadas a la validaci\u00f3n';
                                     }
+                                    for (var i = 0; i < numSalidas; i++) {
+                                        if (Ext.isEmpty(acciones[i].CDVALOR)) {
+                                            throw 'Las acciones relacionadas a la validaci\u00f3n no tienen valor';
+                                        }
+                                    }
+                                    
+                                    if (!cliente) {
+                                        paso3 = 'Ejecutando validaci\u00f3n';
+                                        Ice.request({
+                                            mascara : paso3,
+                                            url     : Ice.url.bloque.mesacontrol.ejecutarValidacion,
+                                            params  : {
+                                                'flujo.cdtipflu'    : cdtipflu,
+                                                'flujo.cdflujomc'   : cdflujomc,
+                                                'flujo.tipoent'     : tipodest,
+                                                'flujo.claveent'    : clavedest,
+                                                'flujo.webid'       : webiddest,
+                                                'flujo.ntramite'    : ntramite,
+                                                'flujo.status'      : status,
+                                                'flujo.cdunieco'    : cdunieco,
+                                                'flujo.cdramo'      : cdramo,
+                                                'flujo.estado'      : estado,
+                                                'flujo.nmpoliza'    : nmpoliza,
+                                                'flujo.nmsituac'    : nmsituac,
+                                                'flujo.nmsuplem'    : nmsuplem,
+                                                'params.cdvalidafk' : data.CDVALIDAFK
+                                            },
+                                            success: function (json) {
+                                                var paso4 = 'Decodificando respuesta al ejecutar validaci\u00f3n';
+                                                try {
+                                                    Ice.log('### validacion:',json);
+                                                    var valorRespValid = json.params.salida,
+                                                        salida         = '';
+                                                    Ice.log('Resultado validacion java: ', valorRespValid);
+                                                    for (var i=0 ; i<numSalidas ; i++) {
+                                                        if ('x' + acciones[i].CDVALOR === 'x' + valorRespValid) {
+                                                            salida = acciones[i];
+                                                            break;
+                                                        }
+                                                        // CUANDO LA RESPUESTA DE LA VALIDACION JAVA INICIA CON '*' (EJ: *JTEZVA|PROGRAMADOR)
+                                                        // BUSCAMOS UNA ACCION CUYO VALOR SEA '*', EJECUTAMOS ESA ACCION
+                                                        // Y LE MANDAMOS COMO AUXILIAR LA RESPUESTA JAVA SIN EL '*' (EJ: JTEZVA|PROGRAMADOR)
+                                                        else if (acciones[i].CDVALOR === '*'
+                                                            && !Ext.isEmpty(valorRespValid)
+                                                            && valorRespValid.indexOf('*') === 0
+                                                        ) {
+                                                            salida = acciones[i];
+                                                            salida.AUX = valorRespValid.substr(1);
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (Ext.isEmpty(salida)) {
+                                                        throw 'La validaci\u00f3n regres\u00f3 un valor que no tiene acci\u00f3n relacionada';
+                                                    }
+                                                    Ice.procesaAccion(
+                                                        cdtipflu,
+                                                        cdflujomc,
+                                                        salida.TIPODEST,
+                                                        salida.CLAVEDEST,
+                                                        salida.WEBIDDEST,
+                                                        salida.AUX,
+                                                        ntramite,
+                                                        status,
+                                                        cdunieco,
+                                                        cdramo,
+                                                        estado,
+                                                        nmpoliza,
+                                                        nmsituac,
+                                                        nmsuplem,
+                                                        callback
+                                                    );
+                                                } catch (e) {
+                                                    Ice.manejaExcepcion(e, paso4);
+                                                }
+                                            }
+                                        });
+                                    } else { //evaluacion cliente
+                                        paso3 = 'Recuperando datos para validaci\u00f3n cliente';
+                                        Ice.request({
+                                            mascara : paso3,
+                                            url     : Ice.url.bloque.mesacontrol.obtenerDatosValidacionCliente,
+                                            params  : {
+                                                'flujo.cdtipflu'  : cdtipflu,
+                                                'flujo.cdflujomc' : cdflujomc,
+                                                'flujo.tipoent'   : tipodest,
+                                                'flujo.claveent'  : clavedest,
+                                                'flujo.webid'     : webiddest,
+                                                'flujo.ntramite'  : ntramite,
+                                                'flujo.status'    : status,
+                                                'flujo.cdunieco'  : cdunieco,
+                                                'flujo.cdramo'    : cdramo,
+                                                'flujo.estado'    : estado,
+                                                'flujo.nmpoliza'  : nmpoliza,
+                                                'flujo.nmsituac'  : nmsituac,
+                                                'flujo.nmsuplem'  : nmsuplem
+                                            },
+                                            success: function (json) {
+                                                var paso4 = 'Decodificando respuesta al recuperar datos para validaci\u00f3n cliente';
+                                                try {
+                                                    Ice.log('### datos memoria validacion javascript:', json);
+                                                    paso4 = 'Construyendo validaci\u00f3n cliente';
+                                                    eval('var validacionCliente=function(DATOS){Ice.log("DATOS:",DATOS);' + data.JSVALIDA + '};');
+                                                    Ice.log('validacionCliente:', validacionCliente);
+                                                    
+                                                    paso4 = 'Invocando validaci\u00f3n cliente';
+                                                    var valorRespValid = validacionCliente(json.datosTramite),
+                                                        salida         = '';
+                                                    Ice.log('Resultado validacion cliente:', valorRespValid);
+                                                    for (var i = 0; i < numSalidas; i++) {
+                                                        if ('x' + acciones[i].CDVALOR === 'x' + valorRespValid) {
+                                                            salida = acciones[i];
+                                                            break;
+                                                        }
+                                                        // CUANDO LA RESPUESTA DE LA VALIDACION CLIENTE INICIA CON '*' (EJ: *JTEZVA|PROGRAMADOR)
+                                                        // BUSCAMOS UNA ACCION CUYO VALOR SEA '*', EJECUTAMOS ESA ACCION
+                                                        // Y LE MANDAMOS COMO AUXILIAR LA RESPUESTA JAVA SIN EL '*' (EJ: JTEZVA|PROGRAMADOR)
+                                                        else if (acciones[i].CDVALOR === '*'
+                                                            && !Ext.isEmpty(valorRespValid)
+                                                            && valorRespValid.indexOf('*') === 0
+                                                        ) {
+                                                            salida = acciones[i];
+                                                            salida.AUX = valorRespValid.substr(1);
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (Ext.isEmpty(salida)) {
+                                                        throw 'La validaci\u00f3n cliente regres\u00f3 un valor que no tiene acci\u00f3n relacionada';
+                                                    }
+
+                                                    Ice.procesaAccion(
+                                                        cdtipflu,
+                                                        cdflujomc,
+                                                        salida.TIPODEST,
+                                                        salida.CLAVEDEST,
+                                                        salida.WEBIDDEST,
+                                                        salida.AUX,
+                                                        ntramite,
+                                                        status,
+                                                        cdunieco,
+                                                        cdramo,
+                                                        estado,
+                                                        nmpoliza,
+                                                        nmsituac,
+                                                        nmsuplem,
+                                                        callback
+                                                    );
+                                                } catch (e) {
+                                                    Ice.manejaExcepcion(e, paso4);
+                                                }
+                                            }
+                                        });
+                                    }
+                                } catch (e) {
+                                    Ice.manejaExcepcion(e, paso3);
                                 }
                             });
                         } catch (e) {
-                            Ice.manejaExcepcion(e,ck);
+                            Ice.manejaExcepcion(e, paso2);
                         }
                     }
                 });
             } else if (tipodest === 'R') {
-                ck = 'Recuperando acciones posteriores a la revisi\u00f3n';
-                Ice.request({
-                    mascara: ck,
-                    url      : Ice.url.bloque.mesacontrol.cargarAccionesEntidad
-                    ,params  :
-                    {
-                        'params.cdtipflu'   : cdtipflu
-                        ,'params.cdflujomc' : cdflujomc
-                        ,'params.tipoent'   : tipodest
-                        ,'params.cdentidad' : clavedest
-                        ,'params.webid'     : webiddest
-                    }
-                    ,success : function(json)
-                    {
-                        var ck = 'Decodificando respuesta al recuperar acciones posteriores a la revisi\u00f3n';
-                        try
-                        {
-                            Ice.log('### acciones:',json);
-                            var numSalidas = 0
-                                ,accion1   = ''
-                                ,accion2   = ''
-                                ,accExito  = ''
-                                ,accError  = '';
-                            // CDACCION: "138"
-                            // CDCOMPMC: null
-                            // CDESTADOMC: null
-                            // CDFLUJOMC: "12"
-                            // CDICONO: null
-                            // CDPANTMC: null
-                            // CDPROCMC: null
-                            // CDREVISI: null
-                            // CDTIPFLU: "1"
-                            // CDVALIDA: "20"
-                            // CDVALOR: null
-                            // CLAVEDEST: "20"
-                            // DSACCION: "next"
-                            // IDDESTIN: "1450139785755_1072"
-                            // IDORIGEN: "1450121226109_9387"
-                            // TIPODEST: "V"
-                            // WEBIDCOMP: null
-                            // WEBIDDEST: "1450139785755_1072"
-                            // WEBIDESTADO: null
-                            // WEBIDPANT: null
-                            // WEBIDPROC: null
-                            // WEBIDREVISI: null
-                            // WEBIDVALIDA: "1450139785755_1072"
-                            if(json.list.length==0)
-                            {
-                                // jtezva 16 agosto 2016
-                                // se comenta porque ya no es requerida una accion posterior
-                                // if (aux !== 'INICIAL') { // Solo avienta exception si no es INICIAL
-                                //     throw 'No hay acciones relacionadas a la revisi\u00f3n';
-                                // }
-                            }
-                            else if(json.list.length==1)
-                            {
-                                numSalidas = 1;
-                                accion1    = json.list[0];
-                            }
-                            //     * jtezva 16 agosto 2016 ya no permite doble accion
-                            // else if(json.list.length==2)
-                            // {
-                            //     numSalidas = 2;
-                            //     accion1    = json.list[0];
-                            //     accion2    = json.list[1];
-                                
-                            //     if(Ice.nvl(accion1.CDVALOR,'')=='EXITO')
-                            //     {
-                            //         accExito = accion1;
-                            //     }
-                            //     else if(Ice.nvl(accion2.CDVALOR,'')=='EXITO')
-                            //     {
-                            //         accExito = accion2;
-                            //     }
-                            //     if(Ice.nvl(accion1.CDVALOR,'')=='ERROR')
-                            //     {
-                            //         accError = accion1;
-                            //     }
-                            //     else if(Ice.nvl(accion2.CDVALOR,'')=='ERROR')
-                            //     {
-                            //         accError = accion2;
-                            //     }
-                                
-                            //     if(Ext.isEmpty(accExito)||Ext.isEmpty(accError))
-                            //     {
-                            //         throw 'Las acciones relacionadas a la revisi\u00f3n no tienen el valor EXITO/ERROR adecuado';
-                            //     }
+                paso = 'Recuperando acciones posteriores a la revisi\u00f3n';
+                Ice.cargarAccionesEntidad(cdtipflu, cdflujomc, tipodest, clavedest, webiddest, function (list) {
+                    var json = {
+                        list: list
+                    };
+                    var paso2 = 'Decodificando respuesta al recuperar acciones posteriores a la revisi\u00f3n';
+                    try {
+                        Ice.log('### acciones:', json);
+                        var numSalidas = 0,
+                            accion1    = '',
+                            accion2    = '',
+                            accExito   = '',
+                            accError   = '';
+                        if (json.list.length === 0) {
+                            // jtezva 16 agosto 2016
+                            // se comenta porque ya no es requerida una accion posterior
+                            // if (aux !== 'INICIAL') { // Solo avienta exception si no es INICIAL
+                            //     throw 'No hay acciones relacionadas a la revisi\u00f3n';
                             // }
-                            else
-                            {
-                                //     * jtezva 16 agosto 2016
-                                //     * si tiene mas de dos entonces es error
-                                // if (aux !== 'INICIAL') { // Solo avienta exception si no es INICIAL
-                                    throw 'La revisi\u00f3n tiene demasiadas acciones relacionadas';
-                                // }
-                            }
+                        } else if (json.list.length === 1) {
+                            numSalidas = 1;
+                            accion1    = json.list[0];
+                        }
+                        //     * jtezva 16 agosto 2016 ya no permite doble accion
+                        // else if(json.list.length==2)
+                        // {
+                        //     numSalidas = 2;
+                        //     accion1    = json.list[0];
+                        //     accion2    = json.list[1];
                             
-                            ck = 'Ejecutando revisi\u00f3n';
-                            Ice.request({
-                                mascara: ck,
-                                url      : _GLOBAL_URL_REVISION
-                                ,params  :
-                                {
-                                    'flujo.cdtipflu'   : cdtipflu
-                                    ,'flujo.cdflujomc' : cdflujomc
-                                    ,'flujo.tipoent'   : tipodest
-                                    ,'flujo.claveent'  : clavedest
-                                    ,'flujo.webid'     : webiddest
-                                    ,'flujo.ntramite'  : ntramite
-                                    ,'flujo.status'    : status
-                                    ,'flujo.cdunieco'  : cdunieco
-                                    ,'flujo.cdramo'    : cdramo
-                                    ,'flujo.estado'    : estado
-                                    ,'flujo.nmpoliza'  : nmpoliza
-                                    ,'flujo.nmsituac'  : nmsituac
-                                    ,'flujo.nmsuplem'  : nmsuplem
-                                }
-                                ,success : function (json) {
-                                    var ck = 'Decodificando respuesta al ejecutar revisi\u00f3n';
-                                    try
-                                    {
-                                        Ice.log('### revision:',json);
-                                        var faltanDocs = false;
-                                        
-                                        for (var i = 0; i < json.list.length; i++) {
-                                            if (json.list[i].SWOBLIGA === 'S' && json.list[i].SWACTIVO !== 'S') {
-                                                faltanDocs = true;
-                                                break;
-                                            }
+                        //     if(Ice.nvl(accion1.CDVALOR,'')=='EXITO')
+                        //     {
+                        //         accExito = accion1;
+                        //     }
+                        //     else if(Ice.nvl(accion2.CDVALOR,'')=='EXITO')
+                        //     {
+                        //         accExito = accion2;
+                        //     }
+                        //     if(Ice.nvl(accion1.CDVALOR,'')=='ERROR')
+                        //     {
+                        //         accError = accion1;
+                        //     }
+                        //     else if(Ice.nvl(accion2.CDVALOR,'')=='ERROR')
+                        //     {
+                        //         accError = accion2;
+                        //     }
+                            
+                        //     if(Ext.isEmpty(accExito)||Ext.isEmpty(accError))
+                        //     {
+                        //         throw 'Las acciones relacionadas a la revisi\u00f3n no tienen el valor EXITO/ERROR adecuado';
+                        //     }
+                        // }
+                        else {
+                            //     * jtezva 16 agosto 2016
+                            //     * si tiene mas de dos entonces es error
+                            // if (aux !== 'INICIAL') { // Solo avienta exception si no es INICIAL
+                            throw 'La revisi\u00f3n tiene demasiadas acciones relacionadas';
+                            // }
+                        }
+                        
+                        paso2 = 'Ejecutando revisi\u00f3n';
+                        Ice.request({
+                            mascara : paso2,
+                            url     : Ice.url.bloque.mesacontrol.ejecutarRevision,
+                            params  : {
+                                'flujo.cdtipflu'  : cdtipflu,
+                                'flujo.cdflujomc' : cdflujomc,
+                                'flujo.tipoent'   : tipodest,
+                                'flujo.claveent'  : clavedest,
+                                'flujo.webid'     : webiddest,
+                                'flujo.ntramite'  : ntramite,
+                                'flujo.status'    : status,
+                                'flujo.cdunieco'  : cdunieco,
+                                'flujo.cdramo'    : cdramo,
+                                'flujo.estado'    : estado,
+                                'flujo.nmpoliza'  : nmpoliza,
+                                'flujo.nmsituac'  : nmsituac,
+                                'flujo.nmsuplem'  : nmsuplem
+                            },
+                            success: function (json) {
+                                var paso3 = 'Decodificando respuesta al ejecutar revisi\u00f3n';
+                                try {
+                                    Ice.log('### revision:', json);
+                                    var faltanDocs = false;
+                                    
+                                    for (var i = 0; i < json.list.length; i++) {
+                                        if (json.list[i].SWOBLIGA === 'S' && json.list[i].SWACTIVO !== 'S') {
+                                            faltanDocs = true;
+                                            break;
                                         }
-                                        
-                                        // jtezva 16 agosto 2016
-                                        // if (aux === 'INICIAL') {
-                                        //     faltanDocs = true;
-                                        // }
-                                        
-                                        if (!faltanDocs && false) { // jtezva 16 agosto 2016 no se va a ir solo
-                                            if(numSalidas==1)
-                                            {
-                                                Ice.procesaAccion(
-                                                    cdtipflu
-                                                    ,cdflujomc
-                                                    ,accion1.TIPODEST
-                                                    ,accion1.CLAVEDEST
-                                                    ,accion1.WEBIDDEST
-                                                    ,accion1.AUX
-                                                    ,ntramite
-                                                    ,status
-                                                    ,cdunieco
-                                                    ,cdramo
-                                                    ,estado
-                                                    ,nmpoliza
-                                                    ,nmsituac
-                                                    ,nmsuplem
-                                                    ,cdusuari
-                                                    ,cdsisrol
-                                                    ,callback
-                                                );
-                                            }
-                                            else if(numSalidas==2)
-                                            {
-                                                Ice.procesaAccion
-                                                (
-                                                    cdtipflu
-                                                    ,cdflujomc
-                                                    ,accExito.TIPODEST
-                                                    ,accExito.CLAVEDEST
-                                                    ,accExito.WEBIDDEST
-                                                    ,accExito.AUX
-                                                    ,ntramite
-                                                    ,status
-                                                    ,cdunieco
-                                                    ,cdramo
-                                                    ,estado
-                                                    ,nmpoliza
-                                                    ,nmsituac
-                                                    ,nmsuplem
-                                                    ,cdusuari
-                                                    ,cdsisrol
-                                                    ,callback
-                                                );
-                                            }
+                                    }
+
+                                    var listaDocs = [],
+                                        listaReqs = [];
+                                    
+                                    for (var i = 0; i < json.list.length ; i++) {
+                                        if (json.list[i].TIPO === 'DOC') {
+                                            listaDocs.push(json.list[i]);
+                                        } else if (json.list[i].TIPO === 'REQ') {
+                                            json.list[i].CHECK = json.list[i].SWACTIVO === 'S';
+                                            listaReqs.push(json.list[i]);
                                         } else {
-                                            var listaDocs = [],
-                                                listaReqs = [];
-                                            
-                                            for (var i = 0; i < json.list.length ; i++) {
-                                                if (json.list[i].TIPO === 'DOC') {
-                                                    listaDocs.push(json.list[i]);
-                                                } else if (json.list[i].TIPO === 'REQ') {
-                                                    json.list[i].CHECK = json.list[i].SWACTIVO === 'S';
-                                                    listaReqs.push(json.list[i]);
-                                                } else {
-                                                    mensajeError('Tipo de doc/req inv\u00e1lido');
-                                                }
-                                            }
-                                            
-                                            Ice.log('listaDocs:', listaDocs, '.');
-                                            Ice.log('listaReqs;', listaReqs, '.');
-                                            
-                                            Ext.create('Ext.window.Window', {
-                                                title    : 'REVISI\u00D3N DE REQUISITOS Y DOCUMENTOS'
-                                                            + (aux === 'LECTURA'
-                                                                ? ' (SOLO LECTURA)'
-                                                                : ''),
-                                                itemId   : 'WINDOW_REVISION_DOCUMENTOS',
-                                                flujo    : {
-                                                    cdtipflu  : cdtipflu,
-                                                    cdflujomc : cdflujomc,
-                                                    tipodest  : tipodest,
-                                                    clavedest : clavedest,
-                                                    webiddest : webiddest,
-                                                    aux       : aux,
-                                                    ntramite  : ntramite,
-                                                    status    : status,
-                                                    cdunieco  : cdunieco,
-                                                    cdramo    : cdramo,
-                                                    estado    : estado,
-                                                    nmpoliza  : nmpoliza,
-                                                    nmsituac  : nmsituac,
-                                                    nmsuplem  : nmsuplem,
-                                                    cdusuari  : cdusuari,
-                                                    cdsisrol  : cdsisrol,
-                                                    callback  : callback
-                                                },
-                                                modal    : true,
-                                                //closable : false,
-                                                border   : 0,
-                                                defaults : {
-                                                    style : 'margin : 5px;'
-                                                },
-                                                items    : [
-                                                    {
-                                                        xtype : 'displayfield',
-                                                        value : 'Favor de revisar los requisitos y documentos obligatorios:'
-                                                    }, {
-                                                        xtype      : 'grid',
-                                                        width      : 900,
-                                                        height     : 200,
-                                                        autoScroll : true,
-                                                        tipo       : 'REQ',
-                                                        border     : 0,
-                                                        selType    : 'cellmodel',
-                                                        plugins    : [
-                                                            Ext.create('Ext.grid.plugin.CellEditing', {
-                                                                clicksToEdit : 1,
-                                                                listeners : {
-                                                                    beforeedit : function (me, event) {
-                                                                        Ice.log('DSDATO.editor.beforeedit! args:', arguments);
-                                                                        if ('S' !== event.record.get('SWPIDEDATO') || json.params.swconfirm === 'S') {
-                                                                            return false;
-                                                                        }
-                                                                    },
-                                                                    edit : function(me, event) {
-                                                                        var checked = !Ext.isEmpty(event.value) && !Ext.isEmpty(event.value.trim());
-                                                                        marcarRequisitoDesdeRevision(event.rowIdx, checked, event.value.trim(),
-                                                                            _fieldById('WINDOW_REVISION_DOCUMENTOS').down('[activable]'));
-                                                                    }
-                                                                }
-                                                            })
-                                                        ],
-                                                        columns    : [
-                                                            {
-                                                                text      : 'REQUISITO',
-                                                                dataIndex : 'DESCRIP',
-                                                                flex      : 1
-                                                            }, {
-                                                                text      : 'OBLIGATORIO',
-                                                                dataIndex : 'SWOBLIGA',
-                                                                width     : 100,
-                                                                renderer  : function (v)
-                                                                {
-                                                                    var r = '';
-                                                                    if (v === 'S') {
-                                                                        r = '<img src="'+_GLOBAL_DIRECTORIO_ICONOS+'lock.png" />';
-                                                                    }
-                                                                    return r;
-                                                                }
-                                                            }, {
-                                                                text      : 'ESTADO',
-                                                                xtype     : 'checkcolumn',
-                                                                dataIndex : 'CHECK',
-                                                                disabled  : json.params.swconfirm === 'S',
-                                                                width     : 60,
-                                                                listeners : {
-                                                                    beforecheckchange : function (me, row, checked, eOpts) {
-                                                                        var win = _fieldById('WINDOW_REVISION_DOCUMENTOS'),
-                                                                            rec = win.down('grid[tipo=REQ]').getStore().getAt(row);
-                                                                        if ('S' === rec.get('SWPIDEDATO')) {
-                                                                            if (true === checked) {
-                                                                                mensajeWarning('Para activar esta casilla por favor capture el valor en la columna VALOR');
-                                                                            } else {
-                                                                                mensajeWarning('Para desactivar esta casilla por favor borre el valor en la columna VALOR');
-                                                                            }
-                                                                            return false;
-                                                                        }
-                                                                    },
-                                                                    checkchange : function (me, row, checked) {
-                                                                        marcarRequisitoDesdeRevision(row, checked, '',
-                                                                            _fieldById('WINDOW_REVISION_DOCUMENTOS').down('[activable]'));
-                                                                    }
-                                                                }
-                                                            }, {
-                                                                text      : 'SWPIDEDATO',
-                                                                dataIndex : 'SWPIDEDATO',
-                                                                width     : 100,
-                                                                hidden    : true
-                                                            }, {
-                                                                text      : 'VALOR',
-                                                                dataIndex : 'DSDATO',
-                                                                width     : 370,
-                                                                renderer  : function (v, md, rec) {
-                                                                    if ('S' !== rec.get('SWPIDEDATO')) {
-                                                                        return '<span style="font-style : italic;">(N/A)</span>';
-                                                                    } else if (Ext.isEmpty(v) || Ext.isEmpty(v.trim())) {
-                                                                        return '<span style="font-style : italic;">HAGA CLIC PARA CAPTURAR...</span>';
-                                                                    }
-                                                                    return v;
-                                                                },
-                                                                editor    : {
-                                                                    xtype      : 'textfield',
-                                                                    itemId     : 'editorRevisiDsdato',
-                                                                    minLength  : 1,
-                                                                    maxLength  : 100
-                                                                }
-                                                            }
-                                                        ], store : Ext.create('Ext.data.Store', {
-                                                            fields : [
-                                                                'CLAVE', 'DESCRIP', 'SWOBLIGA', 'SWACTIVO', 'CHECK', 'SWPIDEDATO', 'DSDATO'
-                                                            ],
-                                                            data   : listaReqs
-                                                        })
-                                                    }, {
-                                                        xtype      : 'grid',
-                                                        width      : 900,
-                                                        height     : 200,
-                                                        autoScroll : true,
-                                                        tipo       : 'DOC',
-                                                        border     : 0,
-                                                        columns    : [
-                                                            {
-                                                                text      : 'DOCUMENTO',
-                                                                dataIndex : 'DESCRIP',
-                                                                flex      : 70
-                                                            }, {
-                                                                text      : 'OBLIGATORIO',
-                                                                dataIndex : 'SWOBLIGA',
-                                                                flex      : 13,
-                                                                renderer  : function (v)
-                                                                {
-                                                                    var r = '';
-                                                                    if (v === 'S') {
-                                                                        r = '<img src="'+_GLOBAL_DIRECTORIO_ICONOS+'lock.png" />';
-                                                                    }
-                                                                    return r;
-                                                                }
-                                                            }, {
-                                                                text      : 'CARGADO',
-                                                                dataIndex : 'SWACTIVO',
-                                                                flex      : 10,
-                                                                renderer  : function (v, md, rec)
-                                                                {
-                                                                    var r = '';
-                                                                    if (v === 'S') {
-                                                                        r = '<img src="'+_GLOBAL_DIRECTORIO_ICONOS+'accept.png" />';
-                                                                    }
-                                                                    else if (rec.get('SWOBLIGA')  === 'S') {
-                                                                        r = '<img src="'+_GLOBAL_DIRECTORIO_ICONOS+'cancel.png" />';
-                                                                    }
-                                                                    return r;
-                                                                }
-                                                            }, {
-                                                                flex      : 7,
-                                                                dataIndex : 'SWACTIVO',
-                                                                renderer  : function (v, md, rec, row)
-                                                                {
-                                                                    var r = '';
-                                                                    //if (v !== 'S' || true) {
-                                                                    if (json.params.swconfirm !== 'S') {
-                                                                        r = '<a href="#" onclick="subirArchivoDesdeRevision(' + row + '); return false;">' +
-                                                                                '<img src="' + _GLOBAL_DIRECTORIO_ICONOS + 'page_add.png" ' +
-                                                                                'data-qtip="Subir archivo" /></a>';
-                                                                    }
-                                                                    return r;
-                                                                }
-                                                            }
-                                                        ], store : Ext.create('Ext.data.Store', {
-                                                            fields : [
-                                                                'CLAVE', 'DESCRIP', 'SWOBLIGA', 'SWACTIVO'
-                                                            ],
-                                                            data   : listaDocs
-                                                        })
-                                                    }
-                                                ],
-                                                buttonAlign : 'center',
-                                                buttons     : [
-                                                    // jtezva 16 agosto 2016 ya no se usa
-                                                    // {
-                                                    //     text    : 'Aceptar',
-                                                    //     handler : function (me) {
-                                                    //         me.up('window').destroy();
-                                                            
-                                                    //         if (numSalidas === 2 && aux != 'INICIAL') { // Cuando sean 2 salidas y no sea inicial ejecuta error
-                                                    //             Ice.procesaAccion(
-                                                    //                 cdtipflu
-                                                    //                 ,cdflujomc
-                                                    //                 ,accError.TIPODEST
-                                                    //                 ,accError.CLAVEDEST
-                                                    //                 ,accError.WEBIDDEST
-                                                    //                 ,accError.AUX
-                                                    //                 ,ntramite
-                                                    //                 ,status
-                                                    //                 ,cdunieco
-                                                    //                 ,cdramo
-                                                    //                 ,estado
-                                                    //                 ,nmpoliza
-                                                    //                 ,nmsituac
-                                                    //                 ,nmsuplem
-                                                    //                 ,cdusuari
-                                                    //                 ,cdsisrol
-                                                    //                 ,callback
-                                                    //             );
-                                                    //         }
-                                                    //     }
-                                                    // }
-                                                    {
-                                                        text      : 'CONFIRMAR Y CONTINUAR',
-                                                        icon      : _GLOBAL_DIRECTORIO_ICONOS + 'control_fastforward_blue.png',
-                                                        disabled  : numSalidas === 0 || faltanDocs === true || aux === 'LECTURA' || aux === 'INICIAL',
-                                                        activable : numSalidas > 0 && 'LECTURA' !== aux && 'INICIAL' !== aux,
-                                                        handler   : function (me) {
-                                                            centrarVentanaInterna(Ext.MessageBox.confirm(
-                                                                'Confirmar',
-                                                                'La revisi\u00f3n de requisitos no se podr\u00e1 modificar posteriormente\u0020\u00BFDesea continuar?',
-                                                                function(btn)
-                                                                {
-                                                                    if(btn === 'yes')
-                                                                    {
-                                                                        var mask, ck = 'Confirmando revisi\u00f3n';
-                                                                        try {
-                                                                            Ice.request({
-                                                                                mascara: ck,
-                                                                                url     : _GLOBAL_URL_CONFIRMAR_REVISION,
-                                                                                params  : {
-                                                                                    'params.cdtipflu'  : cdtipflu,
-                                                                                    'params.cdflujomc' : cdflujomc,
-                                                                                    'params.ntramite'  : ntramite,
-                                                                                    'params.cdrevisi'  : clavedest,
-                                                                                    'params.swconfirm' : 'S'
-                                                                                },
-                                                                                success : function (json) {
-                                                                                    var ck = 'Decodificando respuesta al confirmar revisi\u00f3n';
-                                                                                    try {
-                                                                                        Ice.log('### confirmar revision:', json);
-                                                                                        var win = me.up('window');
-                                                                                        Ice.procesaAccion
-                                                                                        (
-                                                                                            cdtipflu
-                                                                                            ,cdflujomc
-                                                                                            ,accion1.TIPODEST
-                                                                                            ,accion1.CLAVEDEST
-                                                                                            ,accion1.WEBIDDEST
-                                                                                            ,accion1.AUX
-                                                                                            ,ntramite
-                                                                                            ,status
-                                                                                            ,cdunieco
-                                                                                            ,cdramo
-                                                                                            ,estado
-                                                                                            ,nmpoliza
-                                                                                            ,nmsituac
-                                                                                            ,nmsuplem
-                                                                                            ,cdusuari
-                                                                                            ,cdsisrol
-                                                                                            ,callback
-                                                                                        );
-                                                                                        win.destroy();
-                                                                                    } catch (e) {
-                                                                                        Ice.manejaExcepcion(e, ck);
-                                                                                    }
-                                                                                }
-                                                                            });
-                                                                        } catch (e) {
-                                                                            Ice.manejaExcepcion(e, ck, mask);
-                                                                        }
-                                                                    }
-                                                                }
-                                                            ));
-                                                        }
-                                                    }, {
-                                                        text    : 'DOCUMENTOS',
-                                                        icon    : _GLOBAL_DIRECTORIO_ICONOS + 'printer.png',
-                                                        handler : function (me) {
-                                                            var win = me.up('window');
-                                                            //Ext.syncRequire(_GLOBAL_DIRECTORIO_DEFINES+'VentanaDocumentos');
-                                                            var winDoc = Ext.create({
-                                                                xtype: 'ventanadocumentos',
-                                                                cdtipflu   : cdtipflu
-                                                                ,cdflujomc : cdflujomc
-                                                                ,tipoent   : tipodest
-                                                                ,claveent  : clavedest
-                                                                ,webid     : webiddest
-                                                                ,aux       : ''// 'INICIAL' === flujo.aux || 'LECTURA' === flujo.aux 
-                                                                                            // ? ''
-                                                                                            // : flujo.aux
-                                                                ,ntramite  : ntramite
-                                                                ,status    : status
-                                                                ,cdunieco  : cdunieco
-                                                                ,cdramo    : cdramo
-                                                                ,estado    : estado
-                                                                ,nmpoliza  : nmpoliza
-                                                                ,nmsituac  : nmsituac
-                                                                ,nmsuplem  : nmsuplem
-                                                                ,cdusuari  : cdusuari
-                                                                ,cdsisrol  : cdsisrol
-                                                            }).mostrar();
-                                                            winDoc.on({
-                                                                destroy : function() {
-                                                                    win.recargar();
-                                                                }
-                                                            });
-                                                        }
-                                                    }, {
-                                                        text    : 'CONTINUAR',
-                                                        icon    : _GLOBAL_DIRECTORIO_ICONOS + 'accept.png',
-                                                        hidden  : !(numSalidas === 0 || faltanDocs === true || aux === 'LECTURA' || aux === 'INICIAL'),
-                                                        handler : function (me) {
-                                                            me.up('window').close();
-                                                        }
-                                                    }
-                                                    // jtezva 16 dic 2016 se quita
-                                                    // , {
-                                                    //     text    : 'RECARGAR',
-                                                    //     icon    : _GLOBAL_DIRECTORIO_ICONOS + 'control_repeat_blue.png',
-                                                    //     handler : function (me) {
-                                                    //         me.up('window').recargar();
-                                                    //     }
-                                                    // }
-                                                ],
-                                                recargar : function () {
-                                                    Ice.log('>WINDOW_REVISION_DOCUMENTOS recargar');
-                                                    var me = this;
-                                                    
-                                                    Ice.procesaAccion(
-                                                        me.flujo.cdtipflu
-                                                        ,me.flujo.cdflujomc
-                                                        ,me.flujo.tipodest
-                                                        ,me.flujo.clavedest
-                                                        ,me.flujo.webiddest
-                                                        ,me.flujo.aux
-                                                        ,me.flujo.ntramite
-                                                        ,me.flujo.status
-                                                        ,me.flujo.cdunieco
-                                                        ,me.flujo.cdramo
-                                                        ,me.flujo.estado
-                                                        ,me.flujo.nmpoliza
-                                                        ,me.flujo.nmsituac
-                                                        ,me.flujo.nmsuplem
-                                                        ,me.flujo.cdusuari
-                                                        ,me.flujo.cdsisrol
-                                                        ,me.flujo.callback
-                                                    );
-                                                    
-                                                    me.destroy();
-                                                }
-                                            }).show();
-                                        }
-                                        // }
-                                        // else
-                                        // {
-                                        //     if(numSalidas<2)
-                                        //     {
-                                        //         mensajeError(json.message);
-                                        //     }
-                                        //     else
-                                        //     {
-                                        //         mensajeError
-                                        //         (
-                                        //             json.message
-                                        //             ,function()
-                                        //             {
-                                        //                 Ice.procesaAccion
-                                        //                 (
-                                        //                     cdtipflu
-                                        //                     ,cdflujomc
-                                        //                     ,accError.TIPODEST
-                                        //                     ,accError.CLAVEDEST
-                                        //                     ,accError.WEBIDDEST
-                                        //                     ,accError.AUX
-                                        //                     ,ntramite
-                                        //                     ,status
-                                        //                     ,cdunieco
-                                        //                     ,cdramo
-                                        //                     ,estado
-                                        //                     ,nmpoliza
-                                        //                     ,nmsituac
-                                        //                     ,nmsuplem
-                                        //                     ,cdusuari
-                                        //                     ,cdsisrol
-                                        //                     ,callback
-                                        //                 );
-                                        //             }
-                                        //         );
-                                        //     }
-                                        // }
-                                    }
-                                    catch(e)
-                                    {
-                                        if(numSalidas<2)
-                                        {
-                                            Ice.manejaExcepcion(e,ck);
-                                        }
-                                        else
-                                        {
-                                            debugError(e);
-                                            Ice.mensajeError({
-                                                mensaje: 'Error al manejar respuesta de proceso',
-                                                callback: function (){
-                                                    Ice.procesaAccion(
-                                                        cdtipflu
-                                                        ,cdflujomc
-                                                        ,accError.TIPODEST
-                                                        ,accError.CLAVEDEST
-                                                        ,accError.WEBIDDEST
-                                                        ,accError.AUX
-                                                        ,ntramite
-                                                        ,status
-                                                        ,cdunieco
-                                                        ,cdramo
-                                                        ,estado
-                                                        ,nmpoliza
-                                                        ,nmsituac
-                                                        ,nmsuplem
-                                                        ,cdusuari
-                                                        ,cdsisrol
-                                                        ,callback
-                                                    );
-                                                }
-                                            });
+                                            mensajeError('Tipo de doc/req inv\u00e1lido');
                                         }
                                     }
+                                    
+                                    Ice.log('listaDocs:', listaDocs, '.');
+                                    Ice.log('listaReqs;', listaReqs, '.');
+                                    
+                                    var ven = Ext.create({
+                                        xtype: 'ventanarequisitos',
+                                        title    : 'Revisi\u00f3n de requisitos y documentos'
+                                                    + (aux === 'LECTURA'
+                                                        ? ' (solo lectura)'
+                                                        : ''),
+                                        flujo    : {
+                                            cdtipflu  : cdtipflu,
+                                            cdflujomc : cdflujomc,
+                                            tipodest  : tipodest,
+                                            clavedest : clavedest,
+                                            webiddest : webiddest,
+                                            aux       : aux,
+                                            ntramite  : ntramite,
+                                            status    : status,
+                                            cdunieco  : cdunieco,
+                                            cdramo    : cdramo,
+                                            estado    : estado,
+                                            nmpoliza  : nmpoliza,
+                                            nmsituac  : nmsituac,
+                                            nmsuplem  : nmsuplem,
+                                            callback  : callback
+                                        },
+                                        documentos: listaDocs,
+                                        requisitos: listaReqs,
+                                        accion: accion1,
+                                        numSalidas: numSalidas,
+                                        faltanDocs: faltanDocs,
+                                        swconfirm: json.params.swconfirm
+                                    });
+                                    ven.mostrar();
+                                } catch (e) {
+                                    Ice.manejaExcepcion(e, paso3);
                                 }
-                                ,failure: function (response) {
-                                    if(numSalidas<2)
-                                    {
-                                        errorComunicacion(null,'Error al ejecutar revisi\u00f3n');
-                                    }
-                                    else
-                                    {
-                                        Ice.mensajeError(
-                                            'Error de comunicaci\u00f3n al ejecutar revisi\u00f3n'
-                                            ,function()
-                                            {
-                                                Ice.procesaAccion(
-                                                    cdtipflu
-                                                    ,cdflujomc
-                                                    ,accError.TIPODEST
-                                                    ,accError.CLAVEDEST
-                                                    ,accError.WEBIDDEST
-                                                    ,accError.AUX
-                                                    ,ntramite
-                                                    ,status
-                                                    ,cdunieco
-                                                    ,cdramo
-                                                    ,estado
-                                                    ,nmpoliza
-                                                    ,nmsituac
-                                                    ,nmsuplem
-                                                    ,cdusuari
-                                                    ,cdsisrol
-                                                    ,callback
-                                                );
-                                            }
-                                        );
-                                    }
-                                }
-                            });
-                        }
-                        catch(e)
-                        {
-                            Ice.manejaExcepcion(e,ck);
-                        }
+                            }
+                        });
+                    } catch (e) {
+                        Ice.manejaExcepcion(e, paso2);
                     }
                 });
-            } else if (tipodest ===' M') {
+            }
+            /*else if (tipodest ===' M') {
                 ck = 'Recuperando valores de correo';
                 Ext.Ajax.request(
                 {
@@ -1617,8 +917,6 @@ var Ice = (
                                                                     ,nmpoliza
                                                                     ,nmsituac
                                                                     ,nmsuplem
-                                                                    ,cdusuari
-                                                                    ,cdsisrol
                                                                     ,callback
                                                             );
                                                         }
