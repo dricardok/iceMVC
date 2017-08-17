@@ -1978,7 +1978,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 	{
 		protected ActualizarStatusTramiteSP(DataSource dataSource)
 		{
-			super(dataSource,"P_DSPCH_ACT_STATUS_TRAMITE");
+			super(dataSource,"PKG_DESPACHADOR_MC.P_ACT_STATUS_TRAMITE");
 			declareParameter(new SqlParameter("ntramite"   , Types.VARCHAR));
 			declareParameter(new SqlParameter("status"     , Types.VARCHAR));
 			declareParameter(new SqlParameter("fecstatu"   , Types.TIMESTAMP));
@@ -2915,7 +2915,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 	{
 		protected GuardarMotivoRechazoTramite(DataSource dataSource)
 		{
-			super(dataSource,"P_ACT_MOTIVO_RECHAZO_TRAMITE");
+			super(dataSource,"PKG_MESACONTROL.P_ACT_MOTIVO_RECHAZO_TRAMITE");
 			declareParameter(new SqlParameter("ntramite"   , Types.VARCHAR));
 			declareParameter(new SqlParameter("cdrazrecha" , Types.VARCHAR));
 			declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
@@ -3002,7 +3002,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 	{
 		protected ObtenerCorreosStatusTramite(DataSource dataSource)
 		{
-			super(dataSource,"P_GET_MAIL_STATUS_TRAMITE");
+			super(dataSource,"PACK_MAIL.P_GET_STATUS_TRAMITE");
 			declareParameter(new SqlParameter("ntramite" , Types.VARCHAR));
 			declareParameter(new SqlParameter("cdsisrol" , Types.VARCHAR));
 			declareParameter(new SqlParameter("swescala" , Types.VARCHAR));
@@ -4453,7 +4453,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
     
     protected class ActualizarTramiteSustitutoSP extends StoredProcedure {
         protected ActualizarTramiteSustitutoSP (DataSource dataSource) {
-            super(dataSource, "P_MC_UPD_NTRASUST_TRAMITE");
+            super(dataSource, "PKG_MESACONTROL.P_MC_UPD_NTRASUST_TRAMITE");
             declareParameter(new SqlParameter("pv_ntramite_i" , Types.NUMERIC));
             declareParameter(new SqlParameter("pv_ntrasust_i" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_dserror_o" , Types.VARCHAR));

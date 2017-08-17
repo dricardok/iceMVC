@@ -280,7 +280,7 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
 	{
 		protected MovimientoDetalleTramite(DataSource dataSource)
 		{
-			super(dataSource,"PKG_SATELITES2.P_MOV_DMESACONTROL");
+			super(dataSource,"PKG_MESACONTROL.P_MOV_DMESACONTROL");
 			declareParameter(new SqlParameter("ntramite"     , Types.VARCHAR));
 			declareParameter(new SqlParameter("feinicio"     , Types.TIMESTAMP));
 			declareParameter(new SqlParameter("cdclausu"     , Types.VARCHAR));
@@ -289,10 +289,10 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
 			declareParameter(new SqlParameter("cdmotivo"     , Types.VARCHAR));
 			declareParameter(new SqlParameter("cdsisrol"     , Types.VARCHAR));
 			declareParameter(new SqlParameter("swagente"     , Types.VARCHAR));
-			declareParameter(new SqlParameter("cdusuariDest" , Types.VARCHAR));
-			declareParameter(new SqlParameter("cdsisrolDest" , Types.VARCHAR));
+//			declareParameter(new SqlParameter("cdusuariDest" , Types.VARCHAR));
+//			declareParameter(new SqlParameter("cdsisrolDest" , Types.VARCHAR));
 			declareParameter(new SqlParameter("status"       , Types.VARCHAR));
-			declareParameter(new SqlParameter("cerrado"      , Types.VARCHAR));
+//			declareParameter(new SqlParameter("cerrado"      , Types.VARCHAR));
 			declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
 			compile();
@@ -1496,7 +1496,7 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
     
     protected class ObtenerTramiteCompletoSP extends StoredProcedure {
         protected ObtenerTramiteCompletoSP(DataSource dataSource) {
-            super(dataSource, "PKG_PRESINIESTRO.P_GET_TRAMITE_COMPLETO");
+            super(dataSource, "PKG_MESACONTROL.P_GET_TRAMITE_COMPLETO");
             declareParameter(new SqlParameter("pv_ntramite_i", Types.VARCHAR));
             String[] cols = new String[] {
                     "NTRAMITE", "CDUNIECO", "CDRAMO", "ESTADO", "NMPOLIZA", "NMSUPLEM", "NMSOLICI",
