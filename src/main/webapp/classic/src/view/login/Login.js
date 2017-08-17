@@ -39,8 +39,7 @@ Ext.define('Ice.view.login.Login', {
             xtype: 'form',
             reference: 'form',
             bodyPadding: '0 0',
-            width: 415,
-            
+            width: 415,            
             cls: '',
             style: 'float:left; left:50%; margin-left: -225px;',
             defaults: {

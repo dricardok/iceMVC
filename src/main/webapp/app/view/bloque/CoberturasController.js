@@ -27,7 +27,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	        });
 	        Ice.log('Ice.view.bloque.Coberturas.initComponent comps:', comps);
 	        
-			paso = 'recuperando datos de situacion';
+			paso = 'recuperando datos de situación';
 				var gridCoberturas = view.down('#gridCoberturas'),
 				    record = gridCoberturas.getStore().getAt(0);
             	//Ice.log("store- :",store)
@@ -135,7 +135,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 							success: function() {
 								var paso = "";
 								try {
-									paso = "cargando coberturas";
+									paso = "Cargando coberturas";
 									gridCoberturas.store.load();
 									me.up("window").close();
 									Ice.mensajeCorrecto({
@@ -159,7 +159,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	},
 	
 	coberturaObligatoria: function(v, ri, ci, it, record) {
-		var paso = "valida deshabilitando cobertura";
+		var paso = "Valida deshabilitando cobertura";
 		try {
 			if (record.get('swobliga') !== 'N') {
 				return true;
@@ -314,7 +314,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
     			'params.cdcapita': view.getCdcapita()
     		},
 			success: function (json) {
-				var paso = 'Recuperando capital';
+				var paso = 'Recuperando Capital';
 				try {
 					Ice.request({
 						url: Ice.url.bloque.coberturas.obtieneMpolicap,
@@ -329,7 +329,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
     		    			'params.cdcapita': view.getCdcapita()
 						},
     					success: function (response) {
-							var paso2 = "llenando campos";
+							var paso2 = "Llenando campos";
     						try {
     							var valores = json.list ? json.list[0] || {} : {},
     							    mcap = response.list ? response.list[0] || {} : {};
@@ -426,7 +426,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 	*/
 
     cargarSituaciones: function (me) {
-		var paso = "cargando situaciones";
+		var paso = "Cargando situaciones";
     	try {
 	    	var me = this,
 	            view = me.getView();
