@@ -53,6 +53,7 @@ Ext.define('Ice.view.login.Login', {
                     inputType: 'password',
                     style:'padding: 0px 20px 0px 20px;',
                     name: 'password',
+                    sinMayusculas: true,
                     bind: '{login.password}'
                 },
                 

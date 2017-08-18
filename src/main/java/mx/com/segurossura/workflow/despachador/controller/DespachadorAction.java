@@ -97,7 +97,7 @@ public class DespachadorAction extends PrincipalCoreAction {
 	    try {
 	        UsuarioVO usuario = (UsuarioVO)Utils.validateSession(session);
 	        Utils.validate(params, "No se recibieron par\u00e1metros");
-	        String ntramite    = params.get("numtramite"),
+	        String ntramite    = params.get("ntramite"),
 	               status      = params.get("status"),
 	               comments    = params.get("comments"),
 	               cdrazrecha  = params.get("cdrazrecha"),

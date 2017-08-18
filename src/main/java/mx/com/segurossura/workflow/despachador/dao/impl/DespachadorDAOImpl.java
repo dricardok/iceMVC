@@ -117,7 +117,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
 	
 	protected class GuardaConfSucursales extends StoredProcedure {
 		protected GuardaConfSucursales (DataSource dataSource) {
-			super(dataSource, "PKG_SATELITES2.P_MOV_TUNICLAS");
+			super(dataSource, "PKG_MESACONTROL.P_MOV_TUNICLAS");
 			declareParameter(new SqlParameter("cdunieco", Types.VARCHAR));
 			declareParameter(new SqlParameter("cdunizon", Types.VARCHAR));
 			declareParameter(new SqlParameter("nmcapaci", Types.VARCHAR));
@@ -216,7 +216,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
 	
 	protected class GuardaConfPermisos extends StoredProcedure {
 		protected GuardaConfPermisos (DataSource dataSource) {
-			super(dataSource, "PKG_SATELITES2.P_MOV_TUNIPERM");
+			super(dataSource, "PKG_MESACONTROL.P_MOV_TUNIPERM");
 			declareParameter(new SqlParameter("cdtipflu" , Types.VARCHAR));
 			declareParameter(new SqlParameter("cdflujomc", Types.VARCHAR));
 			declareParameter(new SqlParameter("cdramo"   , Types.VARCHAR));
@@ -253,7 +253,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
 	
 	protected class RecuperarRolTrabajoEstatusSP extends StoredProcedure {
 		protected RecuperarRolTrabajoEstatusSP (DataSource dataSource) {
-			super(dataSource, "P_DSPCH_GET_ROL_TRABAJO_STATUS");
+			super(dataSource, "PKG_DESPACHADOR_MC.P_GET_ROL_TRABAJO_STATUS");
 			declareParameter(new SqlParameter("cdtipflu"  , Types.VARCHAR));
 			declareParameter(new SqlParameter("cdflujomc" , Types.VARCHAR));
 			declareParameter(new SqlParameter("estatus"   , Types.VARCHAR));
@@ -337,7 +337,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
 	
 	protected class EsStatusFinalSP extends StoredProcedure {
 		protected EsStatusFinalSP (DataSource dataSource) {
-			super(dataSource, "P_DSPCH_ES_STATUS_FINAL");
+			super(dataSource, "PKG_DESPACHADOR_MC.P_ES_STATUS_FINAL");
 			declareParameter(new SqlParameter("ntramite" , Types.VARCHAR));
 			declareParameter(new SqlParameter("status"   , Types.VARCHAR));
 			declareParameter(new SqlOutParameter("pv_swfinnode_o" , Types.VARCHAR));
@@ -356,7 +356,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
 	
 	protected class BorrarUsuarioYSucursalEncargadoSP extends StoredProcedure {
 		protected BorrarUsuarioYSucursalEncargadoSP (DataSource dataSource) {
-			super(dataSource, "P_DSPCH_BORRAR_USER_ENCARGADO");
+			super(dataSource, "PKG_DESPACHADOR_MC.P_BORRAR_USER_ENCARGADO");
 			declareParameter(new SqlParameter("ntramite", Types.VARCHAR));
 			declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
@@ -598,7 +598,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
     
     protected class RecuperarCdtipramFlujoSP extends StoredProcedure {
         protected RecuperarCdtipramFlujoSP (DataSource dataSource) {
-            super(dataSource, "P_DSPCH_GET_CDTIPRAM_FLUJO");
+            super(dataSource, "PKG_DESPACHADOR_MC.P_GET_CDTIPRAM_FLUJO");
             declareParameter(new SqlParameter("cdtipflu"  , Types.VARCHAR));
             declareParameter(new SqlParameter("cdflujomc" , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_cdtipram_o" , Types.VARCHAR));
@@ -633,7 +633,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
     
     protected class RecuperarSucursalesParaDespacharSP extends StoredProcedure {
         protected RecuperarSucursalesParaDespacharSP (DataSource dataSource) {
-            super(dataSource, "P_DSPCH_GET_SUCURSALES_DSPCH");
+            super(dataSource, "PKG_DESPACHADOR_MC.P_GET_SUCURSALES_DSPCH");
             declareParameter(new SqlParameter("cdtipram"  , Types.VARCHAR));
             declareParameter(new SqlParameter("zona"      , Types.VARCHAR));
             declareParameter(new SqlParameter("nivel"     , Types.VARCHAR));
@@ -672,7 +672,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
     
     protected class RecuperarUsuarioRegresoSP extends StoredProcedure {
         protected RecuperarUsuarioRegresoSP (DataSource dataSource) {
-            super(dataSource, "P_DSPCH_GET_USUARIO_REGRESO");
+            super(dataSource, "PKG_DESPACHADOR_MC.P_GET_USUARIO_REGRESO");
             declareParameter(new SqlParameter("cdtipram" , Types.VARCHAR));
             declareParameter(new SqlParameter("cdsisrol" , Types.VARCHAR));
             declareParameter(new SqlParameter("ntramite" , Types.VARCHAR));
@@ -699,7 +699,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
     
     protected class RecuperarStatusSustitutoSP extends StoredProcedure {
         protected RecuperarStatusSustitutoSP (DataSource dataSource) {
-            super(dataSource, "P_DSPCH_GET_STATUS_SUSTITUTO");
+            super(dataSource, "PKG_DESPACHADOR_MC.P_GET_STATUS_SUSTITUTO");
             declareParameter(new SqlParameter("cdtipflu"  , Types.VARCHAR));
             declareParameter(new SqlParameter("cdflujomc" , Types.VARCHAR));
             declareParameter(new SqlParameter("zona"      , Types.VARCHAR));
@@ -724,7 +724,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
     
     protected class CerrarHistorialTramiteSP extends StoredProcedure {
         protected CerrarHistorialTramiteSP (DataSource dataSource) {
-            super(dataSource, "P_DSPCH_CERRAR_THMESACONTROL");
+            super(dataSource, "PKG_DESPACHADOR_MC.P_CERRAR_THMESACONTROL");
             declareParameter(new SqlParameter("ntramite" , Types.VARCHAR));
             declareParameter(new SqlParameter("fecha"    , Types.TIMESTAMP));
             declareParameter(new SqlParameter("cdusuari" , Types.VARCHAR));
@@ -749,7 +749,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
     
     protected class RecuperarSucursalUsuarioPorTramiteSP extends StoredProcedure {
         protected RecuperarSucursalUsuarioPorTramiteSP (DataSource dataSource) {
-            super(dataSource, "P_DSPCH_GET_SUCURSAL_USR_TRA");
+            super(dataSource, "PKG_DESPACHADOR_MC.P_GET_SUCURSAL_USR_TRA");
             declareParameter(new SqlParameter("cdusuari" , Types.VARCHAR));
             declareParameter(new SqlParameter("ntramite" , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_cdunieco_o" , Types.VARCHAR));
@@ -771,7 +771,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
     
     protected class RecuperarNombreUsuarioSP extends StoredProcedure {
         protected RecuperarNombreUsuarioSP (DataSource dataSource) {
-            super(dataSource, "P_DSPCH_GET_NOMBRE_USUARIO");
+            super(dataSource, "PKG_DESPACHADOR_MC.P_GET_NOMBRE_USUARIO");
             declareParameter(new SqlParameter("cdusuari", Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_nombre_o" , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
@@ -872,7 +872,7 @@ public class DespachadorDAOImpl extends HelperJdbcDao implements DespachadorDAO 
     
     protected class RecuperarAgenteDestinoSP extends StoredProcedure {
         protected RecuperarAgenteDestinoSP (DataSource dataSource) {
-            super(dataSource, "P_DSPCH_GET_AGENTE_DESTINO");
+            super(dataSource, "PKG_DESPACHADOR_MC.P_GET_AGENTE_DESTINO");
             declareParameter(new SqlParameter("ntramite" , Types.VARCHAR));
             String[] cols = new String[] { "NTRAMITE", "CDAGENTE", "CDUSUARI", "CDUNIECO", "CDUNISLD", "CDTIPRAM" };
             declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));

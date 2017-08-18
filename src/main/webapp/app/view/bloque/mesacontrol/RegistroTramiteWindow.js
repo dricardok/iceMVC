@@ -5,6 +5,7 @@ Ext.define('Ice.view.bloque.RegistroTramiteWindow', {
     controller	:	'registrotramitewindow',
     title		:	'Registro de trámite',
     scrollable	:	true,
+    modal		:	true,
     platformConfig: {
 		desktop: {
 			//layout		:	"hbox",
@@ -38,6 +39,8 @@ Ext.define('Ice.view.bloque.RegistroTramiteWindow', {
 	            fields: true,
 	            validators: true
 	        });
+    		me.iniciarValores(items.MESACONTROL.FORM_REGISTRO_TRAMITE.items);
+    		Ice.log("###->",items.MESACONTROL.FORM_REGISTRO_TRAMITE.items);
     		config.items=[
     			{
     				xtype		:	'formdoscolumnasice',
@@ -63,6 +66,25 @@ Ext.define('Ice.view.bloque.RegistroTramiteWindow', {
 			iconCls		: 	'x-fa fa-close',
 			handler		:	'onCancelar'
 		}
-	]
+	],
+	iniciarValores : function(items){
+		var me   = this,
+		paso = 'Iniciando valores';
+		try{
+			
+			switch(Ice.sesion.cdsisrol){
+				case Ice.constantes.roles.AGENTE:
+					
+					var estatus = items.find(function(it){
+						return it.name=='estatus';
+					});
+					if(estatus)
+						estatus.value='100';
+					break;
+			}
+		}catch(e){
+			Ice.manejaExcepcion(e,paso)
+		}
+	}
     
 });

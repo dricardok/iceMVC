@@ -181,7 +181,7 @@ var Ice = (
             		movimientoThmesacontrol:'mesacontrol/historial/movimientoTdmesacontrol.action'
             	},
             	
-            	turnar: 'flujomesacontrol/turnarTramite.action',
+            	turnar: 'despachador/turnarTramite.action',
             	pantallaExterna: 'flujomesacontrol/pantallaExterna.action',
             	cargarAccionesEntidad: 'flujomesacontrol/cargarAccionesEntidad.action'
             },
