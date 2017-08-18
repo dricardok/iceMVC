@@ -79,12 +79,21 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
         var me = this,
             paso = 'Construyendo pantalla de cotizaci\u00f3n';
         try {
+            config.flujo = Ice.validarParamFlujo(config);
+
+            if (config.flujo.ntramite) {
+                config.cdramo = config.flujo.cdramo;
+                config.cdtipsit = {
+                    '501': '51'
+                }[config.cdramo];
+            }
+            Ice.log('Ice.view.cotizacion.Cotizacion.constructor config despues de flujo:', config);
+
             if (!config.cdramo || !config.cdtipsit) {
                 throw 'Falta cdramo o cdtipsit para componente de cotizaci\u00f3n';
             }
             
             config.modulo = config.modulo || 'COTIZACION';
-            config.flujo = config.flujo || {};
             if (config.nuevaCotizacion === false
                 || config.nuevaCotizacion === 'false'
                 || config.nueva === false

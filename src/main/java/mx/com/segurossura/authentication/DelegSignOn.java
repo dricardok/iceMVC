@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
 
+import com.biosnettcs.core.Utils;
+
 import mx.com.royalsun.services.interfaces.ServiceMapBase;
 import mx.com.royalsun.services.interfaces.authentication.ViewfinderItemVO;
 import mx.com.segurossura.authentication.model.BeanSignOn;
@@ -81,6 +83,17 @@ public class DelegSignOn {
 		}		
 		
 		Object dat = validaCuenta(usr, pass).get("finder");
+		ViewfinderItemVO res = (ViewfinderItemVO) dat;
+		logger.debug(Utils.join(res.getErrorcode()		," <-getErrorcode"));
+		logger.debug(Utils.join(res.getErrormessage()	," <-getErrormessage"));
+		logger.debug(Utils.join(res.getFlag()			," <-getFlag"));
+		logger.debug(Utils.join(res.getMessagetype()	," <-getMessagetype"));
+		logger.debug(Utils.join(res.getRedirectpage()	," <-getRedirectpage"));
+		logger.debug(Utils.join(res.getResponsejs()		," <-getResponsejs"));
+		logger.debug(Utils.join(res.getWarningcode()	," <-getWarningcode"));
+		logger.debug(Utils.join(res.getWarningmessage()	," <-getWarningmessage"));
+		logger.debug(Utils.join(res.isFail()			," <-isFail"));
+		
 		if(dat==null)
 			return false;
 		return !((ViewfinderItemVO) dat).isFail();
