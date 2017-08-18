@@ -1,11 +1,5 @@
 package mx.com.segurossura.emision.service.impl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.struts2.json.JSONPopulator;
-import org.apache.struts2.json.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +11,7 @@ import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.portal.model.UsuarioVO;
 
-
 import mx.com.segurossura.authentication.DelegSignOn;
-import mx.com.segurossura.authentication.model.ParentNode;
 import mx.com.segurossura.emision.dao.UsuarioDAO;
 import mx.com.segurossura.emision.service.AuthenticationManager;
 
@@ -67,8 +59,10 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 			paso="Creando  usuario";
 			if(usuarioValido){
 				usuario= usuarioDAO.obtieneRolesCliente(user);
+			}else{
+				throw new ApplicationException("Credenciales incorrectas.");
 			}
-			if(usuario==null || usuario.getRoles()==null){
+			if( usuario.getRoles()==null){
 				throw new ApplicationException("Usted no posee un rol asociado, por favor contacte al administrador");
 			}
 			
@@ -101,7 +95,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 		String result="";
 		try{
 			
-			String login = "{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in\",\"atrMenu\": \"Iniciar sesión\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"C\",\"nodes\": []}]}";
+			String login = "{\"lstChildNodes\": [{\"atrWork\": \"login.action?iconCls=sign-in\",\"atrMenu\": \"Inicio\",\"atrFinish\": true,\"atrCdfunci\": \"\",\"atrTarget\": \"C\",\"nodes\": []}]}";
 			paso="Leyendo menu";
 			
 			RestTemplate rt=new RestTemplate();

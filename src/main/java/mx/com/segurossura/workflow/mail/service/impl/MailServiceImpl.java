@@ -10,7 +10,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -22,14 +23,14 @@ public class MailServiceImpl implements MailService {
 	
 	static final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
 	
+	@Autowired
 	private JavaMailSender mailSender;
 	
-	private SimpleMailMessage defaultMailMessage;
-	
+	@Value("${mail.from}")
 	private String from;
 	
+	@Value("${mail.from.alias}")
 	private String fromAlias;
-	
 	
 	@Override
 	public boolean enviaCorreo(String[] to, String[] cc, String[] bcc, String asunto, String mensaje, String[] rutasAdjuntos, boolean contentTypeHTML) {
@@ -54,7 +55,7 @@ public class MailServiceImpl implements MailService {
 		
 		try {
 			
-			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);//TODO: set multipart by parameter
 			// Se asigna el remitente:
 			helper.setFrom(from, fromAlias);
 			// Se asignan los destinatarios:
@@ -67,11 +68,9 @@ public class MailServiceImpl implements MailService {
 			if(bcc != null && bcc.length > 0) {
 				helper.setBcc(bcc);
 			}
-			// Se asigna el asunto:
-			//TODO: Eliminar defaultMailMessage, cambiar funcionalidad para obtener asunto y mensaje de BD
-			helper.setSubject( StringUtils.isBlank(asunto) ? defaultMailMessage.getSubject() : asunto );
+			helper.setSubject(asunto);
 			// Se asigna el mensaje:
-			helper.setText( StringUtils.isBlank(mensaje) ? defaultMailMessage.getText() : mensaje, contentTypeHTML );
+			helper.setText(mensaje, contentTypeHTML);
 			// Se asignan los adjuntos:
 			for(File file : adjuntos) {
 				if(file != null && file.exists()) {
@@ -90,23 +89,6 @@ public class MailServiceImpl implements MailService {
 			logger.error("Error al enviar correo", e);
 		}
 		return exito;
-	}
-
-	
-	/**
-	 * 
-	 * @param defaultMailMessage
-	 */
-	public void setDefaultMailMessage(SimpleMailMessage defaultMailMessage) {
-		this.defaultMailMessage = defaultMailMessage;
-	}
-
-	/**
-	 * 
-	 * @param mailSender
-	 */
-	public void setMailSender(JavaMailSender mailSender) {
-		this.mailSender = mailSender;
 	}
 	
 	/**

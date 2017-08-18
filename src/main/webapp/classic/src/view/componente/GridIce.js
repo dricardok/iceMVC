@@ -31,7 +31,10 @@ Ext.define('Ice.view.componente.GridIce', {
 						cols.push(col);
 					}
 				}
-				config.columns = (config.columns || []).concat(cols);
+				if(cols.length>0 && config.columns){
+					config.columns = cols.concat(config.columns);
+				}
+				
 			}
 
 			// se suben los botones

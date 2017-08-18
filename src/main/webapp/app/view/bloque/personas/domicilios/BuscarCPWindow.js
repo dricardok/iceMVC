@@ -3,7 +3,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 	extend		:	"Ice.view.componente.VentanaIce",
 	controller	:	"buscarcpwindow",
 	xtype		:	"buscarcpwindow",
-	scrollable	:	true,
+	scrollable	:	'y',
 	//modal		:	true,
 	width		:	"90%",
 	height		:	"80%",
@@ -40,31 +40,34 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 					]
 				},
 				{
-					xtype		:	'panelice',
-					scrollable	:	true,
-					maxHeight	:	150,
+					xtype		:	'panelpaddingice',
+					maxHeight	:	300,
 					items		:	[
 						{
 							xtype		:	'gridice',
 							title		:	"Resultados",
-							scrollable	:	true,
+							scrollable	:	'y',
 							botones		:	[],
 							columns		:	[
 								{
 									text		:	'CP',
-									dataIndex	:	'cdcodpos'
+									dataIndex	:	'cdcodpos',
+									flex		:	2
 								},
 								{
 									text		:	'Provincia',
-									dataIndex	:	'dsprovin'
+									dataIndex	:	'dsprovin',
+									flex		:	2
 								},
 								{
 									text		:	'Ciudad',
-									dataIndex	:	'dsciudad'
+									dataIndex	:	'dsciudad',
+									flex		:	2
 								},
 								{
 									text		:	'Municipio',
-									dataIndex	:	'dsmunici'
+									dataIndex	:	'dsmunici',
+									flex		:	2
 								}
 							],
 							store		:	{

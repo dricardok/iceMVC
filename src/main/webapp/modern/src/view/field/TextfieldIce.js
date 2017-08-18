@@ -4,6 +4,9 @@
 Ext.define('Ice.view.field.TextfieldIce', {
     extend: 'Ext.field.Text',
     xtype: 'textfieldice',
+    config:{
+    	sinMayusculas:false,
+    },
 
     initialize: function () {
         Ice.log('Ice.view.field.TextfieldIce.initialize');
@@ -20,12 +23,13 @@ Ext.define('Ice.view.field.TextfieldIce', {
                 Ice.logWarn('Warning al intentar hacer uppercase de textfieldice modern');
             }
             
-            me.on({
-                blur: function (me) {
-                    me.setValue((me.getValue() || '').toUpperCase());
-                    Ice.eventManager.change(me, me.getValue());
-                }
-            });
+            if(!me.getSinMayusculas())
+	            me.on({
+	                blur: function (me) {
+	                    me.setValue((me.getValue() || '').toUpperCase());
+	                    Ice.eventManager.change(me, me.getValue());
+	                }
+	            });
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
