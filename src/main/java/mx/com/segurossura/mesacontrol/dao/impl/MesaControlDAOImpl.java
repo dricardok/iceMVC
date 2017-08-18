@@ -457,4 +457,34 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
             compile();
         }
     }
+    @Override
+    public boolean existePoliza(String cdunieco, String cdramo, String estado, String nmpoliza)
+            throws Exception {
+        
+        Map<String, Object> params = new LinkedHashMap<String, Object>();       
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        Map<String, Object> resultado = ejecutaSP(new ExistePolizaF(getDataSource()), params);
+        return "S".equals(resultado.get("v_return"));
+        //return true;
+    }
+    
+    protected class ExistePolizaF extends StoredProcedure {
+        protected ExistePolizaF (DataSource dataSource) {
+            super(dataSource, "pkg_valida_alea.f_val_existe_poliza");
+            /** important that the out parameter is defined before the in parameter. */
+            declareParameter(new SqlOutParameter("v_return",    Types.VARCHAR));  
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i" , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o",  Types.VARCHAR));
+            /** use function instead of stored procedure */
+            setFunction(true);
+            compile();
+        }
+    }
 }

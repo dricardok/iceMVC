@@ -25,4 +25,6 @@ public interface MesaControlDAO {
 			String cdusuari, String cdtipsup, String swvispre, String cdpercli, String renuniext, String renramo,
 			String renpoliex, String sworigenmesa, String cdrazrecha, String cdunidspch, String ntrasust,
 			String cdsisrol, String accion) throws Exception;
+
+	public boolean existePoliza(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
 }

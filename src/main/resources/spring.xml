@@ -18,6 +18,8 @@
                  <value>file:///${config.path}/cotizadores/mvc/global.properties</value>
                  <value>file:///${config.path}/cotizadores/mvc/spring-bps-application.properties</value>
                  <value>file:///${config.path}/cotizadores/mvc/client.properties</value>
+                 <!--value>file:///${config.path}/cotizadores/mvc/mail.properties</value-->
+                 <value>classpath:mail.properties</value>
             </list>
         </property>
 	</bean>
@@ -35,5 +37,20 @@
     
     <import resource="classpath:alea-client.xml" />
     <import resource="classpath:pago-client.xml" />
+    
+    <!-- Envio de correos -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+       <property name="host" value="${mail.host}" />
+        <property name="port" value="${mail.port}" />
+        <property name="username" value="${mail.username}" />
+        <property name="password" value="${mail.password}" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.debug">${mail.debug}</prop>
+                <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+                <prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+            </props>
+        </property>
+    </bean>
     
 </beans>
