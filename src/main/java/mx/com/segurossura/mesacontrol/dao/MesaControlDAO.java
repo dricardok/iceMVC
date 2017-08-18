@@ -8,7 +8,7 @@ public interface MesaControlDAO {
 	
 	public List<Map<String, String>> obtenerTramites(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici,
-			long start, long limit) throws Exception;
+			String cdusuari, String cdsisrol, long start, long limit) throws Exception;
 
 	public String movimientoTmesacontrol(String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String nmsolici, String cdsucadm, String cdsucdoc, String cdtiptra, Date ferecepc,

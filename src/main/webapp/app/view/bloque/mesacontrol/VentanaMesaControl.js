@@ -3,8 +3,8 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaMesaControl', {
 	xtype: 'ventanamesacontrol',
 	
 	title: 'Acciones',
-	width: 800,
-	height: 400,
+	width: 500,
+	//height: 400,
 	
 	resizable: false,
 	

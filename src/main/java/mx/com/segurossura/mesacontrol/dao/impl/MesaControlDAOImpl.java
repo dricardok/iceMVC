@@ -34,7 +34,7 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String, String>> obtenerTramites(String cdunieco, String cdramo, String estado, String nmpoliza, 
-			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici, long start, long limit) throws Exception {
+			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici, String cdusuari, String cdsisrol, long start, long limit) throws Exception {
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		params.put("pv_cdunieco_i", cdunieco);
 	    params.put("pv_cdramo_i",   cdramo);
@@ -47,8 +47,10 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
 	    params.put("pv_fstatusf_i", hasta);
 	    params.put("pv_nombre_i", nombre);
 	    params.put("pv_nmsolici_i", nmsolici);
+	    params.put("pv_cdusuari_i", cdusuari);
+        params.put("pv_cdsisrol_i", cdsisrol);
 	    params.put("pv_start_i", start);
-        params.put("pv_limit_i", limit);
+        params.put("pv_limit_i", limit);        
 	    logger.debug("-->"+params);
 	    Map<String, Object> resultado = ejecutaSP(new ObtieneMesaControl(getDataSource()), params);
         List<Map<String, String>> listaDatos = (List<Map<String, String>>) resultado.get("pv_registro_o");
@@ -77,26 +79,33 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
             declareParameter(new SqlParameter("pv_fstatusi_i", Types.DATE));
             declareParameter(new SqlParameter("pv_fstatusf_i", Types.DATE));            
             declareParameter(new SqlParameter("pv_nombre_i", Types.VARCHAR));            
-            declareParameter(new SqlParameter("pv_estatus_i", Types.VARCHAR));                   
+            declareParameter(new SqlParameter("pv_estatus_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdusuari_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdsisrol_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_start_i", Types.NUMERIC));
             declareParameter(new SqlParameter("pv_limit_i", Types.NUMERIC));
             String[] cols = new String[] {
             		"NTRAMITE",     
-                    "CDUNIECO",   
-                    "CDRAMO",    
-                    "ESTADO",     
+                    "CDUNIECO",
+                    "DSUNIECO",
+                    "CDRAMO",
+                    "DSRAMO",
+                    "ESTADO",
+                    "DESCRIPL",
                     "NMPOLIZA",     
                     "NMSUPLEM",   
                     "NMSOLICI",   
                     "CDSUCADM",   
                     "CDSUCDOC",        
-                    "CDTIPTRA",   
+                    "CDTIPTRA",
+                    "DSTIPTRA",
                     "FERECEPC",   
                     "CDAGENTE",   
                     "REFERENCIA",   
                     "NOMBRE", 
                     "FECSTATU",    
                     "ESTATUS",
+                    "DSESTADOMC",
                     "COMMENTS",    
                     "CDTIPSIT",   
                     "OTVALOR01",   
@@ -150,9 +159,12 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
                     "OTVALOR49",  
                     "OTVALOR50",  
                     "SWIMPRES",  
-                    "CDTIPFLU",   
-                    "CDFLUJOMC",   
-                    "CDUSUARI",  
+                    "CDTIPFLU",
+                    "DSTIPFLU",
+                    "CDFLUJOMC", 
+                    "DSFLUJOMC",
+                    "CDUSUARI",
+                    "DSUSUARI",
                     "CDTIPSUP",   
                     "SWVISPRE",   
                     "CDPERCLI",   

@@ -1,7 +1,9 @@
 Ext.define('Ice.view.mesacontrol.MesaControl', {
-    extend: 'Ice.view.componente.ContainerIce',
+    extend: 'Ice.view.componente.PanelIce',
     xtype: 'mesacontrol',
     title: 'Mesa de control',
+    
+    //scrollable: true,
     
     requires: [
     	'Ice.view.bloque.mesacontrol.FormMesaControl'

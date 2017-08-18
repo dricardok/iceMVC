@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
+import com.biosnettcs.portal.model.UsuarioVO;
 
 import mx.com.segurossura.mesacontrol.service.MesaControlManager;
 
@@ -67,6 +68,7 @@ public class MesaControlAction extends PrincipalCoreAction {
                 "\n###### limit ", limit
                ));
 		try{
+			UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
 			Utils.validate(params, "No se recibieron parametros");			
 			String cdunieco = params.get("cdunieco") != null ? ("".equals(params.get("cdunieco")) ? null : params.get("cdunieco")) : null;
             String cdramo = params.get("cdramo")  != null ? ("".equals(params.get("cdramo")) ? null : params.get("cdramo")) : null;;
@@ -85,7 +87,7 @@ public class MesaControlAction extends PrincipalCoreAction {
             String nombre = params.get("nombre")  != null ? ("".equals(params.get("nombre")) ? null : params.get("nombre")) : null;;
             String nmsolici = params.get("nmsolici")  != null ? ("".equals(params.get("nmsolici")) ? null : params.get("nmsolici")) : null;;
             
-            list = mesaControlManager.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici, start, limit);
+            list = mesaControlManager.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol(), start, limit);
             if(list!=null && !list.isEmpty()) {
                 totalCount = Integer.parseInt(list.get(0).get("total"));
             }

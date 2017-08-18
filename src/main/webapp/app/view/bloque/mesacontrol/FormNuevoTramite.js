@@ -4,7 +4,7 @@ Ext.define('Ice.view.bloque.mesacontrol.FormnNuevoTramite', {
 	
 	constructor: function (config) {
 		var me = this,
-		paso = 'Construyendo formulario de nueo tramite para la mesa de control';		
+		paso = 'Construyendo formulario de nuevo tramite para la mesa de control';		
 		
 		try {
 			var comps = Ice.generaComponentes({

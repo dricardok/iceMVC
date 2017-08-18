@@ -8,12 +8,15 @@ Ext.define('Ice.view.bloque.mesacontrol.FormMesaControlController', {
 		var view = this.getView(),
 			grid = view.up().getReferences().gridmesacontrol,
 			formRefs = view.getReferences(),
-			storegrid = grid.store,
+			storegrid = grid.getStore(),
 			paso = 'Buscando tramites';
+		
+		Ice.log('Referencias', view, grid, formRefs, storegrid, paso);
+		
 		try{
 			Ice.log('referencias', view.getReferences());
 			
-			storegrid.removeAll();
+//			storegrid.removeAll();
 			storegrid.load({
 				params: {
 					'params.cdunieco':formRefs.cdunieco.getValue(),
@@ -40,7 +43,11 @@ Ext.define('Ice.view.bloque.mesacontrol.FormMesaControlController', {
 			formRefs = view.getReferences(),
 			paso = 'Limpiando filtros de tramites';
 		try{
-			view.form.reset();
+			if(Ice.classic()){
+				view.getForm().reset();
+			}else{
+				view.reset();
+			}			
 		}catch(e){
 			Ice.generaExcepcion(e, paso);
 		}		 
