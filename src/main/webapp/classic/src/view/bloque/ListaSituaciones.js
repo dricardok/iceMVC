@@ -57,6 +57,49 @@ Ext.define('Ice.view.bloque.ListaSituaciones', {
 						allowDeselect: true
 					};
 				}
+				
+				var comps = Ice.generaComponentes({
+					pantalla: 'BLOQUE_LISTA_SITUACIONES',
+					seccion: 'GRID',
+					modulo: config.modulo || '',
+					estatus: (config.flujo && config.flujo.estatus) || '',
+					cdramo: config.cdramo || '',
+					cdtipsit: config.cdtipsit ||'',
+					auxKey: config.auxkey || '',
+//		                items: true,
+					columns: true,
+					fields:true
+				});
+				Ice.log('Ice.view.bloque.ListaSituaciones.initComponent comps:', comps);
+
+				
+				config.title = 'Situaciones de P\u00f3liza '+config.cdunieco+'-'+config.cdramo+'-'+config.estado+'-'+config.nmpoliza;
+				config.columns = comps.BLOQUE_LISTA_SITUACIONES.GRID.columns;//.concat(me.config.actionColumns),
+				
+				Ice.log("col lista situacion: ",config.columns);
+				config.store = {
+					fields: comps.BLOQUE_LISTA_SITUACIONES.GRID.fields,
+					autoLoad: true,
+					proxy: {
+						type: 'ajax',
+						url: Ice.url.bloque.listaSituaciones.cargar,
+						extraParams: {
+							'params.cdunieco': config.cdunieco,
+							'params.cdramo': config.cdramo,
+							'params.estado': config.estado,
+							'params.nmpoliza': config.nmpoliza,
+							'params.nmsuplem': config.nmsuplem
+						},
+						reader: {
+							type: 'json',
+							successProperty: 'success',
+							messageProperty: 'message',
+							rootProperty: 'situaciones'
+						}
+					}
+				};
+					
+				
 			
 			} catch (e) {
 				Ice.generaExcepcion(e, paso);
@@ -76,59 +119,19 @@ Ext.define('Ice.view.bloque.ListaSituaciones', {
 		var me = this,
 			paso = 'Construyendo bloque lista de situaciones';
 		try {
-			var comps = Ice.generaComponentes({
-				pantalla: 'BLOQUE_LISTA_SITUACIONES',
-				seccion: 'GRID',
-				modulo: me.modulo || '',
-				estatus: (me.flujo && me.flujo.estatus) || '',
-				cdramo: me.cdramo || '',
-				cdtipsit: me.cdtipsit ||'',
-				auxKey: me.auxkey || '',
-//	                items: true,
-				columns: true,
-				fields:true
-			});
-			Ice.log('Ice.view.bloque.ListaSituaciones.initComponent comps:', comps);
-
-			Ext.apply(me, {
-				title: 'Situaciones de P\u00f3liza '+me.cdunieco+'-'+me.cdramo+'-'+me.estado+'-'+me.nmpoliza,
-				columns: comps.BLOQUE_LISTA_SITUACIONES.GRID.columns.concat(me.config.columns || []),//.concat(me.config.actionColumns),
-				store: {
-					fields: comps.BLOQUE_LISTA_SITUACIONES.GRID.fields,
-					autoLoad: true,
-					proxy: {
-						type: 'ajax',
-						url: Ice.url.bloque.listaSituaciones.cargar,
-						extraParams: {
-							'params.cdunieco': me.cdunieco,
-							'params.cdramo': me.cdramo,
-							'params.estado': me.estado,
-							'params.nmpoliza': me.nmpoliza,
-							'params.nmsuplem': me.nmsuplem
-						},
-						reader: {
-							type: 'json',
-							successProperty: 'success',
-							messageProperty: 'message',
-							rootProperty: 'situaciones'
-						}
-					},
-					listeners:{
-						load:function(store,datos){
-							me.fireEvent("cargarstore", store, datos, me);
-						}
-					}
-				},
-				buttons:me.config.buttons,
-			});
+			
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);
 		}             
 
+		
 		// construir componente
 		Ice.log('Antes de llamar padre');
 		me.callParent(arguments);       
 
+		me.getStore().addListener('load',function(store,datos){
+			me.fireEvent("cargarstore", store, datos, me);
+		});
 		// comportamiento
 		paso = '';
 		try {

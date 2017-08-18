@@ -33,13 +33,16 @@ Ext.define("Ice.view.bloque.documentos.historial.TurnadosChart",{
 			});
 			var fus={},i=0;
 			Ice.log("data",data);
+			if(data && data.length<=0){
+				throw 'No hay datos de turnados.';
+			}
 			data.forEach(function(it){
 				fus["data"+i]=it;
-				
 				i++;
 			});
+			Ice.log("fus",fus);
 			config.inicio = Ext.Date.parse(fus["data0"].fefecha, "d/m/Y H:i").getTime();
-			if(Ext.isEmpty(fus["data"+(i-1)].fefecha_fin)){
+			if(Ext.isEmpty(fus["data"+(i-1)].fefecha_fin) || fus["data"+(i-1)].fefecha_fin =='null' ){
 				fus["data"+(i-1)].fefecha_fin=Ext.Date.format(new Date(),"d/m/Y H:i")
 				config.fin    = (new Date()).getTime();
 			}else{
@@ -51,11 +54,13 @@ Ext.define("Ice.view.bloque.documentos.historial.TurnadosChart",{
 			Ice.log("fus :",fus)
 			
 			for(var key in fus){
-				objStore[key] = (Number(
-						Ext.Date.parse(fus[key].fefecha_fin, "d/m/Y H:i").getTime()
-						)-Number(
-								Ext.Date.parse(fus[key].fefecha, "d/m/Y H:i").getTime()
-								));
+				objStore[key] = (
+									Number(
+											Ext.Date.parse(fus[key].fefecha_fin, "d/m/Y H:i").getTime()
+									)-Number(
+											Ext.Date.parse(fus[key].fefecha, "d/m/Y H:i").getTime()
+									)
+								);
 			}
 			
 			var dataStore=[

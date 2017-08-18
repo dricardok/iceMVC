@@ -1083,13 +1083,14 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
 				
 				lista = flujoMesaControlDAO.recuperaTfluproc(cdtipflu, cdflujomc);
 			}
-			else if(consulta.equals(RecuperacionSimple.RECUPERAR_TFLUVAL))
-			{
+			*/
+			else if (consulta.equals(RecuperacionSimple.RECUPERAR_TFLUVAL)) {
 				String cdtipflu  = params.get("cdtipflu");
 				String cdflujomc = params.get("cdflujomc");
 				String cdvalida  = params.get("cdvalida");
 				lista = flujoMesaControlDAO.recuperaTfluval(cdtipflu, cdflujomc, cdvalida);
 			}
+		    /*
 			else if(consulta.equals(RecuperacionSimple.RECUPERAR_TFLUREV))
 			{
 				String cdtipflu = params.get("cdtipflu");
@@ -1186,10 +1187,7 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
 				               cdflujomc , "No se recibi\u00f3 el proceso");
 				
 				lista = flujoMesaControlDAO.recuperarTflujorol(cdtipflu,cdflujomc);
-			}
-		    /*
-			else if(consulta.equals(RecuperacionSimple.RECUPERAR_TFLUMAIL))
-			{
+			} else if(consulta.equals(RecuperacionSimple.RECUPERAR_TFLUMAIL)) {
 				paso = "Recuperando permisos de proceso por rol";
 				logger.debug(paso);
 				
@@ -1204,8 +1202,7 @@ public class RecuperacionSimpleManagerImpl implements RecuperacionSimpleManager 
 						);
 				
 				lista = flujoMesaControlDAO.recuperaTflumail(cdtipflu, cdflujomc, cdmail);
-			 */
-			else if (consulta.equals(RecuperacionSimple.RECUPERAR_TVARMAIL)) {
+			} else if (consulta.equals(RecuperacionSimple.RECUPERAR_TVARMAIL)) {
 			    paso = "Recuperando permisos de proceso por rol";
 			    lista = flujoMesaControlDAO.recuperaTvarmailSP();
 			} else if (consulta.equals(RecuperacionSimple.OBTENER_COTIZADORES_DISPONIBLES)) {

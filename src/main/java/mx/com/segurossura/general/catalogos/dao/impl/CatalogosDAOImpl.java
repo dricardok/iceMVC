@@ -486,9 +486,9 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
 	
 	protected class ObtenerEstatusTramite extends StoredProcedure {
 		protected ObtenerEstatusTramite(DataSource dataSource){
-			super(dataSource, "OPS$DHPERNIA.PKG_MESACONTROL.P_GET_TESTADOMC");
+			super(dataSource, "PKG_MESACONTROL.P_GET_TESTADOMC");
 			declareParameter(new SqlParameter("pv_cdestadomc_i", Types.VARCHAR));
-			String[] cols = new String[] { "estatus", "dsestadomc" };
+			String[] cols = new String[] { "cdestadomc", "dsestadomc" };
 			declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));

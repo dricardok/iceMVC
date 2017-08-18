@@ -225,4 +225,23 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
             compile();
         }
     }
+    
+    @Override
+    public void borrarArchivoRequisitoAnterior (String ntramite, String cddocume) throws Exception {
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("pv_ntramite_i", ntramite);
+        params.put("pv_codidocu_i", cddocume);
+        ejecutaSP(new BorrarArchivoRequisitoAnteriorSP(getDataSource()), params);
+    }
+
+    protected class BorrarArchivoRequisitoAnteriorSP extends StoredProcedure {
+        protected BorrarArchivoRequisitoAnteriorSP(DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_BORRAR_DOC_REQUISITO_ANTE");
+            declareParameter(new SqlParameter("pv_ntramite_i"  , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_codidocu_i"  , Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
+            compile();
+        }
+    }
 }

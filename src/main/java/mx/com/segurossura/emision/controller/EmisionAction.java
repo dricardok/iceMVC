@@ -42,6 +42,7 @@ public class EmisionAction extends PrincipalCoreAction {
 	private String             message;
 	private List<String>	   bloques;
 	private List<Map<String, String>> list;
+	private List<String>	   errores;
 
 	private Map<String, List<Map<String, String>>> componentes;
 	private static SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
@@ -938,7 +939,8 @@ public class EmisionAction extends PrincipalCoreAction {
         return SUCCESS;
     }
 	
-    @Action(        
+    @SuppressWarnings("unchecked")
+	@Action(        
             value = "generarDocumentos", 
             results = { 
                 @Result(name = "success", type = "json") 
@@ -963,7 +965,10 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   iscotizacion, "Falta iscotizacion");
     	    
     	    
-    	    Map<String, String> resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());
+    	    Map<String, Object> resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());
+    	    errores = (List<String>) resultado.get("errores");
+    	    
+    	    
     	    success = true;
     	    
     	}catch(Exception ex){
@@ -974,6 +979,16 @@ public class EmisionAction extends PrincipalCoreAction {
     	return SUCCESS;
     }
     
+    
+    
+	public List<String> getErrores() {
+		return errores;
+	}
+
+	public void setErrores(List<String> errores) {
+		this.errores = errores;
+	}
+
 	public Map<String, String> getParams() {
 		return params;
 	}
