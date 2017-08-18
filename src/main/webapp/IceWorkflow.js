@@ -812,138 +812,105 @@ var Ice = (
                         Ice.manejaExcepcion(e, paso2);
                     }
                 });
-            }
-            /*else if (tipodest ===' M') {
-                ck = 'Recuperando valores de correo';
-                Ext.Ajax.request(
-                {
-                    mascara: ck,
-                    url      : Ice.url.core.recuperacionSimple
-                    ,params  :
-                    {
-                        'params.consulta'   : 'RECUPERAR_TFLUMAIL'
-                        ,'params.cdtipflu'  : cdtipflu
-                        ,'params.cdflujomc' : cdflujomc
-                        ,'params.cdmail'    : clavedest
-                    }
-                    ,success : function(json)
-                    {
-                        var ck = 'Decodificando respuesta al recuperar valores de correo';
-                        try
-                        {
+            } else if (tipodest === 'M') {
+                paso = 'Recuperando valores de correo';
+                Ice.request({
+                    mascara : paso,
+                    url     : Ice.url.core.recuperacionSimple,
+                    params  : {
+                        'params.consulta'  : 'RECUPERAR_TFLUMAIL',
+                        'params.cdtipflu'  : cdtipflu,
+                        'params.cdflujomc' : cdflujomc,
+                        'params.cdmail'    : clavedest
+                    },
+                    success: function (json) {
+                        var paso2 = 'Decodificando respuesta al recuperar valores de correo';
+                        try {
                             Ice.log('### tflumail:',json);
-                            if(json.list.length==0)
-                            {
+                            if (json.list.length === 0) {
                                 throw 'El correo no existe';
-                            }
-                            else if(json.list.length>1)
-                            {
+                            } else if(json.list.length > 1) {
                                 throw 'Correo duplicado';
                             }
                             var data = json.list[0];
                             Ice.log('data:',data);
                             
-                            ck = 'Recuperando acciones posteriores a la validaci\u00f3n';
-                            Ice.request(
-                            {
-                                mascara: ck,
-                                url      : Ice.url.bloque.mesacontrol.cargarAccionesEntidad
-                                ,params  :
-                                {
-                                    'params.cdtipflu'   : cdtipflu
-                                    ,'params.cdflujomc' : cdflujomc
-                                    ,'params.tipoent'   : tipodest
-                                    ,'params.cdentidad' : clavedest
-                                    ,'params.webid'     : webiddest
-                                }
-                                ,success : function(jsonAcc)
-                                {
-                                    var ck = 'Decodificando respuesta al recuperar acciones posteriores a la validaci\u00f3n';
-                                    try
-                                    {
-                                        Ice.log('### acciones:',jsonAcc);
-                                        var numSalidas = jsonAcc.list.length
-                                            ,acciones  = jsonAcc.list;
-                                        if(jsonAcc.list.length < 2){
-                                            ck = 'Enviando correo';
-                                            Ice.request({
-                                                mascara: ck,
-                                                url      : _GLOBAL_URL_ENVIAR_CORREO_FLUJO
-                                                ,params  :
-                                                {
-                                                    'flujo.cdtipflu'     : cdtipflu
-                                                    ,'flujo.cdflujomc'   : cdflujomc
-                                                    ,'flujo.tipoent'     : tipodest
-                                                    ,'flujo.claveent'    : clavedest
-                                                    ,'flujo.webid'       : webiddest
-                                                    ,'flujo.ntramite'    : ntramite
-                                                    ,'flujo.status'      : status
-                                                    ,'flujo.cdunieco'    : cdunieco
-                                                    ,'flujo.cdramo'      : cdramo
-                                                    ,'flujo.estado'      : estado
-                                                    ,'flujo.nmpoliza'    : nmpoliza
-                                                    ,'flujo.nmsituac'    : nmsituac
-                                                    ,'flujo.nmsuplem'    : nmsuplem
-                                                    ,'flujo.aux'         : aux
-                                                    ,'params.dsdestino'  : data.DSDESTINO
-                                                    ,'params.dsasunto'   : data.DSASUNTO
-                                                    ,'params.dsmensaje'  : data.DSMENSAJE
-                                                    ,'params.vardestino' : data.VARDESTINO
-                                                    ,'params.varmensaje' : data.VARMENSAJE
-                                                    ,'params.varasunto'  : data.VARASUNTO
-                                                }
-                                                ,success : function(json)
-                                                {
-                                                    var ck = 'decod Enviando correo';
-                                                    try
-                                                    {
-                                                        Ice.log('### validacion:',json);
-                                                        if(numSalidas == 0){
-                                                            mensajeCorrecto('Correo enviado','Correo enviado');
-                                                        }else{
-                                                            Ice.procesaAccion
-                                                            (
-                                                                    cdtipflu
-                                                                    ,cdflujomc
-                                                                    ,acciones[0].TIPODEST
-                                                                    ,acciones[0].CLAVEDEST
-                                                                    ,acciones[0].WEBIDDEST
-                                                                    ,acciones[0].AUX
-                                                                    ,ntramite
-                                                                    ,status
-                                                                    ,cdunieco
-                                                                    ,cdramo
-                                                                    ,estado
-                                                                    ,nmpoliza
-                                                                    ,nmsituac
-                                                                    ,nmsuplem
-                                                                    ,callback
-                                                            );
-                                                        }
+                            paso2 = 'Recuperando acciones posteriores a la validaci\u00f3n';
+                            Ice.cargarAccionesEntidad(cdtipflu, cdflujomc, tipodest, clavedest, webiddest, function (acciones) {
+                                var paso3 = 'Decodificando respuesta al recuperar acciones posteriores a la validaci\u00f3n';
+                                try {
+                                    Ice.log('### acciones:', acciones);
+                                    var numSalidas = acciones.length;
+                                    if (numSalidas < 2) {
+                                        paso3 = 'Enviando correo';
+                                        Ice.request({
+                                            mascara : paso3,
+                                            url     : Ice.url.bloque.mesacontrol.enviaCorreoFlujo,
+                                            params  : {
+                                                'flujo.cdtipflu'    : cdtipflu,
+                                                'flujo.cdflujomc'   : cdflujomc,
+                                                'flujo.tipoent'     : tipodest,
+                                                'flujo.claveent'    : clavedest,
+                                                'flujo.webid'       : webiddest,
+                                                'flujo.ntramite'    : ntramite,
+                                                'flujo.status'      : status,
+                                                'flujo.cdunieco'    : cdunieco,
+                                                'flujo.cdramo'      : cdramo,
+                                                'flujo.estado'      : estado,
+                                                'flujo.nmpoliza'    : nmpoliza,
+                                                'flujo.nmsituac'    : nmsituac,
+                                                'flujo.nmsuplem'    : nmsuplem,
+                                                'flujo.aux'         : aux,
+                                                'params.dsdestino'  : data.DSDESTINO,
+                                                'params.dsasunto'   : data.DSASUNTO,
+                                                'params.dsmensaje'  : data.DSMENSAJE,
+                                                'params.vardestino' : data.VARDESTINO,
+                                                'params.varmensaje' : data.VARMENSAJE,
+                                                'params.varasunto'  : data.VARASUNTO
+                                            },
+                                            success: function (json) {
+                                                var paso4 = 'Decodificando respuesta al enviar correo';
+                                                try {
+                                                    Ice.log('### enviar correo response:', json);
+                                                    if (numSalidas === 0) {
+                                                        Ice.mensajeCorrecto('Correo enviado', 'Correo enviado');
+                                                    } else {
+                                                        Ice.procesaAccion(
+                                                            cdtipflu,
+                                                            cdflujomc,
+                                                            acciones[0].TIPODEST,
+                                                            acciones[0].CLAVEDEST,
+                                                            acciones[0].WEBIDDEST,
+                                                            acciones[0].AUX,
+                                                            ntramite,
+                                                            status,
+                                                            cdunieco,
+                                                            cdramo,
+                                                            estado,
+                                                            nmpoliza,
+                                                            nmsituac,
+                                                            nmsuplem,
+                                                            callback
+                                                        );
                                                     }
-                                                    catch(e)
-                                                    {
-                                                        Ice.manejaExcepcion(e,ck);
-                                                    }
+                                                } catch (e) {
+                                                    Ice.manejaExcepcion(e, paso4);
                                                 }
-                                            });
-                                        }else{
-                                            throw 'Hay demasiadas acciones relacionadas al correo';
-                                        }
+                                            }
+                                        });
+                                    } else {
+                                        throw 'Hay demasiadas acciones relacionadas al correo';
                                     }
-                                    catch(e)
-                                    {
-                                        Ice.manejaExcepcion(e,ck);
-                                    }
+                                } catch (e) {
+                                    Ice.manejaExcepcion(e, paso3);
                                 }
                             });
                         } catch (e) {
-                            Ice.manejaExcepcion(e,ck);
+                            Ice.manejaExcepcion(e, paso2);
                         }
                     }
                 });
-            */
-            else {
+            } else {
                 throw 'Entidad inv\u00e1lida';
             }
         } catch(e) {

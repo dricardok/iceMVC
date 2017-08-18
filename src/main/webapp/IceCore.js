@@ -188,7 +188,9 @@ var Ice = (
                 obtenerDatosValidacionCliente : 'flujomesacontrol/recuperarDatosTramiteValidacionCliente.action',
                 ejecutarRevision              : 'flujomesacontrol/ejecutaRevision.action',
                 marcarRevisionConfirmada      : 'flujomesacontrol/marcarRevisionConfirmada.action',
-                marcarRequisitoRevision       : 'flujomesacontrol/marcarRequisitoRevision.action'
+                marcarRequisitoRevision       : 'flujomesacontrol/marcarRequisitoRevision.action',
+                subirArchivoRequisito         : 'documentos/subirArchivoRequisito.action',
+                enviaCorreoFlujo              : 'flujomesacontrol/enviaCorreoFlujo.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
@@ -2281,5 +2283,28 @@ var Ice = (
             Utils.generaExcepcion(e, paso);
         }
         return flujo;
+    },
+
+    flujoToParams: function (flujo, paramsEntrada) {
+        Ice.log('Ice.flujoToParams args:', arguments);
+        var params = {};
+        if (!Ext.isEmpty(paramsEntrada)) {
+            params = paramsEntrada;
+        }
+        params['flujo.ntramite']  = flujo.ntramite;
+        params['flujo.status']    = flujo.status;
+        params['flujo.cdtipflu']  = flujo.cdtipflu;
+        params['flujo.cdflujomc'] = flujo.cdflujomc;
+        params['flujo.webid']     = flujo.webid;
+        params['flujo.tipoent']   = flujo.tipoent;
+        params['flujo.claveent']  = flujo.claveent;
+        params['flujo.cdunieco']  = flujo.cdunieco;
+        params['flujo.cdramo']    = flujo.cdramo;
+        params['flujo.estado']    = flujo.estado;
+        params['flujo.nmpoliza']  = flujo.nmpoliza;
+        params['flujo.nmsituac']  = flujo.nmsituac;
+        params['flujo.nmsuplem']  = flujo.nmsuplem;
+        params['flujo.aux']       = flujo.aux;
+        return params;
     }
 });

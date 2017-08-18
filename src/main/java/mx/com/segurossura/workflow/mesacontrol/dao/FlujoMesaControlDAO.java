@@ -987,4 +987,6 @@ public interface FlujoMesaControlDAO {
     public String obtenerSuplementoTramite(String ntramite)throws Exception;
     
     public String ejecutaValidacion (String functionName, String ntramite, String aux, String json) throws Exception;
+    
+    public Map<String, String> obtenerTramite (String ntramite) throws Exception;
 }

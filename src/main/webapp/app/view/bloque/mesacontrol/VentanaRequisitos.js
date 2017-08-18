@@ -257,6 +257,98 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaRequisitos', {
                                     }
                                     rec = grid.getSelection();
                                 }
+                                var venSubDoc = Ext.create({
+                                    xtype: 'ventanaice',
+                                    padre: me,
+                                    title: 'Cargar archivo',
+                                    scrollable: true,
+                                    platformConfig: {
+                                        desktop: {
+                                            modal: true
+                                        }
+                                    },
+                                    items: [{
+                                        xtype: 'formice',
+                                        bodyPadding: '10 0 0 10',
+                                        sinToggle: true,
+                                        platformConfig: {
+                                            '!desktop': {
+                                                enableSubmissionForm: false
+                                            }
+                                        },
+                                        items: [
+                                            {
+                                                xtype: 'textfieldice',
+                                                name: 'params.cddocume',
+                                                value: rec.get('CLAVE'),
+                                                hidden: true
+                                            }, {
+                                                xtype: 'filefieldice',
+                                                name: 'file',
+                                                label: 'Archivo',
+                                                margin: '0 10 10 0',
+                                                width: 300
+                                            }
+                                        ]
+                                    }],
+                                    buttons: [
+                                        {
+                                            text: 'Enviar',
+                                            iconCls: 'x-fa fa-save',
+                                            handler: function (me) {
+                                                var paso = 'Subiendo archivo';
+                                                try {
+                                                    var ventana = me.up('ventanaice'),
+                                                        view = ventana.padre,
+                                                        form = ventana.down('formice');
+                                                    var mask = Ice.mask();
+                                                    form.submit({
+                                                        url: Ice.url.bloque.mesacontrol.subirArchivoRequisito,
+                                                        timeout: 60000,
+                                                        params: {
+                                                            'flujo.cdtipflu'  : view.getFlujo().cdtipflu,
+                                                            'flujo.cdflujomc' : view.getFlujo().cdflujomc,
+                                                            'flujo.tipoent'   : view.getFlujo().tipodest,
+                                                            'flujo.claveent'  : view.getFlujo().clavedest,
+                                                            'flujo.webid'     : view.getFlujo().webiddest,
+                                                            'flujo.aux'       : view.getFlujo().aux,
+                                                            'flujo.ntramite'  : view.getFlujo().ntramite,
+                                                            'flujo.status'    : view.getFlujo().status,
+                                                            'flujo.cdunieco'  : view.getFlujo().cdunieco,
+                                                            'flujo.cdramo'    : view.getFlujo().cdramo,
+                                                            'flujo.estado'    : view.getFlujo().estado,
+                                                            'flujo.nmpoliza'  : view.getFlujo().nmpoliza,
+                                                            'flujo.nmsituac'  : view.getFlujo().nmsituac,
+                                                            'flujo.nmsuplem'  : view.getFlujo().nmsuplem
+                                                        },
+                                                        success: function () {
+                                                            mask.close();
+                                                            ventana.cerrar();
+                                                        },
+                                                        failure: function () {
+                                                            mask.close();
+                                                            Ice.mensajeError('Error al subir el archivo');
+                                                        }
+                                                    });
+                                                } catch (e) {
+                                                    Ice.manejaExcepcion(e, paso);
+                                                }
+                                            }
+                                        }, {
+                                            text: 'Cancelar',
+                                            iconCls: 'x-fa fa-close',
+                                            handler: function (me) {
+                                                me.up('ventanaice').cerrar();
+                                            }
+                                        }
+                                    ]
+                                });
+                                venSubDoc.on({
+                                    close: function (me) {
+                                        me.padre.recargar();
+                                    }
+                                });
+                                venSubDoc.mostrar();
                             } catch (e) {
                                 Ice.manejaExcepcion(e, paso);
                             }
@@ -362,6 +454,13 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaRequisitos', {
                     iconCls: 'x-fa fa-check',
                     hidden: !(config.numSalidas === 0 || config.faltanDocs === true || config.flujo.aux === 'LECTURA'
                         || config.flujo.aux === 'INICIAL'),
+                    handler: function (me) {
+                        me.up('ventanaice').cerrar();
+                    }
+                }, {
+                    text: 'Cerrar',
+                    iconCls: 'x-fa fa-close',
+                    hidden: Ice.classic(),
                     handler: function (me) {
                         me.up('ventanaice').cerrar();
                     }

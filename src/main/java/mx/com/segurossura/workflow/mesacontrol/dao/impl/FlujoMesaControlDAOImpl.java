@@ -4609,4 +4609,39 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
             compile();
         }
     }
+    
+    @Override
+    public Map<String, String> obtenerTramite (String ntramite) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_ntramite_i", ntramite);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerTramiteSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        Map<String, String> tramite = null;
+        if (lista != null && lista.size() > 0) {
+            tramite = lista.get(0);
+        }
+        return tramite;
+    }
+    
+    protected class ObtenerTramiteSP extends StoredProcedure {
+        protected ObtenerTramiteSP (DataSource dataSource) {
+            super(dataSource, "PKG_MESACONTROL.P_GET_TMESACONTROL");
+            declareParameter(new SqlParameter("pv_ntramite_i", Types.VARCHAR));
+            String[] cols = new String[] {
+                    "ntramite", "cdunieco", "cdramo", "estado", "nmpoliza", "nmsuplem", "nmsolici", "cdsucadm", "cdsucdoc", "cdtiptra",
+                    "ferecepc", "cdagente", "referencia", "nombre", "fecstatu", "estatus", "comments", "cdtipsit",
+                    "otvalor01", "otvalor02", "otvalor03", "otvalor04", "otvalor05", "otvalor06", "otvalor07", "otvalor08", "otvalor09", "otvalor10",
+                    "otvalor11", "otvalor12", "otvalor13", "otvalor14", "otvalor15", "otvalor16", "otvalor17", "otvalor18", "otvalor19", "otvalor20",
+                    "otvalor21", "otvalor22", "otvalor23", "otvalor24", "otvalor25", "otvalor26", "otvalor27", "otvalor28", "otvalor29", "otvalor30",
+                    "otvalor31", "otvalor32", "otvalor33", "otvalor34", "otvalor35", "otvalor36", "otvalor37", "otvalor38", "otvalor39", "otvalor40",
+                    "otvalor41", "otvalor42", "otvalor43", "otvalor44", "otvalor45", "otvalor46", "otvalor47", "otvalor48", "otvalor49", "otvalor50",
+                    "swimpres", "cdtipflu", "cdflujomc", "cdusuari", "cdtipsup", "swvispre", "cdpercli", "renuniext", "renramo", "renpoliex",
+                    "sworigenmesa", "cdrazrecha", "cdunidspch", "ntrasust", "cdsisrol"
+                    };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            compile();
+        }
+    }
 }

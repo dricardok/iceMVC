@@ -1,9 +1,11 @@
 package mx.com.segurossura.general.documentos.service;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
 import mx.com.segurossura.general.documentos.model.Archivo;
+import mx.com.segurossura.workflow.mesacontrol.model.FlujoVO;
 
 public interface DocumentosManager {
     
@@ -51,4 +53,6 @@ public interface DocumentosManager {
      */
     public Archivo obtenerDocumento(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
             String url, String ruta, String filename, String cddocume) throws Exception;
+    
+    public void subirArchivoRequisito (FlujoVO flujo, File archivo, String nombre, String contentType, String cddocume) throws Exception;
 }
