@@ -127,7 +127,6 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
             if(data){
                 Ice.log('data ',data);
                 var dom = refs.domiciliosContainer.lookupReference('gridDomicilios').getDomicilioSel();
-                
                 Ice.log("dommm:",dom);
                 view.fireEvent('obtenerCdperson', view, data.cdperson,dom);
                 Ice.pop();

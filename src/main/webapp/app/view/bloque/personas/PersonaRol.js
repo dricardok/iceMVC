@@ -46,7 +46,7 @@ Ext.define('Ice.view.bloque.personas.PersonaRol', {
             	cdperson.listeners = {
                 	personachange:function(pick,cdperson,dom){
                 		var gridDomicilios = pick.up('[xtype=personapoliza]').lookupReference('gridDomicilios');
-                		gridDomicilios.setSelection(dom);
+                		gridDomicilios.setDomiciliosSel(dom.nmorddom-1);
                 		Ice.log("sel dom:",gridDomicilios.setSelection,"---",dom,"|||")
                 	}
                 };

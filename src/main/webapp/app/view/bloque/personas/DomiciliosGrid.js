@@ -72,6 +72,9 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
     },
     
     getDomicilioSel : function(){
-    	this.getController().getDomicilioSel();
+    	return this.getController().getDomicilioSel();
+    },
+    setDomiciliosSel : function(num){
+    	this.getController().setDomiciliosSel(num);
     }
 });

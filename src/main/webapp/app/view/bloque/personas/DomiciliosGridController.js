@@ -36,7 +36,28 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGridController', {
             } else {
                 data = selected.getData();
             }
+			
+			Ice.log(view,"Domicilio sel ::",data);
 			return data;
+		}catch(e){
+			Ice.manejaExcepcion(e,paso);
+		}
+    },
+    setDomiciliosSel : function(num){
+    	var me=this,
+		view = me.getView(),
+		paso = 'Set domicilio sel';
+		try{
+			
+			global3=view;
+			Ice.log("numero grid:",num);
+			 if(Ice.classic()){
+				 view.getSelectionModel().select(num);
+				 alert();
+        	 }else{
+        		 var row = view.select(num);
+        	 }
+			
 		}catch(e){
 			Ice.manejaExcepcion(e,paso);
 		}
