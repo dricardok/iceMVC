@@ -106,7 +106,7 @@ Ext.define('Ice.view.bloque.mesacontrol.FormDetalleTramite', {
 			me.getForm().findField('estatus').setValue(me.getEstatus());
 			me.getForm().findField('cdunieco').setValue(me.getDsunieco());
 			me.getForm().findField('cdramo').setValue(me.getDsramo());
-			me.getForm().findField('nmpoliza').setValue(me.getNmpoliza);
+			me.getForm().findField('nmpoliza').setValue(me.getNmpoliza());
 			me.getForm().findField('nmsolici').setValue(me.getNmsolici());
 			
 			
