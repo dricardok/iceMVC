@@ -68,7 +68,7 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
 	
 	protected class ObtieneMesaControl extends StoredProcedure {
 		protected ObtieneMesaControl(DataSource dataSource) {
-            super(dataSource, "OPS$DHPERNIA.PKG_MESACONTROL.P_GET_TMESACONTROL");
+            super(dataSource, "PKG_MESACONTROL.P_GET_TMESACONTROL");
             declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));

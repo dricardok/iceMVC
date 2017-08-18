@@ -3,126 +3,206 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 	alias: 'controller.gridmesacontrol',
 	
 	
-	onItemClic : function (rec, record) {
-		//Ext.Msg.alert('Recordset seleccionado');
-		Ice.log(rec);
-		Ice.log('Record ', record.data.NTRAMITE);
+	onItemClic : function (rec, record) {		
+		var me = this,
+			view = me.getView(),
+			paso = 'Creando ventana detalle de mesa de control';
 		
-		var ventana = Ext.create('Ice.view.bloque.mesacontrol.VentanaMesaControl', {
+		try {
 			
-			modal: true,
+			var ventana = Ext.create('Ice.view.bloque.mesacontrol.VentanaMesaControl', {
+				
+				modal: true,				
+				
+				platformConfig: {
+			        '!desktop': {
+			            
+			        	scrollable: true
+			        	
+			        },
+			        "desktop" : {
+			        	width: 800
+			        }
+			    },
+				
+				items: [
+					{
+						xtype: 'formdetalletramite',
+						reference: 'formdetalletramite',
+						
+						ntramite: record.data.NTRAMITE,
+						dstipflu: record.data.DSTIPFLU,
+						dsflujomc: record.data.DSFLUJOMC,
+						cdramo: record.data.CDRAMO,
+						dsramo: record.data.DSRAMO,
+						cdunieco: record.data.CDUNIECO,
+						dsunieco: record.data.DSUNIECO,
+						estado: record.data.ESTADO,
+						descripl: record.data.DESCRIPL,
+						nmpoliza: record.data.NMPOLIZA,
+						nmsuplem: record.data.NMSUPLEM,
+						nmsolici: record.data.NMSOLICI,
+						cdsucadm: record.data.CDSUCADM,
+						cdsucdoc: record.data.CDSUCDOC,
+						cdtiptra: record.data.CDTIPTRA,
+						ferecepc: record.data.FERECEPC,
+						cdagente: record.data.CDAGENTE,
+						referencia: record.data.REFERENCIA,
+						nombre: record.data.NOMBRE,
+						fecstatu: record.data.FECSTATU,
+						estatus: record.data.DSESTADOMC,
+								
+						
+						buttons: [{
+							text: 'Documentos',
+							reference: 'formDetalleBtnDocumentos',
+							handler: function (boton) {
+								
+								me.onDocumentosClic(boton);
+							
+							}
+						}, {
+							text: 'Historial',
+							references: 'formDetalleBtnHistorial',
+							handler: function (boton) {
+								
+								me.onHistorialClic(boton);
+							
+							}
+						}, {
+							text: 'Regresar',
+							handler: function () {
+								
+								ventana.cerrar();
+							}
+						}]
+					}
+				]
+			});
 			
+			if(Ice.classic()){
+				ventana.mostrar();
+			} else {
+				Ice.push(ventana);
+			}
 			
-			platformConfig: {
-		        '!desktop': {
-		            
-		        	scrollable: true
-		        	
-		        },
-		        "desktop" : {
-		        	width: 700
-		        }
-		    },
-			
-			items: [
-				{
-					xtype: 'formdetalletramite',
-					reference: 'formdetalletramite',
-					
-					ntramite: record.data.NTRAMITE,
-					dstipflu: record.data.DSTIPFLU,
-					dsflujomc: record.data.DSFLUJOMC,
-					cdramo: record.data.DSRAMO,
-					cdunieco: record.data.DSUNIECO,
-					estado: record.data.DESCRIPL,
-					nmpoliza: record.data.NMPOLIZA,
-					nmsuplem: record.data.NMSUPLEM,
-					nmsolici: record.data.NMSOLICI,
-					cdsucadm: record.data.CDSUCADM,
-					cdsucdoc: record.data.CDSUCDOC,
-					cdtiptra: record.data.CDTIPTRA,
-					ferecepc: record.data.FERECEPC,
-					cdagente: record.data.CDAGENTE,
-					referencia: record.data.REFERENCIA,
-					nombre: record.data.NOMBRE,
-					fecstatu: record.data.FECSTATU,
-					estatus: record.data.DSESTADOMC
-				}
-			],			
-			
-			buttons: [{
-				text: 'Documentos',
-				handler: function () {
-					
-					// TODO:
-					Ext.Msg.alert('Aviso', 'Ver documentos');
-				}
-			}, {
-				text: 'Historial',
-				handler: function () {
-					
-					// TODO:
-					
-					Ext.Msg.alert('Aviso', 'Ver historial');
-				}
-			}]
-		});
-		
-		if(Ice.classic()){
-			ventana.mostrar();
-		} else {
-			Ice.push(ventana);
+		}catch(e) {
+			Ice.generaExcepcion(e, paso);
 		}
-		
 	},
 	
 	onNuevoTramiteClic: function () {
 		
-		var ventana = Ext.create('Ice.view.componente.VentanaIce',  {
-			
-			title: 'Registrar nuevo tramite',
-			width: 500,
-			modal: true,
-			//height: 300,			
-			//layout: 'fit',
+		var me = this,
+			view = me.getView(),
+			paso = 'Manejando el evento onNuevoTramiteClic';
 		
-			items: [
-				{
-					xtype: 'formnuevotramite',
-					reference: 'formnuevotramite'
-				}
-			],
+		try {
+			var ventana = Ext.create('Ice.view.componente.VentanaIce',  {
+				
+				title: 'Registrar nuevo tramite',
+				width: 500,
+				modal: true,
+				//height: 300,			
+				//layout: 'fit',
 			
-			buttons: [
-				{
-					text: 'Continuar',
-					handler: function(){
-												
-						var formulario = Ext.create('Ice.view.bloque.RegistroTramiteWindow', {
-							
-							modal: true,
-							
-							cdtipflu: Ice.query('formnuevotramite').getValues().cdtipflu,
-							cdflujomc: Ice.query('formnuevotramite').getValues().cdflujomc 
-						});
-						ventana.cerrar();
-						formulario.mostrar();
-						
+				items: [
+					{
+						xtype: 'formnuevotramite',
+						reference: 'formnuevotramite'
 					}
-				}, {
-					text: 'Cancelar',
-					handler:  function() {
-						ventana.cerrar();
+				],
+				
+				buttons: [
+					{
+						text: 'Continuar',
+						handler: function() {
+													
+							var formulario = Ext.create('Ice.view.bloque.RegistroTramiteWindow', {
+								
+								modal: true,
+								
+								cdtipflu: Ice.query('formnuevotramite').getValues().cdtipflu,
+								cdflujomc: Ice.query('formnuevotramite').getValues().cdflujomc, 
+								
+								listeners: {
+									'guardartramite' : function (form, ntramite) {
+										
+										/*
+										var boton = view.up().getReferences().formmesacontrol.getReferences().formMesaControlBtnLimpiar;
+										
+										Ice.log('Boton de limpiar', boton);
+										
+										Ice.log(boton.fireEvent('click', boton));
+										*/
+										
+										view.up().getReferences().formmesacontrol.getController().onLimpiarClic();
+										view.up().getReferences().formmesacontrol.getReferences().ntramite.setValue(ntramite);
+										view.up().getReferences().formmesacontrol.getReferences().cdestadomc.setValue(0);
+										view.up().getReferences().formmesacontrol.getController().onBuscarClic();
+									}
+								}
+							});
+							ventana.cerrar();
+							formulario.mostrar();
+							
+						}
+					}, {
+						text: 'Cancelar',
+						handler:  function() {
+							ventana.cerrar();
+						}
 					}
-				}
-			]
-		});
+				]
+			});
+			
+			if(Ice.classic()){
+				ventana.mostrar();
+			} else {
+				Ice.push(ventana);
+			}
+			
+		}catch(e){
+			Ice.generaExcepcion(e, paso);
+		}		
+	},
+	
+	onDocumentosClic: function (boton) {
 		
-		if(Ice.classic()){
-			ventana.mostrar();
-		} else {
-			Ice.push(ventana);
+		var me = this,
+			view = me.getView(),
+			paso = 'onMostrarDocumentos de formDetalleTramite';
+		try {
+			var formDetalle = boton.up().up();			
+			
+			var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos', {
+                cdunieco: formDetalle.getCdunieco(),
+                cdramo: formDetalle.getCdramo(),
+                estado: formDetalle.getEstado(),
+                nmpoliza: formDetalle.getNmpoliza()
+            });
+        	ventanaDocs.mostrar();
+			
+		}catch(e) {
+			Ice.generaExcepcion(e, paso);
+		}
+	},
+	
+	onHistorialClic: function (boton) {
+		var me = this,
+		view = me.getView(),
+		paso = 'onMostrarDocumentos de formDetalleTramite';
+		try {
+			
+			var formDetalle = boton.up().up();
+			
+			var ventanaHistorial = Ext.create('Ice.view.bloque.documentos.historial.HistorialPanel', {
+				ntramite: formDetalle.getNtramite()
+			});
+			ventanaHistorial.mostrar();
+			
+		}catch(e){
+			
 		}
 	}
-	
 });

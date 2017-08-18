@@ -4,6 +4,7 @@ Ext.define('Ice.view.bloque.mesacontrol.FormMesaControlController', {
 	
 	
 	onBuscarClic: function () {
+		
 		Ice.log('Ice.view.bloque.mesacontrol.FormMesaControlController.onBuscarClic');
 		var view = this.getView(),
 			grid = view.up().getReferences().gridmesacontrol,
@@ -16,7 +17,9 @@ Ext.define('Ice.view.bloque.mesacontrol.FormMesaControlController', {
 		try{
 			Ice.log('referencias', view.getReferences());
 			
-//			storegrid.removeAll();
+			if(Ice.classic()) {
+				storegrid.removeAll();
+			}
 			storegrid.load({
 				params: {
 					'params.cdunieco':formRefs.cdunieco.getValue(),
@@ -38,6 +41,7 @@ Ext.define('Ice.view.bloque.mesacontrol.FormMesaControlController', {
 	},
 	
 	onLimpiarClic: function () {
+		
 		Ice.log('Ice.view.bloque.mesacontrol.FormMesaControlController.onLimpiarClic');
 		var view = this.getView(),
 			formRefs = view.getReferences(),

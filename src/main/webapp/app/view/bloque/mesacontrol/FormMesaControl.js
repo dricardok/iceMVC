@@ -9,10 +9,12 @@ Ext.define('Ice.view.bloque.mesacontrol.FormMesaControl', {
 	buttons: [
 		{
 			text: 'Buscar',
+			reference: 'formMesaControlBtnBuscar',
             handler: 'onBuscarClic'
         },
         {
         	text: 'Limpiar',
+        	reference: 'formMesaControlBtnLimpiar',
         	handler: 'onLimpiarClic'
         }
 	],

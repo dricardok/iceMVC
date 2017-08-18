@@ -8,7 +8,9 @@ Ext.define('Ice.view.bloque.mesacontrol.FormDetalleTramite', {
 		dstipflu: null,
 		dsflujomc: null,
 		cdunieco: null,
+		dsunieco: null,
 		estado: null,
+		descripl: null,
 		nmpoliza: null,
 		nmsuplem: null,
 		nmsolici: null,
@@ -20,6 +22,7 @@ Ext.define('Ice.view.bloque.mesacontrol.FormDetalleTramite', {
 		referencia: null,
 		nombre: null,
 		cdramo: null,
+		dsramo: null,
 		fecstatu: null,
 		estatus: null
 	},
@@ -101,10 +104,10 @@ Ext.define('Ice.view.bloque.mesacontrol.FormDetalleTramite', {
 			me.getForm().findField('dstipflu').setValue(me.getDstipflu());
 			me.getForm().findField('dsflujomc').setValue(me.getDsflujomc());
 			me.getForm().findField('estatus').setValue(me.getEstatus());
-			me.getForm().findField('cdunieco').setValue(me.cdunieco);
-			me.getForm().findField('cdramo').setValue(me.cdramo);
-			me.getForm().findField('nmpoliza').setValue(me.nmpoliza);
-			me.getForm().findField('nmsolici').setValue(me.nmsolici);
+			me.getForm().findField('cdunieco').setValue(me.getDsunieco());
+			me.getForm().findField('cdramo').setValue(me.getDsramo());
+			me.getForm().findField('nmpoliza').setValue(me.getNmpoliza);
+			me.getForm().findField('nmsolici').setValue(me.getNmsolici());
 			
 			
 		}catch(e){
@@ -127,8 +130,8 @@ Ext.define('Ice.view.bloque.mesacontrol.FormDetalleTramite', {
 			me.getReferences().dstipflu.setValue(me.getDstipflu());
 			me.getReferences().dsflujomc.setValue(me.getDsflujomc());
 			me.getReferences().estatus.setValue(me.getEstatus());
-			me.getReferences().cdunieco.setValue(me.getCdunieco());
-			me.getReferences().cdramo.setValue(me.getCdramo());
+			me.getReferences().cdunieco.setValue(me.getDsunieco());
+			me.getReferences().cdramo.setValue(me.getDsramo());
 			me.getReferences().nmpoliza.setValue(me.getNmpoliza());
 			me.getReferences().nmsolici.setValue(me.getNmsolici());
 			
