@@ -59,8 +59,10 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 			paso="Creando  usuario";
 			if(usuarioValido){
 				usuario= usuarioDAO.obtieneRolesCliente(user);
+			}else{
+				throw new ApplicationException("Credenciales incorrectas.");
 			}
-			if(usuario==null || usuario.getRoles()==null){
+			if( usuario.getRoles()==null){
 				throw new ApplicationException("Usted no posee un rol asociado, por favor contacte al administrador");
 			}
 			
