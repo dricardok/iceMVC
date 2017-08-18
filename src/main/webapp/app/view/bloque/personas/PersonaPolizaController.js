@@ -41,16 +41,17 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
             cdperson.on({
                 change: function(){
                     Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdperson.change ',cdperson.getValue());
-                    if(cdperson.getValue()){
-                        refs.gridDomicilios.getStore().load({
-                            params: {
-                                'params.cdperson': cdperson.getValue()
-                            }
-                        });
-                        refs.gridDomicilios.show();
-                    }
+                   
                 }
             });
+            if(cdperson.getValue()){
+                refs.gridDomicilios.getStore().load({
+                    params: {
+                        'params.cdperson': cdperson.getValue()
+                    }
+                });
+                refs.gridDomicilios.show();
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

@@ -46,8 +46,20 @@ Ext.define('Ice.view.bloque.personas.PersonaRol', {
             	cdperson.listeners = {
                 	personachange:function(pick,cdperson,dom){
                 		var gridDomicilios = pick.up('[xtype=personapoliza]').lookupReference('gridDomicilios');
-                		gridDomicilios.setDomiciliosSel(dom.nmorddom-1);
-                		Ice.log("sel dom:",gridDomicilios.setSelection,"---",dom,"|||")
+                		
+                		Ice.log("sel dom:",gridDomicilios.setSelection,"---",dom,"|||",cdperson,"**");
+                		 if(cdperson){
+                             gridDomicilios.getStore().load({
+                                 params: {
+                                     'params.cdperson': cdperson
+                                 },
+                                 callback:function(rec,op,s){
+                                	 gridDomicilios.setDomiciliosSel(dom.nmorddom-1);
+                                 }
+                             });
+                             gridDomicilios.show();
+                         }
+                		 
                 	}
                 };
             	
