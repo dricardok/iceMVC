@@ -613,7 +613,8 @@ K                   ENCOLAR CON DATOS ORIGINALES
                         status,
                         fechaHoy,
                         cdusuariDes,
-                        cdunieco);
+                        cdunieco,
+                        cdsisrolDes);
                 
                 paso = "Cerrando historial anterior";
                 logger.debug(paso);
@@ -682,7 +683,7 @@ K                   ENCOLAR CON DATOS ORIGINALES
                 
                 paso = "Rechazando tr\u00e1mite";
                 logger.debug(paso);
-                flujoMesaControlDAO.actualizarStatusTramite(ntramite, status, fechaHoy, null, null);
+                flujoMesaControlDAO.actualizarStatusTramite(ntramite, status, fechaHoy, null, null, null);
                 
                 if (StringUtils.isNotBlank(cdrazrecha)) {
                     paso = "Marcando motivo de rechazo";
@@ -752,7 +753,8 @@ K                   ENCOLAR CON DATOS ORIGINALES
                         status,
                         fechaHoy,
                         cdusuariDes,
-                        cdunieco);
+                        cdunieco,
+                        cdsisrolDes);
                 
                 paso = "Cerrando historial anterior";
                 logger.debug(paso);
@@ -1102,7 +1104,8 @@ K                   ENCOLAR CON DATOS ORIGINALES
                     destino.getStatus(),
                     fechaHoy,
                     destino.getCdusuari(),
-                    destino.getCdunieco()
+                    destino.getCdunieco(),
+                    destino.getCdsisrol()
                     );
             
             paso = "Cerrando historial anterior";

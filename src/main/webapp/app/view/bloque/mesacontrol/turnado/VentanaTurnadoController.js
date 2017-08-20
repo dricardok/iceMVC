@@ -26,8 +26,8 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnadoController', {
                 mascara: 'Turnando tramite',
                 url: Ice.url.bloque.mesacontrol.turnar,
                 params: {
-                    'params.ntramite' : view.getNtramite(),
-                    'params.status': view.getStatus(),
+                    'params.ntramite' : view.getFlujo().ntramite,
+                    'params.status': view.getFlujo().status,
                     'params.comments': values.comments,
                     'params.cdrazrecha': view.getCdrazrecha(),
                     'params.cdusuariDes': view.getCdusuariDes(),

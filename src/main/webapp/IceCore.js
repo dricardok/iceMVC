@@ -32,6 +32,9 @@ var Ice = (
             },
             boton: {
                 fontSize: '0.7em'
+            },
+            ventana: {
+                width: 800
             }
         },
     

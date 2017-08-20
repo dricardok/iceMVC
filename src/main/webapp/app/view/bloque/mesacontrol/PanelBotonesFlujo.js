@@ -39,8 +39,7 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
             config.title = 'Acciones del tr\u00e1mite ' + Ice.nvl(config.flujo.ntramite);
 
             me.callParent(arguments);
-            if (!config.flujo.cdtipflu || !config.flujo.cdflujomc || !config.flujo.tipoent || !config.flujo.claveent ||
-                !config.flujo.webid) {
+            if (!config.flujo.cdtipflu || !config.flujo.cdflujomc || !config.flujo.tipoent || !config.flujo.claveent) {
                 return;
             }
             Ice.cargarAccionesEntidad(config.flujo.cdtipflu, config.flujo.cdflujomc, config.flujo.tipoent, config.flujo.claveent,

@@ -1,9 +1,7 @@
 package mx.com.segurossura.mesacontrol.dao.impl;
 
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +22,6 @@ import com.biosnettcs.core.dao.OracleTypes;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
 
 import mx.com.segurossura.mesacontrol.dao.MesaControlDAO;
-import mx.com.segurossura.mesacontrol.dao.impl.HistorialDAOImpl.movimientoTdmesacontrolSP;
 
 @Repository("mesaControlDAOImplNew")
 public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO {
@@ -458,7 +455,7 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
         }
     }
     @Override
-    public boolean existePoliza(String cdunieco, String cdramo, String estado, String nmpoliza)
+    public String existePoliza(String cdunieco, String cdramo, String estado, String nmpoliza)
             throws Exception {
         
         Map<String, Object> params = new LinkedHashMap<String, Object>();       
@@ -467,7 +464,7 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
         params.put("pv_estado_i", estado);
         params.put("pv_nmpoliza_i", nmpoliza);
         Map<String, Object> resultado = ejecutaSP(new ExistePolizaF(getDataSource()), params);
-        return "S".equals(resultado.get("v_return"));
+        return (String) resultado.get("v_return");
         //return true;
     }
     

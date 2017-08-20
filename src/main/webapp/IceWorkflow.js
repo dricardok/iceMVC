@@ -246,21 +246,26 @@ var Ice = (
                             paso2 = 'Creando componente';
                             // Ext.syncRequire(_GLOBAL_DIRECTORIO_DEFINES+compData.NOMCOMP);
                             Ext.create({
-                                xtype     : compData.NOMCOMP,
-                                ntramite  : ntramite,
-                                status    : status,
-                                cdtipflu  : cdtipflu,
-                                cdflujomc : cdflujomc,
-                                tipoent   : tipodest,
-                                claveent  : clavedest,
-                                webid     : webiddest,
-                                cdunieco  : cdunieco,
-                                cdramo    : cdramo,
-                                estado    : estado,
-                                nmpoliza  : nmpoliza,
-                                nmsituac  : nmsituac,
-                                nmsuplem  : nmsuplem,
-                                aux       : aux
+                                xtype: compData.NOMCOMP,
+                                flujo: {
+                                    ntramite  : ntramite,
+                                    status    : status,
+                                    cdtipflu  : cdtipflu,
+                                    cdflujomc : cdflujomc,
+
+                                    tipoent   : tipodest,
+                                    claveent  : clavedest,
+                                    webid     : webiddest,
+
+                                    cdunieco  : cdunieco,
+                                    cdramo    : cdramo,
+                                    estado    : estado,
+                                    nmpoliza  : nmpoliza,
+                                    nmsituac  : nmsituac,
+                                    nmsuplem  : nmsuplem,
+                                    
+                                    aux       : aux
+                                }
                             }).mostrar();
                         } catch(e) {
                             Ice.manejaExcepcion(e, paso2);
@@ -526,6 +531,7 @@ var Ice = (
                                                 'flujo.nmpoliza'    : nmpoliza,
                                                 'flujo.nmsituac'    : nmsituac,
                                                 'flujo.nmsuplem'    : nmsuplem,
+                                                'flujo.aux'         : aux,
                                                 'params.cdvalidafk' : data.CDVALIDAFK
                                             },
                                             success: function (json) {

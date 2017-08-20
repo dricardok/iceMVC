@@ -26,5 +26,5 @@ public interface MesaControlDAO {
 			String renpoliex, String sworigenmesa, String cdrazrecha, String cdunidspch, String ntrasust,
 			String cdsisrol, String accion) throws Exception;
 
-	public boolean existePoliza(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
+	public String existePoliza(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
 }
