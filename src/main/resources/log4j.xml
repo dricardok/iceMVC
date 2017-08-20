@@ -6,7 +6,7 @@
     <!-- Developer Appender (Ver todo) -->
     <appender name="dev" class="org.apache.log4j.RollingFileAppender">
         <param name="Threshold" value="DEBUG" />
-        <param name="File" value="${logs.path}/ice/dev.log" />
+        <param name="File" value="${logs.path}/cotizadores/mvc/dev.log" />
         <param name="Append" value="true" />
         <param name="MaxFileSize" value="50MB"/>
         <param name="MaxBackupIndex" value="10"/>
@@ -18,7 +18,7 @@
     <!-- Error Appender (Errores) -->
     <appender name="err" class="org.apache.log4j.RollingFileAppender">
         <param name="Threshold" value="WARN" />
-        <param name="File" value="${logs.path}/ice/err.log" />
+        <param name="File" value="${logs.path}/cotizadores/mvc/err.log" />
         <param name="Append" value="true" />
         <param name="MaxFileSize" value="50MB"/>
         <param name="MaxBackupIndex" value="10"/>
@@ -30,7 +30,7 @@
     <!-- SQL Appender (Sentencias SQL) -->
     <appender name="sql" class="org.apache.log4j.RollingFileAppender">
         <param name="Threshold" value="INFO" />
-        <param name="File" value="${logs.path}/ice/sql.log" />
+        <param name="File" value="${logs.path}/cotizadores/mvc/sql.log" />
         <param name="Append" value="true" />
         <param name="MaxFileSize" value="50MB"/>
         <param name="MaxBackupIndex" value="10"/>

@@ -371,6 +371,11 @@ public class CatalogosManagerImpl implements CatalogosManager {
                         lista.add(new BaseVO(tipoRamoIterado.get("CDTIPRAM"), tipoRamoIterado.get("DSTIPRAM")));
                     }
                     break;
+                case MOTIVOS_RECHAZO_TRAMITE:
+                    List<Map<String, String>> listaMotivosRechazo = catalogosDAO.recuperarMotivosRechazo(params.get("ntramite"));
+                    for(Map<String, String> motivoRechazo : listaMotivosRechazo){
+                        lista.add(new BaseVO(motivoRechazo.get("CDRAZRECHA"), motivoRechazo.get("DSRAZRECHA")));
+                    }
                 case TTIPFLUMC_ROL_USR:
                 	if (params == null) {
                         params = new HashMap<String, String>();

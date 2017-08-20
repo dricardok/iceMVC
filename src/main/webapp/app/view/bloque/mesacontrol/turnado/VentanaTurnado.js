@@ -53,8 +53,8 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado', {
             // config.status = config.status.toUpperCase();
 
             var comps = Ice.generaComponentes({
-                pantalla: 'TURNADO',
-                seccion: 'COMENTARIOS',
+                pantalla: 'TRAMITE',
+                seccion: 'TURNADO',
                 columns: true,
                 items: true,
                 fields: true,
@@ -65,10 +65,10 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado', {
                 {
                     xtype: 'formice',
                     reference: 'form',
-                    items: comps.TURNADO.COMENTARIOS.items,
-                    modelFields: comps.TURNADO.COMENTARIOS.fields,
-                    modelValidators: comps.TURNADO.COMENTARIOS.validators,
-                    iceEvents: comps.TURNADO.COMENTARIOS.eventos,
+                    items: comps.TRAMITE.TURNADO.items,
+                    modelFields: comps.TRAMITE.TURNADO.fields,
+                    modelValidators: comps.TRAMITE.TURNADO.validators,
+                    iceEvents: comps.TRAMITE.TURNADO.eventos,
                     buttons: [
                         {
                             text: 'Turnar',
