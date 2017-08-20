@@ -9,11 +9,14 @@ Ext.define('Ice.view.bloque.mesacontrol.FormMesaControl', {
 	buttons: [
 		{
 			text: 'Buscar',
+			iconCls: 'x-fa fa-search',
 			reference: 'formMesaControlBtnBuscar',
             handler: 'onBuscarClic'
         },
         {
         	text: 'Limpiar',
+        	iconCls: 'x-fa fa-filter',
+        	//iconCls: 'x-fa fa-bar-chart',
         	reference: 'formMesaControlBtnLimpiar',
         	handler: 'onLimpiarClic'
         }
