@@ -30,7 +30,8 @@ public enum Catalogos {
     GRUPOS_X_PUNTOVENTA_RAMO(""),
     SUBGRUPOS_X_PUNTOVENTA_RAMO(""),
     PERFILESTARIFA_X_PUNTOVENTA_SUBGRUPO_RAMO(""),
-    SUCURSAL_DE_PUNTO_VENTA("");
+    SUCURSAL_DE_PUNTO_VENTA(""),
+    MOTIVOS_RECHAZO_TRAMITE("");
     
     private String cdtabla;
     

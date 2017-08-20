@@ -1,10 +1,10 @@
 /**
- * Created by DEORTIZT on 16/08/2017.
+ * Created by DEORTIZT on 18/08/2017.
  */
-Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado', {   
+Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaRechazo', {   
     extend: 'Ice.view.componente.PanelIce',
-    xtype: 'ventanaturnado',    
-    controller: 'ventanaturnado',
+    xtype: 'ventanarechazo',    
+    controller: 'ventanarechazo',
 
     // config ext
     title: 'Turnado',
@@ -34,40 +34,45 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado', {
     
     // validacion de parametros de entrada
     constructor: function (config) {
-        Ice.log('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado.constructor config:', config);
+        Ice.log('Ice.view.bloque.mesacontrol.turnado.VentanaRechazo.constructor config:', config);
         var me = this,
-            paso = 'Validando construcci\u00f3n de ventana de turnado';
+            paso = 'Validando construcci\u00f3n de ventana de rechazo';
         try {
             if (!config) {
-                throw 'No hay datos para ventana de turnado';
+                throw 'No hay datos para ventana de rechazo';
             }
             
             if (!config.ntramite) {
-                throw 'Falta numero de tramite para ventana de turnado';
+                throw 'Falta numero de tramite para ventana de rechazo';
             }
             
             config.status = config.status.toUpperCase();
 
             var comps = Ice.generaComponentes({
                 pantalla: 'TRAMITE',
-                seccion: 'TURNADO',
+                seccion: 'RECHAZO',
                 columns: true,
                 items: true,
                 fields: true,
                 validators: true
             });
 
+            var cdrazrecha = Ice.query('[name=cdrazrecha]',comps.TRAMITE.RECHAZO.items);
+            cdrazrecha['param1'] = 'params.ntramite';
+            cdrazrecha['value1'] = config.ntramite;
+            Ice.log('componentes ',cdrazrecha);
+
             config.items = [
                 {
                     xtype: 'formice',
                     reference: 'form',
-                    items: comps.TRAMITE.TURNADO.items,
-                    modelFields: comps.TRAMITE.TURNADO.fields,
-                    modelValidators: comps.TRAMITE.TURNADO.validators,
-                    iceEvents: comps.TRAMITE.TURNADO.eventos,
+                    items: comps.TRAMITE.RECHAZO.items,
+                    modelFields: comps.TRAMITE.RECHAZO.fields,
+                    modelValidators: comps.TRAMITE.RECHAZO.validators,
+                    iceEvents: comps.TRAMITE.RECHAZO.eventos,
                     buttons: [
                         {
-                            text: 'Turnar',
+                            text: 'Rechazar',
                             handler: 'onTurnar'
                         }
                     ]

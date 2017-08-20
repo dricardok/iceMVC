@@ -1,28 +1,28 @@
 /**
  * Created by DEORTIZT on 16/08/2017.
  */
-Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnadoController', {
+Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaRechazoController', {
 	extend: 'Ext.app.ViewController',
-	alias: 'controller.ventanaturnado',
+	alias: 'controller.ventanarechazo',
     
     custom: function(){
-        Ice.log('Ice.view.bloque.mesacontrol.turnado.VentanaTurnadoController custom');
+        Ice.log('Ice.view.bloque.mesacontrol.turnado.VentanaRechazoController custom');
     },
     
     onTurnar: function(){
         this.turnar();
     },
     
-    turnar: function(){
-        Ice.log('Ice.view.bloque.mesacontrol.turnado.turnar custom');
-        var paso = 'Turnando tramite',
+    rechazar: function(){
+        Ice.log('Ice.view.bloque.mesacontrol.turnado.rechazar custom');
+        var paso = 'Rechazando tramite',
             me = this,
             view = me.getView(),
             refs = view.getReferences();
         try{
             var values = refs.form.getValues();
             Ice.log('values de form ',values);
-            Ice.request({
+            /*Ice.request({
                 mascara: 'Turnando tramite',
                 url: Ice.url.bloque.mesacontrol.turnar,
                 params: {
@@ -48,7 +48,7 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnadoController', {
                         Ice.generaExcepcion(e, paso2);
                     }
                 }
-            });
+            });*/
         } catch(e) {
             Ice.generaExcepcion(e, paso);
         }
