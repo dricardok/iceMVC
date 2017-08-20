@@ -1895,16 +1895,16 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 			
 			String //cdtipflu    = params.get("CDTIPFLU"),
 			       //cdflujomc   = params.get("CDFLUJOMC"),
-			       ntramite    = params.get("NTRAMITE"),
+			       ntramite    = params.get("ntramite"),
 			       //statusOld   = params.get("STATUSOLD"),
-			       statusNew   = params.get("STATUSNEW"),
-			       swagente    = params.get("SWAGENTE"),
-			       comments    = params.get("COMMENTS"),
-			       cdrazrecha  = params.get("CDRAZRECHA"),
-			       cdusuariDes = params.get("CDUSUARI_DES"),
-			       cdsisrolDes = params.get("CDSISROL_DES"),
-			       ntrasust    = params.get("NTRASUST"),
-			       correos     = params.get("CORREOS");
+			       statusNew   = params.get("status"),
+			       swagente    = params.get("swagente"),
+			       comments    = params.get("comments"),
+			       cdrazrecha  = params.get("cdrazrecha"),
+			       cdusuariDes = params.get("cdusuariDes"),
+			       cdsisrolDes = params.get("cdsisrolDes"),
+			       ntrasust    = params.get("ntrasust"),
+			       correos     = params.get("correos");
 			
 			boolean //cerrado              = "S".equals(params.get("cerrado")),
 			        soloCorreosRecibidos = "S".equals(params.get("SOLO_CORREOS_RECIBIDOS"));
