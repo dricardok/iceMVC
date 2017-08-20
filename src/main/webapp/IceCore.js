@@ -2306,5 +2306,17 @@ var Ice = (
         params['flujo.nmsuplem']  = flujo.nmsuplem;
         params['flujo.aux']       = flujo.aux;
         return params;
+    },
+
+    /**
+     * Recibe n parametros,
+     * vienen en pares, el i es un objeto, el i+1 es el error para cuando el objeto este vacio
+     */
+    validate: function () {
+        for (var i = 0; i < arguments.length; i = i + 2) {
+            if (Ext.isEmpty(arguments[i])) {
+                throw arguments[i + 1];
+            }
+        }
     }
 });

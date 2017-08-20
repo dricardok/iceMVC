@@ -21,13 +21,13 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
     		itemsPerPage: 50,
     		estatus: -1
     	}
-    ],
+    ]
     
-    constructor: function(config) {
-    	Ice.log('Ice.view.mesacontrol.MesaControl.constructor config:', config);
-        this.callParent(arguments);
-        //Ice.generaComponentes();
-        Ice.query('#mainView').getController().redirectTo('accesocotizacion.action');
-        return;
-    }
+    // constructor: function(config) {
+    // 	Ice.log('Ice.view.mesacontrol.MesaControl.constructor config:', config);
+    //     this.callParent(arguments);
+    //     //Ice.generaComponentes();
+    //     Ice.query('#mainView').getController().redirectTo('accesocotizacion.action');
+    //     return;
+    // }
 });
