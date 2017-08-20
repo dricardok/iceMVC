@@ -21,6 +21,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 			        	
 			        },
 			        "desktop" : {
+			        	
 			        	width: 800
 			        }
 			    },
@@ -55,6 +56,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 						
 						buttons: [{
 							text: 'Documentos',
+							iconCls: 'x-fa fa-files-o',
 							reference: 'formDetalleBtnDocumentos',
 							handler: function (boton) {
 								
@@ -63,6 +65,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 							}
 						}, {
 							text: 'Historial',
+							iconCls: 'x-fa fa-bar-chart',
 							references: 'formDetalleBtnHistorial',
 							handler: function (boton) {
 								
@@ -71,6 +74,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 							}
 						}, {
 							text: 'Regresar',
+							iconCls: 'x-fa fa-close',
 							handler: function () {
 								
 								ventana.cerrar();
@@ -116,6 +120,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 				buttons: [
 					{
 						text: 'Continuar',
+						iconCls: 'x-fa fa-arrow-right',
 						handler: function() {
 													
 							var formulario = Ext.create('Ice.view.bloque.RegistroTramiteWindow', {
@@ -149,6 +154,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 						}
 					}, {
 						text: 'Cancelar',
+						iconCls: 'x-fa fa-close',
 						handler:  function() {
 							ventana.cerrar();
 						}
@@ -202,7 +208,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 			ventanaHistorial.mostrar();
 			
 		}catch(e){
-			
+			Ice.generaExcepcion(e, paso);
 		}
 	}
 });

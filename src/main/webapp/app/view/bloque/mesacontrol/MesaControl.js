@@ -1,9 +1,15 @@
 Ext.define('Ice.view.mesacontrol.MesaControl', {
-    extend: 'Ice.view.componente.PanelIce',
+    extend: 'Ice.view.componente.PanelPaddingIce',
     xtype: 'mesacontrol',
     title: 'Mesa de control',
     
-    //scrollable: true,
+    platformConfig: {
+        '!desktop': {
+            
+        	scrollable: true
+        	
+        }
+    },
     
     requires: [
     	'Ice.view.bloque.mesacontrol.FormMesaControl'
@@ -23,11 +29,12 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
     	}
     ],
     
+    /*
     constructor: function(config) {
     	Ice.log('Ice.view.mesacontrol.MesaControl.constructor config:', config);
         this.callParent(arguments);
         //Ice.generaComponentes();
         Ice.query('#mainView').getController().redirectTo('accesocotizacion.action');
         return;
-    }
+    }*/
 });
