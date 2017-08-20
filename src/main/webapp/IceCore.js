@@ -181,15 +181,29 @@ var Ice = (
             		movimientoThmesacontrol:'mesacontrol/historial/movimientoTdmesacontrol.action'
             	},
             	
-            	turnar: 'despachador/turnarTramite.action',
-            	pantallaExterna: 'flujomesacontrol/pantallaExterna.action',
-            	cargarAccionesEntidad: 'flujomesacontrol/cargarAccionesEntidad.action'
+            	turnar                        : 'flujomesacontrol/turnarTramite.action',
+            	pantallaExterna               : 'flujomesacontrol/pantallaExterna.action',
+                cargarAccionesEntidad         : 'flujomesacontrol/cargarAccionesEntidad.action',
+                ejecutarValidacion            : 'flujomesacontrol/ejecutaValidacion.action',
+                obtenerDatosValidacionCliente : 'flujomesacontrol/recuperarDatosTramiteValidacionCliente.action',
+                ejecutarRevision              : 'flujomesacontrol/ejecutaRevision.action',
+                marcarRevisionConfirmada      : 'flujomesacontrol/marcarRevisionConfirmada.action',
+                marcarRequisitoRevision       : 'flujomesacontrol/marcarRequisitoRevision.action',
+                subirArchivoRequisito         : 'documentos/subirArchivoRequisito.action',
+                enviaCorreoFlujo              : 'flujomesacontrol/enviaCorreoFlujo.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
                 guardar: 'emision/datosAuxiliares/guardarDatosAuxiliares.action'
             }
         }
+    },
+
+    /**
+     * Rutas para los archivos, no son url, son rutas locales relativas al contexto
+     */
+    ruta: {
+        iconos: 'res/images/fam3icons/icons/'
     },
 
     /**
@@ -236,6 +250,10 @@ var Ice = (
                 case 9:
                     console.log(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4],
                         arguments[5], arguments[6], arguments[7], arguments[8]);
+                    break;
+                case 10:
+                    console.log(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4],
+                        arguments[5], arguments[6], arguments[7], arguments[8], arguments[9]);
                     break;
                 default:
                     console.log(arguments);
@@ -2230,5 +2248,63 @@ var Ice = (
             return !Ext.isEmpty(valor) ? valor : '';
         }
         return origen;
+    },
+
+    /**
+     * Se crea el objeto flujo desde un mapa de parametros
+     * puede venir directo flujo: {}
+     * puede venir en llaves flujo.cdtipflu=1, flujo.cd...
+     * puede no venir
+     */
+    validarParamFlujo: function (params) {
+        Ice.log('Ice.validarParamFlujo params:', params);
+        var paso = 'Validando flujo en par\u00e1metros',
+            flujo = {};
+        try {
+            params = params || {};
+            params.flujo = params.flujo || {};
+            flujo = {
+                ntramite  : params.flujo.ntramite  || params['flujo.ntramite'],
+                status    : params.flujo.status    || params['flujo.status'],
+                cdtipflu  : params.flujo.cdtipflu  || params['flujo.cdtipflu'],
+                cdflujomc : params.flujo.cdflujomc || params['flujo.cdflujomc'],
+                webid     : params.flujo.webid     || params['flujo.webid'],
+                tipoent   : (params.flujo.tipoent  || params['flujo.tipoent'] || '').toUpperCase(),
+                claveent  : params.flujo.claveent  || params['flujo.claveent'],
+                cdunieco  : params.flujo.cdunieco  || params['flujo.cdunieco'],
+                cdramo    : params.flujo.cdramo    || params['flujo.cdramo'],
+                estado    : (params.flujo.estado   || params['flujo.estado'] || '').toUpperCase(),
+                nmpoliza  : params.flujo.nmpoliza  || params['flujo.nmpoliza'],
+                nmsituac  : params.flujo.nmsituac  || params['flujo.nmsituac'],
+                nmsuplem  : params.flujo.nmsuplem  || params['flujo.nmsuplem'],
+                aux       : params.flujo.aux       || params['flujo.aux']
+            };
+        } catch (e) {
+            Utils.generaExcepcion(e, paso);
+        }
+        return flujo;
+    },
+
+    flujoToParams: function (flujo, paramsEntrada) {
+        Ice.log('Ice.flujoToParams args:', arguments);
+        var params = {};
+        if (!Ext.isEmpty(paramsEntrada)) {
+            params = paramsEntrada;
+        }
+        params['flujo.ntramite']  = flujo.ntramite;
+        params['flujo.status']    = flujo.status;
+        params['flujo.cdtipflu']  = flujo.cdtipflu;
+        params['flujo.cdflujomc'] = flujo.cdflujomc;
+        params['flujo.webid']     = flujo.webid;
+        params['flujo.tipoent']   = flujo.tipoent;
+        params['flujo.claveent']  = flujo.claveent;
+        params['flujo.cdunieco']  = flujo.cdunieco;
+        params['flujo.cdramo']    = flujo.cdramo;
+        params['flujo.estado']    = flujo.estado;
+        params['flujo.nmpoliza']  = flujo.nmpoliza;
+        params['flujo.nmsituac']  = flujo.nmsituac;
+        params['flujo.nmsuplem']  = flujo.nmsuplem;
+        params['flujo.aux']       = flujo.aux;
+        return params;
     }
 });

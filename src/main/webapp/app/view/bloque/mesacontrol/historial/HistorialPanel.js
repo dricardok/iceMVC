@@ -197,6 +197,20 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 							text		:	"Fin",	
 							flex		:	1.5,
 							dataIndex	:	"fefecha_fin",
+							renderer	:	function(dat,rm,record){
+								var paso='Render tiempo grid turnados',
+									fefin,feini ;
+								try{
+									
+							        if(!dat || dat=='null'){
+							        	dat=Ext.Date.format(new Date() ,"d/m/Y H:i");
+							        }
+							        return dat;
+								}catch(e){
+									Ice.manejaExcepcion(e,paso);
+								}
+								
+							}
 							
 						}
 						,
@@ -214,6 +228,9 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 									}else{
 										fefin = rm.get("fefecha_fin");
 										feini = rm.get("fefecha");
+									}
+									if(!fefin || fefin=='null'){
+										fefin=Ext.Date.format(new Date() ,"d/m/Y H:i");
 									}
 									var nfecha=(Number(
 											Ext.Date.parse(fefin, "d/m/Y H:i").getTime()

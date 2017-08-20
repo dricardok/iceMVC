@@ -53,7 +53,7 @@ public class AuthenticationAction extends PrincipalCoreAction {
 	    )
 	public String validaUsuario(){
 		logger.debug(StringUtils.join(
-				 "\n###################"
+				 "\n###########################"
 				,"\n###### validaUsuario ######"
 				));
 		

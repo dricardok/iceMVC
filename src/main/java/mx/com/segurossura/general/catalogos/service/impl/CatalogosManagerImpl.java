@@ -277,7 +277,7 @@ public class CatalogosManagerImpl implements CatalogosManager {
                 	    lista.add(new BaseVO("-1", "TAREAS PENDIENTES"));
                 	    lista.add(new BaseVO("0", "TODOS"));
                         for (Map<String, String> registro: estatusTramite) {
-                            lista.add(new BaseVO(registro.get("estatus"), registro.get("dsestadomc")));
+                            lista.add(new BaseVO(registro.get("cdestadomc"), registro.get("dsestadomc")));
                         }
                     }
                     break;
@@ -376,6 +376,26 @@ public class CatalogosManagerImpl implements CatalogosManager {
                     for(Map<String, String> motivoRechazo : listaMotivosRechazo){
                         lista.add(new BaseVO(motivoRechazo.get("CDRAZRECHA"), motivoRechazo.get("DSRAZRECHA")));
                     }
+                case TTIPFLUMC_ROL_USR:
+                	if (params == null) {
+                        params = new HashMap<String, String>();
+                    }
+                	List<Map<String, String>> listaTiposFlujo = flujoMesaControlDAO.recuperarTtipflumcPorRolPorUsuario(params.get("agrupamc"), cdsisrol, cdusuari);
+                	lista = new ArrayList<BaseVO>();
+                    for (Map<String, String> tipoFlujo : listaTiposFlujo) {
+                        lista.add(new BaseVO(tipoFlujo.get("CDTIPFLU"), tipoFlujo.get("DSTIPFLU")));
+                    }
+					break;
+				case TFLUJOMC_X_ROL_USR:
+					if (params == null) {
+                        params = new HashMap<String, String>();
+                    }
+					List<Map<String, String>> listaFlujos = flujoMesaControlDAO.recuperaTflujomcPorRolPorUsuario(params.get("idPadre"), params.get("swfinal"), cdsisrol, cdusuari);
+					lista = new ArrayList<BaseVO>();
+                    for (Map<String, String> flujo : listaFlujos) {
+                        lista.add(new BaseVO(flujo.get("CDFLUJOMC"), flujo.get("DSFLUJOMC")));
+                    }
+					break;
                 default:
                     throw new ApplicationException(Utils.join("No existe el cat\u00e1logo ", catalogo));
                 }

@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -31,8 +34,8 @@ import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.emision.dao.PersonasPolizaDAO;
 import mx.com.segurossura.emision.dao.RegistoPersonaDAO;
 import mx.com.segurossura.emision.dao.SituacionDAO;
-import mx.com.segurossura.emision.service.DatosAuxiliaresManager;
 import mx.com.segurossura.emision.service.AgrupadoresManager;
+import mx.com.segurossura.emision.service.DatosAuxiliaresManager;
 import mx.com.segurossura.emision.service.EmisionManager;
 import mx.com.segurossura.emision.service.ImpresionManager;
 import mx.com.segurossura.emision.service.PagoManager;
@@ -553,18 +556,23 @@ public class EmisionManagerImpl implements EmisionManager {
 	}
 		
 	@Override
-	public Map<String, String> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion, String cdusuari) throws Exception {
+	public Map<String, Object> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion, String cdusuari) throws Exception {
 		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
 				     "@@@@@@@@@ generarDocumentos");
 		List<Documento> documentos = null;
 		Map<String, String> datosMrecibo = null;
-		Map<String, String> results = new HashMap<String, String>();
+		Map<String, Object> results = new HashMap<String, Object>();
+		List<String> errores = new ArrayList<String>();
 		StringBuilder path = new StringBuilder();
 		StringBuilder paso = new StringBuilder();
 		boolean exito = false;
 		String documentoRuta = "";
 		String nombreExtension = "";
 		String urlSLIP;
+		int contDocEr = 0;
+		
+		ExecutorService executor = Executors.newFixedThreadPool(5);
+		
 		try {
 			
 			// Obteniendo nmrecibo para obtener el nmrecibo de la poliza emitida
@@ -630,11 +638,13 @@ public class EmisionManagerImpl implements EmisionManager {
 							generaDirectorio(directorioBase, cdunieco, cdramo, estado, nmpoliza, nmsuplem);
 							
 							FileUtils.copyURLToFile(new URL(urlSLIP), new File(documentoRuta), 120000, 120000);
+
 							exito = true;
 							
 						}catch(Exception fe){
 							logger.error(fe.getMessage(), fe);
-							
+							contDocEr += 1;
+							errores.add("Error al obtener documento " + documento.getNombre());
 						}
 						
 						documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpoliza, nmsolici, localnmsuplem, ntramite, new Date(),
@@ -647,6 +657,11 @@ public class EmisionManagerImpl implements EmisionManager {
 						continue;
 					}
 				}
+				
+				if(documentos.size() == contDocEr) {
+					throw new Exception();
+				}
+				
 			} else {
 					
 			}			
@@ -972,4 +987,5 @@ public class EmisionManagerImpl implements EmisionManager {
 	    return perf;
 
 	}
+
 }

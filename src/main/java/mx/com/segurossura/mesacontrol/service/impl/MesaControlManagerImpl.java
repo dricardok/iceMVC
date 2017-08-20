@@ -4,12 +4,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.mesacontrol.dao.MesaControlDAO;
 import mx.com.segurossura.mesacontrol.service.MesaControlManager;
@@ -24,7 +26,7 @@ public class MesaControlManagerImpl implements MesaControlManager {
 	
 	@Override
 	public List<Map<String, String>> obtenerTramites(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici)
+			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici, String cdusuari, String cdsisrol, long start, long limit)
 			throws Exception {
 		
 		logger.debug(Utils.join(
@@ -34,8 +36,8 @@ public class MesaControlManagerImpl implements MesaControlManager {
 		String paso = "";
         List<Map<String, String>> datos = null;
 		try {
-			paso="Consultando datos";
-			datos = mesaControlDAO.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici);
+			paso="Consultando tramites de mesa de control";
+			datos = mesaControlDAO.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici, cdusuari, cdsisrol, start, limit);
 			
         } catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
@@ -68,10 +70,19 @@ public class MesaControlManagerImpl implements MesaControlManager {
 				 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				,"\n@@@@@@ movimientoTmesacontrol"				
 				));
-		String paso = "";
+		String paso = "Registrando tramite";
         String rntramite = "";
 		try {
 			paso="Consultando datos";
+			if((!StringUtils.isEmpty(cdunieco) && !StringUtils.isEmpty(cdramo) &&
+				!StringUtils.isEmpty(estado)   && !StringUtils.isEmpty(nmpoliza))){
+				boolean existePol=mesaControlDAO.existePoliza(cdunieco, cdramo, estado, nmpoliza);
+				logger.debug("Existe la poliza: "+existePol);
+				if(!existePol){
+					throw new ApplicationException(Utils.join("La póliza ",cdunieco,"-",cdramo,"-",estado,"-",nmpoliza," no existe."));
+				}
+				
+			}
 			rntramite = mesaControlDAO.movimientoTmesacontrol(ntramite, cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsolici, cdsucadm, cdsucdoc, cdtiptra, ferecepc, cdagente, referencia, nombre, fecstatu, estatus, comments, cdtipsit, otvalor01, otvalor02, otvalor03, otvalor04, otvalor05, otvalor06, otvalor07, otvalor08, otvalor09, otvalor10, otvalor11, otvalor12, otvalor13, otvalor14, otvalor15, otvalor16, otvalor17, otvalor18, otvalor19, otvalor20, otvalor21, otvalor22, otvalor23, otvalor24, otvalor25, otvalor26, otvalor27, otvalor28, otvalor29, otvalor30, otvalor31, otvalor32, otvalor33, otvalor34, otvalor35, otvalor36, otvalor37, otvalor38, otvalor39, otvalor40, otvalor41, otvalor42, otvalor43, otvalor44, otvalor45, otvalor46, otvalor47, otvalor48, otvalor49, otvalor50, swimpres, cdtipflu, cdflujomc, cdusuari, cdtipsup, swvispre, cdpercli, renuniext, renramo, renpoliex, sworigenmesa, cdrazrecha, cdunidspch, ntrasust, cdsisrol, accion);
 			
        } catch (Exception ex) {
