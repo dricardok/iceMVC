@@ -630,7 +630,7 @@ public interface FlujoMesaControlDAO {
 			,String webid
 			)throws Exception;
 	
-	public List<Map<String, String>> recuperaTtipflumcPorRolPorUsuario(String agrupamc,String cdsisrol,String cdusuari) throws Exception;
+	public List<Map<String, String>> recuperarTtipflumcPorRolPorUsuario(String agrupamc,String cdsisrol,String cdusuari) throws Exception;
 	
 	public List<Map<String, String>> recuperaTflujomcPorRolPorUsuario(
 			String cdtipflu
@@ -986,4 +986,7 @@ public interface FlujoMesaControlDAO {
     
     public String obtenerSuplementoTramite(String ntramite)throws Exception;
     
+    public String ejecutaValidacion (String functionName, String ntramite, String aux, String json) throws Exception;
+    
+    public Map<String, String> obtenerTramite (String ntramite) throws Exception;
 }

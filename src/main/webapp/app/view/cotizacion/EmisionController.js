@@ -771,6 +771,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 					}
 				},
 				success: function (action) {
+					Ice.log(action);
 					try {
 						pbar.hide();
 						error.setHtml('<p>Documentos generados</p>');

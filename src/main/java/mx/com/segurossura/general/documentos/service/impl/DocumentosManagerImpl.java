@@ -3,6 +3,7 @@ package mx.com.segurossura.general.documentos.service.impl;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +12,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.biosnettcs.core.Constantes;
 import com.biosnettcs.core.HttpUtil;
 import com.biosnettcs.core.Utils;
 
@@ -20,14 +23,22 @@ import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
 import mx.com.segurossura.general.documentos.model.Archivo;
 import mx.com.segurossura.general.documentos.model.TipoArchivo;
 import mx.com.segurossura.general.documentos.service.DocumentosManager;
+import mx.com.segurossura.workflow.mesacontrol.dao.FlujoMesaControlDAO;
+import mx.com.segurossura.workflow.mesacontrol.model.FlujoVO;
 
 @Service
 public class DocumentosManagerImpl implements DocumentosManager {
     
-    @Autowired
-    DocumentosDAO documentosDAO;
-    
     private static final Logger logger = LoggerFactory.getLogger(DocumentosManagerImpl.class);
+    
+    @Autowired
+    private DocumentosDAO documentosDAO;
+    
+    @Autowired
+    private FlujoMesaControlDAO flujoMesaControlDAO;
+    
+    @Value("${content.ice.path}")
+    private String directorioBase;
 
     @Override
     public List<Map<String, String>> obtenerDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, 
@@ -180,5 +191,65 @@ public class DocumentosManagerImpl implements DocumentosManager {
             throw new Exception(ex.getMessage()+" No se pudo recuperar el archivo");
         }
         return fileInputStream;
+    }
+    
+    @Override
+    public void subirArchivoRequisito (FlujoVO flujo, File archivo, String nombre, String contentType, String cddocume) throws Exception {
+        String paso = null;
+        try {
+            String ruta = Utils.join(directorioBase, File.separator,
+                    flujo.getCdunieco(), File.separator,
+                    flujo.getCdramo(), File.separator,
+                    flujo.getEstado(), File.separator,
+                    flujo.getNmpoliza(), File.separator,
+                    Utils.NVL(flujo.getNmsuplem(), "0"));
+            
+            paso = "Transfiriendo archivo al content";
+            FileUtils.copyFile(archivo, new File(Utils.join(ruta, File.separator, nombre)));
+            
+            paso = "Recuperando tr\u00e1mite";
+            Map<String, String> tramite = flujoMesaControlDAO.obtenerTramite(flujo.getNtramite());
+            
+            paso = "Recuperando nombre de documento";
+            List<Map<String, String>> docs = flujoMesaControlDAO.recuperaTdocume();
+            String dsdocume = null;
+            for (Map<String, String> docIte : docs) {
+                if (docIte.get("CDDOCUME").equals(cddocume)) {
+                    dsdocume = docIte.get("DSDOCUME");
+                    break;
+                }
+            }
+            Utils.validate(dsdocume, "No se encuentra el documento en la tabla");
+            
+            paso = "Borrando archivo anterior";
+            documentosDAO.borrarArchivoRequisitoAnterior(flujo.getNtramite(), cddocume);
+            
+            paso = "Registrando archivo";
+            documentosDAO.realizarMovimientoDocsPoliza(
+                    flujo.getCdunieco(),
+                    flujo.getCdramo(),
+                    flujo.getEstado(),
+                    flujo.getNmpoliza(),
+                    flujo.getNmpoliza(), //nmsolici,
+                    Utils.NVL(flujo.getNmsuplem(), "0"),
+                    flujo.getNtramite(),
+                    new Date(),
+                    nombre, //documento.getId(),
+                    dsdocume, //nombreExtension,
+                    "0", //cdtipsub
+                    "S",
+                    tramite.get("cdtiptra"),
+                    cddocume,
+                    null, //cdorddoc,
+                    null, //cdmoddoc,
+                    null, //nmcertif,
+                    null, //nmsituac,
+                    null, //urlSLIP, 
+                    ruta,
+                    null, //documento.getTipo(),
+                    Constantes.INSERT_MODE);
+        } catch (Exception e) {
+            Utils.generaExcepcion(e, paso);
+        }
     }
 }

@@ -3114,12 +3114,12 @@ Ext.onReady(function()
                                     }
                                     ,{
                                         xtype          : 'textfield'
-                                        ,fieldLabel    : 'VALIDACI\u00D3N'
+                                        ,fieldLabel    : 'VALIDACI\u00D3N (F_ICE_WF_)'
                                         ,labelAlign    : 'top'
                                         ,name          : 'CDVALIDAFK'
                                         ,allowBlank    : false
                                         ,minLength     : 1
-                                        ,maxLength     : 8
+                                        ,maxLength     : 17
                                     }
                                     ,{
                                         xtype       : 'textarea'
