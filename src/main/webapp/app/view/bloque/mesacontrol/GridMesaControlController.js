@@ -16,6 +16,8 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 						xtype: 'formdetalletramite',
 						reference: 'formdetalletramite',
 						
+						sinToggle: true,
+
 						ntramite: record.data.NTRAMITE,
 						dstipflu: record.data.DSTIPFLU,
 						dsflujomc: record.data.DSFLUJOMC,
@@ -40,6 +42,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 					}, {
 						xtype: 'botoneraflujo',
 						docked: 'bottom',
+						botonCerrar: true,
 						flujo: {
 							ntramite  : record.get('NTRAMITE'),
 							status    : record.get('ESTATUS'),

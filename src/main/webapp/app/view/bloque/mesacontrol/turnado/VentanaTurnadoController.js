@@ -27,7 +27,7 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnadoController', {
                 url: Ice.url.bloque.mesacontrol.turnar,
                 params: {
                     'params.ntramite' : view.getFlujo().ntramite,
-                    'params.status': view.getFlujo().status,
+                    'params.status': view.getFlujo().aux,
                     'params.comments': values.comments,
                     'params.cdrazrecha': view.getCdrazrecha(),
                     'params.cdusuariDes': view.getCdusuariDes(),
@@ -37,6 +37,7 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnadoController', {
                 success: function (json) {
                     var paso2 = 'Obteniendo resultado de tramite';
                     try {
+                        view.cerrar();
                         Ice.mensajeCorrecto({
                             titulo: 'Tramite turnado con exito',
                             mensaje: json.message,

@@ -1,5 +1,5 @@
 Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
-	extend		:	"Ice.view.componente.PanelPaddingIce",
+	extend		:	"Ice.view.componente.VentanaIce",
 	xtype		:	"historialpanel",
 	controller 	: 	"historialpanel",
 	scrollable	:	true,
@@ -9,16 +9,43 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
     ],
     
     config		:	{
-    	ntramite		:	null
-    },
+		ntramite		:	null,
+		flujo: null
+	},
+	
+	title: 'Historial',
+	scrollable: true,
+	platformConfig: {
+		desktop: {
+			width: 900,
+			height: 600,
+			modal: true
+		}
+	},
 	
 	constructor: function (config) {
-		
-		var me = this,paso="";
-		try{
+		var me = this,
+		    paso = 'Construyendo ventana de historial';
+		try {
+			config.flujo = Ice.validarParamFlujo(config);
+			if (config.flujo.ntramite) {
+				config.ntramite = config.flujo.ntramite;
+			}
+
 			if(!config.ntramite){
 				throw 'No se recibio en ntramite para el bloque historial MC.';
 			}
+
+			if (Ice.modern()) {
+				config.buttons = (config.buttons || []).concat([{
+					text: 'Cerrar',
+					iconCls: 'x-fa fa-close',
+					handler: function (me) {
+						me.up('ventanaice').cerrar();
+					}
+				}]);
+			}
+			
 			var graficaEve={
 					xtype		:	'cartesian',
 					title		:	"Eventos",
@@ -64,8 +91,11 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
                         tooltip		:	{
                         	trackMouse		:	true,
                         	border: 0,
+							width: 400,
+							height: 300,
+							style: 'background: white;',
                             defaults: {
-                                style: 'margin: 5px;'
+								style: 'margin: 5px;',
                             },
 //                            layout			:	{
 //                            	type		:	'table',

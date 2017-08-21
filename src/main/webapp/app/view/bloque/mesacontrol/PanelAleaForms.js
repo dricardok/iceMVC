@@ -1,11 +1,17 @@
 Ext.define('Ice.view.bloque.mesacontrol.PanelAleaForms', {
-    extend: 'Ice.view.componente.FormDosColumnasIce',
+    extend: 'Ice.view.componente.PanelPaddingIce',
     xtype: 'panelaleaforms',
 
     controller: 'panelaleaforms',
 
     config: {
         flujo: null
+    },
+
+    platformConfig: {
+        '!desktop': {
+            scrollable: true
+        }
     },
 
     constructor: function (config) {
@@ -23,11 +29,11 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelAleaForms', {
             Ice.validate(json.title, 'Falta el titulo en el auxiliar para pantalla de alea forms',
                          json.seccion, 'Falta la secci\u00f3n en el auxiliar para pantalal de alea forms');
 
-            config.title = 'Acceso a ALEA - ' + json.title;
+            config.title = 'ALEA ' + json.title + ' - FAVOR DE ACCEDER A LA FORMA';
 
             var comps = Ice.generaComponentes({
                 pantalla: 'ALEA_FORMS',
-                seccion: json.seccion,
+                seccion: json.seccion.toUpperCase(),
                 modulo: '',
                 estatus: '',
                 cdramo: '',
@@ -37,7 +43,23 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelAleaForms', {
                 items: true
             });
 
-            config.items = comps.ALEA_FORMS[json.seccion].items || [];
+            config.items = [
+                {
+                    xtype: 'botoneraflujo',
+                    flujo: config.flujo,
+                }, {
+                    xtype: 'formdoscolumnasice',
+                    reference: 'form',
+                    title: 'Datos',
+                    items: comps.ALEA_FORMS[json.seccion.toUpperCase()].items || [],
+                    sinToggle: true,
+                    platformConfig: {
+                        '!desktop': {
+                            scrollable: true
+                        }
+                    }
+                }
+            ];
 
             me.callParent(arguments);
         } catch (e) {

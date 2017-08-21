@@ -171,8 +171,9 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
                     "SWORIGENMESA", 
                     "CDRAZRECHA",
                     "CDUNIDSPCH", 
-                    "NTRASUST"
-            		};            
+                    "NTRASUST",
+                    "RESPONSABLE"
+            		};
             
             declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_total_o", Types.VARCHAR));

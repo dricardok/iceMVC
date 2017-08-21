@@ -217,6 +217,7 @@ var Ice = (
                                     : pantalla.URLPANTMC);
                             //     }
                             // });
+                            Ice.cerrarVentanas();
                             Ice.redirect(url);
                         } catch(e) {
                             Ice.manejaExcepcion(e,ck);

@@ -4083,4 +4083,17 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	    return suplemento;
 	}
 	
+	@Override
+	public Map<String, String> obtenerTramiteCompleto (String ntramite) throws Exception {
+	    logger.debug(Utils.log("\n@@@@@@ obtenerTramiteCompleto ntramite = ", ntramite));
+	    Map<String, String> tramite = null;
+	    String paso = "Recuperando tr\u00e1mite";
+	    try {
+	        tramite = flujoMesaControlDAO.obtenerTramite(ntramite);
+	    } catch (Exception e) {
+	        Utils.generaExcepcion(e, paso);
+	    }
+	    return tramite;
+	}
+	
 }

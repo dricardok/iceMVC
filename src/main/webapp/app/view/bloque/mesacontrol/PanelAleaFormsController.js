@@ -16,6 +16,24 @@ Ext.define('Ice.view.bloque.mesacontrol.FormAleaFormsController',{
     },
 
     cargar: function () {
-        alert('Ice.view.bloque.mesacontrol.FormAleaFormsController.cargar')
+        Ice.log('Ice.view.bloque.mesacontrol.FormAleaFormsController.cargar');
+        var me = this,
+            view = me.getView(),
+            refs = me.getReferences(),
+            paso = 'Cargando form alea';
+        try {
+            Ice.request({
+                mascara: paso,
+                url: Ice.url.bloque.mesacontrol.obtenerTramiteCompleto,
+                params: {
+                    'params.ntramite': view.getFlujo().ntramite
+                },
+                success: function (json) {
+                    Ice.cargarFormulario(refs.form, json.params);
+                }
+            });
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
     }
 });

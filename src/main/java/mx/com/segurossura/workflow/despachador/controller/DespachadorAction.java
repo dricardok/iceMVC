@@ -103,11 +103,17 @@ public class DespachadorAction extends PrincipalCoreAction {
 	               cdrazrecha  = params.get("cdrazrecha"),
 	               cdusuariDes = params.get("cdusuariDes"),
 	               cdsisrolDes = params.get("cdsisrolDes"),
-	               swagente    = params.get("swagente");
+	               swagente    = params.get("swagente"),
+                   ntrasust    = params.get("ntrasust"),
+                   correos     = params.get("correos");
+	        
+	        boolean soloRecibidos = "S".equalsIgnoreCase(params.get("soloRecibidos"));
+	               
 	        Utils.validate(ntramite, "Falta ntramite");
 	        Date fechaHoy = new Date();
 	        RespuestaTurnadoVO respuestaTurnado = despachadorManager.turnarTramite(usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol(),
-	                ntramite, status, comments, cdrazrecha, cdusuariDes, cdsisrolDes, "S".equals(swagente), false, fechaHoy, false);
+	                ntramite, status, comments, cdrazrecha, cdusuariDes, cdsisrolDes, "S".equals(swagente), false, fechaHoy, false, false,
+	                ntrasust, soloRecibidos, correos);
 	        message = respuestaTurnado.getMessage();
 	        params.put("encolado", respuestaTurnado.isEncolado() ? "S" : "N");
 	        success = true;

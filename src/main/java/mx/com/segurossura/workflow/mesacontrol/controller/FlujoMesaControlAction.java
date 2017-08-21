@@ -1895,16 +1895,16 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 			
 			String //cdtipflu    = params.get("CDTIPFLU"),
 			       //cdflujomc   = params.get("CDFLUJOMC"),
-			       ntramite    = params.get("ntramite"),
+			       ntramite    = params.get("NTRAMITE"),
 			       //statusOld   = params.get("STATUSOLD"),
-			       statusNew   = params.get("status"),
-			       swagente    = params.get("swagente"),
-			       comments    = params.get("comments"),
-			       cdrazrecha  = params.get("cdrazrecha"),
-			       cdusuariDes = params.get("cdusuariDes"),
-			       cdsisrolDes = params.get("cdsisrolDes"),
-			       ntrasust    = params.get("ntrasust"),
-			       correos     = params.get("correos");
+			       statusNew   = params.get("STATUSNEW"),
+			       swagente    = params.get("SWAGENTE"),
+			       comments    = params.get("COMMENTS"),
+			       cdrazrecha  = params.get("CDRAZRECHA"),
+			       cdusuariDes = params.get("CDUSUARI_DES"),
+			       cdsisrolDes = params.get("CDSISROL_DES"),
+			       ntrasust    = params.get("NTRASUST"),
+			       correos     = params.get("CORREOS");
 			
 			boolean //cerrado              = "S".equals(params.get("cerrado")),
 			        soloCorreosRecibidos = "S".equals(params.get("SOLO_CORREOS_RECIBIDOS"));
@@ -2780,6 +2780,29 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
                                      "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
 	    return SUCCESS;
 	}
+    
+    @Action(value   = "obtenerTramiteCompleto",
+            results = { @Result(name="success", type="json") }
+            )
+    public String obtenerTramiteCompleto () {
+        logger.debug(Utils.log("\n####################################",
+                               "\n###### obtenerTramiteCompleto ######",
+                               "\n###### params = ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay par\u00e1metros");
+            Utils.validate(params.get("ntramite"), "No se recibi\\u00f3 el tr\\u00e1mite");
+            params = flujoMesaControlManager.obtenerTramiteCompleto(params.get("ntramite"));
+            success = true;
+        } catch (Exception e) {
+            message = Utils.manejaExcepcion(e);
+        }
+        logger.debug(Utils.log("\n###### success = ", success,
+                               "\n###### message = ", message,
+                               "\n###### obtenerTramiteCompleto ######",
+                               "\n####################################"));
+        return SUCCESS;
+    }
 	
 	////////////////////////////////////////////////////////
 	// GETTERS Y SETTERS                                  //

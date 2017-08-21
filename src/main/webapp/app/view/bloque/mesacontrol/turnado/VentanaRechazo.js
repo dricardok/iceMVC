@@ -2,34 +2,25 @@
  * Created by DEORTIZT on 18/08/2017.
  */
 Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaRechazo', {   
-    extend: 'Ice.view.componente.PanelIce',
+    extend: 'Ice.view.componente.VentanaIce',
     xtype: 'ventanarechazo',    
     controller: 'ventanarechazo',
 
     // config ext
     title: 'Turnado',
     layout: 'fit',
-    bodyPadding: '20 0 0 20',
+    scrollable: true,
     platformConfig: {
         desktop: {
-            scrollable: false,
-            width: 650,
-            height: 400,
-            collapsible: true,
-            titleCollapse: true
+            width: Ice.constantes.componente.ventana.width,
+            maxHeight: 600,
+            modal: true
         },
-        '!desktop': {
-            scrollable: true
-        }
     },
 
     // config no ext
     config: {
-        ntramite: null,
-        status: null,
-        cdrazrecha: null,
-        cdusuariDes: null,
-        cdsisrolDes: null
+        flujo: null
     },
     
     // validacion de parametros de entrada
@@ -41,12 +32,12 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaRechazo', {
             if (!config) {
                 throw 'No hay datos para ventana de rechazo';
             }
+
+            config.flujo = Ice.validarParamFlujo(config);
             
-            if (!config.ntramite) {
+            if (!config.flujo.ntramite) {
                 throw 'Falta numero de tramite para ventana de rechazo';
             }
-            
-            config.status = config.status.toUpperCase();
 
             var comps = Ice.generaComponentes({
                 pantalla: 'TRAMITE',
@@ -59,13 +50,14 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaRechazo', {
 
             var cdrazrecha = Ice.query('[name=cdrazrecha]',comps.TRAMITE.RECHAZO.items);
             cdrazrecha['param1'] = 'params.ntramite';
-            cdrazrecha['value1'] = config.ntramite;
+            cdrazrecha['value1'] = config.flujo.ntramite;
             Ice.log('componentes ',cdrazrecha);
 
             config.items = [
                 {
-                    xtype: 'formice',
+                    xtype: 'formunacolumnaice',
                     reference: 'form',
+                    sinToggle: true,
                     items: comps.TRAMITE.RECHAZO.items,
                     modelFields: comps.TRAMITE.RECHAZO.fields,
                     modelValidators: comps.TRAMITE.RECHAZO.validators,
@@ -73,7 +65,15 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaRechazo', {
                     buttons: [
                         {
                             text: 'Rechazar',
+                            iconCls: 'x-fa fa-power-off',
                             handler: 'onTurnar'
+                        }, {
+                            text: 'Cerrar',
+                            iconCls: 'x-fa fa-close',
+                            hidden: Ice.classic(),
+                            handler: function (me) {
+                                me.up('ventanaice').cerrar();
+                            }
                         }
                     ]
                 }
@@ -82,5 +82,33 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaRechazo', {
             Ice.generaExcepcion(e, paso);
         }
         me.callParent(arguments);
+    },
+
+    initComponent: function () {
+        var me = this,
+            paso = 'Configurando campos de agente';
+        try {
+            me.callParent();
+            if (Ice.sesion.cdsisrol === 'AGENTE') {
+                me.down('[name=swagente]').setValue('S');
+                me.down('[name=swagente]').hide();
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+
+    initialize: function () {
+        var me = this,
+            paso = 'Configurando campos de agente';
+        try {
+            me.callParent();
+            if (Ice.sesion.cdsisrol === 'AGENTE') {
+                me.down('[name=swagente]').check();
+                me.down('[name=swagente]').hide();
+            }
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
     }
 });

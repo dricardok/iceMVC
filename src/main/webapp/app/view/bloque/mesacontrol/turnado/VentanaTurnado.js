@@ -9,14 +9,10 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado', {
     // config ext
     title: 'Turnado',
     layout: 'fit',
-    bodyPadding: '20 0 0 20',
     platformConfig: {
         desktop: {
             scrollable: false,
-            width: 650,
-            height: 400,
-            collapsible: true,
-            titleCollapse: true,
+            width: Ice.constantes.componente.ventana.width,
             modal: true
         },
         '!desktop': {
@@ -47,7 +43,10 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado', {
             config.flujo = Ice.validarParamFlujo(config);
             
             if (!config.flujo.ntramite) {
-                throw 'Falta numero de tramite para ventana de turnado';
+                throw 'Falta numero de tr\u00e1mite para ventana de turnado';
+            }
+            if (!config.flujo.aux) {
+                throw 'Falta par\u00e1metro estatus para ventana de turnado';
             }
             
             // config.status = config.status.toUpperCase();
@@ -63,8 +62,9 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado', {
 
             config.items = [
                 {
-                    xtype: 'formice',
+                    xtype: 'formunacolumnaice',
                     reference: 'form',
+                    sinToggle: true,
                     items: comps.TRAMITE.TURNADO.items,
                     modelFields: comps.TRAMITE.TURNADO.fields,
                     modelValidators: comps.TRAMITE.TURNADO.validators,
@@ -74,6 +74,13 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado', {
                             text: 'Turnar',
                             iconCls: 'x-fa fa-user-plus',
                             handler: 'onTurnar'
+                        }, {
+                            text: 'Cerrar',
+                            iconCls: 'x-fa fa-close',
+                            hidden: Ice.classic(),
+                            handler: function (me) {
+                                me.up('ventanaice').cerrar();
+                            }
                         }
                     ]
                 }
