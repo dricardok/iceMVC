@@ -87,6 +87,7 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
                             change: function(me, value){
                                 var paso = 'Cambio cdmodelo';
                                 try {
+                                    Ice.log('Cambiando modelo de coaseguro cdmodelo ',cdmodelo.getValue());
                                     refs.grid.getStore().getProxy().extraParams['params.cdmodelo'] = cdmodelo.getValue(); 
                                     refs.grid.getStore().load();
                                     refs.grid.show();
