@@ -105,7 +105,7 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
 							
         			],
         			listeners: {
-    					itemtap: function(grid,row,col){
+    					itemaction: function(grid,row,col){
 							me.getController().verDomiciliosTab(grid,row,col)
 						},
 						itemclick: function(grid,row,col){
