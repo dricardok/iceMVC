@@ -8,6 +8,9 @@ Ext.define('Ice.view.field.TextfieldIce', {
     labelAlign: 'top',
     msgTarget: 'under',
     fieldStyle: 'text-transform: uppercase;',
+    config:{
+    	sinMayusculas:false,
+    },
     
     initComponent: function () {
         var me = this,
@@ -23,12 +26,12 @@ Ext.define('Ice.view.field.TextfieldIce', {
         
         Ext.apply(me, configTra);
         this.callParent(arguments);
-
-        me.on({
-            blur: function (me) {
-                me.setValue((me.getValue() || '').toUpperCase())
-                Ice.eventManager.change(me, me.getValue());
-            }
-        });
+        if(!me.getSinMayusculas())
+	        me.on({
+	            blur: function (me) {
+	                me.setValue((me.getValue() || '').toUpperCase())
+	                Ice.eventManager.change(me, me.getValue());
+	            }
+	        });
     }
 });

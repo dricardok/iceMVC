@@ -1,5 +1,6 @@
 package mx.com.segurossura.emision.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -472,8 +473,12 @@ public class SituacionAction extends PrincipalCoreAction {
             Utils.validate(cdramo, "No se recibio producto");
             Utils.validate(estado, "No se recibio estado");
             Utils.validate(nmpoliza, "No se recibio poliza");
-            validaciones = situacionManager.validaBloqueSituacion(cdunieco, cdramo, estado, nmpoliza, nmsuplem, usuario.getCdusuari(),
-                    usuario.getRolActivo().getCdsisrol());
+
+            // 18/08/2017 - jtezva - se comenta porque no sirve
+            // validaciones = situacionManager.validaBloqueSituacion(cdunieco, cdramo, estado, nmpoliza, nmsuplem, usuario.getCdusuari(),
+            //         usuario.getRolActivo().getCdsisrol());
+            validaciones = new ArrayList<Map<String, String>>();
+            
             success = true;
         } catch(Exception ex) {
             success = false;

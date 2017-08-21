@@ -72,4 +72,6 @@ public interface DocumentosDAO {
      * @throws Exception
      */
     public String ObtenerDescripcionDocumento(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cddocume) throws Exception;
+    
+    public void borrarArchivoRequisitoAnterior (String ntramite, String cddocume) throws Exception;
 }

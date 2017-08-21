@@ -6,8 +6,9 @@ import java.util.Map;
 
 public interface MesaControlDAO {
 	
-	public List<Map<String, String>> obtenerTramites(String cdunieco, String cdramo, String estado, String nmpoliza, 
-			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici) throws Exception;
+	public List<Map<String, String>> obtenerTramites(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici,
+			String cdusuari, String cdsisrol, long start, long limit) throws Exception;
 
 	public String movimientoTmesacontrol(String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String nmsolici, String cdsucadm, String cdsucdoc, String cdtiptra, Date ferecepc,
@@ -25,5 +26,5 @@ public interface MesaControlDAO {
 			String renpoliex, String sworigenmesa, String cdrazrecha, String cdunidspch, String ntrasust,
 			String cdsisrol, String accion) throws Exception;
 
-	
+	public String existePoliza(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
 }

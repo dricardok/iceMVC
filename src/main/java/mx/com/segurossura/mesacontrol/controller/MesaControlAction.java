@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
+import com.biosnettcs.portal.model.UsuarioVO;
 
 import mx.com.segurossura.mesacontrol.service.MesaControlManager;
 
@@ -43,6 +44,10 @@ public class MesaControlAction extends PrincipalCoreAction {
 	
 	private static SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
 	
+    private long start;
+    private long limit;
+    private long totalCount;
+	
 	@Autowired
     private MesaControlManager mesaControlManager;
 	
@@ -58,28 +63,37 @@ public class MesaControlAction extends PrincipalCoreAction {
 		logger.debug(StringUtils.join(
                 "\n################################",
                 "\n###### obtenerMesaControl ######",
-                "\n###### params ", params
+                "\n###### params ", params,
+                "\n###### start ", start,
+                "\n###### limit ", limit
                ));
 		try{
+			UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
 			Utils.validate(params, "No se recibieron parametros");			
-			String cdunieco = params.get("cdunieco");
-            String cdramo = params.get("cdramo");
-            String estado = params.get("estado");
-            String nmpoliza = params.get("nmpoliza");
-            String cdagente = params.get("cdagente");
-            String ntramite = params.get("ntramite");
-            String estatus = params.get("estatus");
+			String cdunieco = params.get("cdunieco") != null ? ("".equals(params.get("cdunieco")) ? null : params.get("cdunieco")) : null;
+            String cdramo = params.get("cdramo")  != null ? ("".equals(params.get("cdramo")) ? null : params.get("cdramo")) : null;;
+            String estado = params.get("estado")  != null ? ("".equals(params.get("estado")) ? null : params.get("estado")) : null;;
+            String nmpoliza = params.get("nmpoliza")  != null ? ("".equals(params.get("nmpoliza")) ? null : params.get("nmpoliza")) : null;;
+            String cdagente = params.get("cdagente")  != null ? ("".equals(params.get("cdagente")) ? null : params.get("cdagente")) : null;;
+            String ntramite = params.get("ntramite")  != null ? ("".equals(params.get("ntramite")) ? null : params.get("ntramite")) : null;;
+            String estatus = params.get("estatus")  != null ? ("".equals(params.get("estatus")) ? null : params.get("estatus")) : null;;
             Date desde = null, hasta = null;
-            if(params.get("desde") != null)
-             desde = renderFechas.parse(params.get("desde"));
-            if(params.get("hasta") != null) 
-             hasta = renderFechas.parse(params.get("hasta"));
-            String nombre = params.get("nombre");
-            String nmsolici = params.get("nmsolici");           
+            if(params.get("fstatusi") != null && !params.get("fstatusi").equals("")) {
+             desde = renderFechas.parse(params.get("fstatusi"));
+            }
+            if(params.get("fstatusf") != null && !params.get("fstatusf").equals("")) {
+             hasta = renderFechas.parse(params.get("fstatusf"));
+            }
+            String nombre = params.get("nombre")  != null ? ("".equals(params.get("nombre")) ? null : params.get("nombre")) : null;;
+            String nmsolici = params.get("nmsolici")  != null ? ("".equals(params.get("nmsolici")) ? null : params.get("nmsolici")) : null;;
             
-            list = mesaControlManager.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, 
-            									      cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici);
-            
+            list = mesaControlManager.obtenerTramites(cdunieco, cdramo, estado, nmpoliza, cdagente, ntramite, estatus, desde, hasta, nombre, nmsolici, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol(), start, limit);
+            if(list!=null && !list.isEmpty()) {
+                totalCount = Integer.parseInt(list.get(0).get("total"));
+            }
+            else {
+            	totalCount = 0;
+            }
             success = true;
 		}catch(Exception ex){
 			success = false;
@@ -101,13 +115,14 @@ public class MesaControlAction extends PrincipalCoreAction {
 			}
 	)
 	public String movimientoMesacontrol() {
-		
-		logger.debug(StringUtils.join(
-                "\n################################",
-                "\n###### movimientoMesacontrol ######",
-                "\n###### params ", params
-               ));
-		try{
+		logger.debug(StringUtils.join("\n###################################",
+		                              "\n###### movimientoMesacontrol ######",
+		                              "\n###### params ", params));
+		try {
+		    UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+		    String cdusuari = usuario.getCdusuari(),
+		           cdsisrol = usuario.getRolActivo().getCdsisrol();
+		    
 			Utils.validate(params, "No se recibieron parametros");			
 			String ntramite	= params.get("ntramite");
 			String cdunieco	= params.get("cdunieco");
@@ -178,7 +193,6 @@ public class MesaControlAction extends PrincipalCoreAction {
 			String swimpres	= params.get("swimpres");
 			String cdtipflu	= params.get("cdtipflu");
 			String cdflujomc	= params.get("cdflujomc");
-			String cdusuari	= params.get("cdusuari");
 			String cdtipsup	= params.get("cdtipsup");
 			String swvispre	= params.get("swvispre");
 			String cdpercli	= params.get("cdpercli");
@@ -189,20 +203,21 @@ public class MesaControlAction extends PrincipalCoreAction {
 			String cdrazrecha	= params.get("cdrazrecha");
 			String cdunidspch	= params.get("cdunidspch");
 			String ntrasust	= params.get("ntrasust");
-			String cdsisrol	= params.get("cdsisrol");
 			String accion	= params.get("accion");          
             
 			
-			Date ferecepc = null, fecstatu = null;
-            if(params.get("ferecepc") != null)
-            	ferecepc = renderFechas.parse(params.get("ferecepc"));
-            if(params.get("fecstatu") != null) 
-            	fecstatu = renderFechas.parse(params.get("fecstatu"));
-            this.ntramite = mesaControlManager. movimientoTmesacontrol(ntramite, cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsolici, cdsucadm, cdsucdoc, cdtiptra, ferecepc, cdagente, referencia, nombre, fecstatu, estatus, comments, cdtipsit, otvalor01, otvalor02, otvalor03, otvalor04, otvalor05, otvalor06, otvalor07, otvalor08, otvalor09, otvalor10, otvalor11, otvalor12, otvalor13, otvalor14, otvalor15, otvalor16, otvalor17, otvalor18, otvalor19, otvalor20, otvalor21, otvalor22, otvalor23, otvalor24, otvalor25, otvalor26, otvalor27, otvalor28, otvalor29, otvalor30, otvalor31, otvalor32, otvalor33, otvalor34, otvalor35, otvalor36, otvalor37, otvalor38, otvalor39, otvalor40, otvalor41, otvalor42, otvalor43, otvalor44, otvalor45, otvalor46, otvalor47, otvalor48, otvalor49, otvalor50, swimpres, cdtipflu, cdflujomc, cdusuari, cdtipsup, swvispre, cdpercli, renuniext, renramo, renpoliex, sworigenmesa, cdrazrecha, cdunidspch, ntrasust, cdsisrol, accion);
+            this.ntramite = mesaControlManager.movimientoTmesacontrol(ntramite, cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsolici, cdsucadm,
+                    cdsucdoc, cdtiptra, null, cdagente, referencia, nombre, null, estatus, comments, cdtipsit,
+                    otvalor01, otvalor02, otvalor03, otvalor04, otvalor05, otvalor06, otvalor07, otvalor08, otvalor09, otvalor10,
+                    otvalor11, otvalor12, otvalor13, otvalor14, otvalor15, otvalor16, otvalor17, otvalor18, otvalor19, otvalor20,
+                    otvalor21, otvalor22, otvalor23, otvalor24, otvalor25, otvalor26, otvalor27, otvalor28, otvalor29, otvalor30,
+                    otvalor31, otvalor32, otvalor33, otvalor34, otvalor35, otvalor36, otvalor37, otvalor38, otvalor39, otvalor40,
+                    otvalor41, otvalor42, otvalor43, otvalor44, otvalor45, otvalor46, otvalor47, otvalor48, otvalor49, otvalor50,
+                    swimpres, cdtipflu, cdflujomc, cdusuari, cdtipsup, swvispre, cdpercli, renuniext, renramo, renpoliex, sworigenmesa,
+                    cdrazrecha, cdunidspch, ntrasust, cdsisrol, accion);
             success = true;
-		}catch(Exception ex){
-			success = false;
-			Utils.manejaExcepcion(ex);
+		} catch (Exception ex) {
+			message = Utils.manejaExcepcion(ex);
 		}
 		logger.debug(StringUtils.join(
                 
@@ -215,6 +230,36 @@ public class MesaControlAction extends PrincipalCoreAction {
 	
 	
 	// Getters and Setters
+
+	public long getStart() {
+		return start;
+	}
+
+
+	public void setStart(long start) {
+		this.start = start;
+	}
+
+
+	public long getLimit() {
+		return limit;
+	}
+
+
+	public void setLimit(long limit) {
+		this.limit = limit;
+	}
+
+
+	public long getTotalCount() {
+		return totalCount;
+	}
+
+
+	public void setTotalCount(long totalCount) {
+		this.totalCount = totalCount;
+	}
+
 
 	public boolean isSuccess() {
 		return success;

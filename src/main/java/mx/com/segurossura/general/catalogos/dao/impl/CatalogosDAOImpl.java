@@ -486,9 +486,9 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
 	
 	protected class ObtenerEstatusTramite extends StoredProcedure {
 		protected ObtenerEstatusTramite(DataSource dataSource){
-			super(dataSource, "OPS$DHPERNIA.PKG_MESACONTROL.P_GET_TESTADOMC");
+			super(dataSource, "PKG_MESACONTROL.P_GET_TESTADOMC");
 			declareParameter(new SqlParameter("pv_cdestadomc_i", Types.VARCHAR));
-			String[] cols = new String[] { "estatus", "dsestadomc" };
+			String[] cols = new String[] { "cdestadomc", "dsestadomc" };
 			declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
@@ -661,6 +661,31 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
             declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public List<Map<String, String>> recuperarMotivosRechazo (String ntramite) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String,String>();
+        params.put("ntramite", ntramite);
+        Map<String,Object> procRes = ejecutaSP(new RecuperarMotivosRechazoSP(getDataSource()),params);
+        List<Map<String,String>> lista = (List<Map<String,String>>) procRes.get("pv_registro_o");
+        return lista;
+    }
+    
+    protected class RecuperarMotivosRechazoSP extends StoredProcedure{
+        protected RecuperarMotivosRechazoSP(DataSource dataSource){
+            super(dataSource,"PKG_LOV_ALEA.P_GET_MOTIVOS_RECHAZO_TRA");
+            declareParameter(new SqlParameter("ntramite", Types.VARCHAR));
+            String[] cols = new String[]{
+                    "CDRAZRECHA", 
+                    "DSRAZRECHA", 
+                    "TEXTORECHA"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
             compile();
         }
     }

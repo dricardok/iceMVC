@@ -87,6 +87,7 @@ Ext.define('Ice.view.login.Login', {
                     label: 'Contrase\u00f1a',
                     inputType: 'password',
                     name: 'password',
+                    sinMayusculas: true,
                     bind: '{login.password}',
                     listeners: {
                         specialkey: 'onSpecialkeyPress'

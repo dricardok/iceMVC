@@ -18,7 +18,8 @@
                  <value>file:///${config.path}/cotizadores/mvc/global.properties</value>
                  <value>file:///${config.path}/cotizadores/mvc/spring-bps-application.properties</value>
                  <value>file:///${config.path}/cotizadores/mvc/client.properties</value>
-                 <value>file:///${config.path}/cotizadores/mvc/mail.properties</value>
+                 <!--value>file:///${config.path}/cotizadores/mvc/mail.properties</value-->
+                 <value>classpath:mail.properties</value>
             </list>
         </property>
 	</bean>
