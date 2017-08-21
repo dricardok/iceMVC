@@ -30,7 +30,8 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
         estado: null,
         nmpoliza: null,
         nmsuplem: null,
-        itemsPerPage: null
+        itemsPerPage: null,
+        flujo: null
     },
     
     // validacion de parametros de entrada
@@ -42,10 +43,19 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
             if (!config) {
                 throw 'No hay datos para ventana de documentos';
             }
+
+            config.flujo = Ice.validarParamFlujo(config);
+            if (config.flujo.ntramite) {
+                config.cdunieco = config.flujo.cdunieco;
+                config.cdramo   = config.flujo.cdramo;
+                config.estado   = config.flujo.estado;
+                config.nmpoliza = config.flujo.nmpoliza;
+                config.nmsuplem = config.flujo.nmsuplem;
+            }
             
             if (!config.cdunieco || !config.cdramo || !config.estado ||!config.nmpoliza
             //    || Ext.isEmpty(config.nmsuplem)
-            ) {alert();
+            ) {
                 throw 'Falta llave de p\u00f3liza para ventana de documentos';
             }
             

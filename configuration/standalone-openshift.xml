@@ -150,36 +150,23 @@
                         <background-validation>true</background-validation>
                         <background-validation-millis>60000</background-validation-millis
                         -->
-                        <!--validate-on-match>true</validate-on-match>
+                        <validate-on-match>true</validate-on-match>
                         <check-valid-connection-sql>SELECT * from dual</check-valid-connection-sql>
-						<background-validation>false</background-validation-->
-						<validate-on-match>false</validate-on-match>
-                        <background-validation>true</background-validation>
-                        <background-validation-millis>60000</background-validation-millis>
-                        <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleValidConnectionChecker"></valid-connection-checker>
-                        <stale-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleStaleConnectionChecker"></stale-connection-checker>
-                        <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleExceptionSorter"></exception-sorter>
+			<background-validation>false</background-validation>
                     </validation>
                     <timeout>
-                        <!--set-tx-query-timeout>false</set-tx-query-timeout>
+                        <set-tx-query-timeout>false</set-tx-query-timeout>
                         <blocking-timeout-millis>0</blocking-timeout-millis>
                         <idle-timeout-minutes>0</idle-timeout-minutes>
                         <query-timeout>0</query-timeout>
                         <use-try-lock>0</use-try-lock>
                         <allocation-retry>0</allocation-retry>
-                        <allocation-retry-wait-millis>0</allocation-retry-wait-millis-->
-                        <set-tx-query-timeout>false</set-tx-query-timeout>
-                        <blocking-timeout-millis>10000</blocking-timeout-millis>
-                        <idle-timeout-minutes>30</idle-timeout-minutes>
-                        <query-timeout>60</query-timeout>
-                        <use-try-lock>60</use-try-lock>
-                        <allocation-retry>3</allocation-retry>
-                        <allocation-retry-wait-millis>5000</allocation-retry-wait-millis>
+                        <allocation-retry-wait-millis>0</allocation-retry-wait-millis>
                     </timeout>
                     <pool>
-                        <min-pool-size>1</min-pool-size>
-                        <max-pool-size>30</max-pool-size>
-                        <flush-strategy>EntirePool</flush-strategy>
+                        <min-pool-size>5</min-pool-size>
+                        <max-pool-size>40</max-pool-size>
+                        <flush-strategy>IdleConnections</flush-strategy>
                     </pool>
                 </datasource>
                 <drivers>

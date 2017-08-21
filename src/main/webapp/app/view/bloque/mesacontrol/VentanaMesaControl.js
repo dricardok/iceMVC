@@ -3,10 +3,16 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaMesaControl', {
 	xtype: 'ventanamesacontrol',
 	
 	title: 'Acciones',
-	width: 500,
-	//height: 400,
 	
-	resizable: false,
+	platformConfig: {
+		desktop : {
+			modal: true,
+			width: Ice.constantes.componente.ventana.width
+		},
+		'!desktop': {
+			scrollable: true
+		},
+	},
 	
 	config: {
 		cdunieco: null,

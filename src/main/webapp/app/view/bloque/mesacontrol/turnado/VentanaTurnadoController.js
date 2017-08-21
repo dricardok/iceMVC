@@ -6,7 +6,7 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnadoController', {
 	alias: 'controller.ventanaturnado',
     
     custom: function(){
-        Ice.log('Ice.view.bloque.mesacontrol.turnado.AgregarDocumentoController custom');
+        Ice.log('Ice.view.bloque.mesacontrol.turnado.VentanaTurnadoController custom');
     },
     
     onTurnar: function(){
@@ -26,8 +26,8 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnadoController', {
                 mascara: 'Turnando tramite',
                 url: Ice.url.bloque.mesacontrol.turnar,
                 params: {
-                    'params.ntramite' : view.getNtramite(),
-                    'params.status': view.getStatus(),
+                    'params.ntramite' : view.getFlujo().ntramite,
+                    'params.status': view.getFlujo().aux,
                     'params.comments': values.comments,
                     'params.cdrazrecha': view.getCdrazrecha(),
                     'params.cdusuariDes': view.getCdusuariDes(),
@@ -37,6 +37,7 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnadoController', {
                 success: function (json) {
                     var paso2 = 'Obteniendo resultado de tramite';
                     try {
+                        view.cerrar();
                         Ice.mensajeCorrecto({
                             titulo: 'Tramite turnado con exito',
                             mensaje: json.message,

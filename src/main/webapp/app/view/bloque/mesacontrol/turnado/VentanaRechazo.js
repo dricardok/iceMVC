@@ -1,78 +1,71 @@
 /**
- * Created by DEORTIZT on 16/08/2017.
+ * Created by DEORTIZT on 18/08/2017.
  */
-Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado', {   
+Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaRechazo', {   
     extend: 'Ice.view.componente.VentanaIce',
-    xtype: 'ventanaturnado',    
-    controller: 'ventanaturnado',
+    xtype: 'ventanarechazo',    
+    controller: 'ventanarechazo',
 
     // config ext
     title: 'Turnado',
     layout: 'fit',
+    scrollable: true,
     platformConfig: {
         desktop: {
-            scrollable: false,
             width: Ice.constantes.componente.ventana.width,
+            maxHeight: 600,
             modal: true
         },
-        '!desktop': {
-            scrollable: true
-        }
     },
 
     // config no ext
     config: {
-        ntramite: null,
-        status: null,
-        cdrazrecha: null,
-        cdusuariDes: null,
-        cdsisrolDes: null,
         flujo: null
     },
     
     // validacion de parametros de entrada
     constructor: function (config) {
-        Ice.log('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado.constructor config:', config);
+        Ice.log('Ice.view.bloque.mesacontrol.turnado.VentanaRechazo.constructor config:', config);
         var me = this,
-            paso = 'Validando construcci\u00f3n de ventana de turnado';
+            paso = 'Validando construcci\u00f3n de ventana de rechazo';
         try {
             if (!config) {
-                throw 'No hay datos para ventana de turnado';
+                throw 'No hay datos para ventana de rechazo';
             }
 
             config.flujo = Ice.validarParamFlujo(config);
             
             if (!config.flujo.ntramite) {
-                throw 'Falta numero de tr\u00e1mite para ventana de turnado';
+                throw 'Falta numero de tramite para ventana de rechazo';
             }
-            if (!config.flujo.aux) {
-                throw 'Falta par\u00e1metro estatus para ventana de turnado';
-            }
-            
-            // config.status = config.status.toUpperCase();
 
             var comps = Ice.generaComponentes({
                 pantalla: 'TRAMITE',
-                seccion: 'TURNADO',
+                seccion: 'RECHAZO',
                 columns: true,
                 items: true,
                 fields: true,
                 validators: true
             });
 
+            var cdrazrecha = Ice.query('[name=cdrazrecha]',comps.TRAMITE.RECHAZO.items);
+            cdrazrecha['param1'] = 'params.ntramite';
+            cdrazrecha['value1'] = config.flujo.ntramite;
+            Ice.log('componentes ',cdrazrecha);
+
             config.items = [
                 {
                     xtype: 'formunacolumnaice',
                     reference: 'form',
                     sinToggle: true,
-                    items: comps.TRAMITE.TURNADO.items,
-                    modelFields: comps.TRAMITE.TURNADO.fields,
-                    modelValidators: comps.TRAMITE.TURNADO.validators,
-                    iceEvents: comps.TRAMITE.TURNADO.eventos,
+                    items: comps.TRAMITE.RECHAZO.items,
+                    modelFields: comps.TRAMITE.RECHAZO.fields,
+                    modelValidators: comps.TRAMITE.RECHAZO.validators,
+                    iceEvents: comps.TRAMITE.RECHAZO.eventos,
                     buttons: [
                         {
-                            text: 'Turnar',
-                            iconCls: 'x-fa fa-user-plus',
+                            text: 'Rechazar',
+                            iconCls: 'x-fa fa-power-off',
                             handler: 'onTurnar'
                         }, {
                             text: 'Cerrar',
@@ -85,9 +78,6 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado', {
                     ]
                 }
             ];
-
-            config.items[0].items[0].anchor = '90%';
-            config.items[0].items[0].height = 200;
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

@@ -1,33 +1,39 @@
 Ext.define('Ice.view.mesacontrol.MesaControl', {
-    extend: 'Ice.view.componente.PanelIce',
+    extend: 'Ice.view.componente.PanelPaddingIce',
     xtype: 'mesacontrol',
     title: 'Mesa de control',
     
-    //scrollable: true,
+    platformConfig: {
+        '!desktop': {
+        	scrollable: true
+        }
+    },
     
-    requires: [
-    	'Ice.view.bloque.mesacontrol.FormMesaControl'
-    ],
-    
-    controller: 'mesacontrol',  
-    
-    items: [
-    	{
-    		xtype: 'formmesacontrol',
-    		reference: 'formmesacontrol'
-    	}, {
-    		xtype: 'gridmesacontrol',
-    		reference: 'gridmesacontrol',
-    		itemsPerPage: 50,
-    		estatus: -1
-    	}
-    ],
+    controller: 'mesacontrol',
     
     constructor: function(config) {
-    	Ice.log('Ice.view.mesacontrol.MesaControl.constructor config:', config);
-        this.callParent(arguments);
-        //Ice.generaComponentes();
-        Ice.query('#mainView').getController().redirectTo('accesocotizacion.action');
-        return;
+        return Ice.query('#mainView').getController().redirectTo('accesocotizacion.action'); // para que no entre a mesa
+        Ice.log('Ice.view.mesacontrol.MesaControl.constructor config:', config);
+        var me = this,
+            paso = 'Construyendo mesa de control';
+        try {
+            Ice.generaComponentes(); // para que valide sesion
+
+            config.items = [
+                {
+                    xtype: 'formmesacontrol',
+                    reference: 'formmesacontrol'
+                }, {
+                    xtype: 'gridmesacontrol',
+                    reference: 'gridmesacontrol',
+                    itemsPerPage: 50,
+                    estatus: -1
+                }
+            ].concat(config.items || []);
+
+            me.callParent(arguments);
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
     }
 });

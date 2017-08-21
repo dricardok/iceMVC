@@ -2822,12 +2822,14 @@ Ext.onReady(function()
                                                 ,xtype     : 'checkcolumn'
                                                 ,dataIndex : 'SWCOMPRA'
                                                 ,width     : 55
+                                                ,hidden    : true
                                             }
                                             ,{
                                                 text       : 'REASI.'
                                                 ,xtype     : 'checkcolumn'
                                                 ,dataIndex : 'SWREASIG'
                                                 ,width     : 55
+                                                ,hidden    : true
                                             }
                                         ]
                                         ,store : Ext.create('Ext.data.Store',

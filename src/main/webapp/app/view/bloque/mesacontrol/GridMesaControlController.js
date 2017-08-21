@@ -11,25 +11,13 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 		try {
 			
 			var ventana = Ext.create('Ice.view.bloque.mesacontrol.VentanaMesaControl', {
-				
-				modal: true,				
-				
-				platformConfig: {
-			        '!desktop': {
-			            
-			        	scrollable: true
-			        	
-			        },
-			        "desktop" : {
-			        	width: 800
-			        }
-			    },
-				
 				items: [
 					{
 						xtype: 'formdetalletramite',
 						reference: 'formdetalletramite',
 						
+						sinToggle: true,
+
 						ntramite: record.data.NTRAMITE,
 						dstipflu: record.data.DSTIPFLU,
 						dsflujomc: record.data.DSFLUJOMC,
@@ -50,42 +38,31 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 						referencia: record.data.REFERENCIA,
 						nombre: record.data.NOMBRE,
 						fecstatu: record.data.FECSTATU,
-						estatus: record.data.DSESTADOMC,
-								
-						
-						buttons: [{
-							text: 'Documentos',
-							reference: 'formDetalleBtnDocumentos',
-							handler: function (boton) {
-								
-								me.onDocumentosClic(boton);
-							
-							}
-						}, {
-							text: 'Historial',
-							references: 'formDetalleBtnHistorial',
-							handler: function (boton) {
-								
-								me.onHistorialClic(boton);
-							
-							}
-						}, {
-							text: 'Regresar',
-							handler: function () {
-								
-								ventana.cerrar();
-							}
-						}]
+						estatus: record.data.DSESTADOMC
+					}, {
+						xtype: 'botoneraflujo',
+						docked: 'bottom',
+						botonCerrar: true,
+						flujo: {
+							ntramite  : record.get('NTRAMITE'),
+							status    : record.get('ESTATUS'),
+							cdtipflu  : record.get('CDTIPFLU'),
+							cdflujomc : record.get('CDFLUJOMC'),
+							tipoent   : 'E',
+							claveent  : record.get('ESTATUS'),
+							webid     : '',
+							cdunieco  : record.get('CDUNIECO'),
+							cdramo    : record.get('CDRAMO'),
+							estado    : record.get('ESTADO'),
+							nmpoliza  : record.get('NMPOLIZA'),
+							nmsituac  : record.get('NMSITUAC'),
+							nmsuplem  : record.get('NMSUPLEM'),
+							aux       : ''
+						}
 					}
 				]
 			});
-			
-			if(Ice.classic()){
-				ventana.mostrar();
-			} else {
-				Ice.push(ventana);
-			}
-			
+			ventana.mostrar();
 		}catch(e) {
 			Ice.generaExcepcion(e, paso);
 		}
@@ -98,13 +75,16 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 			paso = 'Manejando el evento onNuevoTramiteClic';
 		
 		try {
-			var ventana = Ext.create('Ice.view.componente.VentanaIce',  {
-				
+			var ventana = Ext.create({
+				xtype: 'ventanaice',
 				title: 'Registrar nuevo tramite',
-				width: 500,
-				modal: true,
-				//height: 300,			
-				//layout: 'fit',
+
+				platformConfig: {
+					desktop: {
+						width: Ice.constantes.componente.ventana.width,
+						modal: true
+					}
+				},
 			
 				items: [
 					{
@@ -116,6 +96,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 				buttons: [
 					{
 						text: 'Continuar',
+						iconCls: 'x-fa fa-arrow-right',
 						handler: function() {
 													
 							var formulario = Ext.create('Ice.view.bloque.RegistroTramiteWindow', {
@@ -149,6 +130,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 						}
 					}, {
 						text: 'Cancelar',
+						iconCls: 'x-fa fa-close',
 						handler:  function() {
 							ventana.cerrar();
 						}
@@ -202,7 +184,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 			ventanaHistorial.mostrar();
 			
 		}catch(e){
-			
+			Ice.generaExcepcion(e, paso);
 		}
 	}
 });
