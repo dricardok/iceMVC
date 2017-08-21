@@ -64,7 +64,6 @@ Ext.define('Ice.view.field.CdpersonPickerController', {
                         me.setValue(cdperson);
                         view.setDomicilioSel(domicilioSel);
                         view.fireEvent('personachange',view,cdperson,domicilioSel);
-                        Ice.log("view----",view,"##",domicilioSel,"##");
                     }
                 },
                 cdrol: view.getCdrol(),
