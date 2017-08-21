@@ -7,23 +7,24 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
     layout: 'hbox',
     platformConfig: {
         desktop: {
-            maxHeight: 110,
+            height: 120,
             bodyPadding: '0 0 0 10',
             defaults: {
                 margin: '0 10 10 0'
             }
         },
         tablet: {
-            height: 100
+            height: 110
         },
         phone: {
-            height: 100
+            height: 110
         }
     },
     
     // config no ext
     config: {
-        flujo: null
+        flujo: null,
+        botonCerrar: false
     },
 
     constructor: function (config) {
@@ -39,8 +40,7 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
             config.title = 'Acciones del tr\u00e1mite ' + Ice.nvl(config.flujo.ntramite);
 
             me.callParent(arguments);
-            if (!config.flujo.cdtipflu || !config.flujo.cdflujomc || !config.flujo.tipoent || !config.flujo.claveent ||
-                !config.flujo.webid) {
+            if (!config.flujo.cdtipflu || !config.flujo.cdflujomc || !config.flujo.tipoent || !config.flujo.claveent) {
                 return;
             }
             Ice.cargarAccionesEntidad(config.flujo.cdtipflu, config.flujo.cdflujomc, config.flujo.tipoent, config.flujo.claveent,
@@ -66,6 +66,20 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
                             nmsituac  : config.flujo.nmsituac,
                             nmsuplem  : config.flujo.nmsuplem,
                             aux       : lista[i].AUX
+                        }
+                    });
+                }
+                if (config.botonCerrar === true && Ice.modern()) {
+                    me.add({
+                        xtype: 'buttonice',
+                        text: 'Cerrar',
+                        icon: Ice.ruta.iconos + 'cancel.png',
+                        handler: function (me) {
+                            try {
+                                me.up('ventanaice').cerrar();
+                            } catch (e) {
+                                Ice.logWarn('No se puede cerrar ventanaice desde botoneraflujo', e);
+                            }
                         }
                     });
                 }

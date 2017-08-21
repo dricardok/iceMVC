@@ -32,6 +32,9 @@ var Ice = (
             },
             boton: {
                 fontSize: '0.7em'
+            },
+            ventana: {
+                width: 800
             }
         },
     
@@ -181,7 +184,7 @@ var Ice = (
             		movimientoThmesacontrol:'mesacontrol/historial/movimientoTdmesacontrol.action'
             	},
             	
-            	turnar                        : 'flujomesacontrol/turnarTramite.action',
+            	turnar                        : 'despachador/turnarTramite.action',
             	pantallaExterna               : 'flujomesacontrol/pantallaExterna.action',
                 cargarAccionesEntidad         : 'flujomesacontrol/cargarAccionesEntidad.action',
                 ejecutarValidacion            : 'flujomesacontrol/ejecutaValidacion.action',
@@ -190,7 +193,8 @@ var Ice = (
                 marcarRevisionConfirmada      : 'flujomesacontrol/marcarRevisionConfirmada.action',
                 marcarRequisitoRevision       : 'flujomesacontrol/marcarRequisitoRevision.action',
                 subirArchivoRequisito         : 'documentos/subirArchivoRequisito.action',
-                enviaCorreoFlujo              : 'flujomesacontrol/enviaCorreoFlujo.action'
+                enviaCorreoFlujo              : 'flujomesacontrol/enviaCorreoFlujo.action',
+                obtenerTramiteCompleto        : 'flujomesacontrol/obtenerTramiteCompleto.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
@@ -458,10 +462,11 @@ var Ice = (
             	
             if (Ext.manifest.toolkit === 'classic') {
                 Ext.create('Ext.window.Window', {
-                    width: 300,
+                    width: 400,
 //                    ui:	'ice-window',
                     frame:true,
-                    height: 150,
+                    minHeight: 150,
+                    maxHeight: 600,
                     closeAction: 'destroy',
                     title: titulo,
 
@@ -1991,7 +1996,8 @@ var Ice = (
      * Esta funcion hace submit al index de la aplicacion
      */
     index: function () {
-        Ice.redirect('mesacontrol.action');
+        Ice.cerrarVentanas();
+        Ice.redirect('login.action');
     },
 
     redirect: function (url) {
@@ -2215,7 +2221,7 @@ var Ice = (
             if (!refs) {
                 return refs;
             }
-            var namesMap;
+            var namesMap = {};
             for (refKey in refs) {
                 if (refs[refKey] && typeof refs[refKey].getName === 'function') {
                     namesMap = namesMap || {};
@@ -2306,5 +2312,17 @@ var Ice = (
         params['flujo.nmsuplem']  = flujo.nmsuplem;
         params['flujo.aux']       = flujo.aux;
         return params;
+    },
+
+    /**
+     * Recibe n parametros,
+     * vienen en pares, el i es un objeto, el i+1 es el error para cuando el objeto este vacio
+     */
+    validate: function () {
+        for (var i = 0; i < arguments.length; i = i + 2) {
+            if (Ext.isEmpty(arguments[i])) {
+                throw arguments[i + 1];
+            }
+        }
     }
 });

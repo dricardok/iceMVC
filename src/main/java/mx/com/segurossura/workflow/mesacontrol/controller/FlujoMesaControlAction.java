@@ -2780,6 +2780,29 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
                                      "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
 	    return SUCCESS;
 	}
+    
+    @Action(value   = "obtenerTramiteCompleto",
+            results = { @Result(name="success", type="json") }
+            )
+    public String obtenerTramiteCompleto () {
+        logger.debug(Utils.log("\n####################################",
+                               "\n###### obtenerTramiteCompleto ######",
+                               "\n###### params = ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay par\u00e1metros");
+            Utils.validate(params.get("ntramite"), "No se recibi\\u00f3 el tr\\u00e1mite");
+            params = flujoMesaControlManager.obtenerTramiteCompleto(params.get("ntramite"));
+            success = true;
+        } catch (Exception e) {
+            message = Utils.manejaExcepcion(e);
+        }
+        logger.debug(Utils.log("\n###### success = ", success,
+                               "\n###### message = ", message,
+                               "\n###### obtenerTramiteCompleto ######",
+                               "\n####################################"));
+        return SUCCESS;
+    }
 	
 	////////////////////////////////////////////////////////
 	// GETTERS Y SETTERS                                  //

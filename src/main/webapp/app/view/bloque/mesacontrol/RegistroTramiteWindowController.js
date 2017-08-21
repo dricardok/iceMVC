@@ -24,9 +24,10 @@ Ext.define('Ice.view.bloque.mesacontrol.RegistroTramiteWindowController', {
 			for(var idx in data){
 				data['params.'+idx]=data[idx];
 			}
-			data['params.'+'accion']='I';
-			data['params.'+'cdtipflu']=view.getCdtipflu();
-			data['params.'+'cdflujomc']=view.getCdflujomc();
+			data['params.accion']       = 'I';
+			data['params.cdtipflu']     = view.getCdtipflu();
+			data['params.cdflujomc']    = view.getCdflujomc();
+			data['params.sworigenmesa'] = 'S';
 			Ice.request({
 				url:Ice.url.bloque.mesacontrol.movimientoMesacontrol,
 				params:data,

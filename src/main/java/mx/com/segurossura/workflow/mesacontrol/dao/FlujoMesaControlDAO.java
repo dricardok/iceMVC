@@ -575,13 +575,8 @@ public interface FlujoMesaControlDAO {
 			,String cdrol
 			)throws Exception;
 	
-	public void actualizarStatusTramite(
-			String ntramite
-			,String status
-			,Date fecstatu
-			,String cdusuari
-			,String cdunidspch
-			)throws Exception;
+	public void actualizarStatusTramite (String ntramite, String status, Date fecstatu, String cdusuari, String cdunidspch, String cdsisrol)
+	        throws Exception;
 	
 	public Map<String,Object> recuperarDatosTramiteValidacionCliente(
 			String cdtipflu

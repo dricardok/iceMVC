@@ -1957,20 +1957,15 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 	}
 	
 	@Override
-	public void actualizarStatusTramite(
-			String ntramite
-			,String status
-			,Date fecstatu
-			,String cdusuari
-			,String cdunidspch
-			)throws Exception
-	{
+	public void actualizarStatusTramite (String ntramite, String status, Date fecstatu, String cdusuari, String cdunidspch, String cdsisrol)
+            throws Exception {
 		Map<String,Object> params = new LinkedHashMap<String,Object>();
 		params.put("ntramite"   , ntramite);
 		params.put("status"     , status);
 		params.put("fecstatu"   , fecstatu);
 		params.put("cdusuari"   , cdusuari);
         params.put("cdunidspch" , cdunidspch);
+        params.put("cdsisrol"   , cdsisrol);
 		ejecutaSP(new ActualizarStatusTramiteSP(getDataSource()),params);
 	}
 	
@@ -1984,6 +1979,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 			declareParameter(new SqlParameter("fecstatu"   , Types.TIMESTAMP));
 			declareParameter(new SqlParameter("cdusuari"   , Types.VARCHAR));
             declareParameter(new SqlParameter("cdunidspch" , Types.VARCHAR));
+            declareParameter(new SqlParameter("cdsisrol"   , Types.VARCHAR));
 			declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
 			compile();
@@ -4602,7 +4598,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
             
             /** important that the out parameter is defined before the in parameter. */
             declareParameter(new SqlOutParameter("v_return"   , Types.VARCHAR));  
-            declareParameter(new SqlParameter("pv_ntramite_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_ntramite_i" , Types.NUMERIC));
             declareParameter(new SqlParameter("pv_aux_i"      , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_config_i"   , Types.VARCHAR));
             /** use function instead of stored procedure */

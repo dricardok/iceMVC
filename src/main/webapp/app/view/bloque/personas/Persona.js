@@ -109,20 +109,6 @@ Ext.define('Ice.view.bloque.personas.Persona', {
                 			modelFields:compsMpersona.AGREGAR_PERSONAS.MPERSONA.fields.concat(compsTatriper.TATRIPER.TATRIPER.fields)
             			},
             			items		:	compsMpersona.AGREGAR_PERSONAS.MPERSONA.items.concat(compsTatriper.TATRIPER.TATRIPER.items),
-            			buttons		:	[
-            				{
-            					text:"Cancelar",
-            					iconCls: 'x-fa fa-close',
-            					handler:function(){
-            						Ice.pop()
-            					}
-            				},
-            				{
-            					text		:	'Guardar',
-            					iconCls		: 	'x-fa fa-save',
-            					handler		:	'guardarPersona'
-            				}
-            			],
             			iceEvents: eventsForm.AGREGAR_PERSONAS.EVENTOS.eventos
             			
             	}
@@ -161,6 +147,20 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 			Ice.generaExcepcion(e, paso);
 		}
     },
+    buttons		:	[
+		{
+			text:"Cancelar",
+			iconCls: 'x-fa fa-close',
+			handler:function(){
+				Ice.pop()
+			}
+		},
+		{
+			text		:	'Guardar',
+			iconCls		: 	'x-fa fa-save',
+			handler		:	'guardarPersona'
+		}
+	],
     
     initialize: function(){
     	var me = this,

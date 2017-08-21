@@ -115,13 +115,14 @@ public class MesaControlAction extends PrincipalCoreAction {
 			}
 	)
 	public String movimientoMesacontrol() {
-		
-		logger.debug(StringUtils.join(
-                "\n################################",
-                "\n###### movimientoMesacontrol ######",
-                "\n###### params ", params
-               ));
-		try{
+		logger.debug(StringUtils.join("\n###################################",
+		                              "\n###### movimientoMesacontrol ######",
+		                              "\n###### params ", params));
+		try {
+		    UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+		    String cdusuari = usuario.getCdusuari(),
+		           cdsisrol = usuario.getRolActivo().getCdsisrol();
+		    
 			Utils.validate(params, "No se recibieron parametros");			
 			String ntramite	= params.get("ntramite");
 			String cdunieco	= params.get("cdunieco");
@@ -192,7 +193,6 @@ public class MesaControlAction extends PrincipalCoreAction {
 			String swimpres	= params.get("swimpres");
 			String cdtipflu	= params.get("cdtipflu");
 			String cdflujomc	= params.get("cdflujomc");
-			String cdusuari	= params.get("cdusuari");
 			String cdtipsup	= params.get("cdtipsup");
 			String swvispre	= params.get("swvispre");
 			String cdpercli	= params.get("cdpercli");
@@ -203,20 +203,21 @@ public class MesaControlAction extends PrincipalCoreAction {
 			String cdrazrecha	= params.get("cdrazrecha");
 			String cdunidspch	= params.get("cdunidspch");
 			String ntrasust	= params.get("ntrasust");
-			String cdsisrol	= params.get("cdsisrol");
 			String accion	= params.get("accion");          
             
 			
-			Date ferecepc = null, fecstatu = null;
-            if(params.get("ferecepc") != null)
-            	ferecepc = renderFechas.parse(params.get("ferecepc"));
-            if(params.get("fecstatu") != null) 
-            	fecstatu = renderFechas.parse(params.get("fecstatu"));
-            this.ntramite = mesaControlManager. movimientoTmesacontrol(ntramite, cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsolici, cdsucadm, cdsucdoc, cdtiptra, ferecepc, cdagente, referencia, nombre, fecstatu, estatus, comments, cdtipsit, otvalor01, otvalor02, otvalor03, otvalor04, otvalor05, otvalor06, otvalor07, otvalor08, otvalor09, otvalor10, otvalor11, otvalor12, otvalor13, otvalor14, otvalor15, otvalor16, otvalor17, otvalor18, otvalor19, otvalor20, otvalor21, otvalor22, otvalor23, otvalor24, otvalor25, otvalor26, otvalor27, otvalor28, otvalor29, otvalor30, otvalor31, otvalor32, otvalor33, otvalor34, otvalor35, otvalor36, otvalor37, otvalor38, otvalor39, otvalor40, otvalor41, otvalor42, otvalor43, otvalor44, otvalor45, otvalor46, otvalor47, otvalor48, otvalor49, otvalor50, swimpres, cdtipflu, cdflujomc, cdusuari, cdtipsup, swvispre, cdpercli, renuniext, renramo, renpoliex, sworigenmesa, cdrazrecha, cdunidspch, ntrasust, cdsisrol, accion);
+            this.ntramite = mesaControlManager.movimientoTmesacontrol(ntramite, cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsolici, cdsucadm,
+                    cdsucdoc, cdtiptra, null, cdagente, referencia, nombre, null, estatus, comments, cdtipsit,
+                    otvalor01, otvalor02, otvalor03, otvalor04, otvalor05, otvalor06, otvalor07, otvalor08, otvalor09, otvalor10,
+                    otvalor11, otvalor12, otvalor13, otvalor14, otvalor15, otvalor16, otvalor17, otvalor18, otvalor19, otvalor20,
+                    otvalor21, otvalor22, otvalor23, otvalor24, otvalor25, otvalor26, otvalor27, otvalor28, otvalor29, otvalor30,
+                    otvalor31, otvalor32, otvalor33, otvalor34, otvalor35, otvalor36, otvalor37, otvalor38, otvalor39, otvalor40,
+                    otvalor41, otvalor42, otvalor43, otvalor44, otvalor45, otvalor46, otvalor47, otvalor48, otvalor49, otvalor50,
+                    swimpres, cdtipflu, cdflujomc, cdusuari, cdtipsup, swvispre, cdpercli, renuniext, renramo, renpoliex, sworigenmesa,
+                    cdrazrecha, cdunidspch, ntrasust, cdsisrol, accion);
             success = true;
-		}catch(Exception ex){
-			success = false;
-			Utils.manejaExcepcion(ex);
+		} catch (Exception ex) {
+			message = Utils.manejaExcepcion(ex);
 		}
 		logger.debug(StringUtils.join(
                 
