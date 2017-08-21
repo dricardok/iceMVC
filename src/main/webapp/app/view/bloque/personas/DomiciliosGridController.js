@@ -53,7 +53,6 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGridController', {
 			Ice.log("numero grid:",num);
 			 if(Ice.classic()){
 				 view.getSelectionModel().select(num);
-				 alert();
         	 }else{
         		 var row = view.select(num);
         	 }

@@ -104,6 +104,14 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
 							}
 							
         			],
+        			listeners: {
+    					itemtap: function(grid,row,col){
+							me.getController().verDomiciliosTab(grid,row,col)
+						},
+						itemclick: function(grid,row,col){
+							me.getController().verDomiciliosTab(grid,row,col)
+						}
+    				}
         			
                 },
                 {
@@ -128,7 +136,7 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                     reference: 'btnGuardar',
                     handler: 'onGuardar'
                 }, {
-                    text: 'Nuevo',
+                    text: 'Nueva persona',
                     iconCls: 'x-fa fa-plus',
                     reference: 'btnNuevo',
                     handler: 'onNuevo'

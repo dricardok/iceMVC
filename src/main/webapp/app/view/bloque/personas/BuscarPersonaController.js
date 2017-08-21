@@ -269,6 +269,11 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
         refs = view.getReferences(),
         paso = 'Domicilios persona';
 	    try{
+	    	if(Ice.classic()){
+				 view.getSelectionModel().select(num);
+	       	}else{
+	       		 var row = view.select(num);
+	       	}
 	    	if(Ext.manifest.toolkit === 'classic'){
     			var record=grid.getStore().getAt(rowIndex);            
             } else {
@@ -276,6 +281,26 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
                     record = cell.getRecord(),
                     data = record.getData();
             }
+	    	var gridDomicilios = refs.domiciliosContainer.lookupReference('gridDomicilios');
+	    	gridDomicilios.setCdperson(record.get("cdperson"));
+	    	gridDomicilios.getStore().load({
+	    		params	:	{
+	    			'params.cdperson':record.get("cdperson")
+	    		}
+	    	});
+	    	gridDomicilios.setHidden(false);
+	    } catch(e){
+	        Ice.generaExcepcion(e, paso);
+	    }
+    },
+    verDomiciliosTab : function(grid, record, colIndex){
+    	var me = this,
+        view = me.getView(),
+        refs = view.getReferences(),
+        paso = 'Domicilios persona';
+	    try{
+
+
 	    	var gridDomicilios = refs.domiciliosContainer.lookupReference('gridDomicilios');
 	    	gridDomicilios.setCdperson(record.get("cdperson"));
 	    	gridDomicilios.getStore().load({
