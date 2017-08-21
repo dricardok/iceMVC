@@ -20,7 +20,6 @@ import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.portal.model.RolSistema;
 
 import mx.com.segurossura.general.cmp.dao.ComponentesDAO;
-import mx.com.segurossura.general.producto.model.Ramo;
 import mx.com.segurossura.workflow.confcomp.dao.PantallasDAO;
 import mx.com.segurossura.workflow.confcomp.model.ComponenteVO;
 import mx.com.segurossura.workflow.confcomp.model.Item;
@@ -1175,18 +1174,21 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 		        salida = mesaControlDAO.recuperarOtvalorTramitePorDsatribu(flujo.getNtramite(), "AUXILIAR%FLUJO");
 		    } else {
     			logger.debug(paso);
-    			salida = flujoMesaControlDAO.ejecutaValidacion(
-    					flujo.getNtramite(),
-    					"", // flujo.getCdunieco()
-    					Ramo.MESA_CONTROL.getCdramo(),
-    					"", // flujo.getEstado(),
-    					"", // flujo.getNmpoliza(),
-    					"", // flujo.getNmsituac(),
-    					"", // flujo.getNmsuplem(),
-    					cdvalidafk,
-    					cdusuari,
-    					cdsisrol,
-    					flujo.getClaveent());
+    			Map<String, String> validacion = flujoMesaControlDAO.recuperaTfluval(flujo.getCdtipflu(), flujo.getCdflujomc(),
+    			        flujo.getClaveent()).get(0);
+    			salida = flujoMesaControlDAO.ejecutaValidacion(cdvalidafk, flujo.getNtramite(), flujo.getAux(), validacion.get("JSVALIDA"));
+    			/*
+				"", // flujo.getCdunieco()
+				Ramo.MESA_CONTROL.getCdramo(),
+				"", // flujo.getEstado(),
+				"", // flujo.getNmpoliza(),
+				"", // flujo.getNmsituac(),
+				"", // flujo.getNmsuplem(),
+				cdvalidafk,
+				cdusuari,
+				cdsisrol,
+				flujo.getClaveent());
+				*/
 		    }
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
@@ -4079,6 +4081,19 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	        Utils.generaExcepcion(ex, paso);
 	    }
 	    return suplemento;
+	}
+	
+	@Override
+	public Map<String, String> obtenerTramiteCompleto (String ntramite) throws Exception {
+	    logger.debug(Utils.log("\n@@@@@@ obtenerTramiteCompleto ntramite = ", ntramite));
+	    Map<String, String> tramite = null;
+	    String paso = "Recuperando tr\u00e1mite";
+	    try {
+	        tramite = flujoMesaControlDAO.obtenerTramite(ntramite);
+	    } catch (Exception e) {
+	        Utils.generaExcepcion(e, paso);
+	    }
+	    return tramite;
 	}
 	
 }

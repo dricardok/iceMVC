@@ -8,6 +8,13 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialAgregarDetalleWindow",
 	config		:{
 		record	:	null
 	},
+
+	platformConfig: {
+		desktop: {
+			width: Ice.constantes.componente.ventana.width,
+			modal: true
+		}
+	},
 	
 	constructor	:	function(config){
 		Ice.log('formagrupador.constructor config:', config);
@@ -52,15 +59,14 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialAgregarDetalleWindow",
 	
 	buttons		:		[
 		{
+			text		:	'Agregar Detalle',
+			iconCls 	: 'x-fa fa-plus-circle',
+			handler		:	'agregarDetalle'
+		}, {
 			text		:	'Cancelar',
 			iconCls 	: 'x-fa fa-close',
 			handler		:	'cancelar'
 			
-		},
-		{
-			text		:	'Agregar Detalle',
-			iconCls 	: 'x-fa fa-plus-circle',
-			handler		:	'agregarDetalle'
 		}
 	]
 });

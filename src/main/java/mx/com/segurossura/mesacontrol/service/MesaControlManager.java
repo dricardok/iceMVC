@@ -2,12 +2,16 @@ package mx.com.segurossura.mesacontrol.service;
 
 import java.util.List;
 import java.util.Map;
+
+import com.biosnettcs.portal.model.UsuarioVO;
+
 import java.util.Date;
 
 public interface MesaControlManager {
 	
-	List<Map<String, String>> obtenerTramites(String cdunieco, String cdramo, String estado, String nmpoliza, 
-			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, String nmsolici) throws Exception;
+	List<Map<String, String>> obtenerTramites(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String cdagente, String ntramite, String estatus, Date desde, Date hasta, String nombre, 
+			String nmsolici, String cdusuari, String cdsisrol, long start, long limit) throws Exception;
 	
 	public String movimientoTmesacontrol(String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsuplem, String nmsolici, String cdsucadm, String cdsucdoc, String cdtiptra, Date ferecepc,

@@ -2822,12 +2822,14 @@ Ext.onReady(function()
                                                 ,xtype     : 'checkcolumn'
                                                 ,dataIndex : 'SWCOMPRA'
                                                 ,width     : 55
+                                                ,hidden    : true
                                             }
                                             ,{
                                                 text       : 'REASI.'
                                                 ,xtype     : 'checkcolumn'
                                                 ,dataIndex : 'SWREASIG'
                                                 ,width     : 55
+                                                ,hidden    : true
                                             }
                                         ]
                                         ,store : Ext.create('Ext.data.Store',
@@ -3114,12 +3116,12 @@ Ext.onReady(function()
                                     }
                                     ,{
                                         xtype          : 'textfield'
-                                        ,fieldLabel    : 'VALIDACI\u00D3N'
+                                        ,fieldLabel    : 'VALIDACI\u00D3N (F_ICE_WF_)'
                                         ,labelAlign    : 'top'
                                         ,name          : 'CDVALIDAFK'
                                         ,allowBlank    : false
                                         ,minLength     : 1
-                                        ,maxLength     : 8
+                                        ,maxLength     : 17
                                     }
                                     ,{
                                         xtype       : 'textarea'
