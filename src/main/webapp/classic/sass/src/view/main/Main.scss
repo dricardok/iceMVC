@@ -293,8 +293,8 @@
 
 @include extjs-button-small-ui(
     $ui: 'gray',
-    $background-color: #ebebeb,
-    $border-color:darken($color-gray, 5%)
+    $background-color: rgba(0, 51, 160, 0.10),
+    $border-color:darken($color-gray, 1%)
 );
 @include extjs-button-large-ui(
     $ui: 'gray',
@@ -438,31 +438,56 @@
 );
 
 
+.x-btn-default-small-color-pressed{
+    background-color: rgba(0, 51, 160, 0.25);
+}
 
-.x-btn-gray-small {
+
+
+    .x-btn-gray-small {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
     border-radius: 2px;
     padding: 7px 7px 7px 7px;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #e8e8e8;
+    border-width: 0px;
+    border-style: transparent;
+    background-color: rgba(0, 51, 160, 0.10);
 }
-    .x-btn-over .xbtn-default-toolbar-small{
-        border-color: #dbdbdb;
+    .x-btn-over.xbtn-default-toolbar-small{
+        border-color: transparent !important;
         background-image:none;
+        background-color: rgba(0, 51, 160, 0.25);
+        color: #868687;
 }
+    .x-btn-over.x-btn-gray-small {
+    border-color: transparent !important;
+    background-image: none;
+    background-color: rgba(0, 51, 160, 0.10);
+    color:#fff;
+}    
 
-    
-  
+    .x-btn-over.x-btn-icon-el-gray-small{
+        
+    }
+
+
     .x-btn-inner-gray-small {
     font: 500 12px/16px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
-    color: #606060;
+    color: #868687 !important;
     padding: 0 5px;
     max-width: 100%;
 }
+
+
+    .x-btn-icon-el-gray-small{
+    font-size: 16px;
+    height: 16px;
+    color: #868687 !important;
+    line-height: 16px;
+}
+
+
+
     
-    
-    
-    
+
