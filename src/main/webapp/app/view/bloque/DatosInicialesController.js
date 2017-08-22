@@ -111,7 +111,9 @@ Ext.define('Ice.view.bloque.DatosInicialesController', {
                             refs.panelcoaseguro.setCdunieco(values.cdunieco);
                             refs.panelcoaseguro.setNmpoliza(values.nmpoliza);
                             refs.panelcoaseguro.setCdtipcoa(values.cdtipcoa);
+                            Ice.suspendEvents(refs.panelcoaseguro);
                             refs.panelcoaseguro.getController().cargar(values);
+                            Ice.resumeEvents(refs.panelcoaseguro);
                         }
                     }
                 }
