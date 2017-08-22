@@ -406,7 +406,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
         }
     },
         
-    emitir: function () {
+    emitir: function (list, params) {
         Ice.log('controller.emision emitir');
         var me = this,
             view = me.getView(),
@@ -423,7 +423,13 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     cdunieco: view.getCdunieco(),
                     cdramo: view.getCdramo(),
                     estado: view.getEstado(),
-                    nmpoliza: view.getNmpoliza()
+                    nmpoliza: view.getNmpoliza(),
+                    
+                    email: params.email,
+         	        nmtarjeta: params.nmtarjeta,
+         	        orderId: list.orderId,
+         	        authCode: list.authCode,
+         	        nmcotizacion: params.nmpoliza
                 }),
                 success: function (action) {
                 	
@@ -665,10 +671,12 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 	            }),
 	            success: function (action) {	            	
 	            	
+	            	
+	            	
 	            	ventana.cerrar();
 	            	// Ice.mensajeCorrecto('Pago autorizado ');
 	            	
-	                me.emitir();
+	                me.emitir(action.list[0], action.params);
 	                
 	            },
 	            failure: function (action) {
