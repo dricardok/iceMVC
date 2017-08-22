@@ -87,10 +87,18 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
                             change: function(me, value){
                                 var paso = 'Cambio cdmodelo';
                                 try {
-                                    Ice.log('Cambiando modelo de coaseguro cdmodelo ',cdmodelo.getValue());
-                                    refs.grid.getStore().getProxy().extraParams['params.cdmodelo'] = cdmodelo.getValue(); 
-                                    refs.grid.getStore().load();
-                                    refs.grid.show();
+                                    Ice.log('store ',refs.grid.getStore());
+                                    if(refs.grid.getStore().getData().length == 0){
+                                        view.setModeloEditado(true);
+                                    }
+                                    if(view.getModeloEditado()){
+                                        Ice.log('Cambiando modelo de coaseguro cdmodelo ',cdmodelo.getValue());
+                                        refs.grid.getStore().getProxy().extraParams['params.cdmodelo'] = cdmodelo.getValue(); 
+                                        refs.grid.getStore().load();
+                                        refs.grid.show();
+                                    } else {
+                                        view.setModeloEditado(true);
+                                    }
                                 } catch (e) {
                                     Ice.logWarn(paso, e);
                                 }
@@ -534,6 +542,9 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguroController', {
                                         refs.formAceptado.hide();
                                     }
                                 }
+                                setTimeout(function(){ 
+                                    Ice.log('esperando a mostrar elementos de coaseguro');
+                                }, 3000);
                             } catch (e) {
                                 Ice.manejaExcepcion(e, paso2);
                             }
