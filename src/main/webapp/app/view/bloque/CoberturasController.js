@@ -447,6 +447,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 		    form = view.down('[reference=form]'),
 			elementos = [];
 			Ice.log("form",form);
+			
 			if(Ext.ComponentQuery.query('[xtype=numberfieldice][getValue]',form).length>0){
 				this.guardarCoberturas(params);
 				return;
@@ -467,6 +468,13 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 					var paso2 = 'Evaluando validaciones';
 					try {
     					var list = json.list || [];
+    					var gridCoberturas = Ext.ComponentQuery.query("#gridCoberturas",view)[0];
+    					gridCoberturas.getStore().each(function(rec){
+    						if(Number(rec.get("ptcapita"))===0){
+    							throw 'Falta Suma Asegurada';
+    						}
+    					});
+    					
     					if (list.length>0) {
 							Ext.create('Ice.view.bloque.VentanaValidaciones', {
 								lista: list

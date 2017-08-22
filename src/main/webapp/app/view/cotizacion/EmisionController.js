@@ -142,6 +142,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     bloqueExistente.getController().cargar();
                 }
             });
+            me.puedeEmitir();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -220,7 +221,8 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 } catch (e) {
                     Ice.logWarn('warning al invocar onVistaAgente en gridagrupadores', e);
                 }
-            }
+            } 
+            me.puedeEmitir();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -908,5 +910,38 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
+    },
+    
+    puedeEmitir : function(){
+    	var me = this,
+        view = me.getView(),
+        refs = view.getReferences(),
+        paso = 'Preguntando si puede emitir';
+    	try{
+    		var data = {
+    				'params.cdunieco': view.getCdunieco(),
+        			'params.cdramo': view.getCdramo(),
+        			'params.estado': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
+        			'params.nmpoliza': view.getNmpoliza(),
+        			'params.nmsuplem': view.getNmsuplem()
+    		};
+    		Ice.request({
+        		url		:	Ice.url.emision.puedeEmitir,
+        		params	:	data,
+        		success	:	function(data){
+        			var paso = 'Respuesta de puede emitir.';
+        			try{
+        				var puedeEmitir = data.emitir === 'S'
+        				refs.cotizarbutton.setHidden(!puedeEmitir);
+        			}catch(e){
+        				Ice.manejaExcepcion(e,paso);
+        			}
+        		}
+        		
+        	});
+    	}catch(e){
+    		Ice.manejaExcepcion(e,paso)
+    	}
+    	
     }
 });
