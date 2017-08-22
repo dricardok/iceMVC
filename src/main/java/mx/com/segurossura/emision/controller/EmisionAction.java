@@ -739,13 +739,20 @@ public class EmisionAction extends PrincipalCoreAction {
     	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
     	           newestad  = params.get("newestad"),
     	           newpoliza = params.get("newpoliza"),
-    	           pnmrecibo = params.get("pnmrecibo");
+    	           pnmrecibo = params.get("pnmrecibo"),
+    	           
+    	           email 	 = params.get("email"),
+    	           nmtarjeta = params.get("nmtarjeta"),
+    	           orderId	 = params.get("orderId"),
+    	           authCode   = params.get("authCode"),
+    	           nmcotizacion = params.get("nmcotizacion");
+    	           
     	    Utils.validate(cdunieco, "Falta cdunieco",
     	                   cdramo,   "Falta cdramo",
     	                   estado,   "Falta estado",
     	                   nmpoliza, "Falta nmpoliza");
     	    
-    	    Map<String, String> resultado =  emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo);
+    	    Map<String, String> resultado =  emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo, nmcotizacion, nmtarjeta, authCode, orderId, email);
     	    
     	    params = new HashMap<String, String>();
             params.put("nmpoliza", resultado.get("polizaemitida"));
@@ -766,7 +773,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	logger.debug(Utils.log("###### confirmarPoliza params = ", params));
     	@SuppressWarnings("rawtypes")
 		Map session = ActionContext.getContext().getSession();
-		
+
 		UsuarioVO user = (UsuarioVO) session.get(Constantes.USER);
 		// Si el usuario completo existe en sesion:
         if (user != null && user.getRolActivo() != null && StringUtils.isNotBlank(user.getRolActivo().getCdsisrol())) {
@@ -809,10 +816,11 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   email, 	 "Falta email");
     	    
     	    emisionManager.guardarDatosPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdbanco, nmtarjeta, fevencm, fevenca, email);
-    	    String codigoautorizacion = emisionManager.realizarPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, 
+    	    
+    	    list = emisionManager.realizarPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, 
     	    															cdbanco, dsbanco, nmtarjeta, codseg, fevencm, 
     	    															fevenca, nombre, email, usuario);
-    	    params.put("codaut", codigoautorizacion);
+    	    //params.put("codaut", codigoautorizacion);
     	    
     	    
     		success = true;

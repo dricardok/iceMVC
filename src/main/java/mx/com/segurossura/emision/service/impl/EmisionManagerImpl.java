@@ -14,6 +14,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -708,10 +709,27 @@ public class EmisionManagerImpl implements EmisionManager {
 
 	@Override
 	public Map<String, String> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception {
+											   String nmsuplem, String newestad, String newpoliza, String pnmrecibo, 
+											   String nmcotizacion, String nmtarjeta, String authCode, String orderId, 
+											   String email) throws Exception {
 		
 		logger.debug("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
-					 "@@@@@@ confirmarPoliza @@@@@@");
+					 "@@@@@@ confirmarPoliza, parametros ", 
+					 "cdunieco "+ cdunieco, 
+					 "cdramo "+ cdramo, 
+					 "estado "+ estado,
+					 "nmpoliza "+ nmpoliza, 
+					 "nmsuplem "+ nmsuplem, 
+					 "newestad "+ newestad, 
+					 "newpoliza "+ newpoliza,
+					 "pnmrecibo "+ pnmrecibo,
+					 "pnmrecibo "+ nmcotizacion,
+					 "nmtarjeta "+ nmtarjeta,
+					 "authCode "+ authCode,
+					 "orderId "+ orderId, 
+					 "email "+ email);
+		
+		
 		Map<String, String> results = new HashMap<String, String>();
 		String paso = null, nmpolizaEmitida = null;
 		Map<String, String> datosMrecibo = null;
@@ -723,30 +741,44 @@ public class EmisionManagerImpl implements EmisionManager {
 			nmpolizaEmitida = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
 			results.put("polizaemitida", nmpolizaEmitida);
 			
-			estado = EstadoPoliza.MASTER.getClave();
-			nmpoliza = nmpolizaEmitida;
-			logger.info("Poliza emitida: {}", nmpoliza);	
 			
-			
-			// Obteniendo nmrecibo para obtener el nmrecibo de la poliza emitida
-			datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpolizaEmitida, null).get(0);
-			
-			
-			logger.info("ObtenerDatosConfirmacion ", datosMrecibo);
-			// Construir Request para el servicio de aplicar pago
-			request = new RequestWs();
-			request.setCdunieco(Integer.parseInt(cdunieco));
-			request.setCdramo(Integer.parseInt(cdramo));
-			request.setNmpoliza(Integer.parseInt(nmpoliza));
-			request.setNmrecibo(Integer.parseInt(datosMrecibo.get("nmrecibo")));
-			
-			paso = new StringBuilder("Aplicando recibo en ALEA de la p\u00f3liza ").append(nmpoliza).toString();			
-			try{
-				pagoManager.aplicaPago(request);
-			}catch(Exception e){
-				logger.error(e.getMessage(), e);
+			logger.info("Validando si se debe aplicar pago por ALEA");
+			if(authCode != null) {
+				
+				estado = EstadoPoliza.MASTER.getClave();
+				nmpoliza = nmpolizaEmitida;
+				logger.info("Poliza emitida: {}", nmpoliza);	
+				
+				
+				// Obteniendo nmrecibo para obtener el nmrecibo de la poliza emitida
+				datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpolizaEmitida, null).get(0);
+				
+				
+				logger.info("ObtenerDatosConfirmacion ", datosMrecibo);
+				// Construir Request para el servicio de aplicar pago
+				request = new RequestWs();
+				request.setCdunieco(Integer.parseInt(cdunieco));
+				request.setCdramo(Integer.parseInt(cdramo));
+				request.setNmpoliza(Integer.parseInt(nmpoliza));
+				request.setNmrecibo(Integer.parseInt(datosMrecibo.get("nmrecibo")));
+				
+				request.setNmcotiza(Long.parseLong(nmcotizacion));
+				//request.set
+				request.setOrderId(orderId);
+				request.setEmail(email);
+				
+				Tarjeta tarjeta = new Tarjeta(nmtarjeta);
+				tarjeta.setAuthCode(authCode);
+				
+				request.setTarjeta(tarjeta);
+				
+				paso = new StringBuilder("Aplicando recibo en ALEA de la p\u00f3liza ").append(nmpoliza).toString();			
+				try{
+					pagoManager.aplicaPago(request);
+				}catch(Exception e){
+					logger.error(e.getMessage(), e);
+				}
 			}
-			
 			
 			// marcar la cotizacion como pendiente de documentos
 			logger.debug("marcar la emision como pendiente de documentos...");	
@@ -775,8 +807,9 @@ public class EmisionManagerImpl implements EmisionManager {
 		return results;
 	}
 		
+	@SuppressWarnings("unchecked")
 	@Override
-	public String realizarPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, 
+	public List<Map<String, String>> realizarPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, 
     		String nmsuplem, String cdbanco, String dsbanco, String nmtarjeta, 
     		String codseg, String fevencm, String fevenca, String nombre, String email, String usuario) throws Exception {
 		
@@ -785,8 +818,9 @@ public class EmisionManagerImpl implements EmisionManager {
 		String paso = "";		
 		String resultado = null;		
 		Map<String, String> datosPago = null;
-		
-		Banco banco = null;
+		List<Map<String, String>> resultados = null;
+		Map<String, String> response = null;
+ 		Banco banco = null;
 		Tarjeta tarjeta = null;
 		RequestWs request = null;
 		
@@ -851,35 +885,39 @@ public class EmisionManagerImpl implements EmisionManager {
             
             if(transaccionResponse != null) {            	
             	
-            	logger.info("Codigo de autorizacion: " + transaccionResponse.getAuthCode());
-                logger.info("Codigo de Error " + transaccionResponse.getCcErrCode());
-                logger.info("Mensage de respuesta " + transaccionResponse.getCcReturnMsg());
-                logger.info(transaccionResponse.getDcError());
-                logger.info(transaccionResponse.getParamError());
-                logger.info(transaccionResponse.getProcReturnCode());
-                logger.info(transaccionResponse.getProcReturnMsg());
-                logger.info(transaccionResponse.getProcReturnMsg());
-                logger.info(transaccionResponse.getResponseCode());
-                logger.info(transaccionResponse.getText());
-                logger.info(transaccionResponse.getTimeOut());
-                logger.info(transaccionResponse.getTotal());
+            	logger.info("AuthCode " + transaccionResponse.getAuthCode());
+                logger.info("CcErrCode "+ transaccionResponse.getCcErrCode());
+                logger.info("CcReturnMsg "+ transaccionResponse.getCcReturnMsg());
+                logger.info("DcError "+ transaccionResponse.getDcError());
+                logger.info("ParamError "+ transaccionResponse.getParamError());
+                logger.info("ProcReturnCode "+ transaccionResponse.getProcReturnCode());
+                logger.info("ProcReturnMsg "+ transaccionResponse.getProcReturnMsg());
+                logger.info("ResponseConde "+ transaccionResponse.getResponseCode());
+                logger.info("Text "+ transaccionResponse.getText());
+                logger.info("TimeOut "+ transaccionResponse.getTimeOut());
+                logger.info("Total "+ transaccionResponse.getTotal());
+                logger.info("OrderId "+ transaccionResponse.getOrderId());
                 
             	if(transaccionResponse.getAuthCode() == "") {           	
             	
             		throw new Exception(transaccionResponse.getDcError());
-            	}
+            	}            	
+            	
+            }            
+            
+            //resultado = transaccionResponse.getAuthCode();
+            response = BeanUtils.describe(transaccionResponse);
+            if(response!= null) {
+            	resultados = new ArrayList<Map<String, String>>();
+            	resultados.add(response);
             }
-            
-            
-            resultado = transaccionResponse.getAuthCode();
-						
 			
 		}catch(Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		}		
 		logger.debug(Utils.join("\n@@@@@@ realizarPagoTarjeta", "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
 		
-		return resultado;
+		return resultados;
 	}
 		
 	@Override
