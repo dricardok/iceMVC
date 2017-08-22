@@ -26,6 +26,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     } else {
                         me.irBloqueSiguiente();
                     }
+                    me.puedeEmitir();
                 } catch (e) {
                     Ice.manejaExcepcion(e, paso2);
                 }
@@ -101,6 +102,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 var bloqueActual = refs['ref' + (index - 1)];
                 bloqueActual.getController().guardar({
                     success: function () {
+                    	me.puedeEmitir();
                         agregarYEnfocarBloque(true);
                     }
                 });
@@ -135,6 +137,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 
             bloqueActual.getController().guardar({
                 success: function () {
+                	me.puedeEmitir();
                     view.setGuardadoAutomaticoSuspendido(true); // para que no valide el guardado
                     tabpanel.setActiveTab(bloqueExistente);
                     view.setGuardadoAutomaticoSuspendido(false);
@@ -142,7 +145,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     bloqueExistente.getController().cargar();
                 }
             });
-            me.puedeEmitir();
+            
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -185,13 +188,15 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     try {
                         // ('cargar nuevo card posterior a salvar anterior card');
                         newCard.getController().cargar();
-
+                        
                         // convertir bloque de agrupadores para agente
                         try {
                             newCard.getReferences().gridagrupadores.getController().onVistaAgente();
+                            me.puedeEmitir();
                         } catch (e) {
                             Ice.logWarn('warning al invocar onVistaAgente en gridagrupadores', e);
                         }
+                        
                     } catch (e){
                         Ice.manejaExcepcion(e, pasoCargar);
                     }
@@ -218,11 +223,12 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 // convertir bloque de agrupadores para agente
                 try {
                     newCard.getReferences().gridagrupadores.getController().onVistaAgente();
+                    me.puedeEmitir();
                 } catch (e) {
                     Ice.logWarn('warning al invocar onVistaAgente en gridagrupadores', e);
                 }
+                
             } 
-            me.puedeEmitir();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }

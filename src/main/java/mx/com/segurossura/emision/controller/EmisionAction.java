@@ -1011,7 +1011,8 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   cdramo,   "Falta cdramo",
     	                   estado,   "Falta estado",
     	                   nmpoliza, "Falta nmpoliza");
-    	    emitir = "S";
+    	    emitir = emisionManager.puedeEmitir(cdunieco, cdramo, estado, nmpoliza, nmsuplem)?"S":"N";
+    	    logger.debug("Puede emitir: "+emitir);
     	    success = true;
     	    
     	}catch(Exception ex){
