@@ -43,6 +43,7 @@ public class EmisionAction extends PrincipalCoreAction {
 	private List<String>	   bloques;
 	private List<Map<String, String>> list;
 	private List<String>	   errores;
+	private String			   emitir;
 
 	private Map<String, List<Map<String, String>>> componentes;
 	private static SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
@@ -738,13 +739,20 @@ public class EmisionAction extends PrincipalCoreAction {
     	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
     	           newestad  = params.get("newestad"),
     	           newpoliza = params.get("newpoliza"),
-    	           pnmrecibo = params.get("pnmrecibo");
+    	           pnmrecibo = params.get("pnmrecibo"),
+    	           
+    	           email 	 = params.get("email"),
+    	           nmtarjeta = params.get("nmtarjeta"),
+    	           orderId	 = params.get("orderId"),
+    	           authCode   = params.get("authCode"),
+    	           nmcotizacion = params.get("nmcotizacion");
+    	           
     	    Utils.validate(cdunieco, "Falta cdunieco",
     	                   cdramo,   "Falta cdramo",
     	                   estado,   "Falta estado",
     	                   nmpoliza, "Falta nmpoliza");
     	    
-    	    Map<String, String> resultado =  emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo);
+    	    Map<String, String> resultado =  emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo, nmcotizacion, nmtarjeta, authCode, orderId, email);
     	    
     	    params = new HashMap<String, String>();
             params.put("nmpoliza", resultado.get("polizaemitida"));
@@ -765,7 +773,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	logger.debug(Utils.log("###### confirmarPoliza params = ", params));
     	@SuppressWarnings("rawtypes")
 		Map session = ActionContext.getContext().getSession();
-		
+
 		UsuarioVO user = (UsuarioVO) session.get(Constantes.USER);
 		// Si el usuario completo existe en sesion:
         if (user != null && user.getRolActivo() != null && StringUtils.isNotBlank(user.getRolActivo().getCdsisrol())) {
@@ -808,10 +816,11 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   email, 	 "Falta email");
     	    
     	    emisionManager.guardarDatosPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdbanco, nmtarjeta, fevencm, fevenca, email);
-    	    String codigoautorizacion = emisionManager.realizarPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, 
+    	    
+    	    list = emisionManager.realizarPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, 
     	    															cdbanco, dsbanco, nmtarjeta, codseg, fevencm, 
     	    															fevenca, nombre, email, usuario);
-    	    params.put("codaut", codigoautorizacion);
+    	    //params.put("codaut", codigoautorizacion);
     	    
     	    
     		success = true;
@@ -979,6 +988,39 @@ public class EmisionAction extends PrincipalCoreAction {
     	return SUCCESS;
     }
     
+    @SuppressWarnings("unchecked")
+	@Action(        
+            value = "puedeEmitir", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        ) 
+    public String puedeEmitir(){
+    	logger.debug(Utils.log("\n###### puedeEmitir params: ", params));
+    	try {
+    		UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+    		Utils.validate(params, "No se recibieron datos");
+    	    String cdunieco  = params.get("cdunieco"),
+    	           cdramo    = params.get("cdramo"),
+    	           estado    = params.get("estado"),
+    	           nmpoliza  = params.get("nmpoliza"),
+    	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0");
+    	           //iscotizacion = params.get("iscotizacion");
+    	    
+    	    Utils.validate(cdunieco, "Falta cdunieco",
+    	                   cdramo,   "Falta cdramo",
+    	                   estado,   "Falta estado",
+    	                   nmpoliza, "Falta nmpoliza");
+    	    emitir = "S";
+    	    success = true;
+    	    
+    	}catch(Exception ex){
+    		message = Utils.manejaExcepcion(ex);
+    		success = false;
+    	}
+    	
+    	return SUCCESS;
+    }
     
     
 	public List<String> getErrores() {
@@ -1038,4 +1080,14 @@ public class EmisionAction extends PrincipalCoreAction {
 	public void setBloques(List<String> bloques) {
 		this.bloques = bloques;
 	}
+
+	public String getEmitir() {
+		return emitir;
+	}
+
+	public void setEmitir(String emitir) {
+		this.emitir = emitir;
+	}
+	
+	
 }
