@@ -2111,4 +2111,40 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             compile();
         }
     }
+    
+    @Override
+    public boolean puedeEmitir(String cdunieco, String cdramo, String estado, String nmpoliza, 
+            String nmsuplem) throws Exception {
+
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+      //  if(true){ return false;}
+        Map<String, Object> procRes  = ejecutaSP(new puedeEmitirSP(getDataSource()), params);
+        String res = (String) procRes.get("v_return");
+        return "S".equals(res);
+    }
+    
+	protected class puedeEmitirSP extends StoredProcedure {
+		protected puedeEmitirSP(DataSource dataSource) {
+			super(dataSource,"PKG_VALIDA_ALEA.F_VAL_EMISION");
+			/** important that the out parameter is defined before the in parameter. */
+            declareParameter(new SqlOutParameter("v_return",    Types.VARCHAR));    
+			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
+			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+			
+            /** use function instead of stored procedure */
+            setFunction(true);
+			
+			compile();
+		}
+	}
 }
