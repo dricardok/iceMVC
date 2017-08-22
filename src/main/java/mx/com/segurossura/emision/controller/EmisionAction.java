@@ -43,6 +43,7 @@ public class EmisionAction extends PrincipalCoreAction {
 	private List<String>	   bloques;
 	private List<Map<String, String>> list;
 	private List<String>	   errores;
+	private String			   emitir;
 
 	private Map<String, List<Map<String, String>>> componentes;
 	private static SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
@@ -979,6 +980,39 @@ public class EmisionAction extends PrincipalCoreAction {
     	return SUCCESS;
     }
     
+    @SuppressWarnings("unchecked")
+	@Action(        
+            value = "puedeEmitir", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        ) 
+    public String puedeEmitir(){
+    	logger.debug(Utils.log("\n###### puedeEmitir params: ", params));
+    	try {
+    		UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+    		Utils.validate(params, "No se recibieron datos");
+    	    String cdunieco  = params.get("cdunieco"),
+    	           cdramo    = params.get("cdramo"),
+    	           estado    = params.get("estado"),
+    	           nmpoliza  = params.get("nmpoliza"),
+    	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0");
+    	           //iscotizacion = params.get("iscotizacion");
+    	    
+    	    Utils.validate(cdunieco, "Falta cdunieco",
+    	                   cdramo,   "Falta cdramo",
+    	                   estado,   "Falta estado",
+    	                   nmpoliza, "Falta nmpoliza");
+    	    emitir = "S";
+    	    success = true;
+    	    
+    	}catch(Exception ex){
+    		message = Utils.manejaExcepcion(ex);
+    		success = false;
+    	}
+    	
+    	return SUCCESS;
+    }
     
     
 	public List<String> getErrores() {
@@ -1038,4 +1072,14 @@ public class EmisionAction extends PrincipalCoreAction {
 	public void setBloques(List<String> bloques) {
 		this.bloques = bloques;
 	}
+
+	public String getEmitir() {
+		return emitir;
+	}
+
+	public void setEmitir(String emitir) {
+		this.emitir = emitir;
+	}
+	
+	
 }
