@@ -2,6 +2,9 @@ package mx.com.segurossura.mesacontrol.service;
 
 import java.util.List;
 import java.util.Map;
+
+import com.biosnettcs.portal.model.UsuarioVO;
+
 import java.util.Date;
 
 public interface MesaControlManager {
@@ -25,5 +28,4 @@ public interface MesaControlManager {
 			String cdusuari, String cdtipsup, String swvispre, String cdpercli, String renuniext, String renramo,
 			String renpoliex, String sworigenmesa, String cdrazrecha, String cdunidspch, String ntrasust,
 			String cdsisrol, String accion) throws Exception;
-
 }
