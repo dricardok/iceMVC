@@ -78,8 +78,13 @@
         <dependency>
 		    <groupId>javax.mail</groupId>
 		    <artifactId>javax.mail-api</artifactId>
-		    <version>1.5.6</version>
-		</dependency>
+		    <version>1.6.0</version>
+        </dependency>
+        <dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>javax.mail</artifactId>
+		    <version>1.5.5</version>
+        </dependency>
 
 
         <!-- Spring Framework -->
@@ -296,7 +301,7 @@
 					<artifactId>alea-commons</artifactId>
 				</exclusion>
 			</exclusions>
-        </dependency>
+		</dependency>
 		
 		<dependency>
 			<groupId>mx.com.royalsun.alea</groupId>
@@ -309,7 +314,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
 		<dependency>
 			<groupId>mx.com.royalsun.alea</groupId>
 			<artifactId>alea-commons</artifactId>
@@ -344,6 +348,40 @@
                </goals>
              </execution>
            </executions>
+           <configuration>
+             <!-- 1.- Excluimos carpetas no necesarias para el war, son solo para el ambiente de desarrollo: -->
+             <warSourceExcludes>
+                .sencha/,
+                .settings/,
+                app/,
+                build/,
+                classic/overrides/,
+                classic/sass/,
+                classic/src/,
+                ext/,
+                jsonLocal/,
+                modern/sass/,
+                modern/src/,
+                packages/,
+                sass/,
+                src/,
+                WebContent/,
+                .classpath,
+                .gitignore,
+                .project,
+                build.xml,
+                workspace.json
+             </warSourceExcludes>
+             <!-- 2.- Copiamos los archivos productivos al nivel de la carpeta de recursos web: -->
+             <webResources>
+               <resource>
+                 <!-- source directory relative to pom.xml: -->
+                 <directory>src/main/webapp/build/production/Ice</directory>
+                 <!-- target directory relative to root -->
+                 <targetPath>/</targetPath> 
+               </resource>
+             </webResources>
+           </configuration>
          </plugin>
         </plugins>
     </build>
