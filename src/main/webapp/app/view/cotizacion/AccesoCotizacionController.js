@@ -122,6 +122,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                         // },
                         {
                             text: 'Cancelar',
+                            ui:'gray',
                             iconCls: 'x-fa fa-close',
                             handler: function () {
                                 venPer.cerrar();

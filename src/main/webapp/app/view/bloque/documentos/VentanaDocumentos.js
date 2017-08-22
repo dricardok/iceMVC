@@ -124,6 +124,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                     {
                         text: 'Cerrar',
                         iconCls: 'x-fa fa-close',
+                        ui:'gray',
                         handler: function(){
                             Ice.pop();
                         }

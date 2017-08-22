@@ -57,6 +57,7 @@ Ext.define('Ice.view.cotizacion.Emision', {
             text: 'Anterior',
             reference: 'anteriorbutton',
             iconCls: 'x-fa fa-backward',
+            ui:'gray',
             handler: 'onAnteriorclic'
         }, {
             text: 'Emitir',

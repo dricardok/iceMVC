@@ -108,6 +108,7 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                 }, {
                     text: 'Cerrar',
                     iconCls: 'x-fa fa-close',
+                    ui:'gray',
                     handler: function(){
                         Ice.pop();
                     }

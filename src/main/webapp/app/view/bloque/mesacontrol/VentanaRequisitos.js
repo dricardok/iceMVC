@@ -337,6 +337,7 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaRequisitos', {
                                         }, {
                                             text: 'Cancelar',
                                             iconCls: 'x-fa fa-close',
+                                            ui:'gray',
                                             handler: function (me) {
                                                 me.up('ventanaice').cerrar();
                                             }
@@ -460,6 +461,7 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaRequisitos', {
                 }, {
                     text: 'Cerrar',
                     iconCls: 'x-fa fa-close',
+                    ui:'gray',
                     hidden: Ice.classic(),
                     handler: function (me) {
                         me.up('ventanaice').cerrar();

@@ -667,6 +667,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                       },{
                           text: 'Cancelar',
                           iconCls: 'x-fa fa-close',
+                          ui:'gray',
                           handler: function(){
                               ventanaCopiar.cerrar();
                           }

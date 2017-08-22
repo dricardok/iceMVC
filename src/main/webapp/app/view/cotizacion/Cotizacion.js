@@ -7,7 +7,7 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
     // config ext
     layout: 'fit',
     header: false,
-    items: [{
+        items: [{
         xtype: 'tabpanelice',
         reference: 'tabpanel',
         listeners: {
@@ -19,6 +19,8 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             text: 'Anterior',
             reference: 'anteriorbutton',
             iconCls: 'x-fa fa-backward',
+            ui:'gray',
+            style:'margin-right: 9px;',
             handler: 'onAnteriorclic'
         },
         // {
@@ -36,6 +38,7 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             text: 'Siguiente',
             reference: 'siguientebutton',
             iconCls: 'x-fa fa-forward',
+            style:'margin-right: 42px;',
             handler: 'onSiguienteClic'
         }
         

@@ -373,6 +373,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             
             Ext.create({
                 xtype: 'ventanaprimas',
+                style:'background-color: transparent !important;',
                 
                 cdunieco: view.getCdunieco(),
                 cdramo: view.getCdramo(),

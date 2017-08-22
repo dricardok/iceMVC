@@ -73,6 +73,7 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
                     me.add({
                         xtype: 'buttonice',
                         text: 'Cerrar',
+                        ui:'gray',
                         icon: Ice.ruta.iconos + 'cancel.png',
                         handler: function (me) {
                             try {

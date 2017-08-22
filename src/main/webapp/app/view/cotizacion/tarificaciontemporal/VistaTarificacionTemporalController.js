@@ -170,6 +170,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					}, {
 						text: 'Cerrar',
 						iconCls: 'x-fa fa-close',
+						ui:'gray',
 						handler: function (boton) {
 							boton.up('ventanatarifastemporales').cerrar();
 						}
