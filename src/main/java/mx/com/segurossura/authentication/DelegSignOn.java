@@ -23,6 +23,7 @@ public class DelegSignOn {
 	
 	private static String driverDataBase;
 	
+	private static ViewfinderItemVO responseSignOn;
 	
 	
 	private DelegSignOn(
@@ -84,6 +85,7 @@ public class DelegSignOn {
 		
 		Object dat = validaCuenta(usr, pass).get("finder");
 		ViewfinderItemVO res = (ViewfinderItemVO) dat;
+		responseSignOn = res;
 		logger.debug(Utils.join(res.getErrorcode()		," <-getErrorcode"));
 		logger.debug(Utils.join(res.getErrormessage()	," <-getErrormessage"));
 		logger.debug(Utils.join(res.getFlag()			," <-getFlag"));
@@ -98,6 +100,14 @@ public class DelegSignOn {
 			return false;
 		return !((ViewfinderItemVO) dat).isFail();
 	}
+
+	public static ViewfinderItemVO getResponseSignOn() {
+		if(responseSignOn == null){
+			responseSignOn = new ViewfinderItemVO();
+		}
+		return responseSignOn;
+	}
+	
 	
 	
 }
