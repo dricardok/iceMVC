@@ -114,10 +114,12 @@ public interface EmisionManager {
     
     
     public Map<String, String> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
-			String nmsuplem, String newestad, String newpoliza, String pnmrecibo) throws Exception;
+			   String nmsuplem, String newestad, String newpoliza, String pnmrecibo, 
+			   String nmcotizacion, String nmtarjeta, String authCode, String orderId, 
+			   String email) throws Exception ;
     
     
-    public String realizarPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, 
+    public List<Map<String, String>> realizarPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, 
     		String nmsuplem, String cdbanco, String dsbanco, String nmtarjeta, 
     		String codseg, String fevencm, String fevenca, String nombre, String email, String usuario) throws Exception;
     
@@ -148,5 +150,7 @@ public interface EmisionManager {
     
     public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
             String nmsuplem) throws Exception;
+    
+     public boolean puedeEmitir(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
     
 }
