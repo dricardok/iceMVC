@@ -80,7 +80,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
             	},
             	success: function(action) {
 					if (action.params['valido'] === 'N') {
-						throw 'La c\u00E9dula del agente ' + codagente + ' es inv\u00E1lida';
+						throw 'C\u00E9dula Vencida, favor actualizar su informaci\u00F3n';
 					}/* else {
 						
 						Ice.request({
