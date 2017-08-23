@@ -349,6 +349,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
         		buttons : [{
         			cls: '',
         			text: 'Modificar',
+        			style:'margin-right: 42px;',       			
         			iconCls: 'x-fa fa-pencil',
         			handler: function(me){
         				Ice.pop();

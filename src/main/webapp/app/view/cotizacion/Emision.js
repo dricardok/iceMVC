@@ -47,6 +47,7 @@ Ext.define('Ice.view.cotizacion.Emision', {
         }
     }],
     buttons: [
+    	
         // {
         //     text: 'Cargar',
         //     reference: 'cargarbutton',
@@ -67,6 +68,7 @@ Ext.define('Ice.view.cotizacion.Emision', {
             hidden:	true
         },{
             text: 'Siguiente',
+            style:'margin-right: 45px;',
             reference: 'siguientebutton',
             iconCls: 'x-fa fa-forward',
             handler: 'onSiguienteClic'

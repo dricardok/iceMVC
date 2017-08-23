@@ -20,11 +20,11 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             reference: 'anteriorbutton',
             iconCls: 'x-fa fa-backward',
             ui:'gray',
-            style:'margin-right: 9px;',
+            //style:'margin-right: 20px;',
             handler: 'onAnteriorclic'
         },
         // {
-        //     text: 'Cargar',
+        //     text: 'Cargar', // style:'margin-right: 42px;',
         //     reference: 'cargarbutton',
         //     iconCls: 'x-fa fa-cloud-download',
         //     handler: 'onCargarClic'
@@ -33,12 +33,13 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             text: 'Cotizar',
             reference: 'cotizarbutton',
             iconCls: 'x-fa fa-dollar',
+          
             handler: 'onCotizarClic'
         }, {
             text: 'Siguiente',
             reference: 'siguientebutton',
             iconCls: 'x-fa fa-forward',
-            style:'margin-right: 42px;',
+            style:'margin-right: 45px;',
             handler: 'onSiguienteClic'
         }
         
