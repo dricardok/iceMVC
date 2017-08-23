@@ -91,7 +91,16 @@ Ext.define('Ice.view.field.CdagentePickerController', {
     },
     
     onSetActiveError: function(param){
-        Ice.mensajeWarning(param);
+        //Ice.mensajeWarning(param);
+    	var me  = this,
+    		view = me.getView()
+    		paso = 'Is valid on cdagentepicker';
+    	
+    	try {
+    		view.getReferences().dsnombre.isValid();
+    	}catch(e){
+    		Ice.generaExcepcion(e, paso);
+    	}
     },
     
     onBuscar: function(){
