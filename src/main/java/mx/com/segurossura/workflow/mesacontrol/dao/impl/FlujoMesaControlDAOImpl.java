@@ -2999,7 +2999,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 	{
 		protected ObtenerCorreosStatusTramite(DataSource dataSource)
 		{
-			super(dataSource,"PACK_MAIL.P_GET_STATUS_TRAMITE");
+			super(dataSource,"PKG_MAIL.P_GET_MAIL_STATUS_TRAMITE");
 			declareParameter(new SqlParameter("ntramite" , Types.VARCHAR));
 			declareParameter(new SqlParameter("cdsisrol" , Types.VARCHAR));
 			declareParameter(new SqlParameter("swescala" , Types.VARCHAR));

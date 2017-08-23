@@ -131,7 +131,7 @@ public class DocumentosAction extends PrincipalCoreAction {
             String estado = params.get("estado");
             String nmpoliza = params.get("nmpoliza");
             String nmsuplem = params.get("nmsuplem");
-            Utils.validate(url, "No se recibio la url");
+            // Utils.validate(url, "No se recibio la url");
             Archivo archivo = documentosManager.obtenerDocumento(cdunieco, cdramo, estado, nmpoliza, nmsuplem, url, ruta, nombre, cddocume);
             fileInputStream = archivo.getFileInputStream();
             filename = archivo.getFilename();
@@ -175,7 +175,7 @@ public class DocumentosAction extends PrincipalCoreAction {
             Utils.validate(params, "No se recibieron parametros");
             String url = params.get("url");
             String ruta = params.get("ruta");
-            Utils.validate(url, "No se recibio la url");
+            // Utils.validate(url, "No se recibio la url");
             String nombre = params.get("dsdocume");
             String cddocume = params.get("cddocume");
             String cdunieco = params.get("cdunieco");

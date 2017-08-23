@@ -202,13 +202,7 @@ public class DocumentosManagerImpl implements DocumentosManager {
                     flujo.getCdramo(), File.separator,
                     flujo.getEstado(), File.separator,
                     flujo.getNmpoliza(), File.separator,
-                    Utils.NVL(flujo.getNmsuplem(), "0"));
-            
-            paso = "Transfiriendo archivo al content";
-            FileUtils.copyFile(archivo, new File(Utils.join(ruta, File.separator, nombre)));
-            
-            paso = "Recuperando tr\u00e1mite";
-            Map<String, String> tramite = flujoMesaControlDAO.obtenerTramite(flujo.getNtramite());
+                    Utils.NVL(flujo.getNmsuplem(), "0"), File.separator);
             
             paso = "Recuperando nombre de documento";
             List<Map<String, String>> docs = flujoMesaControlDAO.recuperaTdocume();
@@ -220,6 +214,15 @@ public class DocumentosManagerImpl implements DocumentosManager {
                 }
             }
             Utils.validate(dsdocume, "No se encuentra el documento en la tabla");
+            
+            paso = "Extrayendo extensi\u00f3n";
+            String extension = nombre.substring(nombre.lastIndexOf("."), nombre.length());
+            
+            paso = "Transfiriendo archivo al content";
+            FileUtils.copyFile(archivo, new File(Utils.join(ruta, dsdocume, extension)));
+            
+            paso = "Recuperando tr\u00e1mite";
+            Map<String, String> tramite = flujoMesaControlDAO.obtenerTramite(flujo.getNtramite());
             
             paso = "Borrando archivo anterior";
             documentosDAO.borrarArchivoRequisitoAnterior(flujo.getNtramite(), cddocume);
@@ -234,8 +237,8 @@ public class DocumentosManagerImpl implements DocumentosManager {
                     Utils.NVL(flujo.getNmsuplem(), "0"),
                     flujo.getNtramite(),
                     new Date(),
-                    nombre, //documento.getId(),
-                    dsdocume, //nombreExtension,
+                    cddocume, //documento.getId(),
+                    Utils.join(dsdocume, extension), //nombreExtension,
                     "0", //cdtipsub
                     "S",
                     tramite.get("cdtiptra"),
