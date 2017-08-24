@@ -852,6 +852,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   nmpoliza, "Falta nmpoliza");
     	    
     	    list = emisionManager.obtenerTarifaMultipleTemp(cdunieco, cdramo, estado, nmpoliza);
+    	    logger.debug("Resultado tarificacion {}-{}-{}-{}: {}", cdunieco, cdramo, estado, nmpoliza, list);
     	    success = true;
     	} catch (Exception ex) {
     		success = false;
