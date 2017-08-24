@@ -743,7 +743,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			
 			
 			logger.info("Validando si se debe aplicar pago por ALEA");
-			if(authCode != null) {
+			if(authCode != null && nmcotizacion != null && orderId != null && email != null && nmtarjeta != null && authCode != null) {
 				
 				estado = EstadoPoliza.MASTER.getClave();
 				nmpoliza = nmpolizaEmitida;
@@ -763,7 +763,6 @@ public class EmisionManagerImpl implements EmisionManager {
 				request.setNmrecibo(Integer.parseInt(datosMrecibo.get("nmrecibo")));
 				
 				request.setNmcotiza(Long.parseLong(nmcotizacion));
-				//request.set
 				request.setOrderId(orderId);
 				request.setEmail(email);
 				
@@ -796,7 +795,6 @@ public class EmisionManagerImpl implements EmisionManager {
 			Utils.generaExcepcion(ex, paso);
 		} finally {
 			request = null;
-			datosMrecibo.clear();
 			datosMrecibo = null;
 			
 		}

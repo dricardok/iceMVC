@@ -433,11 +433,11 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     estado: view.getEstado(),
                     nmpoliza: view.getNmpoliza(),
                     
-                    email: params.email,
-         	        nmtarjeta: params.nmtarjeta,
-         	        orderId: list.orderId,
-         	        authCode: list.authCode,
-         	        nmcotizacion: params.nmpoliza
+                    email: params && params.email ? params.email : null,
+         	        nmtarjeta: params && params.nmtarjeta ? params.nmtarjeta : null,
+         	        orderId: list && list.orderId ? list.orderId : null,
+         	        authCode: list && list.authCode ? list.authCode : null,
+         	        nmcotizacion: params && params.nmpoliza ? params.nmpoliza : null
                 }),
                 success: function (action) {
                 	
