@@ -648,7 +648,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             super(dataSource, "PKG_DATA_ALEA.P_MOV_TVALOPOL");
             this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor()); 
             declareParameter(new SqlParameter("pv_status_i"       , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_tvalo_record_i" , Types.STRUCT, "TVALOPOL_OBJECT"));
+            declareParameter(new SqlParameter("pv_tvalo_record_i" , Types.STRUCT, "OPS$ALEAD11G.TVALOPOL_OBJECT"));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
             compile();
@@ -2111,4 +2111,68 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             compile();
         }
     }
+    
+    @Override
+    public String obtenerAgenteUsuario(String cdusuari) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdusuari_i", cdusuari);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerAgenteUsuarioSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        String cdagente = "";
+        if(lista.size() > 0){
+            cdagente = lista.get(0).get("cdagente");
+        }
+        return cdagente;
+    }
+    
+    protected class ObtenerAgenteUsuarioSP extends StoredProcedure {
+        protected ObtenerAgenteUsuarioSP (DataSource dataSource) {
+            super(dataSource, "PKG_ACCESO_ALEA.P_GET_AGENTE");           
+            declareParameter(new SqlParameter("pv_cdusuari_i", Types.VARCHAR));
+            String[] cols = new String[] {"cdagente"};
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
+    public List<Map<String, String>> puedeEmitir(String cdunieco, String cdramo, String estado, String nmpoliza, 
+            String nmsuplem) throws Exception {
+
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        List<Map<String, String>> errores =new ArrayList<>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+      //  if(true){ return false;}
+        Map<String, Object> procRes  = ejecutaSP(new puedeEmitirSP(getDataSource()), params);
+        String res = (String) procRes.get("v_return");
+        errores = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        
+        return errores;
+    }
+    
+	protected class puedeEmitirSP extends StoredProcedure {
+		protected puedeEmitirSP(DataSource dataSource) {
+			super(dataSource,"PKG_VALIDA_ALEA.F_VAL_EMISION");
+			/** important that the out parameter is defined before the in parameter. */
+            declareParameter(new SqlOutParameter("v_return",    Types.VARCHAR));    
+			declareParameter(new SqlParameter("pv_cdunieco_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_cdramo_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
+			declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
+			String[] cols = new String[] {"tipo","otvalor"};
+            declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
+			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+			
+            /** use function instead of stored procedure */
+            setFunction(true);
+			
+			compile();
+		}
+	}
 }

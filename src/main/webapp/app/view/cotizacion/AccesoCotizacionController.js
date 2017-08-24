@@ -58,8 +58,33 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                     ]
                 }]
             });
-            ventana.mostrar();
-            ventana.record = record;
+            
+            if(Ice.sesion.cdsisrol == Ice.constantes.roles.AGENTE){
+            	Ice.request({
+            		url:Ice.url.emision.validaCedulaAgente,
+            		params :{
+            				'params.cdusuari':Ice.sesion.cdusuari,
+            				'params.cdramo':record.get('cdramo'),
+            				'params.cdproceso': view.getCdproceso()
+            					
+            			},
+                	success:function(){
+                		var paso='Verificando agente';
+                		try{
+                			ventana.mostrar();
+                            ventana.record = record;
+                		}catch(e){
+                			Ice.manejaExcepcion(e,paso);
+                		}
+                	}
+                });
+            }else{
+            	ventana.mostrar();
+                ventana.record = record;
+            }
+            
+            
+            
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }

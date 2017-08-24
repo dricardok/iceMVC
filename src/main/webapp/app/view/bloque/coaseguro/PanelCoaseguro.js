@@ -32,7 +32,8 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguro', {
         status: null,
 
         // coaseguro
-        cdtipcoa: null
+        cdtipcoa: null,
+        modeloEditado: false
     },
 
     constructor: function(config){
