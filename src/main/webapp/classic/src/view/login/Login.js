@@ -79,6 +79,7 @@ Ext.define('Ice.view.login.Login', {
                     xtype: 'textfieldice',
                     label: 'Usuario',
                     name: 'cdusuari',
+                    reference: 'cdusuari',
                     bind: '{login.cdusuari}',
                     listeners: {
                         specialkey: 'onSpecialkeyPress'
@@ -111,13 +112,44 @@ Ext.define('Ice.view.login.Login', {
                             xtype: 'component',
                             width: 150,
                             //style: 'border: 1px solid red;',
-                            html: '<a href="#passwordreset" onclick="return false;" class="linksura" style="font-size:12px !important;color:#707372 !important; line-height:30px !important;">¿Olvid&oacute; su Contrase&ntilde;a?</a>'
+                            html: '<a id="lostpasswordlink" href="#passwordreset" onclick="return false;" class="linksura" style="font-size:12px !important;color:#707372 !important; line-height:30px !important;">¿Olvid&oacute; su Contrase&ntilde;a?</a>',
+                            listeners: {
+                                click: {
+                                    element: 'el', //bind to the underlying el property on the panel
+                                    fn: function() { 
+                                    	var me = this,
+                                    		paso = 'onclic lostPassword';
+                                    	                                    	
+                                    	Ice.log('Manejando evento ', me);
+                                    	
+                                    	try {
+                                    		var cdusuarifield = Ice.query('form').items.items[1].getValue();
+                                    		
+                                    		Ice.log('cdusuarifield', cdusuarifield);
+                                    		
+                                    		if(cdusuarifield && cdusuarifield != "") {	
+                                    			
+                                    			var href = document.getElementById('lostpasswordlink').href;
+                                    			
+                                    			//document.getElementById('lostpasswordlink').href  = 'lalalalal';
+                                    			
+                                    			window.open('https://www.segurossura.com.mx/Utilidades/templates/unlock.html?hash='+cdusuarifield);
+                                    			//window.open('http://10.142.67.39:8080/Utilidades/templates/unlock.html?hash='+cdusuarifield);
+                                    			
+                                    		} else {
+                                    			// Alert pidiendo nombre de usuario
+                                    			Ext.Msg.alert('Aviso', 'Favor de proporcionar nombre de usuario');
+                                    		}                                    		
+                                    		
+                                    	} catch(e) {
+                                    		 Ice.generaExcepcion(e, paso);
+                                    	}
+                                    }
+                                }
+                            }
                         }
                     ]
-                }       
-                 
-                
-                
+                }
             ],
             
             buttons: [
@@ -139,6 +171,15 @@ Ext.define('Ice.view.login.Login', {
     // propiedades no ext (se generan getters y setters)
     config: {},
     
+    constructor: function (config) {
+    	var me = this;
+    	
+    	me.callParent(arguments);
+    	
+    	 Ice.log('Lost', Ext.get('lostpasswordlink'));
+    },
+    
+    
     // configuracion que usa parametros (config ya se encuentra copiada en this)
     initComponent: function () {
         Ice.log('Ice.view.login.Login.initComponent');
@@ -153,5 +194,7 @@ Ext.define('Ice.view.login.Login', {
             Ice.generaExcepcion(e, paso);
         }
         me.callParent();
+        
+        Ice.log('Lost', Ext.get('lostpasswordlink'));
     }
 });
