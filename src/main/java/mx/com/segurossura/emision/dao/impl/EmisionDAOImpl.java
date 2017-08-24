@@ -648,7 +648,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             super(dataSource, "PKG_DATA_ALEA.P_MOV_TVALOPOL");
             this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor()); 
             declareParameter(new SqlParameter("pv_status_i"       , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_tvalo_record_i" , Types.STRUCT, "TVALOPOL_OBJECT"));
+            declareParameter(new SqlParameter("pv_tvalo_record_i" , Types.STRUCT, "OPS$ALEAD11G.TVALOPOL_OBJECT"));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
             compile();
@@ -2108,6 +2108,32 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+            compile();
+        }
+    }
+    
+    @Override
+    public String obtenerAgenteUsuario(String cdusuari) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdusuari_i", cdusuari);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerAgenteUsuarioSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        String cdagente = "";
+        if(lista.size() > 0){
+            cdagente = lista.get(0).get("cdagente");
+        }
+        return cdagente;
+    }
+    
+    protected class ObtenerAgenteUsuarioSP extends StoredProcedure {
+        protected ObtenerAgenteUsuarioSP (DataSource dataSource) {
+            super(dataSource, "PKG_ACCESO_ALEA.P_GET_AGENTE");           
+            declareParameter(new SqlParameter("pv_cdusuari_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            String[] cols = new String[] {"cdagente"};
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
             compile();
         }
     }
