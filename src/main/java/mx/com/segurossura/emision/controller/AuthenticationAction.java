@@ -276,8 +276,8 @@ public class AuthenticationAction extends PrincipalCoreAction {
 		
 		try
 		{
-
-			message=authenticationManager.obtenerMenu((UsuarioVO) session.get("USUARIO"));
+			UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+			message=authenticationManager.obtenerMenu(usuario);
 			
 			success=true;
 			

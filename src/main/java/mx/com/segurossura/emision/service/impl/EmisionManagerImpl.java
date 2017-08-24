@@ -922,10 +922,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	public List<Map<String, String>> obtenerTarifaMultipleTemp(String cdunieco, String cdramo, String estado,
 			String nmpoliza) throws Exception {
 		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "\n@@@@@@ obtenerTarifaMultipleTemp"));
-		String paso = "";
+		String paso = "Obteniendo datos de tarificaci\u00F3n";
 		List<Map<String, String>> datos = null;
 		try {
-			paso = "Consultando datos";
 			datos = emisionDAO.obtenerTarifaMultipleTemp(cdunieco, cdramo, estado, nmpoliza);
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);

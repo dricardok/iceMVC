@@ -622,4 +622,20 @@ public class DatosGeneralesManagerImpl implements DatosGeneralesManager{
             Utils.generaExcepcion(ex, paso);
         }   
     }
+    
+    @Override
+    public boolean validaCedulaAgente(String cdusuari, String cdramo, String cdproceso) throws Exception{
+        String paso = "Validando cedula del agente";
+        boolean cedulaValida = false;
+        try{
+            String cdagente = emisionDAO.obtenerAgenteUsuario(cdusuari);
+            cedulaValida = agentesDAO.validaAgente(cdagente, cdramo, cdproceso);
+            if(!cedulaValida){
+                throw new ApplicationException("La cedula del agente no es valida");
+            }
+        } catch(Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }
+        return cedulaValida;
+    }
 }
