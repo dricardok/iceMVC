@@ -2129,7 +2129,6 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         protected ObtenerAgenteUsuarioSP (DataSource dataSource) {
             super(dataSource, "PKG_ACCESO_ALEA.P_GET_AGENTE");           
             declareParameter(new SqlParameter("pv_cdusuari_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
             String[] cols = new String[] {"cdagente"};
             declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
