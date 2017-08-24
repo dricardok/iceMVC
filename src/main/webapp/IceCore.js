@@ -89,7 +89,8 @@ var Ice = (
             validarCargaCotizacion:     'emision/validarCargaCotizacion.action',
             obtenerPerfilamientoPoliza: 'emision/obtenerPerfilamientoPoliza.action',
             generarDocumentos: 			'emision/generarDocumentos.action',
-            puedeEmitir:				'emision/puedeEmitir.action'
+            puedeEmitir:				'emision/puedeEmitir.action',
+            validaCedulaAgente: 		'emision/datosGenerales/validaCedulaAgente.action'
          },
          
         bloque: {

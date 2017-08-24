@@ -107,6 +107,8 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 				
 				result=rt.getForObject(url, String.class);
 				
+				logger.info("Servicio Menu {}: {}", url, result);
+				
 //				HashMap<String,String> map = (HashMap) JSONUtil.deserialize(result);
 //				
 //				JSONPopulator populator = new JSONPopulator();
