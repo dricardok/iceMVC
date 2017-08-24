@@ -596,6 +596,30 @@ public class DatosGeneralesAction extends PrincipalCoreAction {
         return SUCCESS;
     }
     
+    @Action(
+            value = "datosGenerales/validaCedulaAgente", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        )
+    public String validaCedulaAgente() {
+        logger.debug(Utils.log("###### validaCedulaAgente params: ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos");
+            String cdusuari = params.get("cdusuari");
+            String cdramo = params.get("cdramo");
+            String cdproceso = params.get("cdproceso");
+             Utils.validate(cdusuari, "No se recibio usuario");
+            datosGeneralesManager.validaCedulaAgente(cdusuari, cdramo, cdproceso);
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        return SUCCESS;
+    }
+    
     public boolean isSuccess() {
         return success;
     }

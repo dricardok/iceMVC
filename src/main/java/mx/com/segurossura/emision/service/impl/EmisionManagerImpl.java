@@ -743,7 +743,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			
 			
 			logger.info("Validando si se debe aplicar pago por ALEA");
-			if(authCode != null) {
+			if(authCode != null && nmcotizacion != null && orderId != null && email != null && nmtarjeta != null && authCode != null) {
 				
 				estado = EstadoPoliza.MASTER.getClave();
 				nmpoliza = nmpolizaEmitida;
@@ -763,7 +763,6 @@ public class EmisionManagerImpl implements EmisionManager {
 				request.setNmrecibo(Integer.parseInt(datosMrecibo.get("nmrecibo")));
 				
 				request.setNmcotiza(Long.parseLong(nmcotizacion));
-				//request.set
 				request.setOrderId(orderId);
 				request.setEmail(email);
 				
@@ -796,7 +795,6 @@ public class EmisionManagerImpl implements EmisionManager {
 			Utils.generaExcepcion(ex, paso);
 		} finally {
 			request = null;
-			datosMrecibo.clear();
 			datosMrecibo = null;
 			
 		}
@@ -924,10 +922,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	public List<Map<String, String>> obtenerTarifaMultipleTemp(String cdunieco, String cdramo, String estado,
 			String nmpoliza) throws Exception {
 		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "\n@@@@@@ obtenerTarifaMultipleTemp"));
-		String paso = "";
+		String paso = "Obteniendo datos de tarificaci\u00F3n";
 		List<Map<String, String>> datos = null;
 		try {
-			paso = "Consultando datos";
 			datos = emisionDAO.obtenerTarifaMultipleTemp(cdunieco, cdramo, estado, nmpoliza);
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);

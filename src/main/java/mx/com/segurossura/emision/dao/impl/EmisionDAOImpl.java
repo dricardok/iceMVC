@@ -2113,6 +2113,29 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     }
     
     @Override
+    public String obtenerAgenteUsuario(String cdusuari) throws Exception{
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdusuari_i", cdusuari);
+        Map<String, Object> procRes = ejecutaSP(new ObtenerAgenteUsuarioSP(getDataSource()), params);
+        List<Map<String, String>> lista = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        String cdagente = "";
+        if(lista.size() > 0){
+            cdagente = lista.get(0).get("cdagente");
+        }
+        return cdagente;
+    }
+    
+    protected class ObtenerAgenteUsuarioSP extends StoredProcedure {
+        protected ObtenerAgenteUsuarioSP (DataSource dataSource) {
+            super(dataSource, "PKG_ACCESO_ALEA.P_GET_AGENTE");           
+            declareParameter(new SqlParameter("pv_cdusuari_i", Types.VARCHAR));
+            String[] cols = new String[] {"cdagente"};
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
     public List<Map<String, String>> puedeEmitir(String cdunieco, String cdramo, String estado, String nmpoliza, 
             String nmsuplem) throws Exception {
 

@@ -740,12 +740,13 @@ public class EmisionAction extends PrincipalCoreAction {
     	           newestad  = params.get("newestad"),
     	           newpoliza = params.get("newpoliza"),
     	           pnmrecibo = params.get("pnmrecibo"),
-    	           
-    	           email 	 = params.get("email"),
-    	           nmtarjeta = params.get("nmtarjeta"),
-    	           orderId	 = params.get("orderId"),
-    	           authCode   = params.get("authCode"),
-    	           nmcotizacion = params.get("nmcotizacion");
+    	           			   
+    	        		       
+    	           email 	 = StringUtils.isNotBlank( params.get("email") ) ? params.get("email"): null,
+    	           nmtarjeta = StringUtils.isNotBlank( params.get("nmtarjeta") ) ? params.get("nmtarjeta") : null,
+    	           orderId	 = StringUtils.isNotBlank( params.get("orderId") ) ? params.get("orderId") : null,
+    	           authCode   = StringUtils.isNotBlank( params.get("authCode") ) ? params.get("authCode") : null,
+    	           nmcotizacion = StringUtils.isNotBlank( params.get("nmcotizacion") ) ? params.get("nmcotizacion") : null;
     	           
     	    Utils.validate(cdunieco, "Falta cdunieco",
     	                   cdramo,   "Falta cdramo",
@@ -852,6 +853,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   nmpoliza, "Falta nmpoliza");
     	    
     	    list = emisionManager.obtenerTarifaMultipleTemp(cdunieco, cdramo, estado, nmpoliza);
+    	    logger.debug("Resultado tarificacion {}-{}-{}-{}: {}", cdunieco, cdramo, estado, nmpoliza, list);
     	    success = true;
     	} catch (Exception ex) {
     		success = false;
