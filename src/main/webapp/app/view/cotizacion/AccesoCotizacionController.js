@@ -57,8 +57,28 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                     ]
                 }]
             });
+            
+//            if(Ice.sesion.cdsisrol == Ice.constantes.roles.AGENTE){
+//            	Ice.request({
+//            		url:'',
+//                	success:function(){
+//                		var paso='Verificando agente';
+//                		try{
+//                			ventana.mostrar();
+//                            ventana.record = record;
+//                		}catch(e){
+//                			Ice.manejaExcepcion(e,paso);
+//                		}
+//                	}
+//                });
+//            }else{
+//            	ventana.mostrar();
+//                ventana.record = record;
+//            }
             ventana.mostrar();
             ventana.record = record;
+            
+            
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }

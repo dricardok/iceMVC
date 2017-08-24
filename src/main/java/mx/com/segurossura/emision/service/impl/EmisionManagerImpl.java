@@ -1026,4 +1026,17 @@ public class EmisionManagerImpl implements EmisionManager {
 
 	}
 
+	@Override
+	public List<Map<String, String>> puedeEmitir(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem)
+			throws Exception {
+		List<Map<String, String>> res = null; 
+	    String paso = "Recuperando puede emitir";
+	    try {
+	        res = emisionDAO.puedeEmitir(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+	    } catch (Exception e) {
+	        Utils.generaExcepcion(e, paso);
+	    }
+	    return res;
+	}
+
 }

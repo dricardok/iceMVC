@@ -55,12 +55,13 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 			boolean usuarioValido=true;
 			if(requierePass)
 				 usuarioValido = DelegSignOn.isValid(user, password,urlDataBase,driverDataBase,urlAuth);
+			
 			logger.debug("@@@@ Requiere Pass:"+requierePass);
 			paso="Creando  usuario";
 			if(usuarioValido){
 				usuario= usuarioDAO.obtieneRolesCliente(user);
 			}else{
-				throw new ApplicationException("Credenciales incorrectas.");
+				throw new ApplicationException("Credenciales incorrectas. <br>"+DelegSignOn.getResponseSignOn().getErrormessage());
 			}
 			if( usuario.getRoles()==null){
 				throw new ApplicationException("Usted no posee un rol asociado, por favor contacte al administrador");

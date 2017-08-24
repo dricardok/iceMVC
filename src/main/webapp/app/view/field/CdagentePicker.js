@@ -41,7 +41,7 @@ Ext.define('Ice.view.field.CdagentePicker', {
                     name: 'dsnombre',
                     reference: 'dsnombre',
                     readOnly: true,
-                    allowBlank: this.allowBlank || true                    
+                    allowBlank: false              
                 }, {
                     xtype: 'button',
                     iconCls: 'x-fa fa-search',

@@ -62,8 +62,7 @@ Ext.define('Ice.view.cotizacion.Emision', {
             text: 'Emitir',
             reference: 'cotizarbutton',
             iconCls: 'x-fa fa-key',
-            handler: 'onCotizarClic',
-            hidden:	true
+            handler: 'onCotizarClic'
         },{
             text: 'Siguiente',
             reference: 'siguientebutton',
