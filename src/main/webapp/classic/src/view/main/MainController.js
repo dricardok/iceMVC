@@ -66,6 +66,9 @@ Ext.define('Ice.view.main.MainController', {
                 }, params);
                 
                 Ice.log('Ice.view.main.MainController.setCurrentView config:', config);
+
+                // 23/08/2017 - tezva - para cerrar ventanas
+                Ice.cerrarVentanas();
                 
                 newView = Ext.create(config);
             }

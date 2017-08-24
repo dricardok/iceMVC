@@ -8,9 +8,9 @@
 #canvasdiv
 {
     width            : 5000px;
-    height           : 5000px;
+    height           : 6000px;
     position         : absolute;
-    background-image : url('${flujoimg}fondoModelador.png');
+    background-image : url('${flujoimg}fondoModelador2.png');
 }
 .catEntidad
 {
@@ -3978,14 +3978,14 @@ Ext.onReady(function()
                                             ,{
                                                 xtype       : 'textfield'
                                                 ,fieldLabel : 'NOMBRE'
-                                                ,labelAlign : 'top'
+                                                //,labelAlign : 'top'
                                                 ,name       : 'DSACCION'
                                                 ,allowBlank : false
                                             }
                                             ,{
                                                 xtype       : 'textfield'
                                                 ,fieldLabel : 'VALOR'
-                                                ,labelAlign : 'top'
+                                                //,labelAlign : 'top'
                                                 ,name       : 'CDVALOR'
                                             }
                                             ,{
@@ -4006,7 +4006,8 @@ Ext.onReady(function()
                                     {
                                         itemId   : '_p52_gridAccRol'
                                         ,title   : 'PERMISOS'
-                                        ,height  : 220
+                                        ,hideHeaders: true
+                                        ,height  : 170
                                         ,tools   :
                                         [
                                             {
@@ -4074,7 +4075,7 @@ Ext.onReady(function()
                                     {
                                         itemId      : '_p52_catalogoIconos'
                                         ,title      : 'ICONO'
-                                        ,height     : 250
+                                        ,height     : 200
                                         ,defaults   : { style : 'margin : 5px;' }
                                         ,autoScroll : true
                                         ,border     : 0
