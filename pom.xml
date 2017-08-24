@@ -259,7 +259,7 @@
         <dependency>
             <groupId>com.biosnet.core</groupId>
             <artifactId>ice-commons</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.1</version>
         </dependency>
         
         <!-- Dependencias para authentication -->
