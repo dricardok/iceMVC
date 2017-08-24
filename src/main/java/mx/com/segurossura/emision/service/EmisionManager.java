@@ -151,6 +151,6 @@ public interface EmisionManager {
     public Map<String, String> obtenerPerfilamientoPoliza (String cdunieco, String  cdramo, String estado, String  nmpoliza,
             String nmsuplem) throws Exception;
     
-     public boolean puedeEmitir(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+     public List<Map<String, String>> puedeEmitir(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
     
 }

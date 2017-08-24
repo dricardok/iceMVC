@@ -1027,9 +1027,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	}
 
 	@Override
-	public boolean puedeEmitir(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem)
+	public List<Map<String, String>> puedeEmitir(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem)
 			throws Exception {
-		boolean res = false; 
+		List<Map<String, String>> res = null; 
 	    String paso = "Recuperando puede emitir";
 	    try {
 	        res = emisionDAO.puedeEmitir(cdunieco, cdramo, estado, nmpoliza, nmsuplem);

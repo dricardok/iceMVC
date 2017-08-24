@@ -2113,10 +2113,11 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
     }
     
     @Override
-    public boolean puedeEmitir(String cdunieco, String cdramo, String estado, String nmpoliza, 
+    public List<Map<String, String>> puedeEmitir(String cdunieco, String cdramo, String estado, String nmpoliza, 
             String nmsuplem) throws Exception {
 
         Map<String, Object> params = new LinkedHashMap<String, Object>();
+        List<Map<String, String>> errores =new ArrayList<>();
         params.put("pv_cdunieco_i", cdunieco);
         params.put("pv_cdramo_i", cdramo);
         params.put("pv_estado_i", estado);
@@ -2125,7 +2126,9 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
       //  if(true){ return false;}
         Map<String, Object> procRes  = ejecutaSP(new puedeEmitirSP(getDataSource()), params);
         String res = (String) procRes.get("v_return");
-        return "S".equals(res);
+        errores = (List<Map<String, String>>) procRes.get("pv_registro_o");
+        
+        return errores;
     }
     
 	protected class puedeEmitirSP extends StoredProcedure {
@@ -2138,6 +2141,8 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 			declareParameter(new SqlParameter("pv_estado_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_nmpoliza_i",Types.VARCHAR));
 			declareParameter(new SqlParameter("pv_nmsuplem_i",Types.VARCHAR));
+			String[] cols = new String[] {"tipo","otvalor"};
+            declareParameter(new SqlOutParameter("pv_registro_o",OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
 			

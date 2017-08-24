@@ -196,7 +196,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                         } catch (e) {
                             Ice.logWarn('warning al invocar onVistaAgente en gridagrupadores', e);
                         }
-                        
+                        me.puedeEmitir();
                     } catch (e){
                         Ice.manejaExcepcion(e, pasoCargar);
                     }
@@ -937,8 +937,15 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
         		success	:	function(data){
         			var paso = 'Respuesta de puede emitir.';
         			try{
-        				var puedeEmitir = data.emitir === 'S'
+        				var puedeEmitir = data.emitir === 'S';
         				refs.cotizarbutton.setHidden(!puedeEmitir);
+        				var list = data.list || [];
+						if (list.length != 0) {
+							Ext.create('Ice.view.bloque.VentanaValidaciones', {
+								lista: list
+							}).mostrar();
+						
+						}
         			}catch(e){
         				Ice.manejaExcepcion(e,paso);
         			}
