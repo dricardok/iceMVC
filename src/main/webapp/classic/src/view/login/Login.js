@@ -120,7 +120,7 @@ Ext.define('Ice.view.login.Login', {
                                     	var me = this,
                                     		paso = 'onclic lostPassword';
                                     	                                    	
-                                    	Ice.log('Manejando evento ', me);
+                                    	//Ice.log('Manejando evento ', me.up().up());
                                     	
                                     	try {
                                     		var cdusuarifield = Ice.query('form').items.items[1].getValue();
@@ -131,10 +131,8 @@ Ext.define('Ice.view.login.Login', {
                                     			
                                     			var href = document.getElementById('lostpasswordlink').href;
                                     			
-                                    			//document.getElementById('lostpasswordlink').href  = 'lalalalal';
-                                    			
-                                    			window.open('https://www.segurossura.com.mx/Utilidades/templates/unlock.html?hash='+cdusuarifield);
-                                    			//window.open('http://10.142.67.39:8080/Utilidades/templates/unlock.html?hash='+cdusuarifield);
+                                    			//window.open(me.getUrlpasswordreset+cdusuarifield);
+                                    			window.open(href+cdusuarifield);
                                     			
                                     		} else {
                                     			// Alert pidiendo nombre de usuario
@@ -169,14 +167,50 @@ Ext.define('Ice.view.login.Login', {
     ],
     
     // propiedades no ext (se generan getters y setters)
-    config: {},
+    config: {
+    	urlpasswordreset: null
+    },
     
     constructor: function (config) {
-    	var me = this;
-    	
+    	var me = this
+    		paso = 'Ice.view.login.Login constructor';
+    	try {
+    		
+    		 Ice.request({
+                 //mascara: paso,
+                 url: Ice.url.core.obtenerPropiedades,
+                 success: function (action) {
+                	 
+                	 try {
+                		 
+                		 if(action.properties.urlpasswordreset) {
+                			 
+                			me.setUrlpasswordreset(action.properties.urlpasswordreset);
+                			
+                			if (document.getElementById('lostpasswordlink')) {
+                				document.getElementById('lostpasswordlink').href = action.properties.urlpasswordreset;
+                			}
+                			
+                			Ice.log('Constructor login', me.getUrlpasswordreset());
+                			
+                		 } else {
+                			 // TODO: ASIGNAR URL POR DEFECTO
+                		 }
+                	 
+                     } catch (e) {
+                         Ice.manejaExcepcion(e, paso);
+                     }
+                 },
+                 failure: function () {
+                	 Ice.log("Fallo constructor login");
+                 }
+    			
+    		});
+    		
+    	}catch(e) {
+    		Ice.generaExcepcion(e, paso);
+    	}
     	me.callParent(arguments);
-    	
-    	 Ice.log('Lost', Ext.get('lostpasswordlink'));
     },
     
     
@@ -195,6 +229,5 @@ Ext.define('Ice.view.login.Login', {
         }
         me.callParent();
         
-        Ice.log('Lost', Ext.get('lostpasswordlink'));
     }
 });
