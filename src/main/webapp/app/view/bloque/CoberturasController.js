@@ -275,12 +275,14 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             
             form.add(mpolicap.BLOQUE_COBERTURAS.MPOLICAP.items);
             form.add(comps.TATRIGAR.TATRIGAR.items);
-            
+            Ice.log("Tatrigar items: ",comps.TATRIGAR.TATRIGAR.items);
             form.modelValidators = Ice.utils.mergeObjects(comps.TATRIGAR.TATRIGAR.validators,
 			    mpolicap.BLOQUE_COBERTURAS.MPOLICAP.validators);
             form.modelFields = mpolicap.BLOQUE_COBERTURAS.MPOLICAP.fields.concat(comps.TATRIGAR.TATRIGAR.fields);
             
-            Ice.log("-------->", form.modelValidators);
+            
+            
+            
             this.cargarValores(form);
            
 
@@ -291,6 +293,8 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             		Ice.log("Focus it:",firstItem);
             	}
 	        });
+			
+			Ice.log("modelValidators--->", form.modelValidators);
 		} catch (e) {
 			Ice.manejaExcepcion(e, paso);
     	}
@@ -732,7 +736,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 				elementos = [];
 				Ice.log("form",form);
 			if(form.down('[getValue]')){
-				this.validarCampos(form);
+				Ice.validarFormulario(form);
 			}
 	    	
 	    	form.items.items.forEach(function (it, idx) {
