@@ -10,12 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -896,10 +896,9 @@ public class EmisionManagerImpl implements EmisionManager {
                 logger.info("Total "+ transaccionResponse.getTotal());
                 logger.info("OrderId "+ transaccionResponse.getOrderId());
                 
-            	if(transaccionResponse.getAuthCode() == "") {           	
-            	
-            		throw new Exception(transaccionResponse.getDcError());
-            	}            	
+                if (StringUtils.isBlank(transaccionResponse.getAuthCode())) {           	
+            		throw new ApplicationException(transaccionResponse.getText());
+            	}
             	
             }            
             

@@ -690,7 +690,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 	            failure: function (action) {
 	            	
 	            	ventana.cerrar();
-	            	Ice.mensajeCorrecto('Transaccion rechazada' + action.params.message);
+	            	Ice.mensajeError('Transaccion rechazada: ' + action.message);
 	            }
 	        });			
 			
