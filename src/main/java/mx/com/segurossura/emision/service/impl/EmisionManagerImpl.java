@@ -897,7 +897,7 @@ public class EmisionManagerImpl implements EmisionManager {
                 logger.info("OrderId "+ transaccionResponse.getOrderId());
                 
                 if (StringUtils.isBlank(transaccionResponse.getAuthCode())) {           	
-            		throw new Exception(transaccionResponse.getText());
+            		throw new ApplicationException(transaccionResponse.getText());
             	}
             	
             }            
