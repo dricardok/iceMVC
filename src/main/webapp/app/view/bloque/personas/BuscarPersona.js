@@ -5,8 +5,12 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
     controller: 'buscarpersona',
 
     // config ext
-    title: 'Buscar persona',
-    scrollable: true,
+    
+    title: {
+		text:'Buscar persona',
+		style:'margin:0px 45px 16px 40px;',
+	},
+    //scrollable: true,
 
     // config no ext
     config: {
@@ -109,6 +113,7 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                     text: 'Cerrar',
                     iconCls: 'x-fa fa-close',
                     ui:'gray',
+                    style: 'margin-right:45px;',
                     handler: function(){
                         Ice.pop();
                     }

@@ -84,7 +84,6 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
         				 		text	: 'Cancelar',
         				 		iconCls: 'x-fa fa-close',
         				 		ui:'gray',
-        				 		style:'margin-right: 40px;',
         				 		handler : 'cancelar'
         				 			
         				 	},	
@@ -92,6 +91,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 						    	xtype	: 'button',
 						    	text	: 'Guardar',
 						    	iconCls	: 	'x-fa fa-save',
+						    	style:'margin-right: 40px;',
 						    	handler : 'guardarDomicilio'
 		 			    	}
 		 			    	

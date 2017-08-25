@@ -385,6 +385,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     {
                         text: 'Modificar Cotización',
                         iconCls: 'x-fa fa-check',
+                        style:'margin-right: 45px;',
                         handler: function (me) {
                             me.up('ventanaprimas').cerrar();
                         }
