@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import mx.com.segurossura.general.catalogos.service.PropertiesManager;
 
 @Service
-public class PorpertiesManagerImpl implements PropertiesManager {
+public class PropertiesManagerImpl implements PropertiesManager {
 	
 	@Autowired
 	private Map mapaPropiedades;
