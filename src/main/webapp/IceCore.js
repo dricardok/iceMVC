@@ -68,6 +68,7 @@ var Ice = (
             recuperarDatosSesion: 'authentication/obtenerDatosSesion.action',
             recuperarMenus:       'authentication/obtenerMenu.action',
             obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
+            obtenerPropiedades:   'propiedades/obtenerPropiedades.action', 
             recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
             recuperarTatrisit:    'emision/obtieneTatrisit.action',
             recuperarTatripol:    'emision/obtieneTatripol.action',
