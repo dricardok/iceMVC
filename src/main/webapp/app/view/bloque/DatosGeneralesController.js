@@ -169,6 +169,30 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                     }
                 }
             }
+            paso='Validando Retroactividad para ejecutivo de negocio';
+            if(Ice.sesion.cdsisrol == Ice.constantes.roles.EJECUTIVO_NEGOCIO_SR || Ice.sesion.cdsisrol == Ice.constantes.roles.EJECUTIVO_NEGOCIO_JR){
+            	if(Ice.classic()){
+            		refs.feca_inicio_vigencia.setMinValue(new Date());
+            	}else{
+            		refs.feca_inicio_vigencia.on({
+            			change:function(dp,value){
+            				var paso='validando feini';
+            				try{
+            					var date = new Date();
+            					date.setHours(0,0,0,0);
+            					if(value < date){
+            						throw 'Fecha inválida debe ser igual o mayor que hoy';
+            					}
+            				}catch(e){
+            					Ice.manejaExcepcion(e,paso);
+            					dp.setValue(Ext.Date.format(new Date(),Ext.util.Format.dateFormat));
+            				}
+            			}
+            		});
+            	}
+            	
+            }
+            
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

@@ -39,7 +39,9 @@ var Ice = (
         },
     
 	    roles: {
-            AGENTE: 'AGENTE'
+            AGENTE: 'AGENTE',
+            EJECUTIVO_NEGOCIO_SR: 'COTIZADOR',
+            EJECUTIVO_NEGOCIO_JR: 'COTIZAJR'
 		}
     },
     
