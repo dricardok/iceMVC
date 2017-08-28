@@ -10,12 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -655,7 +655,7 @@ public class EmisionManagerImpl implements EmisionManager {
 						
 					}catch(Exception e) {
 						logger.error(e.getMessage(), e);					
-						continue;
+						//continue;
 					}
 				}
 				
@@ -743,7 +743,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			
 			
 			logger.info("Validando si se debe aplicar pago por ALEA");
-			if(authCode != null) {
+			if(authCode != null && nmcotizacion != null && orderId != null && email != null && nmtarjeta != null && authCode != null) {
 				
 				estado = EstadoPoliza.MASTER.getClave();
 				nmpoliza = nmpolizaEmitida;
@@ -763,7 +763,6 @@ public class EmisionManagerImpl implements EmisionManager {
 				request.setNmrecibo(Integer.parseInt(datosMrecibo.get("nmrecibo")));
 				
 				request.setNmcotiza(Long.parseLong(nmcotizacion));
-				//request.set
 				request.setOrderId(orderId);
 				request.setEmail(email);
 				
@@ -796,7 +795,6 @@ public class EmisionManagerImpl implements EmisionManager {
 			Utils.generaExcepcion(ex, paso);
 		} finally {
 			request = null;
-			datosMrecibo.clear();
 			datosMrecibo = null;
 			
 		}
@@ -898,10 +896,9 @@ public class EmisionManagerImpl implements EmisionManager {
                 logger.info("Total "+ transaccionResponse.getTotal());
                 logger.info("OrderId "+ transaccionResponse.getOrderId());
                 
-            	if(transaccionResponse.getAuthCode() == "") {           	
-            	
-            		throw new Exception(transaccionResponse.getDcError());
-            	}            	
+                if (StringUtils.isBlank(transaccionResponse.getAuthCode())) {           	
+            		throw new ApplicationException(transaccionResponse.getText());
+            	}
             	
             }            
             
@@ -924,10 +921,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	public List<Map<String, String>> obtenerTarifaMultipleTemp(String cdunieco, String cdramo, String estado,
 			String nmpoliza) throws Exception {
 		logger.debug(Utils.join("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "\n@@@@@@ obtenerTarifaMultipleTemp"));
-		String paso = "";
+		String paso = "Obteniendo datos de tarificaci\u00F3n";
 		List<Map<String, String>> datos = null;
 		try {
-			paso = "Consultando datos";
 			datos = emisionDAO.obtenerTarifaMultipleTemp(cdunieco, cdramo, estado, nmpoliza);
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);

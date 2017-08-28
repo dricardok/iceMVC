@@ -68,6 +68,7 @@ var Ice = (
             recuperarDatosSesion: 'authentication/obtenerDatosSesion.action',
             recuperarMenus:       'authentication/obtenerMenu.action',
             obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
+            obtenerPropiedades:   'propiedades/obtenerPropiedades.action', 
             recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
             recuperarTatrisit:    'emision/obtieneTatrisit.action',
             recuperarTatripol:    'emision/obtieneTatripol.action',
@@ -89,7 +90,8 @@ var Ice = (
             validarCargaCotizacion:     'emision/validarCargaCotizacion.action',
             obtenerPerfilamientoPoliza: 'emision/obtenerPerfilamientoPoliza.action',
             generarDocumentos: 			'emision/generarDocumentos.action',
-            puedeEmitir:				'emision/puedeEmitir.action'
+            puedeEmitir:				'emision/puedeEmitir.action',
+            validaCedulaAgente: 		'emision/datosGenerales/validaCedulaAgente.action'
          },
          
         bloque: {

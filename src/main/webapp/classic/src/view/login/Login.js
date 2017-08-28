@@ -79,6 +79,7 @@ Ext.define('Ice.view.login.Login', {
                     xtype: 'textfieldice',
                     label: 'Usuario',
                     name: 'cdusuari',
+                    reference: 'cdusuari',
                     bind: '{login.cdusuari}',
                     listeners: {
                         specialkey: 'onSpecialkeyPress'
@@ -111,13 +112,42 @@ Ext.define('Ice.view.login.Login', {
                             xtype: 'component',
                             width: 150,
                             //style: 'border: 1px solid red;',
-                            html: '<a href="#passwordreset" onclick="return false;" class="linksura" style="font-size:12px !important;color:#707372 !important; line-height:30px !important;">¿Olvid&oacute; su Contrase&ntilde;a?</a>'
+                            html: '<a id="lostpasswordlink" href="#passwordreset" onclick="return false;" class="linksura" style="font-size:12px !important;color:#707372 !important; line-height:30px !important;">¿Olvid&oacute; su Contrase&ntilde;a?</a>',
+                            listeners: {
+                                click: {
+                                    element: 'el', //bind to the underlying el property on the panel
+                                    fn: function() { 
+                                    	var me = this,
+                                    		paso = 'onclic lostPassword';
+                                    	                                    	
+                                    	//Ice.log('Manejando evento ', me.up().up());
+                                    	
+                                    	try {
+                                    		var cdusuarifield = Ice.query('form').items.items[1].getValue();
+                                    		
+                                    		Ice.log('cdusuarifield', cdusuarifield);
+                                    		
+                                    		if(cdusuarifield && cdusuarifield != "") {	
+                                    			
+                                    			var href = document.getElementById('lostpasswordlink').href;
+                                    			
+                                    			//window.open(me.getUrlpasswordreset+cdusuarifield);
+                                    			window.open(href+cdusuarifield);
+                                    			
+                                    		} else {
+                                    			// Alert pidiendo nombre de usuario
+                                    			Ext.Msg.alert('Aviso', 'Favor de proporcionar nombre de usuario');
+                                    		}                                    		
+                                    		
+                                    	} catch(e) {
+                                    		 Ice.generaExcepcion(e, paso);
+                                    	}
+                                    }
+                                }
+                            }
                         }
                     ]
-                }       
-                 
-                
-                
+                }
             ],
             
             buttons: [
@@ -137,7 +167,52 @@ Ext.define('Ice.view.login.Login', {
     ],
     
     // propiedades no ext (se generan getters y setters)
-    config: {},
+    config: {
+    	urlpasswordreset: null
+    },
+    
+    constructor: function (config) {
+    	var me = this
+    		paso = 'Ice.view.login.Login constructor';
+    	try {
+    		
+    		 Ice.request({
+                 //mascara: paso,
+                 url: Ice.url.core.obtenerPropiedades,
+                 success: function (action) {
+                	 
+                	 try {
+                		 
+                		 if(action.properties.urlpasswordreset) {
+                			 
+                			me.setUrlpasswordreset(action.properties.urlpasswordreset);
+                			
+                			if (document.getElementById('lostpasswordlink')) {
+                				document.getElementById('lostpasswordlink').href = action.properties.urlpasswordreset;
+                			}
+                			
+                			Ice.log('Constructor login', me.getUrlpasswordreset());
+                			
+                		 } else {
+                			 // TODO: ASIGNAR URL POR DEFECTO
+                		 }
+                	 
+                     } catch (e) {
+                         Ice.manejaExcepcion(e, paso);
+                     }
+                 },
+                 failure: function () {
+                	 Ice.log("Fallo constructor login");
+                 }
+    			
+    		});
+    		
+    	}catch(e) {
+    		Ice.generaExcepcion(e, paso);
+    	}
+    	me.callParent(arguments);
+    },
+    
     
     // configuracion que usa parametros (config ya se encuentra copiada en this)
     initComponent: function () {
@@ -153,5 +228,6 @@ Ext.define('Ice.view.login.Login', {
             Ice.generaExcepcion(e, paso);
         }
         me.callParent();
+        
     }
 });

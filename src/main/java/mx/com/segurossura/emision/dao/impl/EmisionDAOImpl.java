@@ -648,7 +648,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             super(dataSource, "PKG_DATA_ALEA.P_MOV_TVALOPOL");
             this.getJdbcTemplate().setNativeJdbcExtractor(new OracleJdbc4NativeJdbcExtractor()); 
             declareParameter(new SqlParameter("pv_status_i"       , Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_tvalo_record_i" , Types.STRUCT, "OPS$ALEAD11G.TVALOPOL_OBJECT"));
+            declareParameter(new SqlParameter("pv_tvalo_record_i" , Types.STRUCT, "TVALOPOL_OBJECT"));
             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
             compile();

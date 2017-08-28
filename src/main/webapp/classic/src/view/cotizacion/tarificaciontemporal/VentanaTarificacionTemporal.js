@@ -30,7 +30,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VentanaTarificacionTemporal
     	var me = this,
     		paso = 'Construyendo ventana de tarifa temporal';
     	try {
-    		if(!config || !config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza || !config.cdperpag ) {
+    		if(!config || !config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza || Ext.isEmpty(config.cdperpag) ) {
     			throw 'Faltan par\u00e1metros para construir ventana de tarifa';
     		}
     		
