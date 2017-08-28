@@ -75,10 +75,23 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
                 validators: true
             });
             
+            // Se agregan eventos para datos generales
+            var eventsForm = Ice.generaComponentes({
+                pantalla: 'BLOQUE_DATOS_GENERALES',
+                seccion: 'EVENTOS',
+                modulo: me.modulo || '',
+                estatus: (me.flujo && me.flujo.estatus) || '',
+                cdramo: me.cdramo || '',
+                cdtipsit: me.cdtipsit ||'',
+                auxKey: me.auxkey || '',
+                eventos: true
+            });
+            
             // agregar items, y agregar modelo para el modelValidation
             config.items = comps.BLOQUE_DATOS_GENERALES.FORMULARIO.items.concat(config.items || []);
             config.modelFields = comps.BLOQUE_DATOS_GENERALES.FORMULARIO.fields;
             config.modelValidators = comps.BLOQUE_DATOS_GENERALES.FORMULARIO.validators;
+            config.iceEvents = eventsForm.BLOQUE_DATOS_GENERALES.EVENTOS.eventos;
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
