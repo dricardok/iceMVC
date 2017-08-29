@@ -18,6 +18,10 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacion', {
 		}
     },
     
+    config:{
+    	cdproceso : 'E'
+    },
+    
 
     constructor: function (config) {
         Ice.log();

@@ -26,6 +26,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     } else {
                         me.irBloqueSiguiente();
                     }
+                    me.puedeEmitir();
                 } catch (e) {
                     Ice.manejaExcepcion(e, paso2);
                 }
@@ -101,6 +102,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 var bloqueActual = refs['ref' + (index - 1)];
                 bloqueActual.getController().guardar({
                     success: function () {
+                    	me.puedeEmitir();
                         agregarYEnfocarBloque(true);
                     }
                 });
@@ -135,6 +137,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 
             bloqueActual.getController().guardar({
                 success: function () {
+                	me.puedeEmitir();
                     view.setGuardadoAutomaticoSuspendido(true); // para que no valide el guardado
                     tabpanel.setActiveTab(bloqueExistente);
                     view.setGuardadoAutomaticoSuspendido(false);
@@ -142,6 +145,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     bloqueExistente.getController().cargar();
                 }
             });
+            
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -184,13 +188,15 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     try {
                         // ('cargar nuevo card posterior a salvar anterior card');
                         newCard.getController().cargar();
-
+                        
                         // convertir bloque de agrupadores para agente
                         try {
                             newCard.getReferences().gridagrupadores.getController().onVistaAgente();
+                            me.puedeEmitir();
                         } catch (e) {
                             Ice.logWarn('warning al invocar onVistaAgente en gridagrupadores', e);
                         }
+                        me.puedeEmitir();
                     } catch (e){
                         Ice.manejaExcepcion(e, pasoCargar);
                     }
@@ -217,10 +223,12 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                 // convertir bloque de agrupadores para agente
                 try {
                     newCard.getReferences().gridagrupadores.getController().onVistaAgente();
+                    me.puedeEmitir();
                 } catch (e) {
                     Ice.logWarn('warning al invocar onVistaAgente en gridagrupadores', e);
                 }
-            }
+                
+            } 
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -406,7 +414,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
         }
     },
         
-    emitir: function () {
+    emitir: function (list, params) {
         Ice.log('controller.emision emitir');
         var me = this,
             view = me.getView(),
@@ -423,7 +431,13 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     cdunieco: view.getCdunieco(),
                     cdramo: view.getCdramo(),
                     estado: view.getEstado(),
-                    nmpoliza: view.getNmpoliza()
+                    nmpoliza: view.getNmpoliza(),
+                    
+                    email: params && params.email ? params.email : null,
+         	        nmtarjeta: params && params.nmtarjeta ? params.nmtarjeta : null,
+         	        orderId: list && list.orderId ? list.orderId : null,
+         	        authCode: list && list.authCode ? list.authCode : null,
+         	        nmcotizacion: params && params.nmpoliza ? params.nmpoliza : null
                 }),
                 success: function (action) {
                 	
@@ -665,16 +679,18 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 	            }),
 	            success: function (action) {	            	
 	            	
+	            	
+	            	
 	            	ventana.cerrar();
 	            	// Ice.mensajeCorrecto('Pago autorizado ');
 	            	
-	                me.emitir();
+	                me.emitir(action.list[0], action.params);
 	                
 	            },
 	            failure: function (action) {
 	            	
 	            	ventana.cerrar();
-	            	Ice.mensajeCorrecto('Transaccion rechazada' + action.params.message);
+	            	Ice.mensajeError('Transaccion rechazada: ' + action.message);
 	            }
 	        });			
 			
@@ -900,5 +916,45 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
+    },
+    
+    puedeEmitir : function(){
+    	var me = this,
+        view = me.getView(),
+        refs = view.getReferences(),
+        paso = 'Preguntando si puede emitir';
+    	try{
+    		var data = {
+    				'params.cdunieco': view.getCdunieco(),
+        			'params.cdramo': view.getCdramo(),
+        			'params.estado': view.getEstado()?view.getEstado().toUpperCase():view.getEstado(),
+        			'params.nmpoliza': view.getNmpoliza(),
+        			'params.nmsuplem': view.getNmsuplem()
+    		};
+    		Ice.request({
+        		url		:	Ice.url.emision.puedeEmitir,
+        		params	:	data,
+        		success	:	function(data){
+        			var paso = 'Respuesta de puede emitir.';
+        			try{
+        				var puedeEmitir = data.emitir === 'S';
+        				refs.cotizarbutton.setHidden(!puedeEmitir);
+        				var list = data.list || [];
+						if (list.length != 0) {
+							Ext.create('Ice.view.bloque.VentanaValidaciones', {
+								lista: list
+							}).mostrar();
+						
+						}
+        			}catch(e){
+        				Ice.manejaExcepcion(e,paso);
+        			}
+        		}
+        		
+        	});
+    	}catch(e){
+    		Ice.manejaExcepcion(e,paso)
+    	}
+    	
     }
 });

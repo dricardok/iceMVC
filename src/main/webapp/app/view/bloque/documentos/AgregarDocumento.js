@@ -24,7 +24,8 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
         
         config: {
             ruta: null,
-            nombre: null
+            nombre: null,
+            valido: false
         },
 // contruccion usando metodos ext y parametros de entrada
         constructor: function (config) {
@@ -41,7 +42,10 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
                 });
                 
                 Ice.log('Ice.view.bloque.documentos.AgregarDocumento.initComponent comps:', comps);
-                                
+                
+                var file = Ext.query('[name=file]',comps.DOCUMENTOS.FORMULARIO.items);
+                file['regex'] = '/^.*\.(rtf|RTF)$/';
+                file['regexText'] = 'Solo se permiten archivos rtf';
                 config.items = comps.DOCUMENTOS.FORMULARIO.items;
                 config.modelFields = comps.DOCUMENTOS.FORMULARIO.fields;
                 config.modelValidators = comps.DOCUMENTOS.FORMULARIO.validators;

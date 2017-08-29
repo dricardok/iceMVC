@@ -275,12 +275,14 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             
             form.add(mpolicap.BLOQUE_COBERTURAS.MPOLICAP.items);
             form.add(comps.TATRIGAR.TATRIGAR.items);
-            
+            Ice.log("Tatrigar items: ",comps.TATRIGAR.TATRIGAR.items);
             form.modelValidators = Ice.utils.mergeObjects(comps.TATRIGAR.TATRIGAR.validators,
 			    mpolicap.BLOQUE_COBERTURAS.MPOLICAP.validators);
             form.modelFields = mpolicap.BLOQUE_COBERTURAS.MPOLICAP.fields.concat(comps.TATRIGAR.TATRIGAR.fields);
             
-            Ice.log("-------->", form.modelValidators);
+            
+            
+            
             this.cargarValores(form);
            
 
@@ -291,6 +293,8 @@ Ext.define('Ice.view.bloque.CoberturasController', {
             		Ice.log("Focus it:",firstItem);
             	}
 	        });
+			
+			Ice.log("modelValidators--->", form.modelValidators);
 		} catch (e) {
 			Ice.manejaExcepcion(e, paso);
     	}
@@ -447,10 +451,28 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 		    form = view.down('[reference=form]'),
 			elementos = [];
 			Ice.log("form",form);
+			
+			
+			
 			if(Ext.ComponentQuery.query('[xtype=numberfieldice][getValue]',form).length>0){
+				params = params?params:{};
+				params.callback=function(){
+					var gridCoberturas = Ext.ComponentQuery.query("#gridCoberturas",view)[0];
+					Ice.log("Store: ",gridCoberturas.getStore());
+					gridCoberturas.getStore().each(function(rec){
+						Ice.log("falta suma asegurada gc",rec);
+						if(Number(rec.get("ptcapita"))===0){
+							throw 'Falta Suma Asegurada';
+						}
+					});
+				}
 				this.guardarCoberturas(params);
+				
 				return;
 			}
+			
+			
+			
 			Ice.request({
 				url: Ice.url.bloque.ejecutarValidacion,
 				params: {
@@ -467,6 +489,16 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 					var paso2 = 'Evaluando validaciones';
 					try {
     					var list = json.list || [];
+    					
+    					var gridCoberturas = Ext.ComponentQuery.query("#gridCoberturas",view)[0];
+    					Ice.log("Store: ",gridCoberturas.getStore());
+    					gridCoberturas.getStore().each(function(rec){
+    						Ice.log("falta suma asegurada g2",rec);
+    						if(Number(rec.get("ptcapita"))===0){
+    							throw 'Falta Suma Asegurada';
+    						}
+    					});
+    					
     					if (list.length>0) {
 							Ext.create('Ice.view.bloque.VentanaValidaciones', {
 								lista: list
@@ -704,7 +736,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 				elementos = [];
 				Ice.log("form",form);
 			if(form.down('[getValue]')){
-				this.validarCampos(form);
+				Ice.validarFormulario(form);
 			}
 	    	
 	    	form.items.items.forEach(function (it, idx) {
@@ -737,6 +769,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 					var paso2 = 'Evaluando validaciones';
 					try {
     					var list = json.list || [];
+    					
     					if (list.length>0) {
 							Ext.create('Ice.view.bloque.VentanaValidaciones', {
 								lista: list
@@ -754,12 +787,23 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 			    			});
 		    			}
 						form.hide();
-		    			view.down("#gridCoberturas").getStore().load();
+		    			view.down("#gridCoberturas").getStore().load(function(){
+		    				var paso = 'Verificando suma asegurada';
+		    				try{
+		    					if(params && params.callback){
+		    						params.callback();
+		    					}
+		    					if (params && params.success) {
+									paso2 = 'Ejecutando proceso posterior a coberturas';
+		    						params.success();
+							    }
+		    				}catch(e){
+		    					Ice.manejaExcepcion(e,paso);
+		    				}
+		    				
+		    			});
 
-						if (params && params.success) {
-							paso2 = 'Ejecutando proceso posterior a coberturas';
-    						params.success();
-					    }
+						
 				    } catch (e) {
 				        Ice.manejaExcepcion(e, paso2);
 						if (params && params.failure) {

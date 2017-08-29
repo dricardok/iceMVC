@@ -39,7 +39,9 @@ var Ice = (
         },
     
 	    roles: {
-            AGENTE: 'AGENTE'
+            AGENTE: 'AGENTE',
+            EJECUTIVO_NEGOCIO_SR: 'COTIZADOR',
+            EJECUTIVO_NEGOCIO_JR: 'COTIZAJR'
 		}
     },
     
@@ -68,6 +70,7 @@ var Ice = (
             recuperarDatosSesion: 'authentication/obtenerDatosSesion.action',
             recuperarMenus:       'authentication/obtenerMenu.action',
             obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
+            obtenerPropiedades:   'propiedades/obtenerPropiedades.action', 
             recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
             recuperarTatrisit:    'emision/obtieneTatrisit.action',
             recuperarTatripol:    'emision/obtieneTatripol.action',
@@ -88,7 +91,9 @@ var Ice = (
         	realizarPago:               'emision/realizarPago.action',
             validarCargaCotizacion:     'emision/validarCargaCotizacion.action',
             obtenerPerfilamientoPoliza: 'emision/obtenerPerfilamientoPoliza.action',
-            generarDocumentos: 			'emision/generarDocumentos.action'
+            generarDocumentos: 			'emision/generarDocumentos.action',
+            puedeEmitir:				'emision/puedeEmitir.action',
+            validaCedulaAgente: 		'emision/datosGenerales/validaCedulaAgente.action'
          },
          
         bloque: {
