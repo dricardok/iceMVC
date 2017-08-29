@@ -86,13 +86,11 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                     change: function (me, value) {
                         var paso = 'Calculando fin de vigencia';
                         try {
-                            alert('Antes de cambiar fecha');
                             if(refs.b1_ottempot.getValue()){
                                 me.cambiarFechasTemporalidad(refs);
                             } else {
                                 refs.b1_feproren.setValue(Ext.Date.add(value, Ext.Date.YEAR, 1));
                             }
-                            alert('Despues de cambiar fecha');
                         } catch (e) {
                             Ice.logWarn(paso, e);
                         }
