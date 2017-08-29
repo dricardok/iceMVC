@@ -171,10 +171,11 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             }
             paso='Validando Retroactividad para ejecutivo de negocio';
             if(Ice.sesion.cdsisrol == Ice.constantes.roles.EJECUTIVO_NEGOCIO_SR || Ice.sesion.cdsisrol == Ice.constantes.roles.EJECUTIVO_NEGOCIO_JR){
+            	
             	if(Ice.classic()){
-            		refs.feca_inicio_vigencia.setMinValue(new Date());
+            		refs.b1_feefecto.setMinValue(new Date());
             	}else{
-            		refs.feca_inicio_vigencia.on({
+            		refs.b1_feefecto.on({
             			change:function(dp,value){
             				var paso='validando feini';
             				try{
