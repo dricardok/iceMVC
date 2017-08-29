@@ -49,6 +49,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                             handler: me.onCargarClic
                         }, {
                             text: 'Cancelar',
+                            ui:'gray',
                             iconCls: 'x-fa fa-close',
                             handler: function (btn) {
                                 btn.up('ventanaice').cerrar();
@@ -143,6 +144,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                         // },
                         {
                             text: 'Cancelar',
+                            ui:'gray',
                             iconCls: 'x-fa fa-close',
                             handler: function () {
                                 venPer.cerrar();

@@ -131,6 +131,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 					}, {
 						text: 'Cancelar',
 						iconCls: 'x-fa fa-close',
+						ui:'gray',
 						handler:  function() {
 							ventana.cerrar();
 						}

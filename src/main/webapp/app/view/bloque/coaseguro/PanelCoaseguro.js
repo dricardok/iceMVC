@@ -203,6 +203,7 @@ Ext.define('Ice.view.bloque.coaseguro.PanelCoaseguro', {
                             handler: 'onCargarCia'
                         },{
                             text: 'Cancelar',
+                            ui:'gray',
                             handler: 'onRecuperaCiaEditada'
                         }
                     ]

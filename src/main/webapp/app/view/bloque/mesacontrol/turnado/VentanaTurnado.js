@@ -77,6 +77,7 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaTurnado', {
                         }, {
                             text: 'Cerrar',
                             iconCls: 'x-fa fa-close',
+                            ui:'gray',
                             hidden: Ice.classic(),
                             handler: function (me) {
                                 me.up('ventanaice').cerrar();

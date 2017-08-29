@@ -47,6 +47,7 @@ Ext.define('Ice.view.cotizacion.Emision', {
         }
     }],
     buttons: [
+    	
         // {
         //     text: 'Cargar',
         //     reference: 'cargarbutton',
@@ -57,6 +58,7 @@ Ext.define('Ice.view.cotizacion.Emision', {
             text: 'Anterior',
             reference: 'anteriorbutton',
             iconCls: 'x-fa fa-backward',
+            ui:'gray',
             handler: 'onAnteriorclic'
         }, {
             text: 'Emitir',
@@ -65,6 +67,7 @@ Ext.define('Ice.view.cotizacion.Emision', {
             handler: 'onCotizarClic'
         },{
             text: 'Siguiente',
+            style:'margin-right: 45px;',
             reference: 'siguientebutton',
             iconCls: 'x-fa fa-forward',
             handler: 'onSiguienteClic'

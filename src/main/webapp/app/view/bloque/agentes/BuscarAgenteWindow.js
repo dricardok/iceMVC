@@ -92,6 +92,7 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 				},{
 					text	:	"Cancelar",
 					iconCls: 'x-fa fa-close',
+					ui:'gray',
 					handler	:	function(){
 						me.cerrar();
 					}

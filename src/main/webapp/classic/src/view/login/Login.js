@@ -39,8 +39,7 @@ Ext.define('Ice.view.login.Login', {
             xtype: 'form',
             reference: 'form',
             bodyPadding: '0 0',
-            width: 415,
-            
+            width: 415,            
             cls: '',
             style: 'float:left; left:50%; margin-left: -225px;',
             defaults: {
@@ -100,7 +99,7 @@ Ext.define('Ice.view.login.Login', {
                     layout: 'hbox',
                     style: 'padding: 20px 30px !important;', 
                     items: [
-                        {
+                       /* {
                             xtype: 'checkboxfield',
                             //flex : 1,
                             cls: 'form-panel-font-color rememberMeCheckbox',
@@ -108,7 +107,7 @@ Ext.define('Ice.view.login.Login', {
                             //bind: '{persist}',
                             style: 'font-size; 11px !important; margin-right: 80px;',
                             boxLabel: 'Guardar Contraseña'
-                        }, {
+                        },*/ {
                             xtype: 'component',
                             width: 150,
                             //style: 'border: 1px solid red;',
@@ -154,7 +153,7 @@ Ext.define('Ice.view.login.Login', {
                 {
                     text: 'Ir',
                     reference: 'loginbutton',
-                    iconCls: '',
+                    iconCls: 'x-fa fa-key',
                     style: 'margin-right:30px !important;',
                     handler: 'onAceptarClic',
                     

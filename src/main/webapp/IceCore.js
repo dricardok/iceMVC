@@ -428,7 +428,7 @@ var Ice = (
                     target: mainView,
                     style: "z-index:999999;",
                     close: function () {
-                        this.hide();
+                    this.hide();
                     }
                 });
                 mask.show();
@@ -437,7 +437,7 @@ var Ice = (
                     message: texto || 'Cargando...',
                     maskLocal: true,
                     close: function () {
-                        this.hide();
+                     this.hide();
                     }
                 });
                 mainView.add(mask);
