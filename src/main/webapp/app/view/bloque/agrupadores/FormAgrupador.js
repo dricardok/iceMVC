@@ -97,6 +97,7 @@ Ext.define('Ice.view.bloque.agrupadores.FormAgrupador', {
                     text: 'Cancelar',
                     iconCls: 'x-fa fa-remove',
                     ui:'gray',
+                    style:'margin-right: 45px;',
                     handler: 'onCancelarClic'
                 }
             ].concat(config.buttons || []);

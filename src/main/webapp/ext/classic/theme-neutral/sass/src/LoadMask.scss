@@ -86,7 +86,7 @@
 
 
 
-.x-mask-msg-text {
+/*.x-mask-msg-text {
     padding: 85px 0px 0px 0px;
     background-image: url(images/loadmask/loading.gif);
     background-size: 300px auto !important;
@@ -106,4 +106,84 @@
     background-color: transparent !important;
     color:$font-grey !important;
     font: 400 13px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+}*/
+
+.x-mask-msg-text {
+    padding: 85px 0px 0px 0px;
+    background-image: none;
+    background-size: 300px auto !important;
+    background-repeat: none;
+    background-position: center 0;
+    margin:0 20px;
+    
 }
+
+.x-mask-msg {
+    padding: 10px;
+    background: transparent!important;
+}
+
+.x-mask-msg-inner {
+    padding: 0;
+    background-color: transparent !important;
+    color:$font-grey !important;
+    font: 400 13px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+}
+
+
+
+.x-mask-msg-text{
+    -webkit-transform-origin: 0.5em 0.5em;
+    transform-origin: 0.5em 0.5em;
+}
+
+
+.x-mask-msg-text{
+position:relative;
+}
+.x-mask-msg-text:before{
+    width:20px;
+    height:20px;
+    bottom:50px;
+    border-radius:20px;
+    content:'';
+    position:absolute;
+    background:$azulo-s;
+    animation: x-mask-msg-textbefore 1.5s infinite ease-in-out;
+}
+ 
+.x-mask-msg-text:after{
+    width:20px;
+    height:20px;
+    bottom:50px;
+    border-radius:20px;
+    background:blue;
+    content:'';
+    position:absolute;
+    background:$azulc-s;
+    right:3px;
+    animation: x-mask-msg-textafter 1.5s infinite ease-in-out;
+}
+ 
+@keyframes x-mask-msg-textbefore {
+    0% {transform: translateX(0px) rotate(0deg)}
+    50% {transform: translateX(50px) scale(1.2) rotate(260deg); background:#0033a0;border-radius:0px;}
+      100% {transform: translateX(0px) rotate(0deg)}
+}
+@keyframes x-mask-msg-textafter {
+    0% {transform: translateX(0px)}
+    50% {transform: translateX(-50px) scale(1.2) rotate(-260deg);background:#00B5CB;border-radius:0px;}
+    100% {transform: translateX(0px)}
+}    
+
+
+/*.x-mask .x-mask-inner {
+    position: relative;
+    background: transparent !important;
+    color: #fff;
+    text-align: center;
+    padding: 0.4em;
+    font-size: 0.95em;
+    font-weight: bold;
+}*\
+

@@ -11,8 +11,12 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 		modelFields	:	[]
 	},
 	autoShow		:	true,
-	title			:	'Agregar Domicilio',
-	constructor : 	function(config){
+	title: {
+		text:'Agregar Domicilio',
+		style:'margin:0px 45px 16px 40px;',
+	},
+	
+	   constructor : 	function(config){
 		var paso="",
 			me=this;
 		try{

@@ -131,6 +131,8 @@ Ext.define('Ice.view.bloque.personas.Persona_', {
 	        			buttons		:	[
 	        				{
 	        					text:"Cancelar",
+	        					ui:'gray',
+	                            style: 'margin-right:45px;',
 	        					handler:function(){
 	        						Ice.pop()
 	        					}
