@@ -3115,6 +3115,12 @@ Ext.onReady(function()
                                         ,allowBlank : false
                                     }
                                     ,{
+                                        xtype       : 'textfield'
+                                        ,fieldLabel : 'REFERENCIA'
+                                        ,labelAlign : 'top'
+                                        ,name       : 'REFERENCIA'
+                                    }
+                                    ,{
                                         xtype          : 'textfield'
                                         ,fieldLabel    : 'VALIDACI\u00D3N (F_ICE_WF_)'
                                         ,labelAlign    : 'top'
