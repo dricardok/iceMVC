@@ -2328,5 +2328,13 @@ var Ice = (
                 throw arguments[i + 1];
             }
         }
+    },
+
+    /**
+     * Parsea fechas
+     */
+    parse: function(value, format){
+        return Ext.Date.parse(value, format||Ext.util.Format.dateFormat);
     }
+
 });
