@@ -88,12 +88,9 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
             if(view.getCdramo() == '301'){
                 form.on({
                     afterlayout: function(){
-                        alert('ejecutando afterlayout');
                         try{
                             var b1b_otvalor15 = Ice.query('datosiniciales').refs.formdatosgenerales.getValues().b1b_otvalor15;
-                            Ice.log('Ocultando valores origen, destino bib_otvalor15',b1b_otvalor15);
                             var refsFormSit = refs.form.refs;
-                            Ice.log('Ocultando valores origen, destino refsFormSit',refsFormSit);
                             if(b1b_otvalor15 == '3'){
                                 refsFormSit.b5b_otvalor05.show();
                                 refsFormSit.b5b_otvalor06.show();
