@@ -427,5 +427,7 @@ public interface MesaControlDAO
     public int recuperarConteoTbloqueoTramite(String ntramite) throws Exception;
     
     public String actualizaOTValorMesaControl(Map<String, Object> params) throws Exception;
+
+	public List<Map<String, String>> ejecutarValidacionPorReferencia(String ntramite, String referencia) throws Exception;
     
 }

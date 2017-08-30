@@ -923,5 +923,40 @@ var Ice = (
         } catch(e) {
             Ice.manejaExcepcion(e, paso);
         }
+    },
+    
+    ejecutarValidacionPorReferencia : function(flujo,referencia){
+    	var paso = 'ejecutarValidacionPorReferencia';
+    	try{
+    		
+    		Ice.request({
+    			url		:	Ice.url.bloque.mesacontrol.ejecutarValidacionPorReferencia,
+    			params	:	{
+    				'params.ntramite'		:	flujo.ntramite,
+    				'params.referencia'		:	referencia	
+    			},
+    			success	:	function(datos){
+    				var paso = 'Leyendo datos val por ref';
+    				try{
+    					var smap = datos.smap1;
+    					Ice.cargarAccionesEntidad (flujo.cdtipflu, flujo.cdflujomc, flujo.tipoent, smap.cdvalida, smap.webid, 
+    							function(dat){
+    								var paso = 'procesaAccion';
+    								try{
+    									Ice.procesaAccion (flujo.cdtipflu, flujo.cdflujomc, flujo.tipodest, dat.CLAVEDEST, dat.WEBIDDEST, flujo.aux, flujo.ntramite, flujo.status, flujo.cdunieco,
+    											flujo.cdramo, flujo.estado, flujo.nmpoliza, flujo.nmsituac, flujo.nmsuplem, function(){})
+    								}catch(e){
+    									Ice.manejaExcepcion(e,paso);
+    								}
+    							}
+    					); 
+    				}catch(e){
+    					Ice.manejaExcepcion(e,paso);
+    				}
+    			}
+    		});
+    	}catch(e){
+    		Ice.manejaExcepcion(e,paso);
+    	}
     }
 });

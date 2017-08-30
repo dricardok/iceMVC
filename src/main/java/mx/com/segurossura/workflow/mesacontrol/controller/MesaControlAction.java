@@ -1349,6 +1349,50 @@ public class MesaControlAction extends PrincipalCoreAction {
     }
 	
 	
+	@Action(value   = "ejecutarValidacionPorReferencia",
+            results = { @Result(name="success", type="json") },
+            interceptorRefs = {
+                @InterceptorRef(
+                        value = "json", params = {"enableSMD", "true", "ignoreSMDMethodInterfaces", "false"
+                })
+    })
+	public String ejecutarValidacionPorReferencia() {
+        logger.debug(Utils.log(
+                "\n########################################",
+                "\n########################################",
+                "\n######   ejecutarValidacionPorReferencia  ######",
+                "\n######                            ######"
+                ));
+        logger.debug("smap1:  "+smap1);
+        logger.debug("slist1: "+slist1);
+        try
+        {
+            this.session = ActionContext.getContext().getSession();
+            UsuarioVO usuario = (UsuarioVO)Utils.validateSession(session);
+            
+            String ntramite   = (String) params.get("ntramite"), 
+            	   referencia = (String) params.get("referencia");
+            smap1 = mesaControlManager.ejecutarValidacionPorReferencia(ntramite, referencia).get(0);
+            
+            success=true;
+            
+        } catch(Exception ex) {
+            success=false;
+            logger.error("error al actualizar status de tramite de mesa de control",ex);
+            mensaje = Utils.manejaExcepcion(ex);
+        }
+        logger.debug(Utils.log(
+                "\n######                                    ######",
+                "\n######   ejecutarValidacionPorReferencia  ######",
+                "\n########################################",
+                "\n########################################"
+                ));
+        return SUCCESS;
+    }
+	
+	
+	
+	
 	/**
 	 * Devuelve mensaje con un formato especifico
 	 * @param message

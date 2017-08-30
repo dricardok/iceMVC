@@ -136,22 +136,33 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                                handler: function (boton) {
 					                                    /*
 					                                	me.up('ventanaice').cerrar();
-					                                    */              	
-					                                	Ice.query('#mainView').getController().redirectTo('emision.action?' +
-															    'cdunieco=' + view.getCdunieco() + '&' +
-																'cdramo='   + view.getCdramo()   + '&' +
-																'estado='   + view.getEstado()   + '&' +
-																'nmpoliza=' + view.getNmpoliza() + '&' +
-																'cdtipsit=' + view.getCdtipsit() + '&' +
-																// perfilamiento
-																'cdptovta=' + view.getCdptovta() + '&' +
-																'cdgrupo='  + view.getCdgrupo()  + '&' +
-																'cdsubgpo=' + view.getCdsubgpo() + '&' +
-																'cdperfil=' + view.getCdperfil(),
-									                            true);
-								                        
+					                                    */   
+					                                	Ice.disparaValidacionesEventoPantalla (view.getCdunieco(), 
+					                     					   view.getCdramo(),
+					                     					   view.getEstado(),
+					                     					   view.getNmpoliza(), 
+					                     					   view.getNmsuplem(), 
+					                     					   'EMISION', 'ANTES_PROCEDER_EMISION', 
+					                     					   view.getFlujo(), 
+					                     					   function(){
+							                                		Ice.query('#mainView').getController().redirectTo('emision.action?' +
+																		    'cdunieco=' + view.getCdunieco() + '&' +
+																			'cdramo='   + view.getCdramo()   + '&' +
+																			'estado='   + view.getEstado()   + '&' +
+																			'nmpoliza=' + view.getNmpoliza() + '&' +
+																			'cdtipsit=' + view.getCdtipsit() + '&' +
+																			// perfilamiento
+																			'cdptovta=' + view.getCdptovta() + '&' +
+																			'cdgrupo='  + view.getCdgrupo()  + '&' +
+																			'cdsubgpo=' + view.getCdsubgpo() + '&' +
+																			'cdperfil=' + view.getCdperfil(),
+												                            true);
+											                        
+								                                	
+								                                	Ice.cerrarVentanas();
+					                       				   }
+					                     			);
 					                                	
-					                                	Ice.cerrarVentanas();
 					                                } 
 					                            }
 					                        ]

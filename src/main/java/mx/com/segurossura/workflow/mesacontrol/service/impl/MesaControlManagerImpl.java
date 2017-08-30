@@ -725,5 +725,19 @@ public class MesaControlManagerImpl implements MesaControlManager {
     public void actualizaOTValorMesaControl(HashMap<String, Object> map) throws Exception {
         mesaControlDAO.actualizaOTValorMesaControl(map);
     }
+
+	@Override
+	public List<Map<String, String>> ejecutarValidacionPorReferencia(String ntramite, String referencia)
+			throws Exception {
+		String paso = "ejecutarValidacionPorReferencia";
+		List<Map<String, String>> lista = new ArrayList<>();
+		try{
+			lista = mesaControlDAO.ejecutarValidacionPorReferencia(ntramite, referencia);
+			
+		}catch(Exception e){
+			Utils.generaExcepcion(e, paso);
+		}
+		return null;
+	}
     
 }
