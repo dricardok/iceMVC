@@ -320,6 +320,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
 					}, {
 						text: 'Cancelar',
 						iconCls: 'x-fa fa-close',
+						ui:'gray',
 						handler: function (btn) {
 							btn.up('[xtype=ventanaice]').cerrar();
 						}

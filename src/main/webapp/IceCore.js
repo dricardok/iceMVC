@@ -39,7 +39,9 @@ var Ice = (
         },
     
 	    roles: {
-            AGENTE: 'AGENTE'
+            AGENTE: 'AGENTE',
+            EJECUTIVO_NEGOCIO_SR: 'COTIZADOR',
+            EJECUTIVO_NEGOCIO_JR: 'COTIZAJR'
 		}
     },
     
@@ -68,6 +70,7 @@ var Ice = (
             recuperarDatosSesion: 'authentication/obtenerDatosSesion.action',
             recuperarMenus:       'authentication/obtenerMenu.action',
             obtenerCatalogo:      'catalogos/obtenerCatalogo.action',
+            obtenerPropiedades:   'propiedades/obtenerPropiedades.action', 
             recuperarTatrigar:    'coberturas/obtieneTatrigar.action',
             recuperarTatrisit:    'emision/obtieneTatrisit.action',
             recuperarTatripol:    'emision/obtieneTatripol.action',
@@ -425,7 +428,7 @@ var Ice = (
                     target: mainView,
                     style: "z-index:999999;",
                     close: function () {
-                        this.hide();
+                    this.hide();
                     }
                 });
                 mask.show();
@@ -434,7 +437,7 @@ var Ice = (
                     message: texto || 'Cargando...',
                     maskLocal: true,
                     close: function () {
-                        this.hide();
+                     this.hide();
                     }
                 });
                 mainView.add(mask);

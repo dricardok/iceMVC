@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.HttpUtil;
+import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 
 import mx.com.segurossura.workflow.mail.service.MailService;
@@ -96,7 +97,7 @@ public class MailAction extends PrincipalCoreAction {
 					archivos.add(nombreCompletoArchivo);
 				} else {
 					String mensaje = new StringBuffer("El archivo ").append(nombreCompletoArchivo).append(" no existe, no se adjuntar\u00E1").toString(); 
-					throw new Exception(mensaje);
+					throw new ApplicationException(mensaje);
 				}
 			}
 			

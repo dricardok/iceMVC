@@ -182,12 +182,13 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 							{
 								reference: 'btnGuardar',
 								text: 'Guardar',
-	                            iconCls: 'x-fa fa-save',
+	                            iconCls: 'x-fa fa-save',	                            
 								handler: 'onGuardarBloque'
 							},{
 								text: 'Cancelar',
+								ui:'gray',
 	                            iconCls: 'x-fa fa-close',
-								handler: 'onCancelar'
+	                            handler: 'onCancelar'
 							}
 						],
 						modelFields: compsForm.BLOQUE_LISTA_SITUACIONES.FORMULARIO.fields,

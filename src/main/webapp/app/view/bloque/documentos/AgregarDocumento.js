@@ -58,6 +58,7 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
                     },{
                         text: 'Cancelar',
                         iconCls: 'x-fa fa-close',
+                        ui:'gray',
                         handler: function(){
                             if(Ice.classic()){
                                 this.up('window').close();

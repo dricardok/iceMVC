@@ -816,11 +816,12 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   nombre,   "Falta nombre",
     	                   email, 	 "Falta email");
     	    
-    	    emisionManager.guardarDatosPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdbanco, nmtarjeta, fevencm, fevenca, email);
+    	    
     	    
     	    list = emisionManager.realizarPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, 
     	    															cdbanco, dsbanco, nmtarjeta, codseg, fevencm, 
     	    															fevenca, nombre, email, usuario);
+    	    emisionManager.guardarDatosPagoTarjeta(cdunieco, cdramo, estado, nmpoliza, nmsuplem, cdbanco, nmtarjeta, fevencm, fevenca, email);
     	    //params.put("codaut", codigoautorizacion);
     	    
     	    

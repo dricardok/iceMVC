@@ -105,6 +105,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 	    	{
 		    	xtype	: 'button',
 		    	text	: 'Cancelar',
+		    	ui:'gray',
 		    	iconCls : 'x-fa fa-close',
 		    	handler : 'onCancelar'
 	    	}

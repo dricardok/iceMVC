@@ -40,6 +40,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 				config.buttons = (config.buttons || []).concat([{
 					text: 'Cerrar',
 					iconCls: 'x-fa fa-close',
+					ui:'gray',
 					handler: function (me) {
 						me.up('ventanaice').cerrar();
 					}

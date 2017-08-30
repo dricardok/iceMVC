@@ -64,6 +64,7 @@ Ext.define('Ice.view.bloque.RegistroTramiteWindow', {
 		},{
 			text		:	'Cancelar',
 			iconCls		: 	'x-fa fa-close',
+			ui:'gray',
 			handler		:	'onCancelar'
 		}
 	],

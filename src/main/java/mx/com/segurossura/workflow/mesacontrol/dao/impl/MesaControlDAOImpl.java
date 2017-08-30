@@ -1489,7 +1489,7 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
         Map<String, Object> mapResult = ejecutaSP(new ObtenerTramiteCompletoSP(this.getDataSource()), params);
         List<Map<String,String>> listaTramites = (List<Map<String,String>>) mapResult.get("pv_registro_o");
         if(listaTramites==null||listaTramites.size()==0) {
-            throw new Exception("No se encuentra el tramite "+params.get("pv_ntramite_i"));
+            throw new ApplicationException("No se encuentra el tramite "+params.get("pv_ntramite_i"));
         }
         return listaTramites.get(0);
     }

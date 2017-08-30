@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.biosnettcs.core.Constantes;
 import com.biosnettcs.core.HttpUtil;
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
 import mx.com.segurossura.general.documentos.model.Archivo;
@@ -188,7 +189,7 @@ public class DocumentosManagerImpl implements DocumentosManager {
                 fileInputStream = FileUtils.openInputStream(new File(Utils.join(ruta, filename)));                
             }
         } catch (Exception ex) {
-            throw new Exception(ex.getMessage()+" No se pudo recuperar el archivo");
+            throw new ApplicationException("No se pudo recuperar el archivo:" + ex.getMessage());
         }
         return fileInputStream;
     }

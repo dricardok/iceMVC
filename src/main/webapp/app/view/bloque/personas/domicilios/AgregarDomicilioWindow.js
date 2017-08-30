@@ -11,8 +11,12 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 		modelFields	:	[]
 	},
 	autoShow		:	true,
-	title			:	'Agregar Domicilio',
-	constructor : 	function(config){
+	title: {
+		text:'Agregar Domicilio',
+		style:'margin:0px 45px 16px 40px;',
+	},
+	
+	   constructor : 	function(config){
 		var paso="",
 			me=this;
 		try{
@@ -79,18 +83,22 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 			    	modelValidators:comps.AGREGAR_PERSONAS.MDOMICIL.validators,
         			modelFields	:	comps.AGREGAR_PERSONAS.MDOMICIL.fields,	
         			buttons		:	[
+        				 	{
+        				 		xtype	: 'button',
+        				 		text	: 'Cancelar',
+        				 		iconCls: 'x-fa fa-close',
+        				 		ui:'gray',
+        				 		handler : 'cancelar'
+        				 			
+        				 	},	
 		 			    	{
 						    	xtype	: 'button',
 						    	text	: 'Guardar',
-						    	iconCls		: 	'x-fa fa-save',
+						    	iconCls	: 	'x-fa fa-save',
+						    	style:'margin-right: 40px;',
 						    	handler : 'guardarDomicilio'
-		 			    	},
-		 			    	{
-						    	xtype	: 'button',
-						    	text	: 'Cancelar',
-						    	iconCls: 'x-fa fa-close',
-						    	handler : 'cancelar'
 		 			    	}
+		 			    	
 		 			    ],
 				}
 			]

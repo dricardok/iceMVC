@@ -15,8 +15,11 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 		accion			:	'I'
 	},
 	controller : 'persona',
-	title		: "Agregar / Editar Persona",
-	constructor: function (config) {
+	title: {
+		text:"Agregar / Editar Persona",
+		style:'margin:0px 45px 16px 40px;',
+	},
+		constructor: function (config) {
 		
         Ice.log('Ice.view.bloque.DatosGenerales.constructor config:', config);
         var me = this,
@@ -148,18 +151,21 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 		}
     },
     buttons		:	[
-		{
-			text:"Cancelar",
-			iconCls: 'x-fa fa-close',
-			handler:function(){
-				Ice.pop()
-			}
-		},
-		{
+    	{
 			text		:	'Guardar',
 			iconCls		: 	'x-fa fa-save',
 			handler		:	'guardarPersona'
+		},
+		{
+			text:"Cancelar",
+			iconCls: 'x-fa fa-close',
+			ui:'gray',
+			style:'margin-right: 45px;',
+			handler:function(){
+				Ice.pop()
+			}
 		}
+		
 	],
     
     initialize: function(){

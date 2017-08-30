@@ -349,6 +349,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
         		buttons : [{
         			cls: '',
         			text: 'Modificar',
+        			style:'margin-right: 42px;',       			
         			iconCls: 'x-fa fa-pencil',
         			handler: function(me){
         				Ice.pop();
@@ -373,6 +374,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             
             Ext.create({
                 xtype: 'ventanaprimas',
+                style:'background-color: transparent !important;',
                 
                 cdunieco: view.getCdunieco(),
                 cdramo: view.getCdramo(),
@@ -383,6 +385,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     {
                         text: 'Modificar Cotización',
                         iconCls: 'x-fa fa-check',
+                        style:'margin-right: 45px;',
                         handler: function (me) {
                             me.up('ventanaprimas').cerrar();
                         }
