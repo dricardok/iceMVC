@@ -420,7 +420,7 @@ public interface FlujoMesaControlDAO {
 	 */
 	public String movimientoTfluval(String cdtipflu, String cdflujomc, String cdvalida,
 			String dsvalida, String cdvalidafk, String webid, String xpos,
-			String ypos, String jsvalida, String accion) throws Exception;
+			String ypos, String jsvalida, String referencia, String accion) throws Exception;
 
 	/**
 	 * 

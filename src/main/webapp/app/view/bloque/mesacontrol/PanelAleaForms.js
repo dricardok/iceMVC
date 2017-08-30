@@ -29,7 +29,7 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelAleaForms', {
             Ice.validate(json.title, 'Falta el titulo en el auxiliar para pantalla de alea forms',
                          json.seccion, 'Falta la secci\u00f3n en el auxiliar para pantalal de alea forms');
 
-            config.title = 'ALEA ' + json.title + ' - FAVOR DE ACCEDER A LA FORMA';
+            config.title = 'ALEA ' + json.title.toUpperCase() + ' - FAVOR DE ACCEDER A LA FORMA';
 
             var comps = Ice.generaComponentes({
                 pantalla: 'ALEA_FORMS',

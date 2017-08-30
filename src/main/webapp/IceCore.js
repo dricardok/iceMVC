@@ -2002,7 +2002,6 @@ var Ice = (
      * Esta funcion hace submit al index de la aplicacion
      */
     index: function () {
-        Ice.cerrarVentanas();
         Ice.redirect('login.action');
     },
 
@@ -2330,5 +2329,13 @@ var Ice = (
                 throw arguments[i + 1];
             }
         }
+    },
+
+    /**
+     * Parsea fechas
+     */
+    parse: function(value, format){
+        return Ext.Date.parse(value, format||Ext.util.Format.dateFormat);
     }
+
 });

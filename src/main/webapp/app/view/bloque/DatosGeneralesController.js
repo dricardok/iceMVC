@@ -84,15 +84,18 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             if (refs.b1_feefecto && refs.b1_feproren) {
                 refs.b1_feefecto.on({
                     change: function (me, value) {
-                        var paso = 'Calculando fin de vigencia';
-                        try {
-                            if(refs.b1_ottempot.getValue()){
-                                me.cambiarFechasTemporalidad(refs);
-                            } else {
-                                refs.b1_feproren.setValue(Ext.Date.add(value, Ext.Date.YEAR, 1));
+                        if(view.getCdramo() == '501'){
+                            Ice.log('cambiando fechas desde custom datos generales');
+                            var paso = 'Calculando fin de vigencia';
+                            try {
+                                if(refs.b1_ottempot.getValue()){
+                                    me.cambiarFechasTemporalidad(refs);
+                                } else {
+                                    refs.b1_feproren.setValue(Ext.Date.add(value, Ext.Date.YEAR, 1));
+                                }
+                            } catch (e) {
+                                Ice.logWarn(paso, e);
                             }
-                        } catch (e) {
-                            Ice.logWarn(paso, e);
                         }
                     }
                 });

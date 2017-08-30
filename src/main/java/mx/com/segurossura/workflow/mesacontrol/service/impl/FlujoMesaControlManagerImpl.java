@@ -399,6 +399,7 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 						,xpos
 						,ypos
 						,""
+						,"" //referencia
 						,"I"
 						);
 			}
@@ -547,6 +548,7 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 						,cdflujomc
 						,clave //cdvalida
 						,null //dsvalida
+						,null
 						,null //cdvalidafk
 						,webid
 						,null //xpos
@@ -1077,6 +1079,7 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 			,String xpos
 			,String ypos
 			,String dsvalida
+			,String referencia
 			,String cdvalidafk
 			,String jsvalida
 			,String accion
@@ -1092,6 +1095,7 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 				,"\n@@@@@@ xpos="       , xpos
 				,"\n@@@@@@ ypos="       , ypos
 				,"\n@@@@@@ dsvalida="   , dsvalida
+                ,"\n@@@@@@ referencia=" , referencia
 				,"\n@@@@@@ cdvalidafk=" , cdvalidafk
 				,"\n@@@@@@ jsvalida="   , jsvalida
 				,"\n@@@@@@ accion="     , accion
@@ -1112,6 +1116,7 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 					,xpos
 					,ypos
 					,jsvalida
+					,referencia
 					,accion
 					);
 		}

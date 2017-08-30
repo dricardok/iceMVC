@@ -691,9 +691,9 @@ K                   ENCOLAR CON DATOS ORIGINALES
                     flujoMesaControlDAO.guardarMotivoRechazoTramite(ntramite, cdrazrecha);
                 }
                 
-                paso = "Borrando usuario encargado";
-                logger.debug(paso);
-                despachadorDAO.borrarUsuarioYSucursalEncargado(ntramite);
+//                paso = "Borrando usuario encargado";
+//                logger.debug(paso);
+//                despachadorDAO.borrarUsuarioYSucursalEncargado(ntramite);
                 
                 paso = "Cerrando historial anterior";
                 logger.debug(paso);
@@ -813,83 +813,87 @@ K                   ENCOLAR CON DATOS ORIGINALES
                 
             ///////////////////////////
             ////// SI ES TURNADO //////
-// Se comenta turnado por regiones que estaba definido para salud en GS
-//            else {
-//                /*
-//                 * Un turnado puede ser a un estatus de captura (agente, mesa) o a un estatus de proceso (cotizador, suscriptor)
-//                 * o a un estatus final (emitido, impreso).
-//                 * Si el estatus no es final entonces invocamos al depachador para que nos diga a que usuario le toca el tramite
-//                 */
-//                paso = "Recuperando tipo de estatus";
-//                logger.debug(paso);
-//                boolean esFinal = despachadorDAO.esStatusFinal(ntramite, status);
-//                
-//                RespuestaDespachadorVO destino = null;
-//                if (!esFinal) {
+            else {
+                /*
+                 * Un turnado puede ser a un estatus de captura (agente, mesa) o a un estatus de proceso (cotizador, suscriptor)
+                 * o a un estatus final (emitido, impreso).
+                 * Si el estatus no es final entonces invocamos al depachador para que nos diga a que usuario le toca el tramite
+                 */
+                paso = "Recuperando tipo de estatus";
+                logger.debug(paso);
+                boolean esFinal = despachadorDAO.esStatusFinal(ntramite, status);
+                
+                RespuestaDespachadorVO destino = null;
+                if (!esFinal) {
+                    // 21/08/2017 - jtezva - no se usa el algoritmo de general de seguros, debe venir con un | y entrar al primer if
+                    throw new ApplicationException("El algoritmo no puede turnar, favor de definir un despachador");
 //                    paso = "Invocando despachador";
 //                    logger.debug(paso);
 //                    destino = this.despachar(ntramite, status, sinBuscarRegreso);
-//                }
-//                
-//                if (!esFinal && destino.isEncolado()) { // SI NADIE PUDO ATENDER LO ENCOLAMOS
-//                    paso = "Encolando tr\u00e1mite";
-//                    logger.debug(paso);
-//                    throw new ApplicationException("No hay usuarios disponibles para atender el tr\u00e1mite");
-//                } else {
-//                    if (esFinal) { // EMITIDO
-//                        paso = "Actualizando tr\u00e1mite";
-//                        logger.debug(paso);
-//                        flujoMesaControlDAO.actualizarStatusTramite(
-//                                ntramite,
-//                                status,
-//                                fechaHoy,
-//                                null, // sin usuario (se mantiene)
-//                                null  // sin sucursal (se mantiene)
-//                                );
-//                        
+                }
+                
+                if (!esFinal && destino.isEncolado()) { // SI NADIE PUDO ATENDER LO ENCOLAMOS
+                    paso = "Encolando tr\u00e1mite";
+                    logger.debug(paso);
+                    throw new ApplicationException("No hay usuarios disponibles para atender el tr\u00e1mite");
+                } else {
+                    if (esFinal) { // EMITIDO
+                        paso = "Actualizando tr\u00e1mite";
+                        logger.debug(paso);
+                        flujoMesaControlDAO.actualizarStatusTramite(
+                                ntramite,
+                                status,
+                                fechaHoy,
+                                null, // sin usuario (se mantiene)
+                                null,  // sin sucursal (se mantiene)
+                                null
+                                );
+                        
 //                        paso = "Borrando usuario encargado";
 //                        logger.debug(paso);
 //                        despachadorDAO.borrarUsuarioYSucursalEncargado(ntramite);
-//                        
-//                        paso = "Cerrando historial anterior";
-//                        logger.debug(paso);
-//                        despachadorDAO.cerrarHistorialTramite(ntramite, fechaHoy, cdusuariSes, cdsisrolSes, status);
-//                        
-//                        paso = "Recuperando descripci\u00f3n de estatus";
-//                        logger.debug(paso);
-//                        String dsstatus = this.recuperarDescripcionEstatus(status);
-//                        
-//                        result.setMessage(Utils.join("Tr\u00e1mite turnado a estatus \"", dsstatus,
-//                                "\" con las siguientes observaciones: ", comments));
-//                        
-//                        if (sinGrabarDetalle == false) {
-//                            paso = "Guardando detalle";
-//                            logger.debug(paso);
-//                            mesaControlDAO.movimientoDetalleTramite(
-//                                    ntramite,
-//                                    fechaHoy,
-//                                    null, // cdclausu
-//                                    result.getMessage(),
-//                                    cdusuariSes,
-//                                    null, // cdmotivo
-//                                    cdsisrolSes,
-//                                    permisoAgente ? "S" : "N",
-//                                    null,
-//                                    null,
-//                                    status,
-//                                    true // cerrado
-//                                    );
-//                        }
-//                        
-//                        try {
-//                            paso = "Enviando correos configurados";
-//                            logger.debug(paso);
-//                            flujoMesaControlManager.mandarCorreosStatusTramite(ntramite, cdsisrolSes, porEscalamiento, soloCorreosRecibidos,
-//                                    correosRecibidos);
-//                        } catch (Exception ex) {
-//                            logger.error("Error al mandar correos de estatus al turnar", ex);
-//                        }
-//                    } else { // EN SUSCRIPCION o APROBADO
+                        
+                        paso = "Cerrando historial anterior";
+                        logger.debug(paso);
+                        despachadorDAO.cerrarHistorialTramite(ntramite, fechaHoy, cdusuariSes, cdsisrolSes, status);
+                        
+                        paso = "Recuperando descripci\u00f3n de estatus";
+                        logger.debug(paso);
+                        String dsstatus = this.recuperarDescripcionEstatus(status);
+                        
+                        result.setMessage(Utils.join("Tr\u00e1mite turnado a estatus \"", dsstatus,
+                                "\" con las siguientes observaciones: ", comments));
+                        
+                        if (sinGrabarDetalle == false) {
+                            paso = "Guardando detalle";
+                            logger.debug(paso);
+                            mesaControlDAO.movimientoDetalleTramite(
+                                    ntramite,
+                                    fechaHoy,
+                                    null, // cdclausu
+                                    result.getMessage(),
+                                    cdusuariSes,
+                                    null, // cdmotivo
+                                    cdsisrolSes,
+                                    permisoAgente ? "S" : "N",
+                                    null,
+                                    null,
+                                    status,
+                                    true // cerrado
+                                    );
+                        }
+                        
+                        try {
+                            paso = "Enviando correos configurados";
+                            logger.debug(paso);
+                            flujoMesaControlManager.mandarCorreosStatusTramite(ntramite, cdsisrolSes, porEscalamiento, soloCorreosRecibidos,
+                                    correosRecibidos);
+                        } catch (Exception ex) {
+                            logger.error("Error al mandar correos de estatus al turnar", ex);
+                        }
+                    }
+//                    21/08/2017 - jtezva - se comenta porque el throw de arriba evita que pase por aqui:
+//                    else { // EN SUSCRIPCION o APROBADO
 //                        paso = "Actualizando tr\u00e1mite";
 //                        logger.debug(paso);
 //                        flujoMesaControlDAO.actualizarStatusTramite(
@@ -958,8 +962,8 @@ K                   ENCOLAR CON DATOS ORIGINALES
 //                            logger.error("Error al enviar correos de estatus al turnar", ex);
 //                        }
 //                    }
-//                }
-//            }
+                }
+            }
 	        ////// SI ES TURNADO //////
 	        ///////////////////////////
 	    } catch (Exception ex) {

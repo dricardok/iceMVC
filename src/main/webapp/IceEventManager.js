@@ -26,8 +26,9 @@ var Ice = (
                 if (item.modoExt4 === true) {
                     return;
                 }
-
-                var form = item.up('[getValues]') || {},
+                
+                var me = item,
+                    form = item.up('[getValues]') || {},
                     // name = item.getName(), se comenta para usar:
                     name = item.getReference(),
                     iceEvents = form.iceEvents;
@@ -35,6 +36,7 @@ var Ice = (
                 if (!iceEvents) {
                     return;
                 }
+                var values = (form.getValues && form.getValues()) || {};
                 if (Ext.isEmpty(value)) {
                     value = 'VACIO';
                 }
@@ -51,7 +53,8 @@ var Ice = (
                     )) {
                     return;
                 }
-                var formItemsMapByName;
+                var formItemsMapByName,
+                    names;
                 var crearMapaItemsPorName = function () {
                     if (!formItemsMapByName) {
                         formItemsMapByName = {};
@@ -59,6 +62,7 @@ var Ice = (
                         for (var i = 0; i < (items || []).length; i++) {
                             formItemsMapByName[items[i].getName()] = items[i];
                         }
+                        names = formItemsMapByName;
                     }
                 };
                 var valueProfile = iceEvents.changeValueProfile[name][value] || '*';
@@ -68,7 +72,8 @@ var Ice = (
                     Ext.suspendLayouts();
                     for (var targetName in iceEvents.changeEvents[name][valueProfile].visible) {
                         if (formItemsMapByName[targetName]) {
-                            formItemsMapByName[targetName][iceEvents.changeEvents[name][valueProfile].visible[targetName]
+                            var target = formItemsMapByName[targetName];
+                            target[iceEvents.changeEvents[name][valueProfile].visible[targetName]
                                 ? 'show'
                                 : 'hide']();
                         }
@@ -80,9 +85,12 @@ var Ice = (
                     crearMapaItemsPorName();
                     for (var targetName in iceEvents.changeEvents[name][valueProfile].valor) {
                         if (formItemsMapByName[targetName]) {
-                            formItemsMapByName[targetName].setValue(
-                                iceEvents.changeEvents[name][valueProfile].valor[targetName]
-                            );
+                            var target = formItemsMapByName[targetName],
+                                jsonValue = iceEvents.changeEvents[name][valueProfile].valor[targetName];
+                            if(typeof jsonValue === 'function'){
+                                jsonValue = jsonValue(me, value, form, values, target);
+                            }
+                            target.setValue(jsonValue);
                         }
                     }
                 }
@@ -91,10 +99,11 @@ var Ice = (
                     crearMapaItemsPorName();
                     for (var targetName in iceEvents.changeEvents[name][valueProfile].label) {
                         if (formItemsMapByName[targetName]) {
-                            formItemsMapByName[targetName].setLabel && formItemsMapByName[targetName].setLabel(
+                            var target = formItemsMapByName[targetName];
+                            target.setLabel && target.setLabel(
                                 iceEvents.changeEvents[name][valueProfile].label[targetName]
                             );
-                            formItemsMapByName[targetName].setFieldLabel && formItemsMapByName[targetName].setFieldLabel(
+                            target.setFieldLabel && target.setFieldLabel(
                                 iceEvents.changeEvents[name][valueProfile].label[targetName]
                             );
                         }

@@ -548,7 +548,8 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 			declareParameter(new SqlParameter("cdtipflu"  , Types.VARCHAR));
 			declareParameter(new SqlParameter("cdflujomc" , Types.VARCHAR));
 			declareParameter(new SqlParameter("cdvalida"  , Types.VARCHAR));
-			String[] cols=new String[]{ "CDTIPFLU", "CDFLUJOMC", "CDVALIDA", "DSVALIDA", "CDVALIDAFK", "WEBID", "XPOS", "YPOS", "JSVALIDA"};
+			String[] cols=new String[]{ "CDTIPFLU", "CDFLUJOMC", "CDVALIDA", "DSVALIDA", "CDVALIDAFK", "WEBID", "XPOS", "YPOS", "JSVALIDA",
+			        "REFERENCIA"};
 			declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR, new GenericMapper(cols)));
 			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
@@ -1217,7 +1218,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 	@Override
 	public String movimientoTfluval(String cdtipflu, String cdflujomc,
 			String cdvalida, String dsvalida, String cdvalidafk, String webid,
-			String xpos, String ypos, String jsvalida, String accion) throws Exception 
+			String xpos, String ypos, String jsvalida, String referencia, String accion) throws Exception 
 	{
 		Map<String,String> params = new LinkedHashMap<String,String>();
 		params.put("cdtipflu"   , cdtipflu);
@@ -1229,6 +1230,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 		params.put("xpos"       , xpos);
 		params.put("ypos"       , ypos);
 		params.put("jsvalida"   , jsvalida);
+        params.put("referencia" , referencia);
 		params.put("accion"     , accion);
 		Map<String,Object> procRes = ejecutaSP(new MovimientoTfluvalSP(getDataSource()),params);
 		return (String)procRes.get("cdvalida");
@@ -1248,6 +1250,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 			declareParameter(new SqlParameter     ("xpos"       , Types.VARCHAR));
 			declareParameter(new SqlParameter     ("ypos"       , Types.VARCHAR));
 			declareParameter(new SqlParameter     ("jsvalida"   , Types.VARCHAR));
+            declareParameter(new SqlParameter     ("referencia" , Types.VARCHAR));
 			declareParameter(new SqlParameter     ("accion"     , Types.VARCHAR));
 			declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
 			declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
@@ -2999,7 +3002,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
 	{
 		protected ObtenerCorreosStatusTramite(DataSource dataSource)
 		{
-			super(dataSource,"PACK_MAIL.P_GET_STATUS_TRAMITE");
+			super(dataSource,"PKG_MAIL.P_GET_MAIL_STATUS_TRAMITE");
 			declareParameter(new SqlParameter("ntramite" , Types.VARCHAR));
 			declareParameter(new SqlParameter("cdsisrol" , Types.VARCHAR));
 			declareParameter(new SqlParameter("swescala" , Types.VARCHAR));

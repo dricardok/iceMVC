@@ -7,7 +7,7 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
     layout: 'hbox',
     platformConfig: {
         desktop: {
-            height: 120,
+            maxHeight: 120,
             bodyPadding: '0 0 0 10',
             defaults: {
                 margin: '0 10 10 0'
@@ -75,7 +75,7 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
                         text: 'Cerrar',
                         ui:'gray',
                         icon: Ice.ruta.iconos + 'cancel.png',
-                        handler: function (me) {
+                        handler: config.botonCerrarHandler || function (me) {
                             try {
                                 me.up('ventanaice').cerrar();
                             } catch (e) {
