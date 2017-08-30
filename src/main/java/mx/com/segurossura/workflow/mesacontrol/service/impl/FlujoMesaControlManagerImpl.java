@@ -399,6 +399,7 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 						,xpos
 						,ypos
 						,""
+						,"" //referencia
 						,"I"
 						);
 			}
@@ -547,6 +548,7 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 						,cdflujomc
 						,clave //cdvalida
 						,null //dsvalida
+						,null
 						,null //cdvalidafk
 						,webid
 						,null //xpos
