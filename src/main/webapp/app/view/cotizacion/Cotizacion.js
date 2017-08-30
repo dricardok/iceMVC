@@ -127,9 +127,18 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             if ((config.bloques || []).length === 0) {
                 throw 'No hay bloques configurados';
             }
+            
+            me.callParent(arguments);
+
+            if (config.flujo.ntramite) {
+                Ext.create({
+                    xtype: 'ventanabotonesflujo',
+                    flujo: config.flujo,
+                    padre: me
+                }).mostrar();
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
-        me.callParent(arguments);
     }
 });

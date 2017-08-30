@@ -51,7 +51,7 @@ Ext.define('Ice.view.main.Main', {
                     xtype: 'tbtext',
                     reference: 'userBind',
                     bind: {
-                        text: '{dsusuari} - {dssisrol}',
+                        text: '<div style="text-align: right;">{dsusuari}<br/>{dssisrol}</div>',
                         hidden: '{!rolOUsuario}'
                     },
                     cls: ''

@@ -779,6 +779,7 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 			       ,xpos       = params.get("XPOS")
 			       ,ypos       = params.get("YPOS")
 			       ,dsvalida   = params.get("DSVALIDA")
+			       ,referencia = params.get("REFERENCIA")
 			       ,cdvalidafk = params.get("CDVALIDAFK")
 			       ,jsvalida   = params.get("JSVALIDA")
 			       ,accion     = params.get("ACCION");
@@ -803,6 +804,7 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 					,xpos
 					,ypos
 					,dsvalida
+					,referencia
 					,cdvalidafk
 					,jsvalida
 					,accion

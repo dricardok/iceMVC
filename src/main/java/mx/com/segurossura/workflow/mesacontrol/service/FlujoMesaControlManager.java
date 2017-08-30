@@ -112,6 +112,7 @@ public interface FlujoMesaControlManager
 			,String xpos
 			,String ypos
 			,String dsvalida
+			,String referencia
 			,String cdvalidafk
 			,String jsvalida
 			,String accion

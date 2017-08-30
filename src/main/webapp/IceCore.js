@@ -2001,7 +2001,6 @@ var Ice = (
      * Esta funcion hace submit al index de la aplicacion
      */
     index: function () {
-        Ice.cerrarVentanas();
         Ice.redirect('login.action');
     },
 
