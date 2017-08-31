@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 import com.biosnettcs.portal.model.UsuarioVO;
+import com.opensymphony.xwork2.ActionContext;
 
 import mx.com.segurossura.mesacontrol.service.MesaControlManager;
 
@@ -228,7 +230,42 @@ public class MesaControlAction extends PrincipalCoreAction {
 		return SUCCESS;
 	}
 	
-	
+	@Action(value   = "ejecutarValidacionPorReferencia",
+            results = { @Result(name="success", type="json") })
+	public String ejecutarValidacionPorReferencia() {
+        logger.debug(Utils.log(
+                "\n########################################",
+                "\n########################################",
+                "\n######   ejecutarValidacionPorReferencia  ######",
+                "\n######                            ######"
+                ));
+        logger.debug("params:  "+params);
+        logger.debug("list: "+list);
+        try
+        {
+            this.session = ActionContext.getContext().getSession();
+            UsuarioVO usuario = (UsuarioVO)Utils.validateSession(session);
+            
+            String ntramite   = (String) params.get("ntramite"), 
+            	   referencia = (String) params.get("referencia");
+            params = mesaControlManager.ejecutarValidacionPorReferencia(ntramite, referencia)
+            		.get(0);
+            
+            success=true;
+            
+        } catch(Exception ex) {
+            success=false;
+            logger.error("error al actualizar status de tramite de mesa de control",ex);
+            message = Utils.manejaExcepcion(ex);
+        }
+        logger.debug(Utils.log(
+                "\n######                                    ######",
+                "\n######   ejecutarValidacionPorReferencia  ######",
+                "\n########################################",
+                "\n########################################"
+                ));
+        return SUCCESS;
+    }
 	// Getters and Setters
 
 	public long getStart() {
@@ -307,6 +344,7 @@ public class MesaControlAction extends PrincipalCoreAction {
 	public void setNtramite(String ntramite) {
 		this.ntramite = ntramite;
 	}
+	
 	
 	
 }

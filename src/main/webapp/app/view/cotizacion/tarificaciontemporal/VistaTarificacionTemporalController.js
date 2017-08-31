@@ -137,7 +137,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                                    /*
 					                                	me.up('ventanaice').cerrar();
 					                                    */   
-					                                	Ice.disparaValidacionesEventoPantalla (view.getCdunieco(), 
+					                                	Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
 					                     					   view.getCdramo(),
 					                     					   view.getEstado(),
 					                     					   view.getNmpoliza(), 

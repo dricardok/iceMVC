@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
+import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.dao.OracleTypes;
@@ -29,7 +30,7 @@ import mx.com.segurossura.workflow.confcomp.util.GeneradorCampos;
 import mx.com.segurossura.workflow.mesacontrol.dao.MesaControlDAO;
 import mx.com.segurossura.workflow.mesacontrol.model.EstatusTramite;
 import mx.com.segurossura.workflow.mesacontrol.service.MesaControlManager;
-
+@Service
 public class MesaControlManagerImpl implements MesaControlManager {
 	
     private static Logger logger = Logger.getLogger(MesaControlManagerImpl.class);
@@ -726,18 +727,6 @@ public class MesaControlManagerImpl implements MesaControlManager {
         mesaControlDAO.actualizaOTValorMesaControl(map);
     }
 
-	@Override
-	public List<Map<String, String>> ejecutarValidacionPorReferencia(String ntramite, String referencia)
-			throws Exception {
-		String paso = "ejecutarValidacionPorReferencia";
-		List<Map<String, String>> lista = new ArrayList<>();
-		try{
-			lista = mesaControlDAO.ejecutarValidacionPorReferencia(ntramite, referencia);
-			
-		}catch(Exception e){
-			Utils.generaExcepcion(e, paso);
-		}
-		return null;
-	}
+	
     
 }

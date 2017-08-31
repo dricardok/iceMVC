@@ -119,7 +119,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     		
                     		var flu = view.getFlujo(); 
                     		
-                    		Ice.disparaValidacionesEventoPantalla (view.getCdunieco(), 
+                    		Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
                     											   view.getCdramo(),
                     											   view.getEstado(),
                     											   view.getNmpoliza(), 
@@ -334,7 +334,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             paso = 'Guardando datos';
         try {
         	
-        	Ice.disparaValidacionesEventoPantalla (view.getCdunieco(), 
+        	Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
 					   view.getCdramo(),
 					   view.getEstado(),
 					   view.getNmpoliza(), 
