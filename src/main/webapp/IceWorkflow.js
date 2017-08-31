@@ -979,8 +979,7 @@ var Ice = (
                     'params.nmpoliza' : nmpoliza,
                     'params.nmsuplem' : nmsuplem,
 					'params.pantalla' : pantalla,
-					'params.evento'   : evento,
-					'params.flujo'    : flujo
+					'params.evento'   : evento
                 },
                 success: function (action) {
 					var paso2 = 'Ejecutando referencia';
@@ -1013,13 +1012,13 @@ var Ice = (
 													'params.nmsuplem' : nmsuplem,
 													'params.pantalla' : pantalla,
 													'params.evento'   : evento,
-													'params.flujo'    : flujo,
 													'params.estatus'  : action.params.estatus,
 													'params.comments' : action.params.comments
 												},
 												success: function (action) {
 													var paso3 = 'Ejecutando validacion por referencia';
 													try {
+														flujo.ntramite = action.ntramite;
 														Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
 													} catch (e) {
 														Ice.manejaExcepcion(e, paso3);
