@@ -1010,7 +1010,6 @@ var Ice = (
 													'params.cdramo'   : cdramo,
 													'params.estado'   : estado,
 													'params.nmpoliza' : nmpoliza,
-													'params.nmsituac' : nmsituac,
 													'params.nmsuplem' : nmsuplem,
 													'params.pantalla' : pantalla,
 													'params.evento'   : evento,
