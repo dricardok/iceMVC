@@ -50,5 +50,7 @@ public interface MesaControlManager {
 
 
 	public List<Map<String, String>> ejecutarValidacionPorReferencia(String ntramite, String referencia) throws Exception;
+	
+	public Map<String, String> obtenerTramiteCompleto(String ntramite) throws Exception;
 
 }
