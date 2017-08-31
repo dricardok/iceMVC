@@ -302,11 +302,32 @@ public class MesaControlManagerImpl implements MesaControlManager {
 					ejecutarValidacionPorReferencia(
 							ntramite, 
 							referencia);
+			if(lista.isEmpty()){
+				throw new ApplicationException("No hay registros en ejecutarValidacionPorReferencia");
+			}
+			lista.get(0).putAll(mesaControlDAO.
+					obtenerTramiteCompleto(ntramite));
+			
 			logger.debug("ejecutarValidacionPorReferencia {}",lista);
 			
 		}catch(Exception e){
 			Utils.generaExcepcion(e, paso);
 		}
 		return lista;
+	}
+
+	@Override
+	public Map<String, String> obtenerTramiteCompleto(String ntramite) throws Exception {
+		String paso = "ejecutarValidacionPorReferencia";
+		Map<String, String> m = new HashMap();
+		try{
+			m = mesaControlDAO.
+					obtenerTramiteCompleto(ntramite);
+			logger.debug("obtenerTramiteCompleto {}",m);
+			
+		}catch(Exception e){
+			Utils.generaExcepcion(e, paso);
+		}
+		return m;
 	}
 }

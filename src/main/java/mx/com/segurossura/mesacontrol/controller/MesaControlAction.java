@@ -442,15 +442,10 @@ public class MesaControlAction extends PrincipalCoreAction {
             
             String ntramite   = (String) params.get("ntramite"), 
             	   referencia = (String) params.get("referencia");
-            
-            List<Map<String, String>> lista = mesaControlManager.ejecutarValidacionPorReferencia(ntramite, referencia);
-            if (lista == null || lista.size() == 0) {
-                throw new ApplicationException("No se encuentra la referencia");
-            }
-            if (lista.size() > 1) {
-                throw new ApplicationException("Referencia duplicada");
-            }
-            params = lista.get(0);
+
+            Utils.validate(ntramite,"No se recibió el ntramite",
+            		referencia,"No se recibió la referencia");
+            list = mesaControlManager.ejecutarValidacionPorReferencia(ntramite, referencia);
             
             success=true;
             
