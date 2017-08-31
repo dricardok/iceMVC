@@ -661,7 +661,7 @@ public class EmisionAction extends PrincipalCoreAction {
             
             if (StringUtils.isNotBlank(ntramiteNuevo)) {
                 if (RolSistema.AGENTE.getCdsisrol().equals(usuario.getRolActivo().getCdsisrol())) {
-                    // recuperar referencia NUEVO_TRAMITE_AGENTE_COTIZACION
+                    flujo = flujoMesaControlManager.recuperarReferenciaFlujoCotizacionAgente(ntramiteNuevo, usuario.getRolActivo().getCdsisrol());
                 } else {
                     throw new ApplicationException("No se soporta la creaci\u00f3n de tr\u00e1mite desde cotizaci\u00f3n para rol distinto a agente");
                 }

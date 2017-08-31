@@ -442,4 +442,6 @@ public interface FlujoMesaControlManager
 	
 	public String generarTramiteDesdeConfirmarCotizacion (String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
 	        String cdusuari, String cdsisrol) throws Exception;
+	
+	public FlujoVO recuperarReferenciaFlujoCotizacionAgente (String ntramite, String cdsisrol) throws Exception;
 }

@@ -4127,7 +4127,7 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	        Date fechaHoy = new Date();
 	        if (StringUtils.isBlank(ntramite)) {
 	            String cdagente = null;
-	            if (cdsisrol.equals(RolSistema.AGENTE.getCdsisrol())) {
+	            if (RolSistema.AGENTE.getCdsisrol().equals(cdsisrol)) {
 	                paso = "Recuperando clave de agente";
 	                cdagente = emisionDAO.obtenerAgenteUsuario(cdusuari);
 	            }
@@ -4275,6 +4275,70 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	        Utils.generaExcepcion(e, paso);
 	    }
 	    return ntramiteNuevo;
+	}
+	
+	@Override
+	public FlujoVO recuperarReferenciaFlujoCotizacionAgente (String ntramite, String cdsisrol) throws Exception {
+	    logger.debug(Utils.log("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+	                           "\n@@@@@@ recuperarReferenciaFlujoCotizacionAgente @@@@@@",
+	                           "\n@@@@@@ ntramite = ", ntramite,
+                               "\n@@@@@@ cdsisrol = ", cdsisrol));
+	    FlujoVO flujo = null;
+	    String paso = null;
+	    try {
+	        paso = "Recuperando datos de tr\u00e1mite";
+	        Map<String, String> tramite = mesaControlDAO.obtenerTramiteCompleto(ntramite);
+	        
+	        paso = "Recuperando referencia de tr\u00e1mite generado desde cotizaci\u00f3n";
+	        List<Map<String, String>> validaciones = mesaControlDAO2.ejecutarValidacionPorReferencia(ntramite, "TRAMITE_GENE_DESDE_COTI");
+	        if (validaciones == null || validaciones.size() == 0) {
+	            throw new ApplicationException("No se encuentra la referencia de tr\u00e1mite generado desde cotizaci\u00f3n");
+	        }
+	        if (validaciones.size() > 1) {
+	            throw new ApplicationException("Referencia de tr\u00e1mite generado desde cotizaci\u00f3n duplicada");
+	        }
+	        Map<String, String> referencia = validaciones.get(0);
+	        
+	        paso = "Recuperando acci\u00f3n de referencia";
+	        List<Map<String, String>> acciones = this.cargarAccionesEntidad(
+	                referencia.get("cdtipflu"),
+	                referencia.get("cdflujomc"),
+	                "V", // tipoent
+	                referencia.get("cdvalida"), // cdentidad
+	                referencia.get("webid"),
+	                cdsisrol);
+	        if (acciones == null || acciones.size() == 0) {
+                throw new ApplicationException("No se encuentra la acci\u00f3n de referencia de tr\u00e1mite generado desde cotizaci\u00f3n");
+            }
+            if (acciones.size() > 1) {
+                throw new ApplicationException("Acci\u00f3n de referencia de tr\u00e1mite generado desde cotizaci\u00f3n duplicada");
+            }
+            Map<String, String> accion = acciones.get(0);
+            
+            paso = "Creando flujo resultante";
+            flujo = new FlujoVO();
+            
+            flujo.setCdtipflu(tramite.get("CDTIPFLU"));
+            flujo.setCdflujomc(("CDFLUJOMC"));
+            flujo.setNtramite(ntramite);
+            flujo.setStatus(tramite.get("STATUS"));
+            
+            flujo.setCdunieco(tramite.get("CDUNIECO"));
+            flujo.setCdramo(tramite.get("CDRAMO"));
+            flujo.setEstado(tramite.get("ESTADO"));
+            flujo.setNmpoliza(tramite.get("NMPOLIZA"));
+            flujo.setNmsuplem(tramite.get("NMSUPLEM"));
+            
+            flujo.setTipoent(accion.get("TIPODEST"));
+            flujo.setClaveent(accion.get("CLAVEDEST"));
+            flujo.setWebid(accion.get("WEBIDDEST"));
+	    } catch (Exception e) {
+	        Utils.generaExcepcion(e, paso);
+	    }
+	    logger.debug(Utils.log("\n@@@@@@ flujo = ", ntramite,	            
+	                           "\n@@@@@@ recuperarReferenciaFlujoCotizacionAgente @@@@@@",
+	                           "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
+	    return flujo;
 	}
 	
 }

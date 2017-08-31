@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -18,6 +17,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 import com.biosnettcs.portal.model.UsuarioVO;
 import com.opensymphony.xwork2.ActionContext;
@@ -404,7 +404,10 @@ public class MesaControlAction extends PrincipalCoreAction {
 				params.put("referencia", resultParams.get("referencia"));
 				message = resultParams.get("mensaje");
 				params.put("estatus", resultParams.get("estatus"));
-				params.put("comments", resultParams.get("comments"));
+				params.put("comments", resultParams.get("comments"));				
+				params.put("cdtipflu", resultParams.get("cdtipflu"));
+				params.put("cdflujomc", resultParams.get("cdflujomc"));
+				params.put("cdtiptra", resultParams.get("cdtiptra"));
 			}
 			
 			
@@ -442,8 +445,10 @@ public class MesaControlAction extends PrincipalCoreAction {
             
             String ntramite   = (String) params.get("ntramite"), 
             	   referencia = (String) params.get("referencia");
-            params = mesaControlManager.ejecutarValidacionPorReferencia(ntramite, referencia)
-            		.get(0);
+
+            Utils.validate(ntramite,"No se recibió el ntramite",
+            		referencia,"No se recibió la referencia");
+            list = mesaControlManager.ejecutarValidacionPorReferencia(ntramite, referencia);
             
             success=true;
             
