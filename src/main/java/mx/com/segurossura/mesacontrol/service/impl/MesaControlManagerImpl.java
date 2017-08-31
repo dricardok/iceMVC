@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
 
+import mx.com.segurossura.emision.dao.AgentesDAO;
 import mx.com.segurossura.general.cmp.dao.ComponentesDAO;
 import mx.com.segurossura.mesacontrol.dao.MesaControlDAO;
 import mx.com.segurossura.mesacontrol.service.MesaControlManager;
@@ -37,6 +38,9 @@ public class MesaControlManagerImpl implements MesaControlManager {
 	
 	@Autowired
 	private ComponentesDAO componentesDAO;
+	
+	@Autowired
+	private AgentesDAO agentesDAO;
 	
 	@Override
 	public List<Map<String, String>> obtenerTramites(String cdunieco, String cdramo, String estado, String nmpoliza,
@@ -121,6 +125,15 @@ public class MesaControlManagerImpl implements MesaControlManager {
 				} catch (Exception ex) {
 				    throw new ApplicationException(Utils.join("La póliza ",cdunieco,"-",cdramo,"-",estado,"-",nmpoliza," no existe."));
 				}
+			}
+			
+			// Si viene cdagente y cdramo validar su cedula
+			if(!StringUtils.isEmpty(cdagente) && !StringUtils.isEmpty(cdramo)) {
+				boolean cedulaValida = false;
+				cedulaValida = agentesDAO.validaAgente(cdagente, cdramo, "E");
+		        if(!cedulaValida){
+		           throw new ApplicationException("La cedula del agente no es valida");
+		        }
 			}
 			
 			paso = "Registrando tr\u00e1mite";
