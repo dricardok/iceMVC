@@ -1015,11 +1015,11 @@ var Ice = (
 													'params.estatus'  : action.params.estatus,
 													'params.comments' : action.params.comments
 												},
-												success: function (action) {
+												success: function (resp) {
 													var paso3 = 'Ejecutando validacion por referencia';
 													try {
-														flujo.ntramite = action.ntramite;
-														Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
+														flujo.ntramite = resp.ntramite;
+														Ice.ejecutarValidacionPorReferencia(flujo, resp.params.referencia);
 													} catch (e) {
 														Ice.manejaExcepcion(e, paso3);
 													}
