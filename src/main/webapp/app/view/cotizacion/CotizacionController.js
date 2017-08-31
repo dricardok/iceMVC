@@ -360,7 +360,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
     		
     		var view = me.getView();
     		
-    		var planes = Ext.create('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
+    		var planes = Ext.create('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', { 
 
         		cdunieco: view.getCdunieco(),
         		cdramo: view.getCdramo(),
@@ -376,6 +376,12 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 cdperfil: view.getCdperfil(),
 
                 flujo: view.getFlujo(),
+
+                listeners: {
+                    'tramiteGenerado': function (tarificacionTemporal, flujo) {
+                        view.setFlujo(flujo);
+                    }
+                },
         		
         		buttons : [{
         			cls: '',
