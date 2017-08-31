@@ -402,7 +402,7 @@ public class MesaControlAction extends PrincipalCoreAction {
 			
 			if(resultParams != null ) {
 				params.put("referencia", resultParams.get("referencia"));
-				params.put("mensaje", resultParams.get("mensaje"));
+				message = resultParams.get("mensaje");
 				params.put("estatus", resultParams.get("estatus"));
 				params.put("comments", resultParams.get("comments"));
 			}
