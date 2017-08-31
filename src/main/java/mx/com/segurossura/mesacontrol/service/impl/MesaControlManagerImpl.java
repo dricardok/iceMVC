@@ -251,15 +251,16 @@ public class MesaControlManagerImpl implements MesaControlManager {
 		try {
 			
 			componentes = componentesDAO.obtenerListaComponentesSP(pantalla, evento, null, null, cdramo, null, cdsisrol, null);
-									
+				
+			logger.debug("---> {}",componentes);
 			for(Map<String, String> mapa : componentes) {
 				
 				handler = mapa.get("handler");
 				
 				if(handler != null) {
 					
-					tokens = handler.split("|");
-					
+					tokens = handler.split("\\|");
+					logger.debug(" tokens: {}",tokens);
 					if(tokens != null && tokens.length == 5) {
 						
 						nombreFuncion = tokens[0];

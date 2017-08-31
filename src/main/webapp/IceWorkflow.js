@@ -938,7 +938,7 @@ var Ice = (
     			success	:	function(datos){
     				var paso = 'Leyendo datos val por ref';
     				try{
-    					var smap = datos.smap1;
+    					var smap = datos.params;
     					Ice.cargarAccionesEntidad (flujo.cdtipflu, flujo.cdflujomc, flujo.tipoent, smap.cdvalida, smap.webid, 
     							function(dat){
     								var paso = 'procesaAccion';
@@ -977,7 +977,6 @@ var Ice = (
                     'params.cdramo'   : cdramo,
                     'params.estado'   : estado,
                     'params.nmpoliza' : nmpoliza,
-                    'params.nmsituac' : nmsituac,
                     'params.nmsuplem' : nmsuplem,
 					'params.pantalla' : pantalla,
 					'params.evento'   : evento,
