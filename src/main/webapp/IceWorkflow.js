@@ -1029,7 +1029,7 @@ var Ice = (
 													var paso3 = 'Ejecutando validacion por referencia';
 													try {
 														flujo.ntramite = resp.ntramite;
-														Ice.ejecutarValidacionPorReferencia(flujo, resp.params.referencia);
+														Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
 													} catch (e) {
 														Ice.manejaExcepcion(e, paso3);
 													}
