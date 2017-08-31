@@ -36,7 +36,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 								Ice.request({
 					                mascara: paso,
 									timeout: 1000*60*5,
-					                url: Ice.url.emision.tarificarPlan,
+					                url: Ice.url.emision.tarificarPlan, 
 					                params: Ice.convertirAParams({
 										cdunieco: view.getCdunieco(),
 										cdramo: view.getCdramo(),
@@ -44,7 +44,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 										nmpoliza: view.getNmpoliza(),
 										nmsuplem: view.getNmsuplem(),					                     
 										cdtipsit: view.getCdtipsit(),					                        
-										cdperpag: rec.get('cdperpag')
+										cdperpag: rec.get('cdperpag'),
+										ntramite: view.getFlujo().ntramite || ''
 									}),
 					                success: function (action) {
 					                	

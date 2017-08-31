@@ -19,6 +19,7 @@ import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.portal.model.RolSistema;
 
+import mx.com.segurossura.emision.dao.EmisionDAO;
 import mx.com.segurossura.general.cmp.dao.ComponentesDAO;
 import mx.com.segurossura.workflow.confcomp.dao.PantallasDAO;
 import mx.com.segurossura.workflow.confcomp.model.ComponenteVO;
@@ -29,9 +30,10 @@ import mx.com.segurossura.workflow.despachador.model.RespuestaTurnadoVO;
 import mx.com.segurossura.workflow.despachador.service.DespachadorManager;
 import mx.com.segurossura.workflow.mail.service.MailService;
 import mx.com.segurossura.workflow.mesacontrol.dao.FlujoMesaControlDAO;
-import mx.com.segurossura.workflow.mesacontrol.dao.MesaControlDAO;
 import mx.com.segurossura.workflow.mesacontrol.dao.impl.FlujoMesaControlDAOImpl;
 import mx.com.segurossura.workflow.mesacontrol.model.FlujoVO;
+import mx.com.segurossura.workflow.mesacontrol.model.TipoEndoso;
+import mx.com.segurossura.workflow.mesacontrol.model.TipoTramite;
 import mx.com.segurossura.workflow.mesacontrol.service.FlujoMesaControlManager;
 
 @Service
@@ -54,7 +56,7 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	private PantallasDAO pantallasDAO;
 	
 	@Autowired
-	private MesaControlDAO mesaControlDAO;
+	private mx.com.segurossura.workflow.mesacontrol.dao.MesaControlDAO mesaControlDAO;
 	
 	@Autowired
 	private MailService mailService;
@@ -67,6 +69,12 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	
 	@Autowired
 	private ComponentesDAO componentesDAO;
+	
+	@Autowired
+	private EmisionDAO emisionDAO;
+	
+	@Autowired
+	private mx.com.segurossura.mesacontrol.dao.MesaControlDAO mesaControlDAO2;
 	
 	@Override
 	public Map<String, List<Map<String, String>>> workflow (String cdsisrol) throws Exception {
@@ -4099,6 +4107,174 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	        Utils.generaExcepcion(e, paso);
 	    }
 	    return tramite;
+	}
+	
+	@Override
+	public String generarTramiteDesdeConfirmarCotizacion (String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
+            String cdusuari, String cdsisrol) throws Exception {
+	    String ntramiteNuevo = null,
+	           paso = null;
+	    try {
+	        logger.debug(Utils.log("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+	                               "\n@@@@@@ generarTramiteDesdeConfirmarCotizacion @@@@@@",
+	                               "\n@@@@@@ ntramite = " , ntramite,
+	                               "\n@@@@@@ cdunieco = " , cdunieco,
+	                               "\n@@@@@@ cdramo   = " , cdramo,
+	                               "\n@@@@@@ estado   = " , estado,
+	                               "\n@@@@@@ nmpoliza = " , nmpoliza,
+	                               "\n@@@@@@ cdusuari = " , cdusuari,
+	                               "\n@@@@@@ cdsisrol = " , cdsisrol));
+	        Date fechaHoy = new Date();
+	        if (StringUtils.isBlank(ntramite)) {
+	            String cdagente = null;
+	            if (cdsisrol.equals(RolSistema.AGENTE.getCdsisrol())) {
+	                paso = "Recuperando clave de agente";
+	                cdagente = emisionDAO.obtenerAgenteUsuario(cdusuari);
+	            }
+	            
+	            paso = "Recuperando valores por defecto para tr\u00e1mite nuevo";
+	            List<Map<String, String>> listaComps = componentesDAO.obtenerListaComponentesSP(
+	                    "VALORES_DEFECTO", // pantalla
+	                    "TRAMITE_NUEVO_EMISION",   // seccion
+	                    null, // modulo
+	                    null, // estatus
+	                    cdramo,
+	                    null, // cdtipsit,
+	                    cdsisrol,
+	                    null  // auxkey
+	                    );
+	            
+	            if (listaComps == null || listaComps.size() == 0) {
+	                throw new ApplicationException("No hay valores por defecto para tr\u00e1mite");
+	            }
+	            
+	            if (listaComps.size() > 1) {
+	                throw new ApplicationException("Valores por defecto duplicados para tr\u00e1mite");
+	            }
+	            
+	            Map<String, String> valDefTra = new HashMap<String, String>();
+	            String handler = listaComps.get(0).get("handler");
+	            if (StringUtils.isBlank(handler)) {
+	                throw new ApplicationException("Valores por defecto para tr\u00e1mite sin valor");
+	            }
+	            
+	            paso = "Procesando valores por defecto para tr\u00e1mite";
+	            String[] pares = handler.split("\\|");
+	            for (String par : pares) {
+	                logger.debug(Utils.log("\npar: ", par));
+	                String[] parDescompuesto = par.split(":");
+	                valDefTra.put(parDescompuesto[0], parDescompuesto[1]);
+	            }
+	            
+	            String status    = valDefTra.get("status"),
+                       cdtipsit  = valDefTra.get("cdtipsit"),
+                       cdtipflu  = valDefTra.get("cdtipflu"),
+                       cdflujomc = valDefTra.get("cdflujomc"),
+                       comments  = Utils.join("Se registra un tr\u00e1mite con la confirmaci\u00f3n de la cotizaci\u00f3n ", nmpoliza);
+	            
+	            Utils.validate(status    , "Falta status en valores por defecto de tr\u00e1mite",
+	                           cdtipsit  , "Falta tipo de situaci\u00f3n en valores por defecto de tr\u00e1mite",
+	                           cdtipflu  , "Falta tipo de tr\u00e1mite en valores por defecto de tr\u00e1mite",
+	                           cdflujomc , "Falta clave de flujo en valores por defecto de tr\u00e1mite");
+	            
+	            paso = "Registrando tr\u00e1mite";
+	            ntramiteNuevo = mesaControlDAO2.movimientoTmesacontrol(
+	                    null, // ntramite
+	                    cdunieco,
+	                    cdramo,
+	                    estado,
+	                    nmpoliza,
+	                    "0", // nmsuplem
+	                    nmpoliza, // nmsolici
+	                    cdunieco, // cdsucadm
+	                    cdunieco, // cdsucdoc
+	                    TipoTramite.POLIZA_NUEVA.getCdtiptra(), //cdtiptra
+	                    fechaHoy, // ferecepc,
+	                    cdagente,
+	                    null, // referencia
+	                    null, // nombre
+	                    fechaHoy, //fecstatu
+	                    status,
+	                    comments,
+	                    cdtipsit,
+	                    null /*otvalor01*/, null /*otvalor02*/, null /*otvalor03*/, null /*otvalor04*/, null /*otvalor05*/,
+	                    null /*otvalor06*/, null /*otvalor07*/, null /*otvalor08*/, null /*otvalor09*/, null /*otvalor10*/, null /*otvalor11*/,
+	                    null /*otvalor12*/, null /*otvalor13*/, null /*otvalor14*/, null /*otvalor15*/, null /*otvalor16*/, null /*otvalor17*/,
+	                    null /*otvalor18*/, null /*otvalor19*/, null /*otvalor20*/, null /*otvalor21*/, null /*otvalor22*/, null /*otvalor23*/,
+	                    null /*otvalor24*/, null /*otvalor25*/, null /*otvalor26*/, null /*otvalor27*/, null /*otvalor28*/, null /*otvalor29*/,
+	                    null /*otvalor30*/, null /*otvalor31*/, null /*otvalor32*/, null /*otvalor33*/, null /*otvalor34*/, null /*otvalor35*/,
+	                    null /*otvalor36*/, null /*otvalor37*/, null /*otvalor38*/, null /*otvalor39*/, null /*otvalor40*/, null /*otvalor41*/,
+	                    null /*otvalor42*/, null /*otvalor43*/, null /*otvalor44*/, null /*otvalor45*/, null /*otvalor46*/, null /*otvalor47*/,
+	                    null /*otvalor48*/, null /*otvalor49*/, null /*otvalor50*/,
+	                    "N", // swimpres
+	                    cdtipflu,
+	                    cdflujomc,
+	                    cdusuari,
+	                    String.valueOf(TipoEndoso.EMISION_POLIZA.getCdTipSup()), //cdtipsup
+	                    "N", //swvispre
+	                    null, // cdpercli
+	                    null, // renuniext
+	                    null, // renramo
+	                    null, // renpoliex
+	                    "N", // sworigenmesa
+	                    null, // cdrazrecha
+	                    null, // cdunidspch
+	                    null, // ntrasust
+	                    cdsisrol,
+	                    "I");
+	            
+	            paso = "Turnando tr\u00e1mite";
+	            despachadorManager.turnarTramite(
+	                    cdusuari,
+	                    cdsisrol,
+	                    ntramiteNuevo,
+	                    status,
+	                    comments,
+	                    null,  // cdrazrecha
+	                    cdusuari,
+	                    cdsisrol,
+	                    true,  // permisoAgente
+	                    false, // porEscalamiento
+	                    fechaHoy,
+	                    false, // sinGrabarDetalle
+	                    false, // sinBuscarRegreso
+	                    null,  // ntrasust
+	                    false, // soloCorreosRecibidos
+	                    null   //correosRecibidos
+	                    );
+	        } else {
+	            paso = "Recuperando tr\u00e1mite";
+	            Map<String, String> tramiteCompleto = flujoMesaControlDAO.obtenerTramite(ntramite);
+	            if (tramiteCompleto == null) {
+	                throw new ApplicationException("No se encuentra el tr\u00e1mite");
+	            }
+	            String cdtiptra = tramiteCompleto.get("cdtiptra"),
+	                   status   = tramiteCompleto.get("estatus");
+	            Utils.validate(cdtiptra , "Falta el tipo de tr\u00e1mite",
+	                           status   , "Falta el estatus del tr\u00e1mite");
+	            
+	            paso = "Grabando detalle de movimiento";
+	            mesaControlDAO.movimientoDetalleTramite(
+	                    ntramite,
+	                    fechaHoy, // feinicio
+	                    null, // cdclausu
+	                    Utils.join("Se confirma la cotizaci\u00f3n ", nmpoliza), // comments
+	                    cdusuari,
+	                    null, // cdmotivo
+	                    cdsisrol,
+	                    "S", // swagente
+	                    cdusuari,
+	                    cdsisrol,
+	                    status,
+	                    false);
+	        }
+            logger.debug(Utils.log("\n@@@@@@ ntramiteNuevo = ", ntramiteNuevo,
+                                   "\n@@@@@@ generarTramiteDesdeConfirmarCotizacion @@@@@@",
+                                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
+	    } catch (Exception e) {
+	        Utils.generaExcepcion(e, paso);
+	    }
+	    return ntramiteNuevo;
 	}
 	
 }

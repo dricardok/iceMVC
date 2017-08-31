@@ -439,4 +439,7 @@ public interface FlujoMesaControlManager
 	public String obtenerSuplementoTramite(String ntramite) throws Exception;
 	
 	public Map<String, String> obtenerTramiteCompleto (String ntramite) throws Exception;
+	
+	public String generarTramiteDesdeConfirmarCotizacion (String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
+	        String cdusuari, String cdsisrol) throws Exception;
 }

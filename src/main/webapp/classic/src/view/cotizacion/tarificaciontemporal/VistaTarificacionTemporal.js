@@ -44,7 +44,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
     multiSelect: false,
      itemSelector: 'table.shadow_card',
     
-    listeners: {
+    listeners: { 
     	itemclick: 'onItemClic'
     },
 
@@ -63,7 +63,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 		cdptovta: null,
 		cdgrupo: null,
 		cdsubgpo: null,
-		cdperfil: null
+		cdperfil: null,
+
+		flujo: null
 	},
 	
 	constructor: function (config) {

@@ -374,6 +374,8 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 cdgrupo: view.getCdgrupo(),
                 cdsubgpo: view.getCdsubgpo(),
                 cdperfil: view.getCdperfil(),
+
+                flujo: view.getFlujo(),
         		
         		buttons : [{
         			cls: '',
