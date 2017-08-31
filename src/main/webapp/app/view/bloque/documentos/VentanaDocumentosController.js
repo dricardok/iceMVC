@@ -313,7 +313,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
         }
     },
 
-    mostrarColumna(column, swmostrar){
+    mostrarColumna: function(column, swmostrar){
         Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.mostrarColumna column', column, 'swmostrar', swmostrar);
         if(swmostrar == true){
             column.show();

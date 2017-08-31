@@ -1019,7 +1019,13 @@ var Ice = (
 													'params.cdramo'   : cdramo,
 													'params.estado'   : estado,
 													'params.nmpoliza' : nmpoliza,
-													'params.nmsuplem' : nmsuplem,
+                                                    'params.nmsuplem' : nmsuplem,
+													'params.nmsolici' : nmpoliza,
+													'params.cdsucadm' : cdunieco,
+                                                    'params.cdsucdoc' : cdunieco,
+                                                    'params.cdtiptra' : '1',
+                                                    'params.cdtipflu' : '1',
+                                                    'params.cdflujomc' : '1',
 													'params.pantalla' : pantalla,
 													'params.evento'   : evento,
 													'params.estatus'  : action.params.estatus,
@@ -1029,7 +1035,7 @@ var Ice = (
 													var paso3 = 'Ejecutando validacion por referencia';
 													try {
 														flujo.ntramite = resp.ntramite;
-														Ice.ejecutarValidacionPorReferencia(flujo, resp.params.referencia);
+														Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
 													} catch (e) {
 														Ice.manejaExcepcion(e, paso3);
 													}

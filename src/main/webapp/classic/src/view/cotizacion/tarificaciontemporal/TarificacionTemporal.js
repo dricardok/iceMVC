@@ -30,7 +30,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 		cdsubgpo: null,
 		cdperfil: null,
 
-		flujo: null
+		flujo: null 
 	},
 	
 	constructor: function (config) {
@@ -62,7 +62,14 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 					cdsubgpo: config.cdsubgpo,
 					cdperfil: config.cdperfil,
 
-					flujo: config.flujo
+					flujo: config.flujo,
+					
+					listeners: {
+						'tramiteGenerado': function (vistatarificaciontemporal, flujo) {
+							me.setFlujo(flujo);
+							me.fireEvent('tramiteGenerado', me, flujo);
+						}
+					}
 				}
 			];
 		} catch (e) {

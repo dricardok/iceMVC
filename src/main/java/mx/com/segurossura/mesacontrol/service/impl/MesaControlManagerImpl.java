@@ -286,7 +286,7 @@ public class MesaControlManagerImpl implements MesaControlManager {
 						cdtiptra = tokens[7];
 					}
 					
-					resultado = "N";//flujoMesaControlDAO.ejecutaValidacionPantalla(nombreFuncion, cdunieco, cdramo, estado, nmpoliza, nmsuplem, pantalla, evento, cdusuari, cdsisrol);
+					resultado = flujoMesaControlDAO.ejecutaValidacionPantalla(nombreFuncion, cdunieco, cdramo, estado, nmpoliza, nmsuplem, pantalla, evento, cdusuari, cdsisrol);
 					
 					if(resultado != null && !"S".equals(resultado)) {
 						
