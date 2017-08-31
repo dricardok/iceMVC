@@ -4610,6 +4610,52 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
         }
     }
     
+    
+    @Override
+    public String ejecutaValidacionPantalla (String functionName, String cdunieco, String cdramo, String estado, String nmpoliza, 
+    										 String nmsuplem, String pantalla, String evento, String cdusuari, String cdsisrol) throws Exception {
+    	
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        
+        params.put("pv_cdunieco_i" , cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        params.put("pv_nmsuplem_i", nmsuplem);
+        params.put("pv_cdusuari_i", cdusuari);
+        params.put("pv_cdsisrol_i", cdsisrol);
+        
+        Map<String, Object> resultado = ejecutaSP(new EjecutaValidacionPantallaFuncionSP(functionName, getDataSource()), params);
+        String result = (String) resultado.get("v_return");
+        if (StringUtils.isBlank(result)) {
+            result = "";
+        }
+        
+        logger.debug(Utils.log("\n****** ejecutaValidacion in functionName = F_ICE_SC_", functionName, "'\n****** ejecutaValidacion out result='", "S'"));
+        return result;
+    }
+                 
+    protected class EjecutaValidacionPantallaFuncionSP extends StoredProcedure {
+        protected EjecutaValidacionPantallaFuncionSP (String functionName, DataSource dataSource) {
+            super(dataSource, Utils.join("F_ICE_SC_", functionName));
+            
+            /** important that the out parameter is defined before the in parameter. */
+            declareParameter(new SqlOutParameter("v_return"   , Types.VARCHAR)); 
+               
+            declareParameter(new SqlParameter("pv_cdunieco_i" , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i"   , Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i"   , Types.VARCHAR));            
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdusuari_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdsisrol_i", Types.VARCHAR));
+            
+            /** use function instead of stored procedure */
+            setFunction(true);
+            compile();
+        }
+    }
+    
     @Override
     public Map<String, String> obtenerTramite (String ntramite) throws Exception {
         Map<String, String> params = new LinkedHashMap<String, String>();
@@ -4644,4 +4690,5 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
             compile();
         }
     }
+
 }

@@ -557,6 +557,11 @@ public interface FlujoMesaControlDAO {
 	public String ejecutaValidacion(String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
             String nmsuplem, String cdvalidafk, String cdusuari, String cdsisrol, String cdvalida) throws Exception;
 	
+	
+	public String ejecutaValidacionPantalla(String functionName, String cdunieco, String cdramo, String estado, String nmpoliza, 
+			 String nmsuplem, String pantalla, String evento, String cdusuari, String cdsisrol) throws Exception;
+	
+	
 	public List<Map<String,String>>cargarAccionesEntidad(
 			String cdtipflu
 			,String cdflujomc

@@ -230,6 +230,200 @@ public class MesaControlAction extends PrincipalCoreAction {
 		return SUCCESS;
 	}
 	
+	@Action(value   = "registrarNuevoTramite",
+			results = { @Result(name="success", type="json") }
+			)
+	public String registrarNuevoTramite() {
+		logger.debug(Utils.log(
+				 "\n##############################"
+				,"\n###### registrarNuevoTramite ######"
+				,"\n###### params=",params
+				));
+		try {
+			UsuarioVO usuario = (UsuarioVO)Utils.validateSession(session);
+			
+			Utils.validate(params, "No se recibieron datos");		
+			
+			String ntramite		= params.get("ntramite");
+			String cdunieco		= params.get("cdunieco");
+			String cdramo		= params.get("cdramo");
+			String estado		= params.get("estado");
+			String nmpoliza		= params.get("nmpoliza");
+			String nmsuplem		= params.get("nmsuplem");
+			String nmsolici		= params.get("nmsolici");
+			String cdsucadm		= params.get("cdsucadm");
+			String cdsucdoc		= params.get("cdsucdoc");
+			String cdtiptra		= params.get("cdtiptra");
+			String ferecepc		= params.get("ferecepc");
+			String cdagente		= params.get("cdagente");
+			String referencia	= params.get("referencia");
+			String nombre		= params.get("nombre");
+			String fecstatu 	= params.get("fecstatu");			
+			String estatus		= params.get("estatus");
+			String comments		= params.get("comments");
+			String cdtipsit		= params.get("cdtipsit");
+			String otvalor01	= params.get("otvalor01");
+			String otvalor02	= params.get("otvalor02");
+			String otvalor03	= params.get("otvalor03");
+			String otvalor04	= params.get("otvalor04");
+			String otvalor05	= params.get("otvalor05");
+			String otvalor06	= params.get("otvalor06");
+			String otvalor07	= params.get("otvalor07");
+			String otvalor08	= params.get("otvalor08");
+			String otvalor09	= params.get("otvalor09");
+			String otvalor10	= params.get("otvalor10");
+			String otvalor11	= params.get("otvalor11");
+			String otvalor12	= params.get("otvalor12");
+			String otvalor13	= params.get("otvalor13");
+			String otvalor14	= params.get("otvalor14");
+			String otvalor15	= params.get("otvalor15");
+			String otvalor16	= params.get("otvalor16");
+			String otvalor17	= params.get("otvalor17");
+			String otvalor18	= params.get("otvalor18");
+			String otvalor19	= params.get("otvalor19");
+			String otvalor20	= params.get("otvalor20");
+			String otvalor21	= params.get("otvalor21");
+			String otvalor22	= params.get("otvalor22");
+			String otvalor23	= params.get("otvalor23");
+			String otvalor24	= params.get("otvalor24");
+			String otvalor25	= params.get("otvalor25");
+			String otvalor26	= params.get("otvalor26");
+			String otvalor27	= params.get("otvalor27");
+			String otvalor28	= params.get("otvalor28");
+			String otvalor29	= params.get("otvalor29");
+			String otvalor30	= params.get("otvalor30");
+			String otvalor31	= params.get("otvalor31");
+			String otvalor32	= params.get("otvalor32");
+			String otvalor33	= params.get("otvalor33");
+			String otvalor34	= params.get("otvalor34");
+			String otvalor35	= params.get("otvalor35");
+			String otvalor36	= params.get("otvalor36");
+			String otvalor37	= params.get("otvalor37");
+			String otvalor38	= params.get("otvalor38");
+			String otvalor39	= params.get("otvalor39");
+			String otvalor40	= params.get("otvalor40");
+			String otvalor41	= params.get("otvalor41");
+			String otvalor42	= params.get("otvalor42");
+			String otvalor43	= params.get("otvalor43");
+			String otvalor44	= params.get("otvalor44");
+			String otvalor45	= params.get("otvalor45");
+			String otvalor46	= params.get("otvalor46");
+			String otvalor47	= params.get("otvalor47");
+			String otvalor48	= params.get("otvalor48");
+			String otvalor49	= params.get("otvalor49");
+			String otvalor50	= params.get("otvalor50");
+			String swimpres		= params.get("swimpres");
+			String cdtipflu		= params.get("cdtipflu");
+			String cdflujomc	= params.get("cdflujomc");
+			String cdtipsup		= params.get("cdtipsup");
+			String swvispre		= params.get("swvispre");
+			String cdpercli		= params.get("cdpercli");
+			String renuniext	= params.get("renuniext");
+			String renramo		= params.get("renramo");
+			String renpoliex	= params.get("renpoliex");
+			String sworigenmesa	= params.get("sworigenmesa");
+			String cdrazrecha	= params.get("cdrazrecha");
+			String cdunidspch	= params.get("cdunidspch");
+			String ntrasust		= params.get("ntrasust");
+			
+			
+			Utils.validate(estatus, "No se recibi\u00f3 el status",
+						   comments, "No se recibi\\u00f3 comentarios"
+					);
+			
+			String cdusuari = usuario.getCdusuari();
+			String cdsisrol = usuario.getRolActivo().getCdsisrol();
+			
+			
+			this.ntramite = mesaControlManager.registrarNuevoTramite(ntramite, cdunieco, cdramo, estado, nmpoliza, nmsuplem, nmsolici, cdsucadm, cdsucdoc, cdtiptra,
+																	null, cdagente, referencia, nombre, null, estatus, comments, cdtipsit, otvalor01, otvalor02,
+																	otvalor03, otvalor04, otvalor05, otvalor06, otvalor07, otvalor08, otvalor09, otvalor10, otvalor11,
+																	otvalor12, otvalor13, otvalor14, otvalor15, otvalor16, otvalor17, otvalor18, otvalor19, otvalor20,
+																	otvalor21, otvalor22, otvalor23, otvalor24, otvalor25, otvalor26, otvalor27, otvalor28, otvalor29,
+																	otvalor30, otvalor31, otvalor32, otvalor33, otvalor34, otvalor35, otvalor36, otvalor37, otvalor38,
+																	otvalor39, otvalor40, otvalor41, otvalor42, otvalor43, otvalor44, otvalor45, otvalor46, otvalor47,
+																	otvalor48, otvalor49, otvalor50, swimpres, cdtipflu, cdflujomc, cdusuari, cdtipsup, swvispre, cdpercli,
+																	renuniext, renramo, renpoliex, sworigenmesa, cdrazrecha, cdunidspch, ntrasust, cdsisrol);
+		
+			
+			logger.debug(Utils.log(
+					 "\n###### params=",params
+					,"\n###### registrarNuevoTramite ######"
+					,"\n##############################"
+					));
+			 success = true;
+		}catch(Exception ex) {
+			
+			message = Utils.manejaExcepcion(ex);
+		}
+		
+		return SUCCESS;
+	}
+	
+	
+	@Action(value   = "ejecutarValidacionesEventoPantalla",
+			results = { @Result(name="success", type="json") }
+			)
+	public String dispararValidacionesEventoPantalla() {
+		logger.debug(Utils.log(
+				 "\n##############################"
+				,"\n###### dispararValidacionesEventoPantalla ######"
+				,"\n###### params=",params
+				));
+		Map<String, String> resultParams = null;
+		
+		try {
+			
+			UsuarioVO usuario = (UsuarioVO)Utils.validateSession(session);
+			
+			Utils.validate(params, "No se recibieron datos");	
+			
+			String cdunieco = params.get("cdunieco");
+			String cdramo = params.get("cdramo");
+			String estado = params.get("estado"); 
+			String nmpoliza = params.get("nmpoliza");
+			String nmsuplem = params.get("nmsuplem");
+			String pantalla = params.get("pantalla");
+			String evento = params.get("evento");
+			
+			Utils.validate(cdunieco,  	"No se recibi\u00f3 cdunieco",
+						   cdramo, 		"No se recibi\u00f3 cdramo",
+						   estado,		"No se recibi\u00f3 estado",
+						   nmpoliza,	"No se recibi\u00f3 nmpoliza",
+						   nmsuplem,	"No se recibi\u00f3 nmsuplem",
+						   pantalla,	"No se recibi\u00f3 pantalla",
+						   evento,		"No se recibi\\u00f3 evento"						   
+				);
+			
+					
+			resultParams = mesaControlManager.ejecutarValidacionesEventoPantalla(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pantalla,
+																  evento, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
+			
+			
+			if(resultParams != null ) {
+				params.put("referencia", resultParams.get("referencia"));
+				params.put("mensaje", resultParams.get("mensaje"));
+				params.put("estatus", resultParams.get("estatus"));
+				params.put("comments", resultParams.get("comments"));
+			}
+			
+			
+			logger.debug(Utils.log(
+					 "\n###### params=",params
+					,"\n###### dispararValidacionesEventoPantalla ######"
+					,"\n##############################"
+					));
+			 success = true;
+			 
+		}catch(Exception ex) {			
+			
+			message = Utils.manejaExcepcion(ex);
+		}
+		
+		return SUCCESS;
+	}
+
+	
 	@Action(value   = "ejecutarValidacionPorReferencia",
             results = { @Result(name="success", type="json") })
 	public String ejecutarValidacionPorReferencia() {
@@ -266,6 +460,7 @@ public class MesaControlAction extends PrincipalCoreAction {
                 ));
         return SUCCESS;
     }
+
 	// Getters and Setters
 
 	public long getStart() {
