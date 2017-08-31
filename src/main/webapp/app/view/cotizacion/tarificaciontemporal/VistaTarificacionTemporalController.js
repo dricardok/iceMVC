@@ -48,7 +48,12 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 										ntramite: view.getFlujo().ntramite || ''
 									}),
 					                success: function (action) {
-					                	
+										
+										if (action.flujo && action.flujo.ntramite) {
+											view.setFlujo(action.flujo);
+											view.fireEvent('tramiteGenerado', view, action.flujo);
+										}
+										
 					                	boton.up('ventanatarifastemporales').cerrar();
 					                	
 					                	var p, error;
@@ -138,33 +143,68 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                                    /*
 					                                	me.up('ventanaice').cerrar();
 					                                    */   
-					                                	Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
-					                     					   view.getCdramo(),
-					                     					   view.getEstado(),
-					                     					   view.getNmpoliza(), 
-					                     					   view.getNmsuplem(), 
-					                     					   'EMISION', 'ANTES_PROCEDER_EMISION', 
-					                     					   view.getFlujo(), 
-					                     					   function(){
-							                                		Ice.query('#mainView').getController().redirectTo('emision.action?' +
-																		    'cdunieco=' + view.getCdunieco() + '&' +
-																			'cdramo='   + view.getCdramo()   + '&' +
-																			'estado='   + view.getEstado()   + '&' +
-																			'nmpoliza=' + view.getNmpoliza() + '&' +
-																			'cdtipsit=' + view.getCdtipsit() + '&' +
-																			// perfilamiento
-																			'cdptovta=' + view.getCdptovta() + '&' +
-																			'cdgrupo='  + view.getCdgrupo()  + '&' +
-																			'cdsubgpo=' + view.getCdsubgpo() + '&' +
-																			'cdperfil=' + view.getCdperfil(),
-												                            true);
-											                        
-								                                	
-								                                	Ice.cerrarVentanas();
-					                       				   }
-					                     			);
-					                                	
-					                                } 
+														Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+														    view.getCdramo(),
+															view.getEstado(),
+															view.getNmpoliza(), 
+															view.getNmsuplem(), 
+															'EMISION', 'ANTES_PROCEDER_EMISION', 
+															view.getFlujo(), 
+															function(){
+																var paso;
+																try {
+																	paso = 'Recuperando referencia';
+																	Ice.request({
+																		url: Ice.url.bloque.mesacontrol.ejecutarValidacionPorReferencia,
+																		params: {
+																			'params.ntramite': view.getFlujo().ntramite,
+																			'params.referencia': 'DESDE_COTI_AGENTE'
+																		},
+																		success: function (action) {
+																			var paso2 = 'Recuperando acci\u00f3n de referencia';
+																			try {
+																				Ice.cargarAccionesEntidad(action.params.cdtipflu, action.params.cdflujomc,
+																					'V', action.params.cdvalida, action.params.webid, function (lista) {
+																					if (lista.length === 0) {
+																						throw 'No hay acci\u00f3n para la referencia';
+																					} else if (lista.length > 1) {
+																						throw 'Acci\u00f3n para la referencia duplicada';
+																					}
+
+																					Ice.query('#mainView').getController().redirectTo('emision.action?' +
+																						'flujo.cdtipflu='  + view.getFlujo().cdtipflu  + '&' +
+																						'flujo.cdflujomc=' + view.getFlujo().cdflujomc + '&' +
+																						'flujo.tipoent='   + lista[0].TIPODEST         + '&' +
+																						'flujo.claveent='  + lista[0].CLAVEDEST        + '&' +
+																						'flujo.webid='     + lista[0].WEBIDDEST        + '&' +
+																						'flujo.ntramite='  + view.getFlujo().ntramite  + '&' +
+																						'flujo.status='    + view.getFlujo().status    + '&' +
+																						'flujo.aux='       + Ice.nvl(lista[0].AUX)     + '&' +
+																						'flujo.cdunieco='  + view.getFlujo().cdunieco  + '&' +
+																						'flujo.cdramo='    + view.getFlujo().cdramo    + '&' +
+																						'flujo.estado='    + view.getFlujo().estado    + '&' +
+																						'flujo.nmpoliza='  + view.getFlujo().nmpoliza  + '&' +
+																						'flujo.nmsituac='  + view.getFlujo().nmsituac  + '&' +
+																						'flujo.nmsuplem='  + view.getFlujo().nmsuplem  + '&' +
+																						'cdtipsit=' + view.getCdtipsit() + '&' +
+																						// perfilamiento
+																						'cdptovta=' + view.getCdptovta() + '&' +
+																						'cdgrupo='  + view.getCdgrupo()  + '&' +
+																						'cdsubgpo=' + view.getCdsubgpo() + '&' +
+                                                                                        'cdperfil=' + view.getCdperfil(), true);
+                                                                                    }
+																				);
+																			} catch (e) {
+																				Ice.manejaExcepcion(e, paso2);
+																			}
+																	    }
+																	});
+																} catch (e) {
+																	Ice.manejaExcepcion(e, paso);
+																}
+															}
+														);
+					                                }
 					                            }
 					                        ]
 					                    });

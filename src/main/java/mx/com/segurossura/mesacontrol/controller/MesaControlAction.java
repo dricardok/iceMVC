@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -18,6 +17,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
 import com.biosnettcs.portal.model.UsuarioVO;
 import com.opensymphony.xwork2.ActionContext;
@@ -442,8 +442,15 @@ public class MesaControlAction extends PrincipalCoreAction {
             
             String ntramite   = (String) params.get("ntramite"), 
             	   referencia = (String) params.get("referencia");
-            params = mesaControlManager.ejecutarValidacionPorReferencia(ntramite, referencia)
-            		.get(0);
+            
+            List<Map<String, String>> lista = mesaControlManager.ejecutarValidacionPorReferencia(ntramite, referencia);
+            if (lista == null || lista.size() == 0) {
+                throw new ApplicationException("No se encuentra la referencia");
+            }
+            if (lista.size() > 1) {
+                throw new ApplicationException("Referencia duplicada");
+            }
+            params = lista.get(0);
             
             success=true;
             
