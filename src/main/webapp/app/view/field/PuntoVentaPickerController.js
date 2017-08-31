@@ -3,7 +3,7 @@ Ext.define('Ice.view.field.PuntoVentaPickerController', {
     alias: 'controller.puntoventapicker',
     
     setValue: function (cdptovta) {
-        Ice.log('Ice.view.field.PuntoVentaPickerController.setValue view:', view, ' cdptovta:', cdptovta, ' cdgrupo:', cdgrupo, ' cdsubgpo:', cdsubgpo, ' cdperfil:', cdperfil, ' cdunieco:', cdunieco);
+        Ice.log('Ice.view.field.PuntoVentaPickerController.setValue cdptovta:', cdptovta);
         var me = this,
             view = me.getView(),
             refs = view.getReferences(),
@@ -35,17 +35,17 @@ Ext.define('Ice.view.field.PuntoVentaPickerController', {
         	view = me.getView(),
             paso = 'Obteniendo valor de cdperson';
         try {
-            var windowBuscar = Ext.create('Ice.view.cotizacion.VentanaPerfilamiento', {
+            var formRefs = view.up('[getValues]').getReferences(),
+                windowBuscar = Ext.create('Ice.view.cotizacion.VentanaPerfilamiento', {
                 listeners: {
                     seleccionarPerfil: function (view, cdptovta, cdgrupo, cdsubgpo, cdperfil, cdunieco) {
                         me.setValue(cdptovta);
                         try{
-                            var formRefs = view.up('[getValues]').getReferences();
-                            formRefs.grupo.setValue();
-                            formRefs.subgpo.setValue();
-                            formRefs.perfiltarifa.setValue();
+                            formRefs.grupo.setValue(cdgrupo);
+                            formRefs.subgrupo.setValue(cdsubgpo);
+                            formRefs.perfiltarifa.setValue(cdperfil);
                         } catch (e) {
-                            Ice.log('No se pudo devolver los campos de punto de venta');
+                            Ice.log('No se pudo devolver los campos de punto de venta ',e);
                         }
                         if(Ice.classic()){
                             windowBuscar.cerrar();
@@ -54,8 +54,8 @@ Ext.define('Ice.view.field.PuntoVentaPickerController', {
                         }
                     }
                 },
-                cdtipsit: view.getCdtipsit(),
-                cdramo: view.getCdramo()
+                cdtipsit: formRefs.cdtipsit.getValue(),
+                cdramo: formRefs.cdramo.getValue()
             });
             if(Ice.classic()){
                 windowBuscar.mostrar();

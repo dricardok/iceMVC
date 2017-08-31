@@ -7,8 +7,7 @@ Ext.define('Ice.view.field.PuntoVentaPicker', {
     // config ext
     platformConfig: {
         desktop: {
-            modal: true,
-            width: 800
+            modal: true
         },
         '!desktop': {
             layout: 'fit'
@@ -17,8 +16,6 @@ Ext.define('Ice.view.field.PuntoVentaPicker', {
 
     // config no ext
     config: {
-        cdramo: null,
-        cdtipsit: null,
         modulo: null,
         auxkey: null
     },
@@ -30,9 +27,6 @@ Ext.define('Ice.view.field.PuntoVentaPicker', {
         try {
             if (!config) {
                 throw 'No hay par\u00e1metros para construir ventana de perfilamiento';
-            }
-            if (!config.cdramo || !config.cdtipsit) {
-                throw 'Falta ramo y tipo de situaci\u00f3n para ventana de perfilamiento';
             }
 
             config.modulo = config.modulo || 'COTIZACION';
@@ -49,13 +43,13 @@ Ext.define('Ice.view.field.PuntoVentaPicker', {
                 },{
                     xtype: 'button',
                     iconCls: 'x-fa fa-search',
-                    style:'margin-top: 29px !important;',
+                    style:'margin-top: -42px !important; margin-left: 169px;',
                     scope: me,
                     handler: function () {
                         this.getController().onBuscar();
                     }
                 }
-            ].concat(items || []);
+            ];
 
             config.items = camposPicker;
 
