@@ -442,8 +442,10 @@ public class MesaControlAction extends PrincipalCoreAction {
             
             String ntramite   = (String) params.get("ntramite"), 
             	   referencia = (String) params.get("referencia");
-            params = mesaControlManager.ejecutarValidacionPorReferencia(ntramite, referencia)
-            		.get(0);
+            Utils.validate(ntramite,"No se recibió el ntramite",
+            		referencia,"No se recibió la referencia");
+            list = mesaControlManager.ejecutarValidacionPorReferencia(ntramite, referencia);
+            
             
             success=true;
             

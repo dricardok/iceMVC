@@ -938,13 +938,23 @@ var Ice = (
     			success	:	function(datos){
     				var paso = 'Leyendo datos val por ref';
     				try{
-    					var smap = datos.params;
-    					Ice.cargarAccionesEntidad (flujo.cdtipflu, flujo.cdflujomc, flujo.tipoent, smap.cdvalida, smap.webid, 
+    					
+    					if(datos.list && datos.list.length != 1){
+    						throw 'ejecutarValidacionPorReferencia devuelve mas de un registro'; 
+    					}
+    					var smap = datos.list[0];
+    					Ice.log("datos ejecutarValidacionPorReferencia",smap);
+    					Ice.cargarAccionesEntidad (smap.cdtipflu, smap.cdflujomc, 'V', smap.cdvalida, smap.webid, 
     							function(dat){
     								var paso = 'procesaAccion';
+    								Ice.log("DATOS cargarAccionesEntidad",dat);
     								try{
-    									Ice.procesaAccion (flujo.cdtipflu, flujo.cdflujomc, flujo.tipodest, dat.CLAVEDEST, dat.WEBIDDEST, flujo.aux, flujo.ntramite, flujo.status, flujo.cdunieco,
-    											flujo.cdramo, flujo.estado, flujo.nmpoliza, flujo.nmsituac, flujo.nmsuplem, function(){})
+    									if(dat.list && dat.list.length != 1){
+    			    						throw 'cargarAccionesEntidad devuelve mas de un registro'; 
+    			    					}
+    									dat=dat[0];
+    									Ice.procesaAccion (dat.CDTIPFLU, dat.CDFLUJOMC, dat.TIPODEST, dat.CLAVEDEST, dat.WEBIDDEST, dat.AUX, flujo.ntramite, smap.estatus, smap.cdunieco,
+    											smap.cdramo, smap.estado, smap.nmpoliza, smap.nmsituac, smap.nmsuplem, function(){})
     								}catch(e){
     									Ice.manejaExcepcion(e,paso);
     								}
@@ -979,8 +989,7 @@ var Ice = (
                     'params.nmpoliza' : nmpoliza,
                     'params.nmsuplem' : nmsuplem,
 					'params.pantalla' : pantalla,
-					'params.evento'   : evento,
-					'params.flujo'    : flujo
+					'params.evento'   : evento
                 },
                 success: function (action) {
 					var paso2 = 'Ejecutando referencia';
@@ -1010,18 +1019,17 @@ var Ice = (
 													'params.cdramo'   : cdramo,
 													'params.estado'   : estado,
 													'params.nmpoliza' : nmpoliza,
-													'params.nmsituac' : nmsituac,
 													'params.nmsuplem' : nmsuplem,
 													'params.pantalla' : pantalla,
 													'params.evento'   : evento,
-													'params.flujo'    : flujo,
 													'params.estatus'  : action.params.estatus,
 													'params.comments' : action.params.comments
 												},
-												success: function (action) {
+												success: function (resp) {
 													var paso3 = 'Ejecutando validacion por referencia';
 													try {
-														Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
+														flujo.ntramite = resp.ntramite;
+														Ice.ejecutarValidacionPorReferencia(flujo, resp.params.referencia);
 													} catch (e) {
 														Ice.manejaExcepcion(e, paso3);
 													}

@@ -21,8 +21,10 @@ import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
+import com.biosnettcs.core.exception.ApplicationException;
 
 import mx.com.segurossura.mesacontrol.dao.MesaControlDAO;
+
 
 
 @Repository("mesaControlDAOImplNew")
@@ -537,4 +539,46 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
 			compile();
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+    @Override
+    public Map<String,String> obtenerTramiteCompleto(String ntramite) throws Exception {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_ntramite_i", ntramite);
+        
+        Map<String, Object> mapResult = ejecutaSP(new ObtenerTramiteCompletoSP(this.getDataSource()), params);
+        List<Map<String,String>> listaTramites = (List<Map<String,String>>) mapResult.get("pv_registro_o");
+        if(listaTramites==null||listaTramites.size()==0) {
+            throw new ApplicationException("No se encuentra el tramite "+params.get("pv_ntramite_i"));
+        }
+        return listaTramites.get(0);
+    }
+    
+    protected class ObtenerTramiteCompletoSP extends StoredProcedure {
+        protected ObtenerTramiteCompletoSP(DataSource dataSource) {
+            super(dataSource, "PKG_MESACONTROL.P_GET_TRAMITE_COMPLETO");
+            declareParameter(new SqlParameter("pv_ntramite_i", Types.VARCHAR));
+            String[] cols = new String[] {
+            		"ntramite", "cdunieco", "cdramo", "estado", "nmpoliza", "nmsuplem", "nmsolici",
+                    "cdsucadm", "cdsucdoc", "estatus",  "cdtiptra", "ferecepc",
+                    "cdagente", "referencia", "nombre",
+                    "fecstatu",  "comments", "cdtipsit",
+                    "otvalor01", "otvalor02", "otvalor03", "otvalor04", "otvalor05",
+                    "otvalor06", "otvalor07", "otvalor08", "otvalor09", "otvalor10", 
+                    "otvalor11", "otvalor12", "otvalor13", "otvalor14", "otvalor15",
+                    "otvalor16", "otvalor17", "otvalor18", "otvalor19", "otvalor20", 
+                    "otvalor21", "otvalor22", "otvalor23", "otvalor24", "otvalor25", 
+                    "otvalor26", "otvalor27", "otvalor28", "otvalor29", "otvalor30",
+                    "otvalor31", "otvalor32", "otvalor33", "otvalor34", "otvalor35",
+                    "otvalor36", "otvalor37", "otvalor38", "otvalor39", "otvalor40",
+                    "otvalor41", "otvalor42", "otvalor43", "otvalor44", "otvalor45",
+                    "otvalor46", "otvalor47", "otvalor48", "otvalor49", "otvalor50", 
+                    "renuniext", "renramo", "renpoliex", "cdtipflu", "cdflujomc", "cdunidspch"
+            };
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+            declareParameter(new SqlOutParameter("pv_msg_id_o"  , Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o"   , Types.VARCHAR));
+            compile();
+        }
+    }
 }
