@@ -264,7 +264,7 @@ public class MesaControlManagerImpl implements MesaControlManager {
 		try {
 			
 			componentes = componentesDAO.obtenerListaComponentesSP(pantalla, evento, null, null, cdramo, null, cdsisrol, null);
-				
+			paso = "Obteniendo parametros para validaciones de pantalla";	
 			logger.debug("---> {}",componentes);
 			for(Map<String, String> mapa : componentes) {
 				
@@ -274,7 +274,7 @@ public class MesaControlManagerImpl implements MesaControlManager {
 					
 					tokens = handler.split("\\|");
 					logger.debug(" tokens: {}",tokens);
-					if(tokens != null && tokens.length == 5) {
+					if(tokens != null) {
 						
 						nombreFuncion = tokens[0];
 						referenciaValidacion = tokens[1];
