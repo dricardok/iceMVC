@@ -200,7 +200,9 @@ var Ice = (
                 subirArchivoRequisito         : 'documentos/subirArchivoRequisito.action',
                 enviaCorreoFlujo              : 'flujomesacontrol/enviaCorreoFlujo.action',
                 obtenerTramiteCompleto        : 'flujomesacontrol/obtenerTramiteCompleto.action',
-                ejecutarValidacionPorReferencia : 'mesacontrol/ejecutarValidacionPorReferencia.action'
+                ejecutarValidacionPorReferencia : 'mesacontrol/ejecutarValidacionPorReferencia.action',
+                ejecutarValidacionesEventoPantalla : 'flujomesacontrol/ejecutarValidacionesEventoPantalla.action',
+                registrarNuevoTramite         : 'flujomesacontrol/registrarNuevoTramite.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
