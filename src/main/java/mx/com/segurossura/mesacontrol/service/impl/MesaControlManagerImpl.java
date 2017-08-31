@@ -257,7 +257,7 @@ public class MesaControlManagerImpl implements MesaControlManager {
 		String paso = "";		
 		List<Map<String, String>> componentes = null;
 		Map<String, String> params = new HashMap<String, String>();
-		String handler, nombreFuncion = null, referenciaValidacion = null, mensaje = null, estatus = null, comentarios = null;
+		String handler, nombreFuncion = null, referenciaValidacion = null, mensaje = null, estatus = null, comentarios = null, cdtipflu = null, cdflujomc = null, cdtiptra = null;
 		String tokens[];
 		String resultado = null;
 		
@@ -280,7 +280,10 @@ public class MesaControlManagerImpl implements MesaControlManager {
 						referenciaValidacion = tokens[1];
 						mensaje = tokens[2];
 						estatus =  tokens[3];
-						comentarios = tokens[4];
+						comentarios = tokens[4];						
+						cdtipflu = tokens[5];
+						cdflujomc = tokens[6];
+						cdtiptra = tokens[7];
 					}
 					
 					resultado = "N";//flujoMesaControlDAO.ejecutaValidacionPantalla(nombreFuncion, cdunieco, cdramo, estado, nmpoliza, nmsuplem, pantalla, evento, cdusuari, cdsisrol);
@@ -291,6 +294,9 @@ public class MesaControlManagerImpl implements MesaControlManager {
 						params.put("mensaje", mensaje);
 						params.put("estatus", estatus);
 						params.put("comments", comentarios);
+						params.put("cdtipflu", cdtipflu);
+						params.put("cdflujomc", cdflujomc);
+						params.put("cdtiptra", cdtiptra);
 						
 						break;
 					}

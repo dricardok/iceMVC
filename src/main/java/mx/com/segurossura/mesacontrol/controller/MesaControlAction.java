@@ -404,7 +404,10 @@ public class MesaControlAction extends PrincipalCoreAction {
 				params.put("referencia", resultParams.get("referencia"));
 				message = resultParams.get("mensaje");
 				params.put("estatus", resultParams.get("estatus"));
-				params.put("comments", resultParams.get("comments"));
+				params.put("comments", resultParams.get("comments"));				
+				params.put("cdtipflu", resultParams.get("cdtipflu"));
+				params.put("cdflujomc", resultParams.get("cdflujomc"));
+				params.put("cdtiptra", resultParams.get("cdtiptra"));
 			}
 			
 			
