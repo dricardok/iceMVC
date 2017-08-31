@@ -1015,27 +1015,32 @@ var Ice = (
 												mascara: paso2,
 												url: Ice.url.bloque.mesacontrol.registrarNuevoTramite,
 												params: {
-												    'params.cdunieco' : cdunieco,
-													'params.cdramo'   : cdramo,
-													'params.estado'   : estado,
-													'params.nmpoliza' : nmpoliza,
-                                                    'params.nmsuplem' : nmsuplem,
-													'params.nmsolici' : nmpoliza,
-													'params.cdsucadm' : cdunieco,
-                                                    'params.cdsucdoc' : cdunieco,
-                                                    'params.cdtiptra' : '1',
-                                                    'params.cdtipflu' : '1',
-                                                    'params.cdflujomc' : '1',
-													'params.pantalla' : pantalla,
-													'params.evento'   : evento,
-													'params.estatus'  : action.params.estatus,
-													'params.comments' : action.params.comments
+												    'params.cdunieco'  : cdunieco,
+													'params.cdramo'    : cdramo,
+													'params.estado'    : estado,
+													'params.nmpoliza'  : nmpoliza,
+                                                    'params.nmsuplem'  : nmsuplem,
+													'params.nmsolici'  : nmpoliza,
+													'params.cdsucadm'  : cdunieco,
+                                                    'params.cdsucdoc'  : cdunieco,
+                                                    'params.cdtiptra'  : action.params.cdtiptra,
+                                                    'params.cdtipflu'  : action.params.cdtipflu,
+                                                    'params.cdflujomc' : action.params.cdflujomc,
+													'params.pantalla'  : pantalla,
+													'params.evento'    : evento,
+													'params.estatus'   : action.params.estatus,
+													'params.comments'  : action.params.comments
 												},
 												success: function (resp) {
 													var paso3 = 'Ejecutando validacion por referencia';
 													try {
-														flujo.ntramite = resp.ntramite;
-														Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
+                                                        flujo.ntramite = resp.ntramite;
+                                                        Ice.mensajeCorrecto({
+                                                            mensaje: 'Se registr\u00f3 el tr\u00e1mite ' + resp.ntramite,
+                                                            callback: function () {
+                                                                Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
+                                                            }
+                                                        });
 													} catch (e) {
 														Ice.manejaExcepcion(e, paso3);
 													}
