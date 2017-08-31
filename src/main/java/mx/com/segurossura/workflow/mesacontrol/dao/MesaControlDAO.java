@@ -428,6 +428,5 @@ public interface MesaControlDAO
     
     public String actualizaOTValorMesaControl(Map<String, Object> params) throws Exception;
 
-	public List<Map<String, String>> ejecutarValidacionPorReferencia(String ntramite, String referencia) throws Exception;
     
 }

@@ -28,4 +28,6 @@ public interface MesaControlManager {
 			String cdusuari, String cdtipsup, String swvispre, String cdpercli, String renuniext, String renramo,
 			String renpoliex, String sworigenmesa, String cdrazrecha, String cdunidspch, String ntrasust,
 			String cdsisrol, String accion) throws Exception;
+
+	public List<Map<String, String>> ejecutarValidacionPorReferencia(String ntramite, String referencia) throws Exception;
 }

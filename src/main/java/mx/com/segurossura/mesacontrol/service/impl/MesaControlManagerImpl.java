@@ -1,5 +1,6 @@
 package mx.com.segurossura.mesacontrol.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -158,6 +159,24 @@ public class MesaControlManagerImpl implements MesaControlManager {
 				));
 		return rntramite;
 		
+	}
+	
+	@Override
+	public List<Map<String, String>> ejecutarValidacionPorReferencia(String ntramite, String referencia)
+			throws Exception {
+		String paso = "ejecutarValidacionPorReferencia";
+		List<Map<String, String>> lista = new ArrayList<>();
+		try{
+			lista = mesaControlDAO.
+					ejecutarValidacionPorReferencia(
+							ntramite, 
+							referencia);
+			logger.debug("ejecutarValidacionPorReferencia {}",lista);
+			
+		}catch(Exception e){
+			Utils.generaExcepcion(e, paso);
+		}
+		return lista;
 	}
 
 }
