@@ -1349,6 +1349,11 @@ public class MesaControlAction extends PrincipalCoreAction {
     }
 	
 	
+	
+	
+	
+	
+	
 	/**
 	 * Devuelve mensaje con un formato especifico
 	 * @param message

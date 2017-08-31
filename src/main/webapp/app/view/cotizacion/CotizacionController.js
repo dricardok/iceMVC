@@ -115,7 +115,24 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 var bloqueActual = refs['ref' + (index - 1)];
                 bloqueActual.getController().guardar({
                     success: function () {
-                        agregarYEnfocarBloque(true);
+                    	if(bloqueActual.xtype == 'datosiniciales'){
+                    		
+                    		var flu = view.getFlujo(); 
+                    		
+                    		Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+                    											   view.getCdramo(),
+                    											   view.getEstado(),
+                    											   view.getNmpoliza(), 
+                    											   view.getNmsuplem(), 
+                    											   'COTIZACION', 'GUARDAR_DATOS_INICIALES', 
+                    											   flu, 
+                    											   function(){
+										            					agregarYEnfocarBloque(true);
+										            				});
+                    	}else{
+                    		agregarYEnfocarBloque(true);
+                    	}
+                        
                     }
                 });
             } else {
@@ -316,7 +333,19 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             refs = view.getReferences(),
             paso = 'Guardando datos';
         try {
-           me.revisarCoaseguro();
+        	
+        	Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+					   view.getCdramo(),
+					   view.getEstado(),
+					   view.getNmpoliza(), 
+					   view.getNmsuplem(), 
+					   'COTIZACION', 'ANTES_MOSTRAR_PRIMA', 
+					   view.getFlujo(), 
+					   function(){
+        		 			me.revisarCoaseguro();
+     				   }
+        	);
+          
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -345,6 +374,8 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 cdgrupo: view.getCdgrupo(),
                 cdsubgpo: view.getCdsubgpo(),
                 cdperfil: view.getCdperfil(),
+
+                flujo: view.getFlujo(),
         		
         		buttons : [{
         			cls: '',

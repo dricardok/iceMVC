@@ -1,6 +1,7 @@
 package mx.com.segurossura.mesacontrol.dao.impl;
 
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import com.biosnettcs.core.dao.OracleTypes;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
 
 import mx.com.segurossura.mesacontrol.dao.MesaControlDAO;
+
 
 @Repository("mesaControlDAOImplNew")
 public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO {
@@ -485,4 +487,54 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
             compile();
         }
     }
+    
+    
+    @SuppressWarnings("unchecked")
+    @Override
+	public List<Map<String,String>> ejecutarValidacionPorReferencia(
+			 String ntramite 
+			,String referencia
+			
+			)throws Exception
+	{
+		Map<String,Object> params = new LinkedHashMap<String,Object>();
+		params.put("ntramite"      , ntramite);
+		params.put("referencia"    , referencia);
+		Map<String,Object>       procRes = ejecutaSP(new EjecutarValidacionPorReferencia(getDataSource()),params);
+		List<Map<String,String>> lista   = (List<Map<String,String>>)procRes.get("pv_registro_o");
+		if(lista==null)
+		{
+			lista = new ArrayList<Map<String,String>>();
+		}
+		logger.debug(Utils.log("ejecutarValidacionPorReferencia lista=",lista));
+		return lista;
+	}
+	
+	protected class EjecutarValidacionPorReferencia extends StoredProcedure
+	{
+		protected EjecutarValidacionPorReferencia(DataSource dataSource)
+		{
+			super(dataSource, "PKG_MESACONTROL.P_GET_TFLUVAL_X_REF");
+			declareParameter(new SqlParameter("ntramite"      , Types.VARCHAR));
+			declareParameter(new SqlParameter("referencia"    , Types.VARCHAR));
+			
+			
+			String cols[]=new String[]{
+					"cdtipflu",
+					"cdflujomc",
+					"cdvalida",
+					"dsvalida",
+					"cdvalidafk",
+					"webid",
+					"xpos",
+					"ypos",
+					"jsvalida",
+					"referencia" 
+					};
+			declareParameter(new SqlOutParameter("pv_registro_o" , OracleTypes.CURSOR , new GenericMapper(cols)));
+			declareParameter(new SqlOutParameter("pv_msg_id_o"   , Types.NUMERIC));
+			declareParameter(new SqlOutParameter("pv_title_o"    , Types.VARCHAR));
+			compile();
+		}
+	}
 }

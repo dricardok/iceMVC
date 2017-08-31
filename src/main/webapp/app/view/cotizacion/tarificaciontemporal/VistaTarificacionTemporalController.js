@@ -36,7 +36,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 								Ice.request({
 					                mascara: paso,
 									timeout: 1000*60*5,
-					                url: Ice.url.emision.tarificarPlan,
+					                url: Ice.url.emision.tarificarPlan, 
 					                params: Ice.convertirAParams({
 										cdunieco: view.getCdunieco(),
 										cdramo: view.getCdramo(),
@@ -44,7 +44,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 										nmpoliza: view.getNmpoliza(),
 										nmsuplem: view.getNmsuplem(),					                     
 										cdtipsit: view.getCdtipsit(),					                        
-										cdperpag: rec.get('cdperpag')
+										cdperpag: rec.get('cdperpag'),
+										ntramite: view.getFlujo().ntramite || ''
 									}),
 					                success: function (action) {
 					                	
@@ -136,22 +137,33 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                                handler: function (boton) {
 					                                    /*
 					                                	me.up('ventanaice').cerrar();
-					                                    */              	
-					                                	Ice.query('#mainView').getController().redirectTo('emision.action?' +
-															    'cdunieco=' + view.getCdunieco() + '&' +
-																'cdramo='   + view.getCdramo()   + '&' +
-																'estado='   + view.getEstado()   + '&' +
-																'nmpoliza=' + view.getNmpoliza() + '&' +
-																'cdtipsit=' + view.getCdtipsit() + '&' +
-																// perfilamiento
-																'cdptovta=' + view.getCdptovta() + '&' +
-																'cdgrupo='  + view.getCdgrupo()  + '&' +
-																'cdsubgpo=' + view.getCdsubgpo() + '&' +
-																'cdperfil=' + view.getCdperfil(),
-									                            true);
-								                        
+					                                    */   
+					                                	Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+					                     					   view.getCdramo(),
+					                     					   view.getEstado(),
+					                     					   view.getNmpoliza(), 
+					                     					   view.getNmsuplem(), 
+					                     					   'EMISION', 'ANTES_PROCEDER_EMISION', 
+					                     					   view.getFlujo(), 
+					                     					   function(){
+							                                		Ice.query('#mainView').getController().redirectTo('emision.action?' +
+																		    'cdunieco=' + view.getCdunieco() + '&' +
+																			'cdramo='   + view.getCdramo()   + '&' +
+																			'estado='   + view.getEstado()   + '&' +
+																			'nmpoliza=' + view.getNmpoliza() + '&' +
+																			'cdtipsit=' + view.getCdtipsit() + '&' +
+																			// perfilamiento
+																			'cdptovta=' + view.getCdptovta() + '&' +
+																			'cdgrupo='  + view.getCdgrupo()  + '&' +
+																			'cdsubgpo=' + view.getCdsubgpo() + '&' +
+																			'cdperfil=' + view.getCdperfil(),
+												                            true);
+											                        
+								                                	
+								                                	Ice.cerrarVentanas();
+					                       				   }
+					                     			);
 					                                	
-					                                	Ice.cerrarVentanas();
 					                                } 
 					                            }
 					                        ]

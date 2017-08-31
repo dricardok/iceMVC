@@ -923,5 +923,132 @@ var Ice = (
         } catch(e) {
             Ice.manejaExcepcion(e, paso);
         }
+    },
+    
+    ejecutarValidacionPorReferencia : function(flujo,referencia){
+    	var paso = 'ejecutarValidacionPorReferencia';
+    	try{
+    		
+    		Ice.request({
+    			url		:	Ice.url.bloque.mesacontrol.ejecutarValidacionPorReferencia,
+    			params	:	{
+    				'params.ntramite'		:	flujo.ntramite,
+    				'params.referencia'		:	referencia	
+    			},
+    			success	:	function(datos){
+    				var paso = 'Leyendo datos val por ref';
+    				try{
+    					var smap = datos.params;
+    					Ice.cargarAccionesEntidad (flujo.cdtipflu, flujo.cdflujomc, flujo.tipoent, smap.cdvalida, smap.webid, 
+    							function(dat){
+    								var paso = 'procesaAccion';
+    								try{
+    									Ice.procesaAccion (flujo.cdtipflu, flujo.cdflujomc, flujo.tipodest, dat.CLAVEDEST, dat.WEBIDDEST, flujo.aux, flujo.ntramite, flujo.status, flujo.cdunieco,
+    											flujo.cdramo, flujo.estado, flujo.nmpoliza, flujo.nmsituac, flujo.nmsuplem, function(){})
+    								}catch(e){
+    									Ice.manejaExcepcion(e,paso);
+    								}
+    							}
+    					); 
+    				}catch(e){
+    					Ice.manejaExcepcion(e,paso);
+    				}
+    			}
+    		});
+    	}catch(e){
+    		Ice.manejaExcepcion(e,paso);
+    	}
+    },
+    
+    /**
+     * Ejecuta las validaciones de eventos en la interfaz de usuario
+     */
+    ejecutarValidacionesEventoPantalla: function (cdunieco, cdramo, estado, nmpoliza, nmsuplem, pantalla, evento, flujo, callback) {
+    	
+        Ice.log('Ice.ejecutarValidacionesEventoPantalla args:', arguments);
+        var paso = 'Ejecutando validaciones de evento en pantalla';
+        try {
+        	// ejecuta el action
+            Ice.request({
+                mascara: paso,
+                url: Ice.url.bloque.mesacontrol.ejecutarValidacionesEventoPantalla,
+                params: {
+                    'params.cdunieco' : cdunieco,
+                    'params.cdramo'   : cdramo,
+                    'params.estado'   : estado,
+                    'params.nmpoliza' : nmpoliza,
+                    'params.nmsuplem' : nmsuplem,
+					'params.pantalla' : pantalla,
+					'params.evento'   : evento,
+					'params.flujo'    : flujo
+                },
+                success: function (action) {
+					var paso2 = 'Ejecutando referencia';
+					try {
+						// si recibe de salida params.referencia, significa que va a ejecutar una referencia
+						if(action && action.params && action.params.referencia) {
+							// primero valida, si hay tramite (flujo.ntramite)
+							if(flujo.ntramite) {
+								// muestra al usuario el aviso con la variable message y la pregunta ¿desea turnar el trámite?, al aceptar continuar se ejecuta la referencia de params.referencia (1-e).
+								Ext.Msg.confirm("Aviso", action.message + "\n\u00bfDesea turnar el trámite??", function(opc){
+									if (opc === 'yes') {
+										Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
+									}
+								});
+							} else {
+								// si no hay trámite: se muestra el aviso con la variable message y la pregunta ¿desea registrar el trámite y enviar la solicitud?,
+								Ext.Msg.confirm("Aviso", action.message + "\n\u00bfDesea registrar el tr\u00E1mite y enviar la solicitud?", function(opc){
+									// si decide continuar, se registra un trámite (2-a) usando llave de póliza, params.estatus y params.comments
+									// y se ejecuta la referencia (params.referencia) (1-e) con el trámite generado.
+									if (opc === 'yes') {
+										try {
+											Ice.request({
+												mascara: paso2,
+												url: Ice.url.bloque.mesacontrol.registrarNuevoTramite,
+												params: {
+												    'params.cdunieco' : cdunieco,
+													'params.cdramo'   : cdramo,
+													'params.estado'   : estado,
+													'params.nmpoliza' : nmpoliza,
+													'params.nmsituac' : nmsituac,
+													'params.nmsuplem' : nmsuplem,
+													'params.pantalla' : pantalla,
+													'params.evento'   : evento,
+													'params.flujo'    : flujo,
+													'params.estatus'  : action.params.estatus,
+													'params.comments' : action.params.comments
+												},
+												success: function (action) {
+													var paso3 = 'Ejecutando validacion por referencia';
+													try {
+														Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
+													} catch (e) {
+														Ice.manejaExcepcion(e, paso3);
+													}
+												}
+											});
+										} catch (e) {
+											Ice.manejaExcepcion(e, paso2);
+										}
+									}
+								});
+							}
+						} else {
+							// Si no recibe params.referencia entonces ejecuta el callback
+							paso2 = 'Ejecutando callback ya que no viene params.referencia';
+							try {
+								callback();
+							} catch (e) {
+								Ice.manejaExcepcion(e, paso2);
+							}
+						}
+					} catch (e) {
+						Ice.manejaExcepcion(e, paso2);
+					}
+                }
+            });
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
     }
 });

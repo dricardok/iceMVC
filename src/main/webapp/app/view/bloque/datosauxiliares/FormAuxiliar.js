@@ -58,10 +58,23 @@ Ext.define('Ice.view.bloque.datosauxiliares.FormAuxiliar', {
                 fields: true,
                 validators: true
             });
+            
+            var eventsForm = Ice.generaComponentes({
+				pantalla: 'FORM_AUXILIAR',
+				seccion: 'EVENTOS',
+				modulo: me.modulo || '',
+				estatus: (me.flujo && me.flujo.estatus) || '',
+				cdramo: me.cdramo || '',
+				cdtipsit: me.cdtipsit ||'',
+				auxKey: me.auxkey || '',
+				eventos: true
+			});
 
             config.items = comps.FORM_AUXILIAR.FORM.items;
             config.modelFields = comps.FORM_AUXILIAR.FORM.fields;
             config.modelValidators = comps.FORM_AUXILIAR.FORM.validators;
+            
+            config.iceEvents = eventsForm.FORM_AUXILIAR.EVENTOS.eventos;
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
