@@ -85,6 +85,20 @@ Ext.define('Ice.view.cotizacion.Emision', {
         var me = this,
             paso = 'Validando componente de cotizaci\u00f3n';
         try {
+            config.flujo = Ice.validarParamFlujo(config);
+
+            // cuando viene por flujo
+            if (config.flujo.ntramite) {
+                config.cdunieco = config.flujo.cdunieco;
+                config.cdramo   = config.flujo.cdramo;
+                config.estado   = config.flujo.estado;
+                config.nmpoliza = config.flujo.nmpoliza;
+                config.cdtipsit = {
+                    '501': '51',
+                    '301': '31'
+                }[config.cdramo];
+            }
+
             if (!config || !config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza || !config.cdtipsit) {
                 throw 'Faltan datos para construir pantalla de emisi\u00f3n';
             }
@@ -119,9 +133,18 @@ Ext.define('Ice.view.cotizacion.Emision', {
             if ((config.bloques || []).length === 0) {
                 throw 'No hay bloques configurados';
             }
+            
+            me.callParent(arguments);
+
+            if (config.flujo.ntramite) {
+                Ext.create({
+                    xtype: 'ventanabotonesflujo',
+                    flujo: config.flujo,
+                    padre: me
+                }).mostrar();
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
-        me.callParent(arguments);
     }
 });

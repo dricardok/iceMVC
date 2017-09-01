@@ -300,7 +300,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			for (Map<String, String> situac : situacionesPoliza) {
 				logger.debug("Inicio tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",
 						situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
-				res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"));
+				res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"), cdusuari);
 				logger.debug("Fin    tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",
 						situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
 			}
@@ -381,7 +381,7 @@ public class EmisionManagerImpl implements EmisionManager {
 					
 					logger.debug("Inicio tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",	situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
 					
-					resultados.add(res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac")));
+					resultados.add(res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"), cdusuari));
 					
 					logger.debug("Fin    tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",
 							situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);

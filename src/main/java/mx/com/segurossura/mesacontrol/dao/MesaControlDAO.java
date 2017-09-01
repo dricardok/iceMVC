@@ -30,5 +30,8 @@ public interface MesaControlDAO {
 
 	public List<Map<String, String>> ejecutarValidacionPorReferencia(String ntramite, String referencia) throws Exception;
 
-	public Map<String, String> obtenerTramiteCompleto(String ntramite) throws Exception;
+	/**
+	 * 2017/08/31 - jtezva - se comenta porque no se debe usar
+	 */
+//	public Map<String, String> obtenerTramiteCompleto(String ntramite) throws Exception;
 }
