@@ -5,7 +5,6 @@ Ext.define('Ice.view.bloque.RegistroTramiteWindow', {
     controller	:	'registrotramitewindow',
     title		:	'Registro de trámite',
     style:'padding-top:30px;',
-    scrollable	:	true,
     modal		:	true,
     platformConfig: {
 		desktop: {
