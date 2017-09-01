@@ -324,8 +324,8 @@ public class MesaControlManagerImpl implements MesaControlManager {
 			if(lista.isEmpty()){
 				throw new ApplicationException("No hay registros en ejecutarValidacionPorReferencia");
 			}
-			lista.get(0).putAll(mesaControlDAO.
-					obtenerTramiteCompleto(ntramite));
+			lista.get(0).putAll(flujoMesaControlDAO.
+					obtenerTramite(ntramite));
 			
 			logger.debug("ejecutarValidacionPorReferencia {}",lista);
 			
@@ -335,18 +335,21 @@ public class MesaControlManagerImpl implements MesaControlManager {
 		return lista;
 	}
 
-	@Override
-	public Map<String, String> obtenerTramiteCompleto(String ntramite) throws Exception {
-		String paso = "ejecutarValidacionPorReferencia";
-		Map<String, String> m = new HashMap();
-		try{
-			m = mesaControlDAO.
-					obtenerTramiteCompleto(ntramite);
-			logger.debug("obtenerTramiteCompleto {}",m);
-			
-		}catch(Exception e){
-			Utils.generaExcepcion(e, paso);
-		}
-		return m;
-	}
+	/**
+     * 2017/08/31 - jtezva - no se usa
+     */
+//	@Override
+//	public Map<String, String> obtenerTramiteCompleto(String ntramite) throws Exception {
+//		String paso = "ejecutarValidacionPorReferencia";
+//		Map<String, String> m = new HashMap();
+//		try{
+//			m = flujoMesaControlDAO.
+//					obtenerTramite(ntramite);
+//			logger.debug("obtenerTramiteCompleto {}",m);
+//			
+//		}catch(Exception e){
+//			Utils.generaExcepcion(e, paso);
+//		}
+//		return m;
+//	}
 }

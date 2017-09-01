@@ -77,13 +77,13 @@ public class DespachadorManagerImpl implements DespachadorManager {
 	    try {
 	        paso = "Recuperando datos de tr\u00e1mite";
             logger.debug(paso);
-            Map<String, String> datosTramite = mesaControlDAO.obtenerTramiteCompleto(ntramite);
-            String cdtipflu   = datosTramite.get("CDTIPFLU"),
-                   cdflujomc  = datosTramite.get("CDFLUJOMC"),
-                   cdramo     = datosTramite.get("CDRAMO"),
-                   cdtipsit   = datosTramite.get("CDTIPSIT"),
-                   cdsucadm   = datosTramite.get("CDSUCADM"),
-                   cdunidspch = datosTramite.get("CDUNIDSPCH");
+            Map<String, String> datosTramite = flujoMesaControlDAO.obtenerTramite(ntramite);
+            String cdtipflu   = datosTramite.get("cdtipflu"),
+                   cdflujomc  = datosTramite.get("cdflujomc"),
+                   cdramo     = datosTramite.get("cdramo"),
+                   cdtipsit   = datosTramite.get("cdtipsit"),
+                   cdsucadm   = datosTramite.get("cdsucadm"),
+                   cdunidspch = datosTramite.get("cdunidspch");
             if (StringUtils.isBlank(cdunidspch)) { // Si no tengo sucursal de despacho tomo el cdunieco para iniciar
                 cdunidspch = cdsucadm;
             }
@@ -1040,13 +1040,13 @@ K                   ENCOLAR CON DATOS ORIGINALES
             paso = "Recuperando datos de tr\u00e1mite";
             logger.debug(paso);
             
-            Map<String, String> datosTramite = mesaControlDAO.obtenerTramiteCompleto(ntramite);
-            String cdtipflu   = datosTramite.get("CDTIPFLU"),
-                   cdflujomc  = datosTramite.get("CDFLUJOMC"),
-                   cdramo     = datosTramite.get("CDRAMO"),
-                   cdtipsit   = datosTramite.get("CDTIPSIT"),
+            Map<String, String> datosTramite = flujoMesaControlDAO.obtenerTramite(ntramite);
+            String cdtipflu   = datosTramite.get("cdtipflu"),
+                   cdflujomc  = datosTramite.get("cdflujomc"),
+                   cdramo     = datosTramite.get("cdramo"),
+                   cdtipsit   = datosTramite.get("cdtipsit"),
                    cdunidspch = null,
-                   status     = datosTramite.get("STATUS"),
+                   status     = datosTramite.get("status"),
                    nivel      = ConstantesDespachador.NIVEL_PRIMARIO;
             
             

@@ -148,7 +148,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 															view.getEstado(),
 															view.getNmpoliza(), 
 															view.getNmsuplem(), 
-															'EMISION', 'ANTES_PROCEDER_EMISION', 
+															'COTIZACION', 'ANTES_PROCEDER_EMISION', 
 															view.getFlujo(), 
 															function(){
 																var paso;
@@ -163,8 +163,14 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 																		success: function (action) {
 																			var paso2 = 'Recuperando acci\u00f3n de referencia';
 																			try {
-																				Ice.cargarAccionesEntidad(action.params.cdtipflu, action.params.cdflujomc,
-																					'V', action.params.cdvalida, action.params.webid, function (lista) {
+																				if (!action.list || action.list.length === 0) {
+																					throw 'No hay referencia';
+																				}
+																				if (action.list.length > 1) {
+																					throw 'Referencia duplicada';
+																				}
+																				var ref = action.list[0];
+																				Ice.cargarAccionesEntidad(ref.cdtipflu, ref.cdflujomc, 'V', ref.cdvalida, ref.webid, function (lista) {
 																					if (lista.length === 0) {
 																						throw 'No hay acci\u00f3n para la referencia';
 																					} else if (lista.length > 1) {
