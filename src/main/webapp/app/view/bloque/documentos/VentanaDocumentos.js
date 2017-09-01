@@ -8,15 +8,18 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
     controller: 'ventanadocumentos',
 
     // config ext
-    title: 'Documentos',
+    title: {
+		text:"Documentos",
+		style:'padding:0px 0px 0px 10px;',
+	},
     layout: 'fit',
     platformConfig: {
         desktop: {
             scrollable: false,
-            width: 650,
+            width: 680,
             height: 400,
-            collapsible: true,
-            titleCollapse: true
+            //collapsible: true,
+            //titleCollapse: true
         },
         '!desktop': {
             scrollable: true
@@ -71,6 +74,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                 {
                     xtype: 'listadocumentos',
                     reference: 'listadocumentos',
+                    style:'padding: 0 20px;',
                     title: 'Documentos de '+ (config.estado == 'W' ? 'cotizaci\u00f3n ':'p\u00f3liza ') + config.cdunieco + '-' + config.cdramo + '-' +config.nmpoliza,
                     cdunieco: config.cdunieco,
                     cdramo: config.cdramo,
@@ -157,7 +161,8 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                     iconCls: 'x-fa fa-search',
                     handler: 'buscarDocumentos'
                 }, {
-                    iconCls: 'x-fa fa-refresh',
+                    iconCls: 'x-fa fa-eraser',
+                    text: 'Limpiar',
                     handler: 'onLimpiarFiltro'
                 }
             ].concat(config.buttons || []);

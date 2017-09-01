@@ -133,7 +133,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 						//maxHeigth: 250,
 						buttons: [
 							{
-								text: 'Agregar',
+								text: 'Nueva Situación',
 								iconCls: 'x-fa fa-plus-circle',
 								handler: function(){
 									Ice.log('Agregar ',this);
@@ -181,8 +181,8 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 						buttons: [
 							{
 								reference: 'btnGuardar',
-								text: 'Guardar',
-	                            iconCls: 'x-fa fa-save',	                            
+								text: 'Agregar',
+	                            iconCls: 'x-fa fa-plus-circle',	                            
 								handler: 'onGuardarBloque'
 							},{
 								text: 'Cancelar',

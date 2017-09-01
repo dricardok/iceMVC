@@ -8,6 +8,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 	width		:	"90%",
 	height		:	"80%",
 	title		:	"Buscar Domicilio",
+	style:'padding:20px 0px 0px 0px;',
 	config		:	{
 		record		:	{} 
 	},
@@ -34,6 +35,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 						{
 					    	xtype	: 'button',
 					    	text	: 'Buscar',
+					    	style:'margin-right: 40px;',
 					    	iconCls : 'x-fa fa-search',
 					    	handler : 'onBuscar'
 				    	}
@@ -106,6 +108,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.BuscarCPWindow",{
 		    	xtype	: 'button',
 		    	text	: 'Cancelar',
 		    	ui:'gray',
+		    	style:'margin-right: 40px;',
 		    	iconCls : 'x-fa fa-close',
 		    	handler : 'onCancelar'
 	    	}

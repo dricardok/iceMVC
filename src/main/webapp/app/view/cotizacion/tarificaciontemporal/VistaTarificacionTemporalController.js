@@ -92,7 +92,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                		 hidden: true,
 				                			 width: '100%',
 				                			 style: 'margin-top: 10px',
-				                			 html:  '<p> Error al generar documentos, consulte a soporte tecnico </p>'
+				                			 html:  '<p> Error al generar documentos, consulte a soporte técnico </p>'
 					                	});
 					                	
 					                	var ventana = Ext.create('Ice.view.componente.VentanaIce', {

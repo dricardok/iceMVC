@@ -48,7 +48,7 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaRequisitos', {
             config.items = [
                 {
                     xtype: 'container',
-                    html: '<span style="padding: 0px 10px 10px 0px; border: 0px solid blue;">Favor de revisar los requisitos y documentos obligatorios:<br/>&nbsp;</span>'
+                    html: '<span style="padding: 0px 10px 10px 5px; border: 0px solid blue;font-weight: 600;font-size:14px;color:grey;">Favor de revisar los requisitos y documentos obligatorios:<br/>&nbsp;</span>'
                 }, {
                     xtype: 'gridice',
                     tipo: 'REQ',
@@ -457,7 +457,7 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaRequisitos', {
                     }
                 }, {
                     text: 'Continuar',
-                    iconCls: 'x-fa fa-check',
+                    iconCls: 'x-fa fa-forward',
                     hidden: !(config.numSalidas === 0 || config.faltanDocs === true || config.flujo.aux === 'LECTURA'
                         || config.flujo.aux === 'INICIAL'),
                     handler: function (me) {
