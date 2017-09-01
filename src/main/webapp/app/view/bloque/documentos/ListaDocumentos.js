@@ -19,7 +19,8 @@ Ext.define('Ice.view.bloque.documentos.ListaDocumentos', {
             nmsuplem: null,
             itemsPerPage: null,
             dsdocume: null,
-            actionColumns: []
+            actionColumns: [],
+            ntramite : null
         },
         
         // validacion de parametros de entrada
@@ -67,7 +68,8 @@ Ext.define('Ice.view.bloque.documentos.ListaDocumentos', {
                                 'params.estado': config.estado,
                                 'params.nmpoliza': config.nmpoliza,
                                 'params.nmsuplem': config.nmsuplem,
-                                'params.dsdocume': config.dsdocume
+                                'params.dsdocume': config.dsdocume,
+                                'params.ntramite': config.ntramite
                             },
                             reader: {
                                 type: 'json',
