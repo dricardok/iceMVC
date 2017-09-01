@@ -981,7 +981,7 @@ public class EmisionAction extends PrincipalCoreAction {
                 @Result(name = "success", type = "json") 
             }
         ) 
-    public String generarDocumentos(){
+    public String generarDocumentos() {
     	logger.debug(Utils.log("\n###### generarDocumentos params: ", params));
     	try {
     		UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
@@ -991,25 +991,37 @@ public class EmisionAction extends PrincipalCoreAction {
     	           estado    = params.get("estado"),
     	           nmpoliza  = params.get("nmpoliza"),
     	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
-    	           iscotizacion = params.get("iscotizacion");
+    	           iscotizacion = params.get("iscotizacion"),
+    	           ntramite	 = params.get("ntramite"),
+    	           cdtipsup  = params.get("cdtipsup");
     	    
     	    Utils.validate(cdunieco, "Falta cdunieco",
-    	                   cdramo,   "Falta cdramo",
-    	                   estado,   "Falta estado",
-    	                   nmpoliza, "Falta nmpoliza",
-    	                   iscotizacion, "Falta iscotizacion");
+    	                   //cdramo,   "Falta cdramo",
+    	                   //estado,   "Falta estado",
+    	                   //nmpoliza, "Falta nmpoliza",
+    	                   iscotizacion, "Falta iscotizacion"
+    	                   //cdtipsup, "Falta cdtipsup"
+    	                   );
     	    
     	    Map<String, Object> resultado = null;
     	    
-    	    if(flujo != null) {
+    	    // TODO: Validar con Alvaro si al generar documentos siempre se debe recibir ntramite
+    	    if(ntramite != null && "".equals(ntramite)) {
     	    	
-    	    	resultado = emisionManager.generarDocumentos(flujo.getCdunieco(), flujo.getCdramo(), flujo.getEstado(), flujo.getNmpoliza(), flujo.getNmsuplem(), null, flujo.getAux(), usuario.getCdusuari());
-    	    
-    	    } else {    	  
-    	    
+    	    	if(flujo != null) {
+        	    	
+        	    	//resultado = emisionManager.generarDocumentos(flujo.getCdunieco(), flujo.getCdramo(), flujo.getEstado(), flujo.getNmpoliza(), flujo.getNmsuplem(), null, flujo.getAux(), usuario.getCdusuari());
+        	    	resultado = emisionManager.generarDocumentos(flujo.getNtramite(), cdtipsup, iscotizacion, usuario.getCdusuari());        	    	
+        	    	
+        	    } 
+    	    	
+    	    } else {
+    	    	
     	    	resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());
+    	    	//resultado = emisionManager.generarDocumentos(ntramite, cdtipsup, iscotizacion, usuario.getCdusuari());
     	    	
     	    }
+
     	    errores = (List<String>) resultado.get("errores");
     	    
     	    success = true;
