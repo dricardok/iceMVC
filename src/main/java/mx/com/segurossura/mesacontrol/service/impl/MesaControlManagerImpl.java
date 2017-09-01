@@ -269,7 +269,7 @@ public class MesaControlManagerImpl implements MesaControlManager {
 			for(Map<String, String> mapa : componentes) {
 				
 				handler = mapa.get("handler");
-				
+				logger.info("Handler valores ", handler);
 				if(handler != null) {
 					
 					tokens = handler.split("\\|");
