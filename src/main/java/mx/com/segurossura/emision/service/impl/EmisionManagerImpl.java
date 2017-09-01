@@ -44,7 +44,7 @@ import mx.com.segurossura.general.catalogos.model.Bloque;
 import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
 import mx.com.segurossura.general.documentos.model.TipoArchivo;
 import mx.com.segurossura.general.producto.model.EstadoPoliza;
-import mx.com.segurossura.mesacontrol.dao.MesaControlDAO;
+import mx.com.segurossura.workflow.mesacontrol.dao.FlujoMesaControlDAO;
 
 @Service
 public class EmisionManagerImpl implements EmisionManager {
@@ -82,7 +82,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	private RegistoPersonaDAO registroPersonaDao;
 	
 	@Autowired
-	private MesaControlDAO mesaControlDAO;
+	private FlujoMesaControlDAO flujoMesaControlDAO;
 
 	@Override
 	public void movimientoTvalogar(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
@@ -723,7 +723,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	        try {
 	            // Obteniendo nmrecibo para obtener el nmrecibo de la poliza emitida	            
 	            logger.debug("Obteniendo informacion para generar documentos");
-	            Map<String, String> tramite = mesaControlDAO.obtenerTramiteCompleto(ntramite);
+	            Map<String, String> tramite = flujoMesaControlDAO.obtenerTramite(ntramite);
 	            String cdunieco = tramite.get("cdunieco"),
 	                   cdramo = tramite.get("cdramo"),
 	                   estado = tramite.get("estado"),
