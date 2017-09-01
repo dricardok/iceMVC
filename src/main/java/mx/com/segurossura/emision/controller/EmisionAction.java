@@ -996,10 +996,18 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   nmpoliza, "Falta nmpoliza",
     	                   iscotizacion, "Falta iscotizacion");
     	    
+    	    Map<String, Object> resultado = null;
     	    
-    	    Map<String, Object> resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());
+    	    if(flujo != null) {
+    	    	
+    	    	resultado = emisionManager.generarDocumentos(flujo.getCdunieco(), flujo.getCdramo(), flujo.getEstado(), flujo.getNmpoliza(), flujo.getNmsuplem(), null, flujo.getAux(), usuario.getCdusuari());
+    	    
+    	    } else {    	  
+    	    
+    	    	resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());
+    	    	
+    	    }
     	    errores = (List<String>) resultado.get("errores");
-    	    
     	    
     	    success = true;
     	    

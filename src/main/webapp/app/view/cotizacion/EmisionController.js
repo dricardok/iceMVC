@@ -397,8 +397,18 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                             bot.up('ventanaprimas').cerrar();
                             
                             // me.emitir();
+                            Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+             					   view.getCdramo(),
+             					   view.getEstado(),
+             					   view.getNmpoliza(), 
+             					   view.getNmsuplem(), 
+             					   'EMISION', 'ANTES_EMITIR', 
+             					   view.getFlujo(), 
+             					   function(){
+                            			me.validaTipoPago();
+                  				   }
+                     	);
                             
-                            me.validaTipoPago();
                         }
                     }, {
                         text: 'Modificar',
@@ -552,9 +562,22 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                             }
                         ]
                     });
-                    ventana.mostrar();                    
-                    p.wait({text: 'Generando documentos...'});
-                    me.generarDocumentos(ventana, p, emisonResult, error)
+                    
+                    Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+     					   view.getCdramo(),
+     					   view.getEstado(),
+     					   view.getNmpoliza(), 
+     					   view.getNmsuplem(), 
+     					   'EMISION', 'DESPUES_EMITIR', 
+     					   view.getFlujo(), 
+     					   function(){
+                    			 
+		                    	 ventana.mostrar();                    
+		                         p.wait({text: 'Generando documentos...'});
+		                         me.generarDocumentos(ventana, p, emisonResult, error)
+          				   }
+             	     );
+                   
                 }
             });
         } catch (e) {
