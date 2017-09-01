@@ -88,7 +88,8 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             if (config.flujo.ntramite) {
                 config.cdramo = config.flujo.cdramo;
                 config.cdtipsit = {
-                    '501': '51'
+                    '501': '51',
+                    '301': '31'
                 }[config.cdramo];
             }
             Ice.log('Ice.view.cotizacion.Cotizacion.constructor config despues de flujo:', config);

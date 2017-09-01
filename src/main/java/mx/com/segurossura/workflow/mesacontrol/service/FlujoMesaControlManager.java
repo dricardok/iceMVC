@@ -417,7 +417,10 @@ public interface FlujoMesaControlManager
 	
 	public void recuperarCotiColec(String cdusuari, String cdsisrol, String ntramite, String nmsolici, String status) throws Exception;
 	
-	public Map<String,String> tramiteMC(String ntramite, String nmsolici, String cdunieco, String cdramo, String cdtipsit) throws Exception;
+	/**
+	 * 2017/08/31 - jtezva - se comenta porque no se usa
+	 */
+//	public Map<String,String> tramiteMC(String ntramite, String nmsolici, String cdunieco, String cdramo, String cdtipsit) throws Exception;
 	
 	public void guardarVentanaDatosTramite (String ntramite, Map<String, String> datos) throws Exception;
 	
