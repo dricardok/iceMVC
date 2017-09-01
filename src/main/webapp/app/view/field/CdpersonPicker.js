@@ -44,7 +44,7 @@ Ext.define('Ice.view.field.CdpersonPicker', {
                 }, {
                     xtype: 'button',
                     iconCls: 'x-fa fa-search',
-                    style:'margin-top: 29px !important;',
+                    style:'margin-top:28px;',
                     scope: me,
                     handler: function () {
                         this.getController().onBuscar();

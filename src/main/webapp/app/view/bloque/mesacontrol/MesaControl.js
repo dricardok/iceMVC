@@ -1,7 +1,10 @@
 Ext.define('Ice.view.mesacontrol.MesaControl', {
     extend: 'Ice.view.componente.PanelPaddingIce',
     xtype: 'mesacontrol',
-    title: 'Mesa de control',
+    title: {
+		text:"Mesa de Control",
+		style:'margin:0px 47px 16px 36px;',
+	},
     
     platformConfig: {
         '!desktop': {
@@ -16,8 +19,8 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
     	var me = this,
             paso = 'Construyendo mesa de control';
     	
-    	// me.callParent(arguments);
-        // return Ice.query('#mainView').getController().redirectTo('accesocotizacion.action'); // para que no entre a mesa
+    	//me.callParent(arguments);
+        //return Ice.query('#mainView').getController().redirectTo('accesocotizacion.action'); // para que no entre a mesa
         
         try {
             Ice.generaComponentes(); // para que valide sesion
@@ -27,6 +30,7 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
                     xtype: 'formmesacontrol',
                     reference: 'formmesacontrol'
                 }, {
+                	style:'margin:0px 47px 0px 0px;',
                     xtype: 'gridmesacontrol',
                     reference: 'gridmesacontrol',
                     itemsPerPage: 50,

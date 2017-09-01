@@ -48,7 +48,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
     	itemclick: 'onItemClic'
     },
 
-	padding: '40 0 0 40',
+	padding: '40 0 0 20',
     
 	// config no ext
     config: {

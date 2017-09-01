@@ -85,7 +85,7 @@ Ext.define('Ice.view.bloque.Agentes', {
 			config.items = [
 				{
 					xtype: 'formdoscolumnasice',
-					title: 'Datos de Poliza',
+					title: 'Datos de Póliza',
 					itemId: 'datpoliza',
 					reference: 'datpoliza',
 					items: formPol.BLOQUE_AGENTES.FORM_POLIZA.items,
@@ -103,7 +103,7 @@ Ext.define('Ice.view.bloque.Agentes', {
 							iconCls: 'x-fa fa-search',
 							handler: 'onBuscarClic'
 						}, {
-							text: 'Agregar',
+							text: 'Nuevo Agente',
 							iconCls: 'x-fa fa-plus',
 							handler: 'onAgregarClic'
 						}

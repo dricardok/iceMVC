@@ -13,7 +13,10 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 		flujo: null
 	},
 	
-	title: 'Historial',
+	title: {
+		text:"Historial",
+		style:'margin:0px 30px 16px 10px;',
+	},
 	scrollable: true,
 	platformConfig: {
 		desktop: {
@@ -49,8 +52,11 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 			
 			var graficaEve={
 					xtype		:	'cartesian',
-					title		:	"Eventos",
-					width		:	"100%",
+					title: {
+						text:"Eventos",
+						style:'margin:0px 20px 16px 20px;',
+					},
+					width		:	"95%",
 					height		:	250,
 					innerPadding: 	20,
 			        store: {
@@ -120,7 +126,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 					xtype		:	"panelice",
 					width		:	"100%",
 					
-					title		:	"Historial",
+				
 					
 					platformConfig: {
 						desktop: {
@@ -147,9 +153,12 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 					    }
 					]
 				},
-				{
+				{   style:'margin:0px 20px 16px 20px;',
 					xtype		:	'gridice',
-					title		:	"Eventos",
+					title: {
+						text:"Mesa de Control",
+						//style:'margin:0px 0px 16px 30px;',
+					},
 					reference	:	'gridEventos',
 					columns		:	[
 						{
@@ -179,7 +188,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 						
 					],
 					actionColumns		:	[
-						{
+						{	style:'margin:0px 20px 16px 20px;',
 							xtype : 'actioncolumn',
 							items : [
 										{
@@ -197,9 +206,12 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 			            ntramite: config.ntramite
 			        }
 				},
-				{
+				{	style:'margin:0px 20px 16px 20px;',	
 					xtype		:	'gridice',
-					title		:	"Turnados",
+					title: {
+						text:"Turnados",
+						
+					},
 					columns		:	[
 						{
 							text		:	"Usuario",	
