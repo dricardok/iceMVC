@@ -293,7 +293,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 				nmpoliza: view.getNmpoliza(),
 				iscotizacion: false,
 				cdtipsup: '90',
-				ntramite: view.config.flujo.ntramite
+				ntramite: view.getFlujo().ntramite
 			});
 			
 			Ice.request({

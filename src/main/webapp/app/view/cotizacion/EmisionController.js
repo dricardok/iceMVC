@@ -793,7 +793,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 				nmpoliza: params.nmpoliza,
 				iscotizacion: true,
 				cdtipsup: '90',
-				ntramite: view.config.flujo.ntramite
+				ntramite: view.getFlujo().ntramite
 			});
 			
 			Ice.request({
