@@ -443,7 +443,7 @@ public interface FlujoMesaControlManager
 	
 	public Map<String, String> obtenerTramiteCompleto (String ntramite) throws Exception;
 	
-	public String generarTramiteDesdeConfirmarCotizacion (String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
+	public String confirmarTramiteDesdeCotizacion (String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
 	        String cdusuari, String cdsisrol) throws Exception;
 	
 	public FlujoVO recuperarReferenciaFlujoCotizacionAgente (String ntramite, String cdsisrol) throws Exception;

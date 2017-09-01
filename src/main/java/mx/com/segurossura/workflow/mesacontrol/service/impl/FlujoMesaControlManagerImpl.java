@@ -556,12 +556,12 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 						,cdflujomc
 						,clave //cdvalida
 						,null //dsvalida
-						,null
 						,null //cdvalidafk
 						,webid
 						,null //xpos
 						,null //ypoS
 						,""//jsvalida
+						,null
 						,"D" //accion
 						);
 			}
@@ -4113,13 +4113,13 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	}
 	
 	@Override
-	public String generarTramiteDesdeConfirmarCotizacion (String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
+	public String confirmarTramiteDesdeCotizacion (String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
             String cdusuari, String cdsisrol) throws Exception {
 	    String ntramiteNuevo = null,
 	           paso = null;
 	    try {
-	        logger.debug(Utils.log("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
-	                               "\n@@@@@@ generarTramiteDesdeConfirmarCotizacion @@@@@@",
+	        logger.debug(Utils.log("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+	                               "\n@@@@@@ confirmarTramiteDesdeCotizacion @@@@@@",
 	                               "\n@@@@@@ ntramite = " , ntramite,
 	                               "\n@@@@@@ cdunieco = " , cdunieco,
 	                               "\n@@@@@@ cdramo   = " , cdramo,
@@ -4256,6 +4256,49 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	            Utils.validate(cdtiptra , "Falta el tipo de tr\u00e1mite",
 	                           status   , "Falta el estatus del tr\u00e1mite");
 	            
+	            paso = "Actualizando datos de cotizaci\u00f3n del tr\u00e1mite";
+	            mesaControlDAO2.movimientoTmesacontrol(
+	                    ntramite,
+	                    cdunieco,
+	                    cdramo,
+	                    estado,
+	                    nmpoliza,
+	                    "0", // nmsuplem,
+	                    nmpoliza, // nmsolici,
+	                    cdunieco, //cdsucadm,
+	                    cdunieco, //cdsucdoc,
+	                    null, //cdtiptra,
+	                    null, //ferecepc,
+	                    null, //cdagente,
+	                    null, //referencia,
+	                    null, //nombre,
+	                    null, //fecstatu,
+	                    null, //estatus,
+	                    null, //comments,
+	                    null, //cdtipsit,
+	                    null, null, null, null, null, null, null, null, null, null,
+	                    null, null, null, null, null, null, null, null, null, null,
+	                    null, null, null, null, null, null, null, null, null, null,
+	                    null, null, null, null, null, null, null, null, null, null,
+	                    null, null, null, null, null, null, null, null, null, null,
+	                    null, //swimpres,
+	                    null, //cdtipflu,
+	                    null, //cdflujomc,
+	                    null, //cdusuari,
+	                    null, //cdtipsup,
+	                    null, //swvispre,
+	                    null, //cdpercli,
+	                    null, //renuniext,
+	                    null, //renramo,
+	                    null, //renpoliex,
+	                    null, //sworigenmesa,
+	                    null, //cdrazrecha,
+	                    null, //cdunidspch,
+	                    null, //ntrasust, 
+	                    null, //cdsisrol,
+	                    "U" //accion
+	                    );
+	            
 	            paso = "Grabando detalle de movimiento";
 	            mesaControlDAO.movimientoDetalleTramite(
 	                    ntramite,
@@ -4272,8 +4315,8 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	                    false);
 	        }
             logger.debug(Utils.log("\n@@@@@@ ntramiteNuevo = ", ntramiteNuevo,
-                                   "\n@@@@@@ generarTramiteDesdeConfirmarCotizacion @@@@@@",
-                                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
+                                   "\n@@@@@@ confirmarTramiteDesdeCotizacion @@@@@@",
+                                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
 	    } catch (Exception e) {
 	        Utils.generaExcepcion(e, paso);
 	    }

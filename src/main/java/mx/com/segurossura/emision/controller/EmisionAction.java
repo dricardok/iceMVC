@@ -656,15 +656,17 @@ public class EmisionAction extends PrincipalCoreAction {
                     cdperpag, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             logger.debug("resultado Tarificacion: {}", resultados);
             
-            String ntramiteNuevo= flujoMesaControlManager.generarTramiteDesdeConfirmarCotizacion(ntramite, cdunieco, cdramo, estado, nmpoliza,
+            String ntramiteNuevo = flujoMesaControlManager.confirmarTramiteDesdeCotizacion(ntramite, cdunieco, cdramo, estado, nmpoliza,
                     usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             
             if (StringUtils.isNotBlank(ntramiteNuevo)) {
-                if (RolSistema.AGENTE.getCdsisrol().equals(usuario.getRolActivo().getCdsisrol())) {
-                    flujo = flujoMesaControlManager.recuperarReferenciaFlujoCotizacionAgente(ntramiteNuevo, usuario.getRolActivo().getCdsisrol());
-                } else {
-                    throw new ApplicationException("No se soporta la creaci\u00f3n de tr\u00e1mite desde cotizaci\u00f3n para rol distinto a agente");
-                }
+                ntramite = ntramiteNuevo;
+            }
+            
+            if (RolSistema.AGENTE.getCdsisrol().equals(usuario.getRolActivo().getCdsisrol())) {
+                flujo = flujoMesaControlManager.recuperarReferenciaFlujoCotizacionAgente(ntramite, usuario.getRolActivo().getCdsisrol());
+            } else {
+                throw new ApplicationException("No se soporta la confirmaci\u00f3n de tr\u00e1mite desde cotizaci\u00f3n para rol distinto a agente");
             }
             
             success = true;
