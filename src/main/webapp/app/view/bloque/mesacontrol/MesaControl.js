@@ -19,8 +19,8 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
     	var me = this,
             paso = 'Construyendo mesa de control';
     	
-    	//me.callParent(arguments);
-        //return Ice.query('#mainView').getController().redirectTo('accesocotizacion.action'); // para que no entre a mesa
+    	// me.callParent(arguments);
+        // return Ice.query('#mainView').getController().redirectTo('accesocotizacion.action'); // para que no entre a mesa
         
         try {
             Ice.generaComponentes(); // para que valide sesion

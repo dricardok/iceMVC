@@ -14,36 +14,6 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             tabchange: 'onTabchangeEvent'
         }
     }],
-    buttons: [
-         {
-            text: 'Anterior',
-            reference: 'anteriorbutton',
-            iconCls: 'x-fa fa-backward',
-            ui:'gray',
-            //style:'margin-right: 20px;',
-            handler: 'onAnteriorclic'
-        },
-        // {
-        //     text: 'Cargar', // style:'margin-right: 42px;',
-        //     reference: 'cargarbutton',
-        //     iconCls: 'x-fa fa-cloud-download',
-        //     handler: 'onCargarClic'
-        // },
-        {
-            text: 'Cotizar',
-            reference: 'cotizarbutton',
-            iconCls: 'x-fa fa-dollar',
-          
-            handler: 'onCotizarClic'
-        }, {
-            text: 'Siguiente',
-            reference: 'siguientebutton',
-            iconCls: 'x-fa fa-forward',
-            style:'margin-right: 45px;',
-            handler: 'onSiguienteClic'
-        }
-        
-    ],
 
     // config no ext
     config: {
@@ -128,6 +98,36 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             if ((config.bloques || []).length === 0) {
                 throw 'No hay bloques configurados';
             }
+
+            config.buttons = [
+                {
+                    text: 'Anterior',
+                    reference: 'anteriorbutton',
+                    iconCls: 'x-fa fa-backward',
+                    ui:'gray',
+                    //style:'margin-right: 20px;',
+                    handler: 'onAnteriorclic'
+                },
+                // {
+                //     text: 'Cargar', // style:'margin-right: 42px;',
+                //     reference: 'cargarbutton',
+                //     iconCls: 'x-fa fa-cloud-download',
+                //     handler: 'onCargarClic'
+                // },
+                {
+                    text: (config.flujo && config.flujo.aux && config.flujo.aux.botonCotizarText) || 'Cotizar',
+                    reference: 'cotizarbutton',
+                    iconCls: 'x-fa fa-' + ((config.flujo && config.flujo.aux && config.flujo.aux.botonCotizarIconCls) ||'dollar'),
+                
+                    handler: 'onCotizarClic'
+                }, {
+                    text: 'Siguiente',
+                    reference: 'siguientebutton',
+                    iconCls: 'x-fa fa-forward',
+                    style:'margin-right: 45px;',
+                    handler: 'onSiguienteClic'
+                }
+            ].concat(config.buttons || []);
             
             me.callParent(arguments);
 

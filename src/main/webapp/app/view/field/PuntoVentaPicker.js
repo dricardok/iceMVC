@@ -37,7 +37,7 @@ Ext.define('Ice.view.field.PuntoVentaPicker', {
                     xtype: 'textfieldice',
                     label: config.label || 'Punto de venta',
                     labelAlign: config.labelAlign || 'top',
-                    name: 'cdptovta',
+                    name: config.name || 'cdptovta',
                     reference: 'cdptovta',
                     readOnly: true
                 },{
