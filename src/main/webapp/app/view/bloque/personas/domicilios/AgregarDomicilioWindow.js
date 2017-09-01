@@ -83,21 +83,23 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
 			    	modelValidators:comps.AGREGAR_PERSONAS.MDOMICIL.validators,
         			modelFields	:	comps.AGREGAR_PERSONAS.MDOMICIL.fields,	
         			buttons		:	[
-        				 	{
-        				 		xtype	: 'button',
-        				 		text	: 'Cancelar',
-        				 		iconCls: 'x-fa fa-close',
-        				 		ui:'gray',
-        				 		handler : 'cancelar'
-        				 			
-        				 	},	
-		 			    	{
-						    	xtype	: 'button',
-						    	text	: 'Guardar',
-						    	iconCls	: 	'x-fa fa-save',
-						    	style:'margin-right: 40px;',
-						    	handler : 'guardarDomicilio'
-		 			    	}
+        				 	
+        				{
+					    	xtype	: 'button',
+					    	text	: 'Guardar',
+					    	iconCls	: 	'x-fa fa-save',
+					    	handler : 'guardarDomicilio'
+	 			    	},	
+    				    {
+    				 		xtype	: 'button',
+    				 		text	: 'Cancelar',
+    				 		iconCls: 'x-fa fa-close',
+    				 		ui:'gray',
+    				 		style:'margin-right: 40px;',
+    				 		handler : 'cancelar'
+    				 			
+    				 	}	
+		 			    	
 		 			    	
 		 			    ],
 				}

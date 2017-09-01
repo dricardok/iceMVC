@@ -150,7 +150,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 								// xtype: 'button',
 								itemId: 'btnAgregar',
 								iconCls: 'x-fa fa-plus-circle',
-								text: 'Agregar',
+								text: 'Nueva Cobertura',
 								handler: 'agregarCobertura'
 							}
 						],
