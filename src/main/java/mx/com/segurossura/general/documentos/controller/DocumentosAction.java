@@ -77,10 +77,10 @@ public class DocumentosAction extends PrincipalCoreAction {
             String estado = params.get("estado");
             String nmpoliza = params.get("nmpoliza");
             String nmsuplem = params.get("nmsuplem");
-            Utils.validate(cdunieco, "No se recibio oficina");
-            Utils.validate(cdramo, "No se recibio el producto");
-            Utils.validate(estado, "No se recibio el estado");
-            Utils.validate(nmpoliza, "No se recibio el numero de póliza");
+//            Utils.validate(cdunieco, "No se recibio oficina");
+//            Utils.validate(cdramo, "No se recibio el producto");
+//            Utils.validate(estado, "No se recibio el estado");
+//            Utils.validate(nmpoliza, "No se recibio el numero de póliza");
 //            Utils.validate(nmsuplem, "No se recibio el numero de suplemento");
             String ntramite = params.get("ntramite");
             String cdsisrol = params.get("cdsisrol");

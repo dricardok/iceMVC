@@ -55,17 +55,17 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                 config.ntramite = config.flujo.ntramite;
             }
             
-            if (!config.cdunieco || !config.cdramo || !config.estado ||!config.nmpoliza
+            /*if (!config.cdunieco || !config.cdramo || !config.estado ||!config.nmpoliza
             //    || Ext.isEmpty(config.nmsuplem)
             ) {
                 throw 'Falta llave de p\u00f3liza para ventana de documentos';
-            }
+            }*/
             
             if(!config.itemsPerPage){
                 config.itemsPerPage = 10;
             }
 
-            config.estado = config.estado.toUpperCase();
+            //config.estado = config.estado.toUpperCase();
                                 
             config.items = [
                 {
