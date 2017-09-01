@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum TipoEndoso {
 	
-	EMISION_POLIZA(1);
+	EMISION_POLIZA(90);
     /*
 	CORRECCION_NOMBRE_Y_RFC(2),
 	CAMBIO_DOMICILIO(3),
