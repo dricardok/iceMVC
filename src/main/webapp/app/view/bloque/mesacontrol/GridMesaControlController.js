@@ -77,8 +77,9 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 		try {
 			var ventana = Ext.create({
 				xtype: 'ventanaice',
-				title: 'Registrar nuevo tramite',
-
+				style:'padding-top:20px',
+				title: 'Registrar nuevo trámite',
+				
 				platformConfig: {
 					desktop: {
 						width: Ice.constantes.componente.ventana.width,
@@ -90,13 +91,14 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 					{
 						xtype: 'formnuevotramite',
 						reference: 'formnuevotramite'
+					    	
 					}
 				],
 				
 				buttons: [
 					{
 						text: 'Continuar',
-						iconCls: 'x-fa fa-arrow-right',
+						iconCls: 'x-fa fa-forward',
 						handler: function() {
 													
 							var formulario = Ext.create('Ice.view.bloque.RegistroTramiteWindow', {
@@ -131,6 +133,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 					}, {
 						text: 'Cancelar',
 						iconCls: 'x-fa fa-close',
+						style:'margin-right: 40px;',
 						ui:'gray',
 						handler:  function() {
 							ventana.cerrar();

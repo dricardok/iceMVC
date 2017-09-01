@@ -15,7 +15,8 @@ Ext.define('Ice.view.bloque.mesacontrol.FormMesaControl', {
         },
         {
         	text: 'Limpiar',
-        	iconCls: 'x-fa fa-filter',
+        	iconCls: 'x-fa fa-eraser',
+        	ui:'gray',
         	//iconCls: 'x-fa fa-bar-chart',
         	reference: 'formMesaControlBtnLimpiar',
         	handler: 'onLimpiarClic'

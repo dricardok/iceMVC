@@ -1,6 +1,7 @@
 Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
     extend: 'Ice.view.componente.PanelIce',
     xtype: 'botoneraflujo',
+    style: 'padding:20px 0px 0px 20px;',
 
     // config ext
     scrollable: true,
@@ -8,9 +9,9 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
     platformConfig: {
         desktop: {
             height: 120,
-            bodyPadding: '0 0 0 10',
+            bodyPadding: '0px 0px 0px 10px',
             defaults: {
-                margin: '0 10 10 0'
+                margin: '10 10 10 0px'
             }
         },
         tablet: {
