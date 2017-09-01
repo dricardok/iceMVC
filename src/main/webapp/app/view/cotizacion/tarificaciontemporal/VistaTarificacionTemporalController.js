@@ -49,9 +49,15 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 									}),
 					                success: function (action) {
 										
-										if (action.flujo && action.flujo.ntramite) {
+										if (action.flujo && action.flujo.ntramite) { // cuando se genera el tramite
 											view.setFlujo(action.flujo);
 											view.fireEvent('tramiteGenerado', view, action.flujo);
+										} else { // cuando solo se actualiza, los demas ya los tiene
+											view.getFlujo().cdunieco = view.getCdunieco();
+											view.getFlujo().cdramo   = view.getCdramo();
+											view.getFlujo().estado   = view.getEstado();
+											view.getFlujo().nmpoliza = view.getNmpoliza();
+											view.getFlujo().nmsuplem = view.getNmsuplem();
 										}
 										
 					                	boton.up('ventanatarifastemporales').cerrar();
@@ -148,7 +154,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 															view.getEstado(),
 															view.getNmpoliza(), 
 															view.getNmsuplem(), 
-															'EMISION', 'ANTES_PROCEDER_EMISION', 
+															'COTIZACION', 'ANTES_PROCEDER_EMISION', 
 															view.getFlujo(), 
 															function(){
 																var paso;
@@ -158,13 +164,19 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 																		url: Ice.url.bloque.mesacontrol.ejecutarValidacionPorReferencia,
 																		params: {
 																			'params.ntramite': view.getFlujo().ntramite,
-																			'params.referencia': 'DESDE_COTI_AGENTE'
+																			'params.referencia': 'DESDE_COTI_' + Ice.sesion.cdsisrol
 																		},
 																		success: function (action) {
 																			var paso2 = 'Recuperando acci\u00f3n de referencia';
 																			try {
-																				Ice.cargarAccionesEntidad(action.params.cdtipflu, action.params.cdflujomc,
-																					'V', action.params.cdvalida, action.params.webid, function (lista) {
+																				if (!action.list || action.list.length === 0) {
+																					throw 'No hay referencia';
+																				}
+																				if (action.list.length > 1) {
+																					throw 'Referencia duplicada';
+																				}
+																				var ref = action.list[0];
+																				Ice.cargarAccionesEntidad(ref.cdtipflu, ref.cdflujomc, 'V', ref.cdvalida, ref.webid, function (lista) {
 																					if (lista.length === 0) {
 																						throw 'No hay acci\u00f3n para la referencia';
 																					} else if (lista.length > 1) {

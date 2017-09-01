@@ -562,14 +562,14 @@ public class SituacionManagerImpl implements SituacionManager{
         return validaciones;
 	}
 	
-	public void copiaSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String nmcopias) throws Exception{
+	public void copiaSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String nmcopias, String cdusuari) throws Exception{
 	    logger.debug(Utils.join(
                 "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
                 "\n@@@@@@ copiaSituacion"
                ));
 	    String paso = "Se copia situacion de riesgo";
 	    try{
-	        situacionDAO.copiaSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmcopias);
+	        situacionDAO.copiaSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmcopias, cdusuari);
 	    } catch (Exception ex) {
 	        Utils.generaExcepcion(ex, paso);
 	    }

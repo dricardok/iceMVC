@@ -656,15 +656,18 @@ public class EmisionAction extends PrincipalCoreAction {
                     cdperpag, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             logger.debug("resultado Tarificacion: {}", resultados);
             
-            String ntramiteNuevo= flujoMesaControlManager.generarTramiteDesdeConfirmarCotizacion(ntramite, cdunieco, cdramo, estado, nmpoliza,
+            // si no es agente, el tramite es obligatorio porque solo el agente puede confirmar cotizacion sin tramite
+            if (StringUtils.isBlank(ntramite) && !RolSistema.AGENTE.getCdsisrol().equals(usuario.getRolActivo().getCdsisrol())) {
+                throw new ApplicationException("No se soporta la generaci\u00f3n de tr\u00e1mite desde cotizaci\u00f3n para rol distinto a agente");
+            }
+            
+            // se manda a actualizar el tramite o generar uno nuevo (para agente)
+            String ntramiteNuevo = flujoMesaControlManager.confirmarTramiteDesdeCotizacion(ntramite, cdunieco, cdramo, estado, nmpoliza,
                     usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             
+            // Si se genero un tramite nuevo (agente) recupero la referencia a pantalla cotizacion
             if (StringUtils.isNotBlank(ntramiteNuevo)) {
-                if (RolSistema.AGENTE.getCdsisrol().equals(usuario.getRolActivo().getCdsisrol())) {
-                    flujo = flujoMesaControlManager.recuperarReferenciaFlujoCotizacionAgente(ntramiteNuevo, usuario.getRolActivo().getCdsisrol());
-                } else {
-                    throw new ApplicationException("No se soporta la creaci\u00f3n de tr\u00e1mite desde cotizaci\u00f3n para rol distinto a agente");
-                }
+                flujo = flujoMesaControlManager.recuperarReferenciaFlujoCotizacionAgente(ntramiteNuevo, usuario.getRolActivo().getCdsisrol());
             }
             
             success = true;
@@ -996,10 +999,18 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   nmpoliza, "Falta nmpoliza",
     	                   iscotizacion, "Falta iscotizacion");
     	    
+    	    Map<String, Object> resultado = null;
     	    
-    	    Map<String, Object> resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());
+    	    if(flujo != null) {
+    	    	
+    	    	resultado = emisionManager.generarDocumentos(flujo.getCdunieco(), flujo.getCdramo(), flujo.getEstado(), flujo.getNmpoliza(), flujo.getNmsuplem(), null, flujo.getAux(), usuario.getCdusuari());
+    	    
+    	    } else {    	  
+    	    
+    	    	resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());
+    	    	
+    	    }
     	    errores = (List<String>) resultado.get("errores");
-    	    
     	    
     	    success = true;
     	    

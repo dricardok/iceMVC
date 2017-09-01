@@ -333,19 +333,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             refs = view.getReferences(),
             paso = 'Guardando datos';
         try {
-        	
-        	Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
-					   view.getCdramo(),
-					   view.getEstado(),
-					   view.getNmpoliza(), 
-					   view.getNmsuplem(), 
-					   'COTIZACION', 'ANTES_MOSTRAR_PRIMA', 
-					   view.getFlujo(), 
-					   function(){
-        		 			me.revisarCoaseguro();
-     				   }
-        	);
-          
+        	me.revisarCoaseguro();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -357,46 +345,54 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
     	var me = this,
     		paso = 'Recuperando tarifas por plan';
     	try {
-    		
     		var view = me.getView();
-    		
-    		var planes = Ext.create('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', { 
+            
+            Ice.ejecutarValidacionesEventoPantalla(
+                view.getCdunieco(), 
+				view.getCdramo(),
+				view.getEstado(),
+				view.getNmpoliza(), 
+				view.getNmsuplem(), 
+				'COTIZACION', 'ANTES_MOSTRAR_PRIMA', 
+				view.getFlujo(), 
+				function () {
+                    var planes = Ext.create('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', { 
+                        cdunieco: view.getCdunieco(),
+                        cdramo: view.getCdramo(),
+                        estado: view.getEstado(),
+                        nmpoliza: view.getNmpoliza(),
+                        nmsuplem: view.getNmsuplem(),
+                        cdtipsit: view.getCdtipsit(),
 
-        		cdunieco: view.getCdunieco(),
-        		cdramo: view.getCdramo(),
-        		estado: view.getEstado(),
-        		nmpoliza: view.getNmpoliza(),
-        		nmsuplem: view.getNmsuplem(),
-        		cdtipsit: view.getCdtipsit(),
+                        // perfilamiento
+                        cdptovta: view.getCdptovta(),
+                        cdgrupo: view.getCdgrupo(),
+                        cdsubgpo: view.getCdsubgpo(),
+                        cdperfil: view.getCdperfil(),
 
-                // perfilamiento
-                cdptovta: view.getCdptovta(),
-                cdgrupo: view.getCdgrupo(),
-                cdsubgpo: view.getCdsubgpo(),
-                cdperfil: view.getCdperfil(),
+                        flujo: view.getFlujo(),
 
-                flujo: view.getFlujo(),
-
-                listeners: {
-                    'tramiteGenerado': function (tarificacionTemporal, flujo) {
-                        view.setFlujo(flujo);
-                    }
-                },
-        		
-        		buttons : [{
-        			cls: '',
-        			text: 'Modificar',
-        			style:'margin-right: 42px;',       			
-        			iconCls: 'x-fa fa-pencil',
-        			handler: function(me){
-        				Ice.pop();
-        			}
-        		}]
-        	});
-        	
-        	Ice.push(planes);        	
-        	
-    	}catch(e) {
+                        listeners: {
+                            'tramiteGenerado': function (tarificacionTemporal, flujo) {
+                                view.setFlujo(flujo);
+                            }
+                        },
+                        
+                        buttons : [{
+                            cls: '',
+                            text: 'Modificar',
+                            style:'margin-right: 42px;',       			
+                            iconCls: 'x-fa fa-pencil',
+                            handler: function(me){
+                                Ice.pop();
+                            }
+                        }]
+                    });
+                    
+                    Ice.push(planes);
+                }
+            );
+    	} catch (e) {
     		Ice.manejaExcepcion(e, paso);
     	}
     },

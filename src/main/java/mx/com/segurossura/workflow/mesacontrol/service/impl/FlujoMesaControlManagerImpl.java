@@ -556,12 +556,12 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 						,cdflujomc
 						,clave //cdvalida
 						,null //dsvalida
-						,null
 						,null //cdvalidafk
 						,webid
 						,null //xpos
 						,null //ypoS
 						,""//jsvalida
+						,null
 						,"D" //accion
 						);
 			}
@@ -3738,21 +3738,24 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 				"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
 	}
 	
-	@Override
-	public Map<String,String> tramiteMC(String ntramite, String nmsolici, String cdunieco, String cdramo, String cdtipsit) throws Exception {
-	        String mensaje = "Consultando mesa de control para renovacion";
-		try {
-			if(nmsolici!=null && !nmsolici.equals("0") && !nmsolici.isEmpty() && ("|5|6|16|").lastIndexOf("|"+cdramo+"|")!=-1) {
-				return mesaControlDAO.obtenerTramiteCompleto(nmsolici, cdunieco, cdramo);
-				
-			} else if(ntramite!=null && !ntramite.isEmpty() && ("|5|6|16|").lastIndexOf("|"+cdramo+"|")!=-1) {
-				return mesaControlDAO.obtenerTramiteCompleto(ntramite);
-			}
-		} catch (Exception ex) {
-			Utils.generaExcepcion(ex, mensaje);
-		}
-		return new HashMap<String, String>(0);
-	}
+	/**
+	 * 2017/08/31 - jtezva - se comenta porque no se usa
+	 */
+//	@Override
+//	public Map<String,String> tramiteMC(String ntramite, String nmsolici, String cdunieco, String cdramo, String cdtipsit) throws Exception {
+//	        String mensaje = "Consultando mesa de control para renovacion";
+//		try {
+//			if(nmsolici!=null && !nmsolici.equals("0") && !nmsolici.isEmpty() && ("|5|6|16|").lastIndexOf("|"+cdramo+"|")!=-1) {
+//				return mesaControlDAO.obtenerTramiteCompleto(nmsolici, cdunieco, cdramo);
+//				
+//			} else if(ntramite!=null && !ntramite.isEmpty() && ("|5|6|16|").lastIndexOf("|"+cdramo+"|")!=-1) {
+//				return mesaControlDAO.obtenerTramiteCompleto(ntramite);
+//			}
+//		} catch (Exception ex) {
+//			Utils.generaExcepcion(ex, mensaje);
+//		}
+//		return new HashMap<String, String>(0);
+//	}
 	
 	@Override
 	public void guardarVentanaDatosTramite (String ntramite, Map<String, String> datos) throws Exception {
@@ -4110,13 +4113,13 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	}
 	
 	@Override
-	public String generarTramiteDesdeConfirmarCotizacion (String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
+	public String confirmarTramiteDesdeCotizacion (String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
             String cdusuari, String cdsisrol) throws Exception {
 	    String ntramiteNuevo = null,
 	           paso = null;
 	    try {
-	        logger.debug(Utils.log("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
-	                               "\n@@@@@@ generarTramiteDesdeConfirmarCotizacion @@@@@@",
+	        logger.debug(Utils.log("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+	                               "\n@@@@@@ confirmarTramiteDesdeCotizacion @@@@@@",
 	                               "\n@@@@@@ ntramite = " , ntramite,
 	                               "\n@@@@@@ cdunieco = " , cdunieco,
 	                               "\n@@@@@@ cdramo   = " , cdramo,
@@ -4253,6 +4256,49 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	            Utils.validate(cdtiptra , "Falta el tipo de tr\u00e1mite",
 	                           status   , "Falta el estatus del tr\u00e1mite");
 	            
+	            paso = "Actualizando datos de cotizaci\u00f3n del tr\u00e1mite";
+	            mesaControlDAO2.movimientoTmesacontrol(
+	                    ntramite,
+	                    cdunieco,
+	                    cdramo,
+	                    estado,
+	                    nmpoliza,
+	                    "0", // nmsuplem,
+	                    nmpoliza, // nmsolici,
+	                    cdunieco, //cdsucadm,
+	                    cdunieco, //cdsucdoc,
+	                    null, //cdtiptra,
+	                    null, //ferecepc,
+	                    null, //cdagente,
+	                    null, //referencia,
+	                    null, //nombre,
+	                    null, //fecstatu,
+	                    null, //estatus,
+	                    null, //comments,
+	                    null, //cdtipsit,
+	                    null, null, null, null, null, null, null, null, null, null,
+	                    null, null, null, null, null, null, null, null, null, null,
+	                    null, null, null, null, null, null, null, null, null, null,
+	                    null, null, null, null, null, null, null, null, null, null,
+	                    null, null, null, null, null, null, null, null, null, null,
+	                    null, //swimpres,
+	                    null, //cdtipflu,
+	                    null, //cdflujomc,
+	                    null, //cdusuari,
+	                    null, //cdtipsup,
+	                    null, //swvispre,
+	                    null, //cdpercli,
+	                    null, //renuniext,
+	                    null, //renramo,
+	                    null, //renpoliex,
+	                    null, //sworigenmesa,
+	                    null, //cdrazrecha,
+	                    null, //cdunidspch,
+	                    null, //ntrasust, 
+	                    null, //cdsisrol,
+	                    "U" //accion
+	                    );
+	            
 	            paso = "Grabando detalle de movimiento";
 	            mesaControlDAO.movimientoDetalleTramite(
 	                    ntramite,
@@ -4269,8 +4315,8 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	                    false);
 	        }
             logger.debug(Utils.log("\n@@@@@@ ntramiteNuevo = ", ntramiteNuevo,
-                                   "\n@@@@@@ generarTramiteDesdeConfirmarCotizacion @@@@@@",
-                                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
+                                   "\n@@@@@@ confirmarTramiteDesdeCotizacion @@@@@@",
+                                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
 	    } catch (Exception e) {
 	        Utils.generaExcepcion(e, paso);
 	    }
@@ -4287,7 +4333,7 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	    String paso = null;
 	    try {
 	        paso = "Recuperando datos de tr\u00e1mite";
-	        Map<String, String> tramite = mesaControlDAO.obtenerTramiteCompleto(ntramite);
+	        Map<String, String> tramite = flujoMesaControlDAO.obtenerTramite(ntramite);
 	        
 	        paso = "Recuperando referencia de tr\u00e1mite generado desde cotizaci\u00f3n";
 	        List<Map<String, String>> validaciones = mesaControlDAO2.ejecutarValidacionPorReferencia(ntramite, "TRAMITE_GENE_DESDE_COTI");
@@ -4318,16 +4364,16 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
             paso = "Creando flujo resultante";
             flujo = new FlujoVO();
             
-            flujo.setCdtipflu(tramite.get("CDTIPFLU"));
-            flujo.setCdflujomc(("CDFLUJOMC"));
+            flujo.setCdtipflu(tramite.get("cdtipflu"));
+            flujo.setCdflujomc(tramite.get("cdflujomc"));
             flujo.setNtramite(ntramite);
-            flujo.setStatus(tramite.get("STATUS"));
+            flujo.setStatus(tramite.get("status"));
             
-            flujo.setCdunieco(tramite.get("CDUNIECO"));
-            flujo.setCdramo(tramite.get("CDRAMO"));
-            flujo.setEstado(tramite.get("ESTADO"));
-            flujo.setNmpoliza(tramite.get("NMPOLIZA"));
-            flujo.setNmsuplem(tramite.get("NMSUPLEM"));
+            flujo.setCdunieco(tramite.get("cdunieco"));
+            flujo.setCdramo(tramite.get("cdramo"));
+            flujo.setEstado(tramite.get("estado"));
+            flujo.setNmpoliza(tramite.get("nmpoliza"));
+            flujo.setNmsuplem(tramite.get("nmsuplem"));
             
             flujo.setTipoent(accion.get("TIPODEST"));
             flujo.setClaveent(accion.get("CLAVEDEST"));

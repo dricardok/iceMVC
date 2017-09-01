@@ -334,15 +334,18 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
     }
     
     @Override
-    public void copiaSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String nmcopias) throws Exception{
+	public void copiaSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, 
+			String nmcopias, String cdusuari) throws Exception {
+    	
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("pv_cdunieco_i", cdunieco);
-        params.put("pv_cdramo_i", cdramo);
-        params.put("pv_estado_i", estado);
+        params.put("pv_cdramo_i",   cdramo);
+        params.put("pv_estado_i",   estado);
         params.put("pv_nmpoliza_i", nmpoliza);
         params.put("pv_nmsituac_i", nmsituac);
         params.put("pv_nmsuplem_i", nmsuplem);
         params.put("pv_nmcopias_i", nmcopias);
+        params.put("pv_cduser_i",   cdusuari);
         ejecutaSP(new CopiaSituacionSP(getDataSource()), params);
     }
     
@@ -350,13 +353,14 @@ public class SituacionDAOImpl extends HelperJdbcDao implements SituacionDAO {
         protected CopiaSituacionSP(DataSource dataSource) {
             super(dataSource, "PKG_STRUCT_ALEA.P_CLON_INCISO");
             declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
-            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i",   Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i",   Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsituac_i", Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cduser_i",   Types.VARCHAR));
             declareParameter(new SqlParameter("pv_nmcopias_i", Types.VARCHAR));
-            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_msg_id_o",Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
             compile();
         }
