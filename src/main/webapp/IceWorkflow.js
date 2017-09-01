@@ -997,9 +997,9 @@ var Ice = (
 						// si recibe de salida params.referencia, significa que va a ejecutar una referencia
 						if(action && action.params && action.params.referencia) {
 							// primero valida, si hay tramite (flujo.ntramite)
-							if(flujo.ntramite) {
+							if( !Ext.isEmpty(flujo.ntramite) ) {
 								// muestra al usuario el aviso con la variable message y la pregunta ¿desea turnar el trámite?, al aceptar continuar se ejecuta la referencia de params.referencia (1-e).
-								Ext.Msg.confirm("Aviso", action.message + "\n\u00bfDesea turnar el trámite??", function(opc){
+								Ext.Msg.confirm("Aviso", action.message + "\n\u00bfDesea turnar el tr\u00E1mite " + flujo.ntramite + " ?", function(opc){
 									if (opc === 'yes') {
 										Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
 									}

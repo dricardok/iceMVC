@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
 
+import mx.com.segurossura.emision.dao.AgentesDAO;
 import mx.com.segurossura.general.cmp.dao.ComponentesDAO;
 import mx.com.segurossura.mesacontrol.dao.MesaControlDAO;
 import mx.com.segurossura.mesacontrol.service.MesaControlManager;
@@ -37,6 +38,9 @@ public class MesaControlManagerImpl implements MesaControlManager {
 	
 	@Autowired
 	private ComponentesDAO componentesDAO;
+	
+	@Autowired
+	private AgentesDAO agentesDAO;
 	
 	@Override
 	public List<Map<String, String>> obtenerTramites(String cdunieco, String cdramo, String estado, String nmpoliza,
@@ -121,6 +125,15 @@ public class MesaControlManagerImpl implements MesaControlManager {
 				} catch (Exception ex) {
 				    throw new ApplicationException(Utils.join("La póliza ",cdunieco,"-",cdramo,"-",estado,"-",nmpoliza," no existe."));
 				}
+			}
+			
+			// Si viene cdagente y cdramo validar su cedula
+			if(!StringUtils.isEmpty(cdagente) && !StringUtils.isEmpty(cdramo)) {
+				boolean cedulaValida = false;
+				cedulaValida = agentesDAO.validaAgente(cdagente, cdramo, "E");
+		        if(!cedulaValida){
+		           throw new ApplicationException("La cedula del agente no es valida");
+		        }
 			}
 			
 			paso = "Registrando tr\u00e1mite";
@@ -244,14 +257,14 @@ public class MesaControlManagerImpl implements MesaControlManager {
 		String paso = "";		
 		List<Map<String, String>> componentes = null;
 		Map<String, String> params = new HashMap<String, String>();
-		String handler, nombreFuncion = null, referenciaValidacion = null, mensaje = null, estatus = null, comentarios = null;
+		String handler, nombreFuncion = null, referenciaValidacion = null, mensaje = null, estatus = null, comentarios = null, cdtipflu = null, cdflujomc = null, cdtiptra = null;
 		String tokens[];
 		String resultado = null;
 		
 		try {
 			
 			componentes = componentesDAO.obtenerListaComponentesSP(pantalla, evento, null, null, cdramo, null, cdsisrol, null);
-				
+			paso = "Obteniendo parametros para validaciones de pantalla";	
 			logger.debug("---> {}",componentes);
 			for(Map<String, String> mapa : componentes) {
 				
@@ -261,13 +274,16 @@ public class MesaControlManagerImpl implements MesaControlManager {
 					
 					tokens = handler.split("\\|");
 					logger.debug(" tokens: {}",tokens);
-					if(tokens != null && tokens.length == 5) {
+					if(tokens != null) {
 						
 						nombreFuncion = tokens[0];
 						referenciaValidacion = tokens[1];
 						mensaje = tokens[2];
 						estatus =  tokens[3];
-						comentarios = tokens[4];
+						comentarios = tokens[4];						
+						cdtipflu = tokens[5];
+						cdflujomc = tokens[6];
+						cdtiptra = tokens[7];
 					}
 					
 					resultado = flujoMesaControlDAO.ejecutaValidacionPantalla(nombreFuncion, cdunieco, cdramo, estado, nmpoliza, nmsuplem, pantalla, evento, cdusuari, cdsisrol);
@@ -278,6 +294,9 @@ public class MesaControlManagerImpl implements MesaControlManager {
 						params.put("mensaje", mensaje);
 						params.put("estatus", estatus);
 						params.put("comments", comentarios);
+						params.put("cdtipflu", cdtipflu);
+						params.put("cdflujomc", cdflujomc);
+						params.put("cdtiptra", cdtiptra);
 						
 						break;
 					}

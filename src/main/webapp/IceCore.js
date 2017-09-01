@@ -1167,7 +1167,8 @@ var Ice = (
                     FF: 'filefieldice',
                     CDPERSONPICKER: 'cdpersonpicker',
                     CDAGENTEPICKER: 'cdagentepicker',
-                    PASSWORD: 'textfieldice'
+                    PASSWORD: 'textfieldice',
+                    PUNTOVENTAPICKER: 'puntoventapicker'
                 }[config.tipocampo];
                 if (!item.xtype) {
                     throw 'Tipocampo incorrecto para item';
@@ -1453,7 +1454,8 @@ var Ice = (
                     FF: 'string',
                     CDPERSONPICKER: 'string',
                     CDAGENTEPICKER: 'string',
-                    PASSWORD: 'string'
+                    PASSWORD: 'string',
+                    PUNTOVENTAPICKER: 'string'
                 }[config.tipocampo];
             if (!field.type) {
                 throw 'Tipocampo incorrecto para field';
