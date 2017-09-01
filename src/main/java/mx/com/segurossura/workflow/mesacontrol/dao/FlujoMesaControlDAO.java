@@ -420,7 +420,7 @@ public interface FlujoMesaControlDAO {
 	 */
 	public String movimientoTfluval(String cdtipflu, String cdflujomc, String cdvalida,
 			String dsvalida, String cdvalidafk, String webid, String xpos,
-			String ypos, String jsvalida, String accion) throws Exception;
+			String ypos, String jsvalida, String referencia, String accion) throws Exception;
 
 	/**
 	 * 
@@ -556,6 +556,11 @@ public interface FlujoMesaControlDAO {
 	
 	public String ejecutaValidacion(String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
             String nmsuplem, String cdvalidafk, String cdusuari, String cdsisrol, String cdvalida) throws Exception;
+	
+	
+	public String ejecutaValidacionPantalla(String functionName, String cdunieco, String cdramo, String estado, String nmpoliza, 
+			 String nmsuplem, String pantalla, String evento, String cdusuari, String cdsisrol) throws Exception;
+	
 	
 	public List<Map<String,String>>cargarAccionesEntidad(
 			String cdtipflu

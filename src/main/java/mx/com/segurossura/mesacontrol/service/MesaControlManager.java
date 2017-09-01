@@ -27,5 +27,33 @@ public interface MesaControlManager {
 			String otvalor48, String otvalor49, String otvalor50, String swimpres, String cdtipflu, String cdflujomc,
 			String cdusuari, String cdtipsup, String swvispre, String cdpercli, String renuniext, String renramo,
 			String renpoliex, String sworigenmesa, String cdrazrecha, String cdunidspch, String ntrasust,
-			String cdsisrol, String accion) throws Exception;
+			String cdsisrol, String accion) throws Exception;	
+
+	public String registrarNuevoTramite(String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsuplem, String nmsolici, String cdsucadm, String cdsucdoc, String cdtiptra, Date ferecepc,
+			String cdagente, String referencia, String nombre, Date fecstatu, String estatus, String comments,
+			String cdtipsit, String otvalor01, String otvalor02, String otvalor03, String otvalor04, String otvalor05,
+			String otvalor06, String otvalor07, String otvalor08, String otvalor09, String otvalor10, String otvalor11,
+			String otvalor12, String otvalor13, String otvalor14, String otvalor15, String otvalor16, String otvalor17,
+			String otvalor18, String otvalor19, String otvalor20, String otvalor21, String otvalor22, String otvalor23,
+			String otvalor24, String otvalor25, String otvalor26, String otvalor27, String otvalor28, String otvalor29,
+			String otvalor30, String otvalor31, String otvalor32, String otvalor33, String otvalor34, String otvalor35,
+			String otvalor36, String otvalor37, String otvalor38, String otvalor39, String otvalor40, String otvalor41,
+			String otvalor42, String otvalor43, String otvalor44, String otvalor45, String otvalor46, String otvalor47,
+			String otvalor48, String otvalor49, String otvalor50, String swimpres, String cdtipflu, String cdflujomc,
+			String cdusuari, String cdtipsup, String swvispre, String cdpercli, String renuniext, String renramo,
+			String renpoliex, String sworigenmesa, String cdrazrecha, String cdunidspch, String ntrasust,
+			String cdsisrol) throws Exception;
+	
+	public Map<String, String> ejecutarValidacionesEventoPantalla(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, 
+													 String pantalla, String evento, String cdusuari, String cdsisrol) throws Exception;
+
+
+	public List<Map<String, String>> ejecutarValidacionPorReferencia(String ntramite, String referencia) throws Exception;
+	
+	/**
+	 * 2017/08/31 - jtezva - no se usa
+	 */
+//	public Map<String, String> obtenerTramiteCompleto(String ntramite) throws Exception;
+
 }

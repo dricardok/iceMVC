@@ -112,6 +112,7 @@ public interface FlujoMesaControlManager
 			,String xpos
 			,String ypos
 			,String dsvalida
+			,String referencia
 			,String cdvalidafk
 			,String jsvalida
 			,String accion
@@ -416,7 +417,10 @@ public interface FlujoMesaControlManager
 	
 	public void recuperarCotiColec(String cdusuari, String cdsisrol, String ntramite, String nmsolici, String status) throws Exception;
 	
-	public Map<String,String> tramiteMC(String ntramite, String nmsolici, String cdunieco, String cdramo, String cdtipsit) throws Exception;
+	/**
+	 * 2017/08/31 - jtezva - se comenta porque no se usa
+	 */
+//	public Map<String,String> tramiteMC(String ntramite, String nmsolici, String cdunieco, String cdramo, String cdtipsit) throws Exception;
 	
 	public void guardarVentanaDatosTramite (String ntramite, Map<String, String> datos) throws Exception;
 	
@@ -438,4 +442,9 @@ public interface FlujoMesaControlManager
 	public String obtenerSuplementoTramite(String ntramite) throws Exception;
 	
 	public Map<String, String> obtenerTramiteCompleto (String ntramite) throws Exception;
+	
+	public String confirmarTramiteDesdeCotizacion (String ntramite, String cdunieco, String cdramo, String estado, String nmpoliza,
+	        String cdusuari, String cdsisrol) throws Exception;
+	
+	public FlujoVO recuperarReferenciaFlujoCotizacionAgente (String ntramite, String cdsisrol) throws Exception;
 }

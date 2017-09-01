@@ -1479,48 +1479,50 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
         }
     }
     
-    
-    @SuppressWarnings("unchecked")
-    @Override
-    public Map<String,String> obtenerTramiteCompleto(String ntramite) throws Exception {
-        Map<String, String> params = new LinkedHashMap<String, String>();
-        params.put("pv_ntramite_i", ntramite);
-        
-        Map<String, Object> mapResult = ejecutaSP(new ObtenerTramiteCompletoSP(this.getDataSource()), params);
-        List<Map<String,String>> listaTramites = (List<Map<String,String>>) mapResult.get("pv_registro_o");
-        if(listaTramites==null||listaTramites.size()==0) {
-            throw new ApplicationException("No se encuentra el tramite "+params.get("pv_ntramite_i"));
-        }
-        return listaTramites.get(0);
-    }
-    
-    protected class ObtenerTramiteCompletoSP extends StoredProcedure {
-        protected ObtenerTramiteCompletoSP(DataSource dataSource) {
-            super(dataSource, "PKG_MESACONTROL.P_GET_TRAMITE_COMPLETO");
-            declareParameter(new SqlParameter("pv_ntramite_i", Types.VARCHAR));
-            String[] cols = new String[] {
-                    "NTRAMITE", "CDUNIECO", "CDRAMO", "ESTADO", "NMPOLIZA", "NMSUPLEM", "NMSOLICI",
-                    "CDSUCADM", "CDSUCDOC", "CDSUBRAM", "CDTIPTRA", "FERECEPC",
-                    "CDAGENTE", "REFERENCIA", "NOMBRE",
-                    "FECSTATU", "STATUS", "COMMENTS", "CDTIPSIT",
-                    "OTVALOR01", "OTVALOR02", "OTVALOR03", "OTVALOR04", "OTVALOR05",
-                    "OTVALOR06", "OTVALOR07", "OTVALOR08", "OTVALOR09", "OTVALOR10", 
-                    "OTVALOR11", "OTVALOR12", "OTVALOR13", "OTVALOR14", "OTVALOR15",
-                    "OTVALOR16", "OTVALOR17", "OTVALOR18", "OTVALOR19", "OTVALOR20", 
-                    "OTVALOR21", "OTVALOR22", "OTVALOR23", "OTVALOR24", "OTVALOR25", 
-                    "OTVALOR26", "OTVALOR27", "OTVALOR28", "OTVALOR29", "OTVALOR30",
-                    "OTVALOR31", "OTVALOR32", "OTVALOR33", "OTVALOR34", "OTVALOR35",
-                    "OTVALOR36", "OTVALOR37", "OTVALOR38", "OTVALOR39", "OTVALOR40",
-                    "OTVALOR41", "OTVALOR42", "OTVALOR43", "OTVALOR44", "OTVALOR45",
-                    "OTVALOR46", "OTVALOR47", "OTVALOR48", "OTVALOR49", "OTVALOR50", 
-                    "RENUNIEXT", "RENRAMO", "RENPOLIEX", "CDTIPFLU", "CDFLUJOMC", "CDUNIDSPCH"
-            };
-            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
-            declareParameter(new SqlOutParameter("pv_msg_id_o"  , Types.NUMERIC));
-            declareParameter(new SqlOutParameter("pv_title_o"   , Types.VARCHAR));
-            compile();
-        }
-    }
+    /**
+     * 2017/08/31 - jtezva - se comenta porque no se usa
+     */
+//    @SuppressWarnings("unchecked")
+//    @Override
+//    public Map<String,String> obtenerTramiteCompleto(String ntramite) throws Exception {
+//        Map<String, String> params = new LinkedHashMap<String, String>();
+//        params.put("pv_ntramite_i", ntramite);
+//        
+//        Map<String, Object> mapResult = ejecutaSP(new ObtenerTramiteCompletoSP(this.getDataSource()), params);
+//        List<Map<String,String>> listaTramites = (List<Map<String,String>>) mapResult.get("pv_registro_o");
+//        if(listaTramites==null||listaTramites.size()==0) {
+//            throw new ApplicationException("No se encuentra el tramite "+params.get("pv_ntramite_i"));
+//        }
+//        return listaTramites.get(0);
+//    }
+//    
+//    protected class ObtenerTramiteCompletoSP extends StoredProcedure {
+//        protected ObtenerTramiteCompletoSP(DataSource dataSource) {
+//            super(dataSource, "PKG_MESACONTROL.P_GET_TRAMITE_COMPLETO");
+//            declareParameter(new SqlParameter("pv_ntramite_i", Types.VARCHAR));
+//            String[] cols = new String[] {
+//                    "NTRAMITE", "CDUNIECO", "CDRAMO", "ESTADO", "NMPOLIZA", "NMSUPLEM", "NMSOLICI",
+//                    "CDSUCADM", "CDSUCDOC", "CDSUBRAM", "CDTIPTRA", "FERECEPC",
+//                    "CDAGENTE", "REFERENCIA", "NOMBRE",
+//                    "FECSTATU", "STATUS", "COMMENTS", "CDTIPSIT",
+//                    "OTVALOR01", "OTVALOR02", "OTVALOR03", "OTVALOR04", "OTVALOR05",
+//                    "OTVALOR06", "OTVALOR07", "OTVALOR08", "OTVALOR09", "OTVALOR10", 
+//                    "OTVALOR11", "OTVALOR12", "OTVALOR13", "OTVALOR14", "OTVALOR15",
+//                    "OTVALOR16", "OTVALOR17", "OTVALOR18", "OTVALOR19", "OTVALOR20", 
+//                    "OTVALOR21", "OTVALOR22", "OTVALOR23", "OTVALOR24", "OTVALOR25", 
+//                    "OTVALOR26", "OTVALOR27", "OTVALOR28", "OTVALOR29", "OTVALOR30",
+//                    "OTVALOR31", "OTVALOR32", "OTVALOR33", "OTVALOR34", "OTVALOR35",
+//                    "OTVALOR36", "OTVALOR37", "OTVALOR38", "OTVALOR39", "OTVALOR40",
+//                    "OTVALOR41", "OTVALOR42", "OTVALOR43", "OTVALOR44", "OTVALOR45",
+//                    "OTVALOR46", "OTVALOR47", "OTVALOR48", "OTVALOR49", "OTVALOR50", 
+//                    "RENUNIEXT", "RENRAMO", "RENPOLIEX", "CDTIPFLU", "CDFLUJOMC", "CDUNIDSPCH"
+//            };
+//            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new GenericMapper(cols)));
+//            declareParameter(new SqlOutParameter("pv_msg_id_o"  , Types.NUMERIC));
+//            declareParameter(new SqlOutParameter("pv_title_o"   , Types.VARCHAR));
+//            compile();
+//        }
+//    }
     
     
     @SuppressWarnings("unchecked")
@@ -1840,5 +1842,7 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
             compile();
         }
     }
+    
+   
     
 }

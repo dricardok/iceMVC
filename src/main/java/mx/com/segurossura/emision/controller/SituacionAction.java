@@ -505,6 +505,7 @@ public class SituacionAction extends PrincipalCoreAction {
                "\n###### params ",params
                ));
         try{
+        	UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             Utils.validate(params, "No se recibieron parametros");
             String cdunieco = params.get("cdunieco");
             String cdramo   = params.get("cdramo");
@@ -519,7 +520,7 @@ public class SituacionAction extends PrincipalCoreAction {
             Utils.validate(nmpoliza, "No se recibio poliza");
             Utils.validate(nmsituac, "No se recibio la situacion de riesgo");
             Utils.validate(nmcopias, "No se recibio el numero de copias");
-            situacionManager.copiaSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmcopias);
+            situacionManager.copiaSituacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, nmcopias, usuario.getCdusuari());
             success = true;
         } catch(Exception ex) {
             success = false;

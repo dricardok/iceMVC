@@ -189,17 +189,20 @@ var Ice = (
             		movimientoThmesacontrol:'mesacontrol/historial/movimientoTdmesacontrol.action'
             	},
             	
-            	turnar                        : 'despachador/turnarTramite.action',
-            	pantallaExterna               : 'flujomesacontrol/pantallaExterna.action',
-                cargarAccionesEntidad         : 'flujomesacontrol/cargarAccionesEntidad.action',
-                ejecutarValidacion            : 'flujomesacontrol/ejecutaValidacion.action',
-                obtenerDatosValidacionCliente : 'flujomesacontrol/recuperarDatosTramiteValidacionCliente.action',
-                ejecutarRevision              : 'flujomesacontrol/ejecutaRevision.action',
-                marcarRevisionConfirmada      : 'flujomesacontrol/marcarRevisionConfirmada.action',
-                marcarRequisitoRevision       : 'flujomesacontrol/marcarRequisitoRevision.action',
-                subirArchivoRequisito         : 'documentos/subirArchivoRequisito.action',
-                enviaCorreoFlujo              : 'flujomesacontrol/enviaCorreoFlujo.action',
-                obtenerTramiteCompleto        : 'flujomesacontrol/obtenerTramiteCompleto.action'
+            	turnar                             : 'despachador/turnarTramite.action',
+            	pantallaExterna                    : 'flujomesacontrol/pantallaExterna.action',
+                cargarAccionesEntidad              : 'flujomesacontrol/cargarAccionesEntidad.action',
+                ejecutarValidacion                 : 'flujomesacontrol/ejecutaValidacion.action',
+                obtenerDatosValidacionCliente      : 'flujomesacontrol/recuperarDatosTramiteValidacionCliente.action',
+                ejecutarRevision                   : 'flujomesacontrol/ejecutaRevision.action',
+                marcarRevisionConfirmada           : 'flujomesacontrol/marcarRevisionConfirmada.action',
+                marcarRequisitoRevision            : 'flujomesacontrol/marcarRequisitoRevision.action',
+                subirArchivoRequisito              : 'documentos/subirArchivoRequisito.action',
+                enviaCorreoFlujo                   : 'flujomesacontrol/enviaCorreoFlujo.action',
+                obtenerTramiteCompleto             : 'flujomesacontrol/obtenerTramiteCompleto.action',
+                ejecutarValidacionPorReferencia    : 'mesacontrol/ejecutarValidacionPorReferencia.action',
+                ejecutarValidacionesEventoPantalla : 'mesacontrol/ejecutarValidacionesEventoPantalla.action',
+                registrarNuevoTramite              : 'mesacontrol/registrarNuevoTramite.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
@@ -1164,7 +1167,8 @@ var Ice = (
                     FF: 'filefieldice',
                     CDPERSONPICKER: 'cdpersonpicker',
                     CDAGENTEPICKER: 'cdagentepicker',
-                    PASSWORD: 'textfieldice'
+                    PASSWORD: 'textfieldice',
+                    PUNTOVENTAPICKER: 'puntoventapicker'
                 }[config.tipocampo];
                 if (!item.xtype) {
                     throw 'Tipocampo incorrecto para item';
@@ -1450,7 +1454,8 @@ var Ice = (
                     FF: 'string',
                     CDPERSONPICKER: 'string',
                     CDAGENTEPICKER: 'string',
-                    PASSWORD: 'string'
+                    PASSWORD: 'string',
+                    PUNTOVENTAPICKER: 'string'
                 }[config.tipocampo];
             if (!field.type) {
                 throw 'Tipocampo incorrecto para field';
@@ -2001,7 +2006,6 @@ var Ice = (
      * Esta funcion hace submit al index de la aplicacion
      */
     index: function () {
-        Ice.cerrarVentanas();
         Ice.redirect('login.action');
     },
 
@@ -2329,5 +2333,13 @@ var Ice = (
                 throw arguments[i + 1];
             }
         }
+    },
+
+    /**
+     * Parsea fechas
+     */
+    parse: function(value, format){
+        return Ext.Date.parse(value, format||Ext.util.Format.dateFormat);
     }
+
 });

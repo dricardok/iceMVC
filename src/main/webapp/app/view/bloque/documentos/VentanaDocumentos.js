@@ -34,7 +34,8 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
         nmpoliza: null,
         nmsuplem: null,
         itemsPerPage: null,
-        flujo: null
+        flujo: null,
+        ntramite: null
     },
     
     // validacion de parametros de entrada
@@ -54,6 +55,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                 config.estado   = config.flujo.estado;
                 config.nmpoliza = config.flujo.nmpoliza;
                 config.nmsuplem = config.flujo.nmsuplem;
+                config.ntramite = config.flujo.ntramite;
             }
             
             if (!config.cdunieco || !config.cdramo || !config.estado ||!config.nmpoliza
@@ -80,6 +82,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                     nmpoliza: config.nmpoliza,
                     nmsuplem: config.nmsuplem,
                     dsdocume: config.dsdocume,
+                    ntramite: config.ntramite,
                     itemsPerPage: config.itemsPerPage,
                     platformConfig: {
                         '!desktop': {

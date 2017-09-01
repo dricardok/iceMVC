@@ -72,10 +72,10 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                     );
                 } else {
                     window.open(Ice.url.bloque.documentos.verArchivo+'?'+
-                        'params.url='+encodeURIComponent(data.url)+
-                        '&params.ruta='+encodeURIComponent(data.ruta)+
-                        '&params.cddocume='+data.cddocume+
-                        '&params.cdtipdoc='+encodeURIComponent(data.cdtipdoc)+
+                        'params.url='+encodeURIComponent(Ice.nvl(data.url))+
+                        '&params.ruta='+encodeURIComponent(Ice.nvl(data.ruta))+
+                        '&params.cddocume='+Ice.nvl(data.cddocume)+
+                        '&params.cdtipdoc='+encodeURIComponent(Ice.nvl(data.cdtipdoc))+
                         '&params.cdunieco='+view.getCdunieco()+
                         '&params.cdramo='+view.getCdramo()+
                         '&params.estado='+view.getEstado()+
@@ -313,7 +313,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
         }
     },
 
-    mostrarColumna(column, swmostrar){
+    mostrarColumna: function(column, swmostrar){
         Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.mostrarColumna column', column, 'swmostrar', swmostrar);
         if(swmostrar == true){
             column.show();

@@ -42,5 +42,17 @@ public interface SituacionManager {
 	public List<Map<String, String>> validaBloqueSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem,
 	        String cdusuari, String cdsisrol) throws Exception;
 	
-	public void copiaSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String nmcopias) throws Exception;
+	/**
+	 * Copia una situacion de riesgo a partir de otra, en una poliza
+	 * @param cdunieco
+	 * @param cdramo
+	 * @param estado
+	 * @param nmpoliza
+	 * @param nmsituac Situacion a copiar
+	 * @param nmsuplem
+	 * @param nmcopias Numero de copias 
+	 * @param cdusuari Usuario del sistema
+	 * @throws Exception
+	 */
+	public void copiaSituacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String nmsuplem, String nmcopias, String cdusuari) throws Exception;
 }

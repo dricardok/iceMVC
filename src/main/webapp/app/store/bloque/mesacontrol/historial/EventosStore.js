@@ -31,7 +31,7 @@ Ext.define("Ice.store.bloque.mesacontrol.historial.EventosStore",{
 //                        ,"nmordina"
 //                        ,"dssisrol_dest"],
         	["ntramite"
-                ,"nmordina"
+                ,{name: 'nmordina', type: 'int'}
                 ,"cdtiptra"
                 ,"cdclausu"
                 ,"fecha"

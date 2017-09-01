@@ -21,11 +21,15 @@ import org.springframework.stereotype.Controller;
 
 import com.biosnettcs.core.Constantes;
 import com.biosnettcs.core.Utils;
+import com.biosnettcs.core.exception.ApplicationException;
 import com.biosnettcs.portal.controller.PrincipalCoreAction;
+import com.biosnettcs.portal.model.RolSistema;
 import com.biosnettcs.portal.model.UsuarioVO;
 import com.opensymphony.xwork2.ActionContext;
 
 import mx.com.segurossura.emision.service.EmisionManager;
+import mx.com.segurossura.workflow.mesacontrol.model.FlujoVO;
+import mx.com.segurossura.workflow.mesacontrol.service.FlujoMesaControlManager;
 
 @Controller
 @Scope("prototype")
@@ -44,12 +48,16 @@ public class EmisionAction extends PrincipalCoreAction {
 	private List<Map<String, String>> list;
 	private List<String>	   errores;
 	private String			   emitir;
+	private FlujoVO            flujo;
 
 	private Map<String, List<Map<String, String>>> componentes;
 	private static SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
 	
 	@Autowired
 	private EmisionManager emisionManager;
+	
+	@Autowired
+	private FlujoMesaControlManager flujoMesaControlManager;
 	
 	@Action(		
 	        value = "movimientoTvalogar", 
@@ -630,22 +638,37 @@ public class EmisionAction extends PrincipalCoreAction {
             UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             
             Utils.validate(params, "No se recibieron datos");
-            String cdunieco = params.get("cdunieco");
-            String cdramo =   params.get("cdramo");
-            String estado =   params.get("estado");
-            String nmpoliza = params.get("nmpoliza");
-            String nmsituac = "0".equals(params.get("nmsituac")) ? null : params.get("nmsituac");
-            String cdperpag = params.get("cdperpag");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsituac = "0".equals(params.get("nmsituac")) ? null : params.get("nmsituac"),
+                   cdperpag = params.get("cdperpag"),
+                   ntramite = params.get("ntramite");
             
-            Utils.validate(cdunieco, "Falta cdunieco");
-            Utils.validate(cdramo,   "Falta cdramo");
-            Utils.validate(estado,   "Falta estado");
-            Utils.validate(nmpoliza, "Falta nmpoliza");
-            Utils.validate(cdperpag, "Falta cdperpag");
+            Utils.validate(cdunieco , "Falta cdunieco",
+                           cdramo   , "Falta cdramo",
+                           estado   , "Falta estado",
+                           nmpoliza , "Falta nmpoliza",
+                           cdperpag , "Falta cdperpag");
             
             Map<String, Object> resultados = emisionManager.generarTarificacionPlan(cdunieco, cdramo, estado, nmpoliza, nmsituac,
                     cdperpag, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             logger.debug("resultado Tarificacion: {}", resultados);
+            
+            // si no es agente, el tramite es obligatorio porque solo el agente puede confirmar cotizacion sin tramite
+            if (StringUtils.isBlank(ntramite) && !RolSistema.AGENTE.getCdsisrol().equals(usuario.getRolActivo().getCdsisrol())) {
+                throw new ApplicationException("No se soporta la generaci\u00f3n de tr\u00e1mite desde cotizaci\u00f3n para rol distinto a agente");
+            }
+            
+            // se manda a actualizar el tramite o generar uno nuevo (para agente)
+            String ntramiteNuevo = flujoMesaControlManager.confirmarTramiteDesdeCotizacion(ntramite, cdunieco, cdramo, estado, nmpoliza,
+                    usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
+            
+            // Si se genero un tramite nuevo (agente) recupero la referencia a pantalla cotizacion
+            if (StringUtils.isNotBlank(ntramiteNuevo)) {
+                flujo = flujoMesaControlManager.recuperarReferenciaFlujoCotizacionAgente(ntramiteNuevo, usuario.getRolActivo().getCdsisrol());
+            }
             
             success = true;
         } catch (Exception ex) {
@@ -976,10 +999,18 @@ public class EmisionAction extends PrincipalCoreAction {
     	                   nmpoliza, "Falta nmpoliza",
     	                   iscotizacion, "Falta iscotizacion");
     	    
+    	    Map<String, Object> resultado = null;
     	    
-    	    Map<String, Object> resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());
+    	    if(flujo != null) {
+    	    	
+    	    	resultado = emisionManager.generarDocumentos(flujo.getCdunieco(), flujo.getCdramo(), flujo.getEstado(), flujo.getNmpoliza(), flujo.getNmsuplem(), null, flujo.getAux(), usuario.getCdusuari());
+    	    
+    	    } else {    	  
+    	    
+    	    	resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());
+    	    	
+    	    }
     	    errores = (List<String>) resultado.get("errores");
-    	    
     	    
     	    success = true;
     	    
@@ -1093,6 +1124,12 @@ public class EmisionAction extends PrincipalCoreAction {
 	public void setEmitir(String emitir) {
 		this.emitir = emitir;
 	}
-	
-	
+
+    public FlujoVO getFlujo() {
+        return flujo;
+    }
+
+    public void setFlujo(FlujoVO flujo) {
+        this.flujo = flujo;
+    }
 }

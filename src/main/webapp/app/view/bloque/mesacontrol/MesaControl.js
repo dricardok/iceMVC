@@ -15,13 +15,12 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
     controller: 'mesacontrol',
     
     constructor: function(config) {
-    	var me = this,
-        paso = 'Construyendo mesa de control';
-    	
-    	me.callParent(arguments);
-    	
-        return Ice.query('#mainView').getController().redirectTo('accesocotizacion.action'); // para que no entre a mesa
         Ice.log('Ice.view.mesacontrol.MesaControl.constructor config:', config);
+    	var me = this,
+            paso = 'Construyendo mesa de control';
+    	
+    	// me.callParent(arguments);
+        // return Ice.query('#mainView').getController().redirectTo('accesocotizacion.action'); // para que no entre a mesa
         
         try {
             Ice.generaComponentes(); // para que valide sesion

@@ -84,17 +84,18 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             if (refs.b1_feefecto && refs.b1_feproren) {
                 refs.b1_feefecto.on({
                     change: function (me, value) {
-                        var paso = 'Calculando fin de vigencia';
-                        try {
-                            alert('Antes de cambiar fecha');
-                            if(refs.b1_ottempot.getValue()){
-                                me.cambiarFechasTemporalidad(refs);
-                            } else {
-                                refs.b1_feproren.setValue(Ext.Date.add(value, Ext.Date.YEAR, 1));
+                        if(view.getCdramo() == '501'){
+                            Ice.log('cambiando fechas desde custom datos generales');
+                            var paso = 'Calculando fin de vigencia';
+                            try {
+                                if(refs.b1_ottempot.getValue()){
+                                    me.cambiarFechasTemporalidad(refs);
+                                } else {
+                                    refs.b1_feproren.setValue(Ext.Date.add(value, Ext.Date.YEAR, 1));
+                                }
+                            } catch (e) {
+                                Ice.logWarn(paso, e);
                             }
-                            alert('Despues de cambiar fecha');
-                        } catch (e) {
-                            Ice.logWarn(paso, e);
                         }
                     }
                 });
@@ -640,18 +641,23 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
 
     cambiarFechasTemporalidad: function(refs){
         Ice.log('Ice.view.bloque.DatosGeneralesController.cambiarFechasTemporalidad refs',refs);
-        if(refs){
-            if(refs.b1_ottempot.getValue() == 'R'){
-                refs.b1_fevencim.hide();
-                refs.b1_feproren.show();
-                refs.b1_fevencim.setValue(null);
-                refs.b1_feproren.setValue(Ext.Date.add(new Date(refs.b1_feefecto.getValue()), Ext.Date.YEAR, 1));
-            } else {
-                refs.b1_fevencim.show();
-                refs.b1_feproren.hide();
-                refs.b1_feproren.setValue(null);
-                refs.b1_fevencim.setValue(Ext.Date.add(new Date(refs.b1_feefecto.getValue()), Ext.Date.YEAR, 1));
+        var paso = 'Cambiando fecha de temporalidad';
+        try {
+            if(refs){
+                if(refs.b1_ottempot.getValue() == 'R'){
+                    refs.b1_fevencim.hide();
+                    refs.b1_feproren.show();
+                    refs.b1_fevencim.setValue(null);
+                    refs.b1_feproren.setValue(Ext.Date.add(new Date(refs.b1_feefecto.getValue()), Ext.Date.YEAR, 1));
+                } else {
+                    refs.b1_fevencim.show();
+                    refs.b1_feproren.hide();
+                    refs.b1_feproren.setValue(null);
+                    refs.b1_fevencim.setValue(Ext.Date.add(new Date(refs.b1_feefecto.getValue()), Ext.Date.YEAR, 1));
+                }
             }
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
         }
     }
 });

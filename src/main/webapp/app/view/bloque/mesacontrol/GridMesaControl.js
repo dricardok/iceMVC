@@ -104,8 +104,10 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControl', {
 			
 			config.buttons = [
 				{
+
 					text: 'Nuevo trámite',
 					iconCls: 'x-fa fa-file-text-o',
+
 					handler: 'onNuevoTramiteClic'
 				}
 			].concat(config.buttons || []);

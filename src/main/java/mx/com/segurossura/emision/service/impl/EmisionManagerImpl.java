@@ -44,6 +44,7 @@ import mx.com.segurossura.general.catalogos.model.Bloque;
 import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
 import mx.com.segurossura.general.documentos.model.TipoArchivo;
 import mx.com.segurossura.general.producto.model.EstadoPoliza;
+import mx.com.segurossura.workflow.mesacontrol.dao.FlujoMesaControlDAO;
 
 @Service
 public class EmisionManagerImpl implements EmisionManager {
@@ -79,6 +80,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	
 	@Autowired
 	private RegistoPersonaDAO registroPersonaDao;
+	
+	@Autowired
+	private FlujoMesaControlDAO flujoMesaControlDAO;
 
 	@Override
 	public void movimientoTvalogar(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
@@ -296,7 +300,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			for (Map<String, String> situac : situacionesPoliza) {
 				logger.debug("Inicio tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",
 						situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
-				res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"));
+				res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"), cdusuari);
 				logger.debug("Fin    tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",
 						situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
 			}
@@ -377,7 +381,7 @@ public class EmisionManagerImpl implements EmisionManager {
 					
 					logger.debug("Inicio tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",	situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
 					
-					resultados.add(res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac")));
+					resultados.add(res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"), cdusuari));
 					
 					logger.debug("Fin    tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",
 							situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
@@ -526,16 +530,29 @@ public class EmisionManagerImpl implements EmisionManager {
 		StringBuilder sb = null;
 		if(carpetas != null) {
 			sb = new StringBuilder();
-			for(String carpeta : carpetas) {
-				
+			for(String carpeta : carpetas) {				
 				sb.append(carpeta);
-				sb.append(File.separator);				
-				
+				sb.append(File.separator);
 			}
 		}
 		return sb != null ?  sb.toString() : null;
 	}
 	
+	@SuppressWarnings("deprecation")
+    private String generaRutaLlave(String ntramite, String ferecepc) throws Exception{
+        StringBuilder sb = new StringBuilder();
+        String paso = "Obteniendo ruta para documentos";
+        try{        
+            Date fecha = Utils.parse(ferecepc);
+            sb.append(fecha.getYear()).append(File.separator);
+            sb.append(StringUtils.leftPad(String.valueOf(fecha.getMonth()), 2, '0')).append(File.separator);
+            sb.append(StringUtils.leftPad(String.valueOf(fecha.getDay()), 2, '0')).append(File.separator);
+            sb.append(ntramite).append(File.separator);
+        } catch (Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }
+        return sb != null ?  sb.toString() : null;
+    }
 	
 	private void generaDirectorio(String...carpetas) throws Exception{
 		StringBuilder sb = null;
@@ -555,7 +572,18 @@ public class EmisionManagerImpl implements EmisionManager {
 			}
 		}		
 	}
-		
+	
+	private void generaDirectorios(String ntramite, String ferecepc) throws Exception{
+        StringBuilder sb = null;
+        Date fecha = Utils.parse(ferecepc);
+        generaDirectorio(
+                String.valueOf(fecha.getYear()),
+                StringUtils.leftPad(String.valueOf(fecha.getMonth()), 2, '0'),
+                StringUtils.leftPad(String.valueOf(fecha.getDay()), 2, '0'),
+                ntramite
+         );     
+    }
+	
 	@Override
 	public Map<String, Object> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion, String cdusuari) throws Exception {
 		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
@@ -635,7 +663,6 @@ public class EmisionManagerImpl implements EmisionManager {
 						//	boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
 						exito = false;
 						try {
-							
 							generaDirectorio(directorioBase, cdunieco, cdramo, estado, nmpoliza, nmsuplem);
 							
 							FileUtils.copyURLToFile(new URL(urlSLIP), new File(documentoRuta), 120000, 120000);
@@ -676,6 +703,102 @@ public class EmisionManagerImpl implements EmisionManager {
 		
 		return results;
 	}
+	
+	   @Override
+	   public Map<String, Object> generarDocumentos(String ntramite, String cdtipsup, String isCotizacion, String cdusuari) throws Exception{
+	        logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+	                     "@@@@@@@@@ generarDocumentos");
+	        List<Documento> documentos = null;
+	        Map<String, String> datosMrecibo = null;
+	        Map<String, Object> results = new HashMap<String, Object>();
+	        List<String> errores = new ArrayList<String>();
+	        StringBuilder path = new StringBuilder();
+	        StringBuilder paso = new StringBuilder();
+	        boolean exito = false;
+	        String documentoRuta = "";
+	        String nombreExtension = "";
+	        String urlSLIP;
+	        int contDocEr = 0;	        
+	        ExecutorService executor = Executors.newFixedThreadPool(5);
+	        try {
+	            // Obteniendo nmrecibo para obtener el nmrecibo de la poliza emitida	            
+	            logger.debug("Obteniendo informacion para generar documentos");
+	            Map<String, String> tramite = flujoMesaControlDAO.obtenerTramite(ntramite);
+	            String cdunieco = tramite.get("cdunieco"),
+	                   cdramo = tramite.get("cdramo"),
+	                   estado = tramite.get("estado"),
+	                   nmpoliza = tramite.get("nmpoliza"),
+	                   nmsuplem = tramite.get("nmsuplem"),
+	                   ferecepc = tramite.get("ferecepc"),
+	                   nmsolici = null, // TODO: RBS agregar cuando se agregue la Mesa de control
+	                   cdtiptra = tramite.get("cdtiptra"), // TODO: RBS agregar cuando se agregue la Mesa de control
+	                   codidocu = null, // TODO: RBS agregar cuando se agregue la Mesa de control
+	                   cdorddoc = null, // TODO: RBS agregar cuando se agregue la Mesa de control
+	                   cdmoddoc = null, // TODO: RBS agregar cuando se agregue la Mesa de control
+	                   nmcertif = null, // TODO: RBS agregar cuando se agregue la Mesa de control
+	                   nmsituac = null;
+	            try {
+	                if(isCotizacion.toLowerCase().equals("true")) { 
+	                    datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpoliza, null).get(0);
+	                }
+	            } catch(Exception e) {
+	                e.printStackTrace();
+	            }
+	            
+	            logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+	            documentos = impresionManager.getDocumentos(ntramite, cdramo, estado, nmpoliza, nmsuplem);
+	            logger.debug("Fin de obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
+	            // Especificar el path para almacenar documentos                
+	            path.append(generaRutaLlave(ntramite, ferecepc));
+	            paso.append("Guardando documentos de la tramite ").append(ntramite).toString();
+	            if(documentos != null) {
+	                logger.debug("Numero de documentos devueltos para la Confirmacion {} " + documentos.size());
+	                // Se guardan la lista de documentos:
+	                for (Documento documento : documentos) {
+	                    String localnmsuplem = isCotizacion.toLowerCase().equals("false") ? nmsuplem : datosMrecibo.get("nmsuplem");
+	                    try{   
+	                        logger.info(documento.getId());
+	                        logger.info(documento.getNombre());
+	                        logger.info(documento.getTipo());
+	                        logger.info(documento.getUrl());                        
+	                        
+	                        documentoRuta = path+documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
+	                        nombreExtension = documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());                        
+	                        urlSLIP = documento.getTipo()!=null ? documento.getUrl()+"/"+cdusuari+"/rtf" : documento.getUrl();
+	                            
+	                        //  boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
+	                        exito = false;
+	                        try {
+	                            generaDirectorios(ntramite, ferecepc);
+	                            FileUtils.copyURLToFile(new URL(urlSLIP), new File(documentoRuta), 120000, 120000);
+	                            exito = true;
+	                        } catch(Exception fe) {
+	                            logger.error(fe.getMessage(), fe);
+	                            contDocEr += 1;
+	                            errores.add("Error al obtener documento " + documento.getNombre());
+	                        }
+	                        documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpoliza, nmsolici, localnmsuplem, ntramite, new Date(),
+	                                                                   documento.getId(), nombreExtension, cdtipsup, exito ? Constantes.SI : Constantes.NO,
+	                                                                   cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, urlSLIP, 
+	                                                                   path.toString(), documento.getTipo(), Constantes.INSERT_MODE);                                           	                        
+	                    } catch(Exception e) {
+	                        logger.error(e.getMessage(), e);                    
+	                        //continue;
+	                    }
+	                }
+	                if(documentos.size() == contDocEr) {
+	                    throw new Exception();
+	                }
+	            }
+	        }catch(Exception ex) {
+	            Utils.generaExcepcion(ex, paso.toString());
+	        }       
+	        
+	        logger.debug("@@@@@@@@@ generarDocumentos",
+	                     "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+	        
+	        return results;
+	    }
 	
 	@Override
 	public List<Map<String, String>> obtenerDatosTarificacion(String cdunieco, String cdramo, String estado,

@@ -36,7 +36,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 								Ice.request({
 					                mascara: paso,
 									timeout: 1000*60*5,
-					                url: Ice.url.emision.tarificarPlan,
+					                url: Ice.url.emision.tarificarPlan, 
 					                params: Ice.convertirAParams({
 										cdunieco: view.getCdunieco(),
 										cdramo: view.getCdramo(),
@@ -44,10 +44,22 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 										nmpoliza: view.getNmpoliza(),
 										nmsuplem: view.getNmsuplem(),					                     
 										cdtipsit: view.getCdtipsit(),					                        
-										cdperpag: rec.get('cdperpag')
+										cdperpag: rec.get('cdperpag'),
+										ntramite: view.getFlujo().ntramite || ''
 									}),
 					                success: function (action) {
-					                	
+										
+										if (action.flujo && action.flujo.ntramite) { // cuando se genera el tramite
+											view.setFlujo(action.flujo);
+											view.fireEvent('tramiteGenerado', view, action.flujo);
+										} else { // cuando solo se actualiza, los demas ya los tiene
+											view.getFlujo().cdunieco = view.getCdunieco();
+											view.getFlujo().cdramo   = view.getCdramo();
+											view.getFlujo().estado   = view.getEstado();
+											view.getFlujo().nmpoliza = view.getNmpoliza();
+											view.getFlujo().nmsuplem = view.getNmsuplem();
+										}
+										
 					                	boton.up('ventanatarifastemporales').cerrar();
 					                	
 					                	var p, error;
@@ -136,23 +148,75 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                                handler: function (boton) {
 					                                    /*
 					                                	me.up('ventanaice').cerrar();
-					                                    */              	
-					                                	Ice.query('#mainView').getController().redirectTo('emision.action?' +
-															    'cdunieco=' + view.getCdunieco() + '&' +
-																'cdramo='   + view.getCdramo()   + '&' +
-																'estado='   + view.getEstado()   + '&' +
-																'nmpoliza=' + view.getNmpoliza() + '&' +
-																'cdtipsit=' + view.getCdtipsit() + '&' +
-																// perfilamiento
-																'cdptovta=' + view.getCdptovta() + '&' +
-																'cdgrupo='  + view.getCdgrupo()  + '&' +
-																'cdsubgpo=' + view.getCdsubgpo() + '&' +
-																'cdperfil=' + view.getCdperfil(),
-									                            true);
-								                        
-					                                	
-					                                	Ice.cerrarVentanas();
-					                                } 
+					                                    */   
+														Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+														    view.getCdramo(),
+															view.getEstado(),
+															view.getNmpoliza(), 
+															view.getNmsuplem(), 
+															'COTIZACION', 'ANTES_PROCEDER_EMISION', 
+															view.getFlujo(), 
+															function(){
+																var paso;
+																try {
+																	paso = 'Recuperando referencia';
+																	Ice.request({
+																		url: Ice.url.bloque.mesacontrol.ejecutarValidacionPorReferencia,
+																		params: {
+																			'params.ntramite': view.getFlujo().ntramite,
+																			'params.referencia': 'DESDE_COTI_' + Ice.sesion.cdsisrol
+																		},
+																		success: function (action) {
+																			var paso2 = 'Recuperando acci\u00f3n de referencia';
+																			try {
+																				if (!action.list || action.list.length === 0) {
+																					throw 'No hay referencia';
+																				}
+																				if (action.list.length > 1) {
+																					throw 'Referencia duplicada';
+																				}
+																				var ref = action.list[0];
+																				Ice.cargarAccionesEntidad(ref.cdtipflu, ref.cdflujomc, 'V', ref.cdvalida, ref.webid, function (lista) {
+																					if (lista.length === 0) {
+																						throw 'No hay acci\u00f3n para la referencia';
+																					} else if (lista.length > 1) {
+																						throw 'Acci\u00f3n para la referencia duplicada';
+																					}
+
+																					Ice.query('#mainView').getController().redirectTo('emision.action?' +
+																						'flujo.cdtipflu='  + view.getFlujo().cdtipflu  + '&' +
+																						'flujo.cdflujomc=' + view.getFlujo().cdflujomc + '&' +
+																						'flujo.tipoent='   + lista[0].TIPODEST         + '&' +
+																						'flujo.claveent='  + lista[0].CLAVEDEST        + '&' +
+																						'flujo.webid='     + lista[0].WEBIDDEST        + '&' +
+																						'flujo.ntramite='  + view.getFlujo().ntramite  + '&' +
+																						'flujo.status='    + view.getFlujo().status    + '&' +
+																						'flujo.aux='       + Ice.nvl(lista[0].AUX)     + '&' +
+																						'flujo.cdunieco='  + view.getFlujo().cdunieco  + '&' +
+																						'flujo.cdramo='    + view.getFlujo().cdramo    + '&' +
+																						'flujo.estado='    + view.getFlujo().estado    + '&' +
+																						'flujo.nmpoliza='  + view.getFlujo().nmpoliza  + '&' +
+																						'flujo.nmsituac='  + view.getFlujo().nmsituac  + '&' +
+																						'flujo.nmsuplem='  + view.getFlujo().nmsuplem  + '&' +
+																						'cdtipsit=' + view.getCdtipsit() + '&' +
+																						// perfilamiento
+																						'cdptovta=' + view.getCdptovta() + '&' +
+																						'cdgrupo='  + view.getCdgrupo()  + '&' +
+																						'cdsubgpo=' + view.getCdsubgpo() + '&' +
+                                                                                        'cdperfil=' + view.getCdperfil(), true);
+                                                                                    }
+																				);
+																			} catch (e) {
+																				Ice.manejaExcepcion(e, paso2);
+																			}
+																	    }
+																	});
+																} catch (e) {
+																	Ice.manejaExcepcion(e, paso);
+																}
+															}
+														);
+					                                }
 					                            }
 					                        ]
 					                    });

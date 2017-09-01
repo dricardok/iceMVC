@@ -360,8 +360,11 @@ public interface MesaControlDAO
      * @param ntramite Numero de tramite
      * @return Tramite
      * @throws Exception
+     * 
+     * 2017/08/31 - tezva - se comenta porque no se debe usar
+     * 
      */
-    public Map<String,String> obtenerTramiteCompleto(String ntramite) throws Exception;
+//    public Map<String,String> obtenerTramiteCompleto(String ntramite) throws Exception;
     
     /**
      * Obtiene un tramite a traves de su sucursal, ramo y numero de poliza
@@ -427,5 +430,6 @@ public interface MesaControlDAO
     public int recuperarConteoTbloqueoTramite(String ntramite) throws Exception;
     
     public String actualizaOTValorMesaControl(Map<String, Object> params) throws Exception;
+
     
 }
