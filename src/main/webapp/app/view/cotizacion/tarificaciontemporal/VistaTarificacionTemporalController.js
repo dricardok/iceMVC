@@ -49,9 +49,15 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 									}),
 					                success: function (action) {
 										
-										if (action.flujo && action.flujo.ntramite) {
+										if (action.flujo && action.flujo.ntramite) { // cuando se genera el tramite
 											view.setFlujo(action.flujo);
 											view.fireEvent('tramiteGenerado', view, action.flujo);
+										} else { // cuando solo se actualiza, los demas ya los tiene
+											view.getFlujo().cdunieco = view.getCdunieco();
+											view.getFlujo().cdramo   = view.getCdramo();
+											view.getFlujo().estado   = view.getEstado();
+											view.getFlujo().nmpoliza = view.getNmpoliza();
+											view.getFlujo().nmsuplem = view.getNmsuplem();
 										}
 										
 					                	boton.up('ventanatarifastemporales').cerrar();
@@ -158,7 +164,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 																		url: Ice.url.bloque.mesacontrol.ejecutarValidacionPorReferencia,
 																		params: {
 																			'params.ntramite': view.getFlujo().ntramite,
-																			'params.referencia': 'DESDE_COTI_AGENTE'
+																			'params.referencia': 'DESDE_COTI_' + Ice.sesion.cdsisrol
 																		},
 																		success: function (action) {
 																			var paso2 = 'Recuperando acci\u00f3n de referencia';
