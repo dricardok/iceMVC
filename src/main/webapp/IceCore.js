@@ -2294,6 +2294,13 @@ var Ice = (
                 nmsuplem  : params.flujo.nmsuplem  || params['flujo.nmsuplem'],
                 aux       : params.flujo.aux       || params['flujo.aux']
             };
+            try {
+                if (flujo.aux) {
+                    flujo.aux = Ext.JSON.decode(flujo.aux);
+                }
+            } catch (e) {
+                Ice.logWarn('no se pudo decodificar el json config.flujo.aux', e);
+            }
         } catch (e) {
             Utils.generaExcepcion(e, paso);
         }
