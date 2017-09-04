@@ -245,16 +245,18 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
                     recordPer = cellPer.getRecord();
                 dataPer = recordPer.getData();
             }
-                
+              
             //refs.gridPersonas.getStore().removeAll();
-            var personapoliza = Ext.create('Ice.view.bloque.personas.PersonaPoliza',{
+            var personapoliza = {
                 reference: 'personapoliza',
+                xtype		:	'polizapersona',
                 cdunieco: view.getCdunieco(),
                 cdramo: view.getCdramo(),
                 estado: view.getEstado(),
                 nmpoliza: view.getNmpoliza(),
                 nmsuplem: view.getNmsuplem(),
                 nmsituac: refs.gridPersonas.getNmsituac(),
+                dataPer:dataPer,
                 cdperson: dataPer.cdperson,
                 cdrol: dataPer.cdrol,
                 cdtipsit: view.getCdtipsit(),
@@ -265,6 +267,8 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
                         refs.gridPersonas.getStore().reload();
                     }
                 }
+            
+           
                 // listeners: {
                 //     'datosPersonaGuardada': function(){
                 //         Ice.pop();
@@ -279,13 +283,14 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
                 //         handler: 'onGuardarBloque'
                 //     }
                 // ]
-            });
+            };
+                
             Ice.push(personapoliza);
-            Ext.defer(function () {
-                var refs = personapoliza.getReferences().form.getReferences();
-                refs.cdperson.setValue(dataPer.cdperson);
-                refs.cdrol.setValue(dataPer.cdrol);
-            }, 600);
+//            Ext.defer(function () {
+//                var refs = personapoliza.getReferences().form.getReferences();
+//                refs.cdperson.setValue(dataPer.cdperson);
+//                refs.cdrol.setValue(dataPer.cdrol);
+//            }, 600);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
