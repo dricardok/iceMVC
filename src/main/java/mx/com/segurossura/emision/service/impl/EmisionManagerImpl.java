@@ -542,7 +542,8 @@ public class EmisionManagerImpl implements EmisionManager {
     private String generaRutaLlave(String ntramite, String ferecepc) throws Exception{
         StringBuilder sb = new StringBuilder();
         String paso = "Obteniendo ruta para documentos";
-        try{        
+        try{
+            sb.append(directorioBase).append(File.separator);
             Date fecha = Utils.parse(ferecepc);
             sb.append(fecha.getYear()).append(File.separator);
             sb.append(StringUtils.leftPad(String.valueOf(fecha.getMonth()), 2, '0')).append(File.separator);
@@ -577,6 +578,7 @@ public class EmisionManagerImpl implements EmisionManager {
         StringBuilder sb = null;
         Date fecha = Utils.parse(ferecepc);
         generaDirectorio(
+                directorioBase,
                 String.valueOf(fecha.getYear()),
                 StringUtils.leftPad(String.valueOf(fecha.getMonth()), 2, '0'),
                 StringUtils.leftPad(String.valueOf(fecha.getDay()), 2, '0'),
@@ -756,7 +758,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	                // Se guardan la lista de documentos:
 	                for (Documento documento : documentos) {
 	                    String localnmsuplem = isCotizacion.toLowerCase().equals("false") ? nmsuplem : datosMrecibo.get("nmsuplem");
-	                    try{   
+	                    try{
 	                        logger.info(documento.getId());
 	                        logger.info(documento.getNombre());
 	                        logger.info(documento.getTipo());
