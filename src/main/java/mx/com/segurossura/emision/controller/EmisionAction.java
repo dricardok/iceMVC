@@ -29,6 +29,7 @@ import com.opensymphony.xwork2.ActionContext;
 
 import mx.com.segurossura.emision.service.EmisionManager;
 import mx.com.segurossura.workflow.mesacontrol.model.FlujoVO;
+import mx.com.segurossura.workflow.mesacontrol.model.TipoEndoso;
 import mx.com.segurossura.workflow.mesacontrol.service.FlujoMesaControlManager;
 
 @Controller
@@ -1011,7 +1012,7 @@ public class EmisionAction extends PrincipalCoreAction {
                 @Result(name = "success", type = "json") 
             }
         ) 
-    public String generarDocumentos(){
+    public String generarDocumentos() {
     	logger.debug(Utils.log("\n###### generarDocumentos params: ", params));
     	try {
     		UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
@@ -1021,25 +1022,33 @@ public class EmisionAction extends PrincipalCoreAction {
     	           estado    = params.get("estado"),
     	           nmpoliza  = params.get("nmpoliza"),
     	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
-    	           iscotizacion = params.get("iscotizacion");
+    	           iscotizacion = params.get("iscotizacion"),
+    	           ntramite	 = params.get("ntramite"),
+    	           cdtipsup  = params.get("cdtipsup");
     	    
     	    Utils.validate(cdunieco, "Falta cdunieco",
-    	                   cdramo,   "Falta cdramo",
-    	                   estado,   "Falta estado",
-    	                   nmpoliza, "Falta nmpoliza",
-    	                   iscotizacion, "Falta iscotizacion");
+    	                   //cdramo,   "Falta cdramo",
+    	                   //estado,   "Falta estado",
+    	                   //nmpoliza, "Falta nmpoliza",
+    	                   iscotizacion, "Falta iscotizacion",
+    	                   //cdtipsup, "Falta cdtipsup",
+    	                   ntramite, "Falta ntramite"
+    	                   );
     	    
-    	    Map<String, Object> resultado = null;
+    	    Map<String, Object> resultado = new HashMap<String, Object>();
     	    
     	    if(flujo != null) {
-    	    	
-    	    	resultado = emisionManager.generarDocumentos(flujo.getCdunieco(), flujo.getCdramo(), flujo.getEstado(), flujo.getNmpoliza(), flujo.getNmsuplem(), null, flujo.getAux(), usuario.getCdusuari());
+        	    	
+        	    	//resultado = emisionManager.generarDocumentos(flujo.getCdunieco(), flujo.getCdramo(), flujo.getEstado(), flujo.getNmpoliza(), flujo.getNmsuplem(), null, flujo.getAux(), usuario.getCdusuari());
+        	    	resultado = emisionManager.generarDocumentos(flujo.getNtramite(), TipoEndoso.EMISION_POLIZA.getCdTipSup().toString(), flujo.getAux(), usuario.getCdusuari());
     	    
-    	    } else {    	  
-    	    
-    	    	resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());
-    	    	
+    	    } 
+    		else {       	    	
+        	    	resultado = emisionManager.generarDocumentos(ntramite, cdtipsup, iscotizacion, usuario.getCdusuari());
+        
+        	    	//resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());    	    	
     	    }
+    	    
     	    errores = (List<String>) resultado.get("errores");
     	    
     	    success = true;

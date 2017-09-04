@@ -746,11 +746,11 @@ public class EmisionManagerImpl implements EmisionManager {
 	            }
 	            
 	            logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);
-	            documentos = impresionManager.getDocumentos(ntramite, cdramo, estado, nmpoliza, nmsuplem);
+	            documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
 	            logger.debug("Fin de obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
 	            // Especificar el path para almacenar documentos                
 	            path.append(generaRutaLlave(ntramite, ferecepc));
-	            paso.append("Guardando documentos de la tramite ").append(ntramite).toString();
+	            paso.append("Guardando documentos del tramite ").append(ntramite).toString();
 	            if(documentos != null) {
 	                logger.debug("Numero de documentos devueltos para la Confirmacion {} " + documentos.size());
 	                // Se guardan la lista de documentos:
