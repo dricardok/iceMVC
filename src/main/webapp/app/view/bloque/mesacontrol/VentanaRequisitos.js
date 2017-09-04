@@ -212,7 +212,7 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaRequisitos', {
                                 }
                                 else if (rec.get('SWOBLIGA')  === 'S') {
                                     if (Ice.classic()) {
-                                        r = '<img src="' + Ice.ruta.iconos + 'cancel.png" />';
+                                        r = '<img src="' + Ice.ruta.iconos + 'cancel_02.png" />';
                                     }
                                 }
                                 return r;

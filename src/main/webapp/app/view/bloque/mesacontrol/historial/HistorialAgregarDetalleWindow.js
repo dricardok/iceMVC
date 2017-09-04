@@ -4,7 +4,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialAgregarDetalleWindow",
 	controller 	: 	"historialagregardetallewindow",
 	title		:	"Agregar Detalle",
 	scrollable	:	true,
-	bodyPadding: '40 0 0 40',
+	bodyPadding: '30',
 	config		:{
 		record	:	null
 	},
@@ -65,6 +65,8 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialAgregarDetalleWindow",
 		}, {
 			text		:	'Cancelar',
 			iconCls 	: 'x-fa fa-close',
+			ui:'gray',
+	 		style:'margin-right: 30px;',
 			handler		:	'cancelar'
 			
 		}
