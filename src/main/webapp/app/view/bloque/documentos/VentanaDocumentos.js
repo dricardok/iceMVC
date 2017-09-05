@@ -74,7 +74,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                 {
                     xtype: 'listadocumentos',
                     reference: 'listadocumentos',
-                    style:'padding: 0 20px;',
+                    style:'padding:10px 20px;',
                     title: 'Documentos de '+ (config.estado == 'W' ? 'cotizaci\u00f3n ':'p\u00f3liza ') + config.cdunieco + '-' + config.cdramo + '-' +config.nmpoliza,
                     cdunieco: config.cdunieco,
                     cdramo: config.cdramo,

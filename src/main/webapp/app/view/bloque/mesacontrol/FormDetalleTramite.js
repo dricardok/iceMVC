@@ -2,7 +2,7 @@ Ext.define('Ice.view.bloque.mesacontrol.FormDetalleTramite', {
 	extend: 'Ice.view.componente.FormDosColumnasIce',
 	
 	xtype: 'formdetalletramite',
-	
+	style: 'padding: 30px 0px 0px 0px;',
 	config: {
 		ntramite: null,
 		dstipflu: null,
@@ -30,7 +30,7 @@ Ext.define('Ice.view.bloque.mesacontrol.FormDetalleTramite', {
 	items: [
 		{
 			xtype: 'displayfield',
-	        fieldLabel: 'No. Tramite',
+	        fieldLabel: 'No. Trámite',
 	        name: 'ntramite'
 		}, {
 			xtype: 'displayfield',
@@ -54,11 +54,11 @@ Ext.define('Ice.view.bloque.mesacontrol.FormDetalleTramite', {
 	        name: 'cdramo'
 		}, {
 			xtype: 'displayfield',
-			fieldLabel: 'Poliza',
+			fieldLabel: 'Póliza',
 	        name: 'nmpoliza'
 		}, {
 			xtype: 'displayfield',
-			fieldLabel: 'Cotizacion',
+			fieldLabel: 'Cotización',
 	        name: 'nmsolici'
 		}
 	],

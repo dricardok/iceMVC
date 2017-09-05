@@ -740,7 +740,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	                   nmcertif = null, // TODO: RBS agregar cuando se agregue la Mesa de control
 	                   nmsituac = null;
 	            try {
-	                if(isCotizacion.toLowerCase().equals("true")) { 
+	                if(isCotizacion.toLowerCase().equals("false")) { 
 	                    datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpoliza, null).get(0);
 	                }
 	            } catch(Exception e) {

@@ -15,7 +15,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 	
 	title: {
 		text:"Historial",
-		style:'margin:0px 30px 16px 10px;',
+		style:'margin:0px 30px 0px 10px;',
 	},
 	scrollable: true,
 	platformConfig: {
@@ -54,7 +54,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 					xtype		:	'cartesian',
 					title: {
 						text:"Eventos",
-						style:'margin:0px 20px 16px 20px;',
+						style:'margin:0px 10px 10px 20px;',
 					},
 					width		:	"95%",
 					height		:	250,
@@ -68,6 +68,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
                         position: 'bottom',
                         fields: ['fecha'],
                         title: 'Eventos',
+                        //style:'margin:0px 20px 10px 10px;',
                         grid: true
                     }, {
                         type: 'category',
@@ -153,14 +154,16 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 					    }
 					]
 				},
-				{   style:'margin:0px 20px 16px 20px;',
+				{   style:'margin:0px 30px 16px 20px;',
 					xtype		:	'gridice',
 					title: {
 						text:"Mesa de Control",
-						//style:'margin:0px 0px 16px 30px;',
+						
 					},
 					reference	:	'gridEventos',
+					
 					columns		:	[
+						
 						{
 							text		:	"No.",	
 							dataIndex	:	"nmordina"
@@ -196,14 +199,14 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 											tooltip : 'Modificar detalle',
 											handler : function(grid,row,col){
 												me.getController().modificarDetalle(grid,row,col)
-											},
+											}
 //											isActionDisabled : function(view,row,col,it,record){
 //												return "S" === record.get('swagente');
 //											},
-											isDisabled : function(view,row,col,it,record){
-												Ice.log("args : ",arguments);
-												return "S" !== record.get('swagente');
-											}
+//											isDisabled : function(view,row,col,it,record){
+//												Ice.log("args : ",arguments);
+//												return "S" !== record.get('swagente');
+//											}
 										}
 									]
 						}
@@ -213,11 +216,10 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 			            ntramite: config.ntramite
 			        }
 				},
-				{	style:'margin:0px 20px 16px 20px;',	
+				{	style:'margin:0px 30px 16px 20px;',	
 					xtype		:	'gridice',
 					title: {
 						text:"Turnados",
-						
 					},
 					columns		:	[
 						{
