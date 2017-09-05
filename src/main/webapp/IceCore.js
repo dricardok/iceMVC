@@ -1168,7 +1168,8 @@ var Ice = (
                     CDPERSONPICKER: 'cdpersonpicker',
                     CDAGENTEPICKER: 'cdagentepicker',
                     PASSWORD: 'textfieldice',
-                    PUNTOVENTAPICKER: 'puntoventapicker'
+                    PUNTOVENTAPICKER: 'puntoventapicker',
+                    DOMICILIOPICKER: 'domiciliopicker'
                 }[config.tipocampo];
                 if (!item.xtype) {
                     throw 'Tipocampo incorrecto para item';
@@ -1455,7 +1456,8 @@ var Ice = (
                     CDPERSONPICKER: 'string',
                     CDAGENTEPICKER: 'string',
                     PASSWORD: 'string',
-                    PUNTOVENTAPICKER: 'string'
+                    PUNTOVENTAPICKER: 'string',
+                    DOMICILIOPICKER: 'string'
                 }[config.tipocampo];
             if (!field.type) {
                 throw 'Tipocampo incorrecto para field';
@@ -2294,6 +2296,13 @@ var Ice = (
                 nmsuplem  : params.flujo.nmsuplem  || params['flujo.nmsuplem'],
                 aux       : params.flujo.aux       || params['flujo.aux']
             };
+            try {
+                if (flujo.aux) {
+                    flujo.aux = Ext.JSON.decode(flujo.aux);
+                }
+            } catch (e) {
+                Ice.logWarn('no se pudo decodificar el json config.flujo.aux', e);
+            }
         } catch (e) {
             Utils.generaExcepcion(e, paso);
         }
@@ -2340,6 +2349,17 @@ var Ice = (
      */
     parse: function(value, format){
         return Ext.Date.parse(value, format||Ext.util.Format.dateFormat);
+    },
+
+    /**
+     * 2018/09/05 - jtezva - nuevo, para no llamar el de Ext
+     */
+    confirm: function (titulo, mensaje, callback) {
+        Ext.Msg.confirm(titulo, mensaje, function (boton) {
+            if (boton === 'yes') {
+                callback();
+            }
+        });
     }
 
 });

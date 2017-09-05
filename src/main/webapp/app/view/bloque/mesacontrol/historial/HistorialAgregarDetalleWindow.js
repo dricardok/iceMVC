@@ -38,6 +38,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialAgregarDetalleWindow",
         			fieldLabel	:	'Se recibe con los siguientes comentarios',
         			width		:	'100%',
         			maxRows		:   7,
+        			hidden		:	config.record.get('swagente')!='S',
         			value		:	config.record.get('comments')
         		},
         		{

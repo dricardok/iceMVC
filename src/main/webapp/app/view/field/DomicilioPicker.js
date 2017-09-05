@@ -1,8 +1,8 @@
-Ext.define('Ice.view.field.PuntoVentaPicker', {
+Ext.define('Ice.view.field.DomicilioPicker', {
     extend: 'Ice.view.componente.ContainerIce',
-    xtype: 'puntoventapicker',
+    xtype: 'domiciliopicker',
 
-    controller: 'puntoventapicker',
+    controller: 'domiciliopicker',
 
     // config ext
     platformConfig: {
@@ -21,7 +21,7 @@ Ext.define('Ice.view.field.PuntoVentaPicker', {
     },
 
     constructor: function (config) {
-        Ice.log('Ice.view.field.PuntoVentaPicker.constructor config:', config);
+        Ice.log('Ice.view.field.DomicilioPicker.constructor config:', config);
         var me = this,
             paso = 'Construyendo ventana de perfilamiento';
         try {
@@ -35,10 +35,10 @@ Ext.define('Ice.view.field.PuntoVentaPicker', {
             var camposPicker = [
                 {
                     xtype: 'textfieldice',
-                    label: config.label || 'Punto de venta',
+                    label: config.label || 'Domicilio',
                     labelAlign: config.labelAlign || 'top',
-                    name: config.name || 'cdptovta',
-                    reference: 'cdptovta',
+                    name: config.name || 'dsdomici',
+                    reference: 'dsdomici',
                     readOnly: true
                 },{
                     xtype: 'button',

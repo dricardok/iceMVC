@@ -200,6 +200,13 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 											handler : function(grid,row,col){
 												me.getController().modificarDetalle(grid,row,col)
 											}
+//											isActionDisabled : function(view,row,col,it,record){
+//												return "S" === record.get('swagente');
+//											},
+//											isDisabled : function(view,row,col,it,record){
+//												Ice.log("args : ",arguments);
+//												return "S" !== record.get('swagente');
+//											}
 										}
 									]
 						}
