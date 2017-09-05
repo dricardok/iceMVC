@@ -20,7 +20,10 @@
 {
     width            : 50px;
     height           : 50px;
-    background-image : url('${flujoimg}estado.png');
+    border-radius: 50px;
+    background-color: #00B5CB ;
+   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+//background-image : url('${flujoimg}estado.png');
 }
 .sucursal .image
 {
@@ -37,6 +40,10 @@
     top         : 20px;
     width       : 200px;
     text-align  : center;
+    color       : #FFF;
+    font-size:20px;
+    text-shadow:1px 2px 3px rgba(0, 0, 0, .3);
+   
 }
 .sucursal .CDUNIECO, .labelS
 {
@@ -233,7 +240,9 @@
     width            : 500px;
     height           : 20px;
     border           : 0px solid red;
-    background-image : url('${flujoimg}titulo0.png');
+    color: #FFF;
+    background: linear-gradient(60deg, #26c6da, #00acc1);
+    box-shadow: 0 12px 20px -10px rgba(0, 188, 212, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(0, 188, 212, 0.2);
 }
 .entidadT1
 {
