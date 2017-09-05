@@ -791,7 +791,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 				cdramo: view.getCdramo(),
 				estado: 'M',
 				nmpoliza: params.nmpoliza,
-				iscotizacion: true,
+				iscotizacion: false,
 				cdtipsup: '90',
 				ntramite: view.getFlujo().ntramite
 			});

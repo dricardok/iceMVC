@@ -111,9 +111,26 @@ public class DespachadorAction extends PrincipalCoreAction {
 	               
 	        Utils.validate(ntramite, "Falta ntramite");
 	        Date fechaHoy = new Date();
-	        RespuestaTurnadoVO respuestaTurnado = despachadorManager.turnarTramite(usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol(),
-	                ntramite, status, comments, cdrazrecha, cdusuariDes, cdsisrolDes, "S".equals(swagente), false, fechaHoy, false, false,
-	                ntrasust, soloRecibidos, correos);
+	        
+	        RespuestaTurnadoVO respuestaTurnado = null;
+	        
+	        if(flujo != null) {	
+	        	
+	        	respuestaTurnado = despachadorManager.turnarTramite(usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol(),
+	        														flujo.getNtramite(), flujo.getAux(), comments, cdrazrecha, cdusuariDes, 
+	        														cdsisrolDes, true, false, fechaHoy, false, false,
+	        														ntrasust, soloRecibidos, correos);
+	        	
+	        } else {
+	        	
+	        	respuestaTurnado = despachadorManager.turnarTramite(usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol(),
+		                											ntramite, status, comments, cdrazrecha, cdusuariDes, 
+		                											cdsisrolDes, "S".equals(swagente), false, fechaHoy, false, false,
+		                											ntrasust, soloRecibidos, correos);
+	        	
+	        }
+	        
+	        
 	        message = respuestaTurnado.getMessage();
 	        params.put("encolado", respuestaTurnado.isEncolado() ? "S" : "N");
 	        success = true;
