@@ -2,14 +2,14 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.domiciliopicker',
     
-    setValue: function (cdptovta) {
-        Ice.log('Ice.view.field.DomicilioPickerController.setValue cdptovta:', cdptovta);
+    setValue: function (dsdomici) {
+        Ice.log('Ice.view.field.DomicilioPickerController.setValue dsdomici:', dsdomici);
         var me = this,
             view = me.getView(),
             refs = view.getReferences(),
             paso = 'Modificando valor de punto de venta';
         try {
-            refs.cdptovta.setValue(cdptovta);
+            refs.dsdomici.setValue(dsdomici);
         } catch (e){
             Ice.generaExcepcion(e, paso);
         }
@@ -22,7 +22,7 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
             paso = 'Obteniendo valor de punto de venta',
             value;
         try {
-            value = refs.cdptovta.getValue();
+            value = refs.dsdomici.getValue();
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -32,21 +32,46 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
     buscar: function () {
         Ice.log('Ice.view.field.DomicilioPickerController.buscar');
         var me = this,
-        	view = me.getView(),
+            view = me.getView(),
+            refs = view.getReferences(),
             paso = 'Obteniendo valor de cdperson';
         try {
             var formRefs = view.up('[getValues]').getReferences(),
-                windowBuscar = Ext.create('Ice.view.bloque.personas.domicilios.FormularioDomicilio', {
-                listeners: {
-                    seleccionarDomicilio: function (dsdomici) {
-                        me.setValue(dsdomici);
-                        if(Ice.classic()){
-                            windowBuscar.cerrar();
-                        } else {
-                            Ice.pop();
-                        }
+                windowBuscar = Ext.create('Ice.view.componente.VentanaIce',{
+                items: [
+                    {
+                        xtype: 'formulariodomicilio',
+                        buttons: [
+                            {
+                                text: 'Aceptar',
+                                iconCls: 'x-fa fa-accept',
+                                handler: function (btn) {
+                                    try{
+                                        var values = btn.up('formulariodomicilio').getValues();
+                                        for (name in values){
+                                            try {
+                                                var val = values[name],
+                                                    formVal = formRefs[name];
+                                                Ice.log('val ',val,'formVal',formVal);
+                                                formVal.setValue(val);
+                                            } catch(e) {
+                                                Ice.log('error setean valor name ',name, ' error ', e);
+                                            }
+                                        }
+                                        me.setValue(values.dsdomici);
+                                        if(Ice.classic()){
+                                            windowBuscar.cerrar();
+                                        } else {
+                                            Ice.pop();
+                                        }
+                                    } catch(e) {
+                                        Ice.log('No se pudo modificar dsdomici ',e);
+                                    }
+                                }
+                            }
+                        ]
                     }
-                }
+                ]
             });
             if(Ice.classic()){
                 windowBuscar.mostrar();
@@ -55,6 +80,14 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
             }
         } catch (e){
             Ice.generaExcepcion(e, paso);
+        }
+    },
+
+    manejaSetValue: function(campo, value){
+        try{
+            campo.setValue(value);
+        } catch(e) {
+            Ice.log('No se pudo setear campo', campo);
         }
     },
     

@@ -1,5 +1,5 @@
 Ext.define('Ice.view.bloque.personas.domicilios.FormularioDomicilio',{
-	extend:	'Ice.view.componente.FormIce',
+	extend:	'Ice.view.componente.FormDosColumnasIce',
 	xtype:	'formulariodomicilio',
 	controller:	'formulariodomicilio',
 	/*config		:	{
