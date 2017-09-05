@@ -16,7 +16,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
     platformConfig: {
         desktop: {
             scrollable: false,
-            width: 680,
+            width: 790,
             height: 400,
             //collapsible: true,
             //titleCollapse: true
@@ -58,23 +58,23 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                 config.ntramite = config.flujo.ntramite;
             }
             
-            if (!config.cdunieco || !config.cdramo || !config.estado ||!config.nmpoliza
+            /*if (!config.cdunieco || !config.cdramo || !config.estado ||!config.nmpoliza
             //    || Ext.isEmpty(config.nmsuplem)
             ) {
                 throw 'Falta llave de p\u00f3liza para ventana de documentos';
-            }
+            }*/
             
             if(!config.itemsPerPage){
                 config.itemsPerPage = 10;
             }
 
-            config.estado = config.estado.toUpperCase();
+            //config.estado = config.estado.toUpperCase();
                                 
             config.items = [
                 {
                     xtype: 'listadocumentos',
                     reference: 'listadocumentos',
-                    style:'padding: 0 20px;',
+                    style:'padding:10px 20px;',
                     title: 'Documentos de '+ (config.estado == 'W' ? 'cotizaci\u00f3n ':'p\u00f3liza ') + config.cdunieco + '-' + config.cdramo + '-' +config.nmpoliza,
                     cdunieco: config.cdunieco,
                     cdramo: config.cdramo,
@@ -152,6 +152,11 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                     iconCls: 'x-fa fa-file-o',
                     text: 'Documentos',
                     handler: 'onRecargarDocumentos'
+                },{
+                    iconCls: 'x-fa fa-upload',
+                    text: 'Subir archivo',
+                    reference: 'btnSubirArchivo',
+                    handler: 'onSubirDocumento'
                 },{
                     xtype: 'textfieldice',
                     labelAlign: 'left',

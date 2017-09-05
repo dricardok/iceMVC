@@ -5,6 +5,7 @@ import java.io.File;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -544,15 +545,19 @@ public class EmisionManagerImpl implements EmisionManager {
 	}
 	
 	@SuppressWarnings("deprecation")
-    private String generaRutaLlave(String ntramite, String ferecepc) throws Exception{
+    public String generaRutaLlave(String ntramite, String ferecepc) throws Exception{
         StringBuilder sb = new StringBuilder();
         String paso = "Obteniendo ruta para documentos";
-        try{        
+        try{
+            sb.append(directorioBase).append(File.separator);
             Date fecha = Utils.parse(ferecepc);
-            sb.append(fecha.getYear()).append(File.separator);
-            sb.append(StringUtils.leftPad(String.valueOf(fecha.getMonth()), 2, '0')).append(File.separator);
-            sb.append(StringUtils.leftPad(String.valueOf(fecha.getDay()), 2, '0')).append(File.separator);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(fecha);
+            sb.append(cal.get(Calendar.YEAR)).append(File.separator);
+            sb.append(StringUtils.leftPad(String.valueOf(cal.get(Calendar.MONTH)+1), 2, '0')).append(File.separator);
+            sb.append(StringUtils.leftPad(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)), 2, '0')).append(File.separator);
             sb.append(ntramite).append(File.separator);
+            logger.info("ruta :{}", sb.toString());
         } catch (Exception ex) {
             Utils.generaExcepcion(ex, paso);
         }
@@ -581,10 +586,16 @@ public class EmisionManagerImpl implements EmisionManager {
 	private void generaDirectorios(String ntramite, String ferecepc) throws Exception{
         StringBuilder sb = null;
         Date fecha = Utils.parse(ferecepc);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        sb.append(cal.get(Calendar.YEAR)).append(File.separator);
+        sb.append(StringUtils.leftPad(String.valueOf(cal.get(Calendar.MONTH)+1), 2, '0')).append(File.separator);
+        sb.append(StringUtils.leftPad(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)), 2, '0')).append(File.separator);
         generaDirectorio(
-                String.valueOf(fecha.getYear()),
-                StringUtils.leftPad(String.valueOf(fecha.getMonth()), 2, '0'),
-                StringUtils.leftPad(String.valueOf(fecha.getDay()), 2, '0'),
+                directorioBase,
+                String.valueOf(cal.get(Calendar.YEAR)),
+                StringUtils.leftPad(String.valueOf(cal.get(Calendar.MONTH)+1), 2, '0'),
+                StringUtils.leftPad(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)), 2, '0'),
                 ntramite
          );     
     }
@@ -743,7 +754,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	                   nmcertif = null, // TODO: RBS agregar cuando se agregue la Mesa de control
 	                   nmsituac = null;
 	            try {
-	                if(isCotizacion.toLowerCase().equals("true")) { 
+	                if(isCotizacion.toLowerCase().equals("false")) { 
 	                    datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpoliza, null).get(0);
 	                }
 	            } catch(Exception e) {
@@ -761,7 +772,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	                // Se guardan la lista de documentos:
 	                for (Documento documento : documentos) {
 	                    String localnmsuplem = isCotizacion.toLowerCase().equals("false") ? nmsuplem : datosMrecibo.get("nmsuplem");
-	                    try{   
+	                    try{
 	                        logger.info(documento.getId());
 	                        logger.info(documento.getNombre());
 	                        logger.info(documento.getTipo());

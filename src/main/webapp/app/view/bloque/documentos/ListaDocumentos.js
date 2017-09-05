@@ -33,17 +33,21 @@ Ext.define('Ice.view.bloque.documentos.ListaDocumentos', {
                         throw 'No hay datos para lista de documentos';
                     }
                     
-                    if (!config.cdunieco || !config.cdramo || !config.estado ||!config.nmpoliza
-                    //    || Ext.isEmpty(config.nmsuplem)
-                    ) {
-                        throw 'Falta llave de p\u00f3liza para lista de documentos';
+                    if(!config.ntramite){
+                        if (!config.cdunieco || !config.cdramo || !config.estado ||!config.nmpoliza
+                        //    || Ext.isEmpty(config.nmsuplem)
+                        ) {
+                            throw 'No existen parametros para mostrar lista de documentos';
+                        } else {
+                            config.estado = config.estado.toUpperCase();
+                        }
                     }
+
                     
                     if(!config.itemsPerPage){
                         config.itemsPerPage = 10;
                     }
                     
-                    config.estado = config.estado.toUpperCase();
 
                     var compsGrid = Ice.generaComponentes({
                         pantalla: 'DOCUMENTOS',

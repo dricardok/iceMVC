@@ -1168,7 +1168,8 @@ var Ice = (
                     CDPERSONPICKER: 'cdpersonpicker',
                     CDAGENTEPICKER: 'cdagentepicker',
                     PASSWORD: 'textfieldice',
-                    PUNTOVENTAPICKER: 'puntoventapicker'
+                    PUNTOVENTAPICKER: 'puntoventapicker',
+                    DOMICILIOPICKER: 'domiciliopicker'
                 }[config.tipocampo];
                 if (!item.xtype) {
                     throw 'Tipocampo incorrecto para item';
@@ -1455,7 +1456,8 @@ var Ice = (
                     CDPERSONPICKER: 'string',
                     CDAGENTEPICKER: 'string',
                     PASSWORD: 'string',
-                    PUNTOVENTAPICKER: 'string'
+                    PUNTOVENTAPICKER: 'string',
+                    DOMICILIOPICKER: 'string'
                 }[config.tipocampo];
             if (!field.type) {
                 throw 'Tipocampo incorrecto para field';
