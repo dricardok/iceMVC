@@ -442,6 +442,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     cdramo: view.getCdramo(),
                     estado: view.getEstado(),
                     nmpoliza: view.getNmpoliza(),
+                    ntramite: view.getFlujo().ntramite,
                     
                     email: params && params.email ? params.email : null,
          	        nmtarjeta: params && params.nmtarjeta ? params.nmtarjeta : null,
@@ -450,134 +451,138 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
          	        nmcotizacion: params && params.nmpoliza ? params.nmpoliza : null
                 }),
                 success: function (action) {
-                	
-                	emisonResult = action.params;
-                	
-                	var p, error;
-                	
-                	if (Ice.classic()) {
-                	
-                		 p = Ext.create('Ext.ProgressBar', {					                		   
-                			 width: '100%',
-                			 style: 'margin-top: 10px'
-                		 });
-                		 
-                	} else {
-                		
-                		 p = Ext.create({
-                			 xtype: 'panelice',
-                			 width: '100%',
-                			 style: 'margin-top: 10px',
-                			 html:  'Generando documentos...',
-                			 
-                			 wait: function(params){
-                				 
-                			 }            		
-                		
-                		 });					                		
-                	}
-                	
-                	var error = Ext.create({
-               		 	xtype: 'panelice',
-               		 	hidden: true,
-               		 	width: '100%',
-               		 	style: 'margin-top: 10px',
-               		 	html:  '<p> Error al generar documentos, consulte a soporte tecnico </p>'
-                	});
-                	
-                    var ventana = Ext.create('Ice.view.componente.VentanaIce', {
-                        platformConfig: {
-                            desktop: {
-                                width: 400
-                            }
-                        },
-                        reference: 'ventanaavisoemision',
-                        modal: true,
-                        closable: false,
-                        title: 'Aviso',
-                        //html: '<div style="padding:10px;">Se emiti&oacute; la p&oacute;liza ' + action.params.nmpoliza + '</div>',
-                        items: [
-                        	{
-                        		xtype: 'panelice',
-                        		style: 'padding: 10px;',
-                        		items: [
-                        			{	
-                        				xtype: 'panelice',
-                        				html: 'Se emiti&oacute; la p&oacute;liza ' + action.params.nmpoliza + ''
-                        			},
-                        			error,
-		                        	p					                        			
-                        		]					                        		
-                        	}
-                        ],
-                        buttons: [
-                            {
-                                text: 'Ver documentos',
-                                reference: 'btndocumentosemision',
-                                disabled: true,
-                                iconCls: 'x-fa fa-files-o',
-                                handler: function(boton){
+                	var p, error, paso2 = 'Mostrando resultado de emisi\u00f3n';
+                	try {
+                        emisonResult = action.params;
+                        
+                        if (Ice.classic()) {
+                        
+                            p = Ext.create('Ext.ProgressBar', {					                		   
+                                width: '100%',
+                                style: 'margin-top: 10px'
+                            });
+                            
+                        } else {
+                            
+                            p = Ext.create({
+                                xtype: 'panelice',
+                                width: '100%',
+                                style: 'margin-top: 10px',
+                                html:  'Generando documentos...',
+                                
+                                wait: function(params){
                                     
-                                	
-                                	me.abrirVentanaDocumentos(action.params);
-                                	
-                                	/*
-                                	var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos',{
-                                        cdunieco: view.getCdunieco(),
-                                        cdramo: view.getCdramo(),
-                                        estado: 'M',
-                                        nmpoliza: action.params.nmpoliza
-                                    });
-                                    
-                                	ventanaDocs.mostrar();
-                                    
-                                    if (Ice.classic()) {
-                                        Ext.defer(function () {
-                                            ventanaDocs.setCollapsed(true);
-                                            ventanaDocs.showAt(Ext.getBody().getWidth() - (650 + 40), 40);
-                                        }, 600);
-                                    }
-                                    me.disabled();
-                                    */
+                                }            		
+                            
+                            });					                		
+                        }
+                        
+                        var error = Ext.create({
+                            xtype: 'panelice',
+                            hidden: true,
+                            width: '100%',
+                            style: 'margin-top: 10px',
+                            html:  '<p> Error al generar documentos, consulte a soporte tecnico </p>'
+                        });
+                        
+                        var ventana = Ext.create('Ice.view.componente.VentanaIce', {
+                            platformConfig: {
+                                desktop: {
+                                    width: 400
+                                }
+                            },
+                            reference: 'ventanaavisoemision',
+                            modal: true,
+                            closable: false,
+                            title: 'Aviso',
+                            //html: '<div style="padding:10px;">Se emiti&oacute; la p&oacute;liza ' + action.params.nmpoliza + '</div>',
+                            items: [
+                                {
+                                    xtype: 'panelice',
+                                    style: 'padding: 10px;',
+                                    items: [
+                                        {	
+                                            xtype: 'panelice',
+                                            html: 'Se emiti&oacute; la p&oacute;liza ' + action.params.nmpoliza + ''
+                                        },
+                                        error,
+                                        p					                        			
+                                    ]					                        		
+                                }
+                            ],
+                            buttons: [
+                                {
+                                    text: 'Ver documentos',
+                                    reference: 'btndocumentosemision',
+                                    disabled: true,
+                                    iconCls: 'x-fa fa-files-o',
+                                    handler: function(boton){
+                                        
+                                        
+                                        me.abrirVentanaDocumentos(action.params);
+                                        
+                                        /*
+                                        var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos',{
+                                            cdunieco: view.getCdunieco(),
+                                            cdramo: view.getCdramo(),
+                                            estado: 'M',
+                                            nmpoliza: action.params.nmpoliza
+                                        });
+                                        
+                                        ventanaDocs.mostrar();
+                                        
+                                        if (Ice.classic()) {
+                                            Ext.defer(function () {
+                                                ventanaDocs.setCollapsed(true);
+                                                ventanaDocs.showAt(Ext.getBody().getWidth() - (650 + 40), 40);
+                                            }, 600);
+                                        }
+                                        me.disabled();
+                                        */
+                                    },
                                 },
-                            }, {
-                            	text: 'Generar documentos',
-                            	reference: 'btngenerardocumentos',
-                            	disabled: true,
-                            	hidden: true,
-                            	iconCls: 'x-fa fa-files-o',
-                            	handler: function () {
-                            		
-                            		me.generarDocumentos(ventana, p, action.params);
-                            		
-                            	}
-                            }, {
-                                text: 'Inicio',
-                                iconCls: 'x-fa fa-home',
-                                handler: function(boton) {
-                                    //me.up('ventanaice').cerrar();
-                                    Ice.index();
-                                    Ice.cerrarVentanas();
-                                } 
+                                // 2017/09/04 - jtezva - se comenta porque no se usa:
+                                // {
+                                //     text: 'Generar documentos',
+                                //     reference: 'btngenerardocumentos',
+                                //     disabled: true,
+                                //     hidden: true,
+                                //     iconCls: 'x-fa fa-files-o',
+                                //     handler: function () {
+                                //         me.generarDocumentos(ventana, p, action.params);
+                                //     }
+                                // }, 
+                                {
+                                    text: 'Inicio',
+                                    iconCls: 'x-fa fa-home',
+                                    reference: 'botonIrInicio',
+                                    disabled: true,
+                                    handler: function(boton) {
+                                        //me.up('ventanaice').cerrar();
+                                        Ice.index();
+                                        Ice.cerrarVentanas();
+                                    } 
+                                }
+                            ]
+                        });
+                        
+                        Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+                            view.getCdramo(),
+                            view.getEstado(),
+                            view.getNmpoliza(), 
+                            view.getNmsuplem(), 
+                            'EMISION', 'DESPUES_EMITIR', 
+                            view.getFlujo(), 
+                            function(){
+                                    
+                                    ventana.mostrar();                    
+                                    p.wait({text: 'Generando documentos...'});
+                                    me.generarDocumentos(ventana, p, emisonResult, error)
                             }
-                        ]
-                    });
-                    
-                    Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
-     					   view.getCdramo(),
-     					   view.getEstado(),
-     					   view.getNmpoliza(), 
-     					   view.getNmsuplem(), 
-     					   'EMISION', 'DESPUES_EMITIR', 
-     					   view.getFlujo(), 
-     					   function(){
-                    			 
-		                    	 ventana.mostrar();                    
-		                         p.wait({text: 'Generando documentos...'});
-		                         me.generarDocumentos(ventana, p, emisonResult, error)
-          				   }
-             	     );
-                   
+                        );
+                    } catch (e) {
+                        Ice.manejaExcepcion(e, paso2);
+                    }
                 }
             });
         } catch (e) {
@@ -814,12 +819,79 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 				success: function (action) {
 					Ice.log(action);
 					try {
-						pbar.hide();
-						error.setHtml('<p>Documentos generados</p>');
-						error.show();
-						//Ice.query('button', ventana)[1].hide();
-						Ice.query('button', ventana)[0].enable();
-					}catch(e) {
+                        Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+                            view.getCdramo(),
+                            view.getEstado(),
+                            view.getNmpoliza(), 
+                            view.getNmsuplem(), 
+                            'EMISION', 'DESPUES_DOCS_EMISION', 
+                            view.getFlujo(), 
+                            function () {
+                                var paso3 = 'Recuperando usuario impresi\u00f3n';
+                                try {
+                                    Ice.request({
+                                        url: Ice.url.bloque.mesacontrol.ejecutarValidacion,
+                                        mascara: paso3,
+                                        params: Ice.flujoToParams(view.getFlujo(), {'params.cdvalidafk': 'DESPACHADOR'}),
+                                        success: function (action2) {
+                                            // action.params.salida
+                                            var paso4 = 'Turnando a impresi\u00f3n';
+                                            try {
+                                                if (!action2.params || Ext.isEmpty(action2.params.salida) ||
+                                                    action2.params.salida.indexOf('*') === -1) {
+                                                    throw 'No se pudo recuperar el usuario para impresi\u00f3n';
+                                                }
+                                                var turnarParams = Ice.flujoToParams(view.getFlujo());
+                                                turnarParams['flujo.aux'] = action2.params.salidasubstring(1);
+                                                Ice.request({
+                                                    url: Ice.url.bloque.mesacontrol.turnar,
+                                                    mascara: paso4,
+                                                    params: turnarParams,
+                                                    success: function (action3) {
+                                                        var paso5 = 'Mostrando resultado de documentos';
+                                                        try {
+                                                            pbar.hide();
+                                                            error.setHtml('<p>Documentos generados</p>');
+                                                            error.show();
+                                                            //Ice.query('button', ventana)[1].hide();
+                                                            Ice.query('button', ventana)[0].enable(); // boton de Ver documentos
+                                                            Ice.query('button', ventana)[1].enable(); // boton de Inicio
+
+                                                            Ice.confirm('Marcar impresi\u00f3n',
+                                                                '\u00bfDesea marcar el tr\u00e1mite como impreso\u003f',
+                                                                function () {
+                                                                    var paso6 = 'Marcando impresi\u00f3n';
+                                                                    try {
+                                                                        var turnarParams2 = Ice.flujoToParams(view.getFlujo());
+                                                                        turnarParams2['flujo.aux'] = '3';
+                                                                        Ice.request({
+                                                                            url: Ice.url.bloque.mesacontrol.turnar,
+                                                                            mascara: paso6,
+                                                                            params: turnarParams2,
+                                                                            success: function () {
+                                                                                Ice.mensajeCorrecto('Tr\u00e1mite finalizado con \u00e9xito');
+                                                                            }
+                                                                        });
+                                                                    } catch (e) {
+                                                                        Ice.manejaExcepcion(e, paso6);
+                                                                    }
+                                                                });
+                                                        } catch (e) {
+                                                            Ice.manejaExcepcion(e, paso5);
+                                                        }
+                                                    }
+                                                });
+                                            } catch (e) {
+                                                Ice.manejaExcepcion(e, paso4);
+                                            }
+                                        }
+                                    });
+                                } catch (e) {
+                                    Ice.manejaExcepcion(e, paso3);
+                                }
+                            }
+                        );
+					} catch (e) {
 						Ice.logWarn('warning al querer actualizar estatus de barra de generacion de docs', e);
 					}					
 				}

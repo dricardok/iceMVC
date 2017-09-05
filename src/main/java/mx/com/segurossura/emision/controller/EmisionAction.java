@@ -785,6 +785,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	logger.debug(Utils.log("###### confirmarPoliza params = ", params));    	
     	
     	try {
+    	    UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
     	    Utils.validate(params, "No se recibieron datos");
     	    String cdunieco  = params.get("cdunieco"),
     	           cdramo    = params.get("cdramo"),
@@ -800,14 +801,18 @@ public class EmisionAction extends PrincipalCoreAction {
     	           nmtarjeta = StringUtils.isNotBlank( params.get("nmtarjeta") ) ? params.get("nmtarjeta") : null,
     	           orderId	 = StringUtils.isNotBlank( params.get("orderId") ) ? params.get("orderId") : null,
     	           authCode   = StringUtils.isNotBlank( params.get("authCode") ) ? params.get("authCode") : null,
-    	           nmcotizacion = StringUtils.isNotBlank( params.get("nmcotizacion") ) ? params.get("nmcotizacion") : null;
+    	           nmcotizacion = StringUtils.isNotBlank( params.get("nmcotizacion") ) ? params.get("nmcotizacion") : null,
+    	           ntramite = params.get("ntramite");
     	           
     	    Utils.validate(cdunieco, "Falta cdunieco",
     	                   cdramo,   "Falta cdramo",
     	                   estado,   "Falta estado",
-    	                   nmpoliza, "Falta nmpoliza");
+    	                   nmpoliza, "Falta nmpoliza",
+    	                   ntramite, "Falta tr\u00e1mite");
     	    
-    	    Map<String, String> resultado =  emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo, nmcotizacion, nmtarjeta, authCode, orderId, email);
+    	    Map<String, String> resultado =  emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad,
+    	            newpoliza, pnmrecibo, nmcotizacion, nmtarjeta, authCode, orderId, email, ntramite, usuario.getCdusuari(),
+    	            usuario.getRolActivo().getCdsisrol());
     	    
     	    params = new HashMap<String, String>();
             params.put("nmpoliza", resultado.get("polizaemitida"));

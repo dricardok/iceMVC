@@ -2347,6 +2347,17 @@ var Ice = (
      */
     parse: function(value, format){
         return Ext.Date.parse(value, format||Ext.util.Format.dateFormat);
+    },
+
+    /**
+     * 2018/09/05 - jtezva - nuevo, para no llamar el de Ext
+     */
+    confirm: function (titulo, mensaje, callback) {
+        Ext.Msg.confirm(titulo, mensaje, function (boton) {
+            if (boton === 'yes') {
+                callback();
+            }
+        });
     }
 
 });
