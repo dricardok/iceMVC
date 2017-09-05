@@ -16,7 +16,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
     platformConfig: {
         desktop: {
             scrollable: false,
-            width: 680,
+            width: 790,
             height: 400,
             //collapsible: true,
             //titleCollapse: true
@@ -152,6 +152,11 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentos', {
                     iconCls: 'x-fa fa-file-o',
                     text: 'Documentos',
                     handler: 'onRecargarDocumentos'
+                },{
+                    iconCls: 'x-fa fa-upload',
+                    text: 'Subir archivo',
+                    reference: 'btnSubirArchivo',
+                    handler: 'onSubirDocumento'
                 },{
                     xtype: 'textfieldice',
                     labelAlign: 'left',

@@ -3,6 +3,7 @@ package mx.com.segurossura.general.documentos.service.impl;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import com.biosnettcs.core.HttpUtil;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.exception.ApplicationException;
 
+import mx.com.segurossura.emision.service.impl.EmisionManagerImpl;
 import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
 import mx.com.segurossura.general.documentos.model.Archivo;
 import mx.com.segurossura.general.documentos.model.TipoArchivo;
@@ -254,6 +256,84 @@ public class DocumentosManagerImpl implements DocumentosManager {
                     Constantes.INSERT_MODE);
         } catch (Exception e) {
             Utils.generaExcepcion(e, paso);
+        }
+    }
+    
+    @Override
+    public void subirArchivo(File file, String ruta, String nombre, String ntramite) throws Exception{
+        String paso = "Subiendo archivo";
+        try{
+            if(StringUtils.isBlank(ruta)){
+                Map<String, String> tramite = flujoMesaControlDAO.obtenerTramite(ntramite);
+                String ferecepc = tramite.get("ferecepc");
+                logger.info("ferecepc :{}", ferecepc);
+                StringBuilder sb = new StringBuilder();
+                sb.append(directorioBase).append(File.separator);
+                Date fecha = Utils.parse(ferecepc);
+                logger.info("fecha :{}", fecha);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(fecha);
+                logger.info("mes :{}", cal.get(Calendar.MONTH));
+                sb.append(cal.get(Calendar.YEAR)).append(File.separator);
+                sb.append(StringUtils.leftPad(String.valueOf(cal.get(Calendar.MONTH)+1), 2, '0')).append(File.separator);
+                sb.append(StringUtils.leftPad(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)), 2, '0')).append(File.separator);
+                sb.append(ntramite).append(File.separator);
+                logger.info("ruta :{}", sb.toString());
+                ruta = sb.toString();
+                documentosDAO.realizarMovimientoDocsPoliza(
+                        tramite.get("cdunieco"),
+                        tramite.get("cdramo"),
+                        tramite.get("estado"),
+                        tramite.get("nmpoliza"),
+                        tramite.get("nmpoliza"), //nmsolici,
+                        Utils.NVL(tramite.get("nmsuplem"), "0"),
+                        ntramite,
+                        new Date(),
+                        "USER", //documento.getId(),
+                        Utils.join(nombre), //nombreExtension,
+                        tramite.get("cdtipsup"), //cdtipsup
+                        "S",
+                        tramite.get("cdtiptra"),
+                        null,
+                        null, //cdorddoc,
+                        null, //cdmoddoc,
+                        null, //nmcertif,
+                        null, //nmsituac,
+                        null, //urlSLIP, 
+                        ruta,
+                        null, //documento.getTipo(),
+                        Constantes.INSERT_MODE);
+            }
+            if(StringUtils.isNotBlank(ruta)) {
+                logger.info("ruta carpeta:{}", ruta);
+                File carpeta = new File(ruta);
+                if (!carpeta.exists()) {
+                    logger.info("No existe la carpeta::: " + carpeta.getAbsolutePath());
+                    carpeta.mkdir();
+                    if (carpeta.exists()) {
+                        logger.info("Carpeta creada: {}", carpeta.getAbsolutePath());
+                    } else {
+                        logger.info("Carpeta NO creada: {}", carpeta.getAbsolutePath());
+                    }
+                } else {
+                    logger.info("Ya existe la carpeta {} " + ruta);
+                }
+            }
+            
+            String rutaCompletaArchivo = new StringBuilder(ruta).append(nombre).toString();
+            File temp = new File(rutaCompletaArchivo);
+            if(temp.exists()) {
+                temp.delete();
+            }
+            
+            try {
+                FileUtils.copyFile(file, new File(rutaCompletaArchivo));
+                logger.info("Se creo el archivo {}", rutaCompletaArchivo);
+            } catch (Exception e) {
+                logger.info("NO se creo el archivo {}", rutaCompletaArchivo);
+            }
+        } catch (Exception ex) {
+            Utils.generaExcepcion(ex, paso);
         }
     }
 }
