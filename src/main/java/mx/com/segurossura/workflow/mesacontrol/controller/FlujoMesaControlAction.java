@@ -892,7 +892,8 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 			Utils.validate(flujo  , "No se recibieron datos del flujo");
 			Utils.validate(params , "No se recibieron par\u00e1metros");
 			
-			String cdvalidafk = params.get("cdvalidafk");
+			String cdvalidafk = params.get("cdvalidafk"),
+			       jsvalida   = params.get("jsvalida");
 			
 			Utils.validate(cdvalidafk , "No se recibi\u00f3 clave de validaci\u00f3n");
 			
@@ -900,7 +901,8 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
 					flujo,
 					cdvalidafk,
 					usuario.getCdusuari(),
-					usuario.getRolActivo().getCdsisrol()
+					usuario.getRolActivo().getCdsisrol(),
+					jsvalida
 					));
 			
 			success = true;
