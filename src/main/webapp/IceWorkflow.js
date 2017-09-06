@@ -357,7 +357,7 @@ var Ice = (
                                                     Ice.mensajeCorrecto({
                                                         titulo: 'AVISO',
                                                         mensaje: json.message,
-                                                        callback: callback
+                                                        callback: callback || Ice.index
                                                     });
                                                 } else if (numSalidas === 1) {
                                                     Ice.procesaAccion(
