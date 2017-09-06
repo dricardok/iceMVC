@@ -333,7 +333,7 @@ Ext.define('Ice.view.main.MainController', {
                 //text: 'Arriba',
                 iconCls: 'x-fa fa-angle-up',
                 //tooltip: 'Arriba',
-                cls:'pivote zoomIn',
+                //cls:'pivote zoomIn',
                 renderTo: Ext.getBody(),
                 floating: true,
                 iconAlign: 'top',

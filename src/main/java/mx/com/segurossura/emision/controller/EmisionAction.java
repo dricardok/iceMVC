@@ -815,7 +815,13 @@ public class EmisionAction extends PrincipalCoreAction {
     	            usuario.getRolActivo().getCdsisrol());
     	    
     	    params = new HashMap<String, String>();
-            params.put("nmpoliza", resultado.get("polizaemitida"));
+            params.put("nmpoliza", resultado.get("polizaemitida"));            
+            params.put("cdunieco", resultado.get("cdunieco"));
+            params.put("cdramo", resultado.get("cdramo"));
+            params.put("estado", resultado.get("estado"));
+            params.put("nmpoliza", resultado.get("nmpoliza"));
+            params.put("nmsuplem", resultado.get("nmsuplem"));
+            
     		success = true;
     	} catch (Exception ex) {
     	    message = Utils.manejaExcepcion(ex);
@@ -1020,42 +1026,49 @@ public class EmisionAction extends PrincipalCoreAction {
     public String generarDocumentos() {
     	logger.debug(Utils.log("\n###### generarDocumentos params: ", params));
     	try {
+    		
     		UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
-    		Utils.validate(params, "No se recibieron datos");
-    	    String cdunieco  = params.get("cdunieco"),
-    	           cdramo    = params.get("cdramo"),
-    	           estado    = params.get("estado"),
-    	           nmpoliza  = params.get("nmpoliza"),
-    	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
-    	           iscotizacion = params.get("iscotizacion"),
-    	           ntramite	 = params.get("ntramite"),
-    	           cdtipsup  = params.get("cdtipsup");
+    		/*
     	    
-    	    Utils.validate(cdunieco, "Falta cdunieco",
-    	                   //cdramo,   "Falta cdramo",
-    	                   //estado,   "Falta estado",
-    	                   //nmpoliza, "Falta nmpoliza",
-    	                   iscotizacion, "Falta iscotizacion",
-    	                   //cdtipsup, "Falta cdtipsup",
-    	                   ntramite, "Falta ntramite"
-    	                   );
+    	    
     	    
     	    Map<String, Object> resultado = new HashMap<String, Object>();
     	    
     	    if(flujo != null) {
-        	    	
+        	    	logger.debug("FlujoVO  Tramite", ""+flujo.getNtramite(), ""+flujo.getAux());
         	    	//resultado = emisionManager.generarDocumentos(flujo.getCdunieco(), flujo.getCdramo(), flujo.getEstado(), flujo.getNmpoliza(), flujo.getNmsuplem(), null, flujo.getAux(), usuario.getCdusuari());
         	    	resultado = emisionManager.generarDocumentos(flujo.getNtramite(), TipoEndoso.EMISION_POLIZA.getCdTipSup().toString(), flujo.getAux(), usuario.getCdusuari());
     	    
     	    } 
-    		else {       	    	
+    		else {   
+    				Utils.validate(params, "No se recibieron datos");
+        	    
+    				String cdunieco  = params.get("cdunieco"),
+    					   cdramo    = params.get("cdramo"),
+    					   estado    = params.get("estado"),
+    					   nmpoliza  = params.get("nmpoliza"),
+    					   nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
+    					   iscotizacion = params.get("iscotizacion"),
+    					   ntramite	 = params.get("ntramite"),
+    					   cdtipsup  = params.get("cdtipsup");
+    				
+    				Utils.validate(cdunieco, "Falta cdunieco",
+     	                   //cdramo,   "Falta cdramo",
+     	                   //estado,   "Falta estado",
+     	                   //nmpoliza, "Falta nmpoliza",
+     	                   iscotizacion, "Falta iscotizacion",
+     	                   //cdtipsup, "Falta cdtipsup",
+     	                   ntramite, "Falta ntramite"
+     	                   );
+    					
+    			
         	    	resultado = emisionManager.generarDocumentos(ntramite, cdtipsup, iscotizacion, usuario.getCdusuari());
         
         	    	//resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());    	    	
     	    }
     	    
     	    errores = (List<String>) resultado.get("errores");
-    	    
+    	    */
     	    success = true;
     	    
     	}catch(Exception ex){

@@ -1,6 +1,7 @@
 package mx.com.segurossura.workflow.despachador.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -93,23 +94,12 @@ public class DespachadorAction extends PrincipalCoreAction {
 	    logger.debug(Utils.log(
 	            "\n###########################",
 	            "\n###### turnarTramite ######",
-	            "\n###### params = ", params));
+	            "\n###### params = ", params,
+	            "\n###### flujo = ", flujo));
 	    try {
-	        UsuarioVO usuario = (UsuarioVO)Utils.validateSession(session);
-	        Utils.validate(params, "No se recibieron par\u00e1metros");
-	        String ntramite    = params.get("ntramite"),
-	               status      = params.get("status"),
-	               comments    = params.get("comments"),
-	               cdrazrecha  = params.get("cdrazrecha"),
-	               cdusuariDes = params.get("cdusuariDes"),
-	               cdsisrolDes = params.get("cdsisrolDes"),
-	               swagente    = params.get("swagente"),
-                   ntrasust    = params.get("ntrasust"),
-                   correos     = params.get("correos");
-	        
-	        boolean soloRecibidos = "S".equalsIgnoreCase(params.get("soloRecibidos"));
+	        UsuarioVO usuario = (UsuarioVO)Utils.validateSession(session);        
 	               
-	        Utils.validate(ntramite, "Falta ntramite");
+	       
 	        Date fechaHoy = new Date();
 	        
 	        RespuestaTurnadoVO respuestaTurnado = null;
@@ -117,11 +107,26 @@ public class DespachadorAction extends PrincipalCoreAction {
 	        if(flujo != null) {	
 	        	
 	        	respuestaTurnado = despachadorManager.turnarTramite(usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol(),
-	        														flujo.getNtramite(), flujo.getAux(), comments, cdrazrecha, cdusuariDes, 
-	        														cdsisrolDes, true, false, fechaHoy, false, false,
-	        														ntrasust, soloRecibidos, correos);
-	        	
+	        														flujo.getNtramite(), flujo.getAux(), null, null, null, 
+	        														null, true, false, fechaHoy, false, false,
+	        														null, false, null);
+	        	params = new HashMap<String, String>();
 	        } else {
+	        	
+	        	Utils.validate(params, "No se recibieron par\u00e1metros");
+	        	String ntramite    = params.get("ntramite"),
+	 	               status      = params.get("status"),
+	 	               comments    = params.get("comments"),
+	 	               cdrazrecha  = params.get("cdrazrecha"),
+	 	               cdusuariDes = params.get("cdusuariDes"),
+	 	               cdsisrolDes = params.get("cdsisrolDes"),
+	 	               swagente    = params.get("swagente"),
+	                    ntrasust    = params.get("ntrasust"),
+	                    correos     = params.get("correos");
+	        	
+	        	Utils.validate(ntramite, "Falta ntramite");
+	        	
+	        	boolean soloRecibidos = "S".equalsIgnoreCase(params.get("soloRecibidos"));
 	        	
 	        	respuestaTurnado = despachadorManager.turnarTramite(usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol(),
 		                											ntramite, status, comments, cdrazrecha, cdusuariDes, 
@@ -130,8 +135,10 @@ public class DespachadorAction extends PrincipalCoreAction {
 	        	
 	        }
 	        
-	        
+	        logger.debug("Respuesta turnado message "+respuestaTurnado.getMessage()+" isEncolado "+respuestaTurnado.isEncolado());
 	        message = respuestaTurnado.getMessage();
+	        
+	       
 	        params.put("encolado", respuestaTurnado.isEncolado() ? "S" : "N");
 	        success = true;
 	    } catch (Exception ex) {

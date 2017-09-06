@@ -93,6 +93,7 @@ Ext.define('Ice.view.cotizacion.Emision', {
                 config.cdramo   = config.flujo.cdramo;
                 config.estado   = config.flujo.estado;
                 config.nmpoliza = config.flujo.nmpoliza;
+                config.nmsuplem = config.flujo.nmsuplem;
                 config.cdtipsit = {
                     '501': '51',
                     '301': '31'

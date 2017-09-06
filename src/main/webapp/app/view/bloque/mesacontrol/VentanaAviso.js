@@ -25,7 +25,9 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaAviso', {
                          config.flujo.aux      , 'Falta el auxiliar para la ventana de aviso');
             
             paso = 'Decodificando auxiliar de ventana de aviso';
-            var json = Ext.JSON.decode(config.flujo.aux);
+            
+            // var json = Ext.JSON.decode(config.flujo.aux); ya no se decodifica porque lo hace Ice.validarParamFlujo (al inicio del try de este bloque de codigo)
+            var json = config.flujo.aux;
 
             Ice.validate(json.mensaje, 'Falta el mensaje en el auxiliar para la ventana de aviso')
 
