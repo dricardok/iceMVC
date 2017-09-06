@@ -829,13 +829,15 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                             function () {
                                 var paso3 = 'Recuperando usuario impresi\u00f3n';
                                 try {
+                                    var paramsDespachadorImpreso = Ice.flujoToParams(view.getFlujo(), {
+                                        'params.cdvalidafk': 'DESPACHADOR',
+                                        'params.jsvalida': 'DESPACHADOR'
+                                    });
+                                    paramsDespachadorImpreso['flujo.aux'] = '34';
                                     Ice.request({
                                         url: Ice.url.bloque.mesacontrol.ejecutarValidacion,
                                         mascara: paso3,
-                                        params: Ice.flujoToParams(view.getFlujo(), {
-                                            'params.cdvalidafk': 'DESPACHADOR',
-                                            'params.jsvalida': 'DESPACHADOR'
-                                        }),
+                                        params: paramsDespachadorImpreso,
                                         success: function (action2) {
                                             // action.params.salida
                                             var paso4 = 'Turnando a impresi\u00f3n';
