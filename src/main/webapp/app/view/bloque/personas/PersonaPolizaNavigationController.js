@@ -168,35 +168,26 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
             if (gridPersonas && gridPersonas.getStore() && !Ext.isEmpty(gridPersonas.getNmsituac())) {
                 valid = true;
                 //gridPersonas.hide();
-                var personapoliza = Ext.create('Ice.view.bloque.personas.PersonaPoliza', {
-                    reference: 'personapoliza',
-                    cdunieco: view.getCdunieco(),
-                    cdramo: view.getCdramo(),
-                    estado: view.getEstado(),
-                    nmpoliza: view.getNmpoliza(),
-                    nmsuplem: view.getNmsuplem(),
-                    nmsituac: gridPersonas.getNmsituac(),
-                    cdtipsit: view.getCdtipsit(),
-                    accion: 'I',
-                    listeners: {
-                        guardar: function () {
-                            refs.gridPersonas.getStore().removeAll();
-                            refs.gridPersonas.getStore().reload();
+               
+                var personapoliza = {
+                        reference: 'personapoliza',
+                        xtype		:	'polizapersona',
+                        cdunieco: view.getCdunieco(),
+                        cdramo: view.getCdramo(),
+                        estado: view.getEstado(),
+                        nmpoliza: view.getNmpoliza(),
+                        nmsuplem: view.getNmsuplem(),
+                        nmsituac: refs.gridPersonas.getNmsituac(),
+                        cdtipsit: view.getCdtipsit(),
+                        dataPer:{},
+                        accion: 'I',
+                        listeners: {
+                            guardar: function () {
+                                refs.gridPersonas.getStore().removeAll();
+                                refs.gridPersonas.getStore().reload();
+                            }
                         }
-                    }
-                    // listeners: {
-                    //     'datosPersonaGuardada': function() {
-                    //         Ice.pop();
-                    //         Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.cerrarPersonaPoliza');
-                    //     }
-                    // },
-                    // buttons: [{
-                    //     xtype: 'button',
-                    //     reference: 'btnGuardar',
-                    //     text: 'Guardar',
-                    //     handler: 'onGuardarBloque'
-                    // }]
-                });
+                    };
                 //gridPersonas.getStore().removeAll();
                 Ice.push(personapoliza);
             }
@@ -242,7 +233,7 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
             } else {
                 Ice.log('recordPer',gridPersonas.getParent().getRecord().getData());
                 var cellPer = gridPersonas.getParent(),
-                    recordPer = cellPer.getRecord();
+                    recordPer = cellPer.getRecord(),
                 dataPer = recordPer.getData();
             }
               
@@ -267,22 +258,6 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaNavigationController', {
                         refs.gridPersonas.getStore().reload();
                     }
                 }
-            
-           
-                // listeners: {
-                //     'datosPersonaGuardada': function(){
-                //         Ice.pop();
-                //         Ice.log('Ice.view.bloque.personas.PersonasPolizaNavigationController.cerrarPersonaPoliza');
-                //     }
-                // },
-                // buttons: [
-                //     {
-                //         xtype: 'button',
-                //         reference: 'btnGuardar',
-                //         text: 'Guardar',
-                //         handler: 'onGuardarBloque'
-                //     }
-                // ]
             };
                 
             Ice.push(personapoliza);

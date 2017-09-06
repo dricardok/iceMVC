@@ -49,7 +49,6 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGridController', {
 		paso = 'Set domicilio sel';
 		try{
 			
-			global3=view;
 			Ice.log("numero grid:",num);
 			 if(Ice.classic()){
 				 view.getSelectionModel().select(num);

@@ -2,6 +2,7 @@ Ext.define('Ice.view.bloque.personas.PolizaPersona', {
 	
 	extend: 'Ice.view.componente.PanelPaddingIce',
 	xtype		:	'polizapersona',
+	scrollable	:	true,
 	controller:'polizapersona',
 	config		:	{
 		cdunieco: null,
@@ -10,7 +11,9 @@ Ext.define('Ice.view.bloque.personas.PolizaPersona', {
         nmpoliza: null,
         nmsituac: null,
         nmsuplem: null,
-		
+        
+		dataPer:{},
+		accion:null
 		
 	},
 	
@@ -18,7 +21,7 @@ Ext.define('Ice.view.bloque.personas.PolizaPersona', {
 		Ice.log('Ice.view.bloque.personas.PolizaPersona.constructor config:', config);
 		var paso = 'poliza personas',me = this;
 		try{
-			alert();
+			
 			var comps = Ice.generaComponentes({
 	            pantalla: 'BUSQUEDA_PERSONA',
 	            seccion: 'FORMULARIO',
@@ -127,7 +130,26 @@ Ext.define('Ice.view.bloque.personas.PolizaPersona', {
                 
             ].concat(config.items || []);
 
+	        var comps = Ice.generaComponentes({
+                pantalla: 'PERSONA_ROL',
+                seccion: 'FORMULARIO',
+                cdramo: config.cdramo,
+                items: true
+            });
+	        var cdrol = comps.PERSONA_ROL.FORMULARIO.items.find(function(it){
+        		return it.name=='cdrol';
+            });
+	        cdrol['param2'] = 'params.cdnivel';
+            if(config.nmsituac > 0){
+                cdrol['value2'] = '1';
+            } else {
+                cdrol['value2'] = config.nmsituac;
+            }
+            cdrol.value = config.dataPer.cdrol; 
+            cdrol.labelAlign = 'left';
+            Ice.log('Ice.view.bloque.PersonaRol.constructor recargar ',cdrol);
             config.buttons = [
+            	cdrol,
                 {
                     text: 'Elegir',
                     iconCls: 'x-fa fa-check',
