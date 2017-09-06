@@ -771,7 +771,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	                logger.debug("Numero de documentos devueltos para la Confirmacion {} " + documentos.size());
 	                // Se guardan la lista de documentos:
 	                for (Documento documento : documentos) {
-	                    String localnmsuplem = isCotizacion.toLowerCase().equals("false") ? nmsuplem : datosMrecibo.get("nmsuplem");
+	                    String localnmsuplem = isCotizacion.toLowerCase().equals("true") ? nmsuplem : datosMrecibo.get("nmsuplem");
 	                    try{
 	                        logger.info(documento.getId());
 	                        logger.info(documento.getNombre());
