@@ -851,7 +851,10 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                                     Ice.request({
                                         url: Ice.url.bloque.mesacontrol.ejecutarValidacion,
                                         mascara: paso3,
-                                        params: Ice.flujoToParams(view.getFlujo(), {'params.cdvalidafk': 'DESPACHADOR'}),
+                                        params: Ice.flujoToParams(view.getFlujo(), {
+                                            'params.cdvalidafk': 'DESPACHADOR',
+                                            'params.jsvalida': 'DESPACHADOR'
+                                        }),
                                         success: function (action2) {
                                             // action.params.salida
                                         	alert('2');

@@ -354,6 +354,8 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 				emisionDAO.movimientoMpoligar(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem, m.get("cdgarant"), m.get("cdcapita"), null, "I");
 				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem,
 				        Bloque.CAPITALES.getCdbloque(), m.get("cdgarant"), null, null, null, null, cdusuari, cdsisrol);
+				emisionDAO.ejecutarValoresDefecto(cdunieco, cdramo, estado, nmpoliza, nmsituac, nmsuplem,
+				        Bloque.ATRIBUTOS_GARANTIAS.getCdbloque(), m.get("cdgarant"), null, null, null, null, cdusuari, cdsisrol);
 
 			}
 
