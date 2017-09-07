@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>Configurador de Procesos</title>
-<link type="image/x-icon" rel="shortcut icon" href="../../resources/images/favicon.ico">
+
 <style>
 #canvasdiv
 {
@@ -489,6 +489,20 @@
     
   }
 }
+
+@-webkit-keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+    
+  }
+}
+
 
 @-moz-keyframes fadeInUp {
   from {
