@@ -133,13 +133,18 @@
 
 
 .x-mask-msg-text{
-    -webkit-transform-origin: 0.5em 0.5em;
     transform-origin: 0.5em 0.5em;
+    -webkit-transform-origin: 0.5em 0.5em;
+    -moz-transform-origin: 0.5em 0.5em;
+    -ms-transform-origin: 0.5em 0.5em;
+    -o-transform-origin: 0.5em 0.5em;
 }
 
 
 .x-mask-msg-text{
-position:relative;
+    position:relative;
+    max-width: 140px !important;
+    text-align: center;
 }
 .x-mask-msg-text:before{
     width:20px;
@@ -150,6 +155,10 @@ position:relative;
     position:absolute;
     background:$azulo-s;
     animation: x-mask-msg-textbefore 1.5s infinite ease-in-out;
+    -webkit-animation: x-mask-msg-textbefore 1.5s infinite ease-in-out;
+    -moz-animation: x-mask-msg-textbefore 1.5s infinite ease-in-out;
+    -ms-animation: x-mask-msg-textbefore 1.5s infinite ease-in-out;
+    -o-animation: x-mask-msg-textbefore 1.5s infinite ease-in-out;
 }
  
 .x-mask-msg-text:after{
@@ -163,6 +172,10 @@ position:relative;
     background:$azulc-s;
     right:3px;
     animation: x-mask-msg-textafter 1.5s infinite ease-in-out;
+    -webkit-animation: x-mask-msg-textafter 1.5s infinite ease-in-out;
+    -moz-animation: x-mask-msg-textafter 1.5s infinite ease-in-out;
+    -ms-animation: x-mask-msg-textafter 1.5s infinite ease-in-out;
+    -o-animation: x-mask-msg-textafter 1.5s infinite ease-in-out;
 }
  
 @keyframes x-mask-msg-textbefore {
@@ -170,11 +183,62 @@ position:relative;
     50% {transform: translateX(50px) scale(1.2) rotate(260deg); background:#0033a0;border-radius:0px;}
       100% {transform: translateX(0px) rotate(0deg)}
 }
+
+@-webkit-keyframes x-mask-msg-textbefore {
+    0% {transform: translateX(0px) rotate(0deg)}
+    50% {transform: translateX(50px) scale(1.2) rotate(260deg); background:#0033a0;border-radius:0px;}
+      100% {transform: translateX(0px) rotate(0deg)}
+}
+
+@-moz-keyframes x-mask-msg-textbefore {
+    0% {transform: translateX(0px) rotate(0deg)}
+    50% {transform: translateX(50px) scale(1.2) rotate(260deg); background:#0033a0;border-radius:0px;}
+      100% {transform: translateX(0px) rotate(0deg)}
+}
+
+@-ms-keyframes x-mask-msg-textbefore {
+    0% {transform: translateX(0px) rotate(0deg)}
+    50% {transform: translateX(50px) scale(1.2) rotate(260deg); background:#0033a0;border-radius:0px;}
+      100% {transform: translateX(0px) rotate(0deg)}
+}
+
+@-o-keyframes x-mask-msg-textbefore {
+    0% {transform: translateX(0px) rotate(0deg)}
+    50% {transform: translateX(50px) scale(1.2) rotate(260deg); background:#0033a0;border-radius:0px;}
+      100% {transform: translateX(0px) rotate(0deg)}
+}
+
+
+//////////////////////////////////////////////////
+
 @keyframes x-mask-msg-textafter {
     0% {transform: translateX(0px)}
     50% {transform: translateX(-50px) scale(1.2) rotate(-260deg);background:#00B5CB;border-radius:0px;}
     100% {transform: translateX(0px)}
+} 
+
+@-webkit-keyframes x-mask-msg-textafter {
+    0% {transform: translateX(0px)}
+    50% {transform: translateX(-50px) scale(1.2) rotate(-260deg);background:#00B5CB;border-radius:0px;}
+    100% {transform: translateX(0px)}
+}
+ 
+@-moz-keyframes x-mask-msg-textafter {
+    0% {transform: translateX(0px)}
+    50% {transform: translateX(-50px) scale(1.2) rotate(-260deg);background:#00B5CB;border-radius:0px;}
+    100% {transform: translateX(0px)}
 }    
+@-ms-keyframes x-mask-msg-textafter {
+    0% {transform: translateX(0px)}
+    50% {transform: translateX(-50px) scale(1.2) rotate(-260deg);background:#00B5CB;border-radius:0px;}
+    100% {transform: translateX(0px)}
+} 
+
+@-o-keyframes -mask-msg-textafter {
+    0% {transform: translateX(0px)}
+    50% {transform: translateX(-50px) scale(1.2) rotate(-260deg);background:#00B5CB;border-radius:0px;}
+    100% {transform: translateX(0px)}
+} 
 
 
 /*.x-mask .x-mask-inner {

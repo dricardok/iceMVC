@@ -202,7 +202,8 @@ var Ice = (
                 obtenerTramiteCompleto             : 'flujomesacontrol/obtenerTramiteCompleto.action',
                 ejecutarValidacionPorReferencia    : 'mesacontrol/ejecutarValidacionPorReferencia.action',
                 ejecutarValidacionesEventoPantalla : 'mesacontrol/ejecutarValidacionesEventoPantalla.action',
-                registrarNuevoTramite              : 'mesacontrol/registrarNuevoTramite.action'
+                registrarNuevoTramite              : 'mesacontrol/registrarNuevoTramite.action',
+                actualizarCotizacionTramite        : 'flujomesacontrol/actualizarCotizacionTramite.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',

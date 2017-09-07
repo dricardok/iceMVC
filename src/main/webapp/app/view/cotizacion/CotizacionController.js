@@ -90,6 +90,15 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                                     view.setNmpoliza(nmpoliza);
                                     view.setNmsuplem(nmsuplem);
                                     view.setStatus(status);
+
+                                    if (view.getFlujo() && view.getFlujo().ntramite) {
+                                        view.getFlujo().cdunieco = view.getCdunieco();
+                                        view.getFlujo().cdramo   = view.getCdramo();
+                                        view.getFlujo().estado   = view.getEstado();
+                                        view.getFlujo().nmpoliza = view.getNmpoliza();
+                                        view.getFlujo().nmsuplem = view.getNmsuplem();
+                                    }
+
                                     Ice.log('Ice.view.cotizacion.CotizacionController datosiniciales.llaveGenerada viewCotizacion:', view);
                                 }
                             });

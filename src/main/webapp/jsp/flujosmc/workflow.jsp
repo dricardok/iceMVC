@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Configurador de procesos</title>
+<title>Configurador de Procesos</title>
+
 <style>
 #canvasdiv
 {
@@ -12,23 +13,51 @@
     position         : absolute;
     background-image : url('${flujoimg}fondoModelador2.png');
 }
+
+/*------------------Textos----------------*/
+.font01{
+    color            : #888686; 
+}
+.font_02{
+    font-size        : 20px;
+    color            : #fff;
+    text-shadow      : 2px 2px 2px rgba(0, 0, 0, 0.3);
+    text-align       : center;
+    margin           : 0 auto;
+    padding-top      : 11px;
+    display          : block;
+    }
+ /*-----------------------------------------*/
 .catEntidad
 {
     border : 0px solid red;
 }
-.estado .image
+.estado .image {}
+
+.sucursal .image{}
+/*---------Círculo azul css de estado----------*/
+.estado .CDESTADOMC 
 {
-    width            : 50px;
-    height           : 50px;
-    background-image : url('${flujoimg}estado.png');
+    width: 50px !important;
+    height: 50px;
+    margin: 0 auto;
+    -moz-border-radius: 50px; 
+    -webkit-border-radius: 50px; 
+    border-radius: 50px;
+    background-color: rgba(0, 181, 203, 0.5);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
-.sucursal .image
-{
-    width            : 50px;
-    height           : 50px;
-    background-image : url('${flujoimg}estado.png');
-}
-.estado .CDESTADOMC, .labelE
+
+.labelE{
+    width            : 200px;
+    margin-top       : 10px;
+    position         : absolute;
+    margin-left      : -64px;
+    text-align       : center;
+    color            : #525252;
+    font-weight      : 600;
+}    
+.sucursal .CDUNIECO 
 {
     position    : absolute;
     left        : 50%;
@@ -38,24 +67,17 @@
     width       : 200px;
     text-align  : center;
 }
-.sucursal .CDUNIECO, .labelS
-{
-    position    : absolute;
-    left        : 50%;
-    margin-left : -100px;
-    border      : 0px solid red;
-    top         : 20px;
-    width       : 200px;
-    text-align  : center;
-}
-.pantalla .image
-{
+.labelS{}
+
+.pantalla .image {}
+
+.pantalla .CDPANTMC {
     width            : 45px;
     height           : 60px;
-    background-image : url('${flujoimg}pantalla.png');
-}
-.pantalla .CDPANTMC, .labelP
-{
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    background-image : url('${flujoimg}pantalla.png');}
+
+.labelP{
     position    : absolute;
     left        : 50%;
     margin-left : -100px;
@@ -63,15 +85,19 @@
     top         : 25px;
     width       : 200px;
     text-align  : center;
-}
-.componente .image
-{
+    color       : #525252;
+    font-weight : 600;
+    }  
+.componente .image{}
+
+.componente .CDCOMPMC {
     width            : 60px;
     height           : 40px;
     background-image : url('${flujoimg}componente.png');
-}
-.componente .CDCOMPMC, .labelC
-{
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    }
+
+.labelC{   
     position    : absolute;
     left        : 50%;
     margin-left : -100px;
@@ -79,15 +105,20 @@
     top         : 15px;
     width       : 200px;
     text-align  : center;
-}
-.proceso .image
-{
+    color       : #525252;
+    font-weight: 600;
+ }
+
+.proceso .image{}
+
+.proceso .CDPROCMC{
     width            : 65px;
     height           : 35px;
     background-image : url('${flujoimg}proceso.png');
-}
-.proceso .CDPROCMC, .labelO
-{
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+} 
+
+.labelO{
     position    : absolute;
     left        : 50%;
     margin-left : -100px;
@@ -101,12 +132,14 @@
     width            : 50px;
     height           : 50px;
     background-image : url('${flujoimg}validacion.png');
+    //box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 .correo .image
 {
     width            : 60px;
-    height           : 50px;
+    height           : 35px;
     background-image : url('${flujoimg}correo.png');
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 .labelV
 {
@@ -117,12 +150,15 @@
     top         : 20px;
     width       : 200px;
     text-align  : center;
-}
+    color       : #525252;
+    font-weight : 600;
+   }
 .revision .image
 {
     width            : 45px;
     height           : 50px;
     background-image : url('${flujoimg}revision.png');
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 .labelR
 {
@@ -133,13 +169,17 @@
     top         : 20px;
     width       : 200px;
     text-align  : center;
+    color       : #525252;
+    font-weight : 600;
 }
 .titulo .image
 {
     width            : 50px;
     height           : 20px;
     background-image : url('${flujoimg}titulo.png');
+    box-shadow       : 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
+
 .labelT
 {
     position       : absolute;
@@ -150,6 +190,7 @@
     text-align     : left;
     text-transform : uppercase;
     font-weight    : bold;
+    
 }
 .labelT0
 {
@@ -169,7 +210,12 @@
     width            : 50px;
     height           : 50px;
     border           : 0px solid red;
-    background-image : url('${flujoimg}estado.png');
+    border-radius    : 50px;
+    -moz-border-radius: 50px; 
+    -webkit-border-radius: 50px;     
+    background-color : rgba(0, 181, 203, 0.5);
+    box-shadow       : 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+   
 }
 .entidadS
 {
@@ -177,7 +223,12 @@
     width            : 50px;
     height           : 50px;
     border           : 0px solid red;
-    background-image : url('${flujoimg}estado.png');
+    border-radius    : 50px;
+    -moz-border-radius: 50px; 
+    -webkit-border-radius: 50px; 
+    background-color : rgba(0, 181, 203, 0.5);
+    box-shadow       : 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    
 }
 .entidadP
 {
@@ -186,6 +237,7 @@
     height           : 60px;
     border           : 0px solid red;
     background-image : url('${flujoimg}pantalla.png');
+    box-shadow       : 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 .entidadC
 {
@@ -194,6 +246,7 @@
     height           : 40px;
     border           : 0px solid red;
     background-image : url('${flujoimg}componente.png');
+    box-shadow       : 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 .entidadO
 {
@@ -202,6 +255,7 @@
     height           : 35px;
     border           : 0px solid red;
     background-image : url('${flujoimg}proceso.png');
+    box-shadow       : 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 .entidadV
 {
@@ -210,14 +264,16 @@
     height           : 50px;
     border           : 0px solid red;
     background-image : url('${flujoimg}validacion.png');
+    //box-shadow       : 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 .entidadM
 {
     position         : absolute;
     width            : 60px;
-    height           : 50px;
+    height           : 35px;
     border           : 0px solid red;
     background-image : url('${flujoimg}correo.png');
+    box-shadow       : 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 .entidadR
 {
@@ -226,6 +282,7 @@
     height           : 50px;
     border           : 0px solid red;
     background-image : url('${flujoimg}revision.png');
+    box-shadow       : 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 .entidadT0
 {
@@ -233,7 +290,9 @@
     width            : 500px;
     height           : 20px;
     border           : 0px solid red;
-    background-image : url('${flujoimg}titulo0.png');
+    color            : #FFF;
+    background       : linear-gradient(60deg, #26c6da, #87e5f1);
+    box-shadow       : 0 12px 20px -10px rgba(0, 188, 212, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(0, 188, 212, 0.2);
 }
 .entidadT1
 {
@@ -299,47 +358,191 @@
     position : absolute;
     top      : 0;
     left     : 0;
-}
+    
+ }
+ 
+/*------------------Animaciones----------------*/
+ 
 .entidad:hover .labelE
 {
-    top : -15px;
-    font-weight: bold;
-}
+   
+  -webkit-animation-name    : fadeInUp; 
+  -webkit-animation-duration: 0.7s;
+  -moz-animation-name       : fadeInUp; 
+  -moz-animation-duration   : 0.7s;
+  -ms-animation-name        : fadeInUp;
+  -ms-animation-duration    : 0.7s;
+  -o-animation-name         : fadeInUp;
+  -o-animation-duration     : 7s;
+  animation-name            : fadeInUp;
+  animation-duration        : 0.7s;
+  top                       : -30px;
+ }
+  
 .entidad:hover .labelS
 {
-    top : -15px;
-    font-weight: bold;
+   
+  -webkit-animation-name    : fadeInUp; 
+  -webkit-animation-duration: 0.7s;
+  -moz-animation-name       : fadeInUp; 
+  -moz-animation-duration   : 0.7s;
+  -ms-animation-name        : fadeInUp;
+  -ms-animation-duration    : 0.7s;  
+  -o-animation-name         : fadeInUp;
+  -o-animation-duration     : 7s;
+  animation-name            : fadeInUp;
+  animation-duration        : 0.7s;
+  top : -25px;
 }
 .entidad:hover .labelP
 {
-    top : -15px;
-    font-weight: bold;
+  
+  -webkit-animation-name    : fadeInUp; 
+  -webkit-animation-duration: 0.7s;
+  -moz-animation-name       : fadeInUp; 
+  -moz-animation-duration   : 0.7s;
+  -ms-animation-name        : fadeInUp;
+  -ms-animation-duration    : 0.7s;
+  -o-animation-name         : fadeInUp;
+  -o-animation-duration     : 7s;
+  animation-name            : fadeInUp;
+  animation-duration        : 0.7s;
+  top : -25px;
 }
 .entidad:hover .labelC
 {
-    top : -15px;
-    font-weight: bold;
-}
+  
+  -webkit-animation-name    : fadeInUp; 
+  -webkit-animation-duration: 0.7s;
+  -moz-animation-name       : fadeInUp; 
+  -moz-animation-duration   : 0.7s;
+  -ms-animation-name        : fadeInUp;
+  -ms-animation-duration    : 0.7s;
+  a-o-animation-name         : fadeInUp;
+  -o-animation-duration     : 7s;
+  animation-name            : fadeInUp;
+  animation-duration        : 0.7s;
+  top : -25px;
+ }
+ 
 .entidad:hover .labelO
 {
-    top : -15px;
-    font-weight: bold;
+  
+  -webkit-animation-name    : fadeInUp; 
+  -webkit-animation-duration: 0.7s;
+  -moz-animation-name       : fadeInUp; 
+  -moz-animation-duration   : 0.7s;
+  -ms-animation-name        : fadeInUp;
+  -ms-animation-duration    : 0.7s;
+  -o-animation-name         : fadeInUp;
+  -o-animation-duration     : 7s;
+  animation-name            : fadeInUp;
+  animation-duration        : 0.7s;
+  top : -25px;  
 }
 .entidad:hover .labelV
 {
-    top : -15px;
-    font-weight: bold;
-}
+   
+  -webkit-animation-name    : fadeInUp; 
+  -webkit-animation-duration: 0.7s;
+  -moz-animation-name       : fadeInUp; 
+  -moz-animation-duration   : 0.7s;
+  -ms-animation-name        : fadeInUp;
+  -ms-animation-duration    : 0.7s;
+  -o-animation-name         : fadeInUp;
+  -o-animation-duration     : 7s;
+  animation-name            : fadeInUp;
+  animation-duration        : 0.7s;
+  top : -25px;   
+    
+ }
 .entidad:hover .labelR
 {
-    top : -15px;
-    font-weight: bold;
+  
+  -webkit-animation-name    : fadeInUp; 
+  -webkit-animation-duration: 0.7s;
+  -moz-animation-name       : fadeInUp; 
+  -moz-animation-duration   : 0.7s;
+  -ms-animation-name        : fadeInUp;
+  -ms-animation-duration    : 0.7s;
+  -o-animation-name         : fadeInUp;
+  -o-animation-duration     : 7s;
+  animation-name            : fadeInUp;
+  animation-duration        : 0.7s;
+  top : -25px;
 }
 .entidad:hover .labelT
 {
-    top : -15px;
     font-weight: bold;
+    color: rgba(136, 134, 134, 0.3);
 }
+/*----------------keyframes fadeInUp para todos los navegadores------------------*/
+ @keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+    
+  }
+}
+
+@-webkit-keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+    
+  }
+}
+
+
+@-moz-keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+    
+  }
+}
+
+@-ms-keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+    
+  }
+}
+
+@-o-keyframesfadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+    
+  }
+}
+
 </style>
 <script type="text/javascript" src="${ctx}/IceCore.js"></script>
 <script type="text/javascript" src="${ctx}/IceEventManager.js"></script>
@@ -514,12 +717,12 @@ Ext.onReady(function()
     ////// requires //////
     Ext.Loader.setConfig({enabled: true});
     Ext.syncRequire('${ctx}/res/js/icedefines/SelectorMultiple');
-	/* Ext.require(['Ext.form.Panel',
-				 'Ext.ux.form.MultiSelect',
-				 'Ext.ux.form.ItemSelector',
-				 'Ext.tip.QuickTipManager',
-				 'Ext.ux.ajax.JsonSimlet',
-				 'Ext.ux.ajax.SimManager']); */
+    /* Ext.require(['Ext.form.Panel',
+                 'Ext.ux.form.MultiSelect',
+                 'Ext.ux.form.ItemSelector',
+                 'Ext.tip.QuickTipManager',
+                 'Ext.ux.ajax.JsonSimlet',
+                 'Ext.ux.ajax.SimManager']); */
     ////// requires //////
     
     ////// modelos //////
@@ -534,10 +737,10 @@ Ext.onReady(function()
          '<div id="E{CDESTADOMC}" class="catEntidad estado" draggable="true" ondragstart="_p52_dragstart(event);" descrip="{DSESTADOMC}">'
         ,'    <table width="90" border="0">'
         ,'        <tr>'
-        ,'            <td align="center"><div class="image"></div><div class="CDESTADOMC">{CDESTADOMC}</div></td>'
+        ,'            <td class="circle_blue" align="center"><div class="image"></div><div class="CDESTADOMC"><span class="font_02">{CDESTADOMC}</span></div></td>'
         ,'        </tr>'
         ,'        <tr>'
-        ,'            <td align="center"><a class="catedit" href="#" onclick="_p52_editCatClic(\'E\',\'E{CDESTADOMC}\'); return false;" ><img src="${icons}pencil.png" /></a>{DSESTADOMC}</td>'
+        ,'            <td class="font01" align="center"><a class="catedit" href="#" onclick="_p52_editCatClic(\'E\',\'E{CDESTADOMC}\'); return false;" ><img src="${icons}pencil.png" /></a>{DSESTADOMC}</td>'
         ,'        </tr>'
         ,'    </table>'
         ,'</div>'
@@ -562,10 +765,10 @@ Ext.onReady(function()
          '<div id="P{CDPANTMC}" class="catEntidad pantalla" draggable="true" ondragstart="_p52_dragstart(event);" descrip="{DSPANTMC}">'
         ,'    <table width="90" border="0">'
         ,'        <tr>'
-        ,'            <td align="center"><div class="image"></div><div class="CDPANTMC">{CDPANTMC}</div></td>'
+        ,'            <td align="center"><div class="image"></div><div class="CDPANTMC"><span class="font_02">{CDPANTMC}</span></div></td>'
         ,'        </tr>'
         ,'        <tr>'
-        ,'            <td align="center"><a class="catedit" href="#" onclick="_p52_editCatClic(\'P\',\'P{CDPANTMC}\'); return false;" ><img src="${icons}pencil.png" /></a>{DSPANTMC}</td>'
+        ,'            <td class="font01" align="center"><a class="catedit" href="#" onclick="_p52_editCatClic(\'P\',\'P{CDPANTMC}\'); return false;" ><img src="${icons}pencil.png" /></a>{DSPANTMC}</td>'
         ,'        </tr>'
         ,'    </table>'
         ,'</div>'
@@ -576,10 +779,10 @@ Ext.onReady(function()
          '<div id="C{CDCOMPMC}" class="catEntidad componente" draggable="true" ondragstart="_p52_dragstart(event);" descrip="{DSCOMPMC}">'
         ,'    <table width="90" border="0">'
         ,'        <tr>'
-        ,'            <td align="center"><div class="image"></div><div class="CDCOMPMC">{CDCOMPMC}</div></td>'
+        ,'            <td class="" align="center"><div class="image"></div><div class="CDCOMPMC"><span class="font_02">{CDCOMPMC}</span></div></td>'
         ,'        </tr>'
         ,'        <tr>'
-        ,'            <td align="center"><a class="catedit" href="#" onclick="_p52_editCatClic(\'C\',\'C{CDCOMPMC}\'); return false;" ><img src="${icons}pencil.png" /></a>{DSCOMPMC}</td>'
+        ,'            <td class="font01" align="center"><a class="catedit" href="#" onclick="_p52_editCatClic(\'C\',\'C{CDCOMPMC}\'); return false;" ><img src="${icons}pencil.png" /></a>{DSCOMPMC}</td>'
         ,'        </tr>'
         ,'    </table>'
         ,'</div>'
@@ -590,10 +793,10 @@ Ext.onReady(function()
          '<div id="O{CDPROCMC}" class="catEntidad proceso" draggable="true" ondragstart="_p52_dragstart(event);" descrip="{DSPROCMC}">'
         ,'    <table width="90" border="0">'
         ,'        <tr>'
-        ,'            <td align="center"><div class="image"></div><div class="CDPROCMC">{CDPROCMC}</div></td>'
+        ,'            <td align="center"><div class="image"></div><div class="CDPROCMC"><span class="font_02" style="padding-top: 5px;">{CDPROCMC}</span></div></td>'
         ,'        </tr>'
         ,'        <tr>'
-        ,'            <td align="center"><a class="catedit" href="#" onclick="_p52_editCatClic(\'O\',\'O{CDPROCMC}\'); return false;" ><img src="${icons}pencil.png" /></a>{DSPROCMC}</td>'
+        ,'            <td class="font01" align="center"><a class="catedit" href="#" onclick="_p52_editCatClic(\'O\',\'O{CDPROCMC}\'); return false;" ><img src="${icons}pencil.png" /></a>{DSPROCMC}</td>'
         ,'        </tr>'
         ,'    </table>'
         ,'</div>'
@@ -607,7 +810,7 @@ Ext.onReady(function()
         ,'            <td align="center"><div class="image"></div></td>'
         ,'        </tr>'
         ,'        <tr>'
-        ,'            <td align="center">{dsvalidacion}</td>'
+        ,'            <td class="font01" align="center">{dsvalidacion}</td>'
         ,'        </tr>'
         ,'    </table>'
         ,'</div>'
@@ -621,25 +824,25 @@ Ext.onReady(function()
         ,'            <td align="center"><div class="image"></div></td>'
         ,'        </tr>'
         ,'        <tr>'
-        ,'            <td align="center">{dsrevision}</td>'
+        ,'            <td class="font01" align="center">{dsrevision}</td>'
         ,'        </tr>'
         ,'    </table>'
         ,'</div>'
     ]);
     
     correoTpl = new Ext.Template(
-    	    [
-    	         '<div id="M0" class="catEntidad correo" draggable="true" ondragstart="_p52_dragstart(event);" descrip="{dsmail}">'
-    	        ,'    <table width="90" border="0">'
-    	        ,'        <tr>'
-    	        ,'            <td align="center"><div class="image"></div></td>'
-    	        ,'        </tr>'
-    	        ,'        <tr>'
-    	        ,'            <td align="center">{dsmail}</td>'
-    	        ,'        </tr>'
-    	        ,'    </table>'
-    	        ,'</div>'
-    	    ]);
+            [
+                 '<div id="M0" class="catEntidad correo" draggable="true" ondragstart="_p52_dragstart(event);" descrip="{dsmail}">'
+                ,'    <table width="90" border="0">'
+                ,'        <tr>'
+                ,'            <td align="center"><div class="image"></div></td>'
+                ,'        </tr>'
+                ,'        <tr>'
+                ,'            <td align="center">{dsmail}</td>'
+                ,'        </tr>'
+                ,'    </table>'
+                ,'</div>'
+            ]);
     
     tituloTpl = new Ext.Template(
     [
@@ -1916,43 +2119,43 @@ Ext.onReady(function()
         }
     });
     
- 	_p52_winVarsCorreo = Ext.create('Ext.window.Window',{
-		title        : 'VARIABLES'
-		,modal       : true
-		,closeAction : 'hide'
-  		,items       : [
-		                new SelectorMultiple()
-		                ]
-		,buttonAlign : 'center'		                
- 		,buttons     : [
- 		                {
- 		                	text  : 'Guardar',
- 		                	icon  : '${icons}disk.png',
- 		                	handler : function(me){
- 		                		var win = me.up('window');
- 		                		var nameVar   = win.nameCmpVar;
- 		                		var name      = win.nameCmp;
- 		                		var vars      = win.down('[itemId=panVars]').getValue().split(',');
- 		                		var numvars   = _p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name='+name+']').getValue());
- 		                		if (numvars != vars.length){
- 		                			mensajeError('El numero de variables seleccionadas no coinciden con las llaves del texto');
- 		                			return;
- 		                		}
- 		                		_p52_formCorreos.down('[name='+nameVar+']').setValue(win.down('[itemId=panVars]').getValue());
- 		                		win.close();
- 		                	}
- 		                }
- 		                ]
-	}); 
-	
-	if (Number(_p52_params.cdtipmod) === 1) {
-	    _p52_tituloPrincipal = 'C O N F I G U R A D O R&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D E&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P R O C E S O S';
-	} else if (Number(_p52_params.cdtipmod) === 2) {
+    _p52_winVarsCorreo = Ext.create('Ext.window.Window',{
+        title        : 'VARIABLES'
+        ,modal       : true
+        ,closeAction : 'hide'
+        ,items       : [
+                        new SelectorMultiple()
+                        ]
+        ,buttonAlign : 'center'                     
+        ,buttons     : [
+                        {
+                            text  : 'Guardar',
+                            icon  : '${icons}disk.png',
+                            handler : function(me){
+                                var win = me.up('window');
+                                var nameVar   = win.nameCmpVar;
+                                var name      = win.nameCmp;
+                                var vars      = win.down('[itemId=panVars]').getValue().split(',');
+                                var numvars   = _p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name='+name+']').getValue());
+                                if (numvars != vars.length){
+                                    mensajeError('El numero de variables seleccionadas no coinciden con las llaves del texto');
+                                    return;
+                                }
+                                _p52_formCorreos.down('[name='+nameVar+']').setValue(win.down('[itemId=panVars]').getValue());
+                                win.close();
+                            }
+                        }
+                        ]
+    }); 
+    
+    if (Number(_p52_params.cdtipmod) === 1) {
+        _p52_tituloPrincipal = 'C O N F I G U R A D O R&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D E&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P R O C E S O S';
+    } else if (Number(_p52_params.cdtipmod) === 2) {
         _p52_tituloPrincipal = 'C O N F I G U R A D O R&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D E&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S U C U R S A L E S';
     } else {
         _p52_tituloPrincipal = '- E R R O R -';
     }
-	
+    
     ////// componentes //////
     
     ////// contenido //////
@@ -3464,11 +3667,11 @@ Ext.onReady(function()
                                 ,defaults    : { style : 'margin:5px;' }
                                 ,buttonAlign : 'center'
                                 ,hidden      : true
-                                ,layout		 : {
-                                	type     : 'table'
-                                	,columns : 2
-                                	,tdAttrs : {valign:'middle'}
-                                	}
+                                ,layout      : {
+                                    type     : 'table'
+                                    ,columns : 2
+                                    ,tdAttrs : {valign:'middle'}
+                                    }
                                 ,tools       :
                                 [{
                                     type     : 'help'
@@ -3505,55 +3708,55 @@ Ext.onReady(function()
                                             _p52_guardarDatosCorreo
                                             (me,function(me)
                                             {
-                                            	////////////INICIA VALIDACION VARIABLES////////////
-                                            	//var win            = me.up('window');
-                                            	//Para obtener la longitud de variables
-                                            	var vdestino    = _p52_formCorreos.down('[name=VARDESTINO]').getValue();
-                                            	var vasunto     = _p52_formCorreos.down('[name=VARASUNTO]').getValue();
-                                            	var vmensaje    = _p52_formCorreos.down('[name=VARMENSAJE]').getValue();
-                                            	
-                                            	//Se genera esta condicion para evitar que se almacene longitud 1 cuando la cadena esta vacia
-                                            	var varsdestino = 0;
-                                            	if(vdestino.indexOf(',') == -1 && vdestino.length == 0){
-                                            		varsdestino = 0;
-                                            	}else{
-                                            		varsdestino = vdestino.split(',').length;
-                                            	}
-                                            	
-                                            	var varsasunto     = 0;
-                                            	if(vasunto.indexOf(',') == -1 && vasunto.length == 0){
-                                            		varsasunto = 0;
-                                            	}else{
-                                            		varsasunto = vasunto.split(',').length;
-                                            	}
-                                            	
-                                            	var varsmensaje    = 0;
-												if(vmensaje.indexOf(',') == -1 && vmensaje.length == 0){
-                                            		varsmensaje = 0;
-                                            	}else{
-                                            		varsmensaje = vmensaje.split(',').length;
-                                            	}
-                                            	
-                                            	//Obtiene las coincidencias de {} en las variables
- 		                						var numvarsdestino = _p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name=DSDESTINO]').getValue());
- 		                						var numvarsasunto  = _p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name=DSASUNTO]').getValue());
- 		                						var numvarsmensaje = _p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name=DSMENSAJE]').getValue());
- 		                						
- 		                						if(varsdestino != numvarsdestino){
- 		                							mensajeError('El numero de variables seleccionadas en el destinatario no coincide con las llaves del texto');
- 		                							return;
- 		                						}
- 		                						
- 		                						if(varsasunto != numvarsasunto){
- 		                							mensajeError('El numero de variables seleccionadas en el asunto no coincide con las llaves del texto');
- 		                							return;
- 		                						}
- 		                						
- 		                						if(varsmensaje != numvarsmensaje){
- 		                							mensajeError('El numero de variables seleccionadas en el mensaje no coincide con las llaves del texto');
- 		                							return;
- 		                						}
- 		                						////////////TERMINA VALIDACION VARIABLES////////////
+                                                ////////////INICIA VALIDACION VARIABLES////////////
+                                                //var win            = me.up('window');
+                                                //Para obtener la longitud de variables
+                                                var vdestino    = _p52_formCorreos.down('[name=VARDESTINO]').getValue();
+                                                var vasunto     = _p52_formCorreos.down('[name=VARASUNTO]').getValue();
+                                                var vmensaje    = _p52_formCorreos.down('[name=VARMENSAJE]').getValue();
+                                                
+                                                //Se genera esta condicion para evitar que se almacene longitud 1 cuando la cadena esta vacia
+                                                var varsdestino = 0;
+                                                if(vdestino.indexOf(',') == -1 && vdestino.length == 0){
+                                                    varsdestino = 0;
+                                                }else{
+                                                    varsdestino = vdestino.split(',').length;
+                                                }
+                                                
+                                                var varsasunto     = 0;
+                                                if(vasunto.indexOf(',') == -1 && vasunto.length == 0){
+                                                    varsasunto = 0;
+                                                }else{
+                                                    varsasunto = vasunto.split(',').length;
+                                                }
+                                                
+                                                var varsmensaje    = 0;
+                                                if(vmensaje.indexOf(',') == -1 && vmensaje.length == 0){
+                                                    varsmensaje = 0;
+                                                }else{
+                                                    varsmensaje = vmensaje.split(',').length;
+                                                }
+                                                
+                                                //Obtiene las coincidencias de {} en las variables
+                                                var numvarsdestino = _p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name=DSDESTINO]').getValue());
+                                                var numvarsasunto  = _p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name=DSASUNTO]').getValue());
+                                                var numvarsmensaje = _p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name=DSMENSAJE]').getValue());
+                                                
+                                                if(varsdestino != numvarsdestino){
+                                                    mensajeError('El numero de variables seleccionadas en el destinatario no coincide con las llaves del texto');
+                                                    return;
+                                                }
+                                                
+                                                if(varsasunto != numvarsasunto){
+                                                    mensajeError('El numero de variables seleccionadas en el asunto no coincide con las llaves del texto');
+                                                    return;
+                                                }
+                                                
+                                                if(varsmensaje != numvarsmensaje){
+                                                    mensajeError('El numero de variables seleccionadas en el mensaje no coincide con las llaves del texto');
+                                                    return;
+                                                }
+                                                ////////////TERMINA VALIDACION VARIABLES////////////
                                                 _p52_panelCanvas.enable();
                                                 me.up('panel').hide();
                                                 _p52_actualizaLabel(
@@ -3629,7 +3832,7 @@ Ext.onReady(function()
                                         xtype       : 'textfield'
                                         ,fieldLabel : '_VARDESTINO'
                                         ,name       : 'VARDESTINO'
-                                        ,itemId		: 'VARDESTINO'
+                                        ,itemId     : 'VARDESTINO'
                                         ,hidden     : !_p52_debug
                                     }
                                     ,{
@@ -3662,15 +3865,15 @@ Ext.onReady(function()
                                         ,allowBlank : false
                                     }
                                     ,{
-                                    	xtype: 'button'
+                                        xtype: 'button'
                                         ,text: 'Variables'
                                         ,icon : '${icons}table_relationship.png'
                                         ,handler: function() {
-                                        	if(_p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name=DSDESTINO]').getValue()) == 0){
-                                        		mensajeError('El texto no contiene sintaxis para agregar variables');
-                                        	}else{
-                                        		_p52_mostrarVentanaVariablesCorreo('VARDESTINO','DSDESTINO');
-                                        	}
+                                            if(_p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name=DSDESTINO]').getValue()) == 0){
+                                                mensajeError('El texto no contiene sintaxis para agregar variables');
+                                            }else{
+                                                _p52_mostrarVentanaVariablesCorreo('VARDESTINO','DSDESTINO');
+                                            }
                                         }
                                     }
                                     ,{
@@ -3683,15 +3886,15 @@ Ext.onReady(function()
                                         ,maxLength     : 300
                                     }
                                     ,{
-                                    	xtype: 'button'
+                                        xtype: 'button'
                                         ,text: 'Variables'
                                         ,icon : '${icons}table_relationship.png'
                                         ,handler: function() {
-                                        	if(_p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name=DSASUNTO]').getValue()) == 0){
-                                        		mensajeError('El texto no contiene sintaxis para agregar variables');
-                                        	}else{
-                                        		_p52_mostrarVentanaVariablesCorreo('VARASUNTO','DSASUNTO');
-                                        	}
+                                            if(_p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name=DSASUNTO]').getValue()) == 0){
+                                                mensajeError('El texto no contiene sintaxis para agregar variables');
+                                            }else{
+                                                _p52_mostrarVentanaVariablesCorreo('VARASUNTO','DSASUNTO');
+                                            }
                                         }
                                     }
                                     ,{
@@ -3701,15 +3904,15 @@ Ext.onReady(function()
                                         ,name          : 'DSMENSAJE'
                                     }
                                     ,{
-                                    	xtype: 'button'
+                                        xtype: 'button'
                                         ,text: 'Variables'
                                         ,icon : '${icons}table_relationship.png'
                                         ,handler: function() {
-                                        	if(_p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name=DSMENSAJE]').getValue()) == 0){
-                                        		mensajeError('El texto no contiene sintaxis para agregar variables');
-                                        	}else{
-                                        		_p52_mostrarVentanaVariablesCorreo('VARMENSAJE','DSMENSAJE');
-                                        	}
+                                            if(_p52_numberContainsSubstrInStr('{}',_p52_formCorreos.down('[name=DSMENSAJE]').getValue()) == 0){
+                                                mensajeError('El texto no contiene sintaxis para agregar variables');
+                                            }else{
+                                                _p52_mostrarVentanaVariablesCorreo('VARMENSAJE','DSMENSAJE');
+                                            }
                                         }
                                     }
                                     /* , new SelectorMultiple() */
@@ -3940,33 +4143,33 @@ Ext.onReady(function()
                                         ,items    :
                                         [
                                             {
-		                                        xtype       : 'textfield'
-		                                        ,fieldLabel : '_ACCION'
-		                                        ,name       : 'ACCION'
-		                                        ,allowBlank : false
-		                                        ,hidden     : !_p52_debug
-		                                    }
-		                                    ,{
-		                                        xtype       : 'textfield'
-		                                        ,fieldLabel : '_CDTIPFLU'
-		                                        ,name       : 'CDTIPFLU'
-		                                        ,allowBlank : false
-		                                        ,hidden     : !_p52_debug
-		                                    }
-		                                    ,{
-		                                        xtype       : 'textfield'
-		                                        ,fieldLabel : '_CDFLUJOMC'
-		                                        ,name       : 'CDFLUJOMC'
-		                                        ,allowBlank : false
-		                                        ,hidden     : !_p52_debug
-		                                    }
-		                                    ,{
-		                                        xtype       : 'textfield'
-		                                        ,fieldLabel : '_CDACCION'
-		                                        ,name       : 'CDACCION'
-		                                        ,allowBlank : false
-		                                        ,hidden     : !_p52_debug
-		                                    }
+                                                xtype       : 'textfield'
+                                                ,fieldLabel : '_ACCION'
+                                                ,name       : 'ACCION'
+                                                ,allowBlank : false
+                                                ,hidden     : !_p52_debug
+                                            }
+                                            ,{
+                                                xtype       : 'textfield'
+                                                ,fieldLabel : '_CDTIPFLU'
+                                                ,name       : 'CDTIPFLU'
+                                                ,allowBlank : false
+                                                ,hidden     : !_p52_debug
+                                            }
+                                            ,{
+                                                xtype       : 'textfield'
+                                                ,fieldLabel : '_CDFLUJOMC'
+                                                ,name       : 'CDFLUJOMC'
+                                                ,allowBlank : false
+                                                ,hidden     : !_p52_debug
+                                            }
+                                            ,{
+                                                xtype       : 'textfield'
+                                                ,fieldLabel : '_CDACCION'
+                                                ,name       : 'CDACCION'
+                                                ,allowBlank : false
+                                                ,hidden     : !_p52_debug
+                                            }
                                             ,{
                                                 xtype       : 'textfield'
                                                 ,fieldLabel : '_IDORIGEN'
@@ -4719,18 +4922,18 @@ function _p52_cargarTitulos()
     _p52_catalogoTitulos.removeAll();
     _p52_catalogoTitulos.add(
     [
-	    {
-	        xtype   : 'panel'
-	        ,tpl    : tituloTpl
-	        ,border : 0
-	        ,data   :
+        {
+            xtype   : 'panel'
+            ,tpl    : tituloTpl
+            ,border : 0
+            ,data   :
             {
                 cdtitulo  : 0
                 ,dstitulo : 'T\u00edtulo 500'
             }
-	    }
-	    ,{
-	        xtype   : 'panel'
+        }
+        ,{
+            xtype   : 'panel'
             ,tpl    : tituloTpl
             ,border : 0
             ,data   :
@@ -6020,7 +6223,7 @@ function _p52_cargarDatosValidacion(cdvalida)
 
 function _p52_cargarDatosCorreo(cdmail)
 {
-	Ice.log('_p52_cargarDatosCorreo cdmail:',cdmail,'.');
+    Ice.log('_p52_cargarDatosCorreo cdmail:',cdmail,'.');
     var ck = 'Borrando datos de validaci\u00f3n';
     try
     {
@@ -6614,26 +6817,26 @@ function _p52_ventanaTips(tips)
     }).show());
 }
 
-function _p52_mostrarVentanaVariablesCorreo(nameVar, name){	
-	Ice.log('_p52_mostrarVentanaVariablesCorreo',name);
-	_p52_winVarsCorreo.down('[itemId=panVars]').setValue(_p52_formCorreos.down('[name='+nameVar+']').getValue());
-	_p52_winVarsCorreo.nameCmpVar = nameVar;
-	_p52_winVarsCorreo.nameCmp    = name;
-	_p52_winVarsCorreo.show();
-	
+function _p52_mostrarVentanaVariablesCorreo(nameVar, name){ 
+    Ice.log('_p52_mostrarVentanaVariablesCorreo',name);
+    _p52_winVarsCorreo.down('[itemId=panVars]').setValue(_p52_formCorreos.down('[name='+nameVar+']').getValue());
+    _p52_winVarsCorreo.nameCmpVar = nameVar;
+    _p52_winVarsCorreo.nameCmp    = name;
+    _p52_winVarsCorreo.show();
+    
 }
 
 function _p52_numberContainsSubstrInStr(subStr, str){
-	var lastIndex = 0,
- 		count     = 0;
- 	while(lastIndex != -1){
- 		lastIndex = str.indexOf(subStr,lastIndex);
- 		if(lastIndex != -1){
-        	count ++;
-        	lastIndex += subStr.length;
-    	}
- 	}
- 	return count;
+    var lastIndex = 0,
+        count     = 0;
+    while(lastIndex != -1){
+        lastIndex = str.indexOf(subStr,lastIndex);
+        if(lastIndex != -1){
+            count ++;
+            lastIndex += subStr.length;
+        }
+    }
+    return count;
 }
 ////// funciones //////
 

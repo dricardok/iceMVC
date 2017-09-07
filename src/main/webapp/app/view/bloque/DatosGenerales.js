@@ -50,6 +50,8 @@ Ext.define('Ice.view.bloque.DatosGenerales', {
         var me = this,
             paso = 'Construyendo bloque de datos generales';
         try {
+            config.flujo = Ice.validarParamFlujo(config);
+
             if (!config || !config.cdramo || !config.cdtipsit || !config.modulo) {
                 throw 'Faltan par\u00e1metros para construir bloque de datos generales';
             }
