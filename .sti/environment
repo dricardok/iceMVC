@@ -1,6 +1,8 @@
 # Proxy
 HTTP_PROXY_HOST=10.142.66.59
 HTTP_PROXY_PORT=8080
+NO_PROXY=nexus-cicd.qadev.segurossura.com.mx
+HTTP_PROXY_NONPROXYHOSTS=nexus-cicd.qadev.segurossura.com.mx
 # Opcionales
 #HTTP_PROXY_USERNAME=user
 #HTTP_PROXY_PASSWORD=pasword
