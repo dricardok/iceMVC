@@ -795,8 +795,6 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 			paso = 'Generar documentos';
 		
 		try {
-			
-			//alert("");
 			pbar.show();
 			
 			var reqParams = Ice.convertirAParams({

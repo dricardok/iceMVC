@@ -762,7 +762,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	            }
 	            
 	            logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);
-	            documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, "0"); // TODO: Validar integer.parseint
+	            documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
 	            logger.debug("Fin de obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
 	            // Especificar el path para almacenar documentos                
 	            path.append(generaRutaLlave(ntramite, ferecepc));
