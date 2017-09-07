@@ -4631,7 +4631,7 @@ public class FlujoMesaControlDAOImpl extends HelperJdbcDao implements FlujoMesaC
             result = "";
         }
         
-        logger.debug(Utils.log("\n****** ejecutaValidacion in functionName = F_ICE_SC_", functionName, "'\n****** ejecutaValidacion out result='", "S'"));
+        logger.debug(Utils.log("\n****** ejecutaValidacion in functionName = F_ICE_SC_", functionName, "'\n****** ejecutaValidacion out result='", result, "'"));
         return result;
     }
                  

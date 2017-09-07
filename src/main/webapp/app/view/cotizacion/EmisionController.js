@@ -566,11 +566,19 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                             ]
                         });
                         
-                        Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+                        Ice.ejecutarValidacionesEventoPantalla (
+                        	/*
+                        	view.getCdunieco(), 
                             view.getCdramo(),
                             view.getEstado(),
                             view.getNmpoliza(), 
-                            view.getNmsuplem(), 
+                            view.getNmsuplem(),
+                            */
+                        	emisonResult.cdunieco,
+                        	emisonResult.cdramo,
+                        	emisonResult.estado,
+                        	emisonResult.nmpoliza,
+                        	emisonResult.nmsuplem,
                             'EMISION', 'DESPUES_EMITIR', 
                             view.getFlujo(), 
                             function(){
@@ -796,11 +804,10 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 				cdramo: view.getCdramo(),
 				estado: 'M',
 				nmpoliza: params.nmpoliza,
-				iscotizacion: false,
+				iscotizacion: 'false',
 				cdtipsup: '90',
 				ntramite: view.getFlujo().ntramite
 			});
-			
 			Ice.request({
 				url: Ice.url.emision.generarDocumentos,
 				timeout: 1000*60*5,
@@ -819,11 +826,20 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 				success: function (action) {
 					Ice.log(action);
 					try {
-                        Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+						Ice.log("reqParams ", reqParams);
+                        Ice.ejecutarValidacionesEventoPantalla (
+                        	/*	
+                            view.getCdunieco(), 
                             view.getCdramo(),
                             view.getEstado(),
                             view.getNmpoliza(), 
-                            view.getNmsuplem(), 
+                            view.getNmsuplem(),
+                            */
+                        	params.cdunieco,
+                        	params.cdramo,
+                        	params.estado,
+                        	params.nmpoliza,
+                        	params.nmsuplem,
                             'EMISION', 'DESPUES_DOCS_EMISION', 
                             view.getFlujo(), 
                             function () {
@@ -847,7 +863,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                                                     throw 'No se pudo recuperar el usuario para impresi\u00f3n';
                                                 }
                                                 var turnarParams = Ice.flujoToParams(view.getFlujo());
-                                                turnarParams['flujo.aux'] = action2.params.salidasubstring(1);
+                                                turnarParams['flujo.aux'] = action2.params.salida.substring(1);
                                                 Ice.request({
                                                     url: Ice.url.bloque.mesacontrol.turnar,
                                                     mascara: paso4,

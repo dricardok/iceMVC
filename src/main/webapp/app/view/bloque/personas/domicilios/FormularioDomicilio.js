@@ -61,7 +61,6 @@ Ext.define('Ice.view.bloque.personas.domicilios.FormularioDomicilio',{
 				{
 					xtype: "formtrescolumnasice",
 					reference: "formulario",
-					scrollable:	true,
 					items: comps.AGREGAR_PERSONAS.MDOMICIL.items,
 			    	modelValidators: comps.AGREGAR_PERSONAS.MDOMICIL.validators,
         			modelFields	:	comps.AGREGAR_PERSONAS.MDOMICIL.fields
