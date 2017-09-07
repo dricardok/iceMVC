@@ -276,7 +276,8 @@ public class BloqueCoberturasAction extends PrincipalCoreAction{
 		}
 		
 		logger.debug(StringUtils.join(
-				 "\n###### guardarCoberturas ######"
+				  "\n###### validaciones = ",list
+				, "\n###### guardarCoberturas ######"
 				,"\n###############################"
 				));
 		return SUCCESS;

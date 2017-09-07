@@ -126,9 +126,12 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
             
             if(data){
                 Ice.log('data ',data);
-                view.fireEvent('obtenerCdperson', view, data.cdperson);
-                Ice.pop();
+                var dom = refs.domiciliosContainer.lookupReference('gridDomicilios').getDomicilioSel();
+                Ice.log("dommm:",dom);
+                view.fireEvent('obtenerCdperson', view, data.cdperson,dom);
+                //Ice.pop();
             }
+            Ice.pop();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -260,6 +263,65 @@ Ext.define('Ice.view.bloque.personas.BuscarPersonaController', {
             Ice.generaExcepcion(e, paso);
         }
         Ice.log('Ice.view.bloque.BuscarPersonaController.nuevo');
+    },
+    verDomicilios : function(grid, rowIndex, colIndex){
+    	var me = this,
+        view = me.getView(),
+        refs = view.getReferences(),
+        paso = 'Domicilios persona';
+	    try{
+	    	var gridDomicilios = refs.domiciliosContainer.lookupReference('gridDomicilios');
+	    	Ice.log("Arguments: ",arguments);
+	    	
+	    	if(Ext.manifest.toolkit === 'classic'){
+    			var record=grid.getStore().getAt(rowIndex);            
+            } else {
+                var cell = grid.getParent(),
+                    record = cell.getRecord(),
+                    data = record.getData();
+            }
+	    	if(Ice.classic()){
+	    		gridDomicilios.getSelectionModel().select(rowIndex);
+	       	}else{
+//	       		 var str = refs.gridPersonas.getStore();
+//	       		 var idx = str.find("cdperson",record.get("cdperson"));
+//	       		 Ice.log("index",idx);
+//	       		 global= gridDomicilios;
+//	       		 var row = gridDomicilios.select(idx);
+	       	}
+	    	
+	    	gridDomicilios.setCdperson(record.get("cdperson"));
+	    	gridDomicilios.getStore().load({
+	    		params	:	{
+	    			'params.cdperson':record.get("cdperson")
+	    		}
+	    	});
+	    	gridDomicilios.setHidden(false);
+	    } catch(e){
+	        Ice.generaExcepcion(e, paso);
+	    }
+    },
+    verDomiciliosTab : function(grid, record, colIndex,r){
+    	var me = this,
+        view = me.getView(),
+        refs = view.getReferences(),
+        paso = 'Domicilios persona';
+	    try{
+
+	    	
+	    	Ice.log("--->",arguments);
+	    	
+	    	var gridDomicilios = refs.domiciliosContainer.lookupReference('gridDomicilios');
+	    	gridDomicilios.setCdperson(record.get("cdperson"));
+	    	gridDomicilios.getStore().load({
+	    		params	:	{
+	    			'params.cdperson':record.get("cdperson")
+	    		}
+	    	});
+	    	gridDomicilios.setHidden(false);
+	    } catch(e){
+	        Ice.generaExcepcion(e, paso);
+	    }
     }
     
     // navigate: function(panel, direction, nuevoPanel){

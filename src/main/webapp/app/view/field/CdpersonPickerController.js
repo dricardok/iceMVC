@@ -60,8 +60,10 @@ Ext.define('Ice.view.field.CdpersonPickerController', {
         try {
             var windowBuscar = Ext.create('Ice.view.bloque.personas.BuscarPersona', {
                 listeners: {
-                    obtenerCdperson: function (view, cdperson) {
+                    obtenerCdperson: function (v, cdperson,domicilioSel) {
                         me.setValue(cdperson);
+                        view.setDomicilioSel(domicilioSel);
+                        view.fireEvent('personachange',view,cdperson,domicilioSel);
                     }
                 },
                 cdrol: view.getCdrol(),

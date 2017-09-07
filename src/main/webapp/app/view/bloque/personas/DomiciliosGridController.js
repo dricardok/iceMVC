@@ -1,6 +1,65 @@
 Ext.define('Ice.view.bloque.personas.DomiciliosGridController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.domicilios'
+    alias: 'controller.domicilios',
+    
+    agregarDomicilio : function(){
+    	
+    	var me=this,
+    		view = me.getView(),
+    		paso = 'Agregar domicilio';
+    	try{
+    		Ice.push(Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
+	    		listeners:{
+	    			guardarDomicilio:function(){
+	    				view.getStore().proxy.extraParams['params.cdperson']=view.getCdperson();
+	    				view.getStore().load();
+	    				Ice.pop();
+	    			}
+	    		},
+	    		cdperson:view.getCdperson()
+	    	})); 
+    	}catch(e){
+    		Ice.manejaExcepcion(e,paso);
+    	}
+    	
+    },
+    getDomicilioSel : function(){
+    	var me=this,
+		view = me.getView(),
+		paso = 'Agregar domicilio';
+		try{
+			
+			var selected = view.getSelection(),
+            data;
+			if (Ext.manifest.toolkit === 'classic') {
+                data = selected[0].data;
+            } else {
+                data = selected.getData();
+            }
+			
+			Ice.log(view,"Domicilio sel ::",data);
+			return data;
+		}catch(e){
+			Ice.manejaExcepcion(e,paso);
+		}
+    },
+    setDomiciliosSel : function(num){
+    	var me=this,
+		view = me.getView(),
+		paso = 'Set domicilio sel';
+		try{
+			
+			Ice.log("numero grid:",num);
+			 if(Ice.classic()){
+				 view.getSelectionModel().select(num);
+        	 }else{
+        		 var row = view.select(num);
+        	 }
+			
+		}catch(e){
+			Ice.manejaExcepcion(e,paso);
+		}
+    }
     
 //    agregarDomicilio		:	function(accion){
 //    	var paso="",

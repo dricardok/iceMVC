@@ -41,8 +41,14 @@ Ext.define('Ice.view.field.DatefieldIce', {
                     Ice.eventManager.change(me, me.getValue());
                 }
             });
+            
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
+    },
+    constructor:function(config){
+    	config.dateFormat = Ext.util.Format.dateFormat;
+    	config.maxDate = Ext.Date.add(new Date(),Ext.Date.YEAR,5);
+    	this.callParent(arguments);
     }
 });
