@@ -143,6 +143,11 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                            		
 					                            	}
 					                            }, {
+													text: 'Enviar a...',
+													iconCls: 'x-fa fa-send',
+													hidden: !(view.getFlujo() && view.getFlujo().aux && view.getFlujo().aux.onConfirmarReferencia),
+													handler: me.onConfirmarReferencia
+												}, {
 					                                text: 'Continuar emisi&oacute;n',
 					                                iconCls: 'x-fa fa-key',
 					                                handler: function (boton) {
@@ -332,5 +337,21 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 		}catch(e){
 			Ice.manejaExcepcion(e, paso);
 		}
-	}
+	},
+
+	
+	/**
+     * 2017/09/06 - jtezva - para ligar a una validacion del flujo al momento de mostrar la ventana de forma de pago confirmada
+     */
+    onConfirmarReferencia: function () {
+        Ice.log('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalController.onConfirmarReferencia');
+        var me = this,
+            view = me.getView(),
+            paso = 'Mostrando envios posibles para la confirmaci\u00f3n de forma de pago';
+        try {
+            Ice.ejecutarValidacionPorReferencia(view.getFlujo(), view.getFlujo().aux.onConfirmarReferencia);
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+    }
 });

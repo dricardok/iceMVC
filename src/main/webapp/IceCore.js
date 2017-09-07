@@ -2297,7 +2297,7 @@ var Ice = (
                 aux       : params.flujo.aux       || params['flujo.aux']
             };
             try {
-                if (flujo.aux) {
+                if (flujo.aux && typeof flujo.aux === 'string') {
                     flujo.aux = Ext.JSON.decode(flujo.aux);
                 }
             } catch (e) {

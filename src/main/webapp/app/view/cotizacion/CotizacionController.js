@@ -381,15 +381,22 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                                 }
                             },
                             
-                            buttons : [{
-                                cls: '',
-                                text: 'Modificar',
-                                style:'margin-right: 42px;',       			
-                                iconCls: 'x-fa fa-pencil',
-                                handler: function(me){
-                                    Ice.pop();
+                            buttons : [
+                                {
+                                    cls: '',
+                                    text: 'Modificar',
+                                    style:'margin-right: 42px;',       			
+                                    iconCls: 'x-fa fa-pencil',
+                                    handler: function(me){
+                                        Ice.pop();
+                                    }
+                                }, {
+                                    text: 'Enviar a...',
+                                    iconCls: 'x-fa fa-send',
+                                    hidden: !(view.getFlujo() && view.getFlujo().aux && view.getFlujo().aux.onBotoneraReferencia),
+                                    handler: 'onBotoneraReferencia'
                                 }
-                            }]
+                            ]
                         });
                         
                         Ice.push(planes);
@@ -532,6 +539,21 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 success: callbackSuccess
             });
         } catch(e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+    },
+
+    /**
+     * 2017/09/06 - jtezva - para ligar a una validacion del flujo al momento de mostrar la botonera
+     */
+    onBotoneraReferencia: function () {
+        Ice.log('Ice.view.cotizacion.CotizacionController.onBotoneraReferencia');
+        var me = this,
+            view = me.getView(),
+            paso = 'Mostrando envios posibles para la botonera de tarifa';
+        try {
+            Ice.ejecutarValidacionPorReferencia(view.getFlujo(), view.getFlujo().aux.onBotoneraReferencia);
+        } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
     }
