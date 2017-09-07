@@ -1070,6 +1070,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	    errores = (List<String>) resultado.get("errores");
     	    */
     	    success = true;
+    	    message = "Documentos generados";
     	    
     	}catch(Exception ex){
     		message = Utils.manejaExcepcion(ex);

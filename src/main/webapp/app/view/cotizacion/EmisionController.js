@@ -808,7 +808,6 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 				cdtipsup: '90',
 				ntramite: view.getFlujo().ntramite
 			});
-			alert('-1');
 			Ice.request({
 				url: Ice.url.emision.generarDocumentos,
 				timeout: 1000*60*5,
@@ -827,7 +826,6 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 				success: function (action) {
 					Ice.log(action);
 					try {
-						alert('0');
 						Ice.log("reqParams ", reqParams);
                         Ice.ejecutarValidacionesEventoPantalla (
                         	/*	
@@ -847,7 +845,6 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                             function () {
                                 var paso3 = 'Recuperando usuario impresi\u00f3n';
                                 try {
-                                	alert('1');
                                     var paramsDespachadorImpreso = Ice.flujoToParams(view.getFlujo(), {
                                         'params.cdvalidafk': 'DESPACHADOR',
                                         'params.jsvalida': 'DESPACHADOR'
@@ -859,7 +856,6 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                                         params: paramsDespachadorImpreso,
                                         success: function (action2) {
                                             // action.params.salida
-                                        	alert('2');
                                             var paso4 = 'Turnando a impresi\u00f3n';
                                             try {
                                                 if (!action2.params || Ext.isEmpty(action2.params.salida) ||
@@ -867,16 +863,14 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                                                     throw 'No se pudo recuperar el usuario para impresi\u00f3n';
                                                 }
                                                 var turnarParams = Ice.flujoToParams(view.getFlujo());
-                                                turnarParams['flujo.aux'] = action2.params.salidasubstring(1);
+                                                turnarParams['flujo.aux'] = action2.params.salida.substring(1);
                                                 Ice.request({
                                                     url: Ice.url.bloque.mesacontrol.turnar,
                                                     mascara: paso4,
                                                     params: turnarParams,
                                                     success: function (action3) {
-                                                    	alert('3');
                                                         var paso5 = 'Mostrando resultado de documentos';
                                                         try {
-                                                        	alert('4');
                                                             pbar.hide();
                                                             error.setHtml('<p>Documentos generados</p>');
                                                             error.show();
@@ -887,7 +881,6 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                                                             Ice.confirm('Marcar impresi\u00f3n',
                                                                 '\u00bfDesea marcar el tr\u00e1mite como impreso\u003f',
                                                                 function () {
-                                                            		alert('5');
                                                                     var paso6 = 'Marcando impresi\u00f3n';
                                                                     try {
                                                                         var turnarParams2 = Ice.flujoToParams(view.getFlujo());
