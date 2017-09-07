@@ -394,7 +394,10 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                                     text: 'Enviar a...',
                                     iconCls: 'x-fa fa-send',
                                     hidden: !(view.getFlujo() && view.getFlujo().aux && view.getFlujo().aux.onBotoneraReferencia),
-                                    handler: 'onBotoneraReferencia'
+                                    controlador: me,
+                                    handler: function (me) {
+                                        me.controlador.onBotoneraReferencia(me.controlador);
+                                    }
                                 }
                             ]
                         });
@@ -546,12 +549,11 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
     /**
      * 2017/09/06 - jtezva - para ligar a una validacion del flujo al momento de mostrar la botonera
      */
-    onBotoneraReferencia: function () {
-        Ice.log('Ice.view.cotizacion.CotizacionController.onBotoneraReferencia');
-        var me = this,
-            view = me.getView(),
-            paso = 'Mostrando envios posibles para la botonera de tarifa';
+    onBotoneraReferencia: function (me) {
+        Ice.log('Ice.view.cotizacion.CotizacionController.onBotoneraReferencia args:', arguments);
+        var paso = 'Mostrando envios posibles para la botonera de tarifa';
         try {
+            var view = me.getView();
             Ice.ejecutarValidacionPorReferencia(view.getFlujo(), view.getFlujo().aux.onBotoneraReferencia);
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
