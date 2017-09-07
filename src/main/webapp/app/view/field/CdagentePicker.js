@@ -46,7 +46,7 @@ Ext.define('Ice.view.field.CdagentePicker', {
                     xtype: 'button',
                     iconCls: 'x-fa fa-search',
 
-                    style:'margin-top: 29px !important;',
+                    style:'margin-top: 28px !important;margin-left:-10px;',
 
                     scope: me,
                     handler: function () {

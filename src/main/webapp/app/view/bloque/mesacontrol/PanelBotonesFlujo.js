@@ -1,16 +1,19 @@
 Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
     extend: 'Ice.view.componente.PanelIce',
     xtype: 'botoneraflujo',
+    style: 'padding:20px 0px 0px 20px;',
 
     // config ext
     scrollable: true,
     layout: 'hbox',
     platformConfig: {
         desktop: {
+
             height: 120,
-            bodyPadding: '0 0 0 10',
+            bodyPadding: '0px 0px 0px 10px',
+
             defaults: {
-                margin: '0 10 10 0'
+                margin: '10px 10px 10px 0px'
             }
         },
         tablet: {
@@ -73,8 +76,9 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
                     me.add({
                         xtype: 'buttonice',
                         text: 'Cerrar',
+                        ui:'gray',
                         icon: Ice.ruta.iconos + 'cancel.png',
-                        handler: function (me) {
+                        handler: config.botonCerrarHandler || function (me) {
                             try {
                                 me.up('ventanaice').cerrar();
                             } catch (e) {

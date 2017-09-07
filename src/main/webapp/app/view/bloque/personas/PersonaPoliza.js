@@ -77,6 +77,8 @@ Ext.define('Ice.view.bloque.personas.PersonaPoliza', {
                     handler: 'onGuardar'
                 }, {
                     text: 'Cancelar',
+                    ui:'gray',
+        			style:'margin-right: 45px;',
                     iconCls: 'x-fa fa-close',
                     handler: 'onCancelar'
                 }

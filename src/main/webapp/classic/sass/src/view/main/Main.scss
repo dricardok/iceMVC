@@ -187,6 +187,11 @@
 //}
 
 //Add border around html editor field
+
+
+
+
+
 .x-html-editor-input{
     border:1px solid #ccc;
 }
@@ -278,9 +283,18 @@
 
 
 @include extjs-button-small-ui(
+    $ui: 'secundario-sm-framed',
+    $color: #606060,
+    $glyph-color: #606060,
+    $background-color: $sec-color,
+    $border-color: transparent,
+    $border-width: 0
+);
+
+@include extjs-button-small-ui(
     $ui: 'gray',
-    $background-color: $color-gray,
-    $border-color:darken($color-gray, 5%)
+    $background-color: rgba(0, 51, 160, 0.10),
+    $border-color:darken($color-gray, 1%)
 );
 @include extjs-button-large-ui(
     $ui: 'gray',
@@ -347,14 +361,7 @@
     $border-width: 0
 );
 
-@include extjs-button-small-ui(
-    $ui: 'Secundario-sm-framed',
-    $color: #fff,
-    $glyph-color: #fff,
-    $background-color: $azulo-s,
-    $border-color: $azulo-s,
-    $border-width: 0
-);
+
 @include extjs-button-large-ui(
     $ui: 'Secundario-lg',
     $line-height: 34px,
@@ -367,7 +374,7 @@
 
 
 @include extjs-button-small-ui(
-    $ui: 'Nav-sm',
+    $ui: 'Nav-sm-framed',
     $color: $font-grey,
     $glyph-color: $font-grey,
     $background-color: $btn_transparent,
@@ -431,6 +438,58 @@
 );
 
 
+.x-btn-default-small-color-pressed{
+    background-color: #f6f6f6;
+}
 
+    .x-btn-gray-small {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px;
+    padding: 7px 7px 7px 7px;
+    border-width: 0px;
+    border-style: solid;
+    background-color:rgba(0, 51, 160, 0.40)!important;
+    color:#fff;
+    
+}
+    .x-btn-over.xbtn-default-toolbar-small{
+        border-color: transparent !important;
+        background-image:none;
+        background-color: #dddddd;
+        color: #606060;
+}
+    .x-btn-over.x-btn-gray-small {
+    border-color: transparent !important;
+    background-image: none;
+    background-color:rgba(0, 51, 160, 0.25)!important;
+    //background-color:#0033a0;
+    color:#606060 !important;
+}    
+  
+
+    .x-btn-inner-gray-small {
+    font: 500 12px/16px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    color: #FFF  !important;
+    padding: 0 5px;
+    max-width: 100%;
+}
+
+
+    .x-btn-icon-el-gray-small{
+    font-size: 16px;
+    height: 16px;
+    color:#fff !important;
+    line-height: 16px;
+}
+
+.x-btn-over.x-btn-default-toolbar-small {
+    border-color: transparent  !important;
+    background-image: none;
+    background-color: #dddddd;
+    //background-color: rgba(0, 51, 160, 0.75);
+}
 
     
+

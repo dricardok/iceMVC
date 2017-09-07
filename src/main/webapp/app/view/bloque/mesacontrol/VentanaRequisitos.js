@@ -48,7 +48,7 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaRequisitos', {
             config.items = [
                 {
                     xtype: 'container',
-                    html: '<span style="padding: 0px 10px 10px 0px; border: 0px solid blue;">Favor de revisar los requisitos y documentos obligatorios:<br/>&nbsp;</span>'
+                    html: '<span style="padding: 0px 10px 10px 5px; border: 0px solid blue;font-weight: 600;font-size:14px;color:grey;">Favor de revisar los requisitos y documentos obligatorios:<br/>&nbsp;</span>'
                 }, {
                     xtype: 'gridice',
                     tipo: 'REQ',
@@ -212,7 +212,7 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaRequisitos', {
                                 }
                                 else if (rec.get('SWOBLIGA')  === 'S') {
                                     if (Ice.classic()) {
-                                        r = '<img src="' + Ice.ruta.iconos + 'cancel.png" />';
+                                        r = '<img src="' + Ice.ruta.iconos + 'cancel_02.png" />';
                                     }
                                 }
                                 return r;
@@ -337,6 +337,7 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaRequisitos', {
                                         }, {
                                             text: 'Cancelar',
                                             iconCls: 'x-fa fa-close',
+                                            ui:'gray',
                                             handler: function (me) {
                                                 me.up('ventanaice').cerrar();
                                             }
@@ -423,35 +424,40 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaRequisitos', {
                     text: 'Documentos',
                     iconCls: 'x-fa fa-copy',
                     handler : function (me) {
-                        me = me.up('ventanaice');
-                        var winDoc = Ext.create({
-                            xtype     : 'ventanadocumentos',
-                            cdtipflu  : me.getFlujo().cdtipflu,
-                            cdflujomc : me.getFlujo().cdflujomc,
-                            tipoent   : me.getFlujo().tipodest,
-                            claveent  : me.getFlujo().clavedest,
-                            webid     : me.getFlujo().webiddest,
-                            aux       : '',// 'INICIAL' === flujo.aux || 'LECTURA' === flujo.aux 
-                                                        // ? ''
-                                                        // : flujo.aux
-                            ntramite : me.getFlujo().ntramite,
-                            status   : me.getFlujo().status,
-                            cdunieco : me.getFlujo().cdunieco,
-                            cdramo   : me.getFlujo().cdramo,
-                            estado   : me.getFlujo().estado,
-                            nmpoliza : me.getFlujo().nmpoliza,
-                            nmsituac : me.getFlujo().nmsituac,
-                            nmsuplem : me.getFlujo().nmsuplem
-                        }).mostrar();
-                        winDoc.on({
-                            close : function() {
-                                me.recargar();
-                            }
-                        });
+                        var paso = 'Creando ventana de documentos';
+                        try {
+                            me = me.up('ventanaice');
+                            var winDoc = Ext.create({
+                                xtype     : 'ventanadocumentos',
+                                cdtipflu  : me.getFlujo().cdtipflu,
+                                cdflujomc : me.getFlujo().cdflujomc,
+                                tipoent   : me.getFlujo().tipodest,
+                                claveent  : me.getFlujo().clavedest,
+                                webid     : me.getFlujo().webiddest,
+                                aux       : '',// 'INICIAL' === flujo.aux || 'LECTURA' === flujo.aux 
+                                                            // ? ''
+                                                            // : flujo.aux
+                                ntramite : me.getFlujo().ntramite,
+                                status   : me.getFlujo().status,
+                                cdunieco : me.getFlujo().cdunieco,
+                                cdramo   : me.getFlujo().cdramo,
+                                estado   : me.getFlujo().estado,
+                                nmpoliza : me.getFlujo().nmpoliza,
+                                nmsituac : me.getFlujo().nmsituac,
+                                nmsuplem : me.getFlujo().nmsuplem
+                            }).mostrar();
+                            winDoc.on({
+                                close : function() {
+                                    me.recargar();
+                                }
+                            });
+                        } catch (e) {
+                            Ice.manejaExcepcion(e, paso);
+                        }
                     }
                 }, {
                     text: 'Continuar',
-                    iconCls: 'x-fa fa-check',
+                    iconCls: 'x-fa fa-forward',
                     hidden: !(config.numSalidas === 0 || config.faltanDocs === true || config.flujo.aux === 'LECTURA'
                         || config.flujo.aux === 'INICIAL'),
                     handler: function (me) {
@@ -460,6 +466,7 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaRequisitos', {
                 }, {
                     text: 'Cerrar',
                     iconCls: 'x-fa fa-close',
+                    ui:'gray',
                     hidden: Ice.classic(),
                     handler: function (me) {
                         me.up('ventanaice').cerrar();

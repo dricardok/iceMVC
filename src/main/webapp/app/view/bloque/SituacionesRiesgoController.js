@@ -84,6 +84,31 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                     }
                 }
             });*/
+
+            if(view.getCdramo() == '301'){
+                form.on({
+                    afterlayout: function(){
+                        try{
+                            var b1b_otvalor15 = Ice.query('datosiniciales').refs.formdatosgenerales.getValues().b1b_otvalor15;
+                            var refsFormSit = refs.form.refs;
+                            if(b1b_otvalor15 == '3'){
+                                refsFormSit.b5b_otvalor05.show();
+                                refsFormSit.b5b_otvalor06.show();
+                                refsFormSit.b5b_otvalor23.show();
+                            } else {
+                                refsFormSit.b5b_otvalor05.hide();
+                                refsFormSit.b5b_otvalor06.hide();
+                                refsFormSit.b5b_otvalor23.hide();
+                                refsFormSit.b5b_otvalor05.setValue();
+                                refsFormSit.b5b_otvalor06.setValue();
+                                refsFormSit.b5b_otvalor23.setValue();
+                            }
+                        } catch(e) {
+                            Ice.log('No se pudo ocultar los campos origen, destino ',e);
+                        }
+                    }
+                });
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -161,7 +186,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                         store.load();
                         formRefs.cdtipsit.getStore().load(function (r) {
                             if (r.length === 1 && json.situacion) {
-                                if (!formRefs.nmsituac.getValue()) {
+                                if (!formRefs.nmsituac && !formRefs.nmsituac.getValue()) {
                                     formRefs.nmsituac.setValue(json.situacion.nmsituac);
                                 }
                                 //alert(Ext.ComponentQuery.query("[name=nmsituac]")[0].getValue());
@@ -262,7 +287,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           refs = view.getReferences(),
           paso = "";
       try{
-          paso = "Antes de borrar situacion de riesgo";
+          paso = "Antes de borrar situación de riesgo";
           var store = refs.grid.getStore(),
               form = refs.form,
               data;
@@ -275,7 +300,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           }            
           Ice.log('situacion: ',data);
           Ice.request({
-              mascara: 'Borrando situacion de riesgo',
+              mascara: 'Borrando situación de riesgo',
               url: Ice.url.bloque.situacionesRiesgo.borrar,
               params: {
                   'params.cdunieco': data.cdunieco,
@@ -373,11 +398,11 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
         var me = this,
             view = me.getView(),
             refs = view.getReferences(),
-            paso = 'Antes de guardar valores situacion';
+            paso = 'Antes de guardar valores situación';
         view.setProcesandoValoresDefecto(false);
         //view.setDatosFijosNuevos = false;
         try {
-            paso = 'Guardando datos de situacion';
+            paso = 'Guardando datos de situación';
             var form = refs.form,
                 values = Ice.utils.mergeObjects(form.getValues(), {
                     cdunieco: view.getCdunieco(),
@@ -453,7 +478,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
         var me = this,
             view = me.getView(),
             refs = view.getReferences(),
-            paso = 'Antes de validar valores situacion';
+            paso = 'Antes de validar valores situación';
         Ice.log('Ice.view.bloque.SituacionesRiesgoController.guardar view', view);
         view.setProcesandoValoresDefecto(false);
         //view.setDatosFijosNuevos(false);
@@ -464,7 +489,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                 me.guardarBloque();
             }
             Ice.request({
-                mascara: 'Antes de lanzar validaciones de bloque de situacion',
+                mascara: 'Antes de lanzar validaciones de bloque de situación',
                 url: Ice.url.bloque.situacionesRiesgo.validaciones,
                 params: {
                     'params.cdunieco' : view.getCdunieco(),
@@ -551,7 +576,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
     	  Ice.log("values...>",values);
     	  if(!me.editando){
 	    	  Ice.request({
-	              mascara: 'Borrando situacion de riesgo',
+	              mascara: 'Borrando situación de riesgo',
 	              url: Ice.url.bloque.situacionesRiesgo.borrar,
 	              params: {
 	                  'params.cdunieco': values.cdunieco,
@@ -635,7 +660,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                               var isDecimal = nmcopias % 1;
                               if(!isDecimal){
                                   Ice.request({
-                                      mascara: 'Copiando situacion de riesgo',
+                                      mascara: 'Copiando situación de riesgo',
                                       url: Ice.url.bloque.situacionesRiesgo.copiaSituacion,
                                       params: {
                                           'params.cdunieco' : view.getCdunieco(),
@@ -650,10 +675,10 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                                           var paso2 = 'LLenando store';
                                           try {
                                               refs.grid.getStore().reload();
-                                              Ice.mensajeCorrecto('Se copio correctamente situacion de riesgo');
+                                              Ice.mensajeCorrecto('Se copió correctamente situación de riesgo');
                                               ventanaCopiar.cerrar();
                                           } catch (e) {
-                                              Ice.mensajeCorrecto('No se copio situacion de riesgo');
+                                              Ice.mensajeCorrecto('No se copió situación de riesgo');
                                               Ice.manejaExcepcion(e, paso2);
                                               ventanaCopiar.cerrar();
                                           }
@@ -667,6 +692,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                       },{
                           text: 'Cancelar',
                           iconCls: 'x-fa fa-close',
+                          ui:'gray',
                           handler: function(){
                               ventanaCopiar.cerrar();
                           }

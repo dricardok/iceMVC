@@ -27,4 +27,11 @@ public interface MesaControlDAO {
 			String cdsisrol, String accion) throws Exception;
 
 	public String existePoliza(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
+
+	public List<Map<String, String>> ejecutarValidacionPorReferencia(String ntramite, String referencia) throws Exception;
+
+	/**
+	 * 2017/08/31 - jtezva - se comenta porque no se debe usar
+	 */
+//	public Map<String, String> obtenerTramiteCompleto(String ntramite) throws Exception;
 }

@@ -4,7 +4,7 @@ Ext.define('Ice.view.bloque.RegistroTramiteWindow', {
     //autoShow	:	true,
     controller	:	'registrotramitewindow',
     title		:	'Registro de trámite',
-    scrollable	:	true,
+    style:'padding-top:30px;',
     modal		:	true,
     platformConfig: {
 		desktop: {
@@ -64,6 +64,8 @@ Ext.define('Ice.view.bloque.RegistroTramiteWindow', {
 		},{
 			text		:	'Cancelar',
 			iconCls		: 	'x-fa fa-close',
+			style:'margin-right: 40px;',
+			ui:'gray',
 			handler		:	'onCancelar'
 		}
 	],

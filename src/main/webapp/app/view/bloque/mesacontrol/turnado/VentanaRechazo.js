@@ -10,6 +10,7 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaRechazo', {
     title: 'Turnado',
     layout: 'fit',
     scrollable: true,
+    style: 'padding: 30px 0px 0px 0px;',
     platformConfig: {
         desktop: {
             width: Ice.constantes.componente.ventana.width,
@@ -65,11 +66,13 @@ Ext.define('Ice.view.bloque.mesacontrol.turnado.VentanaRechazo', {
                     buttons: [
                         {
                             text: 'Rechazar',
-                            iconCls: 'x-fa fa-power-off',
+                            iconCls: 'x-fa fa-times',
+                            style:'margin-right:40px;',
                             handler: 'onTurnar'
                         }, {
                             text: 'Cerrar',
                             iconCls: 'x-fa fa-close',
+                            ui:'gray',
                             hidden: Ice.classic(),
                             handler: function (me) {
                                 me.up('ventanaice').cerrar();

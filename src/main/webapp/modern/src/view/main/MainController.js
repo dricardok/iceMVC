@@ -126,6 +126,8 @@ Ext.define('Ice.view.main.MainController', {
                 
                 Ice.log('Ice.view.main.MainController.setCurrentView config:', config);
                 
+                Ice.cerrarVentanas();
+                
                 item = mainCard.add(config);
             }
             

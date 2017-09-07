@@ -44,11 +44,11 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
     multiSelect: false,
      itemSelector: 'table.shadow_card',
     
-    listeners: {
+    listeners: { 
     	itemclick: 'onItemClic'
     },
 
-	padding: '40 0 0 40',
+	padding: '40 0 0 20',
     
 	// config no ext
     config: {
@@ -63,7 +63,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 		cdptovta: null,
 		cdgrupo: null,
 		cdsubgpo: null,
-		cdperfil: null
+		cdperfil: null,
+
+		flujo: null
 	},
 	
 	constructor: function (config) {
@@ -71,6 +73,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 		var me = this,
 			paso = 'Construyendo dataview de vista previa';
 		try {
+			config.flujo = Ice.validarParamFlujo(config);
+			
 			if (!config
 				|| !config.cdunieco
 				|| !config.cdramo

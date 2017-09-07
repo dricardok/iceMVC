@@ -37,6 +37,10 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
         this.recargarDocumentos();
     },
     
+    onSubirDocumento: function(){
+        this.subirDocumento();
+    },
+    
     verDocumento: function(grid, rowIndex, colIndex){
         Ice.log('Ice.view.bloque.documentos.VentanaDocumentosController.verDocumento', grid, rowIndex, colIndex);
         var paso = 'Antes de visualizar documento',
@@ -72,10 +76,10 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                     );
                 } else {
                     window.open(Ice.url.bloque.documentos.verArchivo+'?'+
-                        'params.url='+encodeURIComponent(data.url)+
-                        '&params.ruta='+encodeURIComponent(data.ruta)+
-                        '&params.cddocume='+data.cddocume+
-                        '&params.cdtipdoc='+encodeURIComponent(data.cdtipdoc)+
+                        'params.url='+encodeURIComponent(Ice.nvl(data.url))+
+                        '&params.ruta='+encodeURIComponent(Ice.nvl(data.ruta))+
+                        '&params.cddocume='+Ice.nvl(data.cddocume)+
+                        '&params.cdtipdoc='+encodeURIComponent(Ice.nvl(data.cdtipdoc))+
                         '&params.cdunieco='+view.getCdunieco()+
                         '&params.cdramo='+view.getCdramo()+
                         '&params.estado='+view.getEstado()+
@@ -233,6 +237,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
             view = me.getView(),
             refs = view.getReferences();
         try{
+            refs.btnSubirArchivo.hide();
             refs.listadocumentos.getStore().getProxy().extraParams['params.cdtipdoc'] = 'SLIP';
             refs.listadocumentos.getStore().load();
             this.mostrarActionColumnsSlip(refs.listadocumentos, true);
@@ -248,6 +253,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
             view = me.getView(),
             refs = view.getReferences();
         try{
+            refs.btnSubirArchivo.show();
             refs.listadocumentos.getStore().getProxy().extraParams['params.cdtipdoc'] = null;
             refs.listadocumentos.getStore().load();
             this.mostrarActionColumnsSlip(refs.listadocumentos, false);
@@ -313,7 +319,7 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
         }
     },
 
-    mostrarColumna(column, swmostrar){
+    mostrarColumna: function(column, swmostrar){
         Ice.log('Ice.view.bloque.coaseguro.PanelCoaseguroController.mostrarColumna column', column, 'swmostrar', swmostrar);
         if(swmostrar == true){
             column.show();
@@ -342,5 +348,30 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
             Ice.generaExcepcion(e);
         }
         return data;
+    },
+
+    subirDocumento: function(){
+        Ice.log('Ice.view.bloque.documentos.VentanaDocumentosController.subirDocumento');
+        var paso = 'Agregando documento',
+            me = this,
+            view = me.getView(),
+            refs = view.getReferences();
+        try{
+            var ventanaNuevo = Ext.create('Ice.view.componente.VentanaIce',{
+                closeAction: 'destroy',
+                closable: false,
+                title: 'Agregar documento',
+                modal: true,
+                items: [
+                    {
+                        xtype: 'agregardocumento',
+                        ntramite: view.getNtramite()
+                    }
+                ]
+            });
+            ventanaNuevo.mostrar();
+        } catch(e){
+            Ice.generaExcepcion(e, paso);
+        }
     }
 });

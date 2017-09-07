@@ -97,6 +97,7 @@ public interface EmisionManager {
      */
     public Map<String, Object> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion, String usuario) throws Exception;
     
+    public Map<String, Object> generarDocumentos(String ntramite, String cdtipsup, String isCotizacion, String cdusuari) throws Exception;
     
     /**
      * Obtiene los datos de la tarificacion
@@ -116,7 +117,7 @@ public interface EmisionManager {
     public Map<String, String> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 			   String nmsuplem, String newestad, String newpoliza, String pnmrecibo, 
 			   String nmcotizacion, String nmtarjeta, String authCode, String orderId, 
-			   String email) throws Exception ;
+			   String email, String ntramite, String cdusuari, String cdsisrol) throws Exception ;
     
     
     public List<Map<String, String>> realizarPagoTarjeta(String cdunieco, String cdramo, String estado, String nmpoliza, 

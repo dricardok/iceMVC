@@ -13,7 +13,10 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 		flujo: null
 	},
 	
-	title: 'Historial',
+	title: {
+		text:"Historial",
+		style:'margin:0px 30px 0px 10px;',
+	},
 	scrollable: true,
 	platformConfig: {
 		desktop: {
@@ -40,6 +43,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 				config.buttons = (config.buttons || []).concat([{
 					text: 'Cerrar',
 					iconCls: 'x-fa fa-close',
+					ui:'gray',
 					handler: function (me) {
 						me.up('ventanaice').cerrar();
 					}
@@ -48,8 +52,11 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 			
 			var graficaEve={
 					xtype		:	'cartesian',
-					title		:	"Eventos",
-					width		:	"100%",
+					title: {
+						text:"Eventos",
+						style:'margin:0px 10px 10px 20px;',
+					},
+					width		:	"95%",
 					height		:	250,
 					innerPadding: 	20,
 			        store: {
@@ -61,6 +68,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
                         position: 'bottom',
                         fields: ['fecha'],
                         title: 'Eventos',
+                        //style:'margin:0px 20px 10px 10px;',
                         grid: true
                     }, {
                         type: 'category',
@@ -119,7 +127,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 					xtype		:	"panelice",
 					width		:	"100%",
 					
-					title		:	"Historial",
+				
 					
 					platformConfig: {
 						desktop: {
@@ -146,11 +154,13 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 					    }
 					]
 				},
-				{
+				{   style:'margin:0px 30px 16px 20px;',
 					xtype		:	'gridice',
-					title		:	"Eventos",
+					title: "Mesa de Control",
 					reference	:	'gridEventos',
+					
 					columns		:	[
+						
 						{
 							text		:	"No.",	
 							dataIndex	:	"nmordina"
@@ -178,7 +188,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 						
 					],
 					actionColumns		:	[
-						{
+						{	style:'margin:0px 20px 16px 20px;',
 							xtype : 'actioncolumn',
 							items : [
 										{
@@ -196,9 +206,9 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 			            ntramite: config.ntramite
 			        }
 				},
-				{
+				{	style:'margin:0px 30px 16px 20px;',	
 					xtype		:	'gridice',
-					title		:	"Turnados",
+					title: "Turnados",
 					columns		:	[
 						{
 							text		:	"Usuario",	

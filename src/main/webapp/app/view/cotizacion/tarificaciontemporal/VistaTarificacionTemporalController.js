@@ -36,7 +36,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 								Ice.request({
 					                mascara: paso,
 									timeout: 1000*60*5,
-					                url: Ice.url.emision.tarificarPlan,
+					                url: Ice.url.emision.tarificarPlan, 
 					                params: Ice.convertirAParams({
 										cdunieco: view.getCdunieco(),
 										cdramo: view.getCdramo(),
@@ -44,10 +44,22 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 										nmpoliza: view.getNmpoliza(),
 										nmsuplem: view.getNmsuplem(),					                     
 										cdtipsit: view.getCdtipsit(),					                        
-										cdperpag: rec.get('cdperpag')
+										cdperpag: rec.get('cdperpag'),
+										ntramite: view.getFlujo().ntramite || ''
 									}),
 					                success: function (action) {
-					                	
+										
+										if (action.flujo && action.flujo.ntramite) { // cuando se genera el tramite
+											view.setFlujo(action.flujo);
+											view.fireEvent('tramiteGenerado', view, action.flujo);
+										} else { // cuando solo se actualiza, los demas ya los tiene
+											view.getFlujo().cdunieco = view.getCdunieco();
+											view.getFlujo().cdramo   = view.getCdramo();
+											view.getFlujo().estado   = view.getEstado();
+											view.getFlujo().nmpoliza = view.getNmpoliza();
+											view.getFlujo().nmsuplem = view.getNmsuplem();
+										}
+										
 					                	boton.up('ventanatarifastemporales').cerrar();
 					                	
 					                	var p, error;
@@ -80,7 +92,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                		 hidden: true,
 				                			 width: '100%',
 				                			 style: 'margin-top: 10px',
-				                			 html:  '<p> Error al generar documentos, consulte a soporte tecnico </p>'
+				                			 html:  '<p> Error al generar documentos, consulte a soporte técnico </p>'
 					                	});
 					                	
 					                	var ventana = Ext.create('Ice.view.componente.VentanaIce', {
@@ -131,28 +143,88 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                            		
 					                            	}
 					                            }, {
+													text: 'Enviar a...',
+													iconCls: 'x-fa fa-send',
+													hidden: !(view.getFlujo() && view.getFlujo().aux && view.getFlujo().aux.onConfirmarReferencia),
+													controlador: me,
+													handler: function (me) {
+														me.controlador.onConfirmarReferencia(me.controlador);
+													}
+												}, {
 					                                text: 'Continuar emisi&oacute;n',
 					                                iconCls: 'x-fa fa-key',
 					                                handler: function (boton) {
 					                                    /*
 					                                	me.up('ventanaice').cerrar();
-					                                    */              	
-					                                	Ice.query('#mainView').getController().redirectTo('emision.action?' +
-															    'cdunieco=' + view.getCdunieco() + '&' +
-																'cdramo='   + view.getCdramo()   + '&' +
-																'estado='   + view.getEstado()   + '&' +
-																'nmpoliza=' + view.getNmpoliza() + '&' +
-																'cdtipsit=' + view.getCdtipsit() + '&' +
-																// perfilamiento
-																'cdptovta=' + view.getCdptovta() + '&' +
-																'cdgrupo='  + view.getCdgrupo()  + '&' +
-																'cdsubgpo=' + view.getCdsubgpo() + '&' +
-																'cdperfil=' + view.getCdperfil(),
-									                            true);
-								                        
-					                                	
-					                                	Ice.cerrarVentanas();
-					                                } 
+					                                    */   
+														Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+														    view.getCdramo(),
+															view.getEstado(),
+															view.getNmpoliza(), 
+															view.getNmsuplem(), 
+															'COTIZACION', 'ANTES_PROCEDER_EMISION', 
+															view.getFlujo(), 
+															function(){
+																var paso;
+																try {
+																	paso = 'Recuperando referencia';
+																	Ice.request({
+																		url: Ice.url.bloque.mesacontrol.ejecutarValidacionPorReferencia,
+																		params: {
+																			'params.ntramite': view.getFlujo().ntramite,
+																			'params.referencia': 'DESDE_COTI_' + Ice.sesion.cdsisrol
+																		},
+																		success: function (action) {
+																			var paso2 = 'Recuperando acci\u00f3n de referencia';
+																			try {
+																				if (!action.list || action.list.length === 0) {
+																					throw 'No hay referencia';
+																				}
+																				if (action.list.length > 1) {
+																					throw 'Referencia duplicada';
+																				}
+																				var ref = action.list[0];
+																				Ice.cargarAccionesEntidad(ref.cdtipflu, ref.cdflujomc, 'V', ref.cdvalida, ref.webid, function (lista) {
+																					if (lista.length === 0) {
+																						throw 'No hay acci\u00f3n para la referencia';
+																					} else if (lista.length > 1) {
+																						throw 'Acci\u00f3n para la referencia duplicada';
+																					}
+
+																					Ice.query('#mainView').getController().redirectTo('emision.action?' +
+																						'flujo.cdtipflu='  + view.getFlujo().cdtipflu  + '&' +
+																						'flujo.cdflujomc=' + view.getFlujo().cdflujomc + '&' +
+																						'flujo.tipoent='   + lista[0].TIPODEST         + '&' +
+																						'flujo.claveent='  + lista[0].CLAVEDEST        + '&' +
+																						'flujo.webid='     + lista[0].WEBIDDEST        + '&' +
+																						'flujo.ntramite='  + view.getFlujo().ntramite  + '&' +
+																						'flujo.status='    + view.getFlujo().status    + '&' +
+																						'flujo.aux='       + Ice.nvl(lista[0].AUX)     + '&' +
+																						'flujo.cdunieco='  + view.getFlujo().cdunieco  + '&' +
+																						'flujo.cdramo='    + view.getFlujo().cdramo    + '&' +
+																						'flujo.estado='    + view.getFlujo().estado    + '&' +
+																						'flujo.nmpoliza='  + view.getFlujo().nmpoliza  + '&' +
+																						'flujo.nmsituac='  + view.getFlujo().nmsituac  + '&' +
+																						'flujo.nmsuplem='  + view.getFlujo().nmsuplem  + '&' +
+																						'cdtipsit=' + view.getCdtipsit() + '&' +
+																						// perfilamiento
+																						'cdptovta=' + view.getCdptovta() + '&' +
+																						'cdgrupo='  + view.getCdgrupo()  + '&' +
+																						'cdsubgpo=' + view.getCdsubgpo() + '&' +
+                                                                                        'cdperfil=' + view.getCdperfil(), true);
+                                                                                    }
+																				);
+																			} catch (e) {
+																				Ice.manejaExcepcion(e, paso2);
+																			}
+																	    }
+																	});
+																} catch (e) {
+																	Ice.manejaExcepcion(e, paso);
+																}
+															}
+														);
+					                                }
 					                            }
 					                        ]
 					                    });
@@ -170,6 +242,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					}, {
 						text: 'Cerrar',
 						iconCls: 'x-fa fa-close',
+						ui:'gray',
 						handler: function (boton) {
 							boton.up('ventanatarifastemporales').cerrar();
 						}
@@ -226,7 +299,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 				cdramo: view.getCdramo(),
 				estado: view.getEstado(),
 				nmpoliza: view.getNmpoliza(),
-				iscotizacion: false
+				iscotizacion: 'true',
+				cdtipsup: '90',
+				ntramite: view.getFlujo().ntramite
 			});
 			
 			Ice.request({
@@ -265,5 +340,20 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 		}catch(e){
 			Ice.manejaExcepcion(e, paso);
 		}
-	}
+	},
+
+	
+	/**
+     * 2017/09/06 - jtezva - para ligar a una validacion del flujo al momento de mostrar la ventana de forma de pago confirmada
+     */
+    onConfirmarReferencia: function (me) {
+        Ice.log('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalController.onConfirmarReferencia');
+        var paso = 'Mostrando envios posibles para la confirmaci\u00f3n de forma de pago';
+        try {
+			var view = me.getView();
+            Ice.ejecutarValidacionPorReferencia(view.getFlujo(), view.getFlujo().aux.onConfirmarReferencia);
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+    }
 });

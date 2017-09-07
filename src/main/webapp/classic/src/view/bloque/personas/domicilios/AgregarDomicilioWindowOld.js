@@ -9,7 +9,7 @@ Ext.define("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow_",{
 		accion		:	"I"
 	},
 	autoShow		:	true,
-	title			:	'Agregar Domicilio',
+	title			:	'Agregar Domicilio',	
 	layout			: 	"fit",
 	height			:	"80%",
 	defaults		:{

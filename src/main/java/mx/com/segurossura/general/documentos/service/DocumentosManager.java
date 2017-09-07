@@ -55,4 +55,6 @@ public interface DocumentosManager {
             String url, String ruta, String filename, String cddocume) throws Exception;
     
     public void subirArchivoRequisito (FlujoVO flujo, File archivo, String nombre, String contentType, String cddocume) throws Exception;
+    
+    public void subirArchivo(File file, String ruta, String nombre, String ntramite) throws Exception;
 }

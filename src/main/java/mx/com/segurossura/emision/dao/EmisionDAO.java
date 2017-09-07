@@ -94,10 +94,11 @@ public interface EmisionDAO {
 	 * @param estado
 	 * @param nmpoliza
 	 * @param nmsituac
+	 * @param cdusuari Usuario del sistema
 	 * @return
 	 * @throws Exception
 	 */
-    public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac)
+    public Map<String, Object> generarTarificacion(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac, String cdusuari)
             throws Exception;
 	
 	

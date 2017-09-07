@@ -8,13 +8,13 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 	title: 'Buscar Agente',
 	scrollable: true,
 	modal: true,
-	bodyPadding: '20 0 0 20',
+	bodyPadding: '20 0 0 20px',
 	defaults: {
-		style: 'margin: 0px 20px 20px 0px;'
+		
 	},
 	platformConfig: {
 		desktop: {
-			width: '90%',
+			width: '60%',
 			height: '90%'
 		}
 	},
@@ -34,7 +34,7 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 			
 			var items = [
 				{
-					xtype	:	"formdoscolumnasice",
+					xtype	:	"formice",
 					items	:	[
 						{
 							xtype		:	"textfieldice",
@@ -46,14 +46,16 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 							}
 						}, {
 							xtype: 'button',
-							text	:	"Buscar",
+//							text	:	"Buscar",
 							iconCls: 'x-fa fa-search',
+							style:'margin-top: -47px !important;margin-left: 275px;',
 							handler	:	"onBuscar"
 						}
 					]
 				},
 				{
 					xtype		:	"gridice",
+					style: 'margin: 10px 20px 0px 0px;',
 					columns		:	[
 						{
 							text		:	'Cod. Age.',
@@ -92,6 +94,7 @@ Ext.define("Ice.view.bloque.agentes.BuscarAgenteWindow",{
 				},{
 					text	:	"Cancelar",
 					iconCls: 'x-fa fa-close',
+					ui:'gray',
 					handler	:	function(){
 						me.cerrar();
 					}

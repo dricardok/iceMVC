@@ -15,7 +15,8 @@ Ext.define('Ice.view.bloque.mesacontrol.FormMesaControl', {
         },
         {
         	text: 'Limpiar',
-        	iconCls: 'x-fa fa-filter',
+        	iconCls: 'x-fa fa-eraser',
+        	ui:'gray',
         	//iconCls: 'x-fa fa-bar-chart',
         	reference: 'formMesaControlBtnLimpiar',
         	handler: 'onLimpiarClic'
@@ -41,6 +42,7 @@ Ext.define('Ice.view.bloque.mesacontrol.FormMesaControl', {
 			config.items = (comps.MESA_CONTROL.FORMULARIO.items || []).concat(config.items || []);
 			config.modelFields = comps.MESA_CONTROL.FORMULARIO.fields || [];
 			config.modelValidators = comps.MESA_CONTROL.FORMULARIO.validators || [];
+			config.sinToggle = true;
 			
 		} catch(e) {
 			

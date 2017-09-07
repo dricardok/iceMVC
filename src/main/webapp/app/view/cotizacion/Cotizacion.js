@@ -7,39 +7,13 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
     // config ext
     layout: 'fit',
     header: false,
-    items: [{
+        items: [{
         xtype: 'tabpanelice',
         reference: 'tabpanel',
         listeners: {
             tabchange: 'onTabchangeEvent'
         }
     }],
-    buttons: [
-         {
-            text: 'Anterior',
-            reference: 'anteriorbutton',
-            iconCls: 'x-fa fa-backward',
-            handler: 'onAnteriorclic'
-        },
-        // {
-        //     text: 'Cargar',
-        //     reference: 'cargarbutton',
-        //     iconCls: 'x-fa fa-cloud-download',
-        //     handler: 'onCargarClic'
-        // },
-        {
-            text: 'Cotizar',
-            reference: 'cotizarbutton',
-            iconCls: 'x-fa fa-dollar',
-            handler: 'onCotizarClic'
-        }, {
-            text: 'Siguiente',
-            reference: 'siguientebutton',
-            iconCls: 'x-fa fa-forward',
-            handler: 'onSiguienteClic'
-        }
-        
-    ],
 
     // config no ext
     config: {
@@ -82,9 +56,14 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             config.flujo = Ice.validarParamFlujo(config);
 
             if (config.flujo.ntramite) {
-                config.cdramo = config.flujo.cdramo;
+            	config.cdunieco = config.flujo.cdunieco;
+            	config.cdramo = config.flujo.cdramo;
+            	config.estado = config.flujo.estado;
+            	config.nmpoliza = config.flujo.nmpoliza;
+            	config.nmsuplem = config.flujo.nmsuplem;
                 config.cdtipsit = {
-                    '501': '51'
+                    '501': '51',
+                    '301': '31'
                 }[config.cdramo];
             }
             Ice.log('Ice.view.cotizacion.Cotizacion.constructor config despues de flujo:', config);
@@ -123,9 +102,48 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             if ((config.bloques || []).length === 0) {
                 throw 'No hay bloques configurados';
             }
+
+            config.buttons = [
+                {
+                    text: 'Anterior',
+                    reference: 'anteriorbutton',
+                    iconCls: 'x-fa fa-backward',
+                    ui:'gray',
+                    //style:'margin-right: 20px;',
+                    handler: 'onAnteriorclic'
+                },
+                // {
+                //     text: 'Cargar', // style:'margin-right: 42px;',
+                //     reference: 'cargarbutton',
+                //     iconCls: 'x-fa fa-cloud-download',
+                //     handler: 'onCargarClic'
+                // },
+                {
+                    text: (config.flujo && config.flujo.aux && config.flujo.aux.botonCotizarText) || 'Cotizar',
+                    reference: 'cotizarbutton',
+                    iconCls: 'x-fa fa-' + ((config.flujo && config.flujo.aux && config.flujo.aux.botonCotizarIconCls) ||'dollar'),
+                
+                    handler: 'onCotizarClic'
+                }, {
+                    text: 'Siguiente',
+                    reference: 'siguientebutton',
+                    iconCls: 'x-fa fa-forward',
+                    style:'margin-right: 45px;',
+                    handler: 'onSiguienteClic'
+                }
+            ].concat(config.buttons || []);
+            
+            me.callParent(arguments);
+
+            if (config.flujo.ntramite) {
+                Ext.create({
+                    xtype: 'ventanabotonesflujo',
+                    flujo: config.flujo,
+                    padre: me
+                }).mostrar();
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
-        me.callParent(arguments);
     }
 });

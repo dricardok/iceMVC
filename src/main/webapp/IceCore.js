@@ -189,17 +189,20 @@ var Ice = (
             		movimientoThmesacontrol:'mesacontrol/historial/movimientoTdmesacontrol.action'
             	},
             	
-            	turnar                        : 'despachador/turnarTramite.action',
-            	pantallaExterna               : 'flujomesacontrol/pantallaExterna.action',
-                cargarAccionesEntidad         : 'flujomesacontrol/cargarAccionesEntidad.action',
-                ejecutarValidacion            : 'flujomesacontrol/ejecutaValidacion.action',
-                obtenerDatosValidacionCliente : 'flujomesacontrol/recuperarDatosTramiteValidacionCliente.action',
-                ejecutarRevision              : 'flujomesacontrol/ejecutaRevision.action',
-                marcarRevisionConfirmada      : 'flujomesacontrol/marcarRevisionConfirmada.action',
-                marcarRequisitoRevision       : 'flujomesacontrol/marcarRequisitoRevision.action',
-                subirArchivoRequisito         : 'documentos/subirArchivoRequisito.action',
-                enviaCorreoFlujo              : 'flujomesacontrol/enviaCorreoFlujo.action',
-                obtenerTramiteCompleto        : 'flujomesacontrol/obtenerTramiteCompleto.action'
+            	turnar                             : 'despachador/turnarTramite.action',
+            	pantallaExterna                    : 'flujomesacontrol/pantallaExterna.action',
+                cargarAccionesEntidad              : 'flujomesacontrol/cargarAccionesEntidad.action',
+                ejecutarValidacion                 : 'flujomesacontrol/ejecutaValidacion.action',
+                obtenerDatosValidacionCliente      : 'flujomesacontrol/recuperarDatosTramiteValidacionCliente.action',
+                ejecutarRevision                   : 'flujomesacontrol/ejecutaRevision.action',
+                marcarRevisionConfirmada           : 'flujomesacontrol/marcarRevisionConfirmada.action',
+                marcarRequisitoRevision            : 'flujomesacontrol/marcarRequisitoRevision.action',
+                subirArchivoRequisito              : 'documentos/subirArchivoRequisito.action',
+                enviaCorreoFlujo                   : 'flujomesacontrol/enviaCorreoFlujo.action',
+                obtenerTramiteCompleto             : 'flujomesacontrol/obtenerTramiteCompleto.action',
+                ejecutarValidacionPorReferencia    : 'mesacontrol/ejecutarValidacionPorReferencia.action',
+                ejecutarValidacionesEventoPantalla : 'mesacontrol/ejecutarValidacionesEventoPantalla.action',
+                registrarNuevoTramite              : 'mesacontrol/registrarNuevoTramite.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
@@ -428,7 +431,7 @@ var Ice = (
                     target: mainView,
                     style: "z-index:999999;",
                     close: function () {
-                        this.hide();
+                    this.hide();
                     }
                 });
                 mask.show();
@@ -437,7 +440,7 @@ var Ice = (
                     message: texto || 'Cargando...',
                     maskLocal: true,
                     close: function () {
-                        this.hide();
+                     this.hide();
                     }
                 });
                 mainView.add(mask);
@@ -1164,7 +1167,9 @@ var Ice = (
                     FF: 'filefieldice',
                     CDPERSONPICKER: 'cdpersonpicker',
                     CDAGENTEPICKER: 'cdagentepicker',
-                    PASSWORD: 'textfieldice'
+                    PASSWORD: 'textfieldice',
+                    PUNTOVENTAPICKER: 'puntoventapicker',
+                    DOMICILIOPICKER: 'domiciliopicker'
                 }[config.tipocampo];
                 if (!item.xtype) {
                     throw 'Tipocampo incorrecto para item';
@@ -1450,7 +1455,9 @@ var Ice = (
                     FF: 'string',
                     CDPERSONPICKER: 'string',
                     CDAGENTEPICKER: 'string',
-                    PASSWORD: 'string'
+                    PASSWORD: 'string',
+                    PUNTOVENTAPICKER: 'string',
+                    DOMICILIOPICKER: 'string'
                 }[config.tipocampo];
             if (!field.type) {
                 throw 'Tipocampo incorrecto para field';
@@ -2001,7 +2008,6 @@ var Ice = (
      * Esta funcion hace submit al index de la aplicacion
      */
     index: function () {
-        Ice.cerrarVentanas();
         Ice.redirect('login.action');
     },
 
@@ -2290,6 +2296,13 @@ var Ice = (
                 nmsuplem  : params.flujo.nmsuplem  || params['flujo.nmsuplem'],
                 aux       : params.flujo.aux       || params['flujo.aux']
             };
+            try {
+                if (flujo.aux && typeof flujo.aux === 'string') {
+                    flujo.aux = Ext.JSON.decode(flujo.aux);
+                }
+            } catch (e) {
+                Ice.logWarn('no se pudo decodificar el json config.flujo.aux', e);
+            }
         } catch (e) {
             Utils.generaExcepcion(e, paso);
         }
@@ -2329,5 +2342,24 @@ var Ice = (
                 throw arguments[i + 1];
             }
         }
+    },
+
+    /**
+     * Parsea fechas
+     */
+    parse: function(value, format){
+        return Ext.Date.parse(value, format||Ext.util.Format.dateFormat);
+    },
+
+    /**
+     * 2018/09/05 - jtezva - nuevo, para no llamar el de Ext
+     */
+    confirm: function (titulo, mensaje, callback) {
+        Ext.Msg.confirm(titulo, mensaje, function (boton) {
+            if (boton === 'yes') {
+                callback();
+            }
+        });
     }
+
 });

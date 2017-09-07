@@ -16,22 +16,26 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumentoController', {
 
         file.on({
             change: function(me2, value){
-                if(value){
-                    Ice.log('Ice.view.bloque.AgregarDocumentosController file change value ', value);
-                    var nombre = value.substring(value.lastIndexOf("\\")+1, value.length);
-                    var extension = value.substring(value.lastIndexOf(".")+1, value.length);
-                    Ice.log('nombre y extension ',nombre, extension);
+                if(view.getNombre()){
+                    if(value){
+                        Ice.log('Ice.view.bloque.AgregarDocumentosController file change value ', value);
+                        var nombre = value.substring(value.lastIndexOf("\\")+1, value.length);
+                        var extension = value.substring(value.lastIndexOf(".")+1, value.length);
+                        Ice.log('nombre y extension ',nombre, extension);
+                        view.setValido(true);
+                        if(!nombre.toUpperCase().startsWith("SLIP")){
+                            Ice.mensajeWarning('El nombre del archivo debe empezar con la palabra SLIP.');
+                            file.reset();
+                            view.setValido(false);
+                        }
+                        if(extension.toUpperCase() != 'RTF'){
+                            Ice.mensajeWarning('Su archivo debe ser extensi\u00f3n RTF.');
+                            file.reset();
+                            view.setValido(false);
+                        }
+                    }
+                } else {
                     view.setValido(true);
-                    if(!nombre.toUpperCase().startsWith("SLIP")){
-                        Ice.mensajeWarning('El nombre del archivo debe empezar con la palabra SLIP.');
-                        file.reset();
-                        view.setValido(false);
-                    }
-                    if(extension.toUpperCase() != 'RTF'){
-                        Ice.mensajeWarning('Su archivo debe ser extensi\u00f3n RTF.');
-                        file.reset();
-                        view.setValido(false);
-                    }
                 }
             }
         });
@@ -75,23 +79,47 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumentoController', {
         try{
             if(view.getValido() == true){
                 var mask = Ice.mask('Subiendo slip');
-                view.submit(
-                    {
-                        url: Ice.url.bloque.documentos.subirArchivo,
-                        params:{
-                            'params.nombre': view.getNombre(),
-                            'params.ruta': view.getRuta()
-                        },
-                        success: function(){
-                            mask.close();
-                            view.up('ventanaice').cerrar();
-                        },
-                        failure: function(){
-                            Ice.mensajeWarning('Error al subir slip');
-                            mask.close();
-                        }                    
-                    }
-                );
+                if(view.getNombre()){
+                    view.submit(
+                        {
+                            url: Ice.url.bloque.documentos.subirArchivo,
+                            params:{
+                                'params.nombre': view.getNombre(),
+                                'params.ruta': view.getRuta(),
+                                'params.ntramite': view.getNtramite()
+                            },
+                            success: function(){
+                                mask.close();
+                                view.up('ventanaice').cerrar();
+                            },
+                            failure: function(){
+                                Ice.mensajeWarning('Error al subir slip');
+                                mask.close();
+                            }                    
+                        }
+                    );
+                } else {
+                    var inicio = refs.file.getValue().lastIndexOf('\\')+1,
+                        fin = refs.file.getValue().length,
+                        nombre = refs.file.getValue().substring(inicio, fin);
+                    view.submit(
+                        {
+                            url: Ice.url.bloque.documentos.subirArchivo,
+                            params:{
+                                'params.nombre': nombre,
+                                'params.ntramite': view.getNtramite()
+                            },
+                            success: function(){
+                                mask.close();
+                                view.up('ventanaice').cerrar();
+                            },
+                            failure: function(){
+                                Ice.mensajeWarning('Error al subir slip');
+                                mask.close();
+                            }                    
+                        }
+                    );
+                }
             } else {
                 Ice.mensajeWarning('Archivo no valido');
             }

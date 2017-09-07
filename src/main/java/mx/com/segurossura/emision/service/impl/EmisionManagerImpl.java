@@ -5,6 +5,7 @@ import java.io.File;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +45,9 @@ import mx.com.segurossura.general.catalogos.model.Bloque;
 import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
 import mx.com.segurossura.general.documentos.model.TipoArchivo;
 import mx.com.segurossura.general.producto.model.EstadoPoliza;
+import mx.com.segurossura.workflow.despachador.service.DespachadorManager;
+import mx.com.segurossura.workflow.mesacontrol.dao.FlujoMesaControlDAO;
+import mx.com.segurossura.workflow.mesacontrol.model.EstatusTramite;
 
 @Service
 public class EmisionManagerImpl implements EmisionManager {
@@ -79,6 +83,12 @@ public class EmisionManagerImpl implements EmisionManager {
 	
 	@Autowired
 	private RegistoPersonaDAO registroPersonaDao;
+	
+	@Autowired
+	private FlujoMesaControlDAO flujoMesaControlDAO;
+	
+	@Autowired
+	private DespachadorManager despachadorManager;
 
 	@Override
 	public void movimientoTvalogar(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
@@ -296,7 +306,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			for (Map<String, String> situac : situacionesPoliza) {
 				logger.debug("Inicio tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",
 						situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
-				res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"));
+				res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"), cdusuari);
 				logger.debug("Fin    tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",
 						situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
 			}
@@ -377,7 +387,7 @@ public class EmisionManagerImpl implements EmisionManager {
 					
 					logger.debug("Inicio tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",	situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
 					
-					resultados.add(res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac")));
+					resultados.add(res = emisionDAO.generarTarificacion(cdunieco, cdramo, estado, nmpoliza, situac.get("nmsituac"), cdusuari));
 					
 					logger.debug("Fin    tarificando inciso {} de cdunieco={}, cdramo:{}, nmpoliza:{}",
 							situac.get("nmsituac"), cdunieco, cdramo, nmpoliza);
@@ -526,16 +536,33 @@ public class EmisionManagerImpl implements EmisionManager {
 		StringBuilder sb = null;
 		if(carpetas != null) {
 			sb = new StringBuilder();
-			for(String carpeta : carpetas) {
-				
+			for(String carpeta : carpetas) {				
 				sb.append(carpeta);
-				sb.append(File.separator);				
-				
+				sb.append(File.separator);
 			}
 		}
 		return sb != null ?  sb.toString() : null;
 	}
 	
+	@SuppressWarnings("deprecation")
+    public String generaRutaLlave(String ntramite, String ferecepc) throws Exception{
+        StringBuilder sb = new StringBuilder();
+        String paso = "Obteniendo ruta para documentos";
+        try{
+            sb.append(directorioBase).append(File.separator);
+            Date fecha = Utils.parse(ferecepc);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(fecha);
+            sb.append(cal.get(Calendar.YEAR)).append(File.separator);
+            sb.append(StringUtils.leftPad(String.valueOf(cal.get(Calendar.MONTH)+1), 2, '0')).append(File.separator);
+            sb.append(StringUtils.leftPad(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)), 2, '0')).append(File.separator);
+            sb.append(ntramite).append(File.separator);
+            logger.info("ruta :{}", sb.toString());
+        } catch (Exception ex) {
+            Utils.generaExcepcion(ex, paso);
+        }
+        return sb != null ?  sb.toString() : null;
+    }
 	
 	private void generaDirectorio(String...carpetas) throws Exception{
 		StringBuilder sb = null;
@@ -555,7 +582,24 @@ public class EmisionManagerImpl implements EmisionManager {
 			}
 		}		
 	}
-		
+	
+	private void generaDirectorios(String ntramite, String ferecepc) throws Exception{
+        StringBuilder sb = new StringBuilder();
+        Date fecha = Utils.parse(ferecepc);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        sb.append(cal.get(Calendar.YEAR)).append(File.separator);
+        sb.append(StringUtils.leftPad(String.valueOf(cal.get(Calendar.MONTH)+1), 2, '0')).append(File.separator);
+        sb.append(StringUtils.leftPad(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)), 2, '0')).append(File.separator);
+        generaDirectorio(
+                directorioBase,
+                String.valueOf(cal.get(Calendar.YEAR)),
+                StringUtils.leftPad(String.valueOf(cal.get(Calendar.MONTH)+1), 2, '0'),
+                StringUtils.leftPad(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)), 2, '0'),
+                ntramite
+         );     
+    }
+	
 	@Override
 	public Map<String, Object> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion, String cdusuari) throws Exception {
 		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
@@ -581,7 +625,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			logger.debug("Obteniendo informacion para generar documentos");
 			try {
 				
-				if(isCotizacion.toLowerCase().equals("true")) { 
+				if(isCotizacion.toLowerCase().equals("false")) { 
 				
 					datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpoliza, null).get(0);
 					
@@ -620,7 +664,7 @@ public class EmisionManagerImpl implements EmisionManager {
 					String nmcertif = null; // TODO: RBS agregar cuando se agregue la Mesa de control
 					String nmsituac = null; // TODO: RBS agregar cuando se agregue la Mesa de control
 					String cdtipsub = "90";
-					String localnmsuplem = isCotizacion.toLowerCase().equals("false") ? nmsuplem : datosMrecibo.get("nmsuplem");
+					String localnmsuplem = isCotizacion.toLowerCase().equals("true") ? nmsuplem : datosMrecibo.get("nmsuplem");
 					try
 					{   
 						logger.info(documento.getId());
@@ -635,7 +679,6 @@ public class EmisionManagerImpl implements EmisionManager {
 						//	boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
 						exito = false;
 						try {
-							
 							generaDirectorio(directorioBase, cdunieco, cdramo, estado, nmpoliza, nmsuplem);
 							
 							FileUtils.copyURLToFile(new URL(urlSLIP), new File(documentoRuta), 120000, 120000);
@@ -677,6 +720,102 @@ public class EmisionManagerImpl implements EmisionManager {
 		return results;
 	}
 	
+	   @Override
+	   public Map<String, Object> generarDocumentos(String ntramite, String cdtipsup, String isCotizacion, String cdusuari) throws Exception{
+	        logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+	                     "@@@@@@@@@ generarDocumentos");
+	        List<Documento> documentos = null;
+	        Map<String, String> datosMrecibo = null;
+	        Map<String, Object> results = new HashMap<String, Object>();
+	        List<String> errores = new ArrayList<String>();
+	        StringBuilder path = new StringBuilder();
+	        StringBuilder paso = new StringBuilder();
+	        boolean exito = false;
+	        String documentoRuta = "";
+	        String nombreExtension = "";
+	        String urlSLIP;
+	        int contDocEr = 0;	        
+	        ExecutorService executor = Executors.newFixedThreadPool(5);
+	        try {
+	            // Obteniendo nmrecibo para obtener el nmrecibo de la poliza emitida	            
+	            logger.debug("Obteniendo informacion para generar documentos");
+	            Map<String, String> tramite = flujoMesaControlDAO.obtenerTramite(ntramite);
+	            String cdunieco = tramite.get("cdunieco"),
+	                   cdramo = tramite.get("cdramo"),
+	                   estado = tramite.get("estado"),
+	                   nmpoliza = tramite.get("nmpoliza"),
+	                   nmsuplem = tramite.get("nmsuplem"),
+	                   ferecepc = tramite.get("ferecepc"),
+	                   nmsolici = null, // TODO: RBS agregar cuando se agregue la Mesa de control
+	                   cdtiptra = tramite.get("cdtiptra"), // TODO: RBS agregar cuando se agregue la Mesa de control
+	                   codidocu = null, // TODO: RBS agregar cuando se agregue la Mesa de control
+	                   cdorddoc = null, // TODO: RBS agregar cuando se agregue la Mesa de control
+	                   cdmoddoc = null, // TODO: RBS agregar cuando se agregue la Mesa de control
+	                   nmcertif = null, // TODO: RBS agregar cuando se agregue la Mesa de control
+	                   nmsituac = null;
+	            try {
+	                if(isCotizacion.toLowerCase().equals("false")) { 
+	                    datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpoliza, null).get(0);
+	                }
+	            } catch(Exception e) {
+	                e.printStackTrace();
+	            }
+	            
+	            logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+	            documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, "0"); // TODO: Validar integer.parseint
+	            logger.debug("Fin de obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
+	            // Especificar el path para almacenar documentos                
+	            path.append(generaRutaLlave(ntramite, ferecepc));
+	            paso.append("Guardando documentos del tramite ").append(ntramite).toString();
+	            if(documentos != null) {
+	                logger.debug("Numero de documentos devueltos para la Confirmacion {} " + documentos.size());
+	                // Se guardan la lista de documentos:
+	                for (Documento documento : documentos) {
+	                    String localnmsuplem = isCotizacion.toLowerCase().equals("true") ? nmsuplem : datosMrecibo.get("nmsuplem");
+	                    try{
+	                        logger.info(documento.getId());
+	                        logger.info(documento.getNombre());
+	                        logger.info(documento.getTipo());
+	                        logger.info(documento.getUrl());                        
+	                        
+	                        documentoRuta = path+documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
+	                        nombreExtension = documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());                        
+	                        urlSLIP = documento.getTipo()!=null ? documento.getUrl()+"/"+cdusuari+"/rtf" : documento.getUrl();
+	                            
+	                        //  boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
+	                        exito = false;
+	                        try {
+	                            generaDirectorios(ntramite, ferecepc);
+	                            FileUtils.copyURLToFile(new URL(urlSLIP), new File(documentoRuta), 120000, 120000);
+	                            exito = true;
+	                        } catch(Exception fe) {
+	                            logger.error(fe.getMessage(), fe);
+	                            contDocEr += 1;
+	                            errores.add("Error al obtener documento " + documento.getNombre());
+	                        }
+	                        documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpoliza, nmsolici, localnmsuplem, ntramite, new Date(),
+	                                                                   documento.getId(), nombreExtension, cdtipsup, exito ? Constantes.SI : Constantes.NO,
+	                                                                   cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, urlSLIP, 
+	                                                                   path.toString(), documento.getTipo(), Constantes.INSERT_MODE);                                           	                        
+	                    } catch(Exception e) {
+	                        logger.error(e.getMessage(), e);                    
+	                        //continue;
+	                    }
+	                }
+	                if(documentos.size() == contDocEr) {
+	                    throw new ApplicationException("Todos los documentos tuvieron errores");
+	                }
+	            }
+	        }catch(Exception ex) {
+	            Utils.generaExcepcion(ex, paso.toString());
+	        }       
+	        
+	        logger.debug("@@@@@@@@@ generarDocumentos",
+	                     "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+	        
+	        return results;
+	    }
+	
 	@Override
 	public List<Map<String, String>> obtenerDatosTarificacion(String cdunieco, String cdramo, String estado,
 			String nmpoliza) throws Exception {
@@ -711,36 +850,50 @@ public class EmisionManagerImpl implements EmisionManager {
 	public Map<String, String> confirmarPoliza(String cdunieco, String cdramo, String estado, String nmpoliza,
 											   String nmsuplem, String newestad, String newpoliza, String pnmrecibo, 
 											   String nmcotizacion, String nmtarjeta, String authCode, String orderId, 
-											   String email) throws Exception {
+											   String email, String ntramite, String cdusuari, String cdsisrol) throws Exception {
+		logger.debug(Utils.log("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+        					   "\n@@@@@@ confirmarPoliza @@@@@@", 
+        					   "\n@@@@@@ cdunieco "  , cdunieco, 
+        					   "\n@@@@@@ cdramo "    , cdramo, 
+        					   "\n@@@@@@ estado "    , estado,
+        					   "\n@@@@@@ nmpoliza "  , nmpoliza, 
+        					   "\n@@@@@@ nmsuplem "  , nmsuplem, 
+        					   "\n@@@@@@ newestad "  , newestad, 
+        					   "\n@@@@@@ newpoliza " , newpoliza,
+        					   "\n@@@@@@ pnmrecibo " , pnmrecibo,
+        					   "\n@@@@@@ pnmrecibo " , nmcotizacion,
+        					   "\n@@@@@@ nmtarjeta " , nmtarjeta,
+        					   "\n@@@@@@ authCode "  , authCode,
+        					   "\n@@@@@@ orderId "   , orderId, 
+        					   "\n@@@@@@ email "     , email));
 		
-		logger.debug("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
-					 "@@@@@@ confirmarPoliza, parametros ", 
-					 "cdunieco "+ cdunieco, 
-					 "cdramo "+ cdramo, 
-					 "estado "+ estado,
-					 "nmpoliza "+ nmpoliza, 
-					 "nmsuplem "+ nmsuplem, 
-					 "newestad "+ newestad, 
-					 "newpoliza "+ newpoliza,
-					 "pnmrecibo "+ pnmrecibo,
-					 "pnmrecibo "+ nmcotizacion,
-					 "nmtarjeta "+ nmtarjeta,
-					 "authCode "+ authCode,
-					 "orderId "+ orderId, 
-					 "email "+ email);
+		Map<String, String> results = new HashMap<String, String>(),
+		                    datosMrecibo = null;
+		String paso = null,
+		       nmpolizaEmitida = null;
 		
-		
-		Map<String, String> results = new HashMap<String, String>();
-		String paso = null, nmpolizaEmitida = null;
-		Map<String, String> datosMrecibo = null;
 		RequestWs request = null;
 		
+		Date fechaHoy = new Date();
+		
 		try {
-		    
+            // turnar el tramite a "en documentacion"
+            paso = "Recuperando usuario encargado de estatus 'En documentaci\u00f3n'";
+            String estatusDocumentacion = flujoMesaControlDAO.ejecutaValidacion("DESPACHADOR", ntramite,
+                    EstatusTramite.EN_DOCUMENTACION.getCodigo(), null);
+            if (StringUtils.isBlank(estatusDocumentacion) || estatusDocumentacion.indexOf("*") == -1) {
+                throw new ApplicationException("Antes de emitir debe configurarse el estatus 'En documentaci\u00f3n'");
+            }
+            // Se quita el * de inicio
+            estatusDocumentacion = estatusDocumentacion.substring(1, estatusDocumentacion.length());
+            
 			paso = "Confirmando p\u00f3liza";
 			nmpolizaEmitida = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
 			results.put("polizaemitida", nmpolizaEmitida);
 			
+			
+			// Obtener datos de la poliza
+			List<Map<String, String>> poliza = emisionDAO.obtieneMpolizas(cdunieco, cdramo, "M", nmpolizaEmitida, null);
 			
 			logger.info("Validando si se debe aplicar pago por ALEA");
 			if(authCode != null && nmcotizacion != null && orderId != null && email != null && nmtarjeta != null && authCode != null) {
@@ -790,18 +943,41 @@ public class EmisionManagerImpl implements EmisionManager {
 						        "V", // status
 								params);
 			
-						
+			paso = "Turnando tr\u00e1mite a estatus 'En documentaci\u00f3n'";
+			despachadorManager.turnarTramite(
+			        cdusuari,
+			        cdsisrol,
+			        ntramite,
+			        estatusDocumentacion,
+			        Utils.join("Se emite la p\u00f3liza ", nmpolizaEmitida, ". Documentaci\u00f3n pendiente."),
+			        null,  // cdrazrecha
+			        null,  // cdusuariDes,
+			        null,  // cdsisrolDes
+			        true,  // permisoAgente
+			        false, // porEscalamiento
+			        fechaHoy,
+			        false, // sinGrabarDetalle
+			        false, // sinBuscarRegreso
+			        null,  // ntrasust
+			        false, //soloCorreosRecibidos
+			        null   //correosRecibidos
+			        );
+		
+		// Se agrega datos de la poliza
+			if(poliza != null && poliza.size() > 0) {
+			
+				results.putAll(poliza.get(0));
+			
+			}
+			
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		} finally {
 			request = null;
 			datosMrecibo = null;
-			
 		}
-		
-		logger.debug("\n@@@@@@ confirmarPoliza @@@@@@",
-				     "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		
+		logger.debug(Utils.log("\n@@@@@@ confirmarPoliza @@@@@@",
+				               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
 		return results;
 	}
 		

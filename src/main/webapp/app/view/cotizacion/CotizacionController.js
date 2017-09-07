@@ -115,7 +115,24 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 var bloqueActual = refs['ref' + (index - 1)];
                 bloqueActual.getController().guardar({
                     success: function () {
-                        agregarYEnfocarBloque(true);
+                    	if(bloqueActual.xtype == 'datosiniciales'){
+                    		
+                    		var flu = view.getFlujo(); 
+                    		
+                    		Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
+                    											   view.getCdramo(),
+                    											   view.getEstado(),
+                    											   view.getNmpoliza(), 
+                    											   view.getNmsuplem(), 
+                    											   'COTIZACION', 'GUARDAR_DATOS_INICIALES', 
+                    											   flu, 
+                    											   function(){
+										            					agregarYEnfocarBloque(true);
+										            				});
+                    	}else{
+                    		agregarYEnfocarBloque(true);
+                    	}
+                        
                     }
                 });
             } else {
@@ -316,7 +333,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             refs = view.getReferences(),
             paso = 'Guardando datos';
         try {
-           me.revisarCoaseguro();
+        	me.revisarCoaseguro();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -328,37 +345,68 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
     	var me = this,
     		paso = 'Recuperando tarifas por plan';
     	try {
-    		
-    		var view = me.getView();
-    		
-    		var planes = Ext.create('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
+            var view = me.getView();
+            
+            if (view.getFlujo() && view.getFlujo().aux && view.getFlujo().aux.antesMostrarPrimaReferencia) {
+                Ice.ejecutarValidacionPorReferencia(view.getFlujo(), view.getFlujo().aux.antesMostrarPrimaReferencia);
+            } else {
+                Ice.ejecutarValidacionesEventoPantalla(
+                    view.getCdunieco(), 
+                    view.getCdramo(),
+                    view.getEstado(),
+                    view.getNmpoliza(), 
+                    view.getNmsuplem(), 
+                    'COTIZACION', 'ANTES_MOSTRAR_PRIMA', 
+                    view.getFlujo(), 
+                    function () {
+                        var planes = Ext.create('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', { 
+                            cdunieco: view.getCdunieco(),
+                            cdramo: view.getCdramo(),
+                            estado: view.getEstado(),
+                            nmpoliza: view.getNmpoliza(),
+                            nmsuplem: view.getNmsuplem(),
+                            cdtipsit: view.getCdtipsit(),
 
-        		cdunieco: view.getCdunieco(),
-        		cdramo: view.getCdramo(),
-        		estado: view.getEstado(),
-        		nmpoliza: view.getNmpoliza(),
-        		nmsuplem: view.getNmsuplem(),
-        		cdtipsit: view.getCdtipsit(),
+                            // perfilamiento
+                            cdptovta: view.getCdptovta(),
+                            cdgrupo: view.getCdgrupo(),
+                            cdsubgpo: view.getCdsubgpo(),
+                            cdperfil: view.getCdperfil(),
 
-                // perfilamiento
-                cdptovta: view.getCdptovta(),
-                cdgrupo: view.getCdgrupo(),
-                cdsubgpo: view.getCdsubgpo(),
-                cdperfil: view.getCdperfil(),
-        		
-        		buttons : [{
-        			cls: '',
-        			text: 'Modificar',
-        			iconCls: 'x-fa fa-pencil',
-        			handler: function(me){
-        				Ice.pop();
-        			}
-        		}]
-        	});
-        	
-        	Ice.push(planes);        	
-        	
-    	}catch(e) {
+                            flujo: view.getFlujo(),
+
+                            listeners: {
+                                'tramiteGenerado': function (tarificacionTemporal, flujo) {
+                                    view.setFlujo(flujo);
+                                }
+                            },
+                            
+                            buttons : [
+                                {
+                                    cls: '',
+                                    text: 'Modificar',
+                                    style:'margin-right: 42px;',       			
+                                    iconCls: 'x-fa fa-pencil',
+                                    handler: function(me){
+                                        Ice.pop();
+                                    }
+                                }, {
+                                    text: 'Enviar a...',
+                                    iconCls: 'x-fa fa-send',
+                                    hidden: !(view.getFlujo() && view.getFlujo().aux && view.getFlujo().aux.onBotoneraReferencia),
+                                    controlador: me,
+                                    handler: function (me) {
+                                        me.controlador.onBotoneraReferencia(me.controlador);
+                                    }
+                                }
+                            ]
+                        });
+                        
+                        Ice.push(planes);
+                    }
+                );
+            }
+    	} catch (e) {
     		Ice.manejaExcepcion(e, paso);
     	}
     },
@@ -373,6 +421,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
             
             Ext.create({
                 xtype: 'ventanaprimas',
+                style:'background-color: transparent !important;',
                 
                 cdunieco: view.getCdunieco(),
                 cdramo: view.getCdramo(),
@@ -383,6 +432,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     {
                         text: 'Modificar Cotización',
                         iconCls: 'x-fa fa-check',
+                        style:'margin-right: 45px;',
                         handler: function (me) {
                             me.up('ventanaprimas').cerrar();
                         }
@@ -471,7 +521,8 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                             'params.estado': view.getEstado(),
                             'params.nmpoliza': view.getNmpoliza(),
                             'params.nmsuplem': view.getNmsuplem(),
-                            'params.nmsituac': '0'
+                            'params.nmsituac': '0',
+                            'params.ntramite': view.getFlujo() && view.getFlujo().ntramite || ''
                         },
                         success: function (action) {
                             var paso3 = 'Mostrando tarifa';
@@ -491,6 +542,20 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                 success: callbackSuccess
             });
         } catch(e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+    },
+
+    /**
+     * 2017/09/06 - jtezva - para ligar a una validacion del flujo al momento de mostrar la botonera
+     */
+    onBotoneraReferencia: function (me) {
+        Ice.log('Ice.view.cotizacion.CotizacionController.onBotoneraReferencia args:', arguments);
+        var paso = 'Mostrando envios posibles para la botonera de tarifa';
+        try {
+            var view = me.getView();
+            Ice.ejecutarValidacionPorReferencia(view.getFlujo(), view.getFlujo().aux.onBotoneraReferencia);
+        } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
     }

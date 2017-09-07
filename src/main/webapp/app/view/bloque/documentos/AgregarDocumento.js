@@ -25,7 +25,8 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
         config: {
             ruta: null,
             nombre: null,
-            valido: false
+            valido: false,
+            ntramite: null
         },
 // contruccion usando metodos ext y parametros de entrada
         constructor: function (config) {
@@ -58,6 +59,7 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumento', {
                     },{
                         text: 'Cancelar',
                         iconCls: 'x-fa fa-close',
+                        ui:'gray',
                         handler: function(){
                             if(Ice.classic()){
                                 this.up('window').close();

@@ -66,6 +66,9 @@ Ext.define('Ice.view.main.MainController', {
                 }, params);
                 
                 Ice.log('Ice.view.main.MainController.setCurrentView config:', config);
+
+                // 23/08/2017 - tezva - para cerrar ventanas
+                Ice.cerrarVentanas();
                 
                 newView = Ext.create(config);
             }
@@ -86,6 +89,9 @@ Ext.define('Ice.view.main.MainController', {
                     Ext.suspendLayouts();
                     mainLayout.setActiveItem(mainCard.add(newView));
                     Ext.resumeLayouts(true);
+
+                    // 21/08/2017 - jtezva - para subir el scroll
+                    refs.mainContainerWrap.scrollTo(0, 0);
                 }
             }
     
@@ -324,15 +330,16 @@ Ext.define('Ice.view.main.MainController', {
             paso = 'Creando pivote';
         try {
             var piv = Ext.create('Ext.button.Button', {
-                text: 'Arriba',
-                iconCls: 'x-fa fa-eject',
-                cls:'pivote',
+                //text: 'Arriba',
+                iconCls: 'x-fa fa-angle-up',
+                //tooltip: 'Arriba',
+                //cls:'pivote zoomIn',
                 renderTo: Ext.getBody(),
                 floating: true,
                 iconAlign: 'top',
                 hidden: true,
                 padre: refs.mainContainerWrap,
-                style: 'left: 100%; margin-left: -50px; top: 100%; margin-top: -100px; padding-left: 0px; padding-right: 0px;transition: all 250ms;',
+                style: 'left: 100%; margin-left: -45px; top: 100%; margin-top: -87px; border-radius:34px; padding-left: 0px; width: 35px; height:34px; padding-right: 0px;',
                 handler: function (me) {
                     me.hide();
                     me.padre.scrollTo(0, 0);

@@ -44,6 +44,8 @@ Ext.define('Ice.view.bloque.DatosIniciales', {
                 throw 'Faltan datos para construir bloque de datos iniciales';
             }
 
+            config.flujo = Ice.validarParamFlujo(config);
+
             config.estado = config.estado || 'W';
             config.nmsuplem = config.nmsuplem || 0;
             config.status = config.status || 'V';
