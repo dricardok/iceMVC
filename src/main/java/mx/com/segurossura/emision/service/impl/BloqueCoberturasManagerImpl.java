@@ -213,10 +213,11 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 				));
 		String paso="";
 		List<Map<String, String>> datos=null;
+		List<Map<String, String>> lista=new ArrayList<>();
 		try{
 			
 			paso="Guardando datos";
-			List<Map<String, String>> lista=new ArrayList<>();
+			
 			Optional<Map<String, String>> mpolicap = valores.stream().filter(
 									  m-> !(m.get("tabla")==null || "null".equals(m.get("tabla")))
 								   ).findFirst();
@@ -250,7 +251,6 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 			lista.addAll(
 					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null,
 					        Bloque.CAPITALES.getCdbloque(), null, null, null, cdusuari, cdsisrol));
-			
 			lista.addAll(
 					emisionDAO.ejecutarValidaciones(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null,
 					        Bloque.GARANTIAS.getCdbloque(), null, null, null, cdusuari, cdsisrol));
@@ -267,7 +267,7 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 				 "\n@@@@@@ obtieneTatrigar"
 				,"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 				));
-		return null;
+		return lista;
 		
 	}
 	
