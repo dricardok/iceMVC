@@ -2807,6 +2807,64 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
                                "\n####################################"));
         return SUCCESS;
     }
+    
+    @Action(value   = "actualizarCotizacionTramite",
+            results = { @Result(name="success", type="json") }
+            )
+    public String actualizarCotizacionTramite () {
+        logger.debug(Utils.log("\n#########################################",
+                               "\n###### actualizarCotizacionTramite ######",
+                               "\n###### params = ", params));
+        try {
+            Utils.validateSession(session);
+            Utils.validate(params, "No hay datos para actualizar cotizaci\u00f3n de tr\u00e1mite");
+            String ntramite = params.get("ntramite"),
+                   cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsuplem = params.get("nmsuplem");
+            Utils.validate(ntramite, "Falta ntramite para actualizar cotizaci\\u00f3n de tr\\u00e1mite",
+                           cdunieco, "Falta cduniecio para actualizar cotizaci\\u00f3n de tr\\u00e1mite",
+                           cdramo,   "Falta cdramo para actualizar cotizaci\\u00f3n de tr\\u00e1mite",
+                           estado,   "Falta estado para actualizar cotizaci\\u00f3n de tr\\u00e1mite",
+                           nmpoliza, "Falta nmpoliza para actualizar cotizaci\\u00f3n de tr\\u00e1mite",
+                           nmsuplem, "Falta nmsuplem para actualizar cotizaci\\u00f3n de tr\\u00e1mite");
+            flujoMesaControlManager.movimientoTmesacontrol(ntramite,
+                    cdunieco,
+                    cdramo,
+                    estado,
+                    nmpoliza,
+                    "0",      // nmsuplem
+                    nmpoliza, // nmsolici
+                    cdunieco, // cdsucadm
+                    cdunieco, // cdsucdoc
+                    null /*cdtiptra*/, null /*ferecepc*/, null /*cdagente*/, null /*referencia*/, null /*nombre*/, null /*fecstatu*/, null /*estatus*/,
+                    null /*comments*/, null /*cdtipsit*/,
+                    null /*otvalor01*/, null /*otvalor02*/, null /*otvalor03*/, null /*otvalor04*/, null /*otvalor05*/,
+                    null /*otvalor06*/, null /*otvalor07*/, null /*otvalor08*/, null /*otvalor09*/, null /*otvalor10*/,
+                    null /*otvalor11*/, null /*otvalor12*/, null /*otvalor13*/, null /*otvalor14*/, null /*otvalor15*/,
+                    null /*otvalor16*/, null /*otvalor17*/, null /*otvalor18*/, null /*otvalor19*/, null /*otvalor20*/,
+                    null /*otvalor21*/, null /*otvalor22*/, null /*otvalor23*/, null /*otvalor24*/, null /*otvalor25*/,
+                    null /*otvalor26*/, null /*otvalor27*/, null /*otvalor28*/, null /*otvalor29*/, null /*otvalor30*/,
+                    null /*otvalor31*/, null /*otvalor32*/, null /*otvalor33*/, null /*otvalor34*/, null /*otvalor35*/,
+                    null /*otvalor36*/, null /*otvalor37*/, null /*otvalor38*/, null /*otvalor39*/, null /*otvalor40*/,
+                    null /*otvalor41*/, null /*otvalor42*/, null /*otvalor43*/, null /*otvalor44*/, null /*otvalor45*/,
+                    null /*otvalor46*/, null /*otvalor47*/, null /*otvalor48*/, null /*otvalor49*/, null /*otvalor50*/,
+                    null /*swimpres*/, null /*cdtipflu*/, null /*cdflujomc*/, null /*cdusuari*/, null /*cdtipsup*/, null /*swvispre*/,
+                    null /*cdpercli*/, null /*renuniext*/, null /*renramo*/, null /*renpoliex*/, null /*sworigenmesa*/, null /*cdrazrecha*/,
+                    null /*cdunidspch*/, null /*ntrasust*/, null /*cdsisrol*/,
+                    "U" /*  accion*/);
+            success = true;
+        } catch (Exception e) {
+            message = Utils.manejaExcepcion(e);
+        }
+        logger.debug(Utils.log("\n###### success = ", success,
+                               "\n###### message = ", message,
+                               "\n###### actualizarCotizacionTramite ######",
+                               "\n#########################################"));
+        return SUCCESS;
+    }
 	
 	////////////////////////////////////////////////////////
 	// GETTERS Y SETTERS                                  //
