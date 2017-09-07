@@ -285,5 +285,41 @@ Ext.define('Ice.view.bloque.personas.PolizaPersonaController', {
     },
     onGuardar: function (btn) {
         this.guardar(btn);
+    },
+    editarDomicilio: function(grid,rowIndex,colIndex){
+    	var paso='',
+    		me=this,
+    		view = me.getView();
+    	
+    	try{
+    		Ice.log(grid,rowIndex,colIndex);
+    		
+    		
+    		
+    		if(Ext.manifest.toolkit === 'classic'){
+    			var record=grid.getStore().getAt(rowIndex);            
+            } else {
+                var cell = grid.getParent(),
+                    record = cell.getRecord(),
+                    data = record.getData();
+            }
+    		
+    		Ice.log("record",record,record.get("cdperson"),record.get("nmorddom"));
+    		Ice.push(Ext.create("Ice.view.bloque.personas.domicilios.AgregarDomicilioWindow",{
+    			
+    			cdperson:record.get("cdperson"),
+				nmorddom:record.get("nmorddom"),
+	    		listeners:{
+	    			guardarDomicilio:function(){
+	    				view.down('[xtype=domicilios]').getStore().load();
+	    				Ice.pop();
+	    			}
+	    		}
+	    	}));
+    		
+    		
+    	}catch(e){
+    		Ice.manejaExcepcion(e,paso);
+    	}
     }
 });

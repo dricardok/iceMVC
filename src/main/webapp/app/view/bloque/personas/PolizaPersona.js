@@ -124,7 +124,21 @@ Ext.define('Ice.view.bloque.personas.PolizaPersona', {
                         selector: true,
                         hidden	: true,
                         scrollable:true,
-                        agregarDomicilio:true
+                        agregarDomicilio:true,
+                        actionColumns	:	[
+            				{
+    								xtype : 'actioncolumn',
+    								items : [
+    											{
+    												iconCls : 'x-fa fa-edit',
+    												tooltip : 'Editar',
+    												handler : function(grid,row,col){
+    													me.getController().editarDomicilio(grid,row,col)
+    												}
+    											}
+    										]
+    							}
+            			]
                     }]
                 }
                 
