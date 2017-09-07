@@ -7,7 +7,8 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaAviso', {
         desktop: {
             modal: true,
             width: 500,
-            height: 250
+            height: 250,
+            bodyPadding: '0px'
         }
     },
 
@@ -39,6 +40,7 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaAviso', {
                 }, {
                     xtype: 'botoneraflujo',
                     docked: 'bottom',
+                    padding: '0px',
                     flujo: config.flujo,
                     botonCerrar: true
                 }

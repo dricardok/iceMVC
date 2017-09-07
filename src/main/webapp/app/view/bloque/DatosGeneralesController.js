@@ -275,6 +275,32 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                             throw 'No se gener\u00f3 la llave de p\u00f3liza';
                         }
                         
+                        // si tenemos flujo entonces hay que actualizar la cotizacion del tramite
+                        if (view.getFlujo() && view.getFlujo().ntramite) {
+                            Ice.request({
+                                mascara: 'Actualizando cotizaci\u00f3n del tr\u00e1mite',
+                                url: Ice.url.bloque.mesacontrol.actualizarCotizacionTramite,
+                                params: Ice.convertirAParams({
+                                    ntramite: view.getFlujo().ntramite,
+                                    cdunieco: view.getCdunieco(),
+                                    cdramo: view.getCdramo(),
+                                    estado: view.getEstado(),
+                                    nmpoliza: view.getNmpoliza(),
+                                    nmsuplem: view.getNmsuplem()
+                                }),
+                                success: function (action) {
+                                    view.getFlujo().cdunieco = view.getCdunieco();
+                                    view.getFlujo().cdramo   = view.getCdramo();
+                                    view.getFlujo().estado   = view.getEstado();
+                                    view.getFlujo().nmpoliza = view.getNmpoliza();
+                                    view.getFlujo().nmsuplem = view.getNmsuplem();
+                                },
+                                failure: function () {
+                                    Ice.mensajeError('Error al actualizar cotizaci\u00f3n del tr\u00e1mite');
+                                }
+                            });
+                        }
+                        
                         view.fireEvent('llaveGenerada', view, view.getCdunieco(), view.getCdramo(), view.getEstado(), view.getNmpoliza(),
                             view.getNmsuplem(), view.getStatus());
                         

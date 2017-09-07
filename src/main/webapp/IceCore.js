@@ -202,7 +202,8 @@ var Ice = (
                 obtenerTramiteCompleto             : 'flujomesacontrol/obtenerTramiteCompleto.action',
                 ejecutarValidacionPorReferencia    : 'mesacontrol/ejecutarValidacionPorReferencia.action',
                 ejecutarValidacionesEventoPantalla : 'mesacontrol/ejecutarValidacionesEventoPantalla.action',
-                registrarNuevoTramite              : 'mesacontrol/registrarNuevoTramite.action'
+                registrarNuevoTramite              : 'mesacontrol/registrarNuevoTramite.action',
+                actualizarCotizacionTramite        : 'flujomesacontrol/actualizarCotizacionTramite.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
@@ -2297,7 +2298,7 @@ var Ice = (
                 aux       : params.flujo.aux       || params['flujo.aux']
             };
             try {
-                if (flujo.aux) {
+                if (flujo.aux && typeof flujo.aux === 'string') {
                     flujo.aux = Ext.JSON.decode(flujo.aux);
                 }
             } catch (e) {
