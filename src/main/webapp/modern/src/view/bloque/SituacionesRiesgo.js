@@ -69,11 +69,11 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 			var eventsForm = Ice.generaComponentes({
 				pantalla: 'BLOQUE_LISTA_SITUACIONES',
 				seccion: 'EVENTOS', 
-				modulo: me.modulo || '',
-				estatus: (me.flujo && me.flujo.estatus) || '',
-				cdramo: me.cdramo || '',
-				cdtipsit: me.cdtipsit ||'',
-				auxKey: me.auxkey || '',
+				modulo: config.modulo || '',
+				estatus: (config.flujo && config.flujo.estatus) || '',
+				cdramo: config.cdramo || '',
+				cdtipsit: config.cdtipsit ||'',
+				auxKey: config.auxkey || '',
 				eventos: true
 			});
 
