@@ -38,9 +38,11 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 		var me = this,
 			paso = 'Construyendo bloque de tarificacion temporal';
 		try {
+			config.flujo = Ice.validarParamFlujo(config);
+
 			if (!config || !config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza) {
 				throw 'Faltan datos para construir bloque de vista previa';
-	        }			
+	        }
 			
 			config.items = [
 				   {

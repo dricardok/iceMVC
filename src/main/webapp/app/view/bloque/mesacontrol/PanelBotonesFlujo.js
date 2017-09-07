@@ -13,7 +13,7 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
             bodyPadding: '0px 0px 0px 10px',
 
             defaults: {
-                margin: '10 10 10 0px'
+                margin: '10px 10px 10px 0px'
             }
         },
         tablet: {

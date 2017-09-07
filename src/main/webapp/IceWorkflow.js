@@ -357,7 +357,7 @@ var Ice = (
                                                     Ice.mensajeCorrecto({
                                                         titulo: 'AVISO',
                                                         mensaje: json.message,
-                                                        callback: callback
+                                                        callback: callback || Ice.index
                                                     });
                                                 } else if (numSalidas === 1) {
                                                     Ice.procesaAccion(
@@ -366,7 +366,7 @@ var Ice = (
                                                         accion1.TIPODEST,
                                                         accion1.CLAVEDEST,
                                                         accion1.WEBIDDEST,
-                                                        aux,
+                                                        Ice.nvl(accion1.AUX, aux),
                                                         ntramite,
                                                         status,
                                                         cdunieco,
@@ -384,7 +384,7 @@ var Ice = (
                                                         accExito.TIPODEST,
                                                         accExito.CLAVEDEST,
                                                         accExito.WEBIDDEST,
-                                                        aux,
+                                                        Ice.nvl(accExito.AUX, aux),
                                                         ntramite,
                                                         status,
                                                         cdunieco,
@@ -410,7 +410,7 @@ var Ice = (
                                                                 accError.TIPODEST,
                                                                 accError.CLAVEDEST,
                                                                 accError.WEBIDDEST,
-                                                                aux,
+                                                                Ice.nvl(accError.AUX, aux),
                                                                 ntramite,
                                                                 status,
                                                                 cdunieco,
@@ -437,7 +437,7 @@ var Ice = (
                                                             accError.TIPODEST,
                                                             accError.CLAVEDEST,
                                                             accError.WEBIDDEST,
-                                                            aux,
+                                                            Ice.nvl(accError.AUX, aux),
                                                             ntramite,
                                                             status,
                                                             cdunieco,

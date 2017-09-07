@@ -15,7 +15,8 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaBotonesFlujo', {
 
             config.items = [{
                 xtype: 'botoneraflujo',
-                flujo: config.flujo
+                flujo: config.flujo,
+                padding: '0px'
             }];
 
             config.frame = false;

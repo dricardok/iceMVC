@@ -584,7 +584,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	}
 	
 	private void generaDirectorios(String ntramite, String ferecepc) throws Exception{
-        StringBuilder sb = null;
+        StringBuilder sb = new StringBuilder();
         Date fecha = Utils.parse(ferecepc);
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha);
@@ -625,7 +625,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			logger.debug("Obteniendo informacion para generar documentos");
 			try {
 				
-				if(isCotizacion.toLowerCase().equals("true")) { 
+				if(isCotizacion.toLowerCase().equals("false")) { 
 				
 					datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpoliza, null).get(0);
 					
@@ -664,7 +664,7 @@ public class EmisionManagerImpl implements EmisionManager {
 					String nmcertif = null; // TODO: RBS agregar cuando se agregue la Mesa de control
 					String nmsituac = null; // TODO: RBS agregar cuando se agregue la Mesa de control
 					String cdtipsub = "90";
-					String localnmsuplem = isCotizacion.toLowerCase().equals("false") ? nmsuplem : datosMrecibo.get("nmsuplem");
+					String localnmsuplem = isCotizacion.toLowerCase().equals("true") ? nmsuplem : datosMrecibo.get("nmsuplem");
 					try
 					{   
 						logger.info(documento.getId());
@@ -762,7 +762,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	            }
 	            
 	            logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);
-	            documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem);
+	            documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, "0"); // TODO: Validar integer.parseint
 	            logger.debug("Fin de obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
 	            // Especificar el path para almacenar documentos                
 	            path.append(generaRutaLlave(ntramite, ferecepc));
@@ -803,7 +803,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	                    }
 	                }
 	                if(documentos.size() == contDocEr) {
-	                    throw new Exception();
+	                    throw new ApplicationException("Todos los documentos tuvieron errores");
 	                }
 	            }
 	        }catch(Exception ex) {
@@ -884,11 +884,16 @@ public class EmisionManagerImpl implements EmisionManager {
             if (StringUtils.isBlank(estatusDocumentacion) || estatusDocumentacion.indexOf("*") == -1) {
                 throw new ApplicationException("Antes de emitir debe configurarse el estatus 'En documentaci\u00f3n'");
             }
+            // Se quita el * de inicio
+            estatusDocumentacion = estatusDocumentacion.substring(1, estatusDocumentacion.length());
             
 			paso = "Confirmando p\u00f3liza";
 			nmpolizaEmitida = emisionDAO.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, pnmrecibo);
 			results.put("polizaemitida", nmpolizaEmitida);
 			
+			
+			// Obtener datos de la poliza
+			List<Map<String, String>> poliza = emisionDAO.obtieneMpolizas(cdunieco, cdramo, "M", nmpolizaEmitida, null);
 			
 			logger.info("Validando si se debe aplicar pago por ALEA");
 			if(authCode != null && nmcotizacion != null && orderId != null && email != null && nmtarjeta != null && authCode != null) {
@@ -957,6 +962,14 @@ public class EmisionManagerImpl implements EmisionManager {
 			        false, //soloCorreosRecibidos
 			        null   //correosRecibidos
 			        );
+		
+		// Se agrega datos de la poliza
+			if(poliza != null && poliza.size() > 0) {
+			
+				results.putAll(poliza.get(0));
+			
+			}
+			
 		} catch (Exception ex) {
 			Utils.generaExcepcion(ex, paso);
 		} finally {
