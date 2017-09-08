@@ -2177,4 +2177,40 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
 			compile();
 		}
 	}
+
+
+	@Override
+	public List<Map<String, String>> obtenerNsublogi(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsuplem) throws Exception {
+		Map<String, String> params = new LinkedHashMap<String, String>();
+	    params.put("pv_cdunieco_i", cdunieco);
+	    params.put("pv_cdramo_i", cdramo);
+	    params.put("pv_estado_i", estado);
+	    params.put("pv_nmpoliza_i", nmpoliza);
+	    params.put("pv_nmsuplem_i", nmsuplem);
+	    Map<String, Object> resultado = ejecutaSP(new ObtenerNsublogi(getDataSource()), params);
+	    List<Map<String, String>> lista =(List<Map<String,String>>)resultado.get("pv_registro_o");
+	    
+	    logger.debug("Resultado ", lista);
+	    
+	    if(lista == null||lista.size() == 0) {
+	    	throw new ApplicationException("Sin resultados");
+	    }
+	    return lista;
+	}
+
+	protected class ObtenerNsublogi extends StoredProcedure {
+        protected ObtenerNsublogi(DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_GET_NSUPLOGI");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsuplem_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new DinamicMapper()));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
 }

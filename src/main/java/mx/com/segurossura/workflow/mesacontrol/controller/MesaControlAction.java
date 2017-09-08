@@ -46,7 +46,7 @@ import mx.com.segurossura.workflow.mesacontrol.service.MesaControlManager;
 @ParentPackage(value="default")
 @Namespace("/mesacontrol")
 public class MesaControlAction extends PrincipalCoreAction {
-	
+
 	private static final long serialVersionUID = -3398140781812652316L;
 	
 	private static Logger logger = LoggerFactory.getLogger(MesaControlAction.class);
@@ -1377,6 +1377,31 @@ public class MesaControlAction extends PrincipalCoreAction {
         ));
     }
 	
+    @Action(value   = "cargarCdagentePorCdusuari",
+            results = {
+                @Result(name="success", type="json")
+            }
+    )   
+    public String cargarCdagentePorCdusuari() {
+        logger.debug( Utils.log(
+               "\n######  cargarCdagentePorCdusuari #####",
+               "\n######  params ", params
+        ));
+        try{
+            UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+            logger.debug(Utils.log("usuario ",usuario.getCdusuari()));
+            String cdagente = mesaControlManager.cargarCdagentePorCdusuari(usuario.getCdusuari());
+            params.put("cdagente", cdagente);
+            success = true;
+        } catch(Exception ex) {
+            Utils.manejaExcepcion(ex);
+        }
+        logger.debug( Utils.log(
+                "\n######  cargarCdagentePorCdusuari #####"
+        ));
+        return SUCCESS;
+    }
+    
 	/////////////////////////////////
 	////// getters ans setters //////
 	/*/////////////////////////////*/

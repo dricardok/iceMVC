@@ -35,18 +35,15 @@ public class MesaControlDAOImpl extends HelperJdbcDao implements MesaControlDAO 
     
 	private static final Logger logger = LoggerFactory.getLogger(MesaControlDAOImpl.class);
 	
-	public String cargarCdagentePorCdusuari(String cdusuari)throws Exception
-	{
+	public String cargarCdagentePorCdusuari(String cdusuari)throws Exception{
 		Map<String,String> params = new LinkedHashMap<String,String>();
 		params.put("cdusuari" , cdusuari);
 		Map<String,Object>resultado=this.ejecutaSP(new CargarCdagentePorCdusuari(getDataSource()), params);
 		return (String)resultado.get("pv_cdagente_o");
 	}
 	
-	protected class CargarCdagentePorCdusuari extends StoredProcedure
-	{
-		protected CargarCdagentePorCdusuari(DataSource dataSource)
-		{
+	protected class CargarCdagentePorCdusuari extends StoredProcedure{
+		protected CargarCdagentePorCdusuari(DataSource dataSource){
 			super(dataSource, "PKG_CONSULTA.P_GET_CDAGENTE_X_CDUSUARI");
 			declareParameter(new SqlParameter("cdusuari"    , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_cdagente_o" , Types.VARCHAR));

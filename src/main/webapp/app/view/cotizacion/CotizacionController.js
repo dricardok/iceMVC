@@ -19,6 +19,46 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     me.cargar();
                 } else {
                     me.irBloqueSiguiente();
+                    try{
+                        var paso2 = 'Cambiando valor de agente en datos generales',
+                            agente = Ice.query('[xtype=bloquedatosgenerales]').getReferences().cdagente;
+                        if(view.getFlujo() && view.getFlujo().ntramite){
+                            Ice.log('datos generales ',Ice.query('[xtype=bloquedatosgenerales]').getReferences());
+                            var cambiaAgente = function(tramite) {
+                                agente.setValue(tramite.cdagente);
+                            };
+                            Ice.recuperaTramiteCompleto(view.getFlujo().ntramite, cambiaAgente);
+                        } else {
+                            if(Ice.sesion.cdsisrol === Ice.constantes.roles.AGENTE){
+                                var cdusuari = Ice.sesion.cdusuari;
+                                Ice.log('Obteniendo agente de usuario cdusuari ',cdusuari);
+                                try {
+                                    Ice.request({
+                                        mascara: paso2,
+                                        url: Ice.url.bloque.mesacontrol.obtenerAgenteXUsuario,
+                                        params: {
+                                            'params.cdusuari': cdusuari
+                                        },
+                                        success: function (json) {
+                                            var paso3 = 'Obteniendo agente de usuario en sesion';
+                                            try {
+                                                agente.setValue(json.params.cdagente);
+                                            } catch (e) {
+                                                Ice.manejaExcepcion(e, paso3);
+                                            }
+                                        },
+                                        failure: function () {
+                                            Ice.resumeEvents(view);
+                                        }
+                                    });
+                                } catch(e) {
+                                    Ice.log('No se pudo cambiar el valor del agente en datos generales ',e);
+                                }
+                            }
+                        }
+                    } catch(e) {
+                        Ice.log('No se recupero referencia de agente ',e);
+                    }
                 }
             } catch (e) {
                 Ice.manejaExcepcion(e, paso);

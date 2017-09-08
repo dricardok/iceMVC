@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import com.biosnettcs.core.Utils;
 import com.biosnettcs.core.dao.OracleTypes;
 
+import mx.com.segurossura.emision.dao.EmisionDAO;
+import mx.com.segurossura.emision.dao.impl.EmisionDAOImpl;
 import mx.com.segurossura.workflow.confcomp.dao.PantallasDAO;
 import mx.com.segurossura.workflow.confcomp.model.ComponenteVO;
 import mx.com.segurossura.workflow.confcomp.model.Item;
@@ -35,19 +37,28 @@ public class MesaControlManagerImpl implements MesaControlManager {
 	
     private static Logger logger = Logger.getLogger(MesaControlManagerImpl.class);
 	
-	private MesaControlDAO mesaControlDAO;
+	@Autowired
+    private MesaControlDAO mesaControlDAO;
 	
 	@Autowired
 	private PantallasDAO pantallasDAO ;
 	
+	@Autowired
+	private EmisionDAO emisionDAO;
+	
 	@Override
-	public String cargarCdagentePorCdusuari(String cdusuari)throws Exception
-	{
+	public String cargarCdagentePorCdusuari(String cdusuari)throws Exception{
 		logger.info(""
 				+ "\n#######################################"
 				+ "\n###### cargarCdagentePorCdusuari ######"
 				+ "\ncdusuari: "+cdusuari);
-		String cdagente=mesaControlDAO.cargarCdagentePorCdusuari(cdusuari);
+		String paso = "Obteniendo agente por usuario",
+		       cdagente = "";
+		try{
+		    cdagente = emisionDAO.obtenerAgenteUsuario(cdusuari); //mesaControlDAO.cargarCdagentePorCdusuari(cdusuari);
+		} catch(Exception ex) {
+		    Utils.generaExcepcion(ex, paso);
+		}
 		logger.info(""
 				+ "\ncdagente: "+cdagente
 				+ "\n###### cargarCdagentePorCdusuari ######"

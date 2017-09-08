@@ -1000,9 +1000,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	try {
     		
     		UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
-    		/*
-    	    
-    	    
+    		   	    
     	    
     	    Map<String, Object> resultado = new HashMap<String, Object>();
     	    
@@ -1040,7 +1038,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	    }
     	    
     	    errores = (List<String>) resultado.get("errores");
-    	    */
+    	    
     	    success = true;
     	    message = "Documentos generados";
     	    
