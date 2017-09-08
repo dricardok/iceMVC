@@ -205,8 +205,9 @@ Ext.define('Ice.view.bloque.personas.PolizaPersonaController', {
                 listeners: {
                     'personaGuardada': function(personaView, cdperson){
                         Ice.log('personaGuardado.view',view);
-                        Ice.query('[name=dsatribu]', view.getReferences().formBusquedaPersonas).setValue('CDPERSON');
-                        Ice.query('[name=otvalor]', view.getReferences().formBusquedaPersonas).setValue(cdperson);
+                        Ice.query('[name=dsatribu]', refs.formBusquedaPersonas).setValue('CDPERSON');
+                        Ice.query('[name=otvalor]', refs.formBusquedaPersonas).setValue(cdperson);
+                        me.onBuscar();
                         Ice.pop();
                     }
                 }
