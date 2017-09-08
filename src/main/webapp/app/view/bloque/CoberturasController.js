@@ -769,7 +769,16 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 					var paso2 = 'Evaluando validaciones';
 					try {
     					var list = json.list || [];
-    					
+    					try{
+		    				form.items.items.forEach(function (it, idx) {
+		    		    		if(it.getValue){
+		    		    			it.valorOriginal=it.getValue();
+		    			    		
+		    		    		}
+		    		    	});
+		    			}catch(e){
+		    				Ice.logWarn("Error recargando valores.");
+		    			}
     					if (list.length>0) {
 							Ext.create('Ice.view.bloque.VentanaValidaciones', {
 								lista: list
@@ -802,7 +811,7 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 		    				}
 		    				
 		    			});
-
+		    			
 						
 				    } catch (e) {
 				        Ice.manejaExcepcion(e, paso2);
