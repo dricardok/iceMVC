@@ -1798,6 +1798,17 @@ var Ice = (
                 }
             }
             // fin de validacion de obligatorio para float
+
+            // para validar combos
+            for (var name in validatorsAplican) { // para los que no son ocultos
+                if (validaciones[name] === true && refs[name].getStore && valores2[name]) { // si no tuvo error y es combo y tiene valor
+                    if (refs[name].getStore().find('key', valores2[name]) === -1) {
+                        validaciones[name] = 'Favor de seleccionar una opci\u00f3n';
+                        break;
+                    }
+                }
+            }
+            // fin validacion combos
             
             Ice.log('Ice.obtenerErrores validaciones:', validaciones);
             
@@ -1842,7 +1853,9 @@ var Ice = (
                     var errorString = '';
                     for (var name in errores) {
                         var ref = refs[name];
-                        errorString = errorString + ref.getLabel() + ': ' + errores[name] + '<br/>';
+                        errorString = errorString +
+                            ((ref.getLabel && ref.getLabel()) || ref.label || name)
+                            + ': ' + errores[name] + '<br/>';
                     }
                     throw errorString;
                 }
