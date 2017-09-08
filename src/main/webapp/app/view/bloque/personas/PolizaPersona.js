@@ -1,56 +1,53 @@
-Ext.define('Ice.view.bloque.personas.BuscarPersona', {
-    extend: 'Ice.view.componente.PanelPaddingIce',
-    xtype: 'buscarpersona',
-    
-    controller: 'buscarpersona',
-
-    // config ext
-    
-    title: {
-		text:'Buscar persona',
-		style:'margin:0px 45px 16px 40px;',
-	},
-    //scrollable: true,
-
-    // config no ext
-    config: {
-        cdunieco: null,
+Ext.define('Ice.view.bloque.personas.PolizaPersona', {
+	
+	extend: 'Ice.view.componente.PanelPaddingIce',
+	xtype		:	'polizapersona',
+	scrollable	:	true,
+	controller:'polizapersona',
+	config		:	{
+		cdunieco: null,
         cdramo: null,
         estado: null,
         nmpoliza: null,
         nmsituac: null,
         nmsuplem: null,
-        cdrol: null,
-        mostrarRol: false
-    },
-
-    constructor: function (config) {
-        Ice.log('Ice.view.bloque.personas.BuscarPersona.constructor config:', config);
-        var me = this,
-            paso = 'Construyendo busqueda persona';
-        try {
-            Ice.log('Ice.view.bloque.personas.BuscarPersona.refs:', me.cdramo);
-            var comps = Ice.generaComponentes({
-                pantalla: 'BUSQUEDA_PERSONA',
-                seccion: 'FORMULARIO',
-                modulo: me.modulo || '',
-                estatus: (me.flujo && me.flujo.estatus) || '',
-                cdramo: me.mostrarRol == true ? me.cdramo : '-1',
-                cdtipsit: me.cdtipsit ||'',
-                auxKey: me.auxkey || '',
-                items: true
-            });
-            
-            var compsGrid = Ice.generaComponentes({
-                pantalla: 'BUSQUEDA_PERSONA',
-                seccion: 'GRID',
-                columns: true,
-                fields: true
-            });
-            Ice.log('Ice.view.bloque.personas.BuscarPersona.initComponent comps:', comps);
-            Ice.log('Ice.view.bloque.personas.BuscarPersona.initComponent compsGrid:', compsGrid);
-
-            config.items = [
+        
+		dataPer:{},
+		accion:null
+		
+	},
+	
+	constructor: function(config){
+		Ice.log('Ice.view.bloque.personas.PolizaPersona.constructor config:', config);
+		var paso = 'poliza personas',me = this;
+		try{
+			
+			var comps = Ice.generaComponentes({
+	            pantalla: 'BUSQUEDA_PERSONA',
+	            seccion: 'FORMULARIO',
+	            modulo: me.modulo || '',
+	            estatus: (me.flujo && me.flujo.estatus) || '',
+	            cdramo: me.mostrarRol == true ? me.cdramo : '-1',
+	            cdtipsit: me.cdtipsit ||'',
+	            auxKey: me.auxkey || '',
+	            items: true
+	        });
+	        
+	        var compsGrid = Ice.generaComponentes({
+	            pantalla: 'BUSQUEDA_PERSONA',
+	            seccion: 'GRID',
+	            columns: true,
+	            fields: true
+	        });
+	        
+	        comps.BUSQUEDA_PERSONA.FORMULARIO.items.forEach(function(it){
+	        	if(it.name == "dsatribu"){
+	        		it.value='CDPERSON';
+	        	}else if(it.name == "otvalor"){
+	        		it.value = config.dataPer.cdperson;
+	        	}
+	        });
+	        config.items = [
                 {
                     xtype: 'formdoscolumnasice',
                     title: 'Filtro',
@@ -61,7 +58,7 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                         iconCls: 'x-fa fa-search',
                         handler: 'onBuscar'
                     }]
-                }, {
+                },{
                     xtype: 'gridice',
                     title: 'Resultados',
                     reference: 'gridPersonas',
@@ -127,13 +124,46 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                         selector: true,
                         hidden	: true,
                         scrollable:true,
-                        agregarDomicilio:true
+                        agregarDomicilio:true,
+                        actionColumns	:	[
+            				{
+    								xtype : 'actioncolumn',
+    								items : [
+    											{
+    												iconCls : 'x-fa fa-edit',
+    												tooltip : 'Editar',
+    												handler : function(grid,row,col){
+    													me.getController().editarDomicilio(grid,row,col)
+    												}
+    											}
+    										]
+    							}
+            			]
                     }]
                 }
                 
             ].concat(config.items || []);
 
+	        var comps = Ice.generaComponentes({
+                pantalla: 'PERSONA_ROL',
+                seccion: 'FORMULARIO',
+                cdramo: config.cdramo,
+                items: true
+            });
+	        var cdrol = comps.PERSONA_ROL.FORMULARIO.items.find(function(it){
+        		return it.name=='cdrol';
+            });
+	        cdrol['param2'] = 'params.cdnivel';
+            if(config.nmsituac > 0){
+                cdrol['value2'] = '1';
+            } else {
+                cdrol['value2'] = config.nmsituac;
+            }
+            cdrol.value = config.dataPer.cdrol; 
+            cdrol.labelAlign = 'left';
+            Ice.log('Ice.view.bloque.PersonaRol.constructor recargar ',cdrol);
             config.buttons = [
+            	cdrol,
                 {
                     text: 'Elegir',
                     iconCls: 'x-fa fa-check',
@@ -147,18 +177,17 @@ Ext.define('Ice.view.bloque.personas.BuscarPersona', {
                 }, {
                     text: 'Cerrar',
                     iconCls: 'x-fa fa-close',
-                    ui:'gray',
-                    style: 'margin-right:45px;',
                     handler: function(){
                         Ice.pop();
                     }
                 }
             ].concat(config.buttons || []);
-            
-            me.callParent(arguments);
-        } catch (e) {
-            Ice.generaExcepcion(e, paso);
-        }
-        Ice.log('Ice.view.bloque.personas.BuscarPersona.initComponent');
-    }
+
+	        
+	        
+		}catch(e){
+			Ice.manejaExcepcion(e,paso);
+		}
+		me.callParent(arguments);
+	}
 });

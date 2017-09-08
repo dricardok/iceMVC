@@ -38,19 +38,25 @@ Ext.define('Ice.view.bloque.personas.PersonaPolizaController', {
             cdrol = refs.form.getReferences().cdrol;
             Ice.log('Ice.view.bloque.personas.PersonasPolizaController.custom.cdperson',cdperson);
             Ice.log('Ice.view.bloque.personas.PersonasPolizaController.custom.cdrol',cdrol);
-            cdperson.on({
-                change: function(){
-                    Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdperson.change ',cdperson.getValue());
-                    if(cdperson.getValue()){
-                        refs.gridDomicilios.getStore().load({
-                            params: {
-                                'params.cdperson': cdperson.getValue()
-                            }
-                        });
-                        refs.gridDomicilios.show();
-                    }
+            var onChange = function(nfi){
+            	var events=this;
+                Ice.log('Ice.view.bloque.PersonasPolizaController.custom.cdperson.change ',cdperson.getValue());
+                if(cdperson.getValue()){
+                    refs.gridDomicilios.getStore().load({
+                        params: {
+                            'params.cdperson': cdperson.getValue()
+                        }
+                    });
+                    
+                    refs.gridDomicilios.show();
                 }
+               
+                nfi.un("change",onChange)
+            }
+            cdperson.on({
+                change: onChange
             });
+            
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

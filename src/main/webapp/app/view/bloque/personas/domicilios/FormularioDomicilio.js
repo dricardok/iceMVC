@@ -1,5 +1,5 @@
 Ext.define('Ice.view.bloque.personas.domicilios.FormularioDomicilio',{
-	extend:	'Ice.view.componente.FormDosColumnasIce',
+	extend:	'Ice.view.componente.FormTresColumnasIce',
 	xtype:	'formulariodomicilio',
 	controller:	'formulariodomicilio',
 	/*config		:	{
@@ -57,16 +57,12 @@ Ext.define('Ice.view.bloque.personas.domicilios.FormularioDomicilio',{
     			}
     		});
 			
-			config.items=[
-				{
-					xtype: "formtrescolumnasice",
-					reference: "formulario",
-					scrollable:	true,
-					items: comps.AGREGAR_PERSONAS.MDOMICIL.items,
-			    	modelValidators: comps.AGREGAR_PERSONAS.MDOMICIL.validators,
-        			modelFields	:	comps.AGREGAR_PERSONAS.MDOMICIL.fields
-				}
-			]
+			
+			
+			config.reference= "formulario";
+			config.items = comps.AGREGAR_PERSONAS.MDOMICIL.items;
+			config.modelValidators= comps.AGREGAR_PERSONAS.MDOMICIL.validators;
+			config.modelFields	=	comps.AGREGAR_PERSONAS.MDOMICIL.fields;
 			
 			
     		Ice.log("##",comps.AGREGAR_PERSONAS.MDOMICIL.items);

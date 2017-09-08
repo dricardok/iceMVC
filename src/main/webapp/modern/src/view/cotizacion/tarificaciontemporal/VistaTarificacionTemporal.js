@@ -64,7 +64,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 		cdptovta: null,
 		cdgrupo: null,
 		cdsubgpo: null,
-		cdperfil: null
+		cdperfil: null,
+		
+		flujo: null
 	},
 	
 	 // validacion y modificacion de config
@@ -81,6 +83,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 				throw 'Faltan datos para construir dataview de vista previa';
 			}
 			
+    		config.flujo = Ice.validarParamFlujo(config);
 			config.store = {
 				autoLoad: true,
 				fields: [ 'estado', 'subsecuentes', 'total', 'cdramo', 'nmpoliza', 'cdunieco', { name: 'cdperpag', type: 'int' }, 'primer_recibo', 'cdmoneda', 'dsmoneda'],

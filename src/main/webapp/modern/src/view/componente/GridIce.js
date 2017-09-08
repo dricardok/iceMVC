@@ -102,5 +102,16 @@ Ext.define('Ice.view.componente.GridIce', {
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);
 		}
-	}
+	},
+    getSingleSelection:function(){
+    	var selected = this.getSelection(),
+        data;
+		data = selected.getData();
+		Ice.log("Grid sel ::",data);
+		return data;
+    },
+    
+    setSingleSelection:function(idx){
+    	this.select(idx);
+    }
 });

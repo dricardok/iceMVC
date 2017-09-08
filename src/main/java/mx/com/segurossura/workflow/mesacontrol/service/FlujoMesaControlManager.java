@@ -124,7 +124,7 @@ public interface FlujoMesaControlManager
 			,List<Map<String,String>>list
 			)throws Exception;
 	
-	public String ejecutaValidacion(FlujoVO flujo, String cdvalidafk, String cdusuari, String cdsisrol)throws Exception;
+	public String ejecutaValidacion(FlujoVO flujo, String cdvalidafk, String cdusuari, String cdsisrol, String jsvalida)throws Exception;
 	
 	public Map<String,Object> cargarDatosRevision(
 			String cdtipflu

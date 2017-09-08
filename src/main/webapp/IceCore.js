@@ -203,7 +203,8 @@ var Ice = (
                 ejecutarValidacionPorReferencia    : 'mesacontrol/ejecutarValidacionPorReferencia.action',
                 ejecutarValidacionesEventoPantalla : 'mesacontrol/ejecutarValidacionesEventoPantalla.action',
                 registrarNuevoTramite              : 'mesacontrol/registrarNuevoTramite.action',
-                obtenerAgenteXUsuario              : 'mesacontrol/cargarCdagentePorCdusuari.action'
+                obtenerAgenteXUsuario              : 'mesacontrol/cargarCdagentePorCdusuari.action',
+                actualizarCotizacionTramite        : 'flujomesacontrol/actualizarCotizacionTramite.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
@@ -2298,7 +2299,7 @@ var Ice = (
                 aux       : params.flujo.aux       || params['flujo.aux']
             };
             try {
-                if (flujo.aux) {
+                if (flujo.aux && typeof flujo.aux === 'string') {
                     flujo.aux = Ext.JSON.decode(flujo.aux);
                 }
             } catch (e) {
@@ -2383,6 +2384,17 @@ var Ice = (
         } catch(e) {
             Ice.log('No se pudo obtener los datos del tramite ',e);
         }
+    },
+    
+    /**
+     * 2018/09/05 - jtezva - nuevo, para no llamar el de Ext
+     */
+    confirm: function (titulo, mensaje, callback) {
+        Ext.Msg.confirm(titulo, mensaje, function (boton) {
+            if (boton === 'yes') {
+                callback();
+            }
+        });
     }
 
 });

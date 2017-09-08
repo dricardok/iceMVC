@@ -8,24 +8,6 @@
     <name>iceMVC</name>
     <url>http://maven.apache.org</url>
     
-    <repositories>
-	    <repository>
-	        <id>com.springsource.repository.bundles.external</id>
-	        <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
-	        <url>http://repository.springsource.com/maven/bundles/external</url>
-	    </repository>
-	    <!--repository>
-	        <id>oracle.ojdbc</id>
-	        <name>Oracle OJDBC Repository</name>
-	        <url>https://repo.adobe.com/nexus/content/repositories/public</url>
-	    </repository-->
-	    <repository>
-			<id>internal</id>
-			<name>Internal Repository RSA</name>
-			<url>http://10.142.67.54/repository-rsa/m2</url>
-		</repository>
-    </repositories>
-    
     <properties>
         <jdk.version>1.8</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

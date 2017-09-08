@@ -156,10 +156,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 				},
 				{   style:'margin:0px 30px 16px 20px;',
 					xtype		:	'gridice',
-					title: {
-						text:"Mesa de Control",
-						
-					},
+					title: "Mesa de Control",
 					reference	:	'gridEventos',
 					
 					columns		:	[
@@ -200,13 +197,6 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 											handler : function(grid,row,col){
 												me.getController().modificarDetalle(grid,row,col)
 											}
-//											isActionDisabled : function(view,row,col,it,record){
-//												return "S" === record.get('swagente');
-//											},
-//											isDisabled : function(view,row,col,it,record){
-//												Ice.log("args : ",arguments);
-//												return "S" !== record.get('swagente');
-//											}
 										}
 									]
 						}
@@ -218,9 +208,7 @@ Ext.define("Ice.view.bloque.documentos.historial.HistorialPanel",{
 				},
 				{	style:'margin:0px 30px 16px 20px;',	
 					xtype		:	'gridice',
-					title: {
-						text:"Turnados",
-					},
+					title: "Turnados",
 					columns		:	[
 						{
 							text		:	"Usuario",	

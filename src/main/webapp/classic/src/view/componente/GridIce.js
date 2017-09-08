@@ -48,5 +48,19 @@ Ext.define('Ice.view.componente.GridIce', {
 			Ice.generaExcepcion(e,paso);
 		}
 		me.callParent(arguments);
+    },
+    
+    getSingleSelection:function(){
+    	var selected = this.getSelection(),
+        data;
+		if(Ext.isArray(selected) && selected[0]){
+			data = selected[0].data;
+		}
+		Ice.log("Grid sel ::",data);
+		return data;
+    },
+    
+    setSingleSelection:function(idx){
+    	this.getSelectionModel().select(idx);
     }
 });

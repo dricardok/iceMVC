@@ -43,6 +43,25 @@ Ext.define('Ice.view.bloque.personas.PersonaRol', {
             		return it.name=='cdperson';
             	});
             	cdperson.cdramo = config.cdramo;
+            	cdperson.listeners = {
+                	personachange:function(pick,cdperson,dom){
+                		var gridDomicilios = pick.up('[xtype=personapoliza]').lookupReference('gridDomicilios');
+                		
+                		Ice.log("sel dom:",gridDomicilios.setSelection,"---",dom,"|||",cdperson,"**");
+                		 if(cdperson){
+                             gridDomicilios.getStore().load({
+                                 params: {
+                                     'params.cdperson': cdperson
+                                 },
+                                 callback:function(rec,op,s){
+                                	 gridDomicilios.setDomiciliosSel(dom.nmorddom-1);
+                                 }
+                             });
+                             gridDomicilios.show();
+                         }
+                		 
+                	}
+                };
             	
             	var cdrol = comps.PERSONA_ROL.FORMULARIO.items.find(function(it){
             		return it.name=='cdrol';

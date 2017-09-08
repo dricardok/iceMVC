@@ -740,6 +740,7 @@ K                   ENCOLAR CON DATOS ORIGINALES
             ////////////////////////////////
             ////// SI ES REASIGNACION //////
             else if (StringUtils.isNotBlank(cdusuariDes) && StringUtils.isNotBlank(cdsisrolDes)) {
+            	logger.debug("cdusuariDes " + cdusuariDes+" cdsisrolDes "+cdsisrolDes+" status "+status);
                 Utils.validate(status, "Falta configurar la agrupaci\u00f3n de roles (GRUPOSTATUS)");
                 
                 paso = "Recuperando sucursal del usuario";

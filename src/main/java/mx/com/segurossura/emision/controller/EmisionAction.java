@@ -618,34 +618,6 @@ public class EmisionAction extends PrincipalCoreAction {
                     usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
             logger.debug("resultado Tarificacion: {}", resultados);
             
-            if (StringUtils.isNotBlank(ntramite)) {
-                flujoMesaControlManager.movimientoTmesacontrol(ntramite,
-                        cdunieco,
-                        cdramo,
-                        estado,
-                        nmpoliza,
-                        "0",      // nmsuplem
-                        nmpoliza, // nmsolici
-                        cdunieco, // cdsucadm
-                        cdunieco, // cdsucdoc
-                        null /*cdtiptra*/, null /*ferecepc*/, null /*cdagente*/, null /*referencia*/, null /*nombre*/, null /*fecstatu*/, null /*estatus*/,
-                        null /*comments*/, null /*cdtipsit*/,
-                        null /*otvalor01*/, null /*otvalor02*/, null /*otvalor03*/, null /*otvalor04*/, null /*otvalor05*/,
-                        null /*otvalor06*/, null /*otvalor07*/, null /*otvalor08*/, null /*otvalor09*/, null /*otvalor10*/,
-                        null /*otvalor11*/, null /*otvalor12*/, null /*otvalor13*/, null /*otvalor14*/, null /*otvalor15*/,
-                        null /*otvalor16*/, null /*otvalor17*/, null /*otvalor18*/, null /*otvalor19*/, null /*otvalor20*/,
-                        null /*otvalor21*/, null /*otvalor22*/, null /*otvalor23*/, null /*otvalor24*/, null /*otvalor25*/,
-                        null /*otvalor26*/, null /*otvalor27*/, null /*otvalor28*/, null /*otvalor29*/, null /*otvalor30*/,
-                        null /*otvalor31*/, null /*otvalor32*/, null /*otvalor33*/, null /*otvalor34*/, null /*otvalor35*/,
-                        null /*otvalor36*/, null /*otvalor37*/, null /*otvalor38*/, null /*otvalor39*/, null /*otvalor40*/,
-                        null /*otvalor41*/, null /*otvalor42*/, null /*otvalor43*/, null /*otvalor44*/, null /*otvalor45*/,
-                        null /*otvalor46*/, null /*otvalor47*/, null /*otvalor48*/, null /*otvalor49*/, null /*otvalor50*/,
-                        null /*swimpres*/, null /*cdtipflu*/, null /*cdflujomc*/, null /*cdusuari*/, null /*cdtipsup*/, null /*swvispre*/,
-                        null /*cdpercli*/, null /*renuniext*/, null /*renramo*/, null /*renpoliex*/, null /*sworigenmesa*/, null /*cdrazrecha*/,
-                        null /*cdunidspch*/, null /*ntrasust*/, null /*cdsisrol*/,
-                        "U" /*  accion*/);
-            }
-            
             success = true;
         } catch (Exception ex) {
             success = false;
@@ -785,6 +757,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	logger.debug(Utils.log("###### confirmarPoliza params = ", params));    	
     	
     	try {
+    	    UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
     	    Utils.validate(params, "No se recibieron datos");
     	    String cdunieco  = params.get("cdunieco"),
     	           cdramo    = params.get("cdramo"),
@@ -800,17 +773,27 @@ public class EmisionAction extends PrincipalCoreAction {
     	           nmtarjeta = StringUtils.isNotBlank( params.get("nmtarjeta") ) ? params.get("nmtarjeta") : null,
     	           orderId	 = StringUtils.isNotBlank( params.get("orderId") ) ? params.get("orderId") : null,
     	           authCode   = StringUtils.isNotBlank( params.get("authCode") ) ? params.get("authCode") : null,
-    	           nmcotizacion = StringUtils.isNotBlank( params.get("nmcotizacion") ) ? params.get("nmcotizacion") : null;
+    	           nmcotizacion = StringUtils.isNotBlank( params.get("nmcotizacion") ) ? params.get("nmcotizacion") : null,
+    	           ntramite = params.get("ntramite");
     	           
     	    Utils.validate(cdunieco, "Falta cdunieco",
     	                   cdramo,   "Falta cdramo",
     	                   estado,   "Falta estado",
-    	                   nmpoliza, "Falta nmpoliza");
+    	                   nmpoliza, "Falta nmpoliza",
+    	                   ntramite, "Falta tr\u00e1mite");
     	    
-    	    Map<String, String> resultado =  emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad, newpoliza, pnmrecibo, nmcotizacion, nmtarjeta, authCode, orderId, email);
+    	    Map<String, String> resultado =  emisionManager.confirmarPoliza(cdunieco, cdramo, estado, nmpoliza, nmsuplem, newestad,
+    	            newpoliza, pnmrecibo, nmcotizacion, nmtarjeta, authCode, orderId, email, ntramite, usuario.getCdusuari(),
+    	            usuario.getRolActivo().getCdsisrol());
     	    
     	    params = new HashMap<String, String>();
-            params.put("nmpoliza", resultado.get("polizaemitida"));
+            params.put("nmpoliza", resultado.get("polizaemitida"));            
+            params.put("cdunieco", resultado.get("cdunieco"));
+            params.put("cdramo", resultado.get("cdramo"));
+            params.put("estado", resultado.get("estado"));
+            params.put("nmpoliza", resultado.get("nmpoliza"));
+            params.put("nmsuplem", resultado.get("nmsuplem"));
+            
     		success = true;
     	} catch (Exception ex) {
     	    message = Utils.manejaExcepcion(ex);
@@ -1015,35 +998,40 @@ public class EmisionAction extends PrincipalCoreAction {
     public String generarDocumentos() {
     	logger.debug(Utils.log("\n###### generarDocumentos params: ", params));
     	try {
+    		
     		UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
-    		Utils.validate(params, "No se recibieron datos");
-    	    String cdunieco  = params.get("cdunieco"),
-    	           cdramo    = params.get("cdramo"),
-    	           estado    = params.get("estado"),
-    	           nmpoliza  = params.get("nmpoliza"),
-    	           nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
-    	           iscotizacion = params.get("iscotizacion"),
-    	           ntramite	 = params.get("ntramite"),
-    	           cdtipsup  = params.get("cdtipsup");
-    	    
-    	    Utils.validate(cdunieco, "Falta cdunieco",
-    	                   //cdramo,   "Falta cdramo",
-    	                   //estado,   "Falta estado",
-    	                   //nmpoliza, "Falta nmpoliza",
-    	                   iscotizacion, "Falta iscotizacion",
-    	                   //cdtipsup, "Falta cdtipsup",
-    	                   ntramite, "Falta ntramite"
-    	                   );
+    		   	    
     	    
     	    Map<String, Object> resultado = new HashMap<String, Object>();
     	    
     	    if(flujo != null) {
-        	    	
+        	    	logger.debug("FlujoVO  Tramite", ""+flujo.getNtramite(), ""+flujo.getAux());
         	    	//resultado = emisionManager.generarDocumentos(flujo.getCdunieco(), flujo.getCdramo(), flujo.getEstado(), flujo.getNmpoliza(), flujo.getNmsuplem(), null, flujo.getAux(), usuario.getCdusuari());
         	    	resultado = emisionManager.generarDocumentos(flujo.getNtramite(), TipoEndoso.EMISION_POLIZA.getCdTipSup().toString(), flujo.getAux(), usuario.getCdusuari());
     	    
     	    } 
-    		else {       	    	
+    		else {   
+    				Utils.validate(params, "No se recibieron datos");
+        	    
+    				String cdunieco  = params.get("cdunieco"),
+    					   cdramo    = params.get("cdramo"),
+    					   estado    = params.get("estado"),
+    					   nmpoliza  = params.get("nmpoliza"),
+    					   nmsuplem  = Utils.NVL(params.get("nmsuplem"), "0"),
+    					   iscotizacion = params.get("iscotizacion"),
+    					   ntramite	 = params.get("ntramite"),
+    					   cdtipsup  = params.get("cdtipsup");
+    				
+    				Utils.validate(cdunieco, "Falta cdunieco",
+     	                   //cdramo,   "Falta cdramo",
+     	                   //estado,   "Falta estado",
+     	                   //nmpoliza, "Falta nmpoliza",
+     	                   iscotizacion, "Falta iscotizacion",
+     	                   //cdtipsup, "Falta cdtipsup",
+     	                   ntramite, "Falta ntramite"
+     	                   );
+    					
+    			
         	    	resultado = emisionManager.generarDocumentos(ntramite, cdtipsup, iscotizacion, usuario.getCdusuari());
         
         	    	//resultado =  emisionManager.generarDocumentos(cdunieco, cdramo, estado, nmpoliza, nmsuplem, null, iscotizacion, usuario.getCdusuari());    	    	
@@ -1052,6 +1040,7 @@ public class EmisionAction extends PrincipalCoreAction {
     	    errores = (List<String>) resultado.get("errores");
     	    
     	    success = true;
+    	    message = "Documentos generados";
     	    
     	}catch(Exception ex){
     		message = Utils.manejaExcepcion(ex);

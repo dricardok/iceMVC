@@ -24,7 +24,9 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 		cdptovta: null,
 		cdgrupo: null,
 		cdsubgpo: null,
-		cdperfil: null
+		cdperfil: null,
+		
+		flujo: null
 	},
 	
 	constructor: function (config) {
@@ -32,6 +34,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 		var me = this,
 		    paso = 'Construyendo bloque de tarificacion temporal';
 		try {
+			config.flujo = Ice.validarParamFlujo(config);
+			
 			if (!config || !config.cdunieco || !config.cdramo || !config.estado || !config.nmpoliza) {
 				throw 'Faltan datos para construir bloque de vista previa';
 			}
@@ -54,7 +58,16 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.TarificacionTemporal', {
 					cdptovta: config.cdptovta,
 					cdgrupo: config.cdgrupo,
 					cdsubgpo: config.cdsubgpo,
-					cdperfil: config.cdperfil
+					cdperfil: config.cdperfil,
+
+					flujo: config.flujo,
+					
+					listeners: {
+						'tramiteGenerado': function (vistatarificaciontemporal, flujo) {
+							me.setFlujo(flujo);
+							me.fireEvent('tramiteGenerado', me, flujo);
+						}
+					}
 	    		}
 	        ];
 		} catch (e) {

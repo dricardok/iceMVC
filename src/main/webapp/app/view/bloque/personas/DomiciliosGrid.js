@@ -10,7 +10,9 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
     // config no ext
     config  :       {
         cdperson        :   null,
-        selector        :   false
+        selector        :   false,
+        agregarDomicilio:	false
+        
     },
 
     constructor: function (config) {
@@ -55,9 +57,24 @@ Ext.define('Ice.view.bloque.personas.DomiciliosGrid', {
                     }
                 }
             };
+            if(config.agregarDomicilio){
+            	config.buttons = [{
+    				xtype		:	'button',
+                    iconCls		:	'x-fa fa-plus-circle',
+    				text		:	'Agregar Domicilio',
+    				handler		:	'agregarDomicilio'
+    			}];
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
         me.callParent(arguments);
+    },
+    
+    getDomicilioSel : function(){
+    	return this.getController().getDomicilioSel();
+    },
+    setDomiciliosSel : function(num){
+    	this.getController().setDomiciliosSel(num);
     }
 });

@@ -186,7 +186,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                         store.load();
                         formRefs.cdtipsit.getStore().load(function (r) {
                             if (r.length === 1 && json.situacion) {
-                                if (!formRefs.nmsituac.getValue()) {
+                                if (!formRefs.nmsituac && !formRefs.nmsituac.getValue()) {
                                     formRefs.nmsituac.setValue(json.situacion.nmsituac);
                                 }
                                 //alert(Ext.ComponentQuery.query("[name=nmsituac]")[0].getValue());

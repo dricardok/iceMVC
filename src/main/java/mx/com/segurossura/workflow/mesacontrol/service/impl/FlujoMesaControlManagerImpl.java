@@ -1171,7 +1171,7 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	}
 	
 	@Override
-	public String ejecutaValidacion(FlujoVO flujo, String cdvalidafk, String cdusuari, String cdsisrol) throws Exception {
+	public String ejecutaValidacion(FlujoVO flujo, String cdvalidafk, String cdusuari, String cdsisrol, String jsvalida) throws Exception {
 		logger.debug("{}", Utils.log("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
 				                     "\n@@@@@@ ejecutaValidacion @@@@@@",
 				                     "\n@@@@@@ flujo = "      , flujo,
@@ -1187,9 +1187,13 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 		        salida = mesaControlDAO.recuperarOtvalorTramitePorDsatribu(flujo.getNtramite(), "AUXILIAR%FLUJO");
 		    } else {
     			logger.debug(paso);
-    			Map<String, String> validacion = flujoMesaControlDAO.recuperaTfluval(flujo.getCdtipflu(), flujo.getCdflujomc(),
-    			        flujo.getClaveent()).get(0);
-    			salida = flujoMesaControlDAO.ejecutaValidacion(cdvalidafk, flujo.getNtramite(), flujo.getAux(), validacion.get("JSVALIDA"));
+    			
+    			if (StringUtils.isBlank(jsvalida)) {
+    			    jsvalida = flujoMesaControlDAO.recuperaTfluval(flujo.getCdtipflu(), flujo.getCdflujomc(),
+    			            flujo.getClaveent()).get(0).get("JSVALIDA");
+    			}
+    			
+    			salida = flujoMesaControlDAO.ejecutaValidacion(cdvalidafk, flujo.getNtramite(), flujo.getAux(), jsvalida);
     			/*
 				"", // flujo.getCdunieco()
 				Ramo.MESA_CONTROL.getCdramo(),

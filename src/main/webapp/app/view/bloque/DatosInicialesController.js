@@ -78,12 +78,28 @@ Ext.define('Ice.view.bloque.DatosInicialesController', {
             view.setNmpoliza(nmpoliza);
             view.setNmsuplem(nmsuplem);
 
+            if (view.getFlujo() && view.getFlujo().ntramite) {
+                view.getFlujo().cdunieco = view.getCdunieco();
+                view.getFlujo().cdramo   = view.getCdramo();
+                view.getFlujo().estado   = view.getEstado();
+                view.getFlujo().nmpoliza = view.getNmpoliza();
+                view.getFlujo().nmsuplem = view.getNmsuplem();
+            }
+
             if (refs.formdatosauxiliares) {
                 refs.formdatosauxiliares.setCdunieco(cdunieco);
                 refs.formdatosauxiliares.setCdramo(cdramo);
                 refs.formdatosauxiliares.setEstado(estado);
                 refs.formdatosauxiliares.setNmpoliza(nmpoliza);
                 refs.formdatosauxiliares.setNmsuplem(nmsuplem);
+
+                if (view.getFlujo() && view.getFlujo().ntramite) {
+                    refs.formdatosauxiliares.getFlujo().cdunieco = view.getCdunieco();
+                    refs.formdatosauxiliares.getFlujo().cdramo   = view.getCdramo();
+                    refs.formdatosauxiliares.getFlujo().estado   = view.getEstado();
+                    refs.formdatosauxiliares.getFlujo().nmpoliza = view.getNmpoliza();
+                    refs.formdatosauxiliares.getFlujo().nmsuplem = view.getNmsuplem();
+                }
             } else {
                 Ice.logWarn('No existe formulario de datos auxiliares para datos iniciales');
             }

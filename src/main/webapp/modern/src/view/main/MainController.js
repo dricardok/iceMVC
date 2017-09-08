@@ -92,7 +92,9 @@ Ext.define('Ice.view.main.MainController', {
         Ice.log('Ice.view.main.MainController.setCurrentView args:', arguments);
         var paso = 'Agregando nuevo componente al contenedor';
         try {
-            hashTag = (hashTag || '').toLowerCase();
+        	// 7 de sep 2017
+        	// Se comenta el problema de las minusculas en modern
+            //hashTag = (hashTag || '').toLowerCase();
     
             var me = this,
                 refs = me.getReferences(),

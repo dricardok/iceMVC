@@ -73,6 +73,8 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporal',
 		var me = this,
 			paso = 'Construyendo dataview de vista previa';
 		try {
+			config.flujo = Ice.validarParamFlujo(config);
+			
 			if (!config
 				|| !config.cdunieco
 				|| !config.cdramo

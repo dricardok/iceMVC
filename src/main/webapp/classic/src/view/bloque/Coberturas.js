@@ -116,7 +116,6 @@ Ext.define('Ice.view.bloque.Coberturas', {
 						nmsuplem: me.nmsuplem,
 						maxHeigth: '250px',
 						reference: 'grid',
-						// width: "100%",
 						actionColumns: [
 							{
 								xtype: 'actioncolumn',
@@ -133,10 +132,7 @@ Ext.define('Ice.view.bloque.Coberturas', {
 						],
 						listeners: {
 							cargarstore: function (store, datos, grid) {
-								// Ice.log('Agregar ',this);
-								// if (store.count() > 0) {
 								me.getController().mostrarCoberturas(grid, 0, 0);
-								// }
 							}
 						}
 					}, {
@@ -144,10 +140,8 @@ Ext.define('Ice.view.bloque.Coberturas', {
 						itemId: 'gridCoberturas',
 						hidden: true,
 						title: 'Coberturas de la situación ' + me.getNmsituac(),
-						// width : "700px",
 						buttons: [
 							{
-								// xtype: 'button',
 								itemId: 'btnAgregar',
 								iconCls: 'x-fa fa-plus-circle',
 								text: 'Nueva Cobertura',

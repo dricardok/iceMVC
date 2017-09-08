@@ -38,6 +38,7 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
         try {
             var formRefs = view.up('[getValues]').getReferences(),
                 windowBuscar = Ext.create('Ice.view.componente.VentanaIce',{
+                modal:true,
                 items: [
                     {
                         xtype: 'formulariodomicilio',
