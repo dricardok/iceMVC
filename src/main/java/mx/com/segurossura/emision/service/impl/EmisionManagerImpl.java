@@ -735,7 +735,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	        String nombreExtension = "";
 	        String urlSLIP;
 	        int contDocEr = 0;	        
-	        ExecutorService executor = Executors.newFixedThreadPool(5);
+	        //ExecutorService executor = Executors.newFixedThreadPool(5);
 	        try {
 	            // Obteniendo nmrecibo para obtener el nmrecibo de la poliza emitida	            
 	            logger.debug("Obteniendo informacion para generar documentos");
