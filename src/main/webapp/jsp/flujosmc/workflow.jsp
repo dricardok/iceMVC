@@ -300,7 +300,9 @@
     width            : 1000px;
     height           : 20px;
     border           : 0px solid red;
-    background-image : url('${flujoimg}titulo1.png');
+    color            : #FFF;
+    background       : linear-gradient(60deg, #26c6da, #87e5f1);
+    box-shadow       : 0 12px 20px -10px rgba(0, 188, 212, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8p
 }
 .plus
 {
