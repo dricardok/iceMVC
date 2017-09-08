@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import com.biosnettcs.core.Utils;
 
@@ -15,6 +16,7 @@ import mx.com.segurossura.workflow.confcomp.model.ComponenteVO;
 import mx.com.segurossura.workflow.confcomp.model.Item;
 import mx.com.segurossura.workflow.confcomp.service.PantallasManager;
 
+@Service
 public class PantallasManagerImpl implements PantallasManager
 {
 	private final static Logger logger = Logger.getLogger(PantallasManagerImpl.class);

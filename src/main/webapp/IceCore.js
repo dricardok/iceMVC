@@ -154,11 +154,11 @@ var Ice = (
             	obtenerDomicilio:			'registroPersona/obtieneDomicilio.action'
             },
             agentes:{
-            	cargar: 			'emision/agentes/cargar.action',
-            	cargarAgentes: 		'emision/agentes/cargarAgentes.action',
-            	guardar:			'emision/agentes/guardarAgentes.action',
-            	buscar:				'emision/agentes/buscarAgentes.action',
-            	validarAgente:		'emision/agentes/validarAgente.action'
+            	cargar: 			    'emision/agentes/cargar.action',
+            	cargarAgentes: 		    'emision/agentes/cargarAgentes.action',
+            	guardar:			    'emision/agentes/guardarAgentes.action',
+            	buscar:				    'emision/agentes/buscarAgentes.action',
+                validarAgente:		    'emision/agentes/validarAgente.action'
             },
             agrupadores: {
                 obtenerAgrupador:        'emision/obtenerMpoliagr.action',
@@ -202,7 +202,8 @@ var Ice = (
                 obtenerTramiteCompleto             : 'flujomesacontrol/obtenerTramiteCompleto.action',
                 ejecutarValidacionPorReferencia    : 'mesacontrol/ejecutarValidacionPorReferencia.action',
                 ejecutarValidacionesEventoPantalla : 'mesacontrol/ejecutarValidacionesEventoPantalla.action',
-                registrarNuevoTramite              : 'mesacontrol/registrarNuevoTramite.action'
+                registrarNuevoTramite              : 'mesacontrol/registrarNuevoTramite.action',
+                obtenerAgenteXUsuario              : 'mesacontrol/cargarCdagentePorCdusuari.action'
             },
             datosAuxiliares: {
                 cargar: 'emision/datosAuxiliares/cargarDatosAuxiliares.action',
@@ -2349,6 +2350,39 @@ var Ice = (
      */
     parse: function(value, format){
         return Ext.Date.parse(value, format||Ext.util.Format.dateFormat);
+    },
+
+    recuperaTramiteCompleto: function(ntramite, callback) {
+        Ice.log('Ice.recuperarTramiteCompleto ntramite',ntramite);
+        var me = this,
+            tramite = {},
+            paso = 'Recuperando datos de tramite';
+        try {
+            Ice.request({
+                mascara: paso,
+                url: me.url.bloque.mesacontrol.obtenerTramiteCompleto,
+                params: {
+                    'params.ntramite': ntramite
+                },
+                success: function (json) {
+                    var paso2 = 'Datos del tramite obtenidos';
+                    try {
+                        Ice.log('Resultados de tramite ',json);
+                        tramite = json.params;
+                        if(callback){
+                            callback(tramite);
+                        }
+                    } catch (e) {
+                        Ice.manejaExcepcion(e, paso2);
+                    }
+                },
+                failure: function () {
+                    Ice.resumeEvents(view);
+                }
+            });
+        } catch(e) {
+            Ice.log('No se pudo obtener los datos del tramite ',e);
+        }
     }
 
 });
