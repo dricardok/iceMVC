@@ -24,7 +24,10 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                     },
                     '!desktop': {
                         scrollable: true,
-                        layout: 'fit'
+                        style		:	{
+                        	margin	:	'0 auto !important',
+                        	padding	:	'20px !important'
+                        }
                     }
                 },
                 items: [
@@ -44,14 +47,19 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 	},
                 	{
                 		xtype		:	'panelice',
+                		title		:	'Recuperar Cotización',
                 		platformConfig: {
                             desktop: {
-                            	title		:	'Recuperar Cotización',
                             	layout: {
                         	        type: 'vbox',
                         	        align: 'center',
                         	        pack: 'center'
                         	    }
+                            },
+                            '!desktop': {
+                            	 style		:	{
+                                 	padding	:	'20px !important'
+                                 }
                             }
                         }
                 		,
