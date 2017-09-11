@@ -89,7 +89,11 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                 form.on({
                     afterlayout: function(){
                         try{
-                            var b1b_otvalor15 = Ice.query('datosiniciales').refs.formdatosgenerales.getValues().b1b_otvalor15;
+                            var datosiniciales = Ice.query('datosiniciales');
+                            if(datosiniciales.length && datosiniciales.length > 1){
+                                datosiniciales = datosiniciales[datosiniciales.length-1];
+                            }
+                            var b1b_otvalor15 = datosiniciales.getReferences().formdatosgenerales.getValues().b1b_otvalor15;
                             var refsFormSit = refs.form.refs;
                             if(b1b_otvalor15 == '3'){
                                 refsFormSit.b5b_otvalor05.show();
@@ -182,6 +186,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                             Ice.cargarFormulario(refs.form, json.situacion);
                         }
                         form.show();
+                        grid.hide();
                         Ice.log('form',form);
                         store.load();
                         formRefs.cdtipsit.getStore().load(function (r) {
@@ -219,62 +224,48 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
           var store = refs.grid.getStore(),
               form = refs.form,
               data;
-          if(Ext.manifest.toolkit === 'classic'){
+          if(Ice.classic()){
               data = store.getAt(rowIndex).getData();              
           } else {
               var cell = grid.getParent(),
                   record = cell.getRecord(),
                   data = record.getData();
           }
-          
           Ice.log('Data ',data);
-          Ice.request({
-              mascara: 'Editando situacion de riesgo',
-              url: Ice.url.bloque.situacionesRiesgo.obtener,
-              params: {
-                  'params.cdunieco': data.cdunieco,
-                  'params.cdramo': data.cdramo,
-                  'params.estado': data.estado,
-                  'params.nmpoliza': data.nmpoliza,
-                  'params.nmsituac': data.nmsituac,
-                  'params.cdtipsit': data.cdtipsit,
-                  'params.nmsuplem': data.nmsuplem
-              },
-              success: function (json) {
-                  var paso2 = 'LLenando store';
-                  try {
-                      Ice.log('json editando:::',json);
-                      if(json.situacion){
-                          var situacion = json.situacion;
-                          
-                          me.limpiarForm(form);
-                          view.setDatosVariablesNuevos(false);
-
-                          Ice.log("situacion",situacion);
-//                          store.add(json.situacion);
-                          /*
-                          Ice.suspendEvents(view);
-                          for (var att in situacion) {
-                        	  Ice.log("attr:",att)
-                              if (refs[att]) {
-                                  refs[att].setValue(situacion[att]);
-                              }
+          if(data){
+              Ice.request({
+                  mascara: 'Editando situacion de riesgo',
+                  url: Ice.url.bloque.situacionesRiesgo.obtener,
+                  params: {
+                      'params.cdunieco': data.cdunieco,
+                      'params.cdramo': data.cdramo,
+                      'params.estado': data.estado,
+                      'params.nmpoliza': data.nmpoliza,
+                      'params.nmsituac': data.nmsituac,
+                      'params.cdtipsit': data.cdtipsit,
+                      'params.nmsuplem': data.nmsuplem
+                  },
+                  success: function (json) {
+                      var paso2 = 'LLenando store';
+                      try {
+                          Ice.log('json editando:::',json);
+                          if(json.situacion){
+                              var situacion = json.situacion;       
+                              me.limpiarForm(form);
+                              view.setDatosVariablesNuevos(false);    
+                              Ice.log("situacion",situacion);
+                              Ice.cargarFormulario(form, situacion);
                           }
-                         // refs['cdtipsit'].setValue(data.cdtipsit);
-                          formRefs.cdtipsit.setValue(data.cdtipsit);
-                          
-                          Ice.log("--->",refs['cdtipsit']);
-                          Ice.resumeEvents(view);
-                          */
-                          Ice.cargarFormulario(form, situacion);
+                          Ice.log('form',form);
+                          form.show();
+                          refs.grid.hide();
+                      } catch (e) {
+                          Ice.log('Error en request ',e);
+                          Ice.manejaExcepcion(e, paso2);
                       }
-                      Ice.log('form',form);
-                      form.show();
-                  } catch (e) {
-                      Ice.manejaExcepcion(e, paso2);
                   }
-              }
-          });
+              });
+          }
       } catch (e) {
           Ice.manejaExcepcion(e, paso);
       }
@@ -422,6 +413,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
                     }
                     Ice.log('values:', values);
                 }
+                refs.grid.show();
                 Ice.request({
                     mascara: paso,
                     url: Ice.url.bloque.situacionesRiesgo.actualizar,
@@ -572,7 +564,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgoController', {
     	  var form = refs.form;
           var values = form.getValues();  
     	  var store = refs.grid.getStore();
-    	  
+    	  refs.grid.show();
     	  Ice.log("values...>",values);
     	  if(!me.editando){
 	    	  Ice.request({

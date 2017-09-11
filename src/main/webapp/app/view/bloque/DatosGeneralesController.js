@@ -674,12 +674,14 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                     refs.b1_fevencim.hide();
                     refs.b1_feproren.show();
                     refs.b1_fevencim.setValue(null);
-                    refs.b1_feproren.setValue(Ext.Date.add(new Date(refs.b1_feefecto.getValue()), Ext.Date.YEAR, 1));
+                    Ice.log('feefecto',refs.b1_feefecto.getValue());
+                    refs.b1_feproren.setValue(Ext.Date.add(Ice.parse(refs.b1_feefecto.getValue(), 'd/m/Y'), Ext.Date.YEAR, 1));
                 } else {
                     refs.b1_fevencim.show();
                     refs.b1_feproren.hide();
                     refs.b1_feproren.setValue(null);
-                    refs.b1_fevencim.setValue(Ext.Date.add(new Date(refs.b1_feefecto.getValue()), Ext.Date.YEAR, 1));
+                    Ice.log('feefecto',refs.b1_feefecto.getValue());
+                    refs.b1_fevencim.setValue(Ext.Date.add(Ice.parse(refs.b1_feefecto.getValue(), 'd/m/Y'), Ext.Date.YEAR, 1));
                 }
             }
         } catch (e) {
