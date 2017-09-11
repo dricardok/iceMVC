@@ -154,6 +154,10 @@ Ext.define('Ice.view.bloque.Agentes', {
 							iconCls: 'x-fa fa-minus-circle',
 							handler: function (grid, row, col) {
 								me.getController().eliminar(grid, row, col);
+							},
+							isDisabled : function(view,r,c,it,rec){
+								Ice.log("### rec:",rec)
+								return Number(rec.get('cdtipoag')) == 1 
 							}
 						}
 					].concat(config.actionColumns || [])
