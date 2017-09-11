@@ -30,13 +30,17 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 items: [
                 	{
                 		xtype		:	'panelice',
-                		title		:	'Nueva Cotización',
+                		title		:	{
+                						text:"Nueva Cotización",
+                						style:'border-color: transparent; font-size: 16px; padding-bottom:0px',
+                		},
                         buttonAlign	:	'center',
                         titleAlign	:	'center',
                 		buttons		:	[{
                             xtype: 'button',
-                            text: 'Ir',
-                            iconCls: 'x-fa fa-plus',
+                            text: 'Crear',
+                            iconCls: 'x-fa fa-file-o',
+                            style: 'margin-bottom: 30px;',
                             handler: me.onNuevaClic,
                             width  : '200px'
                             
@@ -46,7 +50,10 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 		xtype		:	'panelice',
                 		platformConfig: {
                             desktop: {
-                            	title		:	'Recuperar Cotización',
+                            	title:	{
+            						text:"Recuperar Cotización",
+            						style:'border-color: transparent; font-size: 16px;',
+            		},
                             	layout: {
                         	        type: 'vbox',
                         	        align: 'center',
@@ -57,6 +64,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 		,
                 		
                 		titleAlign	:	'center',
+                		style:'margin-top:10px;',
                 		items: [
                             {
                                 xtype: 'comboice',
@@ -69,10 +77,11 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                                 name: 'nmpoliza'
                             }
                         ]
+                		
                 	}
                 	],
                 	buttonAlign	:	'center',
-                	buttons: [
+                		buttons: [
                         {
                             text: 'Recuperar',
                             iconCls: 'x-fa fa-pencil',
