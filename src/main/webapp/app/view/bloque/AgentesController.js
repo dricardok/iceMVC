@@ -340,11 +340,15 @@ Ext.define('Ice.view.bloque.AgentesController', {
 			paso = 'Eliminar agente',
 			record;
     	try {
+    		
 			if (Ext.manifest.toolkit === 'classic') {
 				record = grid.getStore().getAt(rowIndex);
 			} else {
 				record = grid.getParent().getRecord();
 			}
+			if(Number(record.get('cdtipoag')) == 1 ){
+	          	  throw 'No se puede borrar al agente principal';
+	            }
 			refs.gridagentes.getStore().remove(record);
     	} catch (e) {
 			Ice.manejaExcepcion(e, paso);

@@ -291,7 +291,7 @@ public class DocumentosManagerImpl implements DocumentosManager {
                         new Date(),
                         "USER", //documento.getId(),
                         Utils.join(nombre), //nombreExtension,
-                        tramite.get("cdtipsup"), //cdtipsup
+                        "0", //cdtipsup
                         "S",
                         tramite.get("cdtiptra"),
                         null,
