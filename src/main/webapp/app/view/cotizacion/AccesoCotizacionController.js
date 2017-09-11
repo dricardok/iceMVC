@@ -12,38 +12,68 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
         try {
             var ventana = Ext.create('Ice.view.componente.VentanaIce', {
                 title: record.get('dstipsit'),
+                
                 platformConfig: {
                     desktop: {
                         modal: true,
-                        width: 600
+                        width: 300,
+                        style		:	{
+                        	margin	:	'0 auto !important',
+                        	padding	:	'20px'
+                        },
                     },
                     '!desktop': {
                         scrollable: true,
                         layout: 'fit'
                     }
                 },
-                items: [{
-                    xtype: 'formdoscolumnasice',
-                    referenceHolder: false,
-                    items: [
-                        {
-                            xtype: 'comboice',
-                            label: 'Oficina',
-                            name: 'cdunieco',
-                            catalogo: 'SUCURSALES'
-                        }, {
-                            xtype: 'numberfieldice',
-                            label: 'Cotizaci\u00f3n',
-                            name: 'nmpoliza'
-                        }
-                    ],
-                    buttons: [
-                        {
+                items: [
+                	{
+                		xtype		:	'panelice',
+                		title		:	'Nueva Cotización',
+                        buttonAlign	:	'center',
+                        titleAlign	:	'center',
+                		buttons		:	[{
                             xtype: 'button',
-                            text: 'Nueva',
+                            text: 'Ir',
                             iconCls: 'x-fa fa-plus',
-                            handler: me.onNuevaClic
-                        }, {
+                            handler: me.onNuevaClic,
+                            width  : '200px'
+                            
+                        }]
+                	},
+                	{
+                		xtype		:	'panelice',
+                		platformConfig: {
+                            desktop: {
+                            	title		:	'Recuperar Cotización',
+                            	layout: {
+                        	        type: 'vbox',
+                        	        align: 'center',
+                        	        pack: 'center'
+                        	    }
+                            }
+                        }
+                		,
+                		
+                		titleAlign	:	'center',
+                		items: [
+                            {
+                                xtype: 'comboice',
+                                label: 'Oficina',
+                                name: 'cdunieco',
+                                catalogo: 'SUCURSALES'
+                            }, {
+                                xtype: 'numberfieldice',
+                                label: 'Cotizaci\u00f3n',
+                                name: 'nmpoliza'
+                            }
+                        ]
+                	}
+                	],
+                	buttonAlign	:	'center',
+                	buttons: [
+                        {
                             text: 'Recuperar',
                             iconCls: 'x-fa fa-pencil',
                             handler: me.onCargarClic
@@ -56,9 +86,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                             }
                         }
                     ]
-                }]
             });
-            
             if(Ice.sesion.cdsisrol == Ice.constantes.roles.AGENTE){
             	Ice.request({
             		url:Ice.url.emision.validaCedulaAgente,
