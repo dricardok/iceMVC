@@ -5,7 +5,10 @@ Ext.define('Ice.view.field.DatefieldIce', {
     extend: 'Ext.field.DatePicker',
     xtype: 'datefieldice',
     
-    
+    picker :{
+	            yearFrom:Ext.Date.add(new Date(),Ext.Date.YEAR,-5).getFullYear(),
+	            yearTo:Ext.Date.add(new Date(),Ext.Date.YEAR,20).getFullYear()
+	        },
     getValue: function () {
         var fecha = '',
             value = this.callParent();
@@ -48,7 +51,6 @@ Ext.define('Ice.view.field.DatefieldIce', {
     },
     constructor:function(config){
     	config.dateFormat = Ext.util.Format.dateFormat;
-    	config.maxDate = Ext.Date.add(new Date(),Ext.Date.YEAR,5);
     	this.callParent(arguments);
     }
 });
