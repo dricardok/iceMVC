@@ -77,23 +77,23 @@ Ext.define('Ice.view.bloque.agrupadores.GridAgrupadores', {
 
             config.buttons = [
                 {
-                    text: 'Agrupador',
+                    text: 'Agregar Agrupador',
                     iconCls: 'x-fa fa-plus',
                     handler: 'onAgregarAgrupadorClic'
                 }, {
-                    text: 'Subagrupador',
+                    text: 'Agregar Subagrupador',
                     iconCls: 'x-fa fa-plus',
                     handler: 'onAgregarSubagrupadorClic',
                     hidden: true,
                     reference: 'agregarbutton'
                 }, {
-                    text: 'Subagrupador',
+                    text: 'Editar Subagrupador',
                     iconCls: 'x-fa fa-pencil',
                     handler: 'onEditarClic',
                     hidden: true,
                     reference: 'editarbutton'
                 }, {
-                    text: 'Subagrupador',
+                    text: 'Borrar Subagrupador',
                     iconCls: 'x-fa fa-minus',
                     handler: 'onEliminarClic',
                     hidden: true,
