@@ -491,6 +491,13 @@ html, body {
 }
 
 
+.x-big .x-panel-header .x-managed-borders .x-docked-top .x-panel-header .esp_modern{
+    background-color: transparent !important;
+    background-image: none;
+    
+}
+
+
 //Media Query Botones Selección de rol Classic
 
 @media only screen and (min-width: 768px) {
@@ -513,7 +520,6 @@ html, body {
     margin-left: 193px;
     top: -47px;
 }
-
 
 }
 

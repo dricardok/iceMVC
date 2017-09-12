@@ -36,7 +36,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 		cls: 'esp_modern',
                 		title		:	{
                 						text:"Nueva Cotización",
-                						style:'border-color: transparent; font-size: 16px;',
+                						style:'border-color: transparent; font-size: 16px; background-color:transparent !important;',
                 		},
                         buttonAlign	:	'center',
                         titleAlign	:	'center',
@@ -52,7 +52,10 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 	},
                 	{
                 		xtype		:	'panelice',
-                		title		:	'Recuperar Cotización',
+                		title		:	{
+    						text:"Recuperar Cotización",
+    						style:'border-color: transparent; font-size: 16px; background-color:transparent !important;',
+    		            },
                 		platformConfig: {
                             desktop: {
 
