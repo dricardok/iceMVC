@@ -43,7 +43,8 @@ Ext.define('Ice.view.field.DomicilioPicker', {
                 },{
                     xtype: 'button',
                     iconCls: 'x-fa fa-search',
-                    style:'margin-top: -42px !important; margin-left: 169px;',
+                    //style:'margin-top: -42px !important; margin-left: 169px;',
+                    cls: 'btn_lupita',
                     scope: me,
                     handler: function () {
                         this.getController().onBuscar();

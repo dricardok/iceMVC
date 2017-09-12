@@ -30,9 +30,10 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 items: [
                 	{
                 		xtype		:	'panelice',
+                		cls: 'esp_modern',
                 		title		:	{
                 						text:"Nueva Cotización",
-                						style:'border-color: transparent; font-size: 16px; padding-bottom:0px',
+                						style:'border-color: transparent; font-size: 16px;',
                 		},
                         buttonAlign	:	'center',
                         titleAlign	:	'center',
@@ -40,7 +41,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                             xtype: 'button',
                             text: 'Crear',
                             iconCls: 'x-fa fa-file-o',
-                            style: 'margin-bottom: 30px;',
+                            //style: 'margin-bottom: 30px;',
                             handler: me.onNuevaClic,
                             width  : '200px'
                             
@@ -69,6 +70,7 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                             {
                                 xtype: 'comboice',
                                 label: 'Oficina',
+                                cls: '',
                                 name: 'cdunieco',
                                 catalogo: 'SUCURSALES'
                             }, {
