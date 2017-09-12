@@ -19,10 +19,10 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
         Ice.log('Ice.view.field.DomicilioPickerController.getValue');
         var me = this,
             refs = me.getReferences(),
-            paso = 'Obteniendo valor de punto de venta',
+            paso = 'Obteniendo valor de domicilio',
             value;
         try {
-            value = refs.dsdomici.getValue();
+            value = refs.otvalor15.getValue();
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
