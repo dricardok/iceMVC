@@ -89,6 +89,7 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumentoController', {
                                 'params.ntramite': view.getNtramite()
                             },
                             success: function(){
+                            	view.getListadocumentos().getStore().reload();
                                 mask.close();
                                 view.up('ventanaice').cerrar();
                             },
@@ -110,6 +111,7 @@ Ext.define('Ice.view.bloque.documentos.AgregarDocumentoController', {
                                 'params.ntramite': view.getNtramite()
                             },
                             success: function(){
+                            	view.getListadocumentos().getStore().reload();
                                 mask.close();
                                 view.up('ventanaice').cerrar();
                             },
