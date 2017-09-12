@@ -9,7 +9,7 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
             refs = view.getReferences(),
             paso = 'Modificando valor de punto de venta';
         try {
-            refs.dsdomici.setValue(dsdomici);
+            refs.otvalor15.setValue(dsdomici);
         } catch (e){
             Ice.generaExcepcion(e, paso);
         }
@@ -101,14 +101,25 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
     },
         
     onGetName: function(){
-        return 'dsdomici';
+        return 'otvalor15';
     },
     
-    onSetActiveError: function(param){
-        Ice.mensajeWarning(param);
-    },
+    
     
     onBuscar: function(){
         this.buscar();
+    },
+    onSetActiveError: function(param){
+        //Ice.mensajeWarning(param);
+    	var me  = this,
+    		view = me.getView()
+    		paso = 'Is valid on cdagentepicker';
+    	
+    	try {
+    		
+    		view.getReferences().otvalor15.isValid();
+    	}catch(e){
+    		Ice.generaExcepcion(e, paso);
+    	}
     }
 });
