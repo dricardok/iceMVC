@@ -480,6 +480,22 @@ html, body {
 }
 
 
+.esp_modern{
+    padding: 10px !important;
+}
+
+
+.btn_lupita{    
+    margin-left: 120px;
+    top: -41px;
+}
+
+
+.x-big .x-panel-header .x-managed-borders .x-docked-top .x-panel-header .esp_modern{
+    background-color: transparent !important;
+    background-image: none;
+    
+}
 
 
 //Media Query Botones Selección de rol Classic
@@ -500,6 +516,10 @@ html, body {
      padding:2% 0% 0% 12%;
 }
 
+.btn_lupita{
+    margin-left: 193px;
+    top: -47px;
+}
 
 }
 

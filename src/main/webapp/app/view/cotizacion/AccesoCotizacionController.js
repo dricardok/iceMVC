@@ -33,13 +33,18 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 items: [
                 	{
                 		xtype		:	'panelice',
-                		title		:	'Nueva Cotización',
+                		cls: 'esp_modern',
+                		title		:	{
+                						text:"Nueva Cotización",
+                						style:'border-color: transparent; font-size: 16px; background-color:transparent !important;',
+                		},
                         buttonAlign	:	'center',
                         titleAlign	:	'center',
                 		buttons		:	[{
                             xtype: 'button',
-                            text: 'Ir',
-                            iconCls: 'x-fa fa-plus',
+                            text: 'Crear',
+                            iconCls: 'x-fa fa-file-o',
+                            //style: 'margin-bottom: 30px;',
                             handler: me.onNuevaClic,
                             width  : '200px'
                             
@@ -47,9 +52,14 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 	},
                 	{
                 		xtype		:	'panelice',
-                		title		:	'Recuperar Cotización',
+                		title		:	{
+    						text:"Recuperar Cotización",
+    						style:'border-color: transparent; font-size: 16px; background-color:transparent !important;',
+    		            },
                 		platformConfig: {
                             desktop: {
+
+
                             	layout: {
                         	        type: 'vbox',
                         	        align: 'center',
@@ -65,10 +75,12 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 		,
                 		
                 		titleAlign	:	'center',
+                		style:'margin-top:10px;',
                 		items: [
                             {
                                 xtype: 'comboice',
                                 label: 'Oficina',
+                                cls: '',
                                 name: 'cdunieco',
                                 catalogo: 'SUCURSALES'
                             }, {
@@ -77,10 +89,11 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                                 name: 'nmpoliza'
                             }
                         ]
+                		
                 	}
                 	],
                 	buttonAlign	:	'center',
-                	buttons: [
+                		buttons: [
                         {
                             text: 'Recuperar',
                             iconCls: 'x-fa fa-pencil',
