@@ -24,27 +24,19 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                     },
                     '!desktop': {
                         scrollable: true,
-                        style		:	{
-                        	margin	:	'0 auto !important',
-                        	padding	:	'20px !important'
-                        }
+                        layout: 'fit'
                     }
                 },
                 items: [
                 	{
                 		xtype		:	'panelice',
-                		cls: 'esp_modern',
-                		title		:	{
-                						text:"Nueva Cotización",
-                						style:'border-color: transparent; font-size: 16px; background-color:transparent !important;',
-                		},
+                		title		:	'Nueva Cotización',
                         buttonAlign	:	'center',
                         titleAlign	:	'center',
                 		buttons		:	[{
                             xtype: 'button',
-                            text: 'Crear',
-                            iconCls: 'x-fa fa-file-o',
-                            //style: 'margin-bottom: 30px;',
+                            text: 'Ir',
+                            iconCls: 'x-fa fa-plus',
                             handler: me.onNuevaClic,
                             width  : '200px'
                             
@@ -52,35 +44,23 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 	},
                 	{
                 		xtype		:	'panelice',
-                		title		:	{
-    						text:"Recuperar Cotización",
-    						style:'border-color: transparent; font-size: 16px; background-color:transparent !important;',
-    		            },
                 		platformConfig: {
                             desktop: {
-
-
+                            	title		:	'Recuperar Cotización',
                             	layout: {
                         	        type: 'vbox',
                         	        align: 'center',
                         	        pack: 'center'
                         	    }
-                            },
-                            '!desktop': {
-                            	 style		:	{
-                                 	padding	:	'20px !important'
-                                 }
                             }
                         }
                 		,
                 		
                 		titleAlign	:	'center',
-                		style:'margin-top:10px;',
                 		items: [
                             {
                                 xtype: 'comboice',
                                 label: 'Oficina',
-                                cls: '',
                                 name: 'cdunieco',
                                 catalogo: 'SUCURSALES'
                             }, {
@@ -89,11 +69,10 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                                 name: 'nmpoliza'
                             }
                         ]
-                		
                 	}
                 	],
                 	buttonAlign	:	'center',
-                		buttons: [
+                	buttons: [
                         {
                             text: 'Recuperar',
                             iconCls: 'x-fa fa-pencil',
