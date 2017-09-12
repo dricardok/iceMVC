@@ -135,6 +135,7 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 							{
 								text: 'Nueva Situación',
 								iconCls: 'x-fa fa-plus-circle',
+								reference: 'btnNvaSit',
 								handler: function(){
 									Ice.log('Agregar ',this);
 									me.getController().onAgregarClic();
@@ -181,8 +182,8 @@ Ext.define('Ice.view.bloque.SituacionesRiesgo', {
 						buttons: [
 							{
 								reference: 'btnGuardar',
-								text: 'Agregar',
-	                            iconCls: 'x-fa fa-plus-circle',	                            
+								text: 'Guardar',
+	                            iconCls: 'x-fa fa-save',	                            
 								handler: 'onGuardarBloque'
 							},{
 								text: 'Cancelar',
