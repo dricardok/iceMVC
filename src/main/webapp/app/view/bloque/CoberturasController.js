@@ -786,6 +786,8 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 
 							list.forEach(function (it) {
 								if((it.tipo+'').toLowerCase()=='error') {
+									form.hide();
+					    			view.down("#gridCoberturas").getStore().load();
 									throw "Favor de revisar las validaciones";
 								}
 							});
