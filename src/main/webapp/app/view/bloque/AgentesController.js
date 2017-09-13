@@ -69,7 +69,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
 					throw 'El agente ya se encuentra incluido';
 				}
 			});
-     		view.down('[reference=agregaragente]').reset();
+     		
     		Ice.log(view);
     		
 			Ice.request({
@@ -125,6 +125,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
 
 			refs.gridagentes.getStore().add(datos);
         	view.getAgentesAgregados().push(datos);
+        	view.down('[reference=agregaragente]').reset();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
