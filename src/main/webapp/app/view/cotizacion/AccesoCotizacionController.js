@@ -24,7 +24,10 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                         items: [
                         	{
                         		xtype		:	'panelice',
-                        		title		:	'Nueva Cotización',
+                        		title		:	{
+                        			text:"Nueva Cotización",
+                        			style:'border:0px;font-size:16px;',
+                        		},
                                 buttonAlign	:	'center',
                                 titleAlign	:	'center',
                         		buttons		:	[{
@@ -39,7 +42,10 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                         	{
                         		
                         		xtype		:	'panelice',
-                            	title		:	'Recuperar Cotización',
+                            	title		:	 {
+                        			text:"Recuperar Cotización",
+                        			style:'border:0px;font-size:16px;',
+                        		},
                             	layout: {
                         	        type: 'vbox',
                         	        align: 'center',

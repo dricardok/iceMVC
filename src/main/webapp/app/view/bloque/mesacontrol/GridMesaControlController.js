@@ -91,7 +91,8 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 					{
 						xtype: 'formnuevotramite',
 
-						reference: 'formnuevotramite'
+						reference: 'formnuevotramite',
+						sinToggle: true
 					    	
 
 					}
