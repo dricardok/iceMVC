@@ -1173,7 +1173,8 @@ var Ice = (
                     CDAGENTEPICKER: 'cdagentepicker',
                     PASSWORD: 'textfieldice',
                     PUNTOVENTAPICKER: 'puntoventapicker',
-                    DOMICILIOPICKER: 'domiciliopicker'
+                    DOMICILIOPICKER: 'domiciliopicker',
+                    RFCFIELD: 'rfcfieldice'
                 }[config.tipocampo];
                 if (!item.xtype) {
                     throw 'Tipocampo incorrecto para item';
@@ -1231,6 +1232,11 @@ var Ice = (
             
             // padres
             if (item.xtype === 'comboice' && config.padres) {
+                item.padres = config.padres.split(',');
+            }
+            
+            // padres rfc field
+            if (item.xtype === 'rfcfieldice' && config.padres) {
                 item.padres = config.padres.split(',');
             }
             
@@ -1465,7 +1471,8 @@ var Ice = (
                     CDAGENTEPICKER: 'string',
                     PASSWORD: 'string',
                     PUNTOVENTAPICKER: 'string',
-                    DOMICILIOPICKER: 'string'
+                    DOMICILIOPICKER: 'string',
+                    RFCFIELD:'string'
                 }[config.tipocampo];
             if (!field.type) {
                 throw 'Tipocampo incorrecto para field';
