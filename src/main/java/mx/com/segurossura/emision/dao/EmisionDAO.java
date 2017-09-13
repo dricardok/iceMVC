@@ -434,4 +434,8 @@ public interface EmisionDAO {
 	public List<Map<String, String>> puedeEmitir(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
 	
 	public List<Map<String, String>> obtenerNsublogi(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem) throws Exception;
+	
+	public List<Map<String, String>> consultaDuplicidad(String cdunieco, String cdramo, String feini, String fefin, String nmsolici, String cdtipide, 
+	        String cdideper, String dsnombre, String cdgrupo, String cdsubgpo, String cdagente, String cdpostal, 
+	        String dsdomici, String nmnumero, String otpiso) throws Exception;
 }

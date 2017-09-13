@@ -1210,5 +1210,18 @@ public class EmisionManagerImpl implements EmisionManager {
 	    }
 	    return res;
 	}
-
+	
+	@Override
+	public List<Map<String, String>> obtenerDuplicidad(String cdunieco, String cdramo, String feini, String fefin, String nmsolici, String cdtipide, 
+            String cdideper, String dsnombre, String cdgrupo, String cdsubgpo, String cdagente, String cdpostal, 
+            String dsdomici, String nmnumero, String otpiso) throws Exception{
+	    String paso = "Consultando duplicidad";
+	    List<Map<String, String>> res = new ArrayList<Map<String, String>>();
+	    try{
+	        res = emisionDAO.consultaDuplicidad(cdunieco, cdramo, feini, fefin, nmsolici, cdtipide, cdideper, dsnombre, cdgrupo, cdsubgpo, cdagente, cdpostal, dsdomici, nmnumero, otpiso);
+	    } catch(Exception ex) {
+	        Utils.generaExcepcion(ex, paso);
+	    }
+	    return res;
+	}
 }

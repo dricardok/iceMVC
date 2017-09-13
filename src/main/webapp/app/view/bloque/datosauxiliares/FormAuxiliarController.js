@@ -67,5 +67,40 @@ Ext.define('Ice.view.bloque.datosauxiliares.FormAuxiliarController', {
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
+    },
+
+    onDuplicidad: function(){
+        this.duplicidad();
+    },
+
+    duplicidad: function(){
+        var me = this,
+            view = me.getView();
+        try{
+            var ventana = Ext.create('Ice.view.componente.VentanaIce', {
+                //layout: 'fit',
+                platformConfig: {
+                    desktop: {
+                        scrollable: true,
+                        height: 500,
+                        width: Ice.constantes.componente.ventana.width,
+                        modal: true
+                    },
+                    '!desktop': {
+                        scrollable: true
+                    }
+                },
+                items: {
+                    xtype: 'panelice',
+                    items: {
+                        xtype: 'formularioduplicidad',
+                        cdramo: view.getCdramo()
+                    }
+                }
+            });
+            ventana.mostrar();
+        } catch(e) {
+            Ice.manejaExcepcion(e);
+        }
     }
 });

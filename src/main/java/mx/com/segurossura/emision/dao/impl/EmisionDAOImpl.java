@@ -2213,4 +2213,58 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             compile();
         }
     }
+	
+	@Override
+	public List<Map<String, String>> consultaDuplicidad(String cdunieco, String cdramo, String feini, String fefin, String nmsolici, String cdtipide, 
+            String cdideper, String dsnombre, String cdgrupo, String cdsubgpo, String cdagente, String cdpostal, 
+            String dsdomici, String nmnumero, String otpiso) throws Exception{
+	    Map<String, String> params = new LinkedHashMap<String, String>();
+	    params.put("pv_cdunieco_i"   ,cdunieco);        
+	    params.put("pv_cdramo_i"     ,cdramo); 
+	    params.put("pv_fe_ini_i"     ,feini); 
+	    params.put("pv_fe_fin_i"     ,fefin); 
+	    params.put("pv_nmsolici_i"   ,nmsolici); 
+	    params.put("pv_cdtipide_i"   ,cdtipide); 
+	    params.put("pv_cdideper_i"   ,cdideper);
+	    params.put("pv_dsnombre_i"   ,dsnombre);
+	    params.put("pv_cdgrupo_i"    ,cdgrupo);
+	    params.put("pv_cdsubgrupo_i" ,cdsubgpo);
+	    params.put("pv_cdagente_i"   ,cdagente);
+	    params.put("pv_cdpostal_i"   ,cdpostal);
+	    params.put("pv_dsdomici_i"   ,dsdomici);
+	    params.put("pv_nmnumero_i"   ,nmnumero);
+	    params.put("pv_otpiso_i"     ,otpiso);
+        Map<String, Object> resultado = ejecutaSP(new ConsultaDuplicidadSP(getDataSource()), params);
+        List<Map<String, String>> lista =(List<Map<String,String>>)resultado.get("pv_registro_o");        
+        logger.debug("Resultado ", lista);
+        return lista;
+	}
+	
+	protected class ConsultaDuplicidadSP extends StoredProcedure {
+        protected ConsultaDuplicidadSP(DataSource dataSource) {
+            super(dataSource, "PKG_VALIDA_ALEA.F_VAL_DUPLICADO");
+            declareParameter(new SqlOutParameter("v_return",    Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_fe_ini_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_fe_fin_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmsolici_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdtipide_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdideper_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_dsnombre_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdgrupo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdsubgrupo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdagente_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdpostal_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_dsdomici_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmnumero_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_otpiso_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new DinamicMapper()));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            /** use function instead of stored procedure */
+            setFunction(true);
+            compile();
+        }
+    }
 }

@@ -59,7 +59,7 @@ Ext.define('Ice.view.bloque.personas.domicilios.FormularioDomicilio',{
 			
 			
 			
-			config.reference= "formulario";
+			//config.reference= "formulario";
 			config.items = comps.AGREGAR_PERSONAS.MDOMICIL.items;
 			config.modelValidators= comps.AGREGAR_PERSONAS.MDOMICIL.validators;
 			config.modelFields	=	comps.AGREGAR_PERSONAS.MDOMICIL.fields;
@@ -75,5 +75,9 @@ Ext.define('Ice.view.bloque.personas.domicilios.FormularioDomicilio',{
 		} catch (e) {
 			Ice.generaExcepcion(e, paso);
 		}
-	}
+	},
+	
+	getValues: function () {
+        return this.getController().onGetValues();
+    }
 });

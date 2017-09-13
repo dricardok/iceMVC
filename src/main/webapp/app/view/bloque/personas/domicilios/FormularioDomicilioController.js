@@ -215,5 +215,33 @@ Ext.define('Ice.view.bloque.personas.domicilios.FormularioDomicilioController', 
     	}catch(e){
     		Ice.generaExcepcion(e,paso);
     	}
-    }
+	},
+	
+	onGetValues: function(){
+		return this.getValues();
+	},
+
+	getValues: function(){
+		var paso = 'Obteniendo valores de formulario de domicilio',
+			me = this,
+			view = me.getView(),
+			refs = view.getReferences(),
+			values = {};
+		try{
+			Ice.log('getValues view',refs);
+			var c = 0;
+			for(var obj in refs){
+				var value = refs[obj].getValue();
+				Ice.log('value',value);
+				if(value && value.split("-") != -1){
+					values[obj] = value.split("-")[0];
+				} else {
+					values[obj] = value;
+				}
+			}
+		} catch(e) {
+			Ice.manejaExcepcion(e, paso);
+		}
+		return values;
+	}
 });
