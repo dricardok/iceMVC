@@ -101,6 +101,34 @@ Ext.define('Ice.view.bloque.duplicidad.FormularioDuplicidadController', {
                                     items: {
                                         xtype: 'gridice',
                                         columns: comps.DUPLICIDAD.GRID.columns,
+                                        actionColumns: [
+                                            {
+                                                xtype: 'actioncolumn',
+                                                items: [
+                                                    {
+                                                        tooltip: 'Editar',
+                                                        iconCls: 'x-fa fa-edit',
+                                                        handler: function (grid, rowIndex, colIndex) {
+                                                            try{
+                                                                var data = {};
+                                                                if(Ext.manifest.toolkit === 'classic'){
+                                                                    var store = grid.getStore();
+                                                                    data = store.getAt(rowIndex).getData();              
+                                                                } else {
+                                                                    Ice.log('grid parent',grid.getParent());
+                                                                    var cell = grid.getParent(),
+                                                                        record = cell.getRecord();
+                                                                    data = record.getData();
+                                                                }
+                                                                Ice.log('data',data);
+                                                            } catch(e) {
+                                                                Ice.generaExcepcion(e);
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
                                         store: {
                                             fields: comps.DUPLICIDAD.GRID.fields,
                                             data: json.list
@@ -132,6 +160,34 @@ Ext.define('Ice.view.bloque.duplicidad.FormularioDuplicidadController', {
             view = me.getView();
         try{
             view.cerrar();
+        } catch(e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+    },
+
+    cargarDuplicidadPoliza: function(){
+        Ice.log('Ice.view.bloque.duplicidad.FormularioDuplicidadController.cargarDuplicidadPoliza');
+        var paso = 'Consultando duplicidad de poliza',
+        me = this,
+        view = me.getView(),
+        refs = view.getReferences();
+        try{
+            Ice.request({
+                mascara: paso,
+                url: Ice.url.emision.obtenerDuplicidad,
+                params: params,
+                success: function (json) {
+                    var paso2 = 'Datos duplicidad de poliza';
+                    try {
+                        
+                    } catch(e) {
+                        Ice.manejaExcepcion(e, paso2);
+                    }
+                },
+                failure: function () {
+                    Ice.resumeEvents(view);
+                }
+            });
         } catch(e) {
             Ice.manejaExcepcion(e, paso);
         }

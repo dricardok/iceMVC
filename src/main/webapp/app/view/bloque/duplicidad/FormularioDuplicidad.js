@@ -2,7 +2,7 @@ Ext.define('Ice.view.bloque.duplicidad.FormularioDuplicidad',{
 	extend:	'Ice.view.componente.PanelIce',
 	xtype:	'formularioduplicidad',
 	controller:	'formularioduplicidad',
-	config		:	{
+	config:	{
         cdramo: null
 	},
 	title: {
@@ -31,7 +31,7 @@ Ext.define('Ice.view.bloque.duplicidad.FormularioDuplicidad',{
                     iconCls: 'x-fa fa-search',
                     reference: 'btnConsultar',
                     handler: 'onConsultar'
-                }, {
+                },{
                     text: 'Cancelar',
                     ui:'gray',
         			style:'margin-right: 45px;',

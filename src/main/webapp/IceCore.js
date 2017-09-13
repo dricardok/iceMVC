@@ -95,7 +95,8 @@ var Ice = (
             generarDocumentos: 			'emision/generarDocumentos.action',
             puedeEmitir:				'emision/puedeEmitir.action',
             validaCedulaAgente: 		'emision/datosGenerales/validaCedulaAgente.action',
-            obtenerDuplicidad:          'emision/obtenerDuplicidad.action'
+            obtenerDuplicidad:          'emision/obtenerDuplicidad.action',
+            obtenerDuplicidadPoliza:    'emision/obtenerDuplicidadPoliza.action'
          },
          
         bloque: {
