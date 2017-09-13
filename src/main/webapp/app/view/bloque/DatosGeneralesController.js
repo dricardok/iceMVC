@@ -64,7 +64,7 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 } catch (e) {
                     Ice.manejaExcepcion(e, paso2);
                 }
-            }, 600);
+            }, 1500);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
