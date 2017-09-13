@@ -1318,6 +1318,9 @@ var Ice = (
                     item.maxValue = config.maxvalue;
                 }
             }
+            if (item.xtype === 'numberfieldice') { // para todos los campos numericos si no hay definifo es 0
+                item.minValue = item.minValue || 0;
+            }
             
             
             // password
