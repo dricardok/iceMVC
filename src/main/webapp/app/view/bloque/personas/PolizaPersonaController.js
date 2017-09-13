@@ -1,6 +1,77 @@
 Ext.define('Ice.view.bloque.personas.PolizaPersonaController', {
 	extend: 'Ext.app.ViewController',
     alias : 'controller.polizapersona',
+    init: function(view){
+        Ice.log('Ice.view.bloque.PolizaPersonaController.init',view);
+        var me = this,
+            view = me.getView(),
+            paso = 'Iniciando controlador de edicion de persona';
+        try {
+            me.callParent(arguments);
+            
+            // esperamos a que se cree el viewmodel antes de invocar custom
+            Ext.defer(function () {
+                var paso2;
+                try {
+                    paso2 = 'Definiendo comportamiento de edicion de persona';
+                    me.custom();
+                } catch (e) {
+                    Ice.manejaExcepcion(e, paso2);
+                }
+            }, 600);
+        } catch (e){
+            Ice.generaExcepcion(e, paso);
+        }
+    },
+    custom: function(){
+        Ice.log('Ice.view.bloque.PolizaPersonaController.custom');
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences(),
+        paso = 'Configurando comportamiento de busqueda de personas';
+        try{
+            // var form = refs.form;
+            Ice.log('Ice.view.bloque.PolizaPersonaController.custom form',refs);
+            refs.formBusquedaPersonas.getReferences().dsatribu.on({
+                change: function(){
+                    if(refs.formBusquedaPersonas.getReferences().dsatribu){
+                        Ice.log('dsatribu',refs.dsatribu);
+                        if(refs.formBusquedaPersonas.getReferences().dsatribu.getValue() === 'POLIZA'){
+                            refs.formBusquedaPersonas.getReferences().otvalor.hide();
+                            refs.formBusquedaPersonas.getReferences().cdunieco.show();
+                            refs.formBusquedaPersonas.getReferences().cdramo.show();
+                            refs.formBusquedaPersonas.getReferences().nmpoliza.show();
+                            if(view.getCdunieco()){
+                                Ice.log('refs.cdunieco',refs.formBusquedaPersonas.getReferences().cdunieco);
+                                refs.formBusquedaPersonas.getReferences().cdunieco.setValue(view.getCdunieco());
+//                                refs.cdunieco.setReadOnly(true);
+                            }
+                            
+                            if(view.getCdramo()){
+                                Ice.log('refs.cdramo',refs.formBusquedaPersonas.getReferences().cdramo);
+                                refs.formBusquedaPersonas.getReferences().cdramo.setValue(view.getCdramo());
+//                                refs.cdramo.setReadOnly(true);
+                            }
+                            
+                            if(view.getNmpoliza()){
+                                Ice.log('refs.nmpoliza',refs.formBusquedaPersonas.getReferences().nmpoliza);
+                                refs.formBusquedaPersonas.getReferences().nmpoliza.setValue(view.getNmpoliza());
+//                                refs.nmpoliza.setReadOnly(true);                            
+                            }                            
+                        } else {
+                            refs.formBusquedaPersonas.getReferences().otvalor.show();
+                            refs.formBusquedaPersonas.getReferences().cdunieco.hide();
+                            refs.formBusquedaPersonas.getReferences().cdramo.hide();
+                            refs.formBusquedaPersonas.getReferences().nmpoliza.hide();
+                        }
+                    }
+                }
+            });
+        } catch (e) {
+            Ice.generaExcepcion(e, paso);
+        }
+        Ice.log('Ice.view.bloque.BuscarPersonaController.custom');
+    },
     onBuscar: function(){
         this.buscar();
     },

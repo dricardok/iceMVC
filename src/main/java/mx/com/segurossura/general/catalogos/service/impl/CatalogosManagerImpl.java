@@ -376,6 +376,7 @@ public class CatalogosManagerImpl implements CatalogosManager {
                     for(Map<String, String> motivoRechazo : listaMotivosRechazo){
                         lista.add(new BaseVO(motivoRechazo.get("CDRAZRECHA"), motivoRechazo.get("DSRAZRECHA")));
                     }
+                    break;
                 case TTIPFLUMC_ROL_USR:
                 	if (params == null) {
                         params = new HashMap<String, String>();

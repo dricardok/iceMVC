@@ -677,6 +677,7 @@ public class CatalogosDAOImpl extends HelperJdbcDao implements CatalogosDAO {
     protected class RecuperarMotivosRechazoSP extends StoredProcedure{
         protected RecuperarMotivosRechazoSP(DataSource dataSource){
             super(dataSource,"PKG_LOV_ALEA.P_GET_MOTIVOS_RECHAZO_TRA");
+//            super(dataSource,"P_GET_MOTIVOS_RECHAZO_TRA");
             declareParameter(new SqlParameter("ntramite", Types.VARCHAR));
             String[] cols = new String[]{
                     "CDRAZRECHA", 
