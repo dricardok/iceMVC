@@ -1122,6 +1122,31 @@ public class EmisionAction extends PrincipalCoreAction {
         return SUCCESS;
     }
     
+    @Action(        
+            value = "obtenerDuplicidadPoliza", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        ) 
+    public String obtenerDuplicidadPoliza(){
+        logger.debug(
+                Utils.log("\n###### obtenerDuplicidadPoliza",
+                          "\n###### params: ", params));
+        try {
+            Utils.validate(params, "No se recibieron datos");
+            String cdunieco = params.get("cdunieco");
+            String cdramo   = params.get("cdramo");
+            String estado   = params.get("estado");
+            String nmpoliza = params.get("nmpoliza");
+            params.putAll(emisionManager.obtenerDuplicidadPoliza(cdunieco, cdramo, estado, nmpoliza));
+            success = true;
+        } catch(Exception ex) {
+            message = Utils.manejaExcepcion(ex);
+            success = false;
+        }
+        return SUCCESS;
+    }
+    
 	public List<String> getErrores() {
 		return errores;
 	}

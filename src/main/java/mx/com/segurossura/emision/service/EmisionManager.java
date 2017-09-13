@@ -158,4 +158,6 @@ public interface EmisionManager {
             String cdideper, String dsnombre, String cdgrupo, String cdsubgpo, String cdagente, String cdpostal, 
             String dsdomici, String nmnumero, String otpiso) throws Exception;
     
+    public Map<String, String> obtenerDuplicidadPoliza(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception;
+    
 }

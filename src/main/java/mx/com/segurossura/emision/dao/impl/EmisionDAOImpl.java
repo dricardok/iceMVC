@@ -2276,4 +2276,31 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
             compile();
         }
     }
+	
+	@Override
+	public List<Map<String, String>> consutaDuplicidadPoliza(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception{
+	    Map<String, String> params = new LinkedHashMap<String, String>();
+        params.put("pv_cdunieco_i"   ,cdunieco);        
+        params.put("pv_cdramo_i"     ,cdramo); 
+        params.put("pv_estado_i"     ,estado); 
+        params.put("pv_nmpoliza_i"   ,nmpoliza);
+        Map<String, Object> resultado = ejecutaSP(new ConsultaDuplicidadSP(getDataSource()), params);
+        List<Map<String, String>> lista =(List<Map<String,String>>)resultado.get("pv_registro_o");        
+        logger.debug("Resultado ", lista);
+        return lista;
+	}
+	
+	protected class ConsultaDuplicidadPolizaSP extends StoredProcedure {
+        protected ConsultaDuplicidadPolizaSP(DataSource dataSource) {
+            super(dataSource, "PKG_DATA_ALEA.P_GET_EXP_POLIZA");
+            declareParameter(new SqlParameter("pv_cdunieco_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_cdramo_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_estado_i", Types.VARCHAR));
+            declareParameter(new SqlParameter("pv_nmpoliza_i", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("pv_registro_o", OracleTypes.CURSOR, new DinamicMapper()));
+            declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
+            declareParameter(new SqlOutParameter("pv_title_o", Types.VARCHAR));
+            compile();
+        }
+    }
 }

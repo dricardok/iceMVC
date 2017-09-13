@@ -1224,4 +1224,19 @@ public class EmisionManagerImpl implements EmisionManager {
 	    }
 	    return res;
 	}
+	
+	@Override
+	public Map<String, String> obtenerDuplicidadPoliza(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception{
+	    String paso = "Obteniendo informacion de duplicidad de poliza";
+	    Map<String, String> res = new HashMap<String, String>();
+	    try{
+	        List<Map<String, String>> lista = emisionDAO.consutaDuplicidadPoliza(cdunieco, cdramo, estado, nmpoliza);
+	        if(lista.size() > 0){
+	            res = lista.get(0);
+	        }
+	    } catch(Exception ex) {
+	        Utils.generaExcepcion(ex, paso);
+	    }
+	    return res;
+	}
 }
