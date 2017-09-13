@@ -17,10 +17,17 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
             }
         },
         tablet: {
-            height: 110
+            height: 110,
+            defaults: {
+                style: 'background-color:#FFF;',
+            }
+            
         },
         phone: {
-            height: 110
+            height: 110,
+            defaults: {
+                style: 'background-color:#FFF;',
+            }
         }
     },
     

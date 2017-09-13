@@ -978,3 +978,16 @@ $button-segmented-ui: dynamic($enable-default-uis);
         $background-gradient: $gradient
     );
 }
+
+
+.x-component .x-button .x-iconalign-top .ice-panel-item .ice-panel-item-modern .x-sized .x-widthed .x-heighted .color_mapsite .x-haslabel .x-layout-fit-item{
+    color: #FFF !important;
+}
+
+.color_mapsite .x-button-icon .x-font-icon .x-shown .x-fa .fa-sitemap{
+    color: #FFF !important;
+}
+
+.color_mapsite > .x-button > .x-button-icon{
+    color: #FFF !important;
+}
