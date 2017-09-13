@@ -44,7 +44,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                                             try {
                                                 agente.setValue(json.params.cdagente);
                                             } catch (e) {
-                                                Ice.manejaExcepcion(e, paso3);
+                                                Ice.logWarn(paso3, e);
                                             }
                                         },
                                         failure: function () {
