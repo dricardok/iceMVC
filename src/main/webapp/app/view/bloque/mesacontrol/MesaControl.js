@@ -1,6 +1,7 @@
 Ext.define('Ice.view.mesacontrol.MesaControl', {
     extend: 'Ice.view.componente.PanelPaddingIce',
     xtype: 'mesacontrol',
+    //style:'padding:0px 0px 0px 20px',
     title: {
 		text:"Mesa de Control",
 		style:'margin:0px 47px 16px 36px;',
@@ -9,7 +10,7 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
     platformConfig: {
         '!desktop': {
         	scrollable: true
-        }
+        	}
     },
     
     controller: 'mesacontrol',

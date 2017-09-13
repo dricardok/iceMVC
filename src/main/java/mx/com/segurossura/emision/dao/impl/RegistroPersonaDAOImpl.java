@@ -568,13 +568,14 @@ public class RegistroPersonaDAOImpl extends HelperJdbcDao implements RegistoPers
 	}
 	
 	@Override
-    public String personaDuplicada(String cdperson, String dsnombre, Date fenacimi)
+    public String personaDuplicada(String cdperson, String dsnombre, Date fenacimi, String rfc)
             throws Exception {
         
         Map<String, Object> params = new LinkedHashMap<String, Object>();       
         params.put("pv_cdperson_i", cdperson);
         params.put("pv_dsnombre_i", dsnombre);
         params.put("pv_ntfenaci_i", fenacimi);
+        params.put("pv_rfc_i", rfc);
         Map<String, Object> resultado = ejecutaSP(new PersonaDuplicadaF(getDataSource()), params);
         String res= ((String)resultado.get("v_return"));
         
@@ -589,6 +590,7 @@ public class RegistroPersonaDAOImpl extends HelperJdbcDao implements RegistoPers
             declareParameter(new SqlParameter("pv_cdperson_i" , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_dsnombre_i"   , Types.VARCHAR));
             declareParameter(new SqlParameter("pv_ntfenaci_i"   , Types.DATE));
+            declareParameter(new SqlParameter("pv_rfc_i"   , Types.VARCHAR));
             declareParameter(new SqlOutParameter("pv_msg_id_o", Types.NUMERIC));
             declareParameter(new SqlOutParameter("pv_title_o",  Types.VARCHAR));
             /** use function instead of stored procedure */
