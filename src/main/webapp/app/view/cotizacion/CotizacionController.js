@@ -447,6 +447,15 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                                     handler: function (me) {
                                         me.controlador.onBotoneraReferencia(me.controlador);
                                     }
+                                }, {
+                                    text: 'Enviar a SURA',
+                                    iconCls: 'x-fa fa-send',
+                                    // si no soy agente o si ya tengo tramite no puedo enviar a SURA
+                                    hidden: Ice.sesion.cdsisrol !== 'AGENTE' || (view.getFlujo() && view.getFlujo().ntramite),
+                                    controlador: me,
+                                    handler: function (me) {
+                                        me.controlador.onAgenteEnviarSuraClic(me.controlador);
+                                    }
                                 }
                             ]
                         });
@@ -604,6 +613,54 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
         try {
             var view = me.getView();
             Ice.ejecutarValidacionPorReferencia(view.getFlujo(), view.getFlujo().aux.onBotoneraReferencia);
+        } catch (e) {
+            Ice.manejaExcepcion(e, paso);
+        }
+    },
+
+    /**
+     * 2017/09/12 - jtezva - el agente envia cotizacion a SURA, se registra tramite y se busca referencia
+     */
+    onAgenteEnviarSuraClic: function (me) {
+        var paso = 'Registrando tr\u00e1mite y enviando a SURA';
+        try {
+            var view = me.getView();
+            Ice.request({
+                mascara: paso,
+                url: Ice.url.bloque.mesacontrol.registrarNuevoTramite,
+                params: {
+                    'params.cdunieco'  : view.getCdunieco(),
+                    'params.cdramo'    : view.getCdramo(),
+                    'params.estado'    : view.getEstado(),
+                    'params.nmpoliza'  : view.getNmpoliza(),
+                    'params.nmsuplem'  : view.getNmsuplem(),
+                    'params.nmsolici'  : view.getNmpoliza(),
+                    'params.cdsucadm'  : view.getCdunieco(),
+                    'params.cdsucdoc'  : view.getCdunieco(),
+                    'params.cdtiptra'  : 1,
+                    'params.cdtipflu'  : 1,
+                    'params.cdflujomc' : 1,
+                    'params.estatus'   : 100,
+                    'params.comments'  : 'Se registra un tr\u00e1mite para solicitar cotizaci\u00f3n a SURA'
+                },
+                success: function (action) {
+                    var paso2 = 'Ejecutando validacion por referencia';
+                    try {
+                        var flujo = {
+                            ntramite: action.ntramite
+                        };
+
+                        Ice.mensajeCorrecto({
+                            mensaje: 'Se registr\u00f3 el tr\u00e1mite ' + action.ntramite,
+                            callback: function () {
+                                Ice.ejecutarValidacionPorReferencia(flujo, 'AGENTE_ENVIA_SURA');
+                            }
+                        });
+                    } catch (e) {
+                        Ice.manejaExcepcion(e, paso2);
+                    }
+                }
+            });
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
