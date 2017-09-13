@@ -21,71 +21,111 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                         	margin	:	'0 auto !important',
                         	padding	:	'20px'
                         },
-                    },
-                    '!desktop': {
-                        scrollable: true,
-                        layout: 'fit'
-                    }
-                },
-                items: [
-                	{
-                		xtype		:	'panelice',
-                		title		:	'Nueva Cotización',
-                        buttonAlign	:	'center',
-                        titleAlign	:	'center',
-                		buttons		:	[{
-                            xtype: 'button',
-                            text: 'Ir',
-                            iconCls: 'x-fa fa-plus',
-                            handler: me.onNuevaClic,
-                            width  : '200px'
-                            
-                        }]
-                	},
-                	{
-                		xtype		:	'panelice',
-                		platformConfig: {
-                            desktop: {
+                        items: [
+                        	{
+                        		xtype		:	'panelice',
+                        		title		:	'Nueva Cotización',
+                                buttonAlign	:	'center',
+                                titleAlign	:	'center',
+                        		buttons		:	[{
+                                    xtype: 'button',
+                                    text: 'Ir',
+                                    iconCls: 'x-fa fa-plus',
+                                    handler: me.onNuevaClic,
+                                    width  : '200px'
+                                    
+                                }]
+                        	},
+                        	{
+                        		
+                        		xtype		:	'panelice',
                             	title		:	'Recuperar Cotización',
                             	layout: {
                         	        type: 'vbox',
                         	        align: 'center',
                         	        pack: 'center'
-                        	    }
-                            }
-                        }
-                		,
-                		
-                		titleAlign	:	'center',
-                		items: [
-                            {
-                                xtype: 'comboice',
-                                label: 'Oficina',
-                                name: 'cdunieco',
-                                catalogo: 'SUCURSALES'
-                            }, {
-                                xtype: 'numberfieldice',
-                                label: 'Cotizaci\u00f3n',
-                                name: 'nmpoliza'
-                            }
-                        ]
-                	}
-                	],
-                	buttonAlign	:	'center',
-                	buttons: [
-                        {
-                            text: 'Recuperar',
-                            iconCls: 'x-fa fa-pencil',
-                            handler: me.onCargarClic
-                        }, {
-                            text: 'Cancelar',
-                            ui:'gray',
-                            iconCls: 'x-fa fa-close',
-                            handler: function (btn) {
-                                btn.up('ventanaice').cerrar();
-                            }
-                        }
-                    ]
+                        	    },
+                        		titleAlign	:	'center',
+                        		items: [
+                                    {
+                                        xtype: 'comboice',
+                                        label: 'Oficina',
+                                        name: 'cdunieco',
+                                        catalogo: 'SUCURSALES'
+                                    }, {
+                                        xtype: 'numberfieldice',
+                                        label: 'Cotizaci\u00f3n',
+                                        name: 'nmpoliza'
+                                    }
+                                ]
+                        	}
+                        	],
+                        	buttons: [
+                                {
+                                    text: 'Recuperar',
+                                    iconCls: 'x-fa fa-pencil',
+                                    handler: me.onCargarClic
+                                }, {
+                                    text: 'Cancelar',
+                                    ui:'gray',
+                                    iconCls: 'x-fa fa-close',
+                                    handler: function (btn) {
+                                        btn.up('ventanaice').cerrar();
+                                    }
+                                }
+                            ]
+                    },
+                    '!desktop': {
+                        scrollable: true,
+                        layout: 'fit',
+                        items: [
+                        	
+                        	{
+                        		
+                        		xtype		:	'panelpaddingice',
+                        		
+                        		titleAlign	:	'center',
+                        		items: [
+                                    {
+                                        xtype: 'comboice',
+                                        label: 'Oficina',
+                                        name: 'cdunieco',
+                                        catalogo: 'SUCURSALES'
+                                    }, {
+                                        xtype: 'numberfieldice',
+                                        label: 'Cotizaci\u00f3n',
+                                        name: 'nmpoliza'
+                                    }
+                                ]
+                        	}
+                        	],
+                        	buttons: [
+                        		{
+                                    xtype: 'button',
+                                    text: 'Nueva',
+                                    iconCls: 'x-fa fa-plus',
+                                    handler: me.onNuevaClic,
+                                    width  : '200px'
+                                    
+                                },
+                                {
+                                    text: 'Recuperar',
+                                    iconCls: 'x-fa fa-pencil',
+                                    handler: me.onCargarClic
+                                }, {
+                                    text: 'Cancelar',
+                                    ui:'gray',
+                                    iconCls: 'x-fa fa-close',
+                                    handler: function (btn) {
+                                        btn.up('ventanaice').cerrar();
+                                    }
+                                }
+                            ]
+                    }
+                },
+                
+            	buttonAlign	:	'center'
+            	
             });
             if(Ice.sesion.cdsisrol == Ice.constantes.roles.AGENTE){
             	Ice.request({
