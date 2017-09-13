@@ -244,4 +244,27 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
             compile();
         }
     }
+    
+    @Override
+    public void borrarDocumentosTemporales(String cdunieco, String cdramo, String estado, String nmpoliza) throws Exception {
+    	Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("pv_cdunieco_i", cdunieco);
+        params.put("pv_cdramo_i", cdramo);
+        params.put("pv_estado_i", estado);
+        params.put("pv_nmpoliza_i", nmpoliza);
+        ejecutaSP(new BorrarDocumentosTemporalesSP(getDataSource()), params);
+    }
+    
+    protected class BorrarDocumentosTemporalesSP extends StoredProcedure {
+    	 protected BorrarDocumentosTemporalesSP(DataSource dataSource) {
+             super(dataSource, "PKG_REPORT_ALEA.P_DEL_TDOCUPOL_TMP");
+             declareParameter(new SqlParameter("pv_cdunieco_i"  , Types.VARCHAR));
+             declareParameter(new SqlParameter("pv_cdramo_i"  , Types.VARCHAR));
+             declareParameter(new SqlParameter("pv_estado_i"  , Types.VARCHAR));
+             declareParameter(new SqlParameter("pv_nmpoliza_i"  , Types.VARCHAR));
+             declareParameter(new SqlOutParameter("pv_msg_id_o" , Types.NUMERIC));
+             declareParameter(new SqlOutParameter("pv_title_o"  , Types.VARCHAR));
+             compile();
+         }
+    }
 }

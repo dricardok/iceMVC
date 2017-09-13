@@ -38,8 +38,9 @@ Ext.define('Ice.view.field.DomicilioPicker', {
                     label: config.label || 'Domicilio',
                     labelAlign: config.labelAlign || 'top',
                     name: config.name || 'dsdomici',
-                    reference: 'dsdomici',
-                    readOnly: true
+                    reference: 'otvalor15',
+                    readOnly: true,
+                    allowBlank: false
                 },{
                     xtype: 'button',
                     iconCls: 'x-fa fa-search',
@@ -58,5 +59,19 @@ Ext.define('Ice.view.field.DomicilioPicker', {
             Ice.generaExcepcion(e, paso);
         }
         me.callParent(arguments);
+    },
+    setActiveError: function (param) {
+        this.getController().onSetActiveError(param);
+    },
+    getValue: function () {
+        return this.getController().onGetValue();
+    },
+
+    getName: function () {
+        return this.getController().onGetName();        
+    },
+
+    setValue: function (cdagente) {
+        this.getController().onSetValue(cdagente);
     }
 });
