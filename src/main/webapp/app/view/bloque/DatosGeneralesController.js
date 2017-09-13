@@ -171,19 +171,35 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
                 }
             }
             paso='Validando Retroactividad para ejecutivo de negocio';
-            if(Ice.sesion.cdsisrol == Ice.constantes.roles.EJECUTIVO_NEGOCIO_SR || Ice.sesion.cdsisrol == Ice.constantes.roles.EJECUTIVO_NEGOCIO_JR){
-            	
+            var feretro, retroactividad = false,
+            	rol = Ice.sesion.cdsisrol;
+            feretro = new Date();
+    		feretro.setHours(0,0,0,0);
+            switch(rol){
+            	case Ice.constantes.roles.AGENTE:
+            	case Ice.constantes.roles.MESACONTROL:
+            		retroactividad = true;
+            		break;
+            	case Ice.constantes.roles.EJECUTIVO_NEGOCIO_JR:
+            		feretro = Ext.Date.add(feretro,Ext.Date.DAY,-30);
+            		retroactividad = true;
+            		break;
+            	case Ice.constantes.roles.EJECUTIVO_NEGOCIO_SR:
+            		feretro = Ext.Date.add(feretro,Ext.Date.DAY,-60);
+            		retroactividad = true;
+            		break;
+            }
+            if(retroactividad){
             	if(Ice.classic()){
-            		refs.b1_feefecto.setMinValue(new Date());
+            		refs.b1_feefecto.setMinValue(feretro);
             	}else{
             		refs.b1_feefecto.on({
             			change:function(dp,value){
             				var paso='validando feini';
             				try{
-            					var date = new Date();
-            					date.setHours(0,0,0,0);
-            					if(value < date){
-            						throw 'Fecha inválida debe ser igual o mayor que hoy';
+            					
+            					if(value < feretro){
+            						throw 'Fecha inválida debe ser igual o mayor que: '+Ext.Date.format(feretro,'d-m-Y');
             					}
             				}catch(e){
             					Ice.manejaExcepcion(e,paso);
@@ -192,8 +208,9 @@ Ext.define('Ice.view.bloque.DatosGeneralesController', {
             			}
             		});
             	}
-            	
             }
+        	
+            	
             
         } catch (e) {
             Ice.generaExcepcion(e, paso);
