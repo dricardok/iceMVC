@@ -490,12 +490,36 @@ html, body {
     top: -41px;
 }
 
-
-.x-big .x-panel-header .x-managed-borders .x-docked-top .x-panel-header .esp_modern{
-    background-color: transparent !important;
-    background-image: none;
-    
+.margen-mesa{
+    margin:0px 20px 0px 0px;
 }
+
+
+.btn-acciones{
+    position: absolute !important; 
+    left: 100% !important; 
+    margin-left: -105px; 
+    top: 100%; 
+    margin-top: -90px; 
+    border: 0px solid #f5f5f5; 
+    border-radius:50% !important; 
+    background-color: #0033a0; 
+    color: white;
+    }
+
+.x-component .x-button .x-iconalign-top .ice-panel-item .ice-panel-item-modern .x-sized .x-widthed .x-heighted .color_mapsite .x-haslabel .x-layout-fit-item{
+    color: #FFF !important;
+}
+
+.color_mapsite .x-button-icon .x-font-icon .x-shown .x-fa .fa-sitemap{
+    color: #FFF !important;
+}
+
+
+.color_mapsite > .x-button > .x-button-icon{
+    color: #FFF !important;
+}
+
 
 
 //Media Query Botones Selección de rol Classic

@@ -32,8 +32,8 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                                 titleAlign	:	'center',
                         		buttons		:	[{
                                     xtype: 'button',
-                                    text: 'Ir',
-                                    iconCls: 'x-fa fa-plus',
+                                    text: 'Crear',
+                                    iconCls: 'x-fa fa-file-o ',
                                     handler: me.onNuevaClic,
                                     width  : '200px'
                                     

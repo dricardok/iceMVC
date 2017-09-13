@@ -63,7 +63,7 @@ Ext.define('Ice.view.field.PuntoVentaPickerController', {
                 Ice.push(windowBuscar);
             }
         } catch (e){
-            Ice.generaExcepcion(e, paso);
+            Ice.manejaExcepcion(e, paso);
         }
     },
     

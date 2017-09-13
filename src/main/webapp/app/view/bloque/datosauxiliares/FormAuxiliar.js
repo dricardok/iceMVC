@@ -75,6 +75,14 @@ Ext.define('Ice.view.bloque.datosauxiliares.FormAuxiliar', {
             config.modelValidators = comps.FORM_AUXILIAR.FORM.validators;
             
             config.iceEvents = eventsForm.FORM_AUXILIAR.EVENTOS.eventos;
+            if(Ice.sesion.cdsisrol != Ice.constantes.roles.AGENTE){
+                config.buttons = [
+                    {
+                        text: 'Duplicidad',
+                        handler: 'onDuplicidad'
+                    }
+                ];
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

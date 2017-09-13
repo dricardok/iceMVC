@@ -95,3 +95,8 @@
 @if $button-segmented-ui {
     @include button-segmented-ui;
 }
+
+
+.color_mapsite > .x-button > .x-button-icon{
+    color: #FFF !important;
+}

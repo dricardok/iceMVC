@@ -1,4 +1,5 @@
 
+
 package mx.com.segurossura.emision.controller;
 
 import java.lang.management.ManagementFactory;
@@ -1086,6 +1087,40 @@ public class EmisionAction extends PrincipalCoreAction {
     	return SUCCESS;
     }
     
+    @Action(        
+            value = "obtenerDuplicidad", 
+            results = { 
+                @Result(name = "success", type = "json") 
+            }
+        ) 
+    public String obtenerDuplicidad(){
+        logger.debug(Utils.log("\n###### obtenerDuplicidad",
+                "\n#### params: ", params));
+        try {
+            Utils.validate(params, "No se recibieron datos");
+            String cdunieco = params.get("cdunieco");
+            String cdramo   = params.get("cdramo");
+            String feini    = params.get("fecini");
+            String fefin    = params.get("fecfin");
+            String nmsolici = params.get("nmsolici");
+            String cdtipide = params.get("cdtipide");
+            String cdideper = params.get("cdideper");
+            String dsnombre = params.get("nombre");
+            String cdgrupo  = params.get("cdgrupo");
+            String cdsubgpo = params.get("cdsubgpo");
+            String cdagente = params.get("cdagente");
+            String cdpostal = params.get("cdpostal");
+            String dsdomici = params.get("dsdomici");
+            String nmnumero = params.get("nmnumero");
+            String otpiso   = params.get("otpiso");
+            list = emisionManager.obtenerDuplicidad(cdunieco, cdramo, feini, fefin, nmsolici, cdtipide, cdideper, dsnombre, cdgrupo, cdsubgpo, cdagente, cdpostal, dsdomici, nmnumero, otpiso);
+            success = true;
+        } catch(Exception ex) {
+            message = Utils.manejaExcepcion(ex);
+            success = false;
+        }
+        return SUCCESS;
+    }
     
 	public List<String> getErrores() {
 		return errores;
