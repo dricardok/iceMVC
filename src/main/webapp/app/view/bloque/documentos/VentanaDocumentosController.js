@@ -365,7 +365,8 @@ Ext.define('Ice.view.bloque.documentos.VentanaDocumentosController', {
                 items: [
                     {
                         xtype: 'agregardocumento',
-                        ntramite: view.getNtramite()
+                        ntramite: view.getNtramite(),
+                        listadocumentos: refs.listadocumentos
                     }
                 ]
             });

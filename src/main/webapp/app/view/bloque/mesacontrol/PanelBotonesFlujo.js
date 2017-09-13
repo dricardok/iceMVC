@@ -10,17 +10,24 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
         desktop: {
 
             height: 120,
-            bodyPadding: '0px 0px 0px 10px',
+            bodyPadding: '0px 0px 0px 0px',
 
             defaults: {
-                margin: '10px 10px 10px 0px'
+                margin: '0px 10px 0px 0px'
             }
         },
         tablet: {
-            height: 110
+            height: 110,
+            defaults: {
+                style: 'background-color:#FFF;',
+            }
+            
         },
         phone: {
-            height: 110
+            height: 110,
+            defaults: {
+                style: 'background-color:#FFF;',
+            }
         }
     },
     
@@ -50,7 +57,7 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
                 config.flujo.webid, function (lista) {
                 for (var i = 0; i < lista.length; i++) {
                     var boton = me.add({
-                        xtype: 'buttonice',
+                        xtype: 'buttonice',                        
                         text: lista[i].DSACCION,
                         icon: Ice.ruta.iconos + lista[i].CDICONO + '.png',
                         handler: Ice.botonEntidadClic,

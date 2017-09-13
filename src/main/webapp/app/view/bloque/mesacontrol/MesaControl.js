@@ -20,8 +20,8 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
             paso = 'Construyendo mesa de control';
     	
 
-    	// me.callParent(arguments);
-        // return Ice.query('#mainView').getController().redirectTo('accesocotizacion.action'); // para que no entre a mesa
+    	//me.callParent(arguments);
+        //return Ice.query('#mainView').getController().redirectTo('accesocotizacion.action'); // para que no entre a mesa
 
         
         try {
@@ -32,7 +32,7 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
                     xtype: 'formmesacontrol',
                     reference: 'formmesacontrol'
                 }, {
-                	style:'margin:0px 47px 0px 0px;',
+                	cls:'margen_mesa',
                     xtype: 'gridmesacontrol',
                     reference: 'gridmesacontrol',
                     itemsPerPage: 50,

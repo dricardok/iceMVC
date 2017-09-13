@@ -98,7 +98,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                	var ventana = Ext.create('Ice.view.componente.VentanaIce', {
 					                        platformConfig: {
 					                            desktop: {
-					                                width: 400
+					                                width: 550
 					                            }
 					                        },
 					                        reference: 'ventanadocumentoscotizacion',
@@ -121,7 +121,18 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                        	}
 					                        ],
 					                        buttons: [
-					                            {
+					                        	{
+				                                    text: 'Inicio',
+				                                    iconCls: 'x-fa fa-home',
+				                                    reference: 'botonIrInicio',
+				                                    disabled: false,
+				                                    handler: function(boton) {
+				                                        //me.up('ventanaice').cerrar();
+				                                        Ice.redirect('accesocotizacion.action');
+				                                        
+				                                    } 
+				                                },
+					                        	{
 					                                text: 'Ver documentos',
 					                                reference: 'btndocumentoscotizacion',
 					                                disabled: true,
@@ -313,7 +324,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					try {
 						pbar.hide();
 						error.show();
-						Ice.query('button', ventana)[0].disabled();
+						Ice.query('button', ventana)[1].disabled();
 						//Ice.query('button', ventana)[1].show();
 					}catch(e){
 						Ice.logWarn('warning al querer actualizar estatus de barra de generacion de docs', e);
@@ -327,7 +338,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 						error.setHtml('<p>Documentos generados</p>');
 						error.show();
 						//Ice.query('button', ventana)[1].hide();
-						Ice.query('button', ventana)[0].enable();
+						Ice.query('button', ventana)[1].enable();
 					}catch(e){
 						Ice.logWarn('warning al querer actualizar estatus de barra de generacion de docs', e);
 					}

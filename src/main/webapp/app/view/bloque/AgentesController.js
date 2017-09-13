@@ -69,7 +69,9 @@ Ext.define('Ice.view.bloque.AgentesController', {
 					throw 'El agente ya se encuentra incluido';
 				}
 			});
-
+     		
+    		Ice.log(view);
+    		
 			Ice.request({
             	mascara: 'Validando agente',
             	url: Ice.url.bloque.agentes.validarAgente,
@@ -79,6 +81,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
             		'params.cdagente'  : codagente
             	},
             	success: function(action) {
+            		
 					if (action.params['valido'] === 'N') {
 						throw 'C\u00E9dula Vencida, favor actualizar su informaci\u00F3n';
 					}/* else {
@@ -102,6 +105,8 @@ Ext.define('Ice.view.bloque.AgentesController', {
 			            });
 						
 					}*/
+					
+					
             	}
             });
      		
@@ -120,6 +125,7 @@ Ext.define('Ice.view.bloque.AgentesController', {
 
 			refs.gridagentes.getStore().add(datos);
         	view.getAgentesAgregados().push(datos);
+        	view.down('[reference=agregaragente]').reset();
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }

@@ -16,7 +16,7 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaBotonesFlujo', {
             config.items = [{
                 xtype: 'botoneraflujo',
                 flujo: config.flujo,
-                padding: '0px'
+               // padding: '10px'
             }];
 
             config.frame = false;
@@ -24,13 +24,14 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaBotonesFlujo', {
             config.border = false;
             config.draggable = false;
             config.closable = false;
+            config.scrollable = true;
             config.style = 'border: 0;';
             config.resizable = false;
 
             config.x = 250;
-            config.y = -10;
-            config.width = 600;
-            config.height = 112;
+            config.y = -23;
+            config.width = 650;
+            config.height = 120;
 
             me.callParent(arguments);
         } catch (e) {

@@ -1319,6 +1319,10 @@ var Ice = (
                     item.maxValue = config.maxvalue;
                 }
             }
+            if (item.xtype === 'numberfieldice') {
+                item.minValue = item.minValue || 0; // para todos los campos numericos si no hay definifo es 0
+                item.decimalPrecision = 10; // se permiten 10 decimales
+            }
             
             
             // password

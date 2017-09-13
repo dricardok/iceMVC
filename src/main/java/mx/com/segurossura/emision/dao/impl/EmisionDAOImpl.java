@@ -693,10 +693,19 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         Map<String, String> valoresMap = new LinkedHashMap<String, String>();
         
         if (StringUtils.isNotBlank(valores)) {
+        	
             String[] valoresArray = valores.split(" ");
-            for (int i = 0; i < valoresArray.length ; i = i + 2) {
-                valoresMap.put(valoresArray[i].replaceAll(Utils.join(cdbloque, "."), "").toLowerCase(), valoresArray[i + 1]);
-            }
+            if(valores.startsWith("|") && valores.endsWith("|")){
+            	logger.warn("Los valores por defecto estan regresando validaciones: "+valores);
+        	}else{
+	            try{
+		            for (int i = 0; i < valoresArray.length ; i = i + 2) {
+		                valoresMap.put(valoresArray[i].replaceAll(Utils.join(cdbloque, "."), "").toLowerCase(), valoresArray[i + 1]);
+		            }
+	            }catch(ArrayIndexOutOfBoundsException e){
+	            	logger.warn("Los valores por defecto estan regresando validaciones: "+valores);
+	            }
+        	}
         }
         
         logger.info("****** ejecutarValoresDefecto {} {}-{}-{}-{}-{} sit {} valoresMap = {}", 

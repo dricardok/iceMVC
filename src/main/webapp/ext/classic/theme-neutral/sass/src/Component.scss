@@ -44,11 +44,29 @@
 	color:#FFF; 
 	font-size:16px;
 	min-height:65px; 
-	line-height: 45px;
+	line-height: 45px;	
+	
 	-webkit-transition: all .25s ease-in-out;
 		&:hover{
 		 -webkit-transform: scale(1.1);
-		 background-color: rgba(0, 51, 160, .90); }		 
+		 background-color: rgba(0, 51, 160, .90); }	
+		 
+    -moz-transition: all .25s ease-in-out;
+        &:hover{
+         -moz-transform: scale(1.1);
+         background-color: rgba(0, 51, 160, .90); } 
+    -ms-transition: all .25s ease-in-out;
+        &:hover{
+         -ms-transform: scale(1.1);
+         background-color: rgba(0, 51, 160, .90); }	
+    -o-transition: all .25s ease-in-out;
+        &:hover{
+         -o-transform: scale(1.1);
+         background-color: rgba(0, 51, 160, .90); } 
+     transition:   all .25s ease-in-out;
+        &:hover{ 
+         transform: scale(1.1);
+         background-color: rgba(0, 51, 160, .90); }          
 }
 
 
@@ -83,6 +101,10 @@
 }
 
 
+.margen-mesa{
+    margin:0px 47px 0px 0px;
+}
+
 
 //-------------------Clases para seleccion de PLAN DE TARIFICACIÓN
 
@@ -91,7 +113,32 @@
     -webkit-transition: all .25s ease-in-out;
       background-color:#fff;
               &:hover{
-         -webkit-transform: scale(1.2);
+    -webkit-transform: scale(1.1);
+          }
+      
+      
+    -moz-transition: all .25s ease-in-out;
+      background-color:#fff;
+              &:hover{
+    -moz-transform: scale(1.1);
+          }
+      
+    -ms-transition: all .25s ease-in-out;
+      background-color:#fff;
+              &:hover{
+    -ms-transform: scale(1.1);
+          }
+      
+    -o-transition: all .25s ease-in-out;
+      background-color:#fff;
+              &:hover{
+    -o-transform: scale(1.1);
+          }
+      
+    transition: all .25s ease-in-out;
+      background-color:#fff;
+              &:hover{
+    transform: scale(1.1);
           }
 }
 
@@ -232,9 +279,19 @@
 .wrap_producto{
      margin:3.5% 3.5%;
      float: left;
-     -webkit-transition: all .25s ease-in-out; 
+     -webkit-transition: all .25s ease-in-out;
+     -moz-transition: all .25s ease-in-out;
+     -ms-transition: all .25s ease-in-out;
+     -o-transition: all .25s ease-in-out;
+      transition: all .25s ease-in-out;
+      
      
-     &:hover { -webkit-transform: scale(1.3);
+     &:hover { -webkit-transform: scale(1.1);
+               -moz-transform: scale(1.1);
+               -ms-transform: scale(1.1);
+               -o-transform: scale(1.1);
+               transform: scale(1.1);
+               
               }  
                   
             .icon_product{                  
@@ -244,12 +301,19 @@
             background-color:rgba(112, 115, 114, 0.5);
             margin: 0 auto; 
             cursor: pointer;
-            -webkit-transition: all .25s ease-in-out; 
+            -webkit-transition: all .25s ease-in-out;
+            -moz-transition: all .25s ease-in-out;
+            -ms-transition: all .25s ease-in-out;
+            -o-transition: all .25s ease-in-out;
+            transition: all .25s ease-in-out;
             &:hover {        
                         background-color:$azulc-s;
-                        -webkit-transform: scale(1.3);
-                        
-                         }
+                        -webkit-transform: scale(1.2);
+                        -moz-transform: scale(1.2);
+                        -ms-transform: scale(1.2);
+                        -o-transform: scale(1.2);
+                         transform: scale(1.2);
+                     }
            }
        
         .text_product{    
@@ -388,15 +452,20 @@
         }
 }
 
+.btn_lupita{
+    margin-top: -42px !important; margin-left: 169px;
+}
+
+
 //Estilos Pivote Classic
 
 .zoomIn{
     //position:fixed !important;
-     ;
+     
     -webkit-animation-name    : bounceInUp; 
     -webkit-animation-duration: 0.8s;
-    -moz-animation-name       : bounceInUp; 
-    -moz-animation-duration   : 0.8s;
+    -moz-animation-name       : bounceInUp !important; 
+    -moz-animation-duration   : 0.8s !important;
     -ms-animation-name        : bounceInUp;
     -ms-animation-duration    : 0.8s;
     -o-animation-name         : bounceInUp;
@@ -411,6 +480,7 @@
 @keyframes bounceInUp {
   from, 60%, 75%, 90%, to {
     animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    
   }
 
   from {
@@ -438,88 +508,122 @@
 
 @-webkit-keyframes bounceInUp {
   from, 60%, 75%, 90%, to {
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
   }
 
   from {
     opacity: 0;
-    transform: translate3d(0, 3000px, 0);
+    -webkit-transform: translate3d(0, 3000px, 0);
   }
 
   60% {
     opacity: 1;
-    transform: translate3d(0, -20px, 0);
+    -webkit-transform: translate3d(0, -20px, 0);
   }
 
   75% {
-    transform: translate3d(0, 10px, 0);
+    -webkit-transform: translate3d(0, 10px, 0);
   }
 
   90% {
-    transform: translate3d(0, -5px, 0);
+   -webkit-transform: translate3d(0, -5px, 0);
   }
 
   to {
-    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
   }
 }
 @-moz-keyframes bounceInUp {
   from, 60%, 75%, 90%, to {
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    -moz-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
   }
 
   from {
     opacity: 0;
-    transform: translate3d(0, 3000px, 0);
+   -moz-transform: translate3d(0, 3000px, 0);
   }
 
   60% {
     opacity: 1;
-    transform: translate3d(0, -20px, 0);
+    -moz-transform: translate3d(0, -20px, 0);
   }
 
   75% {
-    transform: translate3d(0, 10px, 0);
+    -moz-transform: translate3d(0, 10px, 0);
   }
 
   90% {
-    transform: translate3d(0, -5px, 0);
+    -moz-transform: translate3d(0, -5px, 0);
   }
 
   to {
-    transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
   }
 }
 
+@-ms-keyframes bounceInUp {
+  from, 60%, 75%, 90%, to {
+    -ms-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
 
+  from {
+    opacity: 0;
+   -ms-transform: translate3d(0, 3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    -ms-transform: translate3d(0, -20px, 0);
+  }
+
+  75% {
+    -ms-transform: translate3d(0, 10px, 0);
+  }
+
+  90% {
+    -ms-transform: translate3d(0, -5px, 0);
+  }
+
+  to {
+    -ms-transform: translate3d(0, 0, 0);
+  }
+}
 
 @-o-keyframes bounceInUp {
   from, 60%, 75%, 90%, to {
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    -o-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
   }
 
   from {
     opacity: 0;
-    transform: translate3d(0, 3000px, 0);
+    -o-transform: translate3d(0, 3000px, 0);
   }
 
   60% {
     opacity: 1;
-    transform: translate3d(0, -20px, 0);
+    -o-transform: translate3d(0, -20px, 0);
   }
 
   75% {
-    transform: translate3d(0, 10px, 0);
+    -o-transform: translate3d(0, 10px, 0);
   }
 
   90% {
-    transform: translate3d(0, -5px, 0);
+    -o-transform: translate3d(0, -5px, 0);
   }
 
   to {
-    transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
   }
 }
+
+.x-btn > .pivote > .x-unselectable > .x-layer > .x-btn-default-small > .x-border-box >.zoomIn{
+   
+    -moz-animation-name       : bounceInUp; 
+    -moz-animation-duration   : 0.8s;    
+               
+}
+
 
 //Media Query Botones Selección de rol Classic
 

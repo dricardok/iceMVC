@@ -109,6 +109,11 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
             } else {
                 agregarYEnfocarBloque();
             }
+            try{
+            	bloqueExistente.getReferences().gridagrupadores.getStore().load();
+            }catch(e){
+            	Ice.logWarn('warning al invocar load grid agrupadores en gridagrupadores', e);
+            }
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
@@ -145,6 +150,12 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                     bloqueExistente.getController().cargar();
                 }
             });
+            try{
+            	bloqueExistente.getReferences().gridagrupadores.getStore().load();
+            }catch(e){
+            	Ice.logWarn('warning al invocar load grid agrupadores en gridagrupadores', e);
+            }
+            
             
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
@@ -195,6 +206,11 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                             me.puedeEmitir();
                         } catch (e) {
                             Ice.logWarn('warning al invocar onVistaAgente en gridagrupadores', e);
+                        }
+                        try{
+                        	newCard.getReferences().gridagrupadores.getStore().load();
+                        }catch(e){
+                        	Ice.logWarn('warning al invocar load grid agrupadores en gridagrupadores', e);
                         }
                         me.puedeEmitir();
                     } catch (e){

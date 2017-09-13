@@ -9,7 +9,7 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
             refs = view.getReferences(),
             paso = 'Modificando valor de punto de venta';
         try {
-            refs.dsdomici.setValue(dsdomici);
+            refs.otvalor15.setValue(dsdomici);
         } catch (e){
             Ice.generaExcepcion(e, paso);
         }
@@ -19,10 +19,10 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
         Ice.log('Ice.view.field.DomicilioPickerController.getValue');
         var me = this,
             refs = me.getReferences(),
-            paso = 'Obteniendo valor de punto de venta',
+            paso = 'Obteniendo valor de domicilio',
             value;
         try {
-            value = refs.dsdomici.getValue();
+            value = refs.otvalor15.getValue();
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -45,7 +45,8 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
                         buttons: [
                             {
                                 text: 'Aceptar',
-                                iconCls: 'x-fa fa-accept',
+                                iconCls: 'x-fa fa-check',
+                                style: 'padding-right:20px;',
                                 handler: function (btn) {
                                     try{
                                         var values = btn.up('formulariodomicilio').getValues();
@@ -101,14 +102,25 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
     },
         
     onGetName: function(){
-        return 'dsdomici';
+        return 'otvalor15';
     },
     
-    onSetActiveError: function(param){
-        Ice.mensajeWarning(param);
-    },
+    
     
     onBuscar: function(){
         this.buscar();
+    },
+    onSetActiveError: function(param){
+        //Ice.mensajeWarning(param);
+    	var me  = this,
+    		view = me.getView()
+    		paso = 'Is valid on cdagentepicker';
+    	
+    	try {
+    		
+    		view.getReferences().otvalor15.isValid();
+    	}catch(e){
+    		Ice.generaExcepcion(e, paso);
+    	}
     }
 });
