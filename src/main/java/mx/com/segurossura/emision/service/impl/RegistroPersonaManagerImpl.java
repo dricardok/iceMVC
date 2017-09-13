@@ -159,7 +159,7 @@ public class RegistroPersonaManagerImpl implements RegistroPersonaManager {
 		try{
 			
 			paso="Consultando datos";
-			String resp=registroPersonaDao.personaDuplicada(cdperson, dsnombre, fenacimi);
+			String resp=registroPersonaDao.personaDuplicada(cdperson, dsnombre, fenacimi, null);
 			logger.debug(accion+"Valida persona dup: "+resp);
 			if(resp!=null && !"".equals(resp.trim()) && "I".equals(accion)){
 				throw new ApplicationException(resp);
