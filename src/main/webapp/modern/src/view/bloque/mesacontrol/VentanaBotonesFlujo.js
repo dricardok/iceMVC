@@ -32,14 +32,15 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaBotonesFlujo', {
         try {
             me.getPadre().add({
                 xtype: 'button',
-                text: '<span style="font-size: 0.5em;">ACCIONES</span>',
-                width: 70,
-                height: 70,
+                text: '<span style="font-size: 0.5em; color:#FFF;">ACCIONES</span>',
+                width: 65,
+                height: 65,
                 flujo: me.getFlujo(),
                 iconAlign: 'top',
+                cls:'color_mapsite',
                 iconCls: 'x-fa fa-sitemap',
-                style: 'position: absolute; left: 100%; margin-left: -80px; top: 100%; margin-top: -90px;' +
-                    'border: 2px solid #f5f5f5; border-radius:50%; background-color: #0033a0; color: white;',
+                style: 'position: absolute; left: 100%; margin-left: -105px; top: 100%; margin-top: -90px;' +
+                    'border-radius:50%; background-color: #0033a0; color: #FFF!important; box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);',
                 handler: function (bot) {
                     var paso2 = 'Construyendo panel de acciones';
                     try {

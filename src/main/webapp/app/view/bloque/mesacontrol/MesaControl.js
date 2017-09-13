@@ -32,7 +32,7 @@ Ext.define('Ice.view.mesacontrol.MesaControl', {
                     xtype: 'formmesacontrol',
                     reference: 'formmesacontrol'
                 }, {
-                	style:'margin:0px 47px 0px 0px;',
+                	cls:'margen_mesa',
                     xtype: 'gridmesacontrol',
                     reference: 'gridmesacontrol',
                     itemsPerPage: 50,
