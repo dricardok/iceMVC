@@ -44,17 +44,43 @@ Ext.define('Ice.view.bloque.RegistroTramiteWindow', {
     		config.items=[
     			{
     				xtype		:	'formdoscolumnasice',
-    				reference	:	'form',
+					reference	:	'form',
+					sinToggle   : true,
     				items		:	items.MESACONTROL.FORM_REGISTRO_TRAMITE.items,
     				
     				modelValidators		:	items.MESACONTROL.FORM_REGISTRO_TRAMITE.validators,
     				modelFields			:	items.MESACONTROL.FORM_REGISTRO_TRAMITE.fields
     			}
     		];
+			me.callParent(arguments);
+
+			// cuando el rol activo es agente, se recupera a si mismo
+			if (Ice.sesion.cdsisrol === Ice.constantes.roles.AGENTE && me.down('cdagentepicker')) {
+				var paso2 = 'Recuperando clave de agente';
+				try {
+					Ice.request({
+						mascara: paso2,
+						url: Ice.url.bloque.mesacontrol.obtenerAgenteXUsuario,
+						params: {
+							'params.cdusuari': Ice.sesion.cdusuari
+						},
+						success: function (json) {
+							var paso3 = 'Asignando clave de agente';
+							try {
+								me.down('cdagentepicker').setValue(json.params.cdagente);
+							} catch (e) {
+								Ice.manejaExcepcion(e, paso3);
+							}
+						}
+					});
+				} catch (e) {
+					Ice.manejaExcepcion(e, paso2);
+				}
+			}
+
     	}catch(e){
     		Ice.manejaExcepcion(e,paso);
     	}
-    	me.callParent(arguments);
     },
     buttons		:	[
 		{
