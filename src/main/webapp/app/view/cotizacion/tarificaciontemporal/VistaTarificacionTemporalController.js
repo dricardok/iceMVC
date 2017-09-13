@@ -98,7 +98,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 					                	var ventana = Ext.create('Ice.view.componente.VentanaIce', {
 					                        platformConfig: {
 					                            desktop: {
-					                                width: 400
+					                                width: 550
 					                            }
 					                        },
 					                        reference: 'ventanadocumentoscotizacion',
