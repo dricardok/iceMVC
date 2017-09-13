@@ -7,7 +7,7 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaAviso', {
         desktop: {
             modal: true,
             width: 500,
-            height: 250,
+            height: 270,
             bodyPadding: '0px'
         }
     },
