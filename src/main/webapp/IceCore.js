@@ -41,7 +41,8 @@ var Ice = (
 	    roles: {
             AGENTE: 'AGENTE',
             EJECUTIVO_NEGOCIO_SR: 'COTIZADOR',
-            EJECUTIVO_NEGOCIO_JR: 'COTIZAJR'
+            EJECUTIVO_NEGOCIO_JR: 'COTIZAJR',
+            MESACONTROL			: 'MESACONTROL'
 		}
     },
     

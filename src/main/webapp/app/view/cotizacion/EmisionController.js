@@ -572,7 +572,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
                                     text: 'Inicio',
                                     iconCls: 'x-fa fa-home',
                                     reference: 'botonIrInicio',
-                                    disabled: true,
+                                    disabled: false,
                                     handler: function(boton) {
                                         //me.up('ventanaice').cerrar();
                                         Ice.index();

@@ -181,13 +181,15 @@ Ext.define('Ice.view.bloque.personas.PolizaPersona', {
                         Ice.pop();
                     }
                 }
-            ].concat(config.buttons || []);
-
-	        
-	        
-		}catch(e){
+            ].concat(config.buttons || []); 
+		} catch(e) {
 			Ice.manejaExcepcion(e,paso);
 		}
 		me.callParent(arguments);
+		try {
+			me.getController().custom();
+		} catch (e) {
+			Ice.generaExcepcion(e, paso);
+		}
 	}
 });
