@@ -24,19 +24,23 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                     },
                     '!desktop': {
                         scrollable: true,
+                        style:'padding:10px !important;',
                         layout: 'fit'
                     }
                 },
                 items: [
                 	{
                 		xtype		:	'panelice',
-                		title		:	'Nueva Cotización',
+                		title: {
+                			text:"Nueva Cotización",
+                			style:'border:0px;font-size:16px;',
+                		},
                         buttonAlign	:	'center',
                         titleAlign	:	'center',
                 		buttons		:	[{
                             xtype: 'button',
-                            text: 'Ir',
-                            iconCls: 'x-fa fa-plus',
+                            text: 'Crear',
+                            iconCls: 'x-fa fa-file-o',
                             handler: me.onNuevaClic,
                             width  : '200px'
                             
@@ -46,7 +50,10 @@ Ext.define('Ice.view.cotizacion.AccesoCotizacionController', {
                 		xtype		:	'panelice',
                 		platformConfig: {
                             desktop: {
-                            	title		:	'Recuperar Cotización',
+                            	title: {
+                        			text:"Recuperar Cotización",
+                        			style:'border:0px;font-size:16px;',
+                        		},
                             	layout: {
                         	        type: 'vbox',
                         	        align: 'center',

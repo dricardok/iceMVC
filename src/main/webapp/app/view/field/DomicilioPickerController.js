@@ -45,7 +45,8 @@ Ext.define('Ice.view.field.DomicilioPickerController', {
                         buttons: [
                             {
                                 text: 'Aceptar',
-                                iconCls: 'x-fa fa-accept',
+                                iconCls: 'x-fa fa-check',
+                                style: 'padding-right:20px;',
                                 handler: function (btn) {
                                     try{
                                         var values = btn.up('formulariodomicilio').getValues();
