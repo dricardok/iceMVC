@@ -13,7 +13,11 @@ Ext.define('Ice.view.field.RfcfieldIce', {
     				blur : function(it){
     					var paso = 'verificando RFC';
     					try{
-    						var pad = it.up().down('[reference=otvalor0'+it.getTipoPer()[0]+']')
+    						var ref=it.getTipoPer()[0];
+    						if(Ext.isNumeric(ref)){
+    							ref='otvalor' + (('x000' + ref).slice(Number(ref) > 100 ? -3 : -2));
+    						}
+    						var pad = it.up().down('[reference='+ref+']')
     						var tipoPersona = pad.getValue();
     						var rfc = it.getValue();
     						var res;

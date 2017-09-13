@@ -42,7 +42,7 @@ var Ice = (
             AGENTE: 'AGENTE',
             EJECUTIVO_NEGOCIO_SR: 'COTIZADOR',
             EJECUTIVO_NEGOCIO_JR: 'COTIZAJR',
-            MESACONTROL			: 'MESACONTROL'
+            MESACONTROL			: 'MESADECONTROL'
 		}
     },
     
