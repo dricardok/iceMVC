@@ -33,7 +33,7 @@ Ext.define('Ice.view.bloque.personas.PolizaPersonaController', {
             // var form = refs.form;
             Ice.log('Ice.view.bloque.PolizaPersonaController.custom form',refs);
             refs.formBusquedaPersonas.getReferences().dsatribu.on({
-                blur: function(){
+                change: function(){
                     if(refs.formBusquedaPersonas.getReferences().dsatribu){
                         Ice.log('dsatribu',refs.dsatribu);
                         if(refs.formBusquedaPersonas.getReferences().dsatribu.getValue() === 'POLIZA'){
