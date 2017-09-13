@@ -507,20 +507,12 @@ html, body {
     color: white;
     }
 
-.x-component .x-button .x-iconalign-top .ice-panel-item .ice-panel-item-modern .x-sized .x-widthed .x-heighted .color_mapsite .x-haslabel .x-layout-fit-item{
+
+.fa-sitemap:before {
+    content: "\f0e8" !important;
     color: #FFF !important;
+    margin-top: 8px !important;
 }
-
-.color_mapsite .x-button-icon .x-font-icon .x-shown .x-fa .fa-sitemap{
-    color: #FFF !important;
-}
-
-
-.color_mapsite > .x-button > .x-button-icon{
-    color: #FFF !important;
-}
-
-
 
 //Media Query Botones Selección de rol Classic
 
