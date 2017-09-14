@@ -32,7 +32,7 @@ Ext.define('Ice.view.bloque.duplicidad.FormularioDuplicidad',{
                     reference: 'btnConsultar',
                     handler: 'onConsultar'
                 },{
-                    text: 'Cancelar',
+                    text: 'Cerrar',
                     ui:'gray',
         			style:'margin-right: 45px;',
                     iconCls: 'x-fa fa-close',

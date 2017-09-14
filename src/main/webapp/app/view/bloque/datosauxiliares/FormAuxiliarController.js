@@ -79,6 +79,7 @@ Ext.define('Ice.view.bloque.datosauxiliares.FormAuxiliarController', {
         try{
             var ventana = Ext.create('Ice.view.componente.VentanaIce', {
                 //layout: 'fit',
+                title: 'Busqueda de duplicidad',
                 platformConfig: {
                     desktop: {
                         scrollable: true,

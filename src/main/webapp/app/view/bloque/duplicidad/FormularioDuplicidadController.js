@@ -120,7 +120,8 @@ Ext.define('Ice.view.bloque.duplicidad.FormularioDuplicidadController', {
                                                                         record = cell.getRecord();
                                                                     data = record.getData();
                                                                 }
-                                                                Ice.log('data',data);
+                                                                data = Ice.convertirAParams(data);
+                                                                me.cargarDuplicidadPoliza(data);
                                                             } catch(e) {
                                                                 Ice.generaExcepcion(e);
                                                             }
@@ -165,31 +166,104 @@ Ext.define('Ice.view.bloque.duplicidad.FormularioDuplicidadController', {
         }
     },
 
-    cargarDuplicidadPoliza: function(){
+    cargarDuplicidadPoliza: function(params){
         Ice.log('Ice.view.bloque.duplicidad.FormularioDuplicidadController.cargarDuplicidadPoliza');
         var paso = 'Consultando duplicidad de poliza',
-        me = this,
-        view = me.getView(),
-        refs = view.getReferences();
+            me = this,
+            view = me.getView(),
+            refs = view.getReferences();
         try{
-            Ice.request({
-                mascara: paso,
-                url: Ice.url.emision.obtenerDuplicidad,
-                params: params,
-                success: function (json) {
-                    var paso2 = 'Datos duplicidad de poliza';
-                    try {
-                        
-                    } catch(e) {
-                        Ice.manejaExcepcion(e, paso2);
+            if(params){
+                Ice.request({
+                    mascara: paso,
+                    url: Ice.url.emision.obtenerDuplicidadPoliza,
+                    params: params,
+                    success: function (json) {
+                        var paso2 = 'Datos duplicidad de poliza';
+                        try {
+                            Ice.log('cargarDuplicidadPoliza json ',json);
+                            var ventana = Ext.create('Ice.view.componente.VentanaIce', {
+                                title: 'Datos de duplicidad de poliza',
+                                //layout: 'fit',
+                                platformConfig: {
+                                    desktop: {
+                                        scrollable: true,
+                                        height: 500,
+                                        width: Ice.constantes.componente.ventana.width,
+                                        modal: true
+                                    },
+                                    '!desktop': {
+                                        scrollable: true
+                                    }
+                                },
+                                items: {
+                                    xtype: 'panelice',
+                                    items: {
+                                        xtype: 'formularioduplicidad',
+                                        reference: 'formduplicidad'
+                                    }
+                                }
+                            });
+                            
+                            ventana.down('formularioduplicidad').getController().setValues(json.params);
+                            ventana.mostrar();
+                        } catch(e) {
+                            Ice.manejaExcepcion(e, paso2);
+                        }
+                    },
+                    failure: function () {
+                        Ice.resumeEvents(view);
                     }
-                },
-                failure: function () {
-                    Ice.resumeEvents(view);
-                }
-            });
+                });
+            }
         } catch(e) {
             Ice.manejaExcepcion(e, paso);
+        }
+    },
+
+    setValues: function(values){
+        var me = this,
+            view = me.getView(),
+            refs = view.getReferences();
+        try{
+            refs.btnConsultar.hide();
+
+            Ice.suspendEvents(refs.formvigencia);
+            Ice.cargarFormulario(refs.formvigencia, values);
+            me.setFieldsFormReadOnly(refs.formvigencia);
+
+            Ice.suspendEvents(refs.formfiltros);
+            Ice.cargarFormulario(refs.formfiltros, values);
+            me.setFieldsFormReadOnly(refs.formfiltros);
+            
+            Ice.suspendEvents(refs.formdomicilio);
+            me.setFieldsValues(refs.formdomicilio);
+            Ice.cargarFormulario(refs.formdomicilio, values);
+            me.setFieldsFormReadOnly(refs.formdomicilio);
+        } catch(e) {
+            Ice.manejaExcepcion(e);
+        }
+    },
+
+    setFieldsFormReadOnly: function(form){
+        try{
+            var refs = form.getReferences();
+            for(var ref in refs){
+                refs[ref].setReadOnly(true);
+            }
+        } catch(e) {
+            Ice.logWarn('No se pudo modificar campos a readOnly ',e);
+        }
+    },
+
+    setFieldsValues: function(form, value){
+        try{
+            var refs = form.getReferences();
+            for(var ref in refs){
+                refs[ref].setValue(value||'');
+            }
+        } catch(e) {
+            Ice.logWarn('No se pudo modificar campos ',e);
         }
     }
 });
