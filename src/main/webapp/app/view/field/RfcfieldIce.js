@@ -18,9 +18,10 @@ Ext.define('Ice.view.field.RfcfieldIce', {
     							ref='otvalor' + (('x000' + ref).slice(Number(ref) > 100 ? -3 : -2));
     						}
     						var pad = it.up().down('[reference='+ref+']')
-    						var tipoPersona = pad.getValue();
-    						var rfc = it.getValue();
+    						var tipoPersona = pad.getValue() ;
+    						var rfc = it.getValue() || '';
     						var res;
+    						rfc = rfc.toUpperCase();
     						Ice.log("RFC:",tipoPersona," . ",rfc);
     						if(Number(tipoPersona) == 1) {// Persona fisica
     				        	Ice.log('fisica');
