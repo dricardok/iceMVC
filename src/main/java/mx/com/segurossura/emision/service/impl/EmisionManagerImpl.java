@@ -42,6 +42,7 @@ import mx.com.segurossura.emision.service.EmisionManager;
 import mx.com.segurossura.emision.service.ImpresionManager;
 import mx.com.segurossura.emision.service.PagoManager;
 import mx.com.segurossura.general.catalogos.model.Bloque;
+import mx.com.segurossura.general.cmp.dao.ComponentesDAO;
 import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
 import mx.com.segurossura.general.documentos.model.TipoArchivo;
 import mx.com.segurossura.general.producto.model.EstadoPoliza;
@@ -75,6 +76,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	@Value("${content.ice.path}")
 	private String directorioBase;
 	
+	@Value("${mui.docs.dns}")
+	private String dns;
+	
 	@Autowired
     private AgrupadoresManager agrupadoresManager;
 	
@@ -89,6 +93,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	
 	@Autowired
 	private DespachadorManager despachadorManager;
+	
+	@Autowired
+	private ComponentesDAO componentesDAO;
 
 	@Override
 	public void movimientoTvalogar(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
@@ -531,6 +538,79 @@ public class EmisionManagerImpl implements EmisionManager {
 		
 		return res;
 	}
+	
+	
+	public String generarVistaPrevia(String cdunieco, String cdramo, String estado, String nmpoliza,
+			String nmsituac, String cdperpag, String cdusuari, String cdsisrol) throws Exception {
+		logger.debug("\n@@@@@@ generarTarificacionPlan @@@@@@");
+		String paso = null;
+		Map<String, Object> res = null;		
+		List<Map<String, String>> mpolizas = null;
+		Map<String, String> params = new HashMap<String, String>();
+		Map<String, String> mpoliza = null;
+		SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
+		List<Map<String, String>> componentes = null;
+		String urlVistaprevia = null;
+		try{
+			
+			logger.debug("Obteneniendo poliza {} {} {} {} {} ", cdunieco, cdramo, estado, nmpoliza);
+			
+			mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, "0");
+			
+			if(mpolizas!=null && !mpolizas.isEmpty() && mpolizas.get(0) != null ) {
+				mpoliza = mpolizas.get(0);
+				
+				logger.debug("Actualizando poliza {} {} {} {} {} ", mpoliza.get("cdunieco"), mpoliza.get("cdramo"), mpoliza.get("estado"), mpoliza.get("nmpoliza"), mpoliza.get("nmsuplem"));
+				
+				emisionDAO.movimientoMpolizas(mpoliza.get("cdunieco"), mpoliza.get("cdramo"), mpoliza.get("estado"), mpoliza.get("nmpoliza"),
+						  mpoliza.get("nmsuplem"), mpoliza.get("nmsuplem"), mpoliza.get("status"), mpoliza.get("swestado"),
+						  mpoliza.get("nmsolici"), 
+						  mpoliza.get("feautori") != null && !mpoliza.get("feautori").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feautori")) : null, 
+						  mpoliza.get("cdmotanu"), 
+						  mpoliza.get("feanulac") != null && !mpoliza.get("feanulac").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feanulac")) : null, 
+						  mpoliza.get("swautori"), mpoliza.get("cdmoneda"), 
+						  mpoliza.get("feinisus") != null && !mpoliza.get("feinisus").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feinisus")) : null,
+						  mpoliza.get("fefinsus") != null && !mpoliza.get("fefinsus").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("fefinsus")) : null,
+						  mpoliza.get("ottempot"), 
+						  mpoliza.get("feefecto") != null && !mpoliza.get("feefecto").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feefecto")) : null, 
+						  mpoliza.get("hhefecto"),
+						  mpoliza.get("feproren") != null && !mpoliza.get("feproren").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feproren")) : null, 
+						  mpoliza.get("fevencim") != null && !mpoliza.get("fevencim").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("fevencim")) : null, 
+						  mpoliza.get("nmrenova"), 
+						  mpoliza.get("ferecibo") != null && !mpoliza.get("ferecibo").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("ferecibo")) : null,
+						  mpoliza.get("feultsin") != null && !mpoliza.get("feultsin").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feultsin")) : null, 
+						  mpoliza.get("nmnumsin"), mpoliza.get("cdtipcoa"), mpoliza.get("swtarifi"), mpoliza.get("swabrido"), 
+						  mpoliza.get("feemisio") != null && !mpoliza.get("feemisio").toLowerCase().equals("null") ? renderFechas.parse(mpoliza.get("feemisio")) : null,
+						  cdperpag, mpoliza.get("nmpoliex"), mpoliza.get("nmcuadro"), mpoliza.get("porredau"),
+						  mpoliza.get("swconsol"), mpoliza.get("nmpolcoi"), mpoliza.get("adparben"), mpoliza.get("nmcercoi"), mpoliza.get("cdtipren"), 
+						  "U");
+				
+			}	
+			
+			logger.debug("Generando tarificacion...");
+			res = generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdusuari, cdsisrol);
+			
+			// 
+			componentes = componentesDAO.obtenerListaComponentesSP("URL_MUI", "CARATULA_COTI", null, null, "501", null, null, null);
+			
+			if(componentes == null) {
+				throw new Exception("Faltan url");
+			}
+			if(componentes != null && componentes.size() > 1) {
+				throw new Exception("Mas de una url");
+			}
+			
+			String segundaparte = componentes.get(0).get("handler")+cdunieco+"/"+cdramo+"/"+estado+"/"+nmpoliza+"/0";
+			
+			urlVistaprevia = dns + segundaparte;
+				
+		} catch(Exception e) {
+			Utils.generaExcepcion(e, paso);
+		}
+		
+		return urlVistaprevia;
+	}
+	
 	
 	private String generaRutaLlave(String...carpetas){
 		StringBuilder sb = null;

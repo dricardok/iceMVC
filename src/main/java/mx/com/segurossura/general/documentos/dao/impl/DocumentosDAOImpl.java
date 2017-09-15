@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
@@ -18,10 +20,13 @@ import com.biosnettcs.core.dao.HelperJdbcDao;
 import com.biosnettcs.core.dao.OracleTypes;
 import com.biosnettcs.core.dao.mapper.GenericMapper;
 
+import mx.com.segurossura.emision.dao.impl.AgentesDAOImpl;
 import mx.com.segurossura.general.documentos.dao.DocumentosDAO;
 
 @Repository
 public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
+	
+	private static final Logger logger = LoggerFactory.getLogger(DocumentosDAOImpl.class);
 
     @Override
     public List<Map<String, String>> obtenerDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, 
@@ -42,11 +47,14 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
         List<Map<String, String>> lista = (List<Map<String, String>>) procResult.get("pv_registro_o");
         if (lista.size() == 0) {
             lista = new ArrayList<Map<String, String>>();
+            logger.debug("No regreso documentos", procResult.toString());
         } else {
             if(lista.get(0) != null){
                 lista.get(0).put("total", procResult.get("pv_num_rec_o").toString());
+                logger.debug("Informacion de docuentos", procResult);
             }
         }
+        
         return lista;
     }
 

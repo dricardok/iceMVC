@@ -2,6 +2,7 @@
 
 package mx.com.segurossura.emision.controller;
 
+import java.io.InputStream;
 import java.lang.management.ManagementFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,6 +30,8 @@ import com.biosnettcs.portal.model.UsuarioVO;
 import com.opensymphony.xwork2.ActionContext;
 
 import mx.com.segurossura.emision.service.EmisionManager;
+import mx.com.segurossura.general.documentos.model.Archivo;
+import mx.com.segurossura.general.documentos.service.DocumentosManager;
 import mx.com.segurossura.workflow.mesacontrol.model.FlujoVO;
 import mx.com.segurossura.workflow.mesacontrol.model.TipoEndoso;
 import mx.com.segurossura.workflow.mesacontrol.service.FlujoMesaControlManager;
@@ -51,7 +54,11 @@ public class EmisionAction extends PrincipalCoreAction {
 	private List<String>	   errores;
 	private String			   emitir;
 	private FlujoVO            flujo;
-
+	
+	private InputStream fileInputStream;
+    private String filename;
+    protected String contentType;
+	
 	private Map<String, List<Map<String, String>>> componentes;
 	private static SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
 	
@@ -60,6 +67,9 @@ public class EmisionAction extends PrincipalCoreAction {
 	
 	@Autowired
 	private FlujoMesaControlManager flujoMesaControlManager;
+	
+	@Autowired
+	private DocumentosManager documentosManager;
 	
 	@Action(		
 	        value = "movimientoTvalogar", 
@@ -626,6 +636,62 @@ public class EmisionAction extends PrincipalCoreAction {
         }
         
         logger.debug("Fin generarTarificacion.");
+        return SUCCESS;
+    }
+    
+    @Action
+    (
+        value   = "vistaprevia",
+        results = 
+        {
+                @Result(name="success", 
+                        type="stream", 
+                        params = {
+                            "contentType"       ,"${contentType}",
+                            "inputName"         ,"fileInputStream",
+                            "bufferSize"        ,"4096",
+                            "contentDisposition","inline; filename=\"${filename}\""
+                        }
+                )
+        }
+    ) 
+    public String generarVistaPrevia() {
+    	logger.debug("Inicio genrarVistaPrevia...");
+        try {
+        	UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
+            
+            Utils.validate(params, "No se recibieron datos");
+            String cdunieco = params.get("cdunieco"),
+                   cdramo   = params.get("cdramo"),
+                   estado   = params.get("estado"),
+                   nmpoliza = params.get("nmpoliza"),
+                   nmsituac = "0".equals(params.get("nmsituac")) ? null : params.get("nmsituac"),
+                   cdperpag = params.get("cdperpag");
+            
+            Utils.validate(cdunieco , "Falta cdunieco",
+                           cdramo   , "Falta cdramo",
+                           estado   , "Falta estado",
+                           nmpoliza , "Falta nmpoliza",
+                           cdperpag , "Falta cdperpag");
+            
+            
+            String url = emisionManager.generarVistaPrevia(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdperpag, usuario.getCdusuari(), usuario.getRolActivo().getCdsisrol());
+            
+            Archivo archivo = documentosManager.obtenerDocumento(url, "CARATULA_COTI.pdf");
+            fileInputStream = archivo.getFileInputStream();
+            filename = archivo.getFilename();
+            success = true;
+            
+        } catch(Exception ex){
+            success = false;
+            message = Utils.manejaExcepcion(ex);
+        }
+        logger.debug(StringUtils.join(
+                "\n###################"
+               ,"\n###### vistaprevia ######"
+               ,"\n###### filename", filename
+               ,"\n###### contentType", contentType
+               ));
         return SUCCESS;
     }
     
@@ -1220,4 +1286,28 @@ public class EmisionAction extends PrincipalCoreAction {
     public void setFlujo(FlujoVO flujo) {
         this.flujo = flujo;
     }
+
+	public InputStream getFileInputStream() {
+		return fileInputStream;
+	}
+
+	public void setFileInputStream(InputStream fileInputStream) {
+		this.fileInputStream = fileInputStream;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
 }
