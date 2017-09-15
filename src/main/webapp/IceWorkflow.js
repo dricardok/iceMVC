@@ -609,7 +609,7 @@ var Ice = (
                                                 'flujo.cdramo'    : cdramo,
                                                 'flujo.estado'    : estado,
                                                 'flujo.nmpoliza'  : nmpoliza,
-                                                'flujo.nmsituac'  : nmsituac,
+                                                'flujo.nmsituac'  : Ice.nvl(nmsituac),
                                                 'flujo.nmsuplem'  : nmsuplem
                                             },
                                             success: function (json) {
