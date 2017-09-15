@@ -1,6 +1,7 @@
 Ext.define('Ice.view.bloque.mesacontrol.FormnNuevoTramite', {
 	extend: 'Ice.view.componente.FormDosColumnasIce',
 	xtype: 'formnuevotramite',
+	controller: 'formnuevotramite',
 	
 	constructor: function (config) {
 		var me = this,
@@ -14,7 +15,7 @@ Ext.define('Ice.view.bloque.mesacontrol.FormnNuevoTramite', {
 				
 				items: true,
 				fields: true,
-				validator: true
+				validators: true
 			});
 			
 			Ice.log(paso, 'campos generados', comps);

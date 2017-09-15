@@ -71,6 +71,23 @@ public interface EmisionManager {
             String nmsituac, String cdusuari, String cdsisrol) throws Exception;
     
     /**
+     * Generar la url de vista previa de documentos, para la forma de pago seleccionada
+     * @param cdunieco
+     * @param cdramo
+     * @param estado
+     * @param nmpoliza
+     * @param nmsituac
+     * @param cdperpag
+     * @param cdusuari
+     * @param cdsisrol
+     * @return
+     * @throws Exception
+     */
+    public String generarVistaPrevia(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsituac,
+            String cdperpag, String cdusuari, String cdsisrol) throws Exception;
+    
+    
+    /**
      * Genera la tarificacion de una poliza bazado en un plan especifico
      * @param cdunieco
      * @param cdramo

@@ -64,7 +64,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 			});
 			ventana.mostrar();
 		}catch(e) {
-			Ice.generaExcepcion(e, paso);
+			Ice.manejaExcepcion(e, paso);
 		}
 	},
 	
@@ -102,36 +102,46 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 					{
 						text: 'Continuar',
 						iconCls: 'x-fa fa-forward',
-						handler: function() {
-													
-							var formulario = Ext.create('Ice.view.bloque.RegistroTramiteWindow', {
+						handler: function(me) {
+							var paso = 'Creando nuevo tramite';
+							try {
 								
-								modal: true,
+								me.up('ventanaice').down('formnuevotramite').getController().validarFormulario();
 								
-								cdtipflu: Ice.query('formnuevotramite').getValues().cdtipflu,
-								cdflujomc: Ice.query('formnuevotramite').getValues().cdflujomc, 
-								
-								listeners: {
-									'guardartramite' : function (form, ntramite) {
-										
-										/*
-										var boton = view.up().getReferences().formmesacontrol.getReferences().formMesaControlBtnLimpiar;
-										
-										Ice.log('Boton de limpiar', boton);
-										
-										Ice.log(boton.fireEvent('click', boton));
-										*/
-										
-										view.up().getReferences().formmesacontrol.getController().onLimpiarClic();
-										view.up().getReferences().formmesacontrol.getReferences().ntramite.setValue(ntramite);
-										view.up().getReferences().formmesacontrol.getReferences().cdestadomc.setValue(0);
-										view.up().getReferences().formmesacontrol.getController().onBuscarClic();
+								var formulario = Ext.create('Ice.view.bloque.RegistroTramiteWindow', {
+									
+									modal: true,
+									
+									cdtipflu: Ice.query('formnuevotramite').getValues().cdtipflu,
+									cdflujomc: Ice.query('formnuevotramite').getValues().cdflujomc, 
+									
+									listeners: {
+										'guardartramite' : function (form, ntramite) {
+											
+											/*
+											var boton = view.up().getReferences().formmesacontrol.getReferences().formMesaControlBtnLimpiar;
+											
+											Ice.log('Boton de limpiar', boton);
+											
+											Ice.log(boton.fireEvent('click', boton));
+											*/
+											
+											view.up().getReferences().formmesacontrol.getController().onLimpiarClic();
+											view.up().getReferences().formmesacontrol.getReferences().ntramite.setValue(ntramite);
+											view.up().getReferences().formmesacontrol.getReferences().cdestadomc.setValue(0);
+											view.up().getReferences().formmesacontrol.getController().onBuscarClic();
+										}
 									}
-								}
-							});
-							ventana.cerrar();
-							formulario.mostrar();
-							
+								});
+								
+								
+								ventana.cerrar();
+								formulario.mostrar();								
+								
+							} catch ( e ) {
+								
+								Ice.manejaExcepcion(e, paso);
+							}							
 						}
 					}, {
 						text: 'Cancelar',
@@ -152,7 +162,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 			}
 			
 		}catch(e){
-			Ice.generaExcepcion(e, paso);
+			Ice.manejaExcepcion(e, paso);
 		}		
 	},
 	
@@ -173,7 +183,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
         	ventanaDocs.mostrar();
 			
 		}catch(e) {
-			Ice.generaExcepcion(e, paso);
+			Ice.manejaExcepcion(e, paso);
 		}
 	},
 	
@@ -191,7 +201,7 @@ Ext.define('Ice.view.bloque.mesacontrol.GridMesaControlController', {
 			ventanaHistorial.mostrar();
 			
 		}catch(e){
-			Ice.generaExcepcion(e, paso);
+			Ice.manejaExcepcion(e, paso);
 		}
 	}
 });
