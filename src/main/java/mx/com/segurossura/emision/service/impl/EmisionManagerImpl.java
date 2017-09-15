@@ -712,7 +712,7 @@ public class EmisionManagerImpl implements EmisionManager {
 				}
 				
 			} catch(Exception e) {
-				e.printStackTrace();
+				logger.error("Error obteniendo informacion para generar docs", e);
 			}
 			
 			logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);

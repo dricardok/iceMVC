@@ -69,7 +69,16 @@ public class ImpresionManagerImpl implements ImpresionManager{
 			if(documentos != null) {
 				numDocs = documentos.size();
 			}
-			logger.debug("Documentos obtenidos {}: {}", numDocs, documentos);
+			logger.debug("Documentos obtenidos: {}", numDocs);
+			if(documentos != null && documentos.size() > 0) {
+				StringBuilder sb = new StringBuilder("Docs obtenidos para poliza ")
+						.append(cdunieco).append(" ").append(cdramo).append(" ")
+						.append(estado).append(" ").append(nmpoliza).append(":\n");
+				for (Documento doc : documentos) {
+					sb.append(doc.getUrl()).append("\n");
+				}
+				logger.info(sb.toString());
+			}
 		}catch(ResponseException e){
 			logger.error("Error al invocar servicio de obtencion de documentos: ", e);
 			throw e;
