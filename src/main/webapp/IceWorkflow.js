@@ -542,6 +542,14 @@ var Ice = (
                                                     var valorRespValid = json.params.salida,
                                                         salida         = '';
                                                     Ice.log('Resultado validacion java: ', valorRespValid);
+
+                                                    // CUANDO LA RESPUESTA TIENE UN NUMERAL/GATO AL INICIO, ES UN MENSAJE
+                                                    // PARA PANTALLA. EJMPLO: #NO SE PUEDE TURNAR
+                                                    if (!Ext.isEmpty(valorRespValid)
+                                                        && valorRespValid.indexOf('#') === 0) {
+                                                        throw valorRespValid.substr(1);
+                                                    }
+
                                                     for (var i=0 ; i<numSalidas ; i++) {
                                                         if ('x' + acciones[i].CDVALOR === 'x' + valorRespValid) {
                                                             salida = acciones[i];
@@ -616,6 +624,14 @@ var Ice = (
                                                     var valorRespValid = validacionCliente(json.datosTramite),
                                                         salida         = '';
                                                     Ice.log('Resultado validacion cliente:', valorRespValid);
+
+                                                    // CUANDO LA RESPUESTA TIENE UN NUMERAL/GATO AL INICIO, ES UN MENSAJE
+                                                    // PARA PANTALLA. EJMPLO: #NO SE PUEDE TURNAR
+                                                    if (!Ext.isEmpty(valorRespValid)
+                                                        && valorRespValid.indexOf('#') === 0) {
+                                                        throw valorRespValid.substr(1);
+                                                    }
+                                                    
                                                     for (var i = 0; i < numSalidas; i++) {
                                                         if ('x' + acciones[i].CDVALOR === 'x' + valorRespValid) {
                                                             salida = acciones[i];
