@@ -26,6 +26,51 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 				
 				buttons: [
 					{
+						text: 'Generar PDF',
+						iconCls: 'x-fa fa-files-o',
+						handler: function (boton) {
+							var paso = 'Obteniendo url de vista previa';
+							
+							try {
+								if(Ext.manifest.toolkit === 'classic'){
+									Ext.create('Ext.form.Panel').submit(
+											{
+												url: Ice.url.emision.vistaprevia,
+												standardSubmit: true,
+												target: '_blank',
+												params:{
+													'params.cdunieco': view.getCdunieco(),
+													'params.cdramo': view.getCdramo(),
+													'params.estado': view.getEstado(),
+													'params.nmpoliza': view.getNmpoliza(),
+													'params.nmsuplem': '0',
+													'params.cdtipsit': view.getCdtipsit(),
+													'params.cdperpag': rec.get('cdperpag')
+												}
+											}
+									);
+								} else {
+									
+									window.open(Ice.url.emision.vistaprevia+'?'+
+											'params.cdunieco='+view.getCdunieco()+
+											'&params.cdramo='+view.getCdramo()+
+											'&params.estado='+view.getEstado()+
+											'&params.nmpoliza='+view.getNmpoliza()+
+											'&params.nmsuplem=0'+
+											'&params.cdtipsit='+view.getCdtipsit()+
+											'&params.cdperpag='+rec.get('cdperpag'),
+					                        '_blank',
+					                        'width=800, height=600'
+					                    );
+									
+								}
+								
+							} catch( e ) {
+								Ice.manejaExcepcion(e, paso);
+							}
+						}
+					},
+					{
 						text: 'Confirmar forma de pago',
 	                    iconCls: 'x-fa fa-key',
 						handler: function (boton) {

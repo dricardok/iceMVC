@@ -445,7 +445,7 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
         var me = this,
             view = me.getView(),
             paso = 'Confirmando p\u00f3liza';
-        
+        Ice.log('Emitir ', view);
         var emisonResult;
         
         try {
