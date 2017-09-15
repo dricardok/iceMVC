@@ -133,10 +133,16 @@ public class RegistroPersonaAction extends PrincipalCoreAction{
 	            String  dsnombre = mpersona.get("dsnombr");
 	            
 	            if("1".equals(otfisjur)){
-        	          dsnombre = Utils.join(dsnombr1," ",
-					  dsnombr2," ",
-					  dsapell1," ",
-					  dsapell2);
+	                String apellidos = Utils.join(dsapell1," ",dsapell2);
+	                String nombre = Utils.join(dsnombr1, " ");
+	                if(StringUtils.isNotBlank(dsnombr2)){
+	                    nombre = Utils.join(nombre, dsnombr2, " ");
+	                }
+	                dsnombre = Utils.join(nombre, apellidos);
+//        	          dsnombre = Utils.join(dsnombr1," ",
+//					  dsnombr2," ",
+//					  dsapell1," ",
+//					  dsapell2);
 	            }
 	            
 	            
