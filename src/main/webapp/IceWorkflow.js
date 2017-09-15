@@ -546,7 +546,7 @@ var Ice = (
                                                     // CUANDO LA RESPUESTA TIENE UN NUMERAL/GATO AL INICIO, ES UN MENSAJE
                                                     // PARA PANTALLA. EJMPLO: #NO SE PUEDE TURNAR
                                                     if (!Ext.isEmpty(valorRespValid)
-                                                        && valorRespValid.indexOf('#') === 0) {
+                                                        && String(valorRespValid).indexOf('#') === 0) {
                                                         throw valorRespValid.substr(1);
                                                     }
 
@@ -628,7 +628,7 @@ var Ice = (
                                                     // CUANDO LA RESPUESTA TIENE UN NUMERAL/GATO AL INICIO, ES UN MENSAJE
                                                     // PARA PANTALLA. EJMPLO: #NO SE PUEDE TURNAR
                                                     if (!Ext.isEmpty(valorRespValid)
-                                                        && valorRespValid.indexOf('#') === 0) {
+                                                        && String(valorRespValid).indexOf('#') === 0) {
                                                         throw valorRespValid.substr(1);
                                                     }
                                                     

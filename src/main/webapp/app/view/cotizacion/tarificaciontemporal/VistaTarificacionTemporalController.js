@@ -248,26 +248,26 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 																					}
 
 																					Ice.query('#mainView').getController().redirectTo('emision.action?' +
-																						'flujo.cdtipflu='  + view.getFlujo().cdtipflu  + '&' +
-																						'flujo.cdflujomc=' + view.getFlujo().cdflujomc + '&' +
-																						'flujo.tipoent='   + lista[0].TIPODEST         + '&' +
-																						'flujo.claveent='  + lista[0].CLAVEDEST        + '&' +
-																						'flujo.webid='     + lista[0].WEBIDDEST        + '&' +
-																						'flujo.ntramite='  + view.getFlujo().ntramite  + '&' +
-																						'flujo.status='    + view.getFlujo().status    + '&' +
-																						'flujo.aux='       + Ice.nvl(lista[0].AUX)     + '&' +
-																						'flujo.cdunieco='  + view.getFlujo().cdunieco  + '&' +
-																						'flujo.cdramo='    + view.getFlujo().cdramo    + '&' +
-																						'flujo.estado='    + view.getFlujo().estado    + '&' +
-																						'flujo.nmpoliza='  + view.getFlujo().nmpoliza  + '&' +
-																						'flujo.nmsituac='  + view.getFlujo().nmsituac  + '&' +
-																						'flujo.nmsuplem='  + view.getFlujo().nmsuplem  + '&' +
-																						'cdtipsit=' + view.getCdtipsit() + '&' +
+																						'flujo.cdtipflu='  + Ice.nvl(view.getFlujo().cdtipflu)  + '&' +
+																						'flujo.cdflujomc=' + Ice.nvl(view.getFlujo().cdflujomc) + '&' +
+																						'flujo.tipoent='   + Ice.nvl(lista[0].TIPODEST)         + '&' +
+																						'flujo.claveent='  + Ice.nvl(lista[0].CLAVEDEST)        + '&' +
+																						'flujo.webid='     + Ice.nvl(lista[0].WEBIDDEST)        + '&' +
+																						'flujo.ntramite='  + Ice.nvl(view.getFlujo().ntramite)  + '&' +
+																						'flujo.status='    + Ice.nvl(view.getFlujo().status)    + '&' +
+																						'flujo.aux='       + Ice.nvl(lista[0].AUX)              + '&' +
+																						'flujo.cdunieco='  + Ice.nvl(view.getFlujo().cdunieco)  + '&' +
+																						'flujo.cdramo='    + Ice.nvl(view.getFlujo().cdramo)    + '&' +
+																						'flujo.estado='    + Ice.nvl(view.getFlujo().estado)    + '&' +
+																						'flujo.nmpoliza='  + Ice.nvl(view.getFlujo().nmpoliza)  + '&' +
+																						'flujo.nmsituac='  + Ice.nvl(view.getFlujo().nmsituac)  + '&' +
+																						'flujo.nmsuplem='  + Ice.nvl(view.getFlujo().nmsuplem)  + '&' +
+																						'cdtipsit=' + Ice.nvl(view.getCdtipsit()) + '&' +
 																						// perfilamiento
-																						'cdptovta=' + view.getCdptovta() + '&' +
-																						'cdgrupo='  + view.getCdgrupo()  + '&' +
-																						'cdsubgpo=' + view.getCdsubgpo() + '&' +
-                                                                                        'cdperfil=' + view.getCdperfil(), true);
+																						'cdptovta=' + Ice.nvl(view.getCdptovta()) + '&' +
+																						'cdgrupo='  + Ice.nvl(view.getCdgrupo())  + '&' +
+																						'cdsubgpo=' + Ice.nvl(view.getCdsubgpo()) + '&' +
+                                                                                        'cdperfil=' + Ice.nvl(view.getCdperfil()), true);
                                                                                     }
 																				);
 																			} catch (e) {
