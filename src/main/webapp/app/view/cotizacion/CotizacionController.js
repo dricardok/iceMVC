@@ -21,7 +21,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     me.irBloqueSiguiente();
                     try{
                         var paso2 = 'Cambiando valor de agente en datos generales',
-                            agente = Ice.query('[xtype=bloquedatosgenerales]').getReferences().cdagente;
+                            agente = Ice.query('[xtype=bloquedatosgenerales]',view).getReferences().cdagente;
                         if(view.getFlujo() && view.getFlujo().ntramite){
                             Ice.log('datos generales ',Ice.query('[xtype=bloquedatosgenerales]').getReferences());
                             var cambiaAgente = function(tramite) {
