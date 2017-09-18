@@ -76,9 +76,6 @@ public class EmisionManagerImpl implements EmisionManager {
 	@Value("${content.ice.path}")
 	private String directorioBase;
 	
-	@Value("${mui.docs.url}")
-	private String urlDocumentos;
-	
 	@Autowired
     private AgrupadoresManager agrupadoresManager;
 	
@@ -96,6 +93,10 @@ public class EmisionManagerImpl implements EmisionManager {
 	
 	@Autowired
 	private ComponentesDAO componentesDAO;
+	
+	private final String SLIP = "SLIP"; 
+	private final String CARATULA_COT = "CAR-COT";
+	private final String CARATULA_EMI = "CAR-EMI";
 
 	@Override
 	public void movimientoTvalogar(String Gn_Cdunieco, String Gn_Cdramo, String Gv_Estado, String Gn_Nmpoliza,
@@ -543,6 +544,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	public String generarVistaPrevia(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsituac, String cdperpag, String cdusuari, String cdsisrol) throws Exception {
 		logger.debug("\n@@@@@@ generarTarificacionPlan @@@@@@");
+		List<Documento> documentos = null;
 		String paso = null;
 		Map<String, Object> res = null;		
 		List<Map<String, String>> mpolizas = null;
@@ -551,6 +553,8 @@ public class EmisionManagerImpl implements EmisionManager {
 		SimpleDateFormat renderFechas = new SimpleDateFormat("dd/MM/yyyy");
 		List<Map<String, String>> componentes = null;
 		String urlVistaprevia = null;
+		String urlDocumentos = null;
+		
 		try{
 			
 			logger.debug("Obteneniendo poliza {} {} {} {} {} ", cdunieco, cdramo, estado, nmpoliza);
@@ -591,18 +595,35 @@ public class EmisionManagerImpl implements EmisionManager {
 			res = generarTarificacion(cdunieco, cdramo, estado, nmpoliza, nmsituac, cdusuari, cdsisrol);
 			
 			// 
-			componentes = componentesDAO.obtenerListaComponentesSP("URL_MUI", "CARATULA_COTI", null, null, "501", null, null, null);
+			//componentes = componentesDAO.obtenerListaComponentesSP("URL_MUI", "CARATULA_COTI", null, null, "501", null, null, null);
+			 logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
+	         documentos = impresionManager.getDocumentos(cdunieco, cdramo, estado, nmpoliza, "0");
+	         logger.debug("Fin de obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, "0");
 			
-			if(componentes == null) {
+			
+			if(documentos == null) {
 				throw new Exception("Faltan url");
 			}
-			if(componentes != null && componentes.size() > 1) {
-				throw new Exception("Mas de una url");
+			if(documentos != null && documentos.isEmpty()) {
+				throw new Exception("No trajo docuentos");
 			}
 			
-			String segundaparte = componentes.get(0).get("handler")+cdunieco+"/"+cdramo+"/"+estado+"/"+nmpoliza+"/0";
+			boolean existeCaratulaCot = false;
+			for(Documento documento : documentos) {
+				
+				if(documento.getTipo().equals(CARATULA_COT)) {
+					logger.debug("Documento {} tipo {} ", documento.getNombre(), documento.getTipo());
+					urlDocumentos = documento.getUrl();
+					existeCaratulaCot = true;
+					urlVistaprevia = urlDocumentos;
+					break;
+				}
+			}		
 			
-			urlVistaprevia = urlDocumentos + segundaparte;
+			if(!existeCaratulaCot) {
+				throw new Exception("No se encontro la caratula de cotizacion");
+			}
+			
 				
 		} catch(Exception e) {
 			Utils.generaExcepcion(e, paso);
@@ -680,6 +701,7 @@ public class EmisionManagerImpl implements EmisionManager {
          );     
     }
 	
+	/*
 	@Override
 	public Map<String, Object> generarDocumentos(String cdunieco, String cdramo, String estado, String nmpoliza, String nmsuplem, String cdtipsup, String isCotizacion, String cdusuari) throws Exception {
 		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
@@ -799,6 +821,7 @@ public class EmisionManagerImpl implements EmisionManager {
 		
 		return results;
 	}
+	*/
 	
 	   @Override
 	   public Map<String, Object> generarDocumentos(String ntramite, String cdtipsup, String isCotizacion, String cdusuari) throws Exception{
@@ -858,9 +881,9 @@ public class EmisionManagerImpl implements EmisionManager {
 	                        logger.info(documento.getTipo());
 	                        logger.info(documento.getUrl());                        
 	                        
-	                        documentoRuta = path+documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
-	                        nombreExtension = documento.getNombre() + (documento.getTipo()!=null ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());                        
-	                        urlSLIP = documento.getTipo()!=null ? documento.getUrl()+"/"+cdusuari+"/rtf" : documento.getUrl();
+	                        documentoRuta = path+documento.getNombre() + ((documento.getTipo()!=null && documento.getTipo().equals(SLIP)) ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());
+	                        nombreExtension = documento.getNombre() + ((documento.getTipo()!=null && documento.getTipo().equals(SLIP)) ? TipoArchivo.RTF.getExtension() : TipoArchivo.PDF.getExtension());                        
+	                        urlSLIP = (documento.getTipo()!=null && documento.getTipo().equals(SLIP)) ? documento.getUrl()+"/"+cdusuari+"/rtf" : documento.getUrl();
 	                            
 	                        //  boolean exito = HttpUtil.generaArchivo(documento.getUrl(), documentoRuta);
 	                        exito = false;
