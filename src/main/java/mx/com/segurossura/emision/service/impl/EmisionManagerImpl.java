@@ -76,8 +76,8 @@ public class EmisionManagerImpl implements EmisionManager {
 	@Value("${content.ice.path}")
 	private String directorioBase;
 	
-	@Value("${mui.docs.dns}")
-	private String dns;
+	@Value("${mui.docs.url}")
+	private String urlDocumentos;
 	
 	@Autowired
     private AgrupadoresManager agrupadoresManager;
@@ -602,7 +602,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			
 			String segundaparte = componentes.get(0).get("handler")+cdunieco+"/"+cdramo+"/"+estado+"/"+nmpoliza+"/0";
 			
-			urlVistaprevia = dns + segundaparte;
+			urlVistaprevia = urlDocumentos + segundaparte;
 				
 		} catch(Exception e) {
 			Utils.generaExcepcion(e, paso);
@@ -838,7 +838,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	                    datosMrecibo = emisionDAO.obtenerDatosConfirmacion(cdunieco, cdramo, estado, nmpoliza, null).get(0);
 	                }
 	            } catch(Exception e) {
-	                e.printStackTrace();
+	            	logger.error("Error obteniendo informacion para generar docs", e);
 	            }
 	            
 	            logger.debug("Obteniendo documentos de la p\u00f3liza {} {} {} {} {}", cdunieco, cdramo, estado, nmpoliza, nmsuplem);
