@@ -51,7 +51,7 @@ public class DocumentosDAOImpl extends HelperJdbcDao implements DocumentosDAO {
         } else {
             if(lista.get(0) != null){
                 lista.get(0).put("total", procResult.get("pv_num_rec_o").toString());
-                logger.debug("Informacion de docuentos", procResult);
+                logger.debug("Informacion de docuentos {} ", procResult.get("pv_num_rec_o").toString());
             }
         }
         

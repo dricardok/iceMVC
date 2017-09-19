@@ -899,7 +899,7 @@ public class EmisionManagerImpl implements EmisionManager {
 	                        documentosDAO.realizarMovimientoDocsPoliza(cdunieco, cdramo, estado, nmpoliza, nmsolici, localnmsuplem, ntramite, new Date(),
 	                                                                   documento.getId(), nombreExtension, cdtipsup, exito ? Constantes.SI : Constantes.NO,
 	                                                                   cdtiptra, codidocu, cdorddoc, cdmoddoc, nmcertif, nmsituac, urlSLIP, 
-	                                                                   path.toString(), documento.getTipo(), Constantes.INSERT_MODE);                                           	                        
+	                                                                   path.toString(), (documento.getTipo()!=null && documento.getTipo().equals(SLIP)) ? documento.getTipo() : null, Constantes.INSERT_MODE);                                           	                        
 	                    } catch(Exception e) {
 	                        logger.error(e.getMessage(), e);                    
 	                        //continue;
