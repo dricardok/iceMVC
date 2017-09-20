@@ -656,7 +656,9 @@ public class EmisionAction extends PrincipalCoreAction {
         }
     ) 
     public String generarVistaPrevia() {
-    	logger.debug("Inicio genrarVistaPrevia...");
+    	
+    	logger.debug("#######################################"
+    			   + "\n##### Inicio generarVistaPrevia...");
         try {
         	UsuarioVO usuario = (UsuarioVO) Utils.validateSession(session);
             
@@ -686,11 +688,12 @@ public class EmisionAction extends PrincipalCoreAction {
             success = false;
             message = Utils.manejaExcepcion(ex);
         }
-        logger.debug(StringUtils.join(
-                "\n###################"
-               ,"\n###### vistaprevia ######"
+        
+        logger.debug(StringUtils.join(                
+               "\n###### Fin de generarVistaPrevia ######"
                ,"\n###### filename", filename
-               ,"\n###### contentType", contentType
+               ,"\n###### contentType", contentType,
+               "\n#########################################"
                ));
         return SUCCESS;
     }
