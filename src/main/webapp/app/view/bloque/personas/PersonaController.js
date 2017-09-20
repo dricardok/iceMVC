@@ -492,7 +492,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 	        	
 	        } else if(Number(tipoPersona) == 2  || tipoPersona == 'S') { // Persona moral y regimen Simplificado
 	            
-	        	res=/[A-Z&Ñ]{3}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]/.test(rfc);
+	        	res=/[A-Z&amp;Ñ]{3}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]/.test(rfc);
 	        	
 	        } else {
 	            throw 'Error en la validacion, tipo de persona invalido: "' + tipoPersona + '"';
