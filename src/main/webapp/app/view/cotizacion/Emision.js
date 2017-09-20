@@ -125,10 +125,6 @@ Ext.define('Ice.view.cotizacion.Emision', {
                 
                 items: true
             });
-            
-            if(Ext.manifest.toolkit === 'classic'){
-                config.b
-            } else{}
 
             config.bloques = bloques.EMISION.BLOQUES.items;
             if ((config.bloques || []).length === 0) {

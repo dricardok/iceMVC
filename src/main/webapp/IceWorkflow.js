@@ -1014,12 +1014,60 @@ var Ice = (
 						if(action && action.params && action.params.referencia) {
 							// primero valida, si hay tramite (flujo.ntramite)
 							if( !Ext.isEmpty(flujo.ntramite) ) {
-								// muestra al usuario el aviso con la variable message y la pregunta ¿desea turnar el trámite?, al aceptar continuar se ejecuta la referencia de params.referencia (1-e).
-								Ext.Msg.confirm("Aviso", action.message + "\n\u00bfDesea turnar el tr\u00E1mite " + flujo.ntramite + " ?", function(opc){
-									if (opc === 'yes') {
-										Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
-									}
-								});
+                                // muestra al usuario el aviso con la variable message y la pregunta ¿desea turnar el trámite?, al aceptar continuar se ejecuta la referencia de params.referencia (1-e).
+                                var funcionRecursiva = function () {
+                                    if (Ice.classic()) {
+                                        Ext.Msg.show({
+                                            title: 'Aviso',
+                                            msg: action.message + "\n\u00bfDesea turnar el tr\u00E1mite " + flujo.ntramite + " ?",
+                                            buttons: Ext.Msg.YESNOCANCEL,
+                                            buttonText: {
+                                                yes: 'Si', no: 'No', cancel: 'Ver documentos'
+                                            },
+                                            fn: function (opc) {
+                                                if (opc === 'yes') {
+                                                    Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
+                                                } else if (opc === 'cancel') {
+                                                    funcionRecursiva();
+                                                    var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos', {
+                                                        flujo: flujo
+                                                    });
+                                                    ventanaDocs.mostrar();
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        var ventanaOpciones = Ext.create({
+                                            xtype: 'ventanaice',
+                                            title: 'Aviso',
+                                            html: action.message + "\n\u00bfDesea turnar el tr\u00E1mite " + flujo.ntramite + " ?",
+                                            buttons: [
+                                                {
+                                                    text: 'Si',
+                                                    handler: function (me) {
+                                                        me.up('ventanaice').cerrar();
+                                                        Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
+                                                    }
+                                                }, {
+                                                    text: 'No',
+                                                    handler: function (me) {
+                                                        me.up('ventanaice').cerrar();
+                                                    }
+                                                }, {
+                                                    text: 'Ver documentos',
+                                                    handler: function (me) {
+                                                        var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos', {
+                                                            flujo: flujo
+                                                        });
+                                                        ventanaDocs.mostrar();
+                                                    }
+                                                }
+                                            ]
+                                        });
+                                        ventanaOpciones.mostrar();
+                                    }
+                                };
+                                funcionRecursiva();
 							} else {
 								// si no hay trámite: se muestra el aviso con la variable message y la pregunta ¿desea registrar el trámite y enviar la solicitud?,
 								Ext.Msg.confirm("Aviso", action.message + "\n\u00bfDesea registrar el tr\u00E1mite y enviar la solicitud?", function(opc){
