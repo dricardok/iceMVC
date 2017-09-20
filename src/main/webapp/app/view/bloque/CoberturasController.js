@@ -761,7 +761,8 @@ Ext.define('Ice.view.bloque.CoberturasController', {
 		    			nmsuplem: view.getNmsuplem(),
 		    			nmsituac: view.getNmsituac(),
 		    			cdgarant: view.getCdgarant(),
-		    			cdcapita: view.getCdcapita()
+		    			cdcapita: view.getCdcapita(),
+		    			cdtipsit: view.getCdtipsit()
 	    			}
 	    		},
 	    		success:function(json){

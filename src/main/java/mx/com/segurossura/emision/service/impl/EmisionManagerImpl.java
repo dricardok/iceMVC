@@ -543,7 +543,8 @@ public class EmisionManagerImpl implements EmisionManager {
 	
 	public String generarVistaPrevia(String cdunieco, String cdramo, String estado, String nmpoliza,
 			String nmsituac, String cdperpag, String cdusuari, String cdsisrol) throws Exception {
-		logger.debug("\n@@@@@@ generarTarificacionPlan @@@@@@");
+		logger.debug("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+					+ "@@@ generarVistaPrevia @@@@@@@@@");
 		List<Documento> documentos = null;
 		String paso = null;
 		Map<String, Object> res = null;		
@@ -557,7 +558,7 @@ public class EmisionManagerImpl implements EmisionManager {
 		
 		try{
 			
-			logger.debug("Obteneniendo poliza {} {} {} {} {} ", cdunieco, cdramo, estado, nmpoliza);
+			logger.debug("Obteneniendo poliza {} {} {} {} ", cdunieco, cdramo, estado, nmpoliza);
 			
 			mpolizas = emisionDAO.obtieneMpolizas(cdunieco, cdramo, estado, nmpoliza, "0");
 			
@@ -611,7 +612,7 @@ public class EmisionManagerImpl implements EmisionManager {
 			boolean existeCaratulaCot = false;
 			for(Documento documento : documentos) {
 				
-				if(documento.getTipo().equals(CARATULA_COT)) {
+				if( CARATULA_COT.equals(documento.getTipo()) ) {
 					logger.debug("Documento {} tipo {} ", documento.getNombre(), documento.getTipo());
 					urlDocumentos = documento.getUrl();
 					existeCaratulaCot = true;
@@ -629,6 +630,8 @@ public class EmisionManagerImpl implements EmisionManager {
 			Utils.generaExcepcion(e, paso);
 		}
 		
+		logger.debug("\n@@@ generarVistaPrevia @@@@@@@@@"
+					 + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		return urlVistaprevia;
 	}
 	
