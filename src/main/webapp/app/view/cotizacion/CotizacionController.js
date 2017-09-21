@@ -189,8 +189,9 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     											   flu, 
                     											   function(){
 										            					agregarYEnfocarBloque(true);
+										            					Ext.Ajax.setTimeout(1000*60*2);
 										            				});
-                    		Ext.Ajax.setTimeout(1000*60*2);
+                    		
                     	}else{
                     		agregarYEnfocarBloque(true);
                     	}
