@@ -179,7 +179,7 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     	if(bloqueActual.xtype == 'datosiniciales'){
                     		
                     		var flu = view.getFlujo(); 
-                    		
+                    		Ext.Ajax.setTimeout(999999999);
                     		Ice.ejecutarValidacionesEventoPantalla (view.getCdunieco(), 
                     											   view.getCdramo(),
                     											   view.getEstado(),
@@ -189,7 +189,9 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                     											   flu, 
                     											   function(){
 										            					agregarYEnfocarBloque(true);
+										            					Ext.Ajax.setTimeout(1000*60*2);
 										            				});
+                    		
                     	}else{
                     		agregarYEnfocarBloque(true);
                     	}
