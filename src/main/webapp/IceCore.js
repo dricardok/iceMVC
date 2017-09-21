@@ -458,6 +458,36 @@ var Ice = (
     },
     
     /**
+     * Presenta aviso en pantalla, recibe objeto params:
+     * params: {
+     *  titulo: 'Datos guardados',
+     *  mensaje: 'Poliza emitida correctamente'
+     * }
+     */
+    toast: function (params) {
+    	var paso = 'Mostrando Aviso';
+    	try {
+    		var titulo = (params && params.titulo) || 'Aviso',
+            	mensaje = (params && params.mensaje) || (params && typeof params === 'string' && params) || '(sin mensaje)';
+    			
+    		if (Ext.manifest.toolkit === 'classic') {
+    			Ext.toast({
+    				  title: titulo,
+    				  timeout: 1000,
+    				  html: mensaje,
+    				  width: 300,
+    				  align: 't'
+    				});
+    		} else {
+    			Ext.toast(mensaje, 1000);
+    		}
+    		
+    	} catch (e) {
+    		Ice.manejaExcepcion(e, paso);
+    	}
+    },
+    
+    /**
      * Presenta mensaje en pantalla, recibe objeto params:
      * params: {
      *     titulo: 'Datos guardados',               <<< titulo de la ventana (opcional)
