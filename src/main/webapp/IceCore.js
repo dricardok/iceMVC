@@ -2322,8 +2322,12 @@ var Ice = (
                 cdramo    : params.flujo.cdramo    || params['flujo.cdramo'],
                 estado    : (params.flujo.estado   || params['flujo.estado'] || '').toUpperCase(),
                 nmpoliza  : params.flujo.nmpoliza  || params['flujo.nmpoliza'],
-                nmsituac  : params.flujo.nmsituac  || params['flujo.nmsituac'],
-                nmsuplem  : params.flujo.nmsuplem  || params['flujo.nmsuplem'],
+                nmsituac  : !Ext.isEmpty(params.flujo.nmsituac)
+                    ? params.flujo.nmsituac
+                    : params['flujo.nmsituac'],
+                nmsuplem  : !Ext.isEmpty(params.flujo.nmsuplem)
+                    ? params.flujo.nmsuplem
+                    : params['flujo.nmsuplem'],
                 aux       : params.flujo.aux       || params['flujo.aux']
             };
             try {
