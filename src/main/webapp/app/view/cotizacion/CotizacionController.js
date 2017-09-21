@@ -137,6 +137,18 @@ Ext.define('Ice.view.cotizacion.CotizacionController', {
                                         view.getFlujo().estado   = view.getEstado();
                                         view.getFlujo().nmpoliza = view.getNmpoliza();
                                         view.getFlujo().nmsuplem = view.getNmsuplem();
+
+                                        if (view.getBotonera()) {
+                                            view.getBotonera().cerrar();
+
+                                            var botonera = Ext.create({
+                                                xtype: 'ventanabotonesflujo',
+                                                flujo: view.getFlujo(),
+                                                padre: view
+                                            }).mostrar();
+
+                                            view.setBotonera(botonera);
+                                        }
                                     }
 
                                     Ice.log('Ice.view.cotizacion.CotizacionController datosiniciales.llaveGenerada viewCotizacion:', view);

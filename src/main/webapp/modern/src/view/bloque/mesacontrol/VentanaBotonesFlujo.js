@@ -61,5 +61,6 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaBotonesFlujo', {
         } catch (e) {
             Ice.manejaExcepcion(e, paso);
         }
+        return me;
     }
 });

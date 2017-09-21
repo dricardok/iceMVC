@@ -839,6 +839,14 @@ Ext.define('Ice.view.cotizacion.EmisionController', {
 				},
 				success: function (action) {
 					Ice.log(action);
+					
+					pbar.hide();
+                    error.setHtml('<p>Documentos generados</p>');
+                    error.show();
+                    //Ice.query('button', ventana)[1].hide();
+                    Ice.query('button', ventana)[0].enable(); // boton de Ver documentos
+                    Ice.query('button', ventana)[1].enable(); // boton de Inicio
+					
 					try {
 						Ice.log("reqParams ", reqParams);
                         Ice.ejecutarValidacionesEventoPantalla (

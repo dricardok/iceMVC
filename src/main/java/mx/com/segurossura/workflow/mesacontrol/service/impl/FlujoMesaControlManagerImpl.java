@@ -4430,4 +4430,121 @@ public class FlujoMesaControlManagerImpl implements FlujoMesaControlManager
 	    }
 	    return ntramiteNuevo;
 	}
+	
+	@Override
+	public String registrarTramiteDesdeFlujo (FlujoVO flujo, String cdusuari, String cdsisrol) throws Exception {
+	    logger.debug(Utils.log("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+                               "\n@@@@@@ registrarTramiteDesdeFlujo @@@@@@",
+                               "\n@@@@@@ cdusuari = ", cdusuari,
+                               "\n@@@@@@ cdsisrol = ", cdsisrol,
+                               "\n@@@@@@ flujo = ", flujo));
+	    String mensaje = null,
+	           paso = null;
+	    Date fechaHoy = new Date();
+	    try {
+	        paso = "Recuperando datos del auxiliar";
+	        String[] split = flujo.getAux().split("\\|");
+	        Map<String, String> datos = new LinkedHashMap<String, String>();
+	        for (int i = 0; i < split.length - 1; i = i + 2) {
+	            datos.put(split[i], split[i+1]);
+	        }
+	        logger.debug(Utils.log("\nDatos recuperados de flujo.aux = ", datos));
+	        
+	        Utils.validate(datos.get("cdtiptra"),  "Falta cdtiptra",
+	                       datos.get("estatus"),   "Falta estatus",
+	                       datos.get("comments"),  "Falta comments",
+	                       datos.get("cdtipflu"),  "Falta cdtipflu",
+	                       datos.get("cdflujomc"), "Falta cdflujomc",
+	                       datos.get("respuesta"), "Falta respuesta");
+	        
+	        if (datos.get("respuesta").indexOf("{}") == -1) {
+	            throw new ApplicationException("Falta el comodin {} en aux.respuesta");
+	        }
+	        
+	        if (datos.get("comments").indexOf("{}") != -1) {
+	            paso = "Insertando tr\u00e1mite original en comentarios de tr\u00e1mite nuevo";
+	            datos.put("comments", datos.get("comments").replace("{}", flujo.getNtramite()));
+	        }
+	        
+	        paso = "Registrando tr\u00e1mite";
+	        String ntramiteNuevo = mesaControlDAO2.movimientoTmesacontrol(
+	                null, // ntramite,
+	                flujo.getCdunieco(),
+	                flujo.getCdramo(),
+	                flujo.getEstado(),
+	                flujo.getNmpoliza(),
+                    flujo.getNmsuplem(),
+                    flujo.getNmpoliza(), // nmsolici,
+                    flujo.getCdunieco(), // cdsucadm,
+                    flujo.getCdunieco(), // cdsucdoc,
+                    datos.get("cdtiptra"),
+                    fechaHoy, // ferecepc,
+                    datos.get("cdagente"),
+                    datos.get("referencia"),
+                    datos.get("nombre"),
+                    fechaHoy, // fecstatu,
+                    datos.get("estatus"),
+                    datos.get("comments"),
+                    datos.get("cdtipsit"),
+                    datos.get("otvalor01"), datos.get("otvalor02"), datos.get("otvalor03"), datos.get("otvalor04"), datos.get("otvalor05"),
+                    datos.get("otvalor06"), datos.get("otvalor07"), datos.get("otvalor08"), datos.get("otvalor09"), datos.get("otvalor10"),
+                    datos.get("otvalor11"), datos.get("otvalor12"), datos.get("otvalor13"), datos.get("otvalor14"), datos.get("otvalor15"),
+                    datos.get("otvalor16"), datos.get("otvalor17"), datos.get("otvalor18"), datos.get("otvalor19"), datos.get("otvalor20"),
+                    datos.get("otvalor21"), datos.get("otvalor22"), datos.get("otvalor23"), datos.get("otvalor24"), datos.get("otvalor25"),
+                    datos.get("otvalor26"), datos.get("otvalor27"), datos.get("otvalor28"), datos.get("otvalor29"), datos.get("otvalor30"),
+                    datos.get("otvalor31"), datos.get("otvalor32"), datos.get("otvalor33"), datos.get("otvalor34"), datos.get("otvalor35"),
+                    datos.get("otvalor36"), datos.get("otvalor37"), datos.get("otvalor38"), datos.get("otvalor39"), datos.get("otvalor40"),
+                    datos.get("otvalor41"), datos.get("otvalor42"), datos.get("otvalor43"), datos.get("otvalor44"), datos.get("otvalor45"),
+                    datos.get("otvalor46"), datos.get("otvalor47"), datos.get("otvalor48"), datos.get("otvalor49"), datos.get("otvalor50"),
+                    Utils.NVL(datos.get("swimpres"), "N"),
+                    datos.get("cdtipflu"),
+                    datos.get("cdflujomc"),
+                    cdusuari,
+                    datos.get("cdtipsup"),
+                    datos.get("swvispre"),
+                    datos.get("cdpercli"),
+                    datos.get("renuniext"),
+                    datos.get("renramo"),
+                    datos.get("renpoliex"),
+                    datos.get("sworigenmesa"),
+                    datos.get("cdrazrecha"),
+                    datos.get("cdunidspch"),
+                    datos.get("ntrasust"),
+                    cdsisrol,
+                    "I" //accion
+                    );
+	        
+	        paso = "Recuperando usuario y rol destino";
+	        String usuarioRolDestino = flujoMesaControlDAO.ejecutaValidacion("DESPACHADOR", ntramiteNuevo, datos.get("estatus"), null);
+	        
+	        paso = "Turnando tr\u00e1mite";
+	        RespuestaTurnadoVO turn = despachadorManager.turnarTramite(
+	                cdusuari,
+	                cdsisrol,
+	                ntramiteNuevo,
+	                usuarioRolDestino.substring(1),
+	                datos.get("comments"),
+	                null, //cdrazrecha, 
+	                null, //cdusuari, 
+	                null, //cdsisrol, 
+	                true, //permisoAgente, 
+	                false, //porEscalamiento, 
+	                fechaHoy, 
+	                false, //sinGrabarDetalle, 
+	                false, //sinBuscarRegreso, 
+	                null, //ntrasust, 
+	                false, //soloCorreosRecibidos, 
+	                "" //correosRecibidos
+	                );
+	        
+	        paso = "Formateando mensaje de respuesta";
+	        mensaje = Utils.join(datos.get("respuesta").replace("{}", ntramiteNuevo), ". Asignaci\u00f3n: ", turn.getMessage());
+	    } catch (Exception e) {
+	        Utils.generaExcepcion(e, paso);
+	    }
+	    logger.debug(Utils.log("\n@@@@@@ mensaje = ", mensaje,
+                               "\n@@@@@@ registrarTramiteDesdeFlujo @@@@@@",
+                               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"));
+	    return mensaje;
+	}
 }

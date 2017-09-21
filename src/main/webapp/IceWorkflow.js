@@ -360,23 +360,49 @@ var Ice = (
                                                         callback: callback || Ice.index
                                                     });
                                                 } else if (numSalidas === 1) {
-                                                    Ice.procesaAccion(
-                                                        cdtipflu,
-                                                        cdflujomc,
-                                                        accion1.TIPODEST,
-                                                        accion1.CLAVEDEST,
-                                                        accion1.WEBIDDEST,
-                                                        Ice.nvl(accion1.AUX, aux),
-                                                        ntramite,
-                                                        status,
-                                                        cdunieco,
-                                                        cdramo,
-                                                        estado,
-                                                        nmpoliza,
-                                                        nmsituac,
-                                                        nmsuplem,
-                                                        callback
-                                                    );
+                                                    if (Ext.isEmpty(json.message)) {
+                                                        Ice.procesaAccion(
+                                                            cdtipflu,
+                                                            cdflujomc,
+                                                            accion1.TIPODEST,
+                                                            accion1.CLAVEDEST,
+                                                            accion1.WEBIDDEST,
+                                                            Ice.nvl(accion1.AUX, aux),
+                                                            ntramite,
+                                                            status,
+                                                            cdunieco,
+                                                            cdramo,
+                                                            estado,
+                                                            nmpoliza,
+                                                            nmsituac,
+                                                            nmsuplem,
+                                                            callback
+                                                        );
+                                                    } else {
+                                                        Ice.mensajeCorrecto({
+                                                            titulo: 'AVISO',
+                                                            mensaje: json.message,
+                                                            callback: function () {
+                                                                Ice.procesaAccion(
+                                                                    cdtipflu,
+                                                                    cdflujomc,
+                                                                    accion1.TIPODEST,
+                                                                    accion1.CLAVEDEST,
+                                                                    accion1.WEBIDDEST,
+                                                                    Ice.nvl(accion1.AUX, aux),
+                                                                    ntramite,
+                                                                    status,
+                                                                    cdunieco,
+                                                                    cdramo,
+                                                                    estado,
+                                                                    nmpoliza,
+                                                                    nmsituac,
+                                                                    nmsuplem,
+                                                                    callback
+                                                                );
+                                                            }
+                                                        });
+                                                    }
                                                 } else if (numSalidas === 2) {
                                                     Ice.procesaAccion(
                                                         cdtipflu,
@@ -1022,12 +1048,12 @@ var Ice = (
                                             msg: action.message + "\n\u00bfDesea turnar el tr\u00E1mite " + flujo.ntramite + " ?",
                                             buttons: Ext.Msg.YESNOCANCEL,
                                             buttonText: {
-                                                yes: 'Si', no: 'No', cancel: 'Ver documentos'
+                                                yes: 'Si', no: 'Ver documentos', cancel: 'No'
                                             },
                                             fn: function (opc) {
                                                 if (opc === 'yes') {
                                                     Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
-                                                } else if (opc === 'cancel') {
+                                                } else if (opc === 'no') {
                                                     funcionRecursiva();
                                                     var ventanaDocs = Ext.create('Ice.view.bloque.documentos.VentanaDocumentos', {
                                                         flujo: flujo
