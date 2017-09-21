@@ -32,6 +32,8 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 	    		me.llenarCampos(view.down('#frmPersona'),Ice.url.bloque.personas.obtenerPersona,params);
 	    		
 	    		
+    		}else{
+    			Ice.cargarFormulario(view.down('#frmPersona'),view.getDefaults());
     		}
     		
     	}catch(e){
@@ -101,7 +103,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     				}
     				Ice.mensaje("Se guardo correctamente");
     				if(me.eventGuardaPersona){
-    					view.fireEvent("personaGuardada", view, json.params.cdperson);
+    					view.fireEvent("personaGuardada", view, json.params.cdperson,Object.assign({},tvaloper,mpersona));
     				}else{
     					me.eventGuardaPersona = true;
     				}
