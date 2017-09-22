@@ -2284,7 +2284,7 @@ public class EmisionDAOImpl extends HelperJdbcDao implements EmisionDAO {
         params.put("pv_cdramo_i"     ,cdramo); 
         params.put("pv_estado_i"     ,estado); 
         params.put("pv_nmpoliza_i"   ,nmpoliza);
-        Map<String, Object> resultado = ejecutaSP(new ConsultaDuplicidadSP(getDataSource()), params);
+        Map<String, Object> resultado = ejecutaSP(new ConsultaDuplicidadPolizaSP(getDataSource()), params);
         List<Map<String, String>> lista =(List<Map<String,String>>)resultado.get("pv_registro_o");        
         logger.debug("Resultado ", lista);
         return lista;
