@@ -1757,7 +1757,7 @@ var Ice = (
                 throw 'No se puede validar el formulario';
             }
 
-            var refs = form.getReferences(),
+            var refs = form.getReferences()||{},
                 valores = form.getValues() || {},
                 valores2 = form.getValues() || {},
                 fields = form.getModelFields() || [],
@@ -1765,9 +1765,9 @@ var Ice = (
                 modelName = Ext.id(),
                 validatorsAplican = {};
             
-            if (!refs) {
+            /*if (!refs) {
                 throw 'No hay referencias para validar errores';
-            }
+            }*/
             
             // transformo los refs a mapa de names, ya que el ref puede ser punto_venta pero el name otvalor12
             refs = Ice.refsToNames(refs);
