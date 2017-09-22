@@ -71,7 +71,7 @@ Ext.define('Ice.view.cotizacion.tarificaciontemporal.VistaTarificacionTemporalCo
 						}
 					},
 					{
-						text: 'Confirmar forma de pago',
+						text: 'Continuar emisi&oacute;n',
 	                    iconCls: 'x-fa fa-key',
 						handler: function (boton) {
 							var paso = 'Tarificando el plan seleccionado'; 							
