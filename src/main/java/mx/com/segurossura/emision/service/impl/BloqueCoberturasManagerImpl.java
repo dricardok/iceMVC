@@ -222,7 +222,7 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 									  m-> !(m.get("tabla")==null || "null".equals(m.get("tabla")))
 								   ).findFirst();
 			
-			if(mpolicap.isPresent()){
+			if(mpolicap.isPresent()){  // si modifica la suma asegurada
 				Map<String, String> m = mpolicap.get();
 				logger.debug("mpolicap:"+m);
 				
@@ -231,6 +231,26 @@ private final static Logger logger = LoggerFactory.getLogger(EmisionManagerImpl.
 					emisionDAO.movimientoMpolicap(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i, null, pv_cdcapita_i, m.get("valor"), pv_nmsuplem_i, "U");
 					emisionDAO.ejecutarValoresDefecto(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i,
 					        Bloque.ATRIBUTOS_GARANTIAS.getCdbloque(), pv_cdgarant_i, null, null, null, null, cdusuari, cdsisrol);
+					
+//					paso = "Ejecutando valores por defecto de cada cobertura";
+//					List<Map<String, String>> capitales = emisionDAO.obtieneMpoligar(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, null, pv_nmsuplem_i, pv_cdtipsit_i, cdsisrol);
+//					capitales.stream()
+//							 .filter(
+//									 	capital -> capital != null && capital.get("cdcapita")!=null && capital.get("cdcapita").equals(pv_cdcapita_i)
+//									 ).peek(m3 -> logger .debug("==: "+m3))
+//							 .forEach(
+//									 	capital -> {
+//									 		logger.debug("Ejecutando valores por defecto para garantia: {} en el cdcapita: {}",pv_cdgarant_i,pv_cdcapita_i);
+//									 		try {
+//												emisionDAO.ejecutarValoresDefecto(pv_cdunieco_i, pv_cdramo_i, pv_estado_i, pv_nmpoliza_i, pv_nmsituac_i, pv_nmsuplem_i,
+//												        Bloque.ATRIBUTOS_GARANTIAS.getCdbloque(), capital.get("cdgarant"), null, null, null, null, cdusuari, cdsisrol);
+//											} catch (Exception e) {
+//												logger.error("Error en los valores por defecto al cambiar el ptcapita");
+//											}
+//									 	}
+//									 );
+					
+					
 				}
 			}
 			

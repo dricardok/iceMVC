@@ -88,12 +88,7 @@ Ext.define('Ice.view.bloque.personas.PolizaPersona', {
 												handler : function(grid,row,col){
 													me.getController().editarPersona(grid,row,col)
 												}
-											}
-										]
-							},
-							{
-								xtype : 'actioncolumn',
-								items : [
+											},
 											{
 												iconCls : 'x-fa  fa-book',
 												tooltip : 'Ver domicilios',

@@ -45,7 +45,9 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
         cdptovta: null,
         cdgrupo: null,
         cdsubgpo: null,
-        cdperfil: null
+        cdperfil: null,
+
+        botonera: null
     },
     
     constructor: function (config) {
@@ -136,11 +138,13 @@ Ext.define('Ice.view.cotizacion.Cotizacion', {
             me.callParent(arguments);
 
             if (config.flujo.ntramite) {
-                Ext.create({
+                var botonera = Ext.create({
                     xtype: 'ventanabotonesflujo',
                     flujo: config.flujo,
                     padre: me
                 }).mostrar();
+
+                me.setBotonera(botonera);
             }
         } catch (e) {
             Ice.generaExcepcion(e, paso);

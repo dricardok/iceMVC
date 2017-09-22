@@ -33,6 +33,8 @@ Ext.define('Ice.view.bloque.mesacontrol.VentanaBotonesFlujo', {
             config.width = 650;
             config.height = 120;
 
+            config.maximizable = false;
+
             me.callParent(arguments);
         } catch (e) {
             Ice.generaExcepcion(e, paso);

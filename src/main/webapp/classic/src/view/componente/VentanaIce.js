@@ -12,6 +12,14 @@ Ext.define('Ice.view.componente.VentanaIce', {
         try {
             Ice.agregarClases(config, ['ice-ventana', 'ice-ventana-classic']);
             Ice.convertirBotones(config.buttons);
+
+            if (Ext.isEmpty(config.resizable)) {
+                config.resizable = false;
+            }
+
+            if (Ext.isEmpty(config.maximizable)) {
+                config.maximizable = true;
+            }
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }

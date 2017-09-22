@@ -32,6 +32,8 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 	    		me.llenarCampos(view.down('#frmPersona'),Ice.url.bloque.personas.obtenerPersona,params);
 	    		
 	    		
+    		}else{
+    			Ice.cargarFormulario(view.down('#frmPersona'),view.getDefaults());
     		}
     		
     	}catch(e){
@@ -101,7 +103,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
     				}
     				Ice.mensaje("Se guardo correctamente");
     				if(me.eventGuardaPersona){
-    					view.fireEvent("personaGuardada", view, json.params.cdperson);
+    					view.fireEvent("personaGuardada", view, json.params.cdperson,Object.assign({},tvaloper,mpersona));
     				}else{
     					me.eventGuardaPersona = true;
     				}
@@ -492,7 +494,7 @@ Ext.define('Ice.view.bloque.personas.PersonaController', {
 	        	
 	        } else if(Number(tipoPersona) == 2  || tipoPersona == 'S') { // Persona moral y regimen Simplificado
 	            
-	        	res=/[A-Z&Ñ]{3}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]/.test(rfc);
+	        	res=/[A-Z&amp;Ñ]{3}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]/.test(rfc);
 	        	
 	        } else {
 	            throw 'Error en la validacion, tipo de persona invalido: "' + tipoPersona + '"';

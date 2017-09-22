@@ -12,7 +12,8 @@ Ext.define('Ice.view.bloque.personas.Persona', {
 		modelValidators	:	{},
 		cdramo			:	null,
 		cdrol			:	null,
-		accion			:	'I'
+		accion			:	'I',
+		defaults		:	{}
 	},
 	controller : 'persona',
 	title: {

@@ -160,6 +160,36 @@ Ext.define('Ice.view.bloque.personas.PolizaPersonaController', {
 	    }
     },
     
+    verDomicilios : function(grid, rowIndex, colIndex,r){
+    	var me = this,
+        view = me.getView(),
+        refs = view.getReferences(),
+        paso = 'Domicilios persona';
+	    try{
+
+	    	Ice.log("--->",arguments);
+	    	var record,cell,data;
+	    	if(Ext.manifest.toolkit === 'classic'){
+	    		record = grid.getStore().getAt(rowIndex);              
+            } else {
+                var cell = grid.getParent(),
+                    record = cell.getRecord(),
+                    data = record.getData();
+            }   
+	    	
+	    	var gridDomicilios = refs.domiciliosContainer.lookupReference('gridDomicilios');
+	    	gridDomicilios.setCdperson(record.get("cdperson"));
+	    	gridDomicilios.getStore().load({
+	    		params	:	{
+	    			'params.cdperson':record.get("cdperson")
+	    		}
+	    	});
+	    	gridDomicilios.setHidden(false);
+	    } catch(e){
+	        Ice.generaExcepcion(e, paso);
+	    }
+    },
+    
     editarPersona:function(grid, rowIndex, colIndex){
     	Ice.log('Ice.view.bloque.BuscarPersonaController.nuevo');
         var me = this,
@@ -255,7 +285,7 @@ Ext.define('Ice.view.bloque.personas.PolizaPersonaController', {
                 } catch (e) {
                     Ice.manejaExcepcion(e, paso2);
                 }
-            }, 600);
+            }, 800);
         } catch (e) {
             Ice.generaExcepcion(e, paso);
         }
@@ -271,19 +301,90 @@ Ext.define('Ice.view.bloque.personas.PolizaPersonaController', {
             paso = 'Nueva persona';
         try{
             Ice.log('nuevo refs',refs);
-            var persona = Ext.create('Ice.view.bloque.personas.Persona',{
-                reference: 'persona',
-                listeners: {
-                    'personaGuardada': function(personaView, cdperson){
-                        Ice.log('personaGuardado.view',view);
-                        Ice.query('[name=dsatribu]', refs.formBusquedaPersonas).setValue('CDPERSON');
-                        Ice.query('[name=otvalor]', refs.formBusquedaPersonas).setValue(cdperson);
-                        me.onBuscar();
-                        Ice.pop();
-                    }
-                }
-            });            
-            Ice.push(persona);
+           if(refs.cdrol.getValue()=='TO'){
+        	   
+        	   Ice.request({
+               	url	:	Ice.url.bloque.datosAuxiliares.cargar,
+               	params	:	{
+               		'params.cdunieco' : view.getCdunieco(),
+                       'params.cdramo': view.getCdramo(),
+                       'params.estado': view.getEstado(),
+                       'params.nmpoliza': view.getNmpoliza(),
+                       'params.nmsuplem': view.getNmsuplem(),
+                       'params.nmsituac': '-1',
+                       'params.cdbloque': 'B1',
+                       'params.status'	 : 'V',
+                       'params.cdgarant'	 : '*'
+               	},
+               	mascara:'Creando formulario',
+               	success:function(datos){
+               		var paso='Creando form';
+               		try{
+               			var persona = {
+               					dsnombr1: datos.params.otvalor13,
+               					dsnombr2: datos.params.otvalor14,
+               					dsapell1: datos.params.otvalor11,
+               					dsapell2: datos.params.otvalor12,
+               					otfisjur: datos.params.otvalor09,
+               					cdtipide: '1',
+               					cdideper: datos.params.otvalor10
+               			};
+               			
+               			var persona = Ext.create('Ice.view.bloque.personas.Persona',{
+                               reference: 'persona',
+                               listeners: {
+                                   'personaGuardada': function(personaView, cdperson){
+                                       Ice.log('personaGuardado.view',view);
+                                       Ice.query('[name=dsatribu]', refs.formBusquedaPersonas).setValue('CDPERSON');
+                                       Ice.query('[name=otvalor]', refs.formBusquedaPersonas).setValue(cdperson);
+                                       me.onBuscar();
+                                       var gridpersonas = refs.gridPersonas;
+                                       
+                                       var gridDomicilios = refs.domiciliosContainer.lookupReference('gridDomicilios');
+//	                           	    	gridDomicilios.setCdperson(cdperson);
+//	                           	    	gridDomicilios.getStore().load({
+//	                           	    		params	:	{
+//	                           	    			'params.cdperson':cdperson
+//	                           	    		}
+//	                           	    	});
+	                           	    	gridDomicilios.setHidden(true);
+                                       Ice.pop();
+                                   }
+                               },
+                               defaults:persona
+                           });            
+                           Ice.push(persona);
+               		}catch(e){
+               			Ice.manejaExcepcion(e,paso);
+               		}
+               	}
+               });
+           }else{
+        	   var persona = Ext.create('Ice.view.bloque.personas.Persona',{
+                   reference: 'persona',
+                   listeners: {
+                       'personaGuardada': function(personaView, cdperson){
+                           Ice.log('personaGuardado.view',view);
+                           Ice.query('[name=dsatribu]', refs.formBusquedaPersonas).setValue('CDPERSON');
+                           Ice.query('[name=otvalor]', refs.formBusquedaPersonas).setValue(cdperson);
+                           me.onBuscar();
+                           var gridDomicilios = refs.domiciliosContainer.lookupReference('gridDomicilios');
+//                  	    	gridDomicilios.setCdperson(cdperson);
+//                  	    	gridDomicilios.getStore().load({
+//                  	    		params	:	{
+//                  	    			'params.cdperson':cdperson
+//                  	    		}
+//                  	    	});
+                  	    	gridDomicilios.setHidden(true);
+                           Ice.pop();
+                       }
+                   }
+               });            
+               Ice.push(persona);
+           }
+           
+            
+            
         } catch(e){
             Ice.generaExcepcion(e, paso);
         }

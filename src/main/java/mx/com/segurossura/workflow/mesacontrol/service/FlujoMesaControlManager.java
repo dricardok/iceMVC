@@ -463,4 +463,12 @@ public interface FlujoMesaControlManager
             String cdusuari, String cdtipsup, String swvispre, String cdpercli, String renuniext, String renramo,
             String renpoliex, String sworigenmesa, String cdrazrecha, String cdunidspch, String ntrasust,
             String cdsisrol, String accion) throws Exception;
+	
+	/**
+	 * Registra un tramite sacando todos los parametros de flujo.aux
+	 * @param flujo
+	 * @return el mensaje para mostrar en pantalla
+	 * @throws Exception
+	 */
+	public String registrarTramiteDesdeFlujo (FlujoVO flujo, String cdusuari, String cdsisrol) throws Exception;
 }

@@ -2865,6 +2865,29 @@ public class FlujoMesaControlAction extends PrincipalCoreAction{
                                "\n#########################################"));
         return SUCCESS;
     }
+    
+    @Action(value   = "registrarTramiteDesdeFlujo",
+            results = { @Result(name="success", type="json") }
+            )
+    public String registrarTramiteDesdeFlujo () {
+        logger.debug(Utils.log("\n########################################",
+                               "\n###### registrarTramiteDesdeFlujo ######",
+                               "\n###### flujo = ", flujo));
+        try {
+            UsuarioVO user = (UsuarioVO) Utils.validateSession(session);
+            Utils.validate(flujo, "Falta el flujo");
+            Utils.validate(flujo.getAux(), "Falta el auxiliar para registrar el tr\u00e1mite desde el flujo");
+            message = flujoMesaControlManager.registrarTramiteDesdeFlujo(flujo, user.getCdusuari(), user.getRolActivo().getCdsisrol());
+            success = true;
+        } catch (Exception e) {
+            message = Utils.manejaExcepcion(e);
+        }
+        logger.debug(Utils.log("\n###### success = ", success,
+                               "\n###### message = ", message,
+                               "\n###### registrarTramiteDesdeFlujo ######",
+                               "\n########################################"));
+        return SUCCESS;
+    }
 	
 	////////////////////////////////////////////////////////
 	// GETTERS Y SETTERS                                  //
