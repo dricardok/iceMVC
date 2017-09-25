@@ -2449,12 +2449,15 @@ var Ice = (
     },
     
     /**
-     * 2018/09/05 - jtezva - nuevo, para no llamar el de Ext
+     * 2017/09/05 - jtezva - nuevo, para no llamar el de Ext
+     * 2017/09/25 - jtezva - se agrega el callback por si eligen no o cancelar
      */
-    confirm: function (titulo, mensaje, callback) {
+    confirm: function (titulo, mensaje, callback, callbackCancel) {
         Ext.Msg.confirm(titulo, mensaje, function (boton) {
             if (boton === 'yes') {
                 callback();
+            } else if (callbackCancel) {
+                callbackCancel();
             }
         });
     }

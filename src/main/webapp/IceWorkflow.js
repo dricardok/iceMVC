@@ -1125,12 +1125,23 @@ var Ice = (
 													var paso3 = 'Ejecutando validacion por referencia';
 													try {
                                                         flujo.ntramite = resp.ntramite;
-                                                        Ice.mensajeCorrecto({
-                                                            mensaje: 'Se registr\u00f3 el tr\u00e1mite ' + resp.ntramite,
-                                                            callback: function () {
+                                                        Ice.confirm(
+                                                            'Tr\u00e1mite ' + resp.ntramite + 'registrado',
+                                                            'Se registr\u00f3 el tr\u00e1mite ' + resp.ntramite + ' ¿Desea subir documentos antes de continuar?',
+                                                            function () {
+                                                                Ext.create('Ice.view.bloque.documentos.VentanaDocumentos', {
+                                                                    flujo: flujo,
+                                                                    listeners: {
+                                                                        close: function () {
+                                                                            Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
+                                                                        }
+                                                                    }
+                                                                }).mostrar();
+                                                            },
+                                                            function () {
                                                                 Ice.ejecutarValidacionPorReferencia(flujo, action.params.referencia);
                                                             }
-                                                        });
+                                                        );
 													} catch (e) {
 														Ice.manejaExcepcion(e, paso3);
 													}
