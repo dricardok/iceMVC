@@ -4,16 +4,15 @@ Ext.define('Ice.view.bloque.mesacontrol.PanelBotonesFlujo', {
     style: 'padding:20px 0px 0px 20px;',
 
     // config ext
-    scrollable: true,
+    scrollable: false,
     layout: 'hbox',
     platformConfig: {
         desktop: {
 
-            height: 120,
-            bodyPadding: '0px 0px 0px 0px',
-
+            height: 110,
+            bodyPadding: '0px 0px 0px 5px',
             defaults: {
-                margin: '0px 10px 0px 0px'
+                margin: '0px 10px 0px 10px'
             }
         },
         tablet: {

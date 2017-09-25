@@ -1,4 +1,5 @@
 Ext.define('Ice.view.bloque.duplicidad.FormularioVigencia',{
+	style:'margin:5px 20px 0px 0px;',
 	extend:	'Ice.view.componente.FormTresColumnasIce',
 	xtype:	'formulariovigencia',
 	controller:	'formulariovigencia',

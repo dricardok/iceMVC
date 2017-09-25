@@ -5,10 +5,7 @@ Ext.define('Ice.view.bloque.duplicidad.FormularioDuplicidad',{
 	config:	{
         cdramo: null
 	},
-	title: {
-        text:'Duplicidad'/*,
-		style:'margin:0px 45px 16px 40px;'*/
-	},
+	
 	constructor : function(config){
 		var paso = 'Construyendo pantalla de duplicidad',
 			me   = this;

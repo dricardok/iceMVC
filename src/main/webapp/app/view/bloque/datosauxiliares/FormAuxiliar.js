@@ -79,6 +79,7 @@ Ext.define('Ice.view.bloque.datosauxiliares.FormAuxiliar', {
                 config.buttons = [
                     {
                         text: 'Duplicidad',
+                        iconCls: 'fa fa-users',
                         handler: 'onDuplicidad'
                     }
                 ];

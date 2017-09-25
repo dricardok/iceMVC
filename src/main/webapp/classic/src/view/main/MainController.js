@@ -339,7 +339,7 @@ Ext.define('Ice.view.main.MainController', {
                 iconAlign: 'top',
                 hidden: true,
                 padre: refs.mainContainerWrap,
-                style: 'left: 100%; margin-left: -45px; top: 100%; margin-top: -87px; border-radius:34px; padding-left: 0px; width: 35px; height:34px; padding-right: 0px;',
+                style: 'left: 100%; margin-left: -47px; top: 100%; margin-top: -87px; border-radius:34px; padding-left: 0px; width: 35px; height:34px; padding-right: 0px;',
                 handler: function (me) {
                     me.hide();
                     me.padre.scrollTo(0, 0);
